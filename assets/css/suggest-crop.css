@@ -1,0 +1,66 @@
+.container-image-crop {
+	padding: 0px;
+	width: 100%;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.container-image-crop .left {
+	box-sizing: border-box;
+	float: left;
+	width: 40%;
+	background: #f3f3f3;
+	border-right: 1px solid #ddd;
+	padding: 18px;
+	height: 100%;
+}
+
+.container-image-crop .left p:first-of-type {
+	margin-top: 0px;
+}
+
+.container-image-crop .left img {
+	float: left;
+	max-width: 45%;
+	border: 1px solid #ddd;
+	padding: 1px;
+}
+
+.container-image-crop .left img:nth-of-type(2) {
+	float: right;
+}
+
+.container-image-crop .right {
+	float: left;
+	width: 55%;
+	padding: 18px;
+}
+
+.container-image-crop .right img {
+	max-width: 100%;
+}
+
+.container-image-crop.comparing {
+	padding: 18px;
+}
+
+/* Make a spinner inline. */
+.spinner.inline {
+	visibility: visible;
+	display: inline-block;
+	float: none;
+}
+
+/**
+* Error cropping image
+*/
+p.crop-invalid {
+	padding-left: 18px;
+	padding-right: 18px;
+	text-align: right;
+}
+
+/* When you click the button, the surrounding text moves up. Prevent this. */
+p.crop-invalid button.crop-fail:active {
+	vertical-align: baseline;
+}
