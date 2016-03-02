@@ -19,6 +19,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 2. Activate the plugin through the Plugins menu in WordPress.
 
 == Changelog ==
+
+= 1.0.9 In progress =
+* Misc:			JIRA WPB-1361	Added license file.
+
 = 1.0.8 =
 * New Feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.
 * New Feature:	JIRA WPB-1684	Suggest image crop when replacing images of different aspect ratios.
