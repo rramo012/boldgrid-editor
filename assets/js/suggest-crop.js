@@ -188,9 +188,9 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 
 		// @var object data Example data: http://pastebin.com/507gY9L8
 		var data = {
-			'action' : 'suggest_crop_crop',
-			'cropDetails' : self.selected_coordinates,
-			'path' : self.new_content.attr('src')
+			action: 'suggest_crop_crop',
+			cropDetails: self.selected_coordinates,
+			path: self.$mfc.find('#suggest-crop-sizes option:selected').val()
 		};
 
 		$.post(ajaxurl, data, function(response) {
@@ -211,7 +211,7 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 		// When the user clicks the "OK" button, close the crop_frame.
 		$('button.crop-fail').on('click', function() {
 			self.crop_frame.close();
-		})
+		});
 	}
 
 	/**
@@ -256,6 +256,31 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 	}
 
 	/**
+	 * Get an img's attachment id from its class attribute.
+	 *
+	 * If we pass in "alignnone wp-image-54490 size-medium", this function will
+	 * parse out and return "54490".
+	 *
+	 * @since 1.0.9
+	 *
+	 * @param string class_attr Example: "alignnone wp-image-54490 size-medium".
+	 * @return integer attachmentId An attachment id.
+	 */
+	this.getAttachmentIdFromClass = function( class_attr ) {
+		// Example classes: ["alignnone", "wp-image-54490", "size-medium"].
+		var classes = class_attr.split(' '), attachmentId = 0;
+
+		$.each( classes, function( i, className ) {
+			if ( className.startsWith('wp-image-') ) {
+				attachmentId = className.replace( 'wp-image-', '' );
+				return false;
+			}
+		});
+
+		return parseInt( attachmentId );
+	}
+
+	/**
 	 * Steps to take when an image is cropped successfull.
 	 * 
 	 * @since 1.0.8
@@ -280,7 +305,6 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 
 		// Close our crop_frame, we're done!
 		self.crop_frame.close();
-
 	}
 
 	/**
@@ -297,25 +321,94 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 	 * @since 1.0.8
 	 */
 	this.image_data_set = function() {
-		// In this.selected_content_set(), we take action similar to the two
-		// lines below. @see this.selected_content_set() for more info about the
-		// variables we're setting below.
-		var new_content = tinyMCE.activeEditor.selection.getContent();
-		self.new_content = $(new_content);
+		var selectedContent = tinyMCE.activeEditor.selection.getContent(),
+			newImageClass = $( selectedContent ).attr('class'),
+			old_img = new Image(), new_img = new Image();
+
+		// Get the attachment id of the new image.
+		self.newImageAttachmentId = self.getAttachmentIdFromClass( newImageClass );
+
+		// Get a list of sizes available for our new image. We'll place
+		// these in a <select> element to allow the user to select which
+		// image size to crop from.
+		var data = {
+			action: 'suggest_crop_get_dimensions',
+			attachment_id: self.newImageAttachmentId
+		};
+		jQuery.post( ajaxurl, data, function( response ) {
+			// Validate our response. If invalid, the crop_frame will close
+			// and the user will continue as if nothing happened.
+			if( 0 == response ) {
+				self.crop_frame.close();
+				clearInterval(self.interval_wait_for_image_data_set);
+				return false;
+			}
+
+			response = JSON.parse( response );
+
+			// Create our <select> element filled with image sizes of our
+			// new image.
+			var template = wp.template('suggest-crop-sizes');
+			self.$selectDimensions = $(template(response));
+
+			self.selectBestFit();
+
+			// Get the new image, the image we've chosen as a replacement.
+			// We've waited up until this point to get the data, as
+			// self.bestSizeSelector (used below) was not set until
+			// self.selectBestFit() (used above) finished running.
+			new_img.onload = function() {
+				self.new_image = new_img;
+			};
+			new_img.src = self.bestSizeSelector;
+		});
 
 		// Get the old image, the image we're replacing.
-		var old_img = new Image();
 		old_img.onload = function() {
 			self.old_image = old_img;
-		}
-		old_img.src = self.selected_content.attr('src');
-
-		// Get the new image, the image we've chosen as a replacement.
-		var new_image = new Image();
-		new_image.onload = function() {
-			self.new_image = new_image;
 		};
-		new_image.src = self.new_content.attr('src');
+		old_img.src = self.selected_content.attr('src');
+	}
+	
+	/**
+	 * Select our best image size.
+	 * 
+	 * Within our <select> of image dimensions available, select by default
+	 * the image of best fit.
+	 * 
+	 * @since 1.0.9
+	 */
+	this.selectBestFit = function() {
+		// Determine the orientation of our old image.
+		// Portrait is > 1, Landscape is < 1, Square is 0.
+		var orientation = parseFloat(self.old_image.width / self.old_image.height),
+			$bestSizes;
+
+		// From the list of available sizes, select the ones that are a best fit.
+		// If Landscape, width is the important factor, and vice versa.
+		if( orientation < 1 ) {
+			$bestSizes = self.$selectDimensions.find('option').filter( function() {
+				return $( this ).attr('data-height') >= self.old_image.height;
+			});
+		} else {
+			$bestSizes = self.$selectDimensions.find('option').filter( function() {
+				return $( this ).attr('data-width') >= self.old_image.width;
+			});
+		}
+			
+		// Set self.bestSizeSelector to the URL of the best size. The
+		// best size is essentially one size higher than a perfect fix.
+		if( 1 == $bestSizes.length ) {
+			self.bestSizeSelector = $bestSizes.eq(0).val();
+		} else if( 0 == $bestSizes.length) {
+			self.bestSizeSelector = self.$selectDimensions.find('option').last().val();
+		} else {
+			self.bestSizeSelector = $bestSizes.eq(1).val();
+		}
+			
+		// Select the best sized <option> in our <select>.
+		self.$selectDimensions.find( 'option[value="' +
+				self.bestSizeSelector + '"]' ).prop( 'selected', true );
 	}
 
 	/**
@@ -353,7 +446,10 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 	 * @since 1.0.8
 	 */
 	this.selected_coordinates_select = function() {
-		self.selected_coordinates_set_default();
+		var selectedCoordinates = self.selected_coordinates_calculate_default(
+			self.old_image.width, self.old_image.height, self.new_image.width,
+			self.new_image.height ), aspectRatio = selectedCoordinates.width +
+			':' + selectedCoordinates.height;
 
 		/**
 		 * After adding the image, bind imgAreaSelect to it.
@@ -361,8 +457,8 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 		 * Full documentation:
 		 * http://odyniec.net/projects/imgareaselect/usage.html
 		 */
-		self.ias = $('img.suggest-crop').imgAreaSelect({
-			aspectRatio : self.aspectRatio,
+		self.ias = self.$suggestCrop.imgAreaSelect({
+			aspectRatio : aspectRatio,
 			// When there is a selection within the image, show the drag
 			// handles.
 			handles : true,
@@ -375,8 +471,8 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 			// Set the default area to be selected.
 			x1 : 0,
 			y1 : 0,
-			x2 : self.default_selected_width,
-			y2 : self.default_selected_height,
+			x2 : selectedCoordinates.width,
+			y2 : selectedCoordinates.height,
 			onInit : function(img, selection) {
 				self.selected_coordinates_set(img, selection);
 			},
@@ -460,6 +556,60 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 			}, 100);
 		}, 1000);
 	}
+	
+	/**
+	 * When an image size is changed, take action.
+	 * 
+	 * @since 1.0.9
+	 * 
+	 * @param string img_src Example: https://domain.com/file.jpg
+	 */
+	this.onSizeChange = function( img_src ) {
+		var selectedCoordinates, aspectRatio, newImage;
+		
+		// Remove any previous 'on load'.
+		self.$suggestCrop.off('load');
+		
+		self.$suggestCrop.attr( 'src', img_src ).on( 'load', function() {
+			newImage = $(this)[0];
+			
+			// img1 is the old image, the image we're replacing.
+			img1Width = self.old_image.width;
+			img1Height = self.old_image.height;
+			// img2 is this image, the new image.
+			img2Width = newImage.naturalWidth;
+			img2Height = newImage.naturalHeight;
+			
+			// Pass all of the above data and calculate which area of the image
+			// we should select and highlight by default.
+			selectedCoordinates = self.selected_coordinates_calculate_default( img1Width, img1Height, img2Width, img2Height );	
+			
+			self.ias.setOptions({
+				aspectRatio : selectedCoordinates.width + ':' + selectedCoordinates.height,
+				imageHeight : newImage.naturalHeight,
+				imageWidth : newImage.naturalWidth,
+				x1 : 0,
+				y1 : 0,
+				x2 : selectedCoordinates.width,
+				y2 : selectedCoordinates.height
+			});
+
+			self.selected_coordinates_set( null, {
+				height: newImage.naturalHeight,
+				width: newImage.naturalWidth,
+				x1: 0,
+				y1: 0,
+				x2: selectedCoordinates.width,
+				y2: selectedCoordinates.height
+			} );
+			
+			self.bindForceAspectRatio( selectedCoordinates.width, selectedCoordinates.height );
+			
+			// Because we're reseting the image, reset the force aspect ratio
+			// to checked.
+			self.$mfc.find('[name="force_aspect_ratio"]').prop( 'checked', true );
+		});
+	}
 
 	/**
 	 * Create our crop_frame.
@@ -511,13 +661,24 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 	 * @since 1.0.8
 	 */
 	this.crop_frame_fill = function() {
+		
 		var data = {
 			old_image_src : self.old_image.src,
 			new_image_src : self.new_image.src,
-			new_content_src : self.new_content.attr('src')
+			new_content_src : self.bestSizeSelector
 		};
 		var template = wp.template('suggest-crop');
 		self.$mfc.html(template(data));
+		
+		// After we've filled in our details, add our <select>.
+		self.$suggestCrop = self.$mfc.find('.suggest-crop');
+		self.$suggestCrop.after(self.$selectDimensions);
+		
+		// Bind our select element.
+		$( '#suggest-crop-sizes' ).change( function() {
+			var img_src = $(this).val();
+			self.onSizeChange(img_src);
+		});
 
 		var template = wp.template('suggest-crop-toolbar');
 		self.$mft.html(template());
@@ -544,55 +705,29 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 	this.selected_coordinates_set = function(img, selection) {
 		self.selected_coordinates = selection;
 	}
-
+	
 	/**
-	 * Set the initial coordiantes to select when cropping an image.
 	 * 
-	 * When we are suggesting that the user crop the image, we make it easier by
-	 * showing their new image with a selection already outlined. This method
-	 * determines exactly what portion of the image to outline.
-	 * 
-	 * Let's say our original image is 10,000 x 10,000. We're replacing it with
-	 * an image 200 x 100. We can't simply take the original image's dimensions
-	 * and select it in the new image, the new image may not be big enough.
-	 * 
-	 * To determine the default coordinates to select, we check if the original
-	 * image fits inside the new image. If it doesn't, we decrease the original
-	 * image's size in increments of 5% until we get a fitting size.
-	 * 
-	 * @since 1.0.8
 	 */
-	this.selected_coordinates_set_default = function() {
-		var is_default_selection_too_small;
-
-		// Set our initial values the the values of the original image.
-		self.default_selected_width = self.old_image.width;
-		self.default_selected_height = self.old_image.height;
-
-		// While the area we want to select is bigger than the new image,
-		// decrease the size of the area we want to select.
-		while (self.default_selected_width > self.new_image.width
-				|| self.default_selected_height > self.new_image.height) {
-			// Decrease the size of our default selection by 5%.
-			self.default_selected_width = self.default_selected_width * .95;
-			self.default_selected_height = self.default_selected_height * .95;
-
-			// Avoid an infinite loop. If we have gotten down to a selection
-			// less than 10px in size, something must have gone wrong. Set our
-			// default selection to the size of the new image.
-			is_default_selection_too_small = (self.default_selected_width < 10 || self.default_selected_height < 10);
-			if (is_default_selection_too_small) {
-				self.default_selected_width = self.new_image.width;
-				self.default_selected_height = self.new_image.height;
-				break;
-			}
+	this.selected_coordinates_calculate_default = function( img1Width, img1Height, img2Width, img2Height ) {		
+		var default_width, default_height, data = {};
+		
+		// First, try maximizing the width.
+		default_width = img2Width;
+		default_height = (img1Height * img2Width) / img1Width;
+		
+		if( default_height > img2Height ) {
+			default_width = img2Width;
+			default_height = (img1Height * img2Width) / img1Width;
+			
+			default_height = img2Height;
+			default_width = (img1Width * img2Height) / img1Height;
 		}
-
-		// Save the aspectRatio we just calculated.
-		// @var string aspectRatio Example aspectRatio:
-		// "97.02766117170738:145.27925483547529".
-		self.aspectRatio = self.default_selected_width + ':'
-				+ self.default_selected_height;
+		
+		data.width = default_width;
+		data.height = default_height;
+		
+		return data; 
 	}
 
 	/**
@@ -665,30 +800,8 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 		$('.imgedit-help-toggle').on('click', function() {
 			$('.imgedit-help').slideToggle();
 		});
-
-		/**
-		 * ELEMENT: "force aspect ratio".
-		 * 
-		 * Action to take when "force aspect ratio" is clicked.
-		 */
-		$('[name="force_aspect_ratio"]').change(function() {
-			// If the checkbox is checked, force the aspect ratio.
-			if ($(this).is(":checked")) {
-				self.ias.setOptions({
-					aspectRatio : self.aspectRatio,
-					x1 : 0,
-					y1 : 0,
-					x2 : self.default_selected_width,
-					y2 : self.default_selected_height,
-				});
-			} else {
-				self.ias.setOptions({
-					aspectRatio : false
-				});
-			}
-
-			self.ias.update();
-		});
+		
+		self.bindForceAspectRatio( self.default_selected_width, self.default_selected_height );
 
 		/**
 		 * ELEMENT: 'Crop Image' and 'Skip Cropping' buttons.
@@ -715,6 +828,38 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function($) {
 		// We just adjusted the buttons, take note of this so we don't do it
 		// again.
 		self.adjusted_crop_frame_buttons = true;
+	}
+	
+	/**
+	 * Bind the 'Force aspect ratio' checkbox.
+	 * 
+	 * @since 1.0.9
+	 * 
+	 * @param integer width
+	 * @param integer height
+	 */
+	this.bindForceAspectRatio = function( width, height ) {
+		var aspectRatio = width + ':' + height;
+		
+		// Remove any existing bindings.
+		$('[name="force_aspect_ratio"]').off('change');
+		
+		$('[name="force_aspect_ratio"]').on('change', function() {
+			// If the checkbox is checked, force the aspect ratio.
+			if ($(this).is(":checked")) {
+				self.ias.setOptions({
+					aspectRatio : aspectRatio,
+					x1 : 0,
+					y1 : 0,
+					x2 : width,
+					y2 : height,
+				});
+			} else {
+				self.ias.setOptions({
+					aspectRatio : false
+				});
+			}
+		});
 	}
 };
 

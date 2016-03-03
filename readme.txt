@@ -22,6 +22,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.0.9 In progress =
 * Misc:			JIRA WPB-1361	Added license file.
+* New Feature:	JIRA WPB-1695	Suggest crop: Add 'size' dropdown menu when cropping an image.
+* New Feature:	JIRA WPB-1698	Suggest crop: default selection should be as wide as it could be.
  
 = 1.0.8 =
 * New Feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.

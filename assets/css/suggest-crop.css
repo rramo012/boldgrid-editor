@@ -40,6 +40,10 @@
 	max-width: 100%;
 }
 
+.container-image-crop .right #suggest-crop-sizes {
+	display: block;
+}
+
 .container-image-crop.comparing {
 	padding: 18px;
 }

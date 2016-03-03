@@ -53,3 +53,14 @@
 		There was an error cropping your image. Please click <em>OK</em> to insert the uncropped image. <button class='button media-button button-primary button-large crop-fail'>OK</button>
 	</p>
 </script>
+<script type='text/html' id='tmpl-suggest-crop-sizes'>
+	<select id='suggest-crop-sizes'>
+		<#	var new_content_src = data.new_content_src;
+			_.forEach( data.sizes, function (u,i) {
+			var option_value = u.url;
+			var option_text = i + ' - ' + u.width + ' × ' + u.height;
+			var selected = ( new_content_src == option_value ? 'selected' : '' );#>
+			<option value='{{{option_value}}}' data-width='{{{u.width}}}' data-height='{{{u.height}}}' {{{selected}}}>{{{option_text}}}</option>
+		<#}); #>
+	</select>
+</script>
