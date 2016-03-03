@@ -61,10 +61,11 @@ class Boldgrid_Editor_Suggest_Crop {
 			'crop' 
 		) );
 		
-		add_action( 'wp_ajax_suggest_crop_get_dimensions', array (
-			$this,
-			'get_dimensions'
-		) );
+		add_action( 'wp_ajax_suggest_crop_get_dimensions', 
+			array (
+				$this,
+				'get_dimensions' 
+			) );
 	}
 	
 	/**
@@ -99,14 +100,14 @@ class Boldgrid_Editor_Suggest_Crop {
 	
 	/**
 	 * Get all available sizes for an attachment id.
-	 * 
+	 *
 	 * @since 1.0.9
-	 * 
+	 *       
 	 * @return array dimensions Example: http://pastebin.com/UamKiXS4
 	 */
 	public function get_dimensions() {
 		// Validate our attachment id.
-		if ( empty ( $_POST['attachment_id'] ) ) {
+		if ( empty( $_POST['attachment_id'] ) ) {
 			wp_die( 0 );
 		}
 		
@@ -119,21 +120,21 @@ class Boldgrid_Editor_Suggest_Crop {
 			wp_die( 0 );
 		}
 		
-		foreach( $dimensions['sizes'] as $size => $size_array ) {
+		foreach ( $dimensions['sizes'] as $size => $size_array ) {
 			$image_src = wp_get_attachment_image_src( $attachment_id, $size );
 			
 			$dimensions['sizes'][$size]['url'] = $image_src[0];
 		}
 		
 		// Add our original size to the dimensions as well.
-		$dimensions['sizes']['original'] = array(
+		$dimensions['sizes']['original'] = array (
 			'file' => $dimensions['file'],
 			'width' => $dimensions['width'],
 			'height' => $dimensions['height'],
-			'url' =>  wp_get_attachment_url( $attachment_id )
+			'url' => wp_get_attachment_url( $attachment_id ) 
 		);
 		
-		echo json_encode($dimensions);
+		echo json_encode( $dimensions );
 		
 		wp_die();
 	}
