@@ -799,10 +799,6 @@ class Boldgrid_Editor {
 		wp_enqueue_script( 'is-typing-boldgrid', 
 			plugins_url( '/assets/js/jquery/jquery.is-typing.js', $plugin_file ), array (), 
 			BOLDGRID_EDITOR_VERSION, true );
-		
-		wp_enqueue_script( 'boldgrid-editor-media-modals', 
-			plugins_url( '/assets/js/media-modals.js', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION, 
-			true );
 	}
 	
 	/**
