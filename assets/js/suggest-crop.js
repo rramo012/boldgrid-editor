@@ -116,6 +116,10 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.crop_frame_clear = function() {
+		// If we previously faded out the media modal, its display is none.
+		// Reset the display.
+		self.$mediaModal.css( 'display', 'block' );
+
 		// Remove the tabs, "Upload Files / Media Library".
 		self.$mfr.remove();
 
@@ -591,6 +595,8 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 		self.$mfr = $( '.media-frame-router' ).last();
 		self.$mfc = $( '.media-frame-content' ).last();
 		self.$mft = $( '.media-frame-toolbar' ).last();
+
+		self.$mediaModal = $( '.media-modal' );
 	}
 
 	/**
@@ -613,6 +619,24 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 
 		self.crop_frame_create();
 		self.crop_frame_clear();
+	}
+
+	/**
+	 * Action to take when image aspect ratios match.
+	 * 
+	 * @since 1.0.9
+	 */
+	this.crop_frame_ratio_match = function() {
+		// Show a 'ratio match!' message.
+		var template = wp.template( 'suggest-crop-ratio-match' );
+		self.$mfc.html( template() );
+
+		// Give the user 1.5 seconds to read the message, then fade out.
+		setTimeout( function() {
+			self.$mediaModal.fadeOut( '500', function() {
+				self.crop_frame.close();
+			} );
+		}, 1500 );
 	}
 
 	/**
@@ -759,7 +783,7 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 			if ( same_dimensions ) {
 				// The images have the same dimensions, so no need to suggest a
 				// crop.
-				self.crop_frame.close();
+				self.crop_frame_ratio_match();
 			} else {
 				// Fill in our self.crop_frame, the UI for cropping an image.
 				self.crop_frame_fill();

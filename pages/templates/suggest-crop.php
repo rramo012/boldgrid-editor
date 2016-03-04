@@ -45,8 +45,13 @@
 </script>
 <script type="text/html" id="tmpl-suggest-crop-compare-images">
 	<div class='container-image-crop comparing'>
-		<span class="spinner inline"></span> Comparing your new image with the image you are replacing. If they have different aspect ratios, you can crop your new image next.
-	<div class='container-image-crop'>
+		<span class="spinner inline"></span> <strong>Reviewing aspect ratios<strong>...
+	</div>
+</script>
+<script type="text/html" id="tmpl-suggest-crop-ratio-match">
+	<div class='container-image-crop comparing'>
+		<span class="dashicons dashicons-yes"></span> <strong>Aspect ratios match</strong>! Replacing image...
+	</div>
 </script>
 <script type='text/html' id='tmpl-suggest-crop-crop-invalid'>
 	<p class='crop-invalid'>
