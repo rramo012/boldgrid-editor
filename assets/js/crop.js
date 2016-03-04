@@ -1,7 +1,7 @@
 var IMHWPB = IMHWPB || {};
 
 /**
- * BoldGrid Editor Suggest Crop.
+ * BoldGrid Editor Crop.
  * 
  * This class handles the front-end functionality for suggesting to users they
  * crop an image when replacing another image with different dimensions within
@@ -9,7 +9,7 @@ var IMHWPB = IMHWPB || {};
  * 
  * @since 1.0.8
  */
-IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
+IMHWPB.BoldGrid_Editor_Crop = function( $ ) {
 	var self = this;
 
 	/**
@@ -870,4 +870,4 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	}
 };
 
-new IMHWPB.BoldGrid_Editor_Suggest_Crop( jQuery );
+new IMHWPB.BoldGrid_Editor_Crop( jQuery );

@@ -14,7 +14,7 @@ if ( ! class_exists( 'Boldgrid_Editor_Media_Tab' ) ) {
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-layout.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-config.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-pointer.php';
-require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-suggest-crop.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-crop.php';
 
 /**
  * BoldGrid Editor class
@@ -276,8 +276,8 @@ class Boldgrid_Editor {
 		
 		// Suggest crop.
 		if ( $is_candidate && 'on' === get_option( 'boldgrid_feature_switch_suggest_crop' ) ) {
-			$boldgrid_editor_suggest_crop = new Boldgrid_Editor_Suggest_Crop();
-			$boldgrid_editor_suggest_crop->add_hooks();
+			$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
+			$boldgrid_editor_crop->add_hooks();
 		}
 	}
 	

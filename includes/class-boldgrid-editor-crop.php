@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BoldGrid Editor Suggest Crop.
+ * BoldGrid Editor Crop.
  *
  * This class helps manage the 'suggest crop' feature, a feature that suggests a user crop an image
  * when they're replacing images with different aspect ratios.
  *
  * @since 1.0.8
  */
-class Boldgrid_Editor_Suggest_Crop {
+class Boldgrid_Editor_Crop {
 	/**
 	 * Should the 'suggest crop' feature be loaded?
 	 *
@@ -78,11 +78,11 @@ class Boldgrid_Editor_Suggest_Crop {
 			$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 			
 			wp_enqueue_script( 'boldgrid-editor-suggest-crop', 
-				plugins_url( '/assets/js/suggest-crop.js', $plugin_file ), array (), 
+				plugins_url( '/assets/js/crop.js', $plugin_file ), array (), 
 				BOLDGRID_EDITOR_VERSION, true );
 			
 			wp_enqueue_style( 'boldgrid-editor-css-suggest-crop', 
-				plugins_url( '/assets/css/suggest-crop.css', $plugin_file ), array (), 
+				plugins_url( '/assets/css/crop.css', $plugin_file ), array (), 
 				BOLDGRID_EDITOR_VERSION );
 		}
 	}
@@ -94,7 +94,7 @@ class Boldgrid_Editor_Suggest_Crop {
 	 */
 	public function admin_footer() {
 		if ( $this->should_be_loaded ) {
-			require_once BOLDGRID_EDITOR_PATH . '/pages/templates/suggest-crop.php';
+			require_once BOLDGRID_EDITOR_PATH . '/pages/templates/crop.php';
 		}
 	}
 	
