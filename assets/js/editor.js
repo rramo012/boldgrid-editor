@@ -393,32 +393,6 @@ IMHWPB.Editor = function( $ ) {
 								return false;
 							}
 						});
-					//If this is an empty div map to the first content element
-					} else if ( $element.is('div')  ) {
-						
-						//This section is causing intermittent problems when swapping images
-						//Skip it for now
-						//TODO: Correct issues with this conditional (y is null)
-						///Potentially retire this code...
-						return;
-						
-						var $children = $element.children();
-						if ( $children.length == 1 && $children.find('br') ) {
-							$element.parent().children().each( function () {
-								var $this = $(this);
-								
-								var content_selectors_string = '';
-								var draggable_instance = self.draggable();
-								if ( draggable_instance ) {
-									content_selectors_string = draggable_instance.content_selectors_string;
-								}
-								
-								if ( $this.is(content_selectors_string) ) {
-									editor.selection.setCursorLocation( this, 0 );
-									return false;
-								}
-							});
-						}
 					}
 				}
 			} );

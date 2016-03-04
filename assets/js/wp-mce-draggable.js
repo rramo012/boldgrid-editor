@@ -27,10 +27,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	this.draggable_inactive = false;
 	
-	/**
-	 * Is Front End Editing Active
-	 */
-	this.is_fee = false;
 	this.last_resize = null;
 	
 	this.phone_width_needed = 620; //480 + 300;
@@ -64,63 +60,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	var pre_init = $.Event( 'BoldGridPreInit' );
 	
-	/**
-	 * Initialize Front End Editing
-	 */
-	this.init_fee = function() {
-		$( '#wp-admin-bar-edit [href="#fee-edit-link"]' ).on( 'click', function() {
-
-			if ( false == self.draggable_instance ) {
-				self.load_draggable( $( '.fee-content-body.mce-content-body' ) );
-			} else {
-				self.toggle_draggable_plugin();
-			}
-		} );
-
-		tinymce.create( 'tinymce.plugins.draggable', {
-			init : function( editor, url ) {
-				// Before adding an undo level check to see if this is allowed
-				editor.on( 'BeforeAddUndo', function( e ) {
-					if ( IMHWPB.tinymce_undo_disabled == true ) {
-						return false;
-					}
-				} );
-				/**
-				 * While resizing a column if you finish resizing over wpview
-				 * wrap, mouseup isn't triggered trigger it manually
-				 */
-				editor.on( 'SetAttrib', function( e ) {
-					if ( e.attrElm.hasClass( 'wpview-wrap' )
-						&& typeof self.draggable_instance != 'undefined' ) {
-						var draggable = self.draggable_instance;
-						if ( draggable.resize ) {
-							draggable.$master_container.trigger( 'mouseup', e.attrElm );
-						}
-					}
-				} );
-
-				// Prevents boldgrid popovers from appearing when resizing
-				// images
-				editor.on( 'ObjectResizeStart', function( e ) {
-					self.draggable_instance.popovers_disabled = true;
-					self.draggable_instance.$master_container.find( '.draggable-tools-imhwpb' )
-					    .addClass( "hidden" );
-				} );
-
-				// Once an object is resized, allow boldgrid popovers.
-				editor.on( 'ObjectResized', function( e ) {
-					self.draggable_instance.popovers_disabled = false;
-					self.draggable_instance.$master_container.find( '.draggable-tools-imhwpb' )
-					    .removeClass( "hidden" );
-				} );
-				
-			},
-		} );
-
-		// Register plugin
-		tinymce.PluginManager.add( 'draggable', tinymce.plugins.draggable );
-	};
-
 	/**
 	 * Initiate the BoldGrid Dragging for the tinymce window
 	 */
@@ -376,12 +315,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.toggle_draggable_plugin = function( event ) {
 
-		var current_document;
-		if ( self.is_fee ) {
-			current_document = document;
-		} else {
-			current_document = $(tinymce.activeEditor.iframeElement).contents().get(0);
-		}
+		var current_document = $(tinymce.activeEditor.iframeElement).contents().get(0);
 
 		self.draggable_inactive = self.set_style_sheet_inactive( 'draggable',
 		    !self.draggable_inactive, current_document );
@@ -804,11 +738,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	};
 	
 	$( function() {
-		if ( typeof (BOLDGRIDDraggable) != 'undefined'
-		    && typeof (BOLDGRIDDraggable.fee) != 'undefined' ) {
-			self.is_fee = true;
-			self.init_fee();
-		}
+		
 		self.$window = $(window);
 		self.$body = $('body');
 		self.$post_body = $('#post-body');

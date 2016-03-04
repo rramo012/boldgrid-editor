@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=dev)](https://travis-ci.org/BoldGrid/boldgrid-editor)
+[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=master)](https://travis-ci.org/BoldGrid/boldgrid-editor)
 
 # BoldGrid Editor #
 **Contributors:** imh_brad, joemoto, rramo012, timph
