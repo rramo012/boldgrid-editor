@@ -433,7 +433,8 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.selected_coordinates_select = function() {
-		self.selected_coordinates_calculate_default( self.old_image.width, self.old_image.height, self.new_image.width, self.new_image.height );
+		self.selected_coordinates_calculate_default( self.old_image.width, self.old_image.height,
+		    self.new_image.width, self.new_image.height );
 
 		/**
 		 * After adding the image, bind imgAreaSelect to it.
@@ -568,9 +569,10 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 			    img2Height = newImage.naturalHeight;
 
 			    // Pass all of the above data and calculate which area of the
-				// image
+			    // image
 			    // we should select and highlight by default.
-			    self.selected_coordinates_calculate_default( img1Width, img1Height, img2Width, img2Height );
+			    self.selected_coordinates_calculate_default( img1Width, img1Height, img2Width,
+			        img2Height );
 
 			    self.ias.setOptions( {
 			        aspectRatio : self.selectedCoordinates.aspectRatio,
@@ -594,7 +596,7 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 			    self.bindForceAspectRatio();
 
 			    // Because we're reseting the image, reset the force aspect
-				// ratio
+			    // ratio
 			    // to checked.
 			    self.$mfc.find( '[name="force_aspect_ratio"]' ).prop( 'checked', true );
 		    } );
@@ -700,18 +702,22 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	 * 
 	 * @since 1.0.9
 	 * 
-	 * @param integer img1Width
-	 * @param integer img1Height
-	 * @param integer img2Width
-	 * @param integer img2Height
+	 * @param integer
+	 *            img1Width
+	 * @param integer
+	 *            img1Height
+	 * @param integer
+	 *            img2Width
+	 * @param integer
+	 *            img2Height
 	 */
-	this.selected_coordinates_calculate_default = function( img1Width, img1Height, img2Width, img2Height ) {		
+	this.selected_coordinates_calculate_default = function( img1Width, img1Height, img2Width, img2Height ) {
 		var default_width, default_height, data = {};
 
 		// First, try maximizing the width.
 		default_width = img2Width;
 		default_height = ( img1Height * img2Width ) / img1Width;
-		
+
 		// Calculations below will center our selection.
 		data.x1 = 0;
 		data.y1 = ( img2Height - default_height ) / 2;
@@ -722,16 +728,16 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 		if ( default_height > img2Height ) {
 			default_height = img2Height;
 			default_width = ( img1Width * img2Height ) / img1Height;
-			
+
 			// Calculations below will center our selection.
-			data.x1 = (img2Width - default_width)/2;
+			data.x1 = ( img2Width - default_width ) / 2;
 			data.y1 = 0;
 			data.x2 = data.x1 + default_width;
 			data.y2 = default_height;
 		}
-		
+
 		data.aspectRatio = default_width + ':' + default_height;
-		
+
 		// This data will be needed globally, so make it so.
 		self.selectedCoordinates = data;
 	}
@@ -851,9 +857,9 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 				self.ias.setOptions( {
 				    aspectRatio : self.selectedCoordinates.aspectRatio,
 				    x1 : self.selectedCoordinates.x1,
-			        y1 : self.selectedCoordinates.y1,
-			        x2 : self.selectedCoordinates.x2,
-			        y2 : self.selectedCoordinates.y2
+				    y1 : self.selectedCoordinates.y1,
+				    x2 : self.selectedCoordinates.x2,
+				    y2 : self.selectedCoordinates.y2
 				} );
 			} else {
 				self.ias.setOptions( {
