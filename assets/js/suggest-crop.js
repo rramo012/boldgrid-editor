@@ -841,10 +841,17 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	 * @since 1.0.9
 	 */
 	this.bindForceAspectRatio = function() {
-		// Remove any existing bindings.
-		$( '[name="force_aspect_ratio"]' ).off( 'change' );
+		var $checkBox = self.$mfc.find( '[name="force_aspect_ratio"]' );
 
-		$( '[name="force_aspect_ratio"]' ).on( 'change', function() {
+		// If the text "Force aspect ratio" is clicked, toggle the checkbox.
+		self.$mfc.find( 'span#toggle-force' ).on( 'click', function() {
+			$checkBox.click();
+		} )
+
+		// Remove any existing bindings.
+		$checkBox.off( 'change' );
+
+		$checkBox.on( 'change', function() {
 			// If the checkbox is checked, force the aspect ratio.
 			if ( $( this ).is( ":checked" ) ) {
 				self.ias.setOptions( {

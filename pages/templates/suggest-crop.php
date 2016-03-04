@@ -27,7 +27,7 @@
 			<img class="suggest-crop img-responsive" src="{{{data.new_content_src}}}" />
 
 			<p>
-				<input type="checkbox" name="force_aspect_ratio" checked>Force aspect ratio?
+				<input type="checkbox" name="force_aspect_ratio" checked><span id='toggle-force'>Force aspect ratio?</span>
 			</p>
 
 		</div>
