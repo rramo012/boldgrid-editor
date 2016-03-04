@@ -90,27 +90,6 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 	} );
 
 	/**
-	 * Actions to take when someone clicks the "Add Media" button.
-	 * 
-	 * Check every 100 miliseconds to see if the "Insert into page" button is
-	 * visible. When it is, bind its click.
-	 * 
-	 * @since 1.0.8
-	 */
-	this.on_click_add_media_button = function() {
-		self.waitForElement( 'button.media-button-insert:visible', 100, function() {
-			$( '.media-button-insert:visible' ).on( 'click', function() {
-				// If this button has not been
-				// binded:
-				if ( !$( this ).hasClass( 'boldgrid-editor-suggest-crop-binded' ) ) {
-					$( this ).addClass( 'boldgrid-editor-suggest-crop-binded' )
-					self.on_image_inserted_into_editor();
-				}
-			} );
-		} );
-	}
-
-	/**
 	 * Actions to take when someone clicks the "Change" button.
 	 * 
 	 * Check every 100 miliseconds to see if the "Replace" button is visible.
@@ -481,16 +460,6 @@ IMHWPB.BoldGrid_Editor_Suggest_Crop = function( $ ) {
 		 */
 		$( 'body' ).on( 'click', '[aria-label="Change"]', function() {
 			self.on_click_change_button();
-			self.selected_content_set();
-		} );
-
-		/**
-		 * Bind the click of the "Add Media" button.
-		 * 
-		 * The "Add Media" button is to the left of the "Add GridBlock" button.
-		 */
-		$( 'body' ).on( 'click', 'button.add_media', function() {
-			self.on_click_add_media_button();
 			self.selected_content_set();
 		} );
 	}
