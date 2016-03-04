@@ -1,10 +1,18 @@
 <?php
+/**
+ * BoldGrid_Editor_Crop class
+ * 
+ * The BoldGrid Editor Crop class suggests users crop images when replacing
+ * those of different aspect ratios.
+ * 
+ * @package Boldgrid_Editor_Crop
+ * @since 1.0.8
+ */
 
 /**
  * BoldGrid Editor Crop.
- *
- * This class helps manage the 'suggest crop' feature, a feature that suggests a user crop an image
- * when they're replacing images with different aspect ratios.
+ * 
+ * See file description above.
  *
  * @since 1.0.8
  */
