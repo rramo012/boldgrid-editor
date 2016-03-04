@@ -10,8 +10,6 @@ IMHWPB.Editor = function( $ ) {
 	//Have we bound the media open event yet?
 	this.media_default_bound = false;
 	
-	self.media_modals = new IMHWPB.BoldGrid_Editor_Media_Modals( $ );
-	
 	/**
 	 * The Main Window
 	 */
@@ -539,7 +537,8 @@ IMHWPB.Editor = function( $ ) {
 							  icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
 							  onclick: function () {
 								  // Open the "Replace Image" media modal.
-								  self.media_modals.changeImage( tinymce.activeEditor.selection.getNode() );
+								  tinymce.activeEditor.buttons.wp_img_edit.onclick();
+								  wp.media.frame.setState('replace-image');
 							  }
 						 }));
 						
