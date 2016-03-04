@@ -12,9 +12,9 @@
 
 			<p>The image you are replacing has a different aspect ratio than the new image you have chosen:</p>
 
-			<img src="{{{data.old_image_src}}}" />
+			<img src="{{{data.old_image_src}}}" draggable='false' />
 
-			<img src="{{{data.new_image_src}}}" />
+			<img src="{{{data.new_image_src}}}" draggable='false' />
 
 			<div class='clear'></div>
 
@@ -24,7 +24,7 @@
 
 		<div class='right'>
 
-			<img class="suggest-crop img-responsive" src="{{{data.new_content_src}}}" />
+			<img class="suggest-crop img-responsive" src="{{{data.new_content_src}}}" draggable='false' />
 
 			<p>
 				<input type="checkbox" name="force_aspect_ratio" checked><span id='toggle-force'>Force aspect ratio?</span>
