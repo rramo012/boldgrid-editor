@@ -477,22 +477,19 @@ IMHWPB.Editor = function( $ ) {
 					$tinymce_iframe.find('body').addClass(BoldgridEditor.body_class);
 				}
 				
-				if ( BoldgridEditor.is_boldgrid_theme ) {
+				if ( BoldgridEditor.hasDraggableEnabled ) {
 
 					IMHWPB.WP_MCE_Draggable.instance.load_draggable($tinymce_iframe);
 					self.draggable = IMHWPB.WP_MCE_Draggable.instance.draggable_instance;
 
-					
 				} else {
 					//If this is not a boldgrid theme we will disable by default, 
 					//and deactivate style sheets
 					IMHWPB.WP_MCE_Draggable.instance
 						.set_style_sheet_inactive( 'draggable', true, $(event.target.iframeElement).contents().get(0));
 					IMHWPB.WP_MCE_Draggable.instance.draggable_inactive = true;
-					var $editor_section = $('#wp-content-editor-container');
-					$editor_section.find('.mce-displaysize-imhwpb').addClass('mce-disabled');
 				}
-				
+
 				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text
 				var $last_element = $tinymce_iframe.find('body > *:last');
 				if ( !$last_element.is('p') || $last_element.children().length != 1 ) {

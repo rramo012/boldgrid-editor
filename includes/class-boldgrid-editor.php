@@ -247,7 +247,14 @@ class Boldgrid_Editor {
 				$this,
 				'boldgrid_gridblock_image_ajax' 
 			) );
-		
+
+		// Save a users selection for enabling draggable.
+		add_action( 'wp_ajax_boldgrid_draggable_enabled', 
+			array (
+				$this,
+				'ajax_draggable_enabled' 
+			) );
+
 		add_action( 'wp_ajax_boldgrid_gridblock_html', 
 			array (
 				$this,
@@ -279,6 +286,22 @@ class Boldgrid_Editor {
 			$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
 			$boldgrid_editor_crop->add_hooks();
 		}
+	}
+
+	/**
+	 * Saves the state of the drag and drop editor feature.
+	 * Ajax Action: wp_ajax_boldgrid_draggable_enabled. 
+	 * 
+	 * @since 1.0.9
+	 */
+	public function ajax_draggable_enabled () {
+		check_ajax_referer( 'boldgrid_draggable_enable', 'security' );
+		
+		// Sanitize to boolean.
+		$draggable_enabled = ! empty( $_POST['draggable_enabled'] );
+		set_theme_mod( 'boldgrid_draggable_enabled', $draggable_enabled );
+		
+		wp_die( 1 );
 	}
 	
 	/**
@@ -689,6 +712,9 @@ class Boldgrid_Editor {
 			}
 		}
 		
+		// Allow other theme developers to indicate that they would like all BG edit tools enabled.
+		$is_editing_boldgrid_theme = apply_filters( 'is_editing_boldgrid_theme', $is_editing_boldgrid_theme );
+		
 		return $is_editing_boldgrid_theme;
 	}
 	
@@ -755,6 +781,22 @@ class Boldgrid_Editor {
 		
 		return ( $boldgrid_palette_class ? $boldgrid_palette_class : $stylzr_palette_class );
 	}
+
+	/**
+	 * Check whether or not Drag and Drop is enabled.
+	 * 
+	 * By default DnD (Drag and Drop) is disabled for non BG themes and enabled for BG themes.
+	 * If the explictily chooses whether to activate or deactivate DnD, we save it as a theme mod 
+	 * on the theme. This means that upon activating a non BG theme for the first time, it will always 
+	 * be disabled, even if you have previously enabled it on another theme.
+	 * 
+	 * @since 1.0.9
+	 * 
+	 * @return boolean Whether or not drggable is enabled.
+	 */
+	public function has_draggable_enabled() {
+		return get_theme_mod( 'boldgrid_draggable_enabled', $this->get_is_boldgrid_theme() );
+	}
 	
 	/**
 	 * Enqueue all scripts
@@ -783,7 +825,9 @@ class Boldgrid_Editor {
 				'site_url' => $this->get_post_url(),
 				'plugin_url' => plugins_url( '', $plugin_file ),
 				'is_IE' => $is_IE,
-				'version' => BOLDGRID_EDITOR_VERSION 
+				'version' => BOLDGRID_EDITOR_VERSION, 
+				'hasDraggableEnabled' => $this->has_draggable_enabled(),
+				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 			) );
 		
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
@@ -872,11 +916,6 @@ class Boldgrid_Editor {
 	 */
 	public function add_mce_buttons() {
 		global $typenow;
-		
-		// check user permissions
-		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
-			return;
-		}
 		
 		// verify the post type
 		if ( ! in_array( $typenow, array (
