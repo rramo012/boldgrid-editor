@@ -37,7 +37,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.9
 	 * 
 	 * @var object self.selectedCoordinates Example self.selectedCoordinates:
-	 *      http://pastebin.com/5X02nX14
+	 *      http://pastebin.com/5X02nX14.
 	 */
 	self.selectedCoordinates = null;
 
@@ -51,7 +51,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 * 
 	 * @param object
-	 *            oldImage|newImage Example: http://pastebin.com/xiY2rHQr
+	 *            oldImage|newImage Example: http://pastebin.com/xiY2rHQr.
 	 */
 	self.newImage = false;
 	self.oldImage = false;
@@ -61,8 +61,8 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * Remove and empty certain containers that aren't needed.
 	 * 
-	 * self.$modalContent vars are declared when we initially created
-	 * the modal, in this.modalCreate().
+	 * self.$modalContent vars are declared when we initially created the modal,
+	 * in this.modalCreate().
 	 * 
 	 * @since 1.0.8
 	 */
@@ -102,7 +102,7 @@ BoldgridEditor.crop = function( $ ) {
 		// text to "Cropping".
 		self.$primaryButton.prop( 'disabled', true ).text( 'Cropping...' );
 
-		// @var object data Example data: http://pastebin.com/507gY9L8
+		// @var object data Example data: http://pastebin.com/507gY9L8.
 		var data = {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
@@ -148,8 +148,7 @@ BoldgridEditor.crop = function( $ ) {
 		// JSON.parse our ajax response.
 		// Abort if this fails.
 		// After response has been JSON.parsed:
-		// @var object response Example response:
-		// http://pastebin.com/d0qXq4wr
+		// @var object response Example: http://pastebin.com/d0qXq4wr.
 		try {
 			response = JSON.parse( response );
 		} catch ( e ) {
@@ -188,7 +187,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.cropValid = function( response ) {
 		// Get the currently selected text.
-		// @var object node Example node: http://pastebin.com/4nwJmLRj
+		// @var object node Example node: http://pastebin.com/4nwJmLRj.
 		var node = tinyMCE.activeEditor.selection.getNode();
 
 		// Adjust the src, width, and height of the new image.
@@ -281,8 +280,7 @@ BoldgridEditor.crop = function( $ ) {
 		var orientation = parseFloat( self.oldImage.width / self.oldImage.height ), $bestSizes;
 
 		// From the list of available sizes, select the ones that are a best
-		// fit.
-		// If Landscape, width is the important factor, and vice versa.
+		// fit. If Landscape, width is the important factor, and vice versa.
 		if ( orientation < 1 ) {
 			$bestSizes = self.$selectDimensions.find( 'option' ).filter( function() {
 				return $( this ).attr( 'data-height' ) >= self.oldImage.height;
@@ -324,7 +322,7 @@ BoldgridEditor.crop = function( $ ) {
 		 * After adding the image, bind imgAreaSelect to it.
 		 * 
 		 * Full documentation:
-		 * http://odyniec.net/projects/imgareaselect/usage.html
+		 * http://odyniec.net/projects/imgareaselect/usage.html.
 		 */
 		self.ias = self.$suggestCrop.imgAreaSelect( {
 		    aspectRatio : self.defaultCoordinates.aspectRatio,
@@ -371,7 +369,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 * 
 	 * @param object
-	 *            imageData Example: http://pastebin.com/izZzzWAy
+	 *            imageData Example: http://pastebin.com/izZzzWAy.
 	 */
 	this.onReplace = function( imageData ) {
 		self.modalOpen();
@@ -384,7 +382,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.9
 	 * 
 	 * @param string
-	 *            imgSrc Example: https://domain.com/file.jpg
+	 *            imgSrc Example: https://domain.com/file.jpg.
 	 */
 	this.onSize = function( imgSrc ) {
 		var newImage;
@@ -400,8 +398,7 @@ BoldgridEditor.crop = function( $ ) {
 			img2Height = newImage.naturalHeight;
 
 			// Pass all of the above data and calculate which area of the
-			// image
-			// we should select and highlight by default.
+			// image we should select and highlight by default.
 			self.setDefaultCoordinates( img1Width, img1Height, img2Width, img2Height );
 
 			self.ias.setOptions( {
@@ -423,11 +420,8 @@ BoldgridEditor.crop = function( $ ) {
 			    y2 : self.defaultCoordinates.y2
 			} );
 
-			// self.bindRatio();
-
 			// Because we're reseting the image, reset the force aspect
-			// ratio
-			// to checked.
+			// ratio to checked.
 			self.$modalContent.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
 		} );
 	}
@@ -448,7 +442,7 @@ BoldgridEditor.crop = function( $ ) {
 		} );
 
 		self.modal.open();
-		
+
 		self.$mediaModal = $( '.media-modal' );
 		self.$modalContent = self.$mediaModal.find( '.media-frame-content', '.media-modal' );
 		self.$modalToolbar = self.$mediaModal.find( '.media-frame-toolbar', '.media-modal' );
@@ -531,9 +525,9 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 * 
 	 * @param object
-	 *            img Example img: http://pastebin.com/hA6Y6FJn
+	 *            img Example img: http://pastebin.com/hA6Y6FJn.
 	 * @param object
-	 *            selection Example selection: http://pastebin.com/4q2Q0nhf
+	 *            selection Example selection: http://pastebin.com/4q2Q0nhf.
 	 */
 	this.setSelectedCoordinates = function( img, selection ) {
 		self.selectedCoordinates = selection;
