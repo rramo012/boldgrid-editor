@@ -30,9 +30,9 @@ BoldgridEditor.crop = function( $ ) {
 	 * Essentially, when the user selects the area of an image to crop, the
 	 * coordinates they want to crop are stored here.
 	 * 
-	 * The coordinates are set in this.setSelectedCoordinates(), which is
-	 * called when imgAreaSelect is initialized and after each time the user
-	 * changes the selection.
+	 * The coordinates are set in this.setSelectedCoordinates(), which is called
+	 * when imgAreaSelect is initialized and after each time the user changes
+	 * the selection.
 	 * 
 	 * @since 1.0.9
 	 * 
@@ -55,31 +55,6 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	self.newImage = false;
 	self.oldImage = false;
-
-	/**
-	 * Get the element the user is trying to replace.
-	 * 
-	 * The element in question is the dom element currently selected within
-	 * tinyMCE.
-	 * 
-	 * This variable is set by self.selectedContentSet(), which is triggered
-	 * when the user clicks either the "Add Media" or "Change" buttons.
-	 * 
-	 * @since 1.0.8
-	 * 
-	 * @var object self.selectedContent A jQuery object Example
-	 *      self.selectedContent: http://pastebin.com/J4eGHWGz.
-	 */
-	self.selectedContent = null;
-
-	/**
-	 * Document ready event.
-	 * 
-	 * @since 1.0.8
-	 */
-	$( function() {
-		self.init();
-	} );
 
 	/**
 	 * Clear our modal.
@@ -169,7 +144,7 @@ BoldgridEditor.crop = function( $ ) {
 			self.cropInvalid();
 			return;
 		}
-		
+
 		// JSON.parse our ajax response.
 		// Abort if this fails.
 		// After response has been JSON.parsed:
@@ -204,32 +179,6 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Get an img's attachment id from its class attribute.
-	 * 
-	 * If we pass in "alignnone wp-image-54490 size-medium", this function will
-	 * parse out and return "54490".
-	 * 
-	 * @since 1.0.9
-	 * 
-	 * @param string
-	 *            classAttr Example: "alignnone wp-image-54490 size-medium".
-	 * @return integer attachmentId An attachment id.
-	 */
-	this.getAttachmentId = function( classAttr ) {
-		// Example classes: ["alignnone", "wp-image-54490", "size-medium"].
-		var classes = classAttr.split( ' ' ), attachmentId = 0;
-
-		$.each( classes, function( i, className ) {
-			if ( className.startsWith( 'wp-image-' ) ) {
-				attachmentId = className.replace( 'wp-image-', '' );
-				return false;
-			}
-		} );
-
-		return parseInt( attachmentId );
-	}
-
-	/**
 	 * Steps to take when an image is cropped successfull.
 	 * 
 	 * @since 1.0.8
@@ -249,8 +198,7 @@ BoldgridEditor.crop = function( $ ) {
 
 		// Reset our crop and skip buttons.
 		self.$skipButton.prop( 'disabled', false );
-		self.$primaryButton.prop( 'disabled', false ).text(
-			$( this ).attr( 'data-default-text' ) );
+		self.$primaryButton.prop( 'disabled', false ).text( $( this ).attr( 'data-default-text' ) );
 
 		// Close our modal, we're done!
 		self.modal.close();
@@ -263,58 +211,60 @@ BoldgridEditor.crop = function( $ ) {
 	 * we're replacing it with. Example image data can be found at the top of
 	 * this document above the declaration of self.newImage.
 	 * 
-	 * This method is triggered by this.onReplace(), which
-	 * is triggered when a user clicks either the "Insert into page" or
-	 * "Replace" buttons.
+	 * This method is triggered by this.onReplace(), which is triggered when a
+	 * user clicks either the "Insert into page" or "Replace" buttons.
 	 * 
 	 * @since 1.0.8
 	 */
-	this.imageDataSet = function() {
-		var selectedContent = tinyMCE.activeEditor.selection.getContent(),
-			newImageClass = $( selectedContent ).attr( 'class' ),
-			oldImg = new Image(), newImg = new Image(),
-			attachmentId = self.getAttachmentId( newImageClass );
+	this.setImages = function( imageData ) {
+		var oldImg = new Image(), newImg = new Image();
 
 		// Get a list of sizes available for our new image. We'll place
 		// these in a <select> element to allow the user to select which
 		// image size to crop from.
 		var data = {
 		    action : 'suggest_crop_get_dimensions',
-		    attachment_id : attachmentId
+		    attachment_id : imageData.attachment_id
 		};
 		jQuery.post( ajaxurl, data, function( response ) {
 			// Validate our response. If invalid, the modal will close
 			// and the user will continue as if nothing happened.
 			if ( 0 == response ) {
 				self.modal.close();
-				clearInterval( self.intervalWaitForImageDataSet );
 				return false;
 			}
 
-			response = JSON.parse( response );
+			try {
+				response = JSON.parse( response );
+			} catch ( e ) {
+				self.modal.close();
+				return false;
+			}
 
 			// Create our <select> element filled with image sizes of our
 			// new image.
 			var template = wp.template( 'suggest-crop-sizes' );
 			self.$selectDimensions = $( template( response ) );
 
-			self.selectBestFit();
+			// Get the old image, the image we're replacing.
+			oldImg.onload = function() {
+				self.oldImage = oldImg;
 
-			// Get the new image, the image we've chosen as a replacement.
-			// We've waited up until this point to get the data, as
-			// self.bestSizeSelector (used below) was not set until
-			// self.selectBestFit() (used above) finished running.
-			newImg.onload = function() {
-				self.newImage = newImg;
+				self.selectBestFit();
+
+				// Get the new image, the image we've chosen as a replacement.
+				// We've waited up until this point to get the data, as
+				// self.bestSizeSelector (used below) was not set until
+				// self.selectBestFit() (used above) finished running.
+				newImg.onload = function() {
+					self.newImage = newImg;
+
+					self.compareImages();
+				};
+				newImg.src = self.bestSizeSelector;
 			};
-			newImg.src = self.bestSizeSelector;
+			oldImg.src = imageData.originalUrl;
 		} );
-
-		// Get the old image, the image we're replacing.
-		oldImg.onload = function() {
-			self.oldImage = oldImg;
-		};
-		oldImg.src = self.selectedContent.attr( 'src' );
 	}
 
 	/**
@@ -359,32 +309,6 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Get the item currently selected in the editor.
-	 * 
-	 * We need to know what image we're replacing.
-	 * 
-	 * This method is ran after the user clicks the "Change" or "Add Media"
-	 * buttons.
-	 * 
-	 * @since 1.0.8
-	 */
-	this.selectedContentSet = function() {
-		// Reset our images.
-		self.newImage = false;
-		self.oldImage = false;
-
-		// @var string selectedContent An <img /> tag.
-		// Example self.selectedContent: http://pastebin.com/HbMXk2sL
-		var selectedContent = tinyMCE.activeEditor.selection.getContent();
-
-		// Convert 'self.selectedContent' to a jQuery element for easier
-		// manipulation.
-		// @var object self.selectedContent A jQuery object.
-		// Example self.selectedContent: http://pastebin.com/J4eGHWGz
-		self.selectedContent = $( selectedContent );
-	}
-
-	/**
 	 * Select an area on our new image.
 	 * 
 	 * When the "Crop Image" modal loads, by default we want an area already
@@ -393,8 +317,8 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.selectCoordinates = function() {
-		self.setDefaultCoordinates( self.oldImage.width, self.oldImage.height,
-		    self.newImage.width, self.newImage.height );
+		self.setDefaultCoordinates( self.oldImage.width, self.oldImage.height, self.newImage.width,
+		    self.newImage.height );
 
 		/**
 		 * After adding the image, bind imgAreaSelect to it.
@@ -433,21 +357,6 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.init = function() {
-		/**
-		 * Bind the click of the "Change" button.
-		 * 
-		 * The "Change" button displays when you click on an image within the
-		 * editor. It is next to the "Edit" button.
-		 */
-		$( 'body' ).on( 'click', '[aria-label="Change"]', function() {
-			self.waitForElement( 'button.media-button-replace:visible', 100, function() {
-				$( '.media-button-replace:visible' ).on( 'click', function() {
-					self.onReplace();
-				} );
-			} );
-			
-			self.selectedContentSet();
-		} );
 	}
 
 	/**
@@ -460,23 +369,13 @@ BoldgridEditor.crop = function( $ ) {
 	 * page" buttons.
 	 * 
 	 * @since 1.0.8
+	 * 
+	 * @param object
+	 *            imageData Example: http://pastebin.com/izZzzWAy
 	 */
-	this.onReplace = function() {
+	this.onReplace = function( imageData ) {
 		self.modalOpen();
-
-		// Wait 1 second after an image is inserted into the editor.
-		setTimeout( function() {
-			// Fire off a method to get all image data.
-			self.imageDataSet();
-
-			// Every tenth of a second, check to see if we have our data.
-			self.intervalWaitForImageDataSet = setInterval( function() {
-				// When this function determines we have the data we need:
-				// # It clears this Interval.
-				// # It fills our modal.
-				self.imageDataWhenSet();
-			}, 100 );
-		}, 1000 );
+		self.setImages( imageData );
 	}
 
 	/**
@@ -490,53 +389,47 @@ BoldgridEditor.crop = function( $ ) {
 	this.onSize = function( imgSrc ) {
 		var newImage;
 
-		// Remove any previous 'on load'.
-		self.$suggestCrop.off( 'load' );
+		self.$suggestCrop.off( 'load' ).attr( 'src', imgSrc ).on( 'load', function() {
+			newImage = $( this )[ 0 ];
 
-		self.$suggestCrop.attr( 'src', imgSrc ).on(
-		    'load',
-		    function() {
-			    newImage = $( this )[ 0 ];
+			// img1 is the old image, the image we're replacing.
+			img1Width = self.oldImage.width;
+			img1Height = self.oldImage.height;
+			// img2 is this image, the new image.
+			img2Width = newImage.naturalWidth;
+			img2Height = newImage.naturalHeight;
 
-			    // img1 is the old image, the image we're replacing.
-			    img1Width = self.oldImage.width;
-			    img1Height = self.oldImage.height;
-			    // img2 is this image, the new image.
-			    img2Width = newImage.naturalWidth;
-			    img2Height = newImage.naturalHeight;
+			// Pass all of the above data and calculate which area of the
+			// image
+			// we should select and highlight by default.
+			self.setDefaultCoordinates( img1Width, img1Height, img2Width, img2Height );
 
-			    // Pass all of the above data and calculate which area of the
-			    // image
-			    // we should select and highlight by default.
-			    self.setDefaultCoordinates( img1Width, img1Height, img2Width,
-			        img2Height );
+			self.ias.setOptions( {
+			    aspectRatio : self.defaultCoordinates.aspectRatio,
+			    imageHeight : newImage.naturalHeight,
+			    imageWidth : newImage.naturalWidth,
+			    x1 : self.defaultCoordinates.x1,
+			    y1 : self.defaultCoordinates.y1,
+			    x2 : self.defaultCoordinates.x2,
+			    y2 : self.defaultCoordinates.y2
+			} );
 
-			    self.ias.setOptions( {
-			        aspectRatio : self.defaultCoordinates.aspectRatio,
-			        imageHeight : newImage.naturalHeight,
-			        imageWidth : newImage.naturalWidth,
-			        x1 : self.defaultCoordinates.x1,
-			        y1 : self.defaultCoordinates.y1,
-			        x2 : self.defaultCoordinates.x2,
-			        y2 : self.defaultCoordinates.y2
-			    } );
+			self.setSelectedCoordinates( null, {
+			    height : newImage.naturalHeight,
+			    width : newImage.naturalWidth,
+			    x1 : self.defaultCoordinates.x1,
+			    y1 : self.defaultCoordinates.y1,
+			    x2 : self.defaultCoordinates.x2,
+			    y2 : self.defaultCoordinates.y2
+			} );
 
-			    self.setSelectedCoordinates( null, {
-			        height : newImage.naturalHeight,
-			        width : newImage.naturalWidth,
-			        x1 : self.defaultCoordinates.x1,
-			        y1 : self.defaultCoordinates.y1,
-			        x2 : self.defaultCoordinates.x2,
-			        y2 : self.defaultCoordinates.y2
-			    } );
+			// self.bindRatio();
 
-			    // self.bindRatio();
-
-			    // Because we're reseting the image, reset the force aspect
-			    // ratio
-			    // to checked.
-			    self.$mfc.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
-		    } );
+			// Because we're reseting the image, reset the force aspect
+			// ratio
+			// to checked.
+			self.$mfc.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
+		} );
 	}
 
 	/**
@@ -569,11 +462,6 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.modalOpen = function() {
-		// If the element we're replacing is not an image, abort.
-		if ( 'IMG' != self.selectedContent.prop( 'tagName' ) ) {
-			return;
-		}
-
 		// If the crop frame is already created, open it and return.
 		if ( self.modal ) {
 			self.modal.open();
@@ -595,12 +483,12 @@ BoldgridEditor.crop = function( $ ) {
 		var template = wp.template( 'suggest-crop-ratio-match' );
 		self.$mfc.html( template() );
 
-		// Give the user 1.5 seconds to read the message, then fade out.
+		// Give the user 1 second to read the message, then fade out.
 		setTimeout( function() {
-			self.$mediaModal.fadeOut( '500', function() {
+			self.$mediaModal.fadeOut( '1000', function() {
 				self.modal.close();
 			} );
-		}, 1500 );
+		}, 1000 );
 	}
 
 	/**
@@ -609,7 +497,6 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.modalFill = function() {
-
 		var data = {
 		    oldImageSrc : self.oldImage.src,
 		    newImageSrc : self.newImage.src,
@@ -623,7 +510,7 @@ BoldgridEditor.crop = function( $ ) {
 		self.$suggestCrop.after( self.$selectDimensions );
 
 		// Bind our select element.
-		$( '#suggest-crop-sizes' ).change( function() {
+		$( '#suggest-crop-sizes' ).on( 'change', function() {
 			var imgSrc = $( this ).val();
 			self.onSize( imgSrc );
 		} );
@@ -700,58 +587,23 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * 
-	 * Wait for an element to exist and then take action.
-	 * 
-	 * This function has been inspired by:
-	 * http://codeception.com/docs/modules/WebDriver#waitForElement.
-	 * 
-	 * @since 1.0.8
-	 * 
-	 * @param string
-	 *            selector A jQuery selector.
-	 * @param int
-	 *            milliseconds How often to check if the element exists.
-	 * @param function
-	 *            whenFound A function to execute when the element is found.
-	 */
-	this.waitForElement = function( selector, milliseconds, whenFound ) {
-		var interval = setInterval( function() {
-			if ( $( selector ).length > 0 ) {
-				whenFound();
-				clearInterval( interval );
-			}
-		}, milliseconds );
-	}
-
-	/**
 	 * Take action when image_data is set.
 	 * 
 	 * This method is triggered within this.onReplace().
 	 * 
 	 * @since 1.0.8
 	 */
-	this.imageDataWhenSet = function() {
-		// Do we have the data we need?
-		var imageDataIsSet = ( false != self.oldImage && false != self.newImage );
+	this.compareImages = function() {
+		// Do our two images have the same dimensions?
+		var sameDimensions = ( ( self.oldImage.width / self.oldImage.height ) == ( self.newImage.width / self.newImage.height ) );
 
-		// If we have finished getting all of the image data:
-		if ( imageDataIsSet ) {
-			// Clear the interval. We know our imageDataIsSet, so stop
-			// checking.
-			clearInterval( self.intervalWaitForImageDataSet );
-
-			// Do our two images have the same dimensions?
-			var sameDimensions = ( ( self.oldImage.width / self.oldImage.height ) == ( self.newImage.width / self.newImage.height ) );
-
-			if ( sameDimensions ) {
-				// The images have the same dimensions, so no need to suggest a
-				// crop.
-				self.onMatch();
-			} else {
-				// Fill in our self.modal, the UI for cropping an image.
-				self.modalFill();
-			}
+		if ( sameDimensions ) {
+			// The images have the same dimensions, so no need to suggest a
+			// crop.
+			self.onMatch();
+		} else {
+			// Fill in our self.modal, the UI for cropping an image.
+			self.modalFill();
 		}
 	}
 

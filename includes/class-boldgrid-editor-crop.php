@@ -195,11 +195,15 @@ class Boldgrid_Editor_Crop {
 			wp_die();
 		}
 		
+		// @see https://codex.wordpress.org/Class_Reference/WP_Image_Editor
 		$new_image = wp_get_image_editor( $path_to_image );
 		
 		// Crop the image.
 		$successful_crop = $new_image->crop( $cropDetails['x1'], $cropDetails['y1'], 
-			$cropDetails['width'], $cropDetails['height'] );
+			// Width.
+			$cropDetails['x2'] - $cropDetails['x1'],
+			// Height.
+			$cropDetails['y2'] - $cropDetails['y1'] );
 		
 		// If we failed to crop the image, abort.
 		if ( false === $successful_crop ) {
