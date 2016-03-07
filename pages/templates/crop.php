@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-suggest-crop">
-	<div class='container-image-crop'>
+	<div class='container-crop'>
 
 		<div class='left'>
 
@@ -43,17 +43,17 @@
 		</div>
 	</div>
 </script>
-<script type="text/html" id="tmpl-suggest-crop-compare-images">
-	<div class='container-image-crop comparing'>
+<script type="text/html" id="tmpl-suggest-crop-compare">
+	<div class='comparing'>
 		<span class="spinner inline"></span> <strong>Reviewing aspect ratios<strong>...
 	</div>
 </script>
-<script type="text/html" id="tmpl-suggest-crop-ratio-match">
-	<div class='container-image-crop comparing'>
+<script type="text/html" id="tmpl-suggest-crop-match">
+	<div class='comparing'>
 		<span class="dashicons dashicons-yes"></span> <strong>Aspect ratios match</strong>! Replacing image...
 	</div>
 </script>
-<script type='text/html' id='tmpl-suggest-crop-crop-invalid'>
+<script type='text/html' id='tmpl-suggest-crop-invalid'>
 	<p class='crop-invalid'>
 		There was an error cropping your image. Please click <em>OK</em> to insert the uncropped image. <button class='button media-button button-primary button-large crop-fail'>OK</button>
 	</p>

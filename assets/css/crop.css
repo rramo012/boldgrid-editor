@@ -1,11 +1,11 @@
-.container-image-crop {
+.container-crop {
 	padding: 0px;
 	width: 100%;
 	box-sizing: border-box;
 	height: 100%;
 }
 
-.container-image-crop .left {
+.container-crop .left {
 	box-sizing: border-box;
 	float: left;
 	width: 40%;
@@ -15,40 +15,40 @@
 	height: 100%;
 }
 
-.container-image-crop .left p:first-of-type {
+.container-crop .left p:first-of-type {
 	margin-top: 0px;
 }
 
-.container-image-crop .left img {
+.container-crop .left img {
 	float: left;
 	max-width: 45%;
 	border: 1px solid #ddd;
 	padding: 1px;
 }
 
-.container-image-crop .left img:nth-of-type(2) {
+.container-crop .left img:nth-of-type(2) {
 	float: right;
 }
 
-.container-image-crop .right {
+.container-crop .right {
 	float: left;
 	width: 55%;
 	padding: 18px;
 }
 
-.container-image-crop .right img {
+.container-crop .right img {
 	max-width: 100%;
 }
 
-.container-image-crop .right #suggest-crop-sizes {
+.container-crop .right #suggest-crop-sizes {
 	display: block;
 }
 
-.container-image-crop .right span#toggle-force {
+.container-crop .right span#toggle-force {
 	cursor: pointer;
 }
 
-.container-image-crop.comparing {
+.comparing {
 	padding: 18px;
 	font-size: 13px;
 }

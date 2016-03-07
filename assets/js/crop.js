@@ -81,7 +81,7 @@ BoldgridEditor.crop = function( $ ) {
 		self.$modalToolbar.empty();
 
 		// Show a message that we're comparing our two images.
-		var template = wp.template( 'suggest-crop-compare-images' );
+		var template = wp.template( 'suggest-crop-compare' );
 		self.$modalContent.html( template() );
 	}
 
@@ -121,7 +121,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.8
 	 */
 	this.cropInvalid = function() {
-		var template = wp.template( 'suggest-crop-crop-invalid' );
+		var template = wp.template( 'suggest-crop-invalid' );
 		self.$modalToolbar.html( template() );
 
 		// When the user clicks the "OK" button, close the modal.
@@ -334,7 +334,7 @@ BoldgridEditor.crop = function( $ ) {
 		    instance : true,
 		    keys : true,
 		    persistent : true,
-		    parent : '.container-image-crop .right',
+		    parent : '.container-crop .right',
 		    // Set the default area to be selected.
 		    x1 : self.defaultCoordinates.x1,
 		    y1 : self.defaultCoordinates.y1,
@@ -472,7 +472,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.onMatch = function() {
 		// Show a 'ratio match!' message.
-		var template = wp.template( 'suggest-crop-ratio-match' );
+		var template = wp.template( 'suggest-crop-match' );
 		self.$modalContent.html( template() );
 
 		// Give the user 1 second to read the message, then fade out.

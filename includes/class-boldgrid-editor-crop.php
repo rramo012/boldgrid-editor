@@ -111,7 +111,7 @@ class Boldgrid_Editor_Crop {
 	 *
 	 * @since 1.0.9
 	 *       
-	 * @return array dimensions Example: http://pastebin.com/UamKiXS4
+	 * @return array dimensions Example: http://pastebin.com/UamKiXS4.
 	 */
 	public function get_dimensions() {
 		// Validate our attachment id.
@@ -152,7 +152,7 @@ class Boldgrid_Editor_Crop {
 	 *
 	 * This method is called via an AJAX request.
 	 *
-	 * Example $_POST on a valid call: http://pastebin.com/YbZ12mLK
+	 * Example $_POST on a valid call: http://pastebin.com/YbZ12mLK.
 	 *
 	 * @since 1.0.8
 	 */
@@ -171,22 +171,22 @@ class Boldgrid_Editor_Crop {
 			}
 		}
 		
-		// Example $cropDetails: http://pastebin.com/yfkg9XCJ
-		$cropDetails = $_POST['cropDetails'];
+		// Example $crop_details: http://pastebin.com/yfkg9XCJ.
+		$crop_details = $_POST['cropDetails'];
 		
 		// Validate $_POST['path'].
 		if ( ! isset( $_POST['path'] ) ) {
 			echo 'Error: path.';
 			wp_die();
 		} else {
-			// Example $path: https://domain.com/wp-content/uploads/2016/01/image.jpg
+			// Example $path: https://domain.com/wp-content/uploads/2016/01/image.jpg.
 			$path = $_POST['path'];
 		}
 		
-		// Example $site_url: https://domain.com
+		// Example $site_url: https://domain.com.
 		$site_url = get_site_url();
 		
-		// Example $path_to_image: /home/user/public_html/wp-content/uploads/2016/01/image.jpg
+		// Example $path_to_image: /home/user/public_html/wp-content/uploads/2016/01/image.jpg.
 		$path_to_image = ABSPATH . ( str_replace( $site_url . '/', '', $path ) );
 		
 		// If we couldn't fine the file, abort.
@@ -195,15 +195,15 @@ class Boldgrid_Editor_Crop {
 			wp_die();
 		}
 		
-		// @see https://codex.wordpress.org/Class_Reference/WP_Image_Editor
+		// @see https://codex.wordpress.org/Class_Reference/WP_Image_Editor.
 		$new_image = wp_get_image_editor( $path_to_image );
 		
 		// Crop the image.
-		$successful_crop = $new_image->crop( $cropDetails['x1'], $cropDetails['y1'], 
+		$successful_crop = $new_image->crop( $crop_details['x1'], $crop_details['y1'], 
 			// Width.
-			$cropDetails['x2'] - $cropDetails['x1'],
+			$crop_details['x2'] - $crop_details['x1'],
 			// Height.
-			$cropDetails['y2'] - $cropDetails['y1'] );
+			$crop_details['y2'] - $crop_details['y1'] );
 		
 		// If we failed to crop the image, abort.
 		if ( false === $successful_crop ) {
@@ -211,22 +211,22 @@ class Boldgrid_Editor_Crop {
 			wp_die();
 		}
 		
-		// Example $new_image_path_parts: http://pastebin.com/b1477tYa
-		$original_image_path_parts = pathinfo( $path_to_image );
+		// Example $new_image_path_parts: http://pastebin.com/b1477tYa.
+		$path_parts = pathinfo( $path_to_image );
 		
-		// Example $new_image_basename = x1_y1_width_height_image.jpg
-		$new_image_basename = $cropDetails['x1'] . '_' . $cropDetails['y1'] . '_' .
-			 $cropDetails['width'] . '_' . $cropDetails['height'] . '_' .
-			 $original_image_path_parts['basename'];
+		// Example $new_image_basename = x1_y1_width_height_image.jpg.
+		$new_image_basename = $crop_details['x1'] . '_' . $crop_details['y1'] . '_' .
+			 $crop_details['width'] . '_' . $crop_details['height'] . '_' .
+			 $path_parts['basename'];
 		
 		// Example $new_image_path:
-		// /home/user/public_html/wp-content/uploads/2016/01/x1_x2_width_height_image.jpg
-		$new_image_path = $original_image_path_parts['dirname'] . '/' . $new_image_basename;
+		// /home/user/public_html/wp-content/uploads/2016/01/x1_x2_width_height_image.jpg.
+		$new_image_path = $path_parts['dirname'] . '/' . $new_image_basename;
 		
-		$new_image_url = str_replace( $original_image_path_parts['basename'], $new_image_basename, 
+		$new_image_url = str_replace( $path_parts['basename'], $new_image_basename, 
 			$path );
 		
-		// Example $successful_save: http://pastebin.com/e0Hvt8gq
+		// Example $successful_save: http://pastebin.com/e0Hvt8gq.
 		$successful_save = $new_image->save( $new_image_path );
 		
 		// If we didn't save the new image successfully, abort.
@@ -238,8 +238,8 @@ class Boldgrid_Editor_Crop {
 		echo json_encode( 
 			array (
 				'new_image_url' => $new_image_url,
-				'new_image_width' => $cropDetails['width'],
-				'new_image_height' => $cropDetails['height'] 
+				'new_image_width' => $crop_details['width'],
+				'new_image_height' => $crop_details['height'] 
 			) );
 		
 		wp_die();
