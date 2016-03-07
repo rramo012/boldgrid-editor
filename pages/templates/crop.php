@@ -12,9 +12,9 @@
 
 			<p>The image you are replacing has a different aspect ratio than the new image you have chosen:</p>
 
-			<img src="{{{data.old_image_src}}}" draggable='false' />
+			<img src="{{{data.oldImageSrc}}}" draggable='false' />
 
-			<img src="{{{data.new_image_src}}}" draggable='false' />
+			<img src="{{{data.newImageSrc}}}" draggable='false' />
 
 			<div class='clear'></div>
 
@@ -24,7 +24,7 @@
 
 		<div class='right'>
 
-			<img class="suggest-crop img-responsive" src="{{{data.new_content_src}}}" draggable='false' />
+			<img class="suggest-crop img-responsive" src="{{{data.newContentSrc}}}" draggable='false' />
 
 			<p>
 				<input type="checkbox" name="force_aspect_ratio" checked><span id='toggle-force'>Force aspect ratio?</span>
@@ -60,12 +60,12 @@
 </script>
 <script type='text/html' id='tmpl-suggest-crop-sizes'>
 	<select id='suggest-crop-sizes'>
-		<#	var new_content_src = data.new_content_src;
+		<#	var newContentSrc = data.newContentSrc;
 			_.forEach( data.sizes, function (u,i) {
-			var option_value = u.url;
-			var option_text = i + ' - ' + u.width + ' × ' + u.height;
-			var selected = ( new_content_src == option_value ? 'selected' : '' );#>
-			<option value='{{{option_value}}}' data-width='{{{u.width}}}' data-height='{{{u.height}}}' {{{selected}}}>{{{option_text}}}</option>
+			var optionValue = u.url;
+			var optionText = i + ' - ' + u.width + ' × ' + u.height;
+			var selected = ( newContentSrc == optionValue ? 'selected' : '' );#>
+			<option value='{{{optionValue}}}' data-width='{{{u.width}}}' data-height='{{{u.height}}}' {{{selected}}}>{{{optionText}}}</option>
 		<#}); #>
 	</select>
 </script>
