@@ -27,7 +27,7 @@
 			<img class="suggest-crop img-responsive" src="{{{data.newContentSrc}}}" draggable='false' />
 
 			<p>
-				<input type="checkbox" name="force_aspect_ratio" checked><span id='toggle-force'>Force aspect ratio?</span>
+				<input type="checkbox" name="force-aspect-ratio" checked><span id='toggle-force'>Force aspect ratio?</span>
 			</p>
 
 		</div>
@@ -39,7 +39,7 @@
 	<div class="media-toolbar">
 		<div class="media-toolbar-primary search-form">
 			<button type="button" class="button media-button button-secondary button-large media-button-skip">Skip Cropping</button>
-			<button type="button" class="button media-button button-primary button-large media-button-select">Crop Image</button>
+			<button type="button" class="button media-button button-primary button-large media-button-select" data-default-text='Crop Image'>Crop Image</button>
 		</div>
 	</div>
 </script>

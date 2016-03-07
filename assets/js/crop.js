@@ -15,14 +15,14 @@ BoldgridEditor.crop = function( $ ) {
 	/**
 	 * A wp.media modal window.
 	 * 
-	 * This modal modal is created in this.cropFrameCreate().
+	 * This modal modal is created in this.modalCreate().
 	 * 
 	 * The media modal is created to simply have a modal. We don't need a media
 	 * library, just a modal.
 	 * 
 	 * @since 1.0.8
 	 */
-	self.cropFrame;
+	self.modal;
 
 	/**
 	 * The coordinates within an image that have been selected by the user.
@@ -57,14 +57,6 @@ BoldgridEditor.crop = function( $ ) {
 	self.oldImage = false;
 
 	/**
-	 * Have we already adjusted the buttons in cropFrame? IE. enabled 'Crop
-	 * Image' and added the 'Skip Cropping' button?
-	 * 
-	 * @since 1.0.8
-	 */
-	self.adjustedCropFrameButtons = false;
-
-	/**
 	 * Get the element the user is trying to replace.
 	 * 
 	 * The element in question is the dom element currently selected within
@@ -90,32 +82,16 @@ BoldgridEditor.crop = function( $ ) {
 	} );
 
 	/**
-	 * Actions to take when someone clicks the "Change" button.
-	 * 
-	 * Check every 100 miliseconds to see if the "Replace" button is visible.
-	 * When it is, bind its click.
-	 * 
-	 * @since 1.0.8
-	 */
-	this.onClickChangeButton = function() {
-		self.waitForElement( 'button.media-button-replace:visible', 100, function() {
-			$( '.media-button-replace:visible' ).on( 'click', function() {
-				self.onImageInsertedIntoEditor();
-			} );
-		} );
-	}
-
-	/**
-	 * Clear our cropFrame.
+	 * Clear our modal.
 	 * 
 	 * Remove and empty certain containers that aren't needed.
 	 * 
 	 * The self.$mfr and self.$mfc vars are declared when we initially created
-	 * the cropFrame, in this.cropFrameCreate().
+	 * the modal, in this.modalCreate().
 	 * 
 	 * @since 1.0.8
 	 */
-	this.cropFrameClear = function() {
+	this.modalClear = function() {
 		// If we previously faded out the media modal, its display is none.
 		// Reset the display.
 		self.$mediaModal.css( 'display', 'block' );
@@ -140,15 +116,10 @@ BoldgridEditor.crop = function( $ ) {
 	 * Makes an ajax call to crop an image.
 	 * 
 	 * @since 1.0.8
-	 * @global self.$primaryButton Defined in this.bindCropFrameElements().
-	 * @global self.$skipButton Defined in this.bindCropFrameElements().
+	 * @global self.$primaryButton Defined in this.bindModal().
+	 * @global self.$skipButton Defined in this.bindModal().
 	 */
 	this.crop = function() {
-		// Get the current text of our primary button, which is "Crop Image".
-		// This method changes that button's text, and then changes it back. We
-		// need to get it's original value so we can change it back.
-		self.originalPrimaryButtonText = self.$primaryButton.text();
-
 		// Disable the skip button. We're cropping, there's no turning back.
 		self.$skipButton.prop( 'disabled', true );
 
@@ -178,9 +149,9 @@ BoldgridEditor.crop = function( $ ) {
 		var template = wp.template( 'suggest-crop-crop-invalid' );
 		self.$mft.html( template() );
 
-		// When the user clicks the "OK" button, close the cropFrame.
+		// When the user clicks the "OK" button, close the modal.
 		$( 'button.crop-fail' ).on( 'click', function() {
-			self.cropFrame.close();
+			self.modal.close();
 		} );
 	}
 
@@ -193,33 +164,39 @@ BoldgridEditor.crop = function( $ ) {
 	 *            response An ajax response.
 	 */
 	this.cropValidate = function( response ) {
-		// If the ajax request failed or we don't have valid json.
-		if ( 0 == response || !self.isJsonString( response ) ) {
+		// Abort if ajax failed.
+		if ( 0 == response ) {
+			self.cropInvalid();
+			return;
+		}
+		
+		// JSON.parse our ajax response.
+		// Abort if this fails.
+		// After response has been JSON.parsed:
+		// @var object response Example response:
+		// http://pastebin.com/d0qXq4wr
+		try {
+			response = JSON.parse( response );
+		} catch ( e ) {
 			self.cropInvalid();
 			return;
 		}
 
-		// We have a valid json string, parse it.
-		// After response has been JSON.parsed:
-		// @var object response Example response:
-		// http://pastebin.com/d0qXq4wr
-		response = JSON.parse( response );
-
 		// Make sure we have all the necessary properties. If we don't, then the
 		// data is invalid.
-		var haveNeededProperties = true;
+		var validProperties = true;
 		var neededProperties = [
 		    'new_image_height', 'new_image_width', 'new_image_url'
 		];
 
 		$.each( neededProperties, function( key, property ) {
 			if ( 'undefined' === typeof response[ property ] ) {
-				haveNeededProperties = false;
+				validProperties = false;
 				return false;
 			}
 		} );
 
-		if ( haveNeededProperties ) {
+		if ( validProperties ) {
 			self.cropValid( response );
 		} else {
 			self.cropInvalid();
@@ -238,7 +215,7 @@ BoldgridEditor.crop = function( $ ) {
 	 *            classAttr Example: "alignnone wp-image-54490 size-medium".
 	 * @return integer attachmentId An attachment id.
 	 */
-	this.getAttachmentIdFromClass = function( classAttr ) {
+	this.getAttachmentId = function( classAttr ) {
 		// Example classes: ["alignnone", "wp-image-54490", "size-medium"].
 		var classes = classAttr.split( ' ' ), attachmentId = 0;
 
@@ -272,10 +249,11 @@ BoldgridEditor.crop = function( $ ) {
 
 		// Reset our crop and skip buttons.
 		self.$skipButton.prop( 'disabled', false );
-		self.$primaryButton.prop( 'disabled', false ).text( self.originalPrimaryButtonText );
+		self.$primaryButton.prop( 'disabled', false ).text(
+			$( this ).attr( 'data-default-text' ) );
 
-		// Close our cropFrame, we're done!
-		self.cropFrame.close();
+		// Close our modal, we're done!
+		self.modal.close();
 	}
 
 	/**
@@ -285,31 +263,30 @@ BoldgridEditor.crop = function( $ ) {
 	 * we're replacing it with. Example image data can be found at the top of
 	 * this document above the declaration of self.newImage.
 	 * 
-	 * This method is triggered by this.onImageInsertedIntoEditor(), which
+	 * This method is triggered by this.onReplace(), which
 	 * is triggered when a user clicks either the "Insert into page" or
 	 * "Replace" buttons.
 	 * 
 	 * @since 1.0.8
 	 */
 	this.imageDataSet = function() {
-		var selectedContent = tinyMCE.activeEditor.selection.getContent(), newImageClass = $(
-		    selectedContent ).attr( 'class' ), oldImg = new Image(), newImg = new Image();
-
-		// Get the attachment id of the new image.
-		self.newImageAttachmentId = self.getAttachmentIdFromClass( newImageClass );
+		var selectedContent = tinyMCE.activeEditor.selection.getContent(),
+			newImageClass = $( selectedContent ).attr( 'class' ),
+			oldImg = new Image(), newImg = new Image(),
+			attachmentId = self.getAttachmentId( newImageClass );
 
 		// Get a list of sizes available for our new image. We'll place
 		// these in a <select> element to allow the user to select which
 		// image size to crop from.
 		var data = {
 		    action : 'suggest_crop_get_dimensions',
-		    attachment_id : self.newImageAttachmentId
+		    attachment_id : attachmentId
 		};
 		jQuery.post( ajaxurl, data, function( response ) {
-			// Validate our response. If invalid, the cropFrame will close
+			// Validate our response. If invalid, the modal will close
 			// and the user will continue as if nothing happened.
 			if ( 0 == response ) {
-				self.cropFrame.close();
+				self.modal.close();
 				clearInterval( self.intervalWaitForImageDataSet );
 				return false;
 			}
@@ -415,8 +392,8 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * @since 1.0.8
 	 */
-	this.selectedCoordinatesSelect = function() {
-		self.defaultCoordinatesCalculateDefault( self.oldImage.width, self.oldImage.height,
+	this.selectCoordinates = function() {
+		self.setDefaultCoordinates( self.oldImage.width, self.oldImage.height,
 		    self.newImage.width, self.newImage.height );
 
 		/**
@@ -463,27 +440,14 @@ BoldgridEditor.crop = function( $ ) {
 		 * editor. It is next to the "Edit" button.
 		 */
 		$( 'body' ).on( 'click', '[aria-label="Change"]', function() {
-			self.onClickChangeButton();
+			self.waitForElement( 'button.media-button-replace:visible', 100, function() {
+				$( '.media-button-replace:visible' ).on( 'click', function() {
+					self.onReplace();
+				} );
+			} );
+			
 			self.selectedContentSet();
 		} );
-	}
-
-	/**
-	 * Is a string a valid json string?
-	 * 
-	 * @since 1.0.8
-	 * 
-	 * @param string
-	 *            str
-	 * @return bool
-	 */
-	this.isJsonString = function( str ) {
-		try {
-			JSON.parse( str );
-		} catch ( e ) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -497,8 +461,8 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * @since 1.0.8
 	 */
-	this.onImageInsertedIntoEditor = function() {
-		self.cropFrameOpen();
+	this.onReplace = function() {
+		self.modalOpen();
 
 		// Wait 1 second after an image is inserted into the editor.
 		setTimeout( function() {
@@ -509,7 +473,7 @@ BoldgridEditor.crop = function( $ ) {
 			self.intervalWaitForImageDataSet = setInterval( function() {
 				// When this function determines we have the data we need:
 				// # It clears this Interval.
-				// # It fills our cropFrame.
+				// # It fills our modal.
 				self.imageDataWhenSet();
 			}, 100 );
 		}, 1000 );
@@ -523,7 +487,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @param string
 	 *            imgSrc Example: https://domain.com/file.jpg
 	 */
-	this.onSizeChange = function( imgSrc ) {
+	this.onSize = function( imgSrc ) {
 		var newImage;
 
 		// Remove any previous 'on load'.
@@ -544,7 +508,7 @@ BoldgridEditor.crop = function( $ ) {
 			    // Pass all of the above data and calculate which area of the
 			    // image
 			    // we should select and highlight by default.
-			    self.defaultCoordinatesCalculateDefault( img1Width, img1Height, img2Width,
+			    self.setDefaultCoordinates( img1Width, img1Height, img2Width,
 			        img2Height );
 
 			    self.ias.setOptions( {
@@ -566,31 +530,31 @@ BoldgridEditor.crop = function( $ ) {
 			        y2 : self.defaultCoordinates.y2
 			    } );
 
-			    // self.bindForceAspectRatio();
+			    // self.bindRatio();
 
 			    // Because we're reseting the image, reset the force aspect
 			    // ratio
 			    // to checked.
-			    self.$mfc.find( '[name="force_aspect_ratio"]' ).prop( 'checked', true );
+			    self.$mfc.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
 		    } );
 	}
 
 	/**
-	 * Create our cropFrame.
+	 * Create our modal.
 	 * 
-	 * See the declaration of cropFrame at the top of this file for more info.
+	 * See the declaration of modal at the top of this file for more info.
 	 * 
 	 * @since 1.0.8
 	 */
-	this.cropFrameCreate = function() {
-		self.cropFrame = wp.media( {
+	this.modalCreate = function() {
+		self.modal = wp.media( {
 		    title : 'Crop Image',
 		    button : {
 			    text : 'Crop Image'
 		    }
 		} );
 
-		self.cropFrame.open();
+		self.modal.open();
 
 		self.$mfr = $( '.media-frame-router' ).last();
 		self.$mfc = $( '.media-frame-content' ).last();
@@ -600,25 +564,25 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Open our cropFrame.
+	 * Open our modal.
 	 * 
 	 * @since 1.0.8
 	 */
-	this.cropFrameOpen = function() {
+	this.modalOpen = function() {
 		// If the element we're replacing is not an image, abort.
 		if ( 'IMG' != self.selectedContent.prop( 'tagName' ) ) {
 			return;
 		}
 
 		// If the crop frame is already created, open it and return.
-		if ( self.cropFrame ) {
-			self.cropFrame.open();
-			self.cropFrameClear();
+		if ( self.modal ) {
+			self.modal.open();
+			self.modalClear();
 			return;
 		}
 
-		self.cropFrameCreate();
-		self.cropFrameClear();
+		self.modalCreate();
+		self.modalClear();
 	}
 
 	/**
@@ -626,7 +590,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * @since 1.0.9
 	 */
-	this.cropFrameRatioMatch = function() {
+	this.onMatch = function() {
 		// Show a 'ratio match!' message.
 		var template = wp.template( 'suggest-crop-ratio-match' );
 		self.$mfc.html( template() );
@@ -634,17 +598,17 @@ BoldgridEditor.crop = function( $ ) {
 		// Give the user 1.5 seconds to read the message, then fade out.
 		setTimeout( function() {
 			self.$mediaModal.fadeOut( '500', function() {
-				self.cropFrame.close();
+				self.modal.close();
 			} );
 		}, 1500 );
 	}
 
 	/**
-	 * Fill our cropFrame.
+	 * Fill our modal.
 	 * 
 	 * @since 1.0.8
 	 */
-	this.cropFrameFill = function() {
+	this.modalFill = function() {
 
 		var data = {
 		    oldImageSrc : self.oldImage.src,
@@ -661,15 +625,15 @@ BoldgridEditor.crop = function( $ ) {
 		// Bind our select element.
 		$( '#suggest-crop-sizes' ).change( function() {
 			var imgSrc = $( this ).val();
-			self.onSizeChange( imgSrc );
+			self.onSize( imgSrc );
 		} );
 
 		var template = wp.template( 'suggest-crop-toolbar' );
 		self.$mft.html( template() );
 
-		self.bindCropFrameElements();
+		self.bindModal();
 
-		self.selectedCoordinatesSelect();
+		self.selectCoordinates();
 	}
 
 	/**
@@ -704,7 +668,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * @param integer
 	 *            img2Height
 	 */
-	this.defaultCoordinatesCalculateDefault = function( img1Width, img1Height, img2Width, img2Height ) {
+	this.setDefaultCoordinates = function( img1Width, img1Height, img2Width, img2Height ) {
 		var defaultWidth, defaultHeight, data = {};
 
 		// First, try maximizing the width.
@@ -763,7 +727,7 @@ BoldgridEditor.crop = function( $ ) {
 	/**
 	 * Take action when image_data is set.
 	 * 
-	 * This method is triggered within this.onImageInsertedIntoEditor().
+	 * This method is triggered within this.onReplace().
 	 * 
 	 * @since 1.0.8
 	 */
@@ -783,20 +747,20 @@ BoldgridEditor.crop = function( $ ) {
 			if ( sameDimensions ) {
 				// The images have the same dimensions, so no need to suggest a
 				// crop.
-				self.cropFrameRatioMatch();
+				self.onMatch();
 			} else {
-				// Fill in our self.cropFrame, the UI for cropping an image.
-				self.cropFrameFill();
+				// Fill in our self.modal, the UI for cropping an image.
+				self.modalFill();
 			}
 		}
 	}
 
 	/**
-	 * Bind events of elements within our cropFrame.
+	 * Bind events of elements within our modal.
 	 * 
 	 * @since 1.0.8
 	 */
-	this.bindCropFrameElements = function() {
+	this.bindModal = function() {
 		/**
 		 * ELEMENT: help button.
 		 * 
@@ -806,7 +770,7 @@ BoldgridEditor.crop = function( $ ) {
 			$( '.imgedit-help' ).slideToggle();
 		} );
 
-		self.bindForceAspectRatio();
+		self.bindRatio();
 
 		/**
 		 * ELEMENT: 'Crop Image' and 'Skip Cropping' buttons.
@@ -827,12 +791,8 @@ BoldgridEditor.crop = function( $ ) {
 
 		// Bind the click of the "Skip Cropping" button.
 		self.$skipButton.on( 'click', function() {
-			self.cropFrame.close();
+			self.modal.close();
 		} );
-
-		// We just adjusted the buttons, take note of this so we don't do it
-		// again.
-		self.adjustedCropFrameButtons = true;
 	}
 
 	/**
@@ -840,8 +800,8 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * @since 1.0.9
 	 */
-	this.bindForceAspectRatio = function() {
-		var $checkBox = self.$mfc.find( '[name="force_aspect_ratio"]' );
+	this.bindRatio = function() {
+		var $checkBox = self.$mfc.find( '[name="force-aspect-ratio"]' );
 
 		// If the text "Force aspect ratio" is clicked, toggle the checkbox.
 		self.$mfc.find( 'span#toggle-force' ).on( 'click', function() {
