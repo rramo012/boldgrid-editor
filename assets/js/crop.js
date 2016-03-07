@@ -61,7 +61,7 @@ BoldgridEditor.crop = function( $ ) {
 	 * 
 	 * Remove and empty certain containers that aren't needed.
 	 * 
-	 * The self.$mfr and self.$mfc vars are declared when we initially created
+	 * self.$modalContent vars are declared when we initially created
 	 * the modal, in this.modalCreate().
 	 * 
 	 * @since 1.0.8
@@ -72,17 +72,17 @@ BoldgridEditor.crop = function( $ ) {
 		self.$mediaModal.css( 'display', 'block' );
 
 		// Remove the tabs, "Upload Files / Media Library".
-		self.$mfr.remove();
+		$( '.media-frame-router' ).remove();
 
 		// Empty the contents of the content frame.
-		self.$mfc.empty();
+		self.$modalContent.empty();
 
 		// Empty the toolbar.
-		self.$mft.empty();
+		self.$modalToolbar.empty();
 
 		// Show a message that we're comparing our two images.
 		var template = wp.template( 'suggest-crop-compare-images' );
-		self.$mfc.html( template() );
+		self.$modalContent.html( template() );
 	}
 
 	/**
@@ -106,7 +106,7 @@ BoldgridEditor.crop = function( $ ) {
 		var data = {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
-		    path : self.$mfc.find( '#suggest-crop-sizes option:selected' ).val()
+		    path : self.$modalContent.find( '#suggest-crop-sizes option:selected' ).val()
 		};
 
 		$.post( ajaxurl, data, function( response ) {
@@ -122,7 +122,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.cropInvalid = function() {
 		var template = wp.template( 'suggest-crop-crop-invalid' );
-		self.$mft.html( template() );
+		self.$modalToolbar.html( template() );
 
 		// When the user clicks the "OK" button, close the modal.
 		$( 'button.crop-fail' ).on( 'click', function() {
@@ -428,7 +428,7 @@ BoldgridEditor.crop = function( $ ) {
 			// Because we're reseting the image, reset the force aspect
 			// ratio
 			// to checked.
-			self.$mfc.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
+			self.$modalContent.find( '[name="force-aspect-ratio"]' ).prop( 'checked', true );
 		} );
 	}
 
@@ -448,12 +448,10 @@ BoldgridEditor.crop = function( $ ) {
 		} );
 
 		self.modal.open();
-
-		self.$mfr = $( '.media-frame-router' ).last();
-		self.$mfc = $( '.media-frame-content' ).last();
-		self.$mft = $( '.media-frame-toolbar' ).last();
-
+		
 		self.$mediaModal = $( '.media-modal' );
+		self.$modalContent = self.$mediaModal.find( '.media-frame-content', '.media-modal' );
+		self.$modalToolbar = self.$mediaModal.find( '.media-frame-toolbar', '.media-modal' );
 	}
 
 	/**
@@ -481,7 +479,7 @@ BoldgridEditor.crop = function( $ ) {
 	this.onMatch = function() {
 		// Show a 'ratio match!' message.
 		var template = wp.template( 'suggest-crop-ratio-match' );
-		self.$mfc.html( template() );
+		self.$modalContent.html( template() );
 
 		// Give the user 1 second to read the message, then fade out.
 		setTimeout( function() {
@@ -503,10 +501,10 @@ BoldgridEditor.crop = function( $ ) {
 		    newContentSrc : self.bestSizeSelector
 		};
 		var template = wp.template( 'suggest-crop' );
-		self.$mfc.html( template( data ) );
+		self.$modalContent.html( template( data ) );
 
 		// After we've filled in our details, add our <select>.
-		self.$suggestCrop = self.$mfc.find( '.suggest-crop' );
+		self.$suggestCrop = self.$modalContent.find( '.suggest-crop' );
 		self.$suggestCrop.after( self.$selectDimensions );
 
 		// Bind our select element.
@@ -516,7 +514,7 @@ BoldgridEditor.crop = function( $ ) {
 		} );
 
 		var template = wp.template( 'suggest-crop-toolbar' );
-		self.$mft.html( template() );
+		self.$modalToolbar.html( template() );
 
 		self.bindModal();
 
@@ -629,7 +627,7 @@ BoldgridEditor.crop = function( $ ) {
 		 * 
 		 * Actions to take when buttons in the lower toolbar are clicked.
 		 */
-		self.$primaryButton = self.$mft.find( '.button-primary' );
+		self.$primaryButton = self.$modalToolbar.find( '.button-primary' );
 
 		// Enable the "Crop Image" button.
 		self.$primaryButton.attr( 'disabled', false );
@@ -653,10 +651,10 @@ BoldgridEditor.crop = function( $ ) {
 	 * @since 1.0.9
 	 */
 	this.bindRatio = function() {
-		var $checkBox = self.$mfc.find( '[name="force-aspect-ratio"]' );
+		var $checkBox = self.$modalContent.find( '[name="force-aspect-ratio"]' );
 
 		// If the text "Force aspect ratio" is clicked, toggle the checkbox.
-		self.$mfc.find( 'span#toggle-force' ).on( 'click', function() {
+		self.$modalContent.find( 'span#toggle-force' ).on( 'click', function() {
 			$checkBox.click();
 		} )
 
