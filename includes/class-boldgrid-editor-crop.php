@@ -1,17 +1,17 @@
 <?php
 /**
  * BoldGrid_Editor_Crop class
- * 
+ *
  * The BoldGrid Editor Crop class suggests users crop images when replacing
  * those of different aspect ratios.
- * 
+ *
  * @package Boldgrid_Editor_Crop
  * @since 1.0.8
  */
 
 /**
  * BoldGrid Editor Crop.
- * 
+ *
  * See file description above.
  *
  * @since 1.0.8
@@ -86,12 +86,11 @@ class Boldgrid_Editor_Crop {
 			$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 			
 			wp_enqueue_script( 'boldgrid-editor-suggest-crop', 
-				plugins_url( '/assets/js/crop.js', $plugin_file ), array (), 
-				BOLDGRID_EDITOR_VERSION, true );
+				plugins_url( '/assets/js/crop.js', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION, 
+				true );
 			
 			wp_enqueue_style( 'boldgrid-editor-css-suggest-crop', 
-				plugins_url( '/assets/css/crop.css', $plugin_file ), array (), 
-				BOLDGRID_EDITOR_VERSION );
+				plugins_url( '/assets/css/crop.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 		}
 	}
 	
@@ -183,6 +182,16 @@ class Boldgrid_Editor_Crop {
 			$path = $_POST['path'];
 		}
 		
+		// Get and validate our original image sizes.
+		if ( empty( $_POST['originalWidth'] ) || empty( $_POST['originalHeight'] ) ) {
+			echo 'Error: Missing original sizes.';
+			wp_die();
+		} else {
+			$original_width = $_POST['originalWidth'];
+			$original_height = $_POST['originalHeight'];
+			$orientation = $original_width / $original_height;
+		}
+		
 		// Example $site_url: https://domain.com.
 		$site_url = get_site_url();
 		
@@ -198,12 +207,13 @@ class Boldgrid_Editor_Crop {
 		// @see https://codex.wordpress.org/Class_Reference/WP_Image_Editor.
 		$new_image = wp_get_image_editor( $path_to_image );
 		
+		// Calculate new width / height based on coordinates.
+		$new_width = $crop_details['x2'] - $crop_details['x1'];
+		$new_height = $crop_details['y2'] - $crop_details['y1'];
+		
 		// Crop the image.
-		$successful_crop = $new_image->crop( $crop_details['x1'], $crop_details['y1'], 
-			// Width.
-			$crop_details['x2'] - $crop_details['x1'],
-			// Height.
-			$crop_details['y2'] - $crop_details['y1'] );
+		$successful_crop = $new_image->crop( $crop_details['x1'], $crop_details['y1'], $new_width, 
+			$new_height );
 		
 		// If we failed to crop the image, abort.
 		if ( false === $successful_crop ) {
@@ -211,20 +221,44 @@ class Boldgrid_Editor_Crop {
 			wp_die();
 		}
 		
+		// Resize an image.
+		// Scenario 1: If the orientation is landscape and our new image has a
+		// greater width than the original.
+		// Scenario 2: If the orientation is portrait and our new image height
+		// is greater than our original.
+		$resized = false;
+		
+		if ( $orientation >= 1 && $new_width > $original_width ) {
+			$resized_width = $original_width;
+			$resized_height = ( $new_height * $resized_width ) / $new_width;
+			$new_image->resize( $resized_width, $resized_height );
+			
+			$resized = true;
+		} elseif ( $orientation < 1 && $new_height > $original_height ) {
+			$resized_height = $original_height;
+			$resized_width = ( $new_width * $resized_height ) / $new_height;
+			$new_image->resize( $resized_width, $resized_height );
+			
+			$resized = true;
+		}
+		
+		if ( $resized ) {
+			$new_width = $resized_width;
+			$new_height = $resized_height;
+		}
+		
 		// Example $new_image_path_parts: http://pastebin.com/b1477tYa.
 		$path_parts = pathinfo( $path_to_image );
 		
 		// Example $new_image_basename = x1_y1_width_height_image.jpg.
-		$new_image_basename = $crop_details['x1'] . '_' . $crop_details['y1'] . '_' .
-			 $crop_details['width'] . '_' . $crop_details['height'] . '_' .
-			 $path_parts['basename'];
+		$new_image_basename = $crop_details['x1'] . '_' . $crop_details['y1'] . '_' . $new_width .
+			 '_' . $new_height . '_' . $path_parts['basename'];
 		
 		// Example $new_image_path:
 		// /home/user/public_html/wp-content/uploads/2016/01/x1_x2_width_height_image.jpg.
 		$new_image_path = $path_parts['dirname'] . '/' . $new_image_basename;
 		
-		$new_image_url = str_replace( $path_parts['basename'], $new_image_basename, 
-			$path );
+		$new_image_url = str_replace( $path_parts['basename'], $new_image_basename, $path );
 		
 		// Example $successful_save: http://pastebin.com/e0Hvt8gq.
 		$successful_save = $new_image->save( $new_image_path );
@@ -238,8 +272,8 @@ class Boldgrid_Editor_Crop {
 		echo json_encode( 
 			array (
 				'new_image_url' => $new_image_url,
-				'new_image_width' => $crop_details['width'],
-				'new_image_height' => $crop_details['height'] 
+				'new_image_width' => $new_width,
+				'new_image_height' => $new_height 
 			) );
 		
 		wp_die();

@@ -106,7 +106,9 @@ BoldgridEditor.crop = function( $ ) {
 		var data = {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
-		    path : self.$modalContent.find( '#suggest-crop-sizes option:selected' ).val()
+		    path : self.$modalContent.find( '#suggest-crop-sizes option:selected' ).val(),
+		    originalWidth: $( self.oldImage )[0].naturalWidth,
+		    originalHeight: $( self.oldImage )[0].naturalHeight,
 		};
 
 		$.post( ajaxurl, data, function( response ) {
