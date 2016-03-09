@@ -120,6 +120,14 @@ class Boldgrid_Editor_Crop {
 		
 		$attachment_id = $_POST['attachment_id'];
 		
+		// Validate our original image's width and height.
+		if ( empty( $_POST['originalWidth'] ) || empty( $_POST['originalHeight'] ) ||
+			 ! is_numeric( $_POST['originalWidth'] ) || ! is_numeric( $_POST['originalHeight'] ) ) {
+			wp_die( 0 );
+		} else {
+			$original_orientation = $_POST['originalWidth'] / $_POST['originalHeight'];
+		}
+		
 		$dimensions = wp_get_attachment_metadata( $attachment_id );
 		
 		// Validate our dimensions.
@@ -128,18 +136,33 @@ class Boldgrid_Editor_Crop {
 		}
 		
 		foreach ( $dimensions['sizes'] as $size => $size_array ) {
+			// Add the url to each size.
 			$image_src = wp_get_attachment_image_src( $attachment_id, $size );
-			
 			$dimensions['sizes'][$size]['url'] = $image_src[0];
+			
+			// Clean up the size name, Replace dashes and underscroes with a space.
+			$new_size = preg_replace( '/[-_]+/', ' ', $size );
+			$new_size = ucwords( $new_size );
+			$dimensions['sizes'][$new_size] = $dimensions['sizes'][$size];
+			unset( $dimensions['sizes'][$size] );
 		}
 		
 		// Add our original size to the dimensions as well.
-		$dimensions['sizes']['original'] = array (
+		$dimensions['sizes']['Full Size'] = array (
 			'file' => $dimensions['file'],
 			'width' => $dimensions['width'],
 			'height' => $dimensions['height'],
 			'url' => wp_get_attachment_url( $attachment_id ) 
 		);
+		
+		// Sort our dimensions.
+		// Based on our original image's orientation, determine if the important
+		// factor is width or height.
+		$factor = ( $original_orientation >= 1 ? 'width' : 'height' );
+		uasort( $dimensions['sizes'], 
+			function ( $a, $b ) use($factor ) {
+				return $a[$factor] - $b[$factor];
+			} );
 		
 		echo json_encode( $dimensions );
 		
@@ -156,6 +179,14 @@ class Boldgrid_Editor_Crop {
 	 * @since 1.0.8
 	 */
 	public function crop() {
+		// Validate $_POST['id'], our attachment id.
+		if ( empty( $_POST['id'] ) || ! is_numeric( $_POST['id'] ) ) {
+			echo 'Error: Invalid attachment id.';
+			wp_die();
+		} else {
+			$attachment_id = $_POST['id'];
+		}
+		
 		// Validate $_POST['cropDetails'].
 		if ( ! isset( $_POST['cropDetails'] ) || ! is_array( $_POST['cropDetails'] ) ) {
 			echo 'Error: Invalid cropDetails.';
@@ -268,6 +299,28 @@ class Boldgrid_Editor_Crop {
 			echo 'Error: unable to save cropped image.';
 			wp_die();
 		}
+		
+		// Get our new file's mime type.
+		$filetype = wp_check_filetype( $new_image_path );
+		
+		// Add our new size to the attachment's metadata.
+		$dimensions = wp_get_attachment_metadata( $attachment_id );
+		
+		$cropped = 0;
+		foreach ( $dimensions['sizes'] as $key => $value ) {
+			if ( strpos( $key, 'crop-' ) === 0 ) {
+				$cropped ++;
+			}
+		}
+		$crop_name = 'crop-' . ( $cropped + 1 );
+		
+		$dimensions['sizes'][$crop_name] = array (
+			'file' => $new_image_basename,
+			'width' => round( $new_width ),
+			'height' => round( $new_height ),
+			'mime-type' => $filetype['type'] 
+		);
+		wp_update_attachment_metadata( $attachment_id, $dimensions );
 		
 		echo json_encode( 
 			array (

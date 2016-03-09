@@ -106,9 +106,10 @@ BoldgridEditor.crop = function( $ ) {
 		var data = {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
-		    path : self.$modalContent.find( '#suggest-crop-sizes option:selected' ).val(),
-		    originalWidth: $( self.oldImage )[0].naturalWidth,
-		    originalHeight: $( self.oldImage )[0].naturalHeight,
+		    path : self.$selectDimensions.find( 'option:selected' ).val(),
+		    originalWidth : $( self.oldImage )[ 0 ].naturalWidth,
+		    originalHeight : $( self.oldImage )[ 0 ].naturalHeight,
+		    id : self.$selectDimensions.attr( 'data-id' )
 		};
 
 		$.post( ajaxurl, data, function( response ) {
@@ -196,6 +197,7 @@ BoldgridEditor.crop = function( $ ) {
 		node.src = response.new_image_url;
 		node.width = response.new_image_width;
 		node.height = response.new_image_height;
+		node.setAttribute( 'data-mce-src', response.new_image_url );
 
 		// Reset our crop and skip buttons.
 		self.$skipButton.prop( 'disabled', false );
@@ -216,17 +218,19 @@ BoldgridEditor.crop = function( $ ) {
 	 * user clicks either the "Insert into page" or "Replace" buttons.
 	 * 
 	 * @since 1.0.8
+	 * 
+	 * @param object
+	 *            imageData Example: http://pastebin.com/Bj0NFusU.
 	 */
 	this.setImages = function( imageData ) {
-		var oldImg = new Image(), newImg = new Image();
-
-		// Get a list of sizes available for our new image. We'll place
-		// these in a <select> element to allow the user to select which
-		// image size to crop from.
-		var data = {
+		var oldImg = new Image(), newImg = new Image(), template = wp
+		    .template( 'suggest-crop-sizes' ), data = {
 		    action : 'suggest_crop_get_dimensions',
-		    attachment_id : imageData.attachment_id
+		    attachment_id : imageData.attachment_id,
+		    originalWidth : imageData.customWidth,
+		    originalHeight : imageData.customHeight
 		};
+
 		jQuery.post( ajaxurl, data, function( response ) {
 			// Validate our response. If invalid, the modal will close
 			// and the user will continue as if nothing happened.
@@ -244,8 +248,8 @@ BoldgridEditor.crop = function( $ ) {
 
 			// Create our <select> element filled with image sizes of our
 			// new image.
-			var template = wp.template( 'suggest-crop-sizes' );
 			self.$selectDimensions = $( template( response ) );
+			self.$selectDimensions.attr( 'data-id', imageData.attachment_id );
 
 			// Get the old image, the image we're replacing.
 			oldImg.onload = function() {
@@ -336,7 +340,7 @@ BoldgridEditor.crop = function( $ ) {
 		    instance : true,
 		    keys : true,
 		    persistent : true,
-		    parent : '.container-crop .right',
+		    parent : self.$modalContent.find( '.container-crop .left' ),
 		    // Set the default area to be selected.
 		    x1 : self.defaultCoordinates.x1,
 		    y1 : self.defaultCoordinates.y1,
@@ -376,6 +380,25 @@ BoldgridEditor.crop = function( $ ) {
 	this.onReplace = function( imageData ) {
 		self.modalOpen();
 		self.setImages( imageData );
+	}
+
+	/**
+	 * Maintain crop selection on window resize.
+	 * 
+	 * @since 1.0.9
+	 */
+	this.onResize = function() {
+		// Only run if the modal is visible.
+		if ( self.$modalContent.is( ':visible' ) ) {
+			self.ias.setOptions( {
+			    imageHeight : self.newImage.naturalHeight,
+			    imageWidth : self.newImage.naturalWidth,
+			    x1 : self.selectedCoordinates.x1,
+			    y1 : self.selectedCoordinates.y1,
+			    x2 : self.selectedCoordinates.x2,
+			    y2 : self.selectedCoordinates.y2
+			} );
+		}
 	}
 
 	/**
@@ -437,6 +460,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.modalCreate = function() {
 		self.modal = wp.media( {
+		    id : 'crop',
 		    title : 'Crop Image',
 		    button : {
 			    text : 'Crop Image'
@@ -445,9 +469,13 @@ BoldgridEditor.crop = function( $ ) {
 
 		self.modal.open();
 
-		self.$mediaModal = $( '.media-modal' );
+		self.$mediaModal = $( '.media-modal' ).last();
 		self.$modalContent = self.$mediaModal.find( '.media-frame-content', '.media-modal' );
 		self.$modalToolbar = self.$mediaModal.find( '.media-frame-toolbar', '.media-modal' );
+
+		$( window ).resize( function() {
+			self.onResize();
+		} );
 	}
 
 	/**
@@ -501,10 +529,11 @@ BoldgridEditor.crop = function( $ ) {
 
 		// After we've filled in our details, add our <select>.
 		self.$suggestCrop = self.$modalContent.find( '.suggest-crop' );
-		self.$suggestCrop.after( self.$selectDimensions );
+
+		$( '.imgedit-group.imgedit-source p' ).last().html( self.$selectDimensions );
 
 		// Bind our select element.
-		$( '#suggest-crop-sizes' ).on( 'change', function() {
+		self.$selectDimensions.on( 'change', function() {
 			var imgSrc = $( this ).val();
 			self.onSize( imgSrc );
 		} );

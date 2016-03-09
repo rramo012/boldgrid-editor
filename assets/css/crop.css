@@ -5,52 +5,53 @@
 	height: 100%;
 }
 
+#crop.media-frame .media-frame-content {
+	top: 50px;
+}
+
+/**
+ * Left side, crop side.
+ */
 .container-crop .left {
+	overflow: auto;
+	width: calc(100% - 350px);
+	padding: 0 16px 24px;
 	box-sizing: border-box;
-	float: left;
-	width: 40%;
-	background: #f3f3f3;
-	border-right: 1px solid #ddd;
+	float: none;
+	height: inherit;
+}
+
+img.suggest-crop {
+	max-width: 100%;
+	max-height: calc(100% - 5px);
+}
+
+.comparing {
 	padding: 18px;
-	height: 100%;
+	font-size: 13px;
 }
 
-.container-crop .left p:first-of-type {
-	margin-top: 0px;
+/*
+ * Media Sidebar.
+ */
+.container-crop .media-sidebar {
+	width: 350px;
+	box-sizing: border-box;
 }
 
-.container-crop .left img {
+.container-crop .media-sidebar img {
 	float: left;
 	max-width: 45%;
 	border: 1px solid #ddd;
 	padding: 1px;
 }
 
-.container-crop .left img:nth-of-type(2) {
+.container-crop .media-sidebar img:nth-of-type(2) {
 	float: right;
 }
 
-.container-crop .right {
-	float: left;
-	width: 55%;
-	padding: 18px;
-}
-
-.container-crop .right img {
-	max-width: 100%;
-}
-
-.container-crop .right #suggest-crop-sizes {
-	display: block;
-}
-
-.container-crop .right span#toggle-force {
+.container-crop .media-sidebar span#toggle-force {
 	cursor: pointer;
-}
-
-.comparing {
-	padding: 18px;
-	font-size: 13px;
 }
 
 /* Make a spinner inline. */
