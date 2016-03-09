@@ -524,6 +524,7 @@ IMHWPB.Editor = function( $ ) {
 						
 						//Toolbar/ButtonGroup.insert()
 						event.toolbar._items[0]._items[0].insert(buttons,3,false);
+						event.toolbar.reposition();
 						self.button_created = true;
 				  }
 				} );
