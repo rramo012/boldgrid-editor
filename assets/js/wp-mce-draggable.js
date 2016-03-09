@@ -315,10 +315,10 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.toggle_draggable_plugin = function( event ) {
 
-		var current_document = $(tinymce.activeEditor.iframeElement).contents().get(0);
+		var currentDocument = $( tinymce.activeEditor.iframeElement ).contents().get( 0 );
 
 		self.draggable_inactive = self.set_style_sheet_inactive( 'draggable',
-			!self.draggable_inactive, current_document );
+			!self.draggable_inactive, currentDocument );
 
 		var $target;
 		if ( typeof event != 'undefined' ) {
