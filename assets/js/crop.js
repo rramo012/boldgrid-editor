@@ -107,8 +107,8 @@ BoldgridEditor.crop = function( $ ) {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
 		    path : self.$selectDimensions.find( 'option:selected' ).val(),
-		    originalWidth : $( self.oldImage )[ 0 ].naturalWidth,
-		    originalHeight : $( self.oldImage )[ 0 ].naturalHeight,
+		    originalWidth : $( self.oldImage )[0].naturalWidth,
+		    originalHeight : $( self.oldImage )[0].naturalHeight,
 		    id : self.$selectDimensions.attr( 'data-id' )
 		};
 
@@ -413,7 +413,7 @@ BoldgridEditor.crop = function( $ ) {
 		var newImage;
 
 		self.$suggestCrop.off( 'load' ).attr( 'src', imgSrc ).on( 'load', function() {
-			newImage = $( this )[ 0 ];
+			newImage = $( this )[0];
 
 			// img1 is the old image, the image we're replacing.
 			img1Width = self.oldImage.width;

@@ -48,7 +48,7 @@ IMHWPB.Media = IMHWPB.Media || {};
 			new_gridblock.generalized_markup = new_gridblock.generalized_markup.replace(/ /g,'');
 			
 			var is_unique_gridblock = true;
-			$.each( IMHWPB.Globals.tabs[ 'basic-gridblocks' ][ 'content' ], function ( index, displayed_gridblock ) {
+			$.each( IMHWPB.Globals.tabs['basic-gridblocks']['content'], function ( index, displayed_gridblock ) {
 				if ( new_gridblock.generalized_markup == displayed_gridblock.generalized_markup ) {
 					is_unique_gridblock = false;
 				}
@@ -88,7 +88,7 @@ IMHWPB.Media = IMHWPB.Media || {};
 				
 				var attachments = [];
 				
-				var plugin_gridblock_contents = IMHWPB.Globals.tabs[ 'basic-gridblocks' ][ 'content' ];
+				var plugin_gridblock_contents = IMHWPB.Globals.tabs['basic-gridblocks']['content'];
 				if ( response.success && response.gridblocks ) {
 					$.each( response.gridblocks, function () {
 						
@@ -184,8 +184,8 @@ IMHWPB.Media = IMHWPB.Media || {};
 				
 				var gridblock_data = null;
 				var gridblock_id = $this.attr('data-id');
-				if ( IMHWPB.Globals.tabs[ 'basic-gridblocks' ][ 'content' ][ gridblock_id ] ) {
-					gridblock_data = IMHWPB.Globals.tabs[ 'basic-gridblocks' ][ 'content' ][ gridblock_id ];
+				if ( IMHWPB.Globals.tabs['basic-gridblocks']['content'][ gridblock_id ] ) {
+					gridblock_data = IMHWPB.Globals.tabs['basic-gridblocks']['content'][ gridblock_id ];
 				}
 				
 				//Find images that need to be exchanged for assets

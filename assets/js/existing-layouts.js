@@ -22,7 +22,7 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 	self.bind_onload_events = function () {
 		self.filter_out_nested_hr();
 		
-		$.each( IMHWPB.Globals.tabs[ 'basic-gridblocks' ][ 'content' ], function ( key ) {
+		$.each( IMHWPB.Globals.tabs['basic-gridblocks']['content'], function ( key ) {
 			var $html = $( this.html );
 			$html.find('img').removeAttr('src class');
 			$html.find('a').removeAttr('href');

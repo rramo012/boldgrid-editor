@@ -817,9 +817,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.merge_additional_menu_options = function() {
 		$.each( additional_menu_items, function( key, menu_item ) {
-			var current_element_selection = menu_options[ menu_item[ 'element_type' ] ];
+			var current_element_selection = menu_options[ menu_item['element_type'] ];
 			var addition_item = {};
-			addition_item[ menu_item[ 'title' ] ] = menu_item[ 'title' ];
+			addition_item[ menu_item['title'] ] = menu_item['title'];
 			$.extend( current_element_selection, addition_item );
 		} );
 	};
@@ -1177,13 +1177,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( !xs_size ) {
 			added_classes.push( 'col-xs-' + design_size );
 		} else {
-			design_size = xs_size[ 1 ];
+			design_size = xs_size[1];
 		}
 
 		if ( !sm_size ) {
 			added_classes.push( 'col-sm-' + design_size );
 		} else {
-			design_size = sm_size[ 1 ];
+			design_size = sm_size[1];
 		}
 
 		if ( !md_size ) {
@@ -1400,7 +1400,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $element = $( this );
 			var $element_next = $element.next();
 			if ( $element_next.length ) {
-				$element_next[ 0 ].popover = null;
+				$element_next[0].popover = null;
 			}
 			$element.remove_popover_imhwpb();
 		} );
@@ -1460,7 +1460,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If you've entered into your child dont remove
 			if ( $current_element.next().find( $related_target ).length
-				|| $current_element.next()[ 0 ] == $related_target[ 0 ] ) {
+				|| $current_element.next()[0] == $related_target[0] ) {
 				return false;
 			}
 
@@ -1468,7 +1468,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			$draggable = $current_element.next();
 
 			// If you did not enter your own popover
-		} else if ( $closest_draggable_tools[ 0 ] != this.popover || false == $closest_draggable_tools.length ) {
+		} else if ( $closest_draggable_tools[0] != this.popover || false == $closest_draggable_tools.length ) {
 			
 			// If you've entered into your parent, and your parent needs a popover
 			// Only applies to content
@@ -1501,10 +1501,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				// Remove invalid elements
 				self.hover_elements[ type ].add_element = null;
 				if ( type == 'row' ) {
-					self.hover_elements[ 'column' ] = { 'add_element': null };
-					self.hover_elements[ 'content' ] = { 'add_element': null };
+					self.hover_elements['column'] = { 'add_element': null };
+					self.hover_elements['content'] = { 'add_element': null };
 				} else if ( type == 'column' ) {
-					self.hover_elements[ 'content' ] = { 'add_element': null };
+					self.hover_elements['content'] = { 'add_element': null };
 				}
 			}
 		}
@@ -1529,7 +1529,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			$tools.remove_popover_imhwpb();
 		}
 		if ( $draggable && $draggable.length ) {
-			$draggable[ 0 ].popover = null;
+			$draggable[0].popover = null;
 			if ( false == self.$current_drag ) {
 				$draggable.removeClass( self.dragging_selector_class_name );
 			}
@@ -1570,7 +1570,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		var $parent_offset = $current.offsetParent().offset();
 		// Attach a popover object to the element so that it can be removed more
 		// easily
-		$current[ 0 ].popover = $added_tooltip[ 0 ];
+		$current[0].popover = $added_tooltip[0];
 
 		// Rewrite the position of the tooltip based on type
 		if ( type == 'content' || type == 'nested-row' ) {
@@ -1713,14 +1713,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var column_size = self.find_column_size( $column );
 			if ( column_size + stack_size <= 12 ) {
 				column.size = column_size;
-				column.object = $column[ 0 ];
+				column.object = $column[0];
 				stack.push( column );
 				stack_size += column_size;
 			} else {
 				layout.push( stack );
 				stack = [];
 				column.size = stack_size = column_size;
-				column.object = $column[ 0 ];
+				column.object = $column[0];
 				stack.push( column );
 			}
 		} );
@@ -1771,7 +1771,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		if ( sibling_column.length ) {
 			$.each( stack, function( key, current_column ) {
-				if ( sibling_column[ 0 ] == current_column.object ) {
+				if ( sibling_column[0] == current_column.object ) {
 					sibling_in_stack = true;
 					return false;
 				}
@@ -1794,9 +1794,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			var $row = self.resize.element.closest_context( self.row_selectors_string,
 				self.$master_container );
-			var row_width = $row[ 0 ].getBoundingClientRect().width;
+			var row_width = $row[0].getBoundingClientRect().width;
 			var column_size = self.find_column_size( self.resize.element );
-			var offset = self.resize.element[ 0 ].getBoundingClientRect();
+			var offset = self.resize.element[0].getBoundingClientRect();
 			var row_size = self.find_row_size( $row );
 			// Determine how much drag until next location
 			var current_column_size = self.column_sizes[ column_size ] * row_width;
@@ -1821,7 +1821,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				larger_override = self.pageX > larger_position ||
 				// If the users cursor is anywhere outside of the row + 10, make
 				// larger
-				$row[ 0 ].getBoundingClientRect().right + self.right_resize_buffer < self.pageX;
+				$row[0].getBoundingClientRect().right + self.right_resize_buffer < self.pageX;
 			}
 
 			var resize_buffer = row_width * self.resize_buffer;
@@ -1841,11 +1841,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			if ( valid_smaller || valid_larger ) {
 
-				var column_stack = self.find_column_stack( $row, self.resize.element[ 0 ] );
+				var column_stack = self.find_column_stack( $row, self.resize.element[0] );
 
 				// If your resizing from the left and this is the first item in
 				// a stack ignore the movemeny
-				if ( self.resize.left && self.resize.element[ 0 ] == column_stack.stack[ 0 ].object ) {
+				if ( self.resize.left && self.resize.element[0] == column_stack.stack[0].object ) {
 					self.$master_container.addClass( 'cursor-not-allowed-imhwpb' );
 					return false;
 				}
@@ -1854,7 +1854,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				//  and your making it larger
 				//  and this is a descktop view
 				//And this is the last column in the row
-				var last_col_in_row = column_stack.stack[ column_stack.stack.length - 1 ].object == self.resize.element[ 0 ] ;
+				var last_col_in_row = column_stack.stack[ column_stack.stack.length - 1 ].object == self.resize.element[0] ;
 				if ( self.resize.right && row_size == 12 && valid_larger && self.active_resize_class == 'col-md' && last_col_in_row ) {
 					return false;
 				}
@@ -1874,7 +1874,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 				}
 
-				var new_column_stack = self.find_column_stack( $row, self.resize.element[ 0 ] );
+				var new_column_stack = self.find_column_stack( $row, self.resize.element[0] );
 
 				if ( column_stack.stack_index != new_column_stack.stack_index ) {
 					self.end_resize();
@@ -1891,7 +1891,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					self.change_column_size( self.resize.sibling, false );
 				}
 
-				var new_column_stack = self.find_column_stack( $row, self.resize.element[ 0 ] );
+				var new_column_stack = self.find_column_stack( $row, self.resize.element[0] );
 
 				if ( column_stack.stack_index != new_column_stack.stack_index ) {
 					self.end_resize();
@@ -2039,7 +2039,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		if ( false == $target.closest( '.draggable-tools-imhwpb' ).length ) {
 			$target.trigger( 'mouseenter' );
-			self.resize_event_map[ 'mousemove.draggable' ]( null, $target );
+			self.resize_event_map['mousemove.draggable']( null, $target );
 		}
 	};
 
@@ -2064,7 +2064,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Find the location of the border on an column
 	 */
 	this.get_border_mouse_location = function( $element, x_position ) {
-		var bounding_rectangle = $element[ 0 ].getBoundingClientRect();
+		var bounding_rectangle = $element[0].getBoundingClientRect();
 		var left_position = Math.floor( bounding_rectangle.left );
 		var right_position = Math.floor( bounding_rectangle.right );
 
@@ -2180,7 +2180,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		var matches = $column_element.attr( 'class' ).match( regex );
 
 		if ( matches ) {
-			column_size = matches[ 1 ];
+			column_size = matches[1];
 		}
 
 		return parseInt( column_size );
@@ -2667,9 +2667,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.$current_drag = $tooltip.next().addClass( 'dragging-imhwpb' );
 
 			if ( self.$current_drag.parent( 'a' ).length ) {
-				self.original_html = self.$current_drag.parent( 'a' )[ 0 ].outerHTML;
+				self.original_html = self.$current_drag.parent( 'a' )[0].outerHTML;
 			} else {
-				self.original_html = self.$current_drag[ 0 ].outerHTML;
+				self.original_html = self.$current_drag[0].outerHTML;
 			}
 			// These settings help reduce cpu resource usage, storing some
 			// properties of the
@@ -2686,18 +2686,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			};
 
 			// Save the column size at drag start so that it wont be recalculated
-			if ( self.$current_drag.IMHWPB[ 'is_row' ] && $this.hasClass( 'action-list' ) ) {
+			if ( self.$current_drag.IMHWPB['is_row'] && $this.hasClass( 'action-list' ) ) {
 				self.$current_drag.IMHWPB.is_row = false;
 				self.$current_drag.IMHWPB.is_content = true;
 			}
 			
-			if ( self.$current_drag.IMHWPB[ 'is_column' ] ) {
-				self.$current_drag.IMHWPB[ 'column_size' ] = self
+			if ( self.$current_drag.IMHWPB['is_column'] ) {
+				self.$current_drag.IMHWPB['column_size'] = self
 					.find_column_size( self.$current_drag );
 				var $current_row = self.$current_drag.closest_context( self.row_selectors_string,
 					self.$master_container );
 				if ( $current_row.length ) {
-					self.$current_drag.IMHWPB[ 'original_row' ] = $current_row[ 0 ];
+					self.$current_drag.IMHWPB['original_row'] = $current_row[0];
 				}
 			}
 
@@ -2748,10 +2748,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			} else if ( self.dragImageSetting == 'browserImage' ) {
 				self.$cloned_drag_image = $( self.original_html );
 				self.$cloned_drag_image.addClass( 'temporary-image-div' );
-				document.body.appendChild( self.$cloned_drag_image[ 0 ] );
+				document.body.appendChild( self.$cloned_drag_image[0] );
 
 				// Set the dragging content
-				event.originalEvent.dataTransfer.setDragImage( self.$cloned_drag_image[ 0 ], 0, 0 );
+				event.originalEvent.dataTransfer.setDragImage( self.$cloned_drag_image[0], 0, 0 );
 
 				// Hide the image that we are currently dragging. It will be
 				// removed once the drag completes
@@ -2849,7 +2849,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				var toolbar_height = outerHeight - innerHeight;
 				var buffer_area = 100;
 				var distance_from_top = (event.originalEvent.screenY - toolbar_height)
-					- self.$mce_32[ 0 ].getBoundingClientRect().bottom;
+					- self.$mce_32[0].getBoundingClientRect().bottom;
 				var scroll_from_top = self.$window.scrollTop();
 				
 				if ( scroll_from_top >= 125 && distance_from_top <= buffer_area ) {
@@ -2858,7 +2858,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var pos_is_fixed = self.$post_status_info.css( 'position' ) == 'fixed';
 				if ( pos_is_fixed ) {
-					var distance_from_bottom = self.$mce_38[ 0 ].getBoundingClientRect().top
+					var distance_from_bottom = self.$mce_38[0].getBoundingClientRect().top
 						- (event.originalEvent.screenY - toolbar_height);
 					if ( distance_from_bottom <= buffer_area ) {
 						scrollBy( 0, scroll_speed );
@@ -2900,7 +2900,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 
 			// Skip if dragging over same element
-			if ( self.$temp_insertion[ 0 ] == $entered[ 0 ] ) {
+			if ( self.$temp_insertion[0] == $entered[0] ) {
 				self.$most_recent_row_enter_add = null;
 				return true;
 			}
@@ -2952,11 +2952,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					if ( $entered.is( self.unformatted_content_selectors_string ) ) {
 
 						// If entered a column that is not my own
-						if ( $entered[ 0 ] != self.$current_drag[ 0 ] ) {
+						if ( $entered[0] != self.$current_drag[0] ) {
 
 							// Ive left from a child of this column or the
 							// column itself
-							if ( $entered.find( $left ).length || $entered[ 0 ] == $left[ 0 ] ) {
+							if ( $entered.find( $left ).length || $entered[0] == $left[0] ) {
 								return true;
 							}
 						}
@@ -3033,7 +3033,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 					var $current_placement = $entered.closest( '.cloned-div-imhwpb' );
 					var entered_current_drag = $current_placement.length
-						&& $current_placement[ 0 ] == self.$temp_insertion[ 0 ];
+						&& $current_placement[0] == self.$temp_insertion[0];
 					if ( entered_current_drag ) {
 						self.$most_recent_row_enter_add = null;
 						return true;
@@ -3101,14 +3101,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 				}
 			} else if ( self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column ) {
-				if ( self.recent_event && self.recent_event.entered == $entered[ 0 ]
-					&& self.recent_event.left == $left[ 0 ] ) {
+				if ( self.recent_event && self.recent_event.entered == $entered[0]
+					&& self.recent_event.left == $left[0] ) {
 					return true;
 				}
 
 				self.recent_event = {
-					'entered' : $entered[ 0 ],
-					'left' : $left[ 0 ],
+					'entered' : $entered[0],
+					'left' : $left[0],
 				};
 
 				// TODO: Figure out of this is good?
@@ -3153,7 +3153,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					if ( $entered.is( self.unformatted_column_selectors_string ) ) {
 
 						// If entered a column that is not my own
-						if ( $entered[ 0 ] != self.$current_drag[ 0 ] ) {
+						if ( $entered[0] != self.$current_drag[0] ) {
 
 							var $original_dragenter = self.entered_target;
 							var $original_drag_leave = $( event.target );
@@ -3161,7 +3161,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 							// Ive left from a child of this column or the column
 							// itself
 							if ( $entered.find( $original_drag_leave ).length
-								|| $entered[ 0 ] == $original_drag_leave[ 0 ] ) {
+								|| $entered[0] == $original_drag_leave[0] ) {
 								
 									return true;
 							}
@@ -3242,7 +3242,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.$master_container );
 		
 		var row_size = self.find_row_size( $new_row );
-		if ( $new_row.length && $current_row[ 0 ] != $new_row[ 0 ] ) {
+		if ( $new_row.length && $current_row[0] != $new_row[0] ) {
 			if ( current_drag_is_parent && (row_size >= self.max_row_size) ) {
 				return false;
 			}
@@ -3255,14 +3255,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			 * Temp insertion is deleted when row is replaced on IE
 			 * only*
 			 */
-			var temp_insertion = self.$temp_insertion[ 0 ].innerHTML;
+			var temp_insertion = self.$temp_insertion[0].innerHTML;
 			if ( self.restore_row ) {
 				// Restore
 				$current_row.html( self.restore_row );
 				self.$temp_insertion.html( temp_insertion );
 			}
 
-			var dragging_out_of_original = self.$current_drag.IMHWPB[ 'original_row' ] != $new_row[ 0 ];
+			var dragging_out_of_original = self.$current_drag.IMHWPB['original_row'] != $new_row[0];
 			// Store current row only if its not the original row. That
 			// row
 			// will not be restored
@@ -3274,7 +3274,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// IF the row has enough room for your current drag item,
 			// just place the item
-			var row_has_room = (row_size + self.$current_drag.IMHWPB[ 'column_size' ] <= self.max_row_size);
+			var row_has_room = (row_size + self.$current_drag.IMHWPB['column_size'] <= self.max_row_size);
 			if ( false == row_has_room && dragging_out_of_original ) {
 
 				// Use the rest of the space if row is partially empty
@@ -3291,8 +3291,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					// row. (Reduce row by 3)
 					column_size = 3;
 					
-					if ( self.$current_drag.IMHWPB[ 'column_size' ] < column_size ) {
-						column_size = self.$current_drag.IMHWPB[ 'column_size' ];
+					if ( self.$current_drag.IMHWPB['column_size'] < column_size ) {
+						column_size = self.$current_drag.IMHWPB['column_size'];
 					}
 					
 					for ( var i = 0; i < column_size; i++ ) {
@@ -3311,7 +3311,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			} else {
 				// Set the column Size
 				self.change_column_size( self.$temp_insertion, null,
-					self.$current_drag.IMHWPB[ 'column_size' ] );
+					self.$current_drag.IMHWPB['column_size'] );
 			}
 
 			if ( current_drag_is_sibling ) {
@@ -3457,9 +3457,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var layout_format = self.get_layout_format( $row );
 				var layout_transform = self.find_layout_transform( layout_format );
-				if ( layout_transform && !layout_transform[ 'current' ] ) {
+				if ( layout_transform && !layout_transform['current'] ) {
 					self.transform_layout( $row, layout_transform );
-					$new_column = $( '<div class="col-md-' + layout_transform[ 'new' ]
+					$new_column = $( '<div class="col-md-' + layout_transform['new']
 						+ ' col-sm-12 col-xs-12"></div>' );
 					$row.append( $new_column );
 				} else {
@@ -3489,7 +3489,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			if ( element_type == 'row' || element_type == 'content' ) {
 				var $cloned_element = $element.clone();
-				$cloned_element[ 0 ].popover = null;
+				$cloned_element[0].popover = null;
 				$element.after( $cloned_element );
 
 			} else if ( element_type == 'column' ) {
@@ -3502,38 +3502,38 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				var new_column_size = 1;
 
 				if ( self.find_row_size( $row ) + column_size <= self.max_row_size ) {
-					var $new_element = $element.before( $element[ 0 ].outerHTML );
-					$new_element[ 0 ].popover = null;
+					var $new_element = $element.before( $element[0].outerHTML );
+					$new_element[0].popover = null;
 				} else if ( layout_transform ) {
 					if ( !layout_transform.current ) {
 						self.transform_layout( $row, layout_transform );
-						new_column_size = layout_transform[ 'new' ];
-						var $new_element = $element.before( $element[ 0 ].outerHTML );
-						$new_element[ 0 ].popover = null;
+						new_column_size = layout_transform['new'];
+						var $new_element = $element.before( $element[0].outerHTML );
+						$new_element[0].popover = null;
 						self.change_column_size( $new_element, null, new_column_size );
 
 					} else {
 
 						// Transform current
 						self.change_column_size( $element, null,
-							layout_transform[ 'current_transform' ] );
+							layout_transform['current_transform'] );
 
 						// Transform New
-						new_column_size = layout_transform[ 'new' ];
-						var $new_element = $element.before( $element[ 0 ].outerHTML );
-						$new_element[ 0 ].popover = null;
+						new_column_size = layout_transform['new'];
+						var $new_element = $element.before( $element[0].outerHTML );
+						$new_element[0].popover = null;
 						self.change_column_size( $new_element, null, new_column_size );
 
 						// Transform Additional
-						$.each( layout_transform[ 'additional_transform' ],
+						$.each( layout_transform['additional_transform'],
 							function( key, transform ) {
 								var num_transformed = 0;
 								$row.find( self.immediate_column_selectors_string ).reverse()
 									.each( function() {
-										if ( num_transformed < transform[ 'count' ] ) {
+										if ( num_transformed < transform['count'] ) {
 											var $column = $( this );
-											if ( self.find_column_size( $column ) == transform[ 'from' ] ) {
-												self.change_column_size( $column, null, transform[ 'to' ] );
+											if ( self.find_column_size( $column ) == transform['from'] ) {
+												self.change_column_size( $column, null, transform['to'] );
 												num_transformed++;
 											}
 										} else {
@@ -3546,13 +3546,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				} else if ( column_size % 2 == 0 && column_size ) {
 					self.change_column_size( $element, null, parseInt( column_size / 2 ) );
-					var $new_element = $element.before( $element[ 0 ].outerHTML );
-					$new_element[ 0 ].popover = null;
+					var $new_element = $element.before( $element[0].outerHTML );
+					$new_element[0].popover = null;
 					self.change_column_size( $new_element, null, parseInt( column_size / 2 ) );
 
 				} else if ( self.decrease_row_size( $row ) ) {
-					var $new_element = $element.before( $element[ 0 ].outerHTML );
-					$new_element[ 0 ].popover = null;
+					var $new_element = $element.before( $element[0].outerHTML );
+					$new_element[0].popover = null;
 					self.change_column_size( $new_element, null, new_column_size );
 				}
 			}
@@ -3588,7 +3588,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		add_media : function( event ) {
 			var $clicked_element = $( this );
 			self.add_media_event_handler( $clicked_element.closest( '.draggable-tools-imhwpb' )
-				.next()[ 0 ] );
+				.next()[0] );
 			return;
 		},
 		/**
@@ -3597,7 +3597,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		insert_layout : function( event ) {
 			var $clicked_element = $( this );
 			self.insert_layout_event_handler( $clicked_element.closest( '.draggable-tools-imhwpb' )
-				.next()[ 0 ] );
+				.next()[0] );
 			return;
 		},
 		trigger_action_click : function( event ) {
@@ -3608,7 +3608,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			// it isn't run
 			if ( native_menu_options.indexOf( $clicked_element.data( 'action' ) ) === -1 ) {
 				self.$boldgrid_menu_action_clicked = $clicked_element.closest(
-					'.draggable-tools-imhwpb' ).next()[ 0 ];
+					'.draggable-tools-imhwpb' ).next()[0];
 				
 				self.wp_media_modal_action( event, $clicked_element );
 			}

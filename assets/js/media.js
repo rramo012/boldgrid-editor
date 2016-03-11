@@ -92,7 +92,7 @@ IMHWPB.Media = function( $ ) {
 		$( '.media-router .media-menu-item' ).on(
 			'click',
 			function() {
-				$( '.media-iframe iframe' )[ 0 ].contentWindow.IMHWPB.Media.instance
+				$( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance
 					.enable_iframe_content( $( this ).data( 'tabname' ) );
 			} );
 
@@ -110,7 +110,7 @@ IMHWPB.Media = function( $ ) {
 				function(e) {
 					e.preventDefault();
 					if ($(this).hasClass('button-primary-disabled') == false) {
-						var child_window = $( '.media-iframe iframe' )[ 0 ].contentWindow.IMHWPB.Media.instance;
+						var child_window = $( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance;
 						
 						var insert_process = function ( html_to_insert ) {
 							child_window.uncheck_all();
@@ -196,7 +196,7 @@ IMHWPB.Media = function( $ ) {
 	this.iframe_onload = function() {
 		var thumnail_action = null;
 
-		switch ( IMHWPB.Globals[ 'tab-details' ][ 'type' ] ) {
+		switch ( IMHWPB.Globals['tab-details']['type'] ) {
 			case 'api':
 				thumnail_action = self.find_api_content;
 				self.bind_search_form();
@@ -218,11 +218,11 @@ IMHWPB.Media = function( $ ) {
 		self.prevent_attachment_content_actions();
 		self.register_sidebar_event_handlers();
 		self.register_attachment_click_events( thumnail_action,
-			IMHWPB.Globals[ 'tab-details' ][ 'selection-type' ] );
+			IMHWPB.Globals['tab-details']['selection-type'] );
 	
 		//This needs to occur after  register_attachment_click_events
 		//so, it cannot be done in the switch
-		if ( IMHWPB.Globals[ 'tab-details' ][ 'type' ] == 'shortcode-form' ) {
+		if ( IMHWPB.Globals['tab-details']['type'] == 'shortcode-form' ) {
 			self.preselect_form();
 		}
 		
@@ -409,7 +409,7 @@ IMHWPB.Media = function( $ ) {
 	this.find_selected_elements = function() {
 		var html = '';
 		
-		switch( IMHWPB.Globals[ 'tab-details' ][ 'type' ]) {
+		switch( IMHWPB.Globals['tab-details']['type']) {
 			case 'html':
 				html = IMHWPB.Media.GridBlocks.get_selected_html();
 				break;
@@ -480,19 +480,19 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.find_api_content = function( $attachment ) {
 		var tab_name = $attachment.closest( '.attachments' ).data( 'tabname' );
-		var map_params = IMHWPB.Globals.tabs[ tab_name ][ 'content' ][ $attachment.data( 'id' ) ][ 'map-params' ];
+		var map_params = IMHWPB.Globals.tabs[ tab_name ]['content'][ $attachment.data( 'id' ) ]['map-params'];
 
 		if ( !self.search_params.center || 
-				IMHWPB.Globals[ 'tab-details' ]['default-location-setting'] == self.search_params) {
+				IMHWPB.Globals['tab-details']['default-location-setting'] == self.search_params) {
 			
 			if ( self.location ) {
 				self.search_params = self.location;
 			} else {
-				self.search_params = IMHWPB.Globals[ 'tab-details' ]['default-location-setting'];
+				self.search_params = IMHWPB.Globals['tab-details']['default-location-setting'];
 			}
 		}
 
-		var src = IMHWPB.Globals[ 'tab-details' ][ 'base-url' ]
+		var src = IMHWPB.Globals['tab-details']['base-url']
 			+ '?'
 			+ $.param( $.extend( self.search_params, map_params, self
 				.find_selected_map_size() ) );
