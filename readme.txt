@@ -27,6 +27,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * New Feature:	JIRA WPB-1697	Suggest crop: Center the default selection.
 * New Feature:	JIRA WPB-1528	Drag and drop enabled state is now remembered per theme.
 * Update:		JIRA WPB-1696	Suggest crop: Do not trigger on 'Add Media'.
+* Update:		JIRA WPB-1738	Suggest crop: Remove feature switch. 	
  
 = 1.0.8 =
 * New Feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.

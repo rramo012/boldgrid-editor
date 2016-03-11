@@ -266,26 +266,8 @@ class Boldgrid_Editor {
 
 		$plugin_update = new Boldgrid_Editor_Update( $this );
 
-		// Get our BoldGrid Settings. These will be used below with the "suggest crop" feature
-		// switch.
-		$boldgrid_settings = get_option( 'boldgrid_settings', array () );
-		$is_candidate = ( isset( $boldgrid_settings['release_channel'] ) &&
-			 'candidate' == $boldgrid_settings['release_channel'] );
-
-		// Update feature switch for "Suggest crop".
-		// Using an option instead of a get variable is an easier approach.
-		// This feature uses ajax. If we used a get variable to toggle the feature
-		// switch, then we would have to add multiple checks in different files.
-		if ( $is_candidate && isset( $_GET['boldgrid_feature_switch_suggest_crop'] ) ) {
-			update_option( 'boldgrid_feature_switch_suggest_crop',
-				$_GET['boldgrid_feature_switch_suggest_crop'] );
-		}
-
-		// Suggest crop.
-		if ( $is_candidate && 'on' === get_option( 'boldgrid_feature_switch_suggest_crop' ) ) {
-			$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
-			$boldgrid_editor_crop->add_hooks();
-		}
+		$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
+		$boldgrid_editor_crop->add_hooks();
 	}
 
 	/**
