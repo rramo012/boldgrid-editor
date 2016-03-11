@@ -143,7 +143,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.cropValidate = function( response ) {
 		// Abort if ajax failed.
-		if ( 0 == response ) {
+		if ( '0' === response ) {
 			self.cropInvalid();
 			return;
 		}
@@ -167,7 +167,7 @@ BoldgridEditor.crop = function( $ ) {
 		];
 
 		$.each( neededProperties, function( key, property ) {
-			if ( 'undefined' === typeof response[ property ] ) {
+			if ( response[ property ] === undefined ) {
 				validProperties = false;
 				return false;
 			}
@@ -234,7 +234,7 @@ BoldgridEditor.crop = function( $ ) {
 		jQuery.post( ajaxurl, data, function( response ) {
 			// Validate our response. If invalid, the modal will close
 			// and the user will continue as if nothing happened.
-			if ( 0 == response ) {
+			if ( '0' === response ) {
 				self.modal.close();
 				return false;
 			}
@@ -299,9 +299,9 @@ BoldgridEditor.crop = function( $ ) {
 
 		// Set self.bestSizeSelector to the URL of the best size. The
 		// best size is essentially one size higher than a perfect fix.
-		if ( 1 == $bestSizes.length ) {
+		if ( 1 === $bestSizes.length ) {
 			self.bestSizeSelector = $bestSizes.eq( 0 ).val();
-		} else if ( 0 == $bestSizes.length ) {
+		} else if ( 0 === $bestSizes.length ) {
 			self.bestSizeSelector = self.$selectDimensions.find( 'option' ).last().val();
 		} else {
 			self.bestSizeSelector = $bestSizes.eq( 1 ).val();
@@ -618,7 +618,7 @@ BoldgridEditor.crop = function( $ ) {
 	 */
 	this.compareImages = function() {
 		// Do our two images have the same dimensions?
-		var sameDimensions = ( ( self.oldImage.width / self.oldImage.height ) == ( self.newImage.width / self.newImage.height ) );
+		var sameDimensions = ( ( self.oldImage.width / self.oldImage.height ) === ( self.newImage.width / self.newImage.height ) );
 
 		if ( sameDimensions ) {
 			// The images have the same dimensions, so no need to suggest a
