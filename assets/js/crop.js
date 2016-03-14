@@ -1,3 +1,13 @@
+/**
+ * The file contains the BoldgridEditor.crop object, which is used to crop
+ * images when editing a page.
+ *
+ * @summary		Crop files within the editor.
+ *
+ * @since		1.0.8
+ * @requires	jquery.imgareaselect.js
+ */
+
 var BoldgridEditor = BoldgridEditor || {};
 
 /**
@@ -15,54 +25,33 @@ BoldgridEditor.crop = function( $ ) {
 	/**
 	 * A wp.media modal window.
 	 *
-	 * This modal modal is created in this.modalCreate().
-	 *
-	 * The media modal is created to simply have a modal. We don't need a media
-	 * library, just a modal.
-	 *
 	 * @since 1.0.8
+	 * @property object self.modal Our crop modal.
 	 */
 	self.modal;
 
 	/**
-	 * The coordinates within an image that have been selected by the user.
-	 *
-	 * Essentially, when the user selects the area of an image to crop, the
-	 * coordinates they want to crop are stored here.
-	 *
-	 * The coordinates are set in this.setSelectedCoordinates(), which is called
-	 * when imgAreaSelect is initialized and after each time the user changes
-	 * the selection.
+	 * Crop coordinates.
 	 *
 	 * @since 1.0.9
-	 *
-	 * @var object self.selectedCoordinates Example self.selectedCoordinates:
-	 *      http://pastebin.com/5X02nX14.
+	 * @property object self.selectedCoordinates Coordiantes user wants to corp.
 	 */
 	self.selectedCoordinates = null;
 
 	/**
-	 * These two items are set to false by default. We set them to false because
-	 * we'll be checking to see if they're set to anything else at another
-	 * point.
-	 *
-	 * Both variables are set in self.imageDataSet.
+	 * Image tags.
 	 *
 	 * @since 1.0.8
+	 * @property object The original (being replaced) and new image (replacing).
 	 *
-	 * @param object
-	 *            oldImage|newImage Example: http://pastebin.com/xiY2rHQr.
 	 */
 	self.newImage = false;
 	self.oldImage = false;
 
 	/**
-	 * Clear our modal.
+	 * @summary Clear the modal.
 	 *
-	 * Remove and empty certain containers that aren't needed.
-	 *
-	 * self.$modalContent vars are declared when we initially created the modal,
-	 * in this.modalCreate().
+	 * Remove and empty certain containers that are note needed.
 	 *
 	 * @since 1.0.8
 	 */
@@ -88,13 +77,11 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Crop an image.
+	 * @summar Crop an image.
 	 *
 	 * Makes an ajax call to crop an image.
 	 *
 	 * @since 1.0.8
-	 * @global self.$primaryButton Defined in this.bindModal().
-	 * @global self.$skipButton Defined in this.bindModal().
 	 */
 	this.crop = function() {
 		// Disable the skip button. We're cropping, there's no turning back.
@@ -106,7 +93,6 @@ BoldgridEditor.crop = function( $ ) {
 		 */
 		self.$primaryButton.prop( 'disabled', true ).text( 'Cropping...' );
 
-		// @var object data Example data: http://pastebin.com/507gY9L8.
 		var data = {
 		    action : 'suggest_crop_crop',
 		    cropDetails : self.selectedCoordinates,
@@ -123,7 +109,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Steps to take when a crop fails.
+	 * @summary Steps to take when a crop fails.
 	 *
 	 * @since 1.0.8
 	 */
@@ -138,12 +124,13 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
+	 * @summary Validate response after cropping image.
+	 *
 	 * After an ajax request to crop an image, validate the response.
 	 *
 	 * @since 1.0.8
 	 *
-	 * @param string
-	 *            response An ajax response.
+	 * @param string response An ajax response.
 	 */
 	this.cropValidate = function( response ) {
 		// Abort if ajax failed.
@@ -152,12 +139,7 @@ BoldgridEditor.crop = function( $ ) {
 			return;
 		}
 
-		/**
-		 * JSON.parse our ajax response. Abort if this fails. After response has
-		 * been JSON.parsed:
-		 *
-		 * @var object response Example: http://pastebin.com/d0qXq4wr.
-		 */
+		// JSON.parse our ajax response. Abort if this fails.
 		try {
 			response = JSON.parse( response );
 		} catch ( e ) {
@@ -189,19 +171,14 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Steps to take when an image is cropped successfull.
+	 * @summary Steps to take when an image is cropped successfull.
 	 *
 	 * @since 1.0.8
 	 *
-	 * @param object
-	 *            response A json.parsed ajax response.
+	 * @param object response A json.parsed ajax response.
 	 */
 	this.cropValid = function( response ) {
-		/**
-		 * Get the currently selected text.
-		 *
-		 * @var object node Example node: http://pastebin.com/4nwJmLRj.
-		 */
+		// Get the currently selected text.
 		var node = tinyMCE.activeEditor.selection.getNode();
 
 		// Adjust the src, width, and height of the new image.
@@ -219,7 +196,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Set our image data.
+	 * @summary Set our image data.
 	 *
 	 * Our "image data" is data about both our original image and the image
 	 * we're replacing it with. Example image data can be found at the top of
@@ -228,10 +205,10 @@ BoldgridEditor.crop = function( $ ) {
 	 * This method is triggered by this.onReplace(), which is triggered when a
 	 * user clicks either the "Insert into page" or "Replace" buttons.
 	 *
+	 * @link http://pastebin.com/Bj0NFusU Example imageData object.
 	 * @since 1.0.8
 	 *
-	 * @param object
-	 *            imageData Example: http://pastebin.com/Bj0NFusU.
+	 * @param object imageData Info on old and new image.
 	 */
 	this.setImages = function( imageData ) {
 		var oldImg = new Image(), newImg = new Image(), template = wp
@@ -289,9 +266,9 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Select our best image size.
+	 * @summary Select our best image size.
 	 *
-	 * Within our <select> of image dimensions available, select by default the
+	 * Within our 'select' of image dimensions available, select by default the
 	 * image of best fit.
 	 *
 	 * @since 1.0.9
@@ -335,23 +312,19 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Select an area on our new image.
+	 * @summary Select an area on our new image.
 	 *
 	 * When the "Crop Image" modal loads, by default we want an area already
 	 * selected. This method does just that.
 	 *
+	 * @link http://odyniec.net/projects/imgareaselect/usage.html Info on imgAreaSelect.
 	 * @since 1.0.8
 	 */
 	this.selectCoordinates = function() {
 		self.setDefaultCoordinates( self.oldImage.width, self.oldImage.height, self.newImage.width,
 		    self.newImage.height );
 
-		/**
-		 * After adding the image, bind imgAreaSelect to it.
-		 *
-		 * Full documentation:
-		 * http://odyniec.net/projects/imgareaselect/usage.html.
-		 */
+		// After adding the image, bind imgAreaSelect to it.
 		self.ias = self.$suggestCrop.imgAreaSelect( {
 		    aspectRatio : self.defaultCoordinates.aspectRatio,
 		    // When there's a selection within the image, show the drag handles.
@@ -385,7 +358,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Actions to take when an image is inserted into the editor.
+	 * @summary Actions to take when an image is inserted into the editor.
 	 *
 	 * Images are inserted into the editor when the user clicks either the
 	 * "Replace" or "Insert into page" buttons.
@@ -393,10 +366,10 @@ BoldgridEditor.crop = function( $ ) {
 	 * This method is binded to the click of the "Replace" and "Insert into
 	 * page" buttons.
 	 *
+	 * @link http://pastebin.com/izZzzWAy Example imageData object.
 	 * @since 1.0.8
 	 *
-	 * @param object
-	 *            imageData Example: http://pastebin.com/izZzzWAy.
+	 * @param object imageData Info on old and new image.
 	 */
 	this.onReplace = function( imageData ) {
 		self.modalOpen();
@@ -404,7 +377,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Maintain crop selection on window resize.
+	 * @summary Maintain crop selection on window resize.
 	 *
 	 * @since 1.0.9
 	 */
@@ -423,12 +396,13 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * When an image size is changed, take action.
+	 * @summary When an image size is changed, take action.
 	 *
 	 * @since 1.0.9
 	 *
-	 * @param string
-	 *            imgSrc Example: https://domain.com/file.jpg.
+	 * @listens .suggest-crop:load
+	 *
+	 * @param string imgSrc URL of image to crop.
 	 */
 	this.onSize = function( imgSrc ) {
 		var newImage;
@@ -477,7 +451,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Create our modal.
+	 * @summary Create our modal.
 	 *
 	 * See the declaration of modal at the top of this file for more info.
 	 *
@@ -504,7 +478,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Open our modal.
+	 * @summary Open our modal.
 	 *
 	 * @since 1.0.8
 	 */
@@ -521,7 +495,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Action to take when image aspect ratios match.
+	 * @summary Action to take when image aspect ratios match.
 	 *
 	 * @since 1.0.9
 	 */
@@ -539,9 +513,11 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Fill our modal.
+	 * @summary Fill our modal.
 	 *
 	 * @since 1.0.8
+	 *
+	 * @listens #suggest-crop-sizes:change
 	 */
 	this.modalFill = function() {
 		var data = {
@@ -572,36 +548,34 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
+	 * @summary Set coordinates user selected.
+	 *
 	 * Set self.selectedCoordinates, the coordinates of the image the user has
 	 * selected.
 	 *
 	 * See the declaration of self.selectedCoordinates at the top of this file
 	 * for more info.
 	 *
+	 * @link http://pastebin.com/hA6Y6FJn Example img object.
+	 * @link http://pastebin.com/4q2Q0nhf Example selection object.
 	 * @since 1.0.8
 	 *
-	 * @param object
-	 *            img Example img: http://pastebin.com/hA6Y6FJn.
-	 * @param object
-	 *            selection Example selection: http://pastebin.com/4q2Q0nhf.
+	 * @param object img The img tag of the image we're cropping.
+	 * @param object selection Coordinates the user wants to crop.
 	 */
 	this.setSelectedCoordinates = function( img, selection ) {
 		self.selectedCoordinates = selection;
 	}
 
 	/**
-	 * Determine what area of the image to crop by default.
+	 * @summary Determine what area of the image to crop by default.
 	 *
 	 * @since 1.0.9
 	 *
-	 * @param integer
-	 *            img1Width
-	 * @param integer
-	 *            img1Height
-	 * @param integer
-	 *            img2Width
-	 * @param integer
-	 *            img2Height
+	 * @param integer img1Width Width of original image.
+	 * @param integer img1Height Height of original image.
+	 * @param integer img2Width Width of replacing image.
+	 * @param integer img2Height Height of replacing image.
 	 */
 	this.setDefaultCoordinates = function( img1Width, img1Height, img2Width, img2Height ) {
 		var defaultWidth, defaultHeight, data = {};
@@ -635,7 +609,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Take action when image_data is set.
+	 * @summary Take action when image_data is set.
 	 *
 	 * This method is triggered within this.onReplace().
 	 *
@@ -655,7 +629,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Bind events of elements within our modal.
+	 * @summary Bind events of elements within our modal.
 	 *
 	 * @since 1.0.8
 	 */
@@ -695,7 +669,7 @@ BoldgridEditor.crop = function( $ ) {
 	}
 
 	/**
-	 * Bind the 'Force aspect ratio' checkbox.
+	 * @summary Bind the 'Force aspect ratio' checkbox.
 	 *
 	 * @since 1.0.9
 	 */
