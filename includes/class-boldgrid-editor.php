@@ -795,6 +795,9 @@ class Boldgrid_Editor {
 		global $is_IE;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
+		wp_enqueue_script( 'boldgrid-fourpan', plugins_url( '/assets/js/jquery/jquery.fourpan.js', $plugin_file ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'media-imhwpb', plugins_url( '/assets/js/media.js', $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
 

@@ -628,62 +628,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 	};
 	
 	/**
-	 * Bind the 2 buttons on the bottom of the edit as row overlay
-	 */
-	this.bind_row_edit_overlay_actions = function () {
-		
-		$(tinymce.activeEditor.iframeElement)
-			.contents()
-			.find('head')
-			.append('<script src="' + BoldgridEditor.plugin_url 
-					+ '/assets/js/jquery/jquery.fourpan.js?boldgrid-editor-version=' 
-					+ BoldgridEditor.version + '"></script>');
-		
-		return;
-		$window.keyup(function(e) {
-			  if (e.keyCode == 27) {
-				  $('#boldgrid-cancel-edit-row').click();
-			  }
-		});
-		
-		$('#boldgrid-cancel-edit-row, #close-row-overlay').on('click', function () {
-			self.dismiss_overlay();
-		});
-		
-		$('#boldgrid-done-edit-row').on('click', function () {
-			var $columns = self.draggable_instance1.$body
-				.find(self.draggable_instance1.column_selectors_string);
-			//Add Empty P tags to empty Columns
-			$.each($columns, function () {
-				var $this = $(this);
-				if ( $this.is(':empty') ) {
-					$this.append('<p><br> </p>');
-				}
-			});
-			
-			self.dismiss_overlay();
-			self.draggable_instance.$master_container
-				.find($(self.nested_row))
-				.replaceWith(self.draggable_instance1.$body.find('.edit-as-row-content-wrap').html());
-		});
-		
-	};
-	
-	/**
-	 * Remove the edit row overlay
-	 */
-	this.dismiss_overlay = function () {
-		self.$resize_div.css('min-height', '0px').stop().slideToggle("slow");
-		$(self.nested_row).css('opacity', '1');
-		
-		setTimeout( function () {
-			self.draggable_instance.$body.removeClass('edit-row-overlay-open');
-			$(self.nested_row).removeClass('editing-as-row');
-			$(self.nested_row).css('opacity', '');
-		}, 500);
-	};
-	
-	/**
 	 * Bind the controls that set the size of the overlay
 	 */
 	this.bind_min_max_controls = function () {
@@ -759,7 +703,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 		self.bind_collapse_click();
 		self.bind_min_max_controls();
 		self.create_resize_handle();
-		self.bind_row_edit_overlay_actions();
 		
 	} );
 };

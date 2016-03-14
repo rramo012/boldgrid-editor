@@ -262,7 +262,7 @@ IMHWPB.Editor = function( $ ) {
 					return false;
 				}
 			});
-			
+
 			//When content is added to editor
 			editor.on( 'SetContent', function( e ) {
 				self.reset_anchor_spaces(tinymce.activeEditor.getBody(), true);
@@ -468,6 +468,7 @@ IMHWPB.Editor = function( $ ) {
 			 * When the editor is initialized load the draggable ability
 			 */
 			editor.on('init', function( event ) {
+				
 				IMHWPB.WP_MCE_Draggable.instance = new IMHWPB.WP_MCE_Draggable();
 				
 				setTimeout( function () {
@@ -529,12 +530,7 @@ IMHWPB.Editor = function( $ ) {
 				  }
 				} );
 			});
-			
-			//Refresh Editor Contents to apply the changes that wordpress would normally do upon saving
-			setTimeout(function () {
-				tinymce.activeEditor.setContent(tinymce.activeEditor.getContent());
-			}, 1000);
-			
+
 			/*
 			 * 
 			 * Used for debugging
