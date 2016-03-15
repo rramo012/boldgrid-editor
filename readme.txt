@@ -20,15 +20,15 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.0.9 In progress =
+= 1.0.9 =
 * Misc:			JIRA WPB-1361	Added license file.
 * New Feature:	JIRA WPB-1695	Suggest crop: Add 'size' dropdown menu when cropping an image.
 * New Feature:	JIRA WPB-1698	Suggest crop: default selection should be as wide as it could be.
 * New Feature:	JIRA WPB-1697	Suggest crop: Center the default selection.
 * New Feature:	JIRA WPB-1528	Drag and drop enabled state is now remembered per theme.
 * Update:		JIRA WPB-1696	Suggest crop: Do not trigger on 'Add Media'.
-* Update:		JIRA WPB-1738	Suggest crop: Remove feature switch. 	
- 
+* Update:		JIRA WPB-1738	Suggest crop: Remove feature switch.
+
 = 1.0.8 =
 * New Feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.
 * New Feature:	JIRA WPB-1684	Suggest image crop when replacing images of different aspect ratios.
@@ -44,7 +44,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.0.5 =
 * New Feature:	JIRA WPB-1520	Adding Icons for draggable tools
-* Usability:	JIRA WPB-1558	Improved popover hover responsiveness	
+* Usability:	JIRA WPB-1558	Improved popover hover responsiveness
 * Bug fix:		JIRA WPB-1553	Added support for __DIR__ in PHP <=5.2.
 * New Feature:	JIRA WPB-1026	Enable fontsize and family selection in tinymce
 * New Feature:	JIRA WPB-1523	Columns will now extend to the full height of row.
@@ -58,7 +58,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.0.3 =
 * New Feature:	JIRA WPB-1432	Added unit tests
-* BugFix:		JIRA WPB-1381	Insert media will now be the default tab when changing an image	
+* BugFix:		JIRA WPB-1381	Insert media will now be the default tab when changing an image
 * BugFix:		JIRA WPB-1453	Fixing issue causing tinymce height to be too large to too small
 
 = 1.0.2 =
