@@ -319,8 +319,14 @@
 .row {
     display: -webkit-box;
     display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.row:before, .row:after {
+    width: 0;
 }
 
 /*************************/

@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.1 =
+* Bug fix:      JIRA WPB-1748	Fixing flexbox issue on safari
+
 = 1.0.9 =
 * Misc:			JIRA WPB-1361	Added license file.
 * New Feature:	JIRA WPB-1695	Suggest crop: Add 'size' dropdown menu when cropping an image.
