@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.1.2 In progress =
+* Bug fix:		JIRA WPB-1809	Fixed undefined index "action" for some scenarios.  Optimized update class and addessed CodeSniffer items.
+
 = 1.1 =
 * Bug fix:      JIRA WPB-1748	Fixing flexbox issue on safari
 
