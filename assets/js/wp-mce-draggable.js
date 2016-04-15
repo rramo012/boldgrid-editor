@@ -77,9 +77,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 				'menu_items' : menu_items,
 				'main_container' : true
 			}, $ ).init();
-			self.draggable_instance = IMHWPB.WP_MCE_Draggable.draggable_instance;
 
-			self.load_draggable_inside_overlay( $container );
+			self.draggable_instance = IMHWPB.WP_MCE_Draggable.draggable_instance;
 		}
 
 		tinymce.activeEditor.controlManager.setActive( 'toggle_draggable_imhwpb', true );
@@ -295,8 +294,11 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.boldgrid_tool_click = function() {
 		self.remove_mce_resize_handles();
-		tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.getBody(), true);
-		tinyMCE.activeEditor.selection.collapse(false);
+		
+		if ( ! self.draggable_instance.ie_version ) {
+			tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.getBody(), true);
+			tinyMCE.activeEditor.selection.collapse(false);
+		}
 	};
 
 	/**
@@ -665,28 +667,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 		} ).bind( "resize", function( e, ui ) {
 			$( this ).css( "top", "auto" );
 		} ).removeClass('ui-resizable');
-	};
-
-	/**
-	 * Instantiates the draggable class for the iframe within the overlay
-	 */
-	this.load_draggable_inside_overlay = function ( $container ) {
-		var $this = self.$overlay_preview;
-		$this.contents().find('head').html($container.find('head').html());
-		IMHWPB.WP_MCE_Draggable.draggable_instance1 = $this.contents().IMHWPB_Draggable( {
-			'dragImage' : 'actual',
-			'add_media_event_handler' : self.add_media_action,
-			'insert_layout_event_handler' : self.insert_layout_action,
-			'menu_items' : menu_items
-		}, $ ).init();
-		self.draggable_instance1 = IMHWPB.WP_MCE_Draggable.draggable_instance1;
-		self.draggable_instance1.$body.addClass('boldgrid-edit-row-overlay');
-		self.draggable_instance1.$body.addClass($container.find('body').attr('class'));
-
-		//Prevent click of actionable items inside the layout iframe
-		$this.contents().on('click', 'a, button, input', function ( e ) {
-			e.preventDefault();
-		});
 	};
 
 	$( function() {

@@ -3,7 +3,7 @@
  * Plugin Name: BoldGrid Editor
  * Plugin URI: http://www.boldgrid.com
  * Description: Customized editing for pages and posts
- * Version: 1.1
+ * Version: 1.1.0.1
  * Author: BoldGrid.com <wpb@boldgrid.com>
  * Author URI: http://www.boldgrid.com
  * Text Domain: boldgrid-editor
@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Define Editor version:
 if ( ! defined( 'BOLDGRID_EDITOR_VERSION' ) ) {
-	define( 'BOLDGRID_EDITOR_VERSION', '1.1' );
+	define( 'BOLDGRID_EDITOR_VERSION', '1.1.0.1' );
 }
 
 // Define Editor Path
