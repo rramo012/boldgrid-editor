@@ -185,8 +185,9 @@
     cursor: auto;
 }
 
+.mce-content-body .drag-handle-imhwpb[contentEditable=false],
 .drag-handle-imhwpb {
-    cursor: move;
+    cursor: move !important;
 }
 
 .popover-imhwpb {

@@ -14,7 +14,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var self = this;
 	var most_recent_enter = [];
 	var most_recent_row_enter = [];
-	var ie_version;
+	
+	self.ie_version;
+	
 	/**
 	 * The jQuery object that the user indicated was draggable
 	 */
@@ -625,12 +627,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.toolkit_markup = function( type ) {
 
-		var popover = '<div spellcheck="false" data-mce-bogus="all" contenteditable="false"'
+		var popover = '<div spellcheck="false" data-mce-bogus="all"'
 			+ 'unselectable="on" class="draggable-tools-imhwpb">'
 			+ '<span class="popover-imhwpb '
 			+ self.type_popover_classes[ type ]
 			+ '">'
-			+ '<div contenteditable="false" title="Move" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
+			+ '<div title="Move" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
 			+ '<span  class="genericon genericon-move" aria-hidden="true"> </span>'
 			+ '</div>';
 			
@@ -675,7 +677,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			deactivate: disable_edit_as_row,
 		});
 
-		ie_version = self.get_ie_version();
+		self.ie_version = self.get_ie_version();
 		self.create_selector_strings();
 		save_original_selector_strings();
 		self.bind_events();
@@ -987,7 +989,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'mouseup.draggable', self.master_container_mouse_up )
 			.on( 'mousemove.draggable', self.mousemove_container );
 		
-		if ( ie_version > 11 || !ie_version ) {
+		if ( self.ie_version > 11 || !self.ie_version ) {
 			self.$interaction_container.on( self.resize_event_map, self.column_selectors_string );
 		}
 	};
@@ -1318,7 +1320,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.drag_cleanup = function () {
 		
 		//This is just a failsafe, but performing this on IE causes resource spike
-		if ( !ie_version ){
+		if ( !self.ie_version ){
 			//Make sure that the transformed layout has the correct elements wrapped
 			self.validate_markup();
 		}
@@ -2653,6 +2655,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * drag image, and set some intial drag properties
 		 */
 		start : function( event ) {
+			
 			self.valid_drag = true;
 			self.drag_drop_triggered = false;
 			var $this = $(this);
@@ -2792,7 +2795,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			// chrome/ie
 			// You cannot modify the drag object in this event
 			var timeout_length = 35;
-			if ( ie_version ) {
+			if ( self.ie_version ) {
 				timeout_length = 150;
 			}
 			
@@ -2886,7 +2889,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 			
 			//Prevent Default here causes an issue on IE
-			if ( !ie_version ) {
+			if ( !self.ie_version ) {
 				event.preventDefault();
 			}
 			
@@ -3190,7 +3193,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 			
 			//Prevent Default here causes an issue on IE
-			if ( !ie_version ) {
+			if ( !self.ie_version ) {
 				event.preventDefault();
 			}
 			
