@@ -180,6 +180,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Drag Start Event
 	 */
 	this.drag_start = function () {
+		tinymce.activeEditor.getBody().setAttribute( 'contenteditable', false );
 		tinyMCE.activeEditor.selection.collapse(false);
 		self.end_undo_level_mce();
 		self.draggable_instance.$master_container.find('html').addClass('drag-progress');
@@ -229,6 +230,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Procedure that when dragging is complete
 	 */
 	this.drag_end_event = function( event, dropped_element ) {
+		tinymce.activeEditor.getBody().setAttribute( 'contenteditable', true );
 		IMHWPB.tinymce_undo_disabled = false;
 		self.add_tiny_mce_history();
 		self.initialize_gallery_objects( self.draggable_instance.$master_container );

@@ -413,9 +413,9 @@ IMHWPB.Editor = function( $ ) {
 			
 			/**
 			 * On mouse down of the drag tools, prevent tinymce from blocking event.
-			 */
+			 */	
 			editor.on( 'mousedown', function( e ) {
-				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length  ) {
+				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length || true === tinymce.activeEditor.boldgrid_resize ) {
 
 					// Stop tinymce DragDropOverrides.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/DragDropOverrides.js#L164.
@@ -502,6 +502,9 @@ IMHWPB.Editor = function( $ ) {
 
 					IMHWPB.WP_MCE_Draggable.instance.load_draggable($tinymce_iframe);
 					self.draggable = IMHWPB.WP_MCE_Draggable.instance.draggable_instance;
+					if ( self.draggable.ie_version && self.draggable.ie_version <= 11 ) {
+						$tinymce_iframe.find( 'body' ).addClass( 'dragging-disabled' );
+					}
 
 				} else {
 					//If this is not a boldgrid theme we will disable by default, 

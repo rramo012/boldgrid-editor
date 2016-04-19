@@ -362,6 +362,14 @@
 	display: none;
 }
 
+.dragging-disabled .popover-imhwpb {
+	width: auto;
+}
+.dragging-disabled .drag-handle-imhwpb,
+.dragging-disabled [data-action="nest-row"] {
+	display: none;
+}
+
 /* The styles for the menu that is displayed when you click on the menu */
 .popover-menu-imhwpb {
     padding: 0;

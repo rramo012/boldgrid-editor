@@ -2208,20 +2208,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.set_drag_to_cursor = function( event ) {
 
 		var offset_properties = {};
-		var top = 0, left = 0;
 
 		if ( self.$current_drag.IMHWPB.is_row ) {
 			offset_properties = {
-				'top' : event.originalEvent.pageY - top
+				'top' : event.originalEvent.pageY
 			};
 		} else if (  self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column == false ){
 			offset_properties = {
-				'left' : event.originalEvent.pageX - left
+				'left' : event.originalEvent.pageX
 			};
 		} else {
 			offset_properties = {
-				'top' : event.originalEvent.pageY - top,
-				'left' : event.originalEvent.pageX - left
+				'top' : event.originalEvent.pageY,
+				'left' : event.originalEvent.pageX
 			};
 		}
 		
@@ -2826,13 +2825,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		},
 
 		over : function( event ) {
-			//Prevent Default is required for IE compatibility
-			//Otherwise you'll exp a intermitent drag end
-			event.preventDefault();
-			
 			if ( !self.$current_drag || !self.valid_drag ) {
 				return;
 			}
+			
+			//Prevent Default is required for IE compatibility
+			//Otherwise you'll exp a intermitent drag end
+			event.preventDefault();
 			
 			// Handles Auto Scrolling
 			// Only trigger every 50 microseconds
@@ -3663,8 +3662,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				}
 				if ( border_hover && (border_hover.left || border_hover.right) ) {
 					$element.addClass( 'resizing-imhwpb' );
+
+					if ( self.ie_version && tinymce ) {
+						tinymce.activeEditor.getBody().setAttribute( 'contenteditable', false );
+						tinymce.activeEditor.boldgrid_resize = true;
+					}
 				} else {
 					$element.removeClass( 'resizing-imhwpb' );
+					
+					if ( self.ie_version && tinymce ) {
+						tinymce.activeEditor.getBody().setAttribute( 'contenteditable', true );
+						tinymce.activeEditor.boldgrid_resize = false;
+					}
 				}
 			}
 		},
