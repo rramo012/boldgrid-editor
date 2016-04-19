@@ -424,6 +424,9 @@ IMHWPB.Editor = function( $ ) {
 					// Stop tinymce from preventing out event.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
 					e.preventDefault = function () {};
+					
+					// Fake the target to the body so that cE checking evals to true.
+					e.target = tinymce.activeEditor.getBody();
 				}
 			} );
 			
