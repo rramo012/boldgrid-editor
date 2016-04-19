@@ -187,7 +187,6 @@ IMHWPB.Editor = function( $ ) {
 	};
 	
 	$( function() {
-		
 		/**
 		 * Select default alignment from the media modal window
 		 * If you are replacing an image with an image, then the default alignment should be
@@ -411,6 +410,22 @@ IMHWPB.Editor = function( $ ) {
 					}
 				}
 			});
+			
+			/**
+			 * On mouse down of the drag tools, prevent tinymce from blocking event.
+			 */
+			editor.on( 'mousedown', function( e ) {
+				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length  ) {
+
+					// Stop tinymce DragDropOverrides.
+					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/DragDropOverrides.js#L164.
+					e.button = true;
+					
+					// Stop tinymce from preventing out event.
+					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
+					e.preventDefault = function () {};
+				}
+			} );
 			
 			 //Prevents boldgrid popovers from appearing when resizing images
 			editor.on('ObjectResizeStart', function(e) {

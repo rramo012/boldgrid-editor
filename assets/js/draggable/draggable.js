@@ -627,12 +627,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.toolkit_markup = function( type ) {
 
-		var popover = '<div spellcheck="false" data-mce-bogus="all"'
+		var popover = '<div spellcheck="false" data-mce-bogus="all" contenteditable="false"'
 			+ 'unselectable="on" class="draggable-tools-imhwpb">'
 			+ '<span class="popover-imhwpb '
 			+ self.type_popover_classes[ type ]
 			+ '">'
-			+ '<div title="Move" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
+			+ '<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
 			+ '<span  class="genericon genericon-move" aria-hidden="true"> </span>'
 			+ '</div>';
 			
