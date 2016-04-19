@@ -3680,14 +3680,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 					if ( self.ie_version && tinymce ) {
 						tinymce.activeEditor.getBody().setAttribute( 'contenteditable', false );
-						tinymce.activeEditor.boldgrid_resize = true;
+						tinymce.activeEditor.boldgridResize = true;
 					}
 				} else {
 					$element.removeClass( 'resizing-imhwpb' );
 					
 					if ( self.ie_version && tinymce ) {
 						tinymce.activeEditor.getBody().setAttribute( 'contenteditable', true );
-						tinymce.activeEditor.boldgrid_resize = false;
+						tinymce.activeEditor.boldgridResize = false;
 					}
 				}
 			}

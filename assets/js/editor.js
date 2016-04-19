@@ -415,7 +415,7 @@ IMHWPB.Editor = function( $ ) {
 			 * On mouse down of the drag tools, prevent tinymce from blocking event.
 			 */	
 			editor.on( 'mousedown', function( e ) {
-				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length || true === tinymce.activeEditor.boldgrid_resize ) {
+				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length || true === tinymce.activeEditor.boldgridResize ) {
 
 					// Stop tinymce DragDropOverrides.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/DragDropOverrides.js#L164.
