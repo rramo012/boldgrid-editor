@@ -16,6 +16,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var most_recent_row_enter = [];
 	
 	self.ie_version;
+	self.isSafari;
 	
 	/**
 	 * The jQuery object that the user indicated was draggable
@@ -678,6 +679,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		});
 
 		self.ie_version = self.get_ie_version();
+		self.isSafari = self.checkIsSafari();
 		self.create_selector_strings();
 		save_original_selector_strings();
 		self.bind_events();
@@ -2654,7 +2656,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * drag image, and set some intial drag properties
 		 */
 		start : function( event ) {
-			
+
 			self.valid_drag = true;
 			self.drag_drop_triggered = false;
 			var $this = $(this);
@@ -2724,7 +2726,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				} ).addClass( 'hidden dragging-started-imhwpb' );
 
 				self.$current_drag.attr( 'data-mce-bogus', "all" );
-							
+				
 				//Set the background color to inherit
 				if ( self.color_is(self.$current_drag.css('background-color'), 'transparent') ) {
 					self.$current_drag.css('background-color', 'inherit');
@@ -2740,8 +2742,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				  	}
 				}, 100);
 				
-				//Setting Drag Image is not allowed in IE
-				if ( typeof event.originalEvent.dataTransfer.setDragImage != "undefined" ) {
+				// Setting Drag Image is not allowed in IE, and fails on safari.
+				if ( typeof event.originalEvent.dataTransfer.setDragImage != "undefined" && ! self.isSafari ) {
+
 					//Turn off Drag Image
 					var img = document.createElement("img");
 					img.src = "";
@@ -2828,7 +2831,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( !self.$current_drag || !self.valid_drag ) {
 				return;
 			}
-			
+
 			//Prevent Default is required for IE compatibility
 			//Otherwise you'll exp a intermitent drag end
 			event.preventDefault();
@@ -3228,6 +3231,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		
 		// other browser
 		return;
+	}
+	
+	/**
+	 * Determine if current browser is safari.
+	 * Thanks To: http://stackoverflow.com/questions/7944460/detect-safari-browser.
+	 * 
+	 * @since 1.1.1.3
+	 * 
+	 * @return boolean.
+	 */
+	this.checkIsSafari = function () {
+		return /^((?!chrome|android).)*safari/i.test( navigator.userAgent );
 	}
 	
 	/**
