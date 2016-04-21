@@ -860,7 +860,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.bind_events = function() {
 		// Bind Event Handlers to container
 		self.bind_drag_listeners();
-		self.bindScrollLock();
 		self.bind_container_events();
 		self.bind_menu_items();
 		self.bind_additional_menu_items();
@@ -1027,27 +1026,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		;
 	};
 	
-
-	/**
-	 * On IE lock the scroll bar before drag has started.
-	 * 
-	 * @since 1.1.1.3
-	 */
-	this.bindScrollLock = function() {
-		if ( self.ie_version ) {
-			window.onscroll = function( e ){
-				// While dragging.
-				if ( self.$current_drag ) {
-					// For this first 500 milliseconds, lock the first scroll event.
-					if ( ! self.$current_drag.IMHWPB.hasLockedScroll && ! self.$current_drag.IMHWPB.dragStarted ) {
-						window.scrollTo( self.$current_drag.IMHWPB.scrollStartX, self.$current_drag.IMHWPB.scrollStartY );
-						self.$current_drag.IMHWPB.hasLockedScroll = true;
-					}
-				}
-			};
-		}
-	};
-
 	/**
 	 * Initializes event binds for drop down menu clicks: for menu items passed
 	 * in at initialization
@@ -2625,23 +2603,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			});
 			
 		}
-	};
-	
-	/**
-	 * When on an IE browser, init some variables to be used to lock scroll and delay drag.
-	 * 
-	 * @since 1.1.1.3
-	 */
-	this.ieDragStart = function () {
-		self.$current_drag.IMHWPB.scrollStartX = window.scrollX;
-		self.$current_drag.IMHWPB.scrollStartY = window.scrollY;
-		self.$current_drag.IMHWPB.dragStarted = false;
-		self.$current_drag.IMHWPB.hasLockedScroll = false;
-
-		// After 500 milliseconds, enable Drag.
-	//	setTimeout( function() {
-			self.$current_drag.IMHWPB.dragStarted = true;
-	//	}, 500 );
 	};
 	
 	/**
