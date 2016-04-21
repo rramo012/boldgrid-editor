@@ -416,7 +416,8 @@ IMHWPB.Editor = function( $ ) {
 			 */	
 			editor.on( 'mousedown', function( e ) {
 				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length || true === tinymce.activeEditor.boldgridResize ) {
-
+					var newDiv;
+					
 					// Stop tinymce DragDropOverrides.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/DragDropOverrides.js#L164.
 					e.button = true;
@@ -425,8 +426,10 @@ IMHWPB.Editor = function( $ ) {
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
 					e.preventDefault = function () {};
 					
-					// Fake the target to the body so that cE checking evals to true.
-					e.target = tinymce.activeEditor.getBody();
+					// Fake the target so that cE checking evals a different element.
+					newDiv = document.createElement( 'div' );
+					newDiv.contentEditable = false;
+					e.target = newDiv;
 				}
 			} );
 			
