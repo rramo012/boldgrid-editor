@@ -776,6 +776,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 	
 	/**
+	 * Remove Classes that were added during drag.
+	 * 
+	 * @since 1.1.1.3
+	 */
+	this.failSafeCleanup = function () {
+		self.$master_container.find( '.dragging-started-imhwpb' ).remove();
+		self.$master_container.find( '.cloned-div-imhwpb' ).removeClass( 'cloned-div-imhwpb' );
+	};
+	
+	/**
 	 * Wrap images and anchors in paragraph
 	 * This is done because tinyMCE frequently does this which causes irregularities
 	 * also by doing this, we make it easier to drag items
@@ -797,7 +807,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Wrap all hr tags in a draggable div This should be called everytime dom
 	 * content is inserted
 	 */
-	this.wrap_hr_tags = function() {
+	this.wrap_hr_tags = function() { 
 		// this needs to occur everytime something is added to page
 		self.$master_container.find( 'hr' ).each( function() {
 			// Find out its already draggable
@@ -850,6 +860,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.bind_events = function() {
 		// Bind Event Handlers to container
 		self.bind_drag_listeners();
+		self.bindScrollLock();
 		self.bind_container_events();
 		self.bind_menu_items();
 		self.bind_additional_menu_items();
@@ -972,6 +983,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'mousedown.draggable', '.drag-handle-imhwpb', self.drag_handle_mousedown )
 			.on( 'mouseup.draggable', '.drag-handle-imhwpb', self.drag_handle_mouseup )
 			.on( 'click.draggable', self.hide_menus )
+			.on( 'click.draggable', self.failSafeCleanup )
 			.on( 'click.draggable', '.context-menu-imhwpb', self.setup_context_menu )
 			.on( 'boldgrid_modify_content.draggable', self.refresh_fourpan );
 		
@@ -995,7 +1007,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.$interaction_container.on( self.resize_event_map, self.column_selectors_string );
 		}
 	};
-
+	
 	/**
 	 * Initializes event binds for drop down menu clicks
 	 */
@@ -1013,6 +1025,27 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 		;
+	};
+	
+
+	/**
+	 * On IE lock the scroll bar before drag has started.
+	 * 
+	 * @since 1.1.1.3
+	 */
+	this.bindScrollLock = function() {
+		if ( self.ie_version ) {
+			window.onscroll = function( e ){
+				// While dragging.
+				if ( self.$current_drag ) {
+					// For this first 500 milliseconds, lock the first scroll event.
+					if ( ! self.$current_drag.IMHWPB.hasLockedScroll && ! self.$current_drag.IMHWPB.dragStarted ) {
+						window.scrollTo( self.$current_drag.IMHWPB.scrollStartX, self.$current_drag.IMHWPB.scrollStartY );
+						self.$current_drag.IMHWPB.hasLockedScroll = true;
+					}
+				}
+			};
+		}
 	};
 
 	/**
@@ -1039,7 +1072,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$body.append(self.$current_drag);
 			}
 		} );
- 
+
 		self.$interaction_container
 			.on( 'dragstart.draggable', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
 			.on( 'dragstart.draggable', 'img, a', self.drag_handlers.hide_tooltips )
@@ -1332,6 +1365,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$master_container.trigger( self.drag_end_event, self.$temp_insertion );
 		self.refresh_handle_location();
 		self.$current_drag = null;
+		self.$master_container.removeClass( 'drag-progress' );
 	};
 	
 	/**
@@ -1950,7 +1984,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.remove_border_classes( self.$master_container );
 
 		var $container = self.$master_container.find( 'body' );
-
+		
 		if ( !$container.length ) {
 			$container = self.$master_container;
 		}
@@ -2505,6 +2539,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * This function is used to drag colummns 
 	 */
 	this.reposition_column = function ( page_x, page_y  ) {
+		
 		if ( self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column == false ) {
 			
 			if ( self.$current_drag.IMHWPB.row_min_max.offset_top > page_y || 
@@ -2593,6 +2628,23 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 	
 	/**
+	 * When on an IE browser, init some variables to be used to lock scroll and delay drag.
+	 * 
+	 * @since 1.1.1.3
+	 */
+	this.ieDragStart = function () {
+		self.$current_drag.IMHWPB.scrollStartX = window.scrollX;
+		self.$current_drag.IMHWPB.scrollStartY = window.scrollY;
+		self.$current_drag.IMHWPB.dragStarted = false;
+		self.$current_drag.IMHWPB.hasLockedScroll = false;
+
+		// After 500 milliseconds, enable Drag.
+	//	setTimeout( function() {
+			self.$current_drag.IMHWPB.dragStarted = true;
+	//	}, 500 );
+	};
+	
+	/**
 	 * This object contains all the event handlers used for DND (Drag and Drop)
 	 */
 	this.drag_handlers = {
@@ -2653,7 +2705,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		/**
 		 * When the Dragging begins We we set a drag image, hide the current
-		 * drag image, and set some intial drag properties
+		 * drag image, and set some initial drag properties
 		 */
 		start : function( event ) {
 
@@ -2669,6 +2721,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}, 100 );
 			
 			self.$current_drag = $tooltip.next().addClass( 'dragging-imhwpb' );
+			self.$master_container.addClass( 'drag-progress' );
 
 			if ( self.$current_drag.parent( 'a' ).length ) {
 				self.original_html = self.$current_drag.parent( 'a' )[0].outerHTML;
@@ -2687,6 +2740,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				'is_content' : self.$current_drag.is( self.content_selectors.join() ),
 				'height' : self.$current_drag.outerHeight(),
 				'width' : self.$current_drag.outerWidth(),
+				'dragStarted' : true
 			};
 
 			// Save the column size at drag start so that it wont be recalculated
@@ -2847,8 +2901,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				 * this is important
 				 * This was moved to "over" on 10/14/15
 				 */
-				self.reposition_row( event.originalEvent.pageY );
-				self.reposition_column( event.originalEvent.pageX, event.originalEvent.pageY  );
+				if ( self.$current_drag.IMHWPB.dragStarted ) {
+					self.reposition_row( event.originalEvent.pageY );
+					self.reposition_column( event.originalEvent.pageX, event.originalEvent.pageY  );
+				}
 				
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
@@ -3667,7 +3723,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * 'mouseup'
 		 */
 		'mousemove.draggable' : function( event, $element ) {
-			if ( !self.resize ) {
+			if ( ! self.resize && ! self.ie_version  ) {
 				var position_x = self.pageX;
 				var border_hover = false;
 				if ( typeof event != 'undefined' && event != null ) {
@@ -3690,6 +3746,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 						tinymce.activeEditor.boldgridResize = false;
 					}
 				}
+			}
+			
+			// If for some reason drag is still active, remove it.
+			if ( self.$current_drag ) {
+				self.drag_handlers.end( event );
 			}
 		},
 		/**
