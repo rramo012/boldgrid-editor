@@ -2055,7 +2055,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		if ( false == $target.closest( '.draggable-tools-imhwpb' ).length ) {
 			$target.trigger( 'mouseenter' );
-			self.resize_event_map['mousemove.draggable']( null, $target );
 		}
 	};
 
@@ -3684,7 +3683,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * 'mouseup'
 		 */
 		'mousemove.draggable' : function( event, $element ) {
-			if ( ! self.resize && ! self.ie_version  ) {
+			if ( ! self.resize ) {
 				var position_x = self.pageX;
 				var border_hover = false;
 				if ( typeof event != 'undefined' && event != null ) {

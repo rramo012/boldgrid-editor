@@ -425,11 +425,20 @@ IMHWPB.Editor = function( $ ) {
 					// Stop tinymce from preventing out event.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
 					e.preventDefault = function () {};
-					
-					// Fake the target so that cE checking evals a different element.
-					newDiv = document.createElement( 'div' );
-					newDiv.contentEditable = false;
-					e.target = newDiv;
+
+					if ( self.draggable && self.draggable.ie_version ) {
+						// Fake the target so that cE checking evals a different element.
+						newDiv = document.createElement( 'div' );
+						newDiv.contentEditable = false;
+						e.target = newDiv;
+					}
+				}
+			} );
+			
+			editor.on( 'dragstart', function( e ) {
+				var $target = $( e.originalTarget );
+				if ( $target.hasClass( 'popover-imhwpb' ) ) {
+					e.preventDefault();
 				}
 			} );
 			
