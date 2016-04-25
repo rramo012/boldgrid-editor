@@ -415,8 +415,20 @@ IMHWPB.Editor = function( $ ) {
 			 * On mouse down of the drag tools, prevent tinymce from blocking event.
 			 */	
 			editor.on( 'mousedown', function( e ) {
-				if ( $( e.target ).closest( '.draggable-tools-imhwpb' ).length || true === tinymce.activeEditor.boldgridResize ) {
-					var newDiv;
+				
+				if ( ! self.draggable ) {
+					return;
+				}
+				
+				var $target = $( e.target ),
+					isResizing = ( true === tinymce.activeEditor.boldgridResize ), 
+					isPopoverChild = $target.closest( '.draggable-tools-imhwpb' ).length,
+					isActionItem = ! self.draggable.ie_version && $target.hasClass( 'action-list' )
+						&& ! $target.attr( 'draggable' ),
+					isPopover = isPopoverChild && ! isActionItem,
+					newDiv;
+
+				if ( isPopover || isResizing ) {
 					
 					// Stop tinymce DragDropOverrides.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/DragDropOverrides.js#L164.
@@ -426,12 +438,10 @@ IMHWPB.Editor = function( $ ) {
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
 					e.preventDefault = function () {};
 
-					if ( self.draggable && self.draggable.ie_version ) {
-						// Fake the target so that cE checking evals a different element.
-						newDiv = document.createElement( 'div' );
-						newDiv.contentEditable = false;
-						e.target = newDiv;
-					}
+					// Fake the target so that cE checking evals a different element.
+					newDiv = $( '<div><div></div></div>' );
+					newDiv[0].contentEditable = false;
+					e.target = newDiv[0];
 				}
 			} );
 			

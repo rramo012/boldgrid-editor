@@ -1434,6 +1434,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	/**
 	 * Returns the type of the given element
+	 * TODO: elimnate the use of this function when possible, consumes alot of resources on edge.
 	 */
 	this.get_element_type = function( $element ) {
 		var type = '';
@@ -2866,6 +2867,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					self.reposition_column( event.originalEvent.pageX, event.originalEvent.pageY  );
 				}
 				
+				// Don't auto scroll when modifying a nested row.
+				if ( self.$body.hasClass( 'editing-as-row' ) ) {
+					return;
+				}
+				
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
 				var buffer_area = 100;
@@ -3592,6 +3598,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			self.$master_container.trigger( self.add_column_event );
 			$current_click.closest( '.popover-menu-imhwpb' ).addClass('hidden');
+			
+			if ( self.ie_version ) {
+				self.refresh_handle_location();
+			}
 		},
 
 		/**

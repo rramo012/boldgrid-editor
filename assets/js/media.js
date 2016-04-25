@@ -146,6 +146,8 @@ IMHWPB.Media = function( $ ) {
 								//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
 								//wp.media.editor.insert( html_to_insert );
 							}
+							
+							$( window ).trigger( 'resize' );
 						};
 						
 						//Insert into page aciton
