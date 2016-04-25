@@ -1135,7 +1135,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.track_window_size = function() {
 		self.active_resize_class = self.determine_class_sizes();
 		self.$window.on( 'load resize', function() {
-			self.active_resize_class = self.determine_class_sizes();
+			setTimeout( function() {
+				self.active_resize_class = self.determine_class_sizes();
+			}, 300 );
 		} );
 	};
 
@@ -3525,7 +3527,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $current_click = $( this );
 			var $element = $current_click.closest( '.draggable-tools-imhwpb' ).next();
 			var element_type = self.get_element_type( $element );
-
 			if ( element_type == 'row' || element_type == 'content' ) {
 				var $cloned_element = $element.clone();
 				$cloned_element[0].popover = null;
@@ -3535,6 +3536,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var $row = $element.closest_context( self.row_selectors_string,
 					self.$master_container );
+
 				var column_size = self.find_column_size( $element );
 				var layout_format = self.get_layout_format( $row );
 				var layout_transform = self.find_layout_transform( layout_format, column_size );
