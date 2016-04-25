@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.1.1.3 =
+* Bug fix:		JIRA WPB-1847	Addressing issues with drag and drop in Safari and Microsoft Edge w/ WP 4.5.
+
 = 1.1.1.2 =
 * Bug fix:		JIRA WPB-1842	Addressing issues with drag and drop in Chrome and FF w/ WP 4.5.
 
