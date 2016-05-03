@@ -97,7 +97,7 @@
 .resize-border-right-imhwpb,
 .resize-border-left-imhwpb,
 .draggable-tools-imhwpb + *:not(button) {
-    border:1px dashed gray !important;
+    outline: 1px dashed gray !important;
 }
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,

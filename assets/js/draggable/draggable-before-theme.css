@@ -18,7 +18,8 @@ h5,
 h6,
 [data-imhwpb-draggable="true"],
 .wpview-wrap { 
-  border:1px dashed rgba(0, 0, 0, 0.0);
+  transition: outline .5s;
+  outline: 1px dashed rgba(0,0,0,0) !important;
 }
 
 hr {
