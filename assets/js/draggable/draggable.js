@@ -7,38 +7,38 @@
  */
 
 /**
- * DO NOT AUTO FORMAT 
+ * DO NOT AUTO FORMAT
  * Allows a user to drag columns, content and rows in a grid
  */
 jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var self = this;
 	var most_recent_enter = [];
 	var most_recent_row_enter = [];
-	
+
 	self.ie_version;
 	self.isSafari;
-	
+
 	/**
 	 * The jQuery object that the user indicated was draggable
 	 */
 	self.$master_container = this;
-	
+
 	//Some Jquery Selectors to be reused
 	self.$window = $( window );
 	self.$body = self.$master_container.find('body');
 	self.$resize_overlay = $('<div id="boldgrid-draggable-resizing-overlay"></div>');
 	self.$master_container.find('html').append(self.$resize_overlay);
 	self.original_selector_strings = {};
-	
-	//Tinymce elements used for auto scrolling 
+
+	//Tinymce elements used for auto scrolling
 	//This may be just as unreliable
 	//tinymce.activeEditor.theme.panel._items[0]._id //32
 	//tinymce.activeEditor.theme.panel._items[2]._id //38
 	self.$mce_32 = $( '#mceu_34' );
 	self.$mce_38 = $( '#mceu_40' );
-	self.$post_status_info = $( '#post-status-info' ); 
-	
-	/** Popover Menu Items to be added **/ 
+	self.$post_status_info = $( '#post-status-info' );
+
+	/** Popover Menu Items to be added **/
 	var additional_menu_items = settings.menu_items || [];
 
 	/** Testing and debug flag that prevents popovers from being removed. Useful for testing placements **/
@@ -46,21 +46,21 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	/** How long should we wait before removing or displaying a new popover **/
 	this.hover_timout = settings.hover_timout || 175;
-	
+
 	/** Should popovers be removed while the user is typing **/
 	this.type_popover_removal = settings.type_popover_removal || true;
-	
+
 	/**
 	 * The interaction container refers to the wrapper that holds all the draggable items
 	 */
 	this.$interaction_container;
-	
+
 	//BoldGrid menu item clicked
 	this.$boldgrid_menu_action_clicked;
 
 	//Last occurrence of an auto scroll
 	this.last_auto_scroll_event = null;
-	
+
 	//Is the user editing anested row
 	this.editting_as_row = false;
 
@@ -76,7 +76,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			add_element : null
 		}
 	};
-	
+
 	/**
 	 * These color alias' help to make sure that the text and background color have enough contrast
 	 */
@@ -90,7 +90,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'transparent'
 		]
 	};
-	
+
 	/**
 	 * A value indicating how fast the auto scroll will move per element.
 	 */
@@ -102,20 +102,20 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	// this.master_container_id = '#' + .uniqueId().attr('id');
 	this.master_container_id = ''; // Temp because document cant have ID
-	
+
 	/**
 	 * Event that indicates that dragging has finished and started
 	 */
 	this.resize_finish_event = $.Event( 'resize_done_dwpb' );
 	this.resize_start_event = $.Event( 'resize_start_dwpb' );
 	this.boldgrid_modify_event = $.Event( 'boldgrid_modify_content' );
-	
-	/** Event fire once row has been added **/ 
+
+	/** Event fire once row has been added **/
 	this.add_row_event = $.Event( 'add_row_event_dwpb' );
-	
+
 	/** Triggered once an element is deleted **/
 	this.delete_event = $.Event( 'delete_dwpb' );
-	
+
 	/** Triggered once an elements contents are cleared **/
 	this.clear_event = $.Event( 'clear_dwpb' );
 
@@ -128,7 +128,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * An event that indicates the dragging has started
 	 */
 	this.drag_start_event = $.Event( 'drag_start_dwpb' );
-	
+
 	/**
 	 * An event that indicates the dragging has started
 	 */
@@ -391,19 +391,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// WP specific wrapper
 		'.wpview-wrap:not(' + self.master_container_id + ' .row .row .wpview-wrap)',
-		
+
 		'blockquote:not(.row .row blockquote)',
 		'code:not(.row .row code)',
 		'abbr:not(.row .row abbr)',
 	];
-	
+
 	/**
 	 * A string containing the eligible content selectors A "content element" is
 	 * an element that can.. - be placed into a column - be placed outside of a
 	 * row - be sorted in a container Initialized at page load.
 	 */
 	var nested_mode_content_selectors = [
-		
+
 		// Headings
 		'.row .row h1',
 		'.row .row h2',
@@ -412,36 +412,36 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row .row h5',
 		'.row .row h6',
 		'.row .row h7',
-		
+
 		'.row .row a',
-		
+
 		// Common Drag Content
 		'.row .row img:not(p img):not(a img)',
 		'.row .row p',
 		'.row .row button:not(p button):not(a button)',
-		
+
 		// Lists
 		'.row .row ul',
 		'.row .row ol',
 		'.row .row dl',
-		
+
 		// Additional Content
 		'.row .row form',
 		'.row .row table',
-		
+
 		// Nested Rows - Not rows nested out of master container
 		'.row .row .row',
-		
+
 		// Custom definitions
 		'.row .row [data-imhwpb-draggable="true"]',
-		
+
 		// WP specific wrapper
 		'.row .row .wpview-wrap',
 		'.row .row code',
 		'.row .row blockquote',
 		'.row .row abbr',
 	];
-	
+
 	/**
 	 * These are the selectors that will interact with a row when dragging it
 	 */
@@ -473,7 +473,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'> blockquote',
 		'> abbr'
 	];
-	
+
 	/**
 	 * An outline of the sizes (Percentage) that corresponds to a column class.
 	 * For example a col-2 should be .167% of the row size
@@ -636,19 +636,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			+ '<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
 			+ '<span  class="genericon genericon-move" aria-hidden="true"> </span>'
 			+ '</div>';
-			
+
 			popover +=  "<div class='popover-menu-imhwpb hidden'><ul>";
 			$.each( menu_options[ type ], function( key, value ) {
 				var draggable = '';
 				if ( key == 'nest-row' ) {
 					draggable = 'draggable="true"';
 				}
-				
+
 				popover += "<li class='no-select-imhwpb action-list' " + draggable + " data-action='" + key + "'>" + value + "</li>";
 			} );
-			
+
 			popover += '</ul></div>';
-			
+
 			popover += '<div title="Modify" class="context-menu-imhwpb draggable-button"> '
 				+ '<span  class="genericon genericon-menu" aria-hidden="true"></span>'
 				+ '</div>';
@@ -657,7 +657,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				popover += '<div title="Edit As Row" class="edit-as-row draggable-button">'
 				+ '<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
 			}
-			
+
 
 
 
@@ -669,7 +669,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.init = function() {
 		self.$interaction_container = self.determine_interaction_container();
-		
+
 		//Init fourpan
 		self.$master_container.fourpan({
 			element_padding : 0,
@@ -690,10 +690,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		return self;
 	};
-	
+
 	/**
 	 * Store the original of the selector strings
-	 * If they get modified during the process of the editor processing, 
+	 * If they get modified during the process of the editor processing,
 	 * These should be used for validation
 	 */
 	var save_original_selector_strings = function () {
@@ -710,7 +710,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			draggable_selectors_string : self.draggable_selectors_string,
 		};
 	};
-	
+
 	/**
 	 * Create all selector strings from configuration arrays
 	 */
@@ -735,17 +735,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		//This should be the column selector string without the visible keyword but may not be working as intended
 		self.column_selectors_string = self.format_column_selectors( self.general_column_selectors, true ).join();
 		self.unformatted_column_selectors_string = self.column_selectors_string.replace(/:visible/, '');
-		
+
 		self.general_column_selectors_string = self.general_column_selectors.join();
 		self.immediate_column_selectors_string = self.format_immediate_column_selectors( self.general_column_selectors ).join();
-		
-		
+
+
 		/**
 		 * Combination of all selectors
 		 */
 		self.draggable_selectors_string = self.format_draggable_selectors_string();
 	};
-	
+
 	/**
 	 * Initialize the background colors of the window to facilitate editing
 	 * If being used within WP_TINYMCE this should really be done from the theme.
@@ -753,18 +753,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.set_background_colors = function () {
 		//On init set the background colors
 		var background_color = self.$body.css ( 'background-color' );
-		
+
 		//If the background color is transparent set the background color to white
 		if ( self.color_is (background_color, 'transparent') || self.color_is ( background_color, 'white' ) ) {
 			self.$body.css ( 'background-color', 'white' );
-			
+
 			//If the background color is white and the color of the text is white,
 			//set the text to black
 			if ( self.color_is(self.$body.css ('color'), 'white') ) {
 				self.$body.css ( 'color', 'black' );
 			}
 		}
-	}
+	};
 
 	/**
 	 * Clean Up the markup and add any needed classes/wrappers
@@ -774,17 +774,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.wrap_content_elements();
 		self.add_redundant_classes();
 	};
-	
+
 	/**
 	 * Remove Classes that were added during drag.
-	 * 
+	 *
 	 * @since 1.1.1.3
 	 */
 	this.failSafeCleanup = function () {
 		self.$master_container.find( '.dragging-started-imhwpb' ).remove();
 		self.$master_container.find( '.cloned-div-imhwpb' ).removeClass( 'cloned-div-imhwpb' );
 	};
-	
+
 	/**
 	 * Wrap images and anchors in paragraph
 	 * This is done because tinyMCE frequently does this which causes irregularities
@@ -807,14 +807,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Wrap all hr tags in a draggable div This should be called everytime dom
 	 * content is inserted
 	 */
-	this.wrap_hr_tags = function() { 
+	this.wrap_hr_tags = function() {
 		// this needs to occur everytime something is added to page
 		self.$master_container.find( 'hr' ).each( function() {
 			// Find out its already draggable
 			var $this = $( this );
 
 			if ( !$this.closest_context( self.original_selector_strings.content_selectors_string, self.$master_container ).length ) {
-				var $closest_receptor = $this.closest_context(self.original_selector_strings.row_selectors_string 
+				var $closest_receptor = $this.closest_context(self.original_selector_strings.row_selectors_string
 					+ ', '+ self.original_selector_strings.general_column_selectors_string, self.$master_container );
 				if ( $closest_receptor.is( self.original_selector_strings.row_selectors_string ) ) {
 					$this.wrap( "<div class='col-md-12'><div class='row'><div class='col-md-12'></div></div></div>" );
@@ -864,25 +864,25 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.bind_menu_items();
 		self.bind_additional_menu_items();
 		self.bind_edit_row();
-		
+
 		//This event should be bound to another mce event
 		setTimeout( function () {
 			self.set_background_colors();
 		}, 1000);
 	};
-	
+
 	var disable_edit_as_row = function () {
 		if ( self.editting_as_row ) {
 			//Restore Content Selectors
 			self.content_selectors = self.original_selectors.content;
 			self.row_selector = self.original_selectors.row;
-	
+
 			self.create_selector_strings();
-			
+
 			self.$master_container.off( '.draggable' );
 			self.bind_events();
-			
-			
+
+
 			$.fourpan.$recent_highlight.removeClass('current-edit-as-row');
 			self.editting_as_row = false;
 
@@ -890,29 +890,29 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.window_mouse_leave();
 		}
 	};
-	
+
 	var activate_edit_as_row = function () {
 		//Save Content Selectors
 		self.original_selectors = {};
 		self.original_selectors.content = self.content_selectors;
 		self.original_selectors.row = self.row_selector;
-		
+
 		self.content_selectors = nested_mode_content_selectors;
 		self.row_selector = [self.nested_row_selector_string];
-		
+
 		self.create_selector_strings();
-		
+
 		self.$master_container.off( '.draggable' );
 		self.bind_events();
-		
+
 		self.$master_container.find('.current-edit-as-row').removeClass('current-edit-as-row');
 		$.fourpan.$recent_highlight.addClass('current-edit-as-row');
-		
+
 		self.editting_as_row = $.fourpan.$recent_highlight;
 		self.$body.addClass('editing-as-row');
 		self.window_mouse_leave();
 	};
-	
+
 	/**
 	 * When the user clicks edit as row
 	 */
@@ -921,13 +921,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $this = $(this);
 			var $element = $this.closest( '.draggable-tools-imhwpb' ).next();
 			self.$master_container.trigger( self.boldgrid_edit_row, $element );
-			
+
 			if ( self.editting_as_row ) {
 				$.fourpan.dismiss( );
-			} else {			
+			} else {
 				$.fourpan.highlight($element);
 			}
-		
+
 		});
 	};
 
@@ -952,12 +952,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				menu_clicked = true;
 			} else if ( $this.closest( '.context-menu-imhwpb' ).siblings('.popover-menu-imhwpb:visible').length ) {
 				menu_clicked = true;
-			} 
+			}
 		}
-		
+
 		if ( menu_clicked == false ) {
 			var $popovers = self.$master_container.find( '.popover-menu-imhwpb' );
-			
+
 			if ( $this ) {
 				$popovers.not($this.closest('.popover-menu-imhwpb')).addClass('hidden');
 			}
@@ -972,7 +972,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.$master_container.is_typing_boldgrid();
 		}
 	};
-	
+
 	/**
 	 * Bind all general events to the container
 	 */
@@ -985,7 +985,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', self.failSafeCleanup )
 			.on( 'click.draggable', '.context-menu-imhwpb', self.setup_context_menu )
 			.on( 'boldgrid_modify_content.draggable', self.refresh_fourpan );
-		
+
 		if ( self.type_popover_removal ) {
 			self.$master_container
 				.on( 'start_typing_boldgrid.draggable', self.typing_events.start )
@@ -1001,17 +1001,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'mouseleave.draggable', self.window_mouse_leave )
 			.on( 'mouseup.draggable', self.master_container_mouse_up )
 			.on( 'mousemove.draggable', self.mousemove_container );
-		
+
 		if ( self.ie_version > 11 || !self.ie_version ) {
 			self.$interaction_container.on( self.resize_event_map, self.column_selectors_string );
 		}
 	};
-	
+
 	/**
 	 * Initializes event binds for drop down menu clicks
 	 */
 	this.bind_menu_items = function() {
-		
+
 		self.$master_container
 			.on( 'click.draggable', 'li[data-action="delete"]', self.menu_actions.delete_element )
 			.on( 'click.draggable','li[data-action="add-column"]', self.menu_actions.add_column )
@@ -1025,7 +1025,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 		;
 	};
-	
+
 	/**
 	 * Initializes event binds for drop down menu clicks: for menu items passed
 	 * in at initialization
@@ -1043,7 +1043,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.bind_drag_listeners = function() {
 
 		self.$window.on( 'dragover.draggable', self.drag_handlers.over );
-		
+
 		self.$interaction_container.on( 'dragleave.draggable', function () {
 			if ( !self.$body.find(self.$current_drag).length && self.$current_drag ) {
 				self.$current_drag.hide();
@@ -1061,11 +1061,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'dragenter.draggable', self.drag_handlers.record_drag_enter )
 			;
 	};
-	
+
 	this.refresh_fourpan = function () {
 		//If editing as row update the overlay
 		if ( self.editting_as_row ) {
-			$.fourpan.refresh(); 
+			$.fourpan.refresh();
 		}
 	};
 
@@ -1074,7 +1074,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Reverses a collection
 	 */
 	$.fn.reverse = [].reverse;
- 
+
 	/**
 	 * Removes a popover
 	 */
@@ -1218,7 +1218,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( format_visibility ) {
 			column_selectors = self.format_selectors( selectors ).slice();
 		}
-		
+
 		$.each( column_selectors, function( key, value ) {
 			value = self.row_selectors_string + ' > ' + value;
 			column_selectors[ key ] = value;
@@ -1272,7 +1272,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Once we finish dragging an element, we need to remove the hidden element
 	 */
 	this.finish_dragging = function() {
-		
+
 		if ( self.$cloned_drag_image && self.$cloned_drag_image.remove ) {
 			self.$cloned_drag_image.remove();
 		}
@@ -1286,7 +1286,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.valid_drag = false;
 		self.remove_receptor_containers();
-		
+
 		//We have just modified the DOM
 		self.$master_container.trigger( self.boldgrid_modify_event );
 	};
@@ -1315,7 +1315,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		return true;
 	};
-	
+
 	/**
 	 * Drags the an absolutely position element over another then deletes it
 	 */
@@ -1328,18 +1328,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'left' : parseInt( $draged_element.css( 'left' ) ) + (newOffset.left - dragOffset.left)
 		}, '600', self.drag_cleanup );
 	};
-	
+
 	/**
 	 * Reset the drag operation, deleting any temp data
 	 */
 	this.drag_cleanup = function () {
-		
+
 		//This is just a failsafe, but performing this on IE causes resource spike
 		if ( !self.ie_version ){
 			//Make sure that the transformed layout has the correct elements wrapped
 			self.validate_markup();
 		}
-		
+
 		self.$current_drag.remove();
 		self.finish_dragging();
 		self.$master_container.trigger( self.drag_end_event, self.$temp_insertion );
@@ -1347,9 +1347,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$current_drag = null;
 		self.$master_container.removeClass( 'drag-progress' );
 	};
-	
+
 	/**
-	 * Remove all popovers and then re-add them used for positioning 
+	 * Remove all popovers and then re-add them used for positioning
 	 */
 	this.refresh_handle_location  = function () {
 		// Remove popovers so that they don't reappear in the old location
@@ -1409,7 +1409,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.delete_popovers();
 	};
-	
+
 	/**
 	 * Delete popovers
 	 */
@@ -1488,7 +1488,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If you did not enter your own popover
 		} else if ( $closest_draggable_tools[0] != this.popover || false == $closest_draggable_tools.length ) {
-			
+
 			// If you've entered into your parent, and your parent needs a popover
 			// Only applies to content
 			var type = self.get_element_type( $current_element );
@@ -1505,7 +1505,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			$tools = $current_element.prev( '.draggable-tools-imhwpb' );
 			$draggable = $current_element;
-			
+
 		}//endif
 
 		if ( $draggable && $draggable.length ) {
@@ -1539,7 +1539,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			setTimeout( self.update_handles, self.hover_timout, self.last_hover );
 		}
 	};
-	
+
 	/**
 	 * Delete a popover
 	 */
@@ -1554,7 +1554,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 		}
 	};
-	
+
 	/**
 	 * Return Row, Column, Content or nested-row
 	 */
@@ -1565,7 +1565,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		} else {
 			var type = self.get_element_type( $current );
 		}
-		
+
 		return type;
 	}
 
@@ -1581,12 +1581,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( !type ) {
 			return;
 		}
-		
+
 		// Insert A tooltip before the current element
 		$current.before( self.toolkit_markup( type ) );
 		var $added_tooltip = $current.prev( '.draggable-tools-imhwpb' );
 		var $offset = $current.offset();
 		var $parent_offset = $current.offsetParent().offset();
+
 		// Attach a popover object to the element so that it can be removed more
 		// easily
 		$current[0].popover = $added_tooltip[0];
@@ -1597,14 +1598,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$content_tooltip.remove();
 			}
 			self.$content_tooltip = $added_tooltip;
-			
+
 			//Min Left of 25
 			var current_bounding_rect = $current[0].getBoundingClientRect();
 			var left = current_bounding_rect.left - 17;
 			if ( left < 25 ) {
 				left = 25;
-			} 
-			
+			}
+
 			$added_tooltip.css( {
 				'top' : current_bounding_rect.top - 25,
 				'left' : left,
@@ -1615,9 +1616,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$column_tooltip.remove();
 			}
 			self.$column_tooltip = $added_tooltip;
-			
+
 			var current_bounding_rect = $current[0].getBoundingClientRect();
-			
+
 			$added_tooltip.css( {
 				'top' : current_bounding_rect.top,
 				'left' : current_bounding_rect.left,
@@ -1633,7 +1634,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			} );
 		}
 	};
-	
+
 	/**
 	 * Shortcut to get all elements that are direct decendents of the body
 	 */
@@ -1648,13 +1649,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		var $current = $( this );
 
 		if ( !self.resize && !self.popovers_disabled ) {
-			
+
 			//If the user only has a paragraph on the page, don't show a popover
 			var $top_level_elements = self.get_top_level_elements();
 			if ( $top_level_elements.length === 1 && $top_level_elements[0].tagName == 'P') {
 				return;
 			}
-			
+
 			// If you have entered a popover rewrite to the popovers element
 			var $closest_draggable = $current.closest( '.draggable-tools-imhwpb' );
 			if ( $closest_draggable.length ) {
@@ -1683,24 +1684,24 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.update_handles = function( last_hover ) {
 		// If the last time we hovered over an element, was this event,
 		if ( last_hover == self.last_hover ) {
-			
+
 			//Do not show popovers while the user is typing
 			if ( self.is_typing && self.is_typing == true ) {
 				return false;
 			}
-			
+
 			// Apply hover_elements
 			$.each( self.hover_elements,
 				function( type, properties ) {
 					if ( this.add_element
 						&& false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
-						
+
 						self.insert_popover( this.add_element );
-						
+
 					} else if ( this.remove_element ) {
-						
+
 						self.remove_drag_handle( this.remove_element.element, this.remove_element.tools );
-						
+
 					}
 
 					// Failsafe due to poor design
@@ -1782,7 +1783,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	/**
 	 * Checks to see if the column passed in is an adjacent column
-	 * 
+	 *
 	 * @return boolean
 	 */
 	this.check_adjacent_column = function( stack, sibling_column ) {
@@ -1944,7 +1945,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.remove_resizing_classes = function ( $container ) {
 		$container.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
 	};
-	
+
 	/**
 	 * Remove border classes
 	 */
@@ -1956,7 +1957,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.removeClass(
 				'resize-border-right-imhwpb resizing-imhwpb resize-border-left-imhwpb content-border-imhwpb' );
 	};
-	
+
 	/**
 	 * Method to be called when the resize process has completed
 	 */
@@ -1965,7 +1966,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.remove_border_classes( self.$master_container );
 
 		var $container = self.$master_container.find( 'body' );
-		
+
 		if ( !$container.length ) {
 			$container = self.$master_container;
 		}
@@ -1977,7 +1978,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$master_container.trigger( self.resize_finish_event );
 	};
 
-	
+
 	/**
 	 * Events to trigger when the users mouse leaves the window
 	 */
@@ -1988,7 +1989,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.remove_resizing_classes( self.$master_container );
 		self.remove_all_popovers();
-		
+
 		self.hover_elements = {
 			'content' : null,
 			'column' : null,
@@ -2184,7 +2185,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				return false;
 			}
 		} );
-		
+
 		//We have just modified the DOM
 		self.$master_container.trigger( self.boldgrid_modify_event );
 	};
@@ -2239,7 +2240,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				'left' : event.originalEvent.pageX
 			};
 		}
-		
+
 		self.$current_drag.offset( offset_properties );
 		self.$current_drag.show();
 	};
@@ -2269,13 +2270,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.color_is = function (color_returned, color) {
 		return self.color_alias[color].indexOf(color_returned) !== -1;
 	};
-	
+
 	/**
 	 * Logic used for adding a maximum height
 	 * If the height of the element if >= 200
 	 * 		then max_height * 1.25
-	 * Else 
-	 * 		max_height = 250  
+	 * Else
+	 * 		max_height = 250
 	 */
 	var add_max_height_styles = function ( $element, cur_height ) {
 		if ( cur_height >= 200 ) {
@@ -2288,7 +2289,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'overflow': 'hidden'
 		});
 	};
-	
+
 	/**
 	 * Add Max heights to rows if dragging a column
 	 * Add Max Heights to content if dragging content
@@ -2307,7 +2308,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			add_max_height_styles( self.$temp_insertion, self.$current_drag.IMHWPB.height );
 		}
 	}
-	
+
 	/**
 	 * Remove the list of styles that we add for max heights
 	 */
@@ -2317,7 +2318,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'overflow': ''
 		});
 	}
-	
+
 	/**
 	 * We've added max heights to rows and content elements while dragging
 	 * Remove them so that the editor is WYSIWYG after drag is finished
@@ -2329,18 +2330,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			remove_max_height_styles(self.$temp_insertion);
 		}
 	}
-	
+
 	this.get_other_top_level_elements = function () {
 		return self.$body.find(self.immediate_row_siblings_string).not(self.$current_drag);
 	};
-	
+
 	/**
 	 * Find max and min y cord used for dragging rows
 	 */
 	this.find_page_min_max = function () {
 		var min_max = {};
 		if ( self.$current_drag.IMHWPB.is_row ) {
-			
+
 			var $other_top_level_elements = self.get_other_top_level_elements();
 
 			var $first = $other_top_level_elements.eq(0);
@@ -2351,10 +2352,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				'offset_bottom' : $last[0].getBoundingClientRect().top + $last.outerHeight(true)
 			}
 		}
-		
+
 		return min_max;
 	};
-	
+
 	/**
 	 * Find boundries of a column when dragging within a row
 	 * in the locked setting
@@ -2364,7 +2365,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( self.$current_drag.IMHWPB.is_column ) {
 			var $row = self.$current_drag.closest('.row');
 			var row = $row.get(0);
-			
+
 			var client_rect = row.getBoundingClientRect();
 			min_max = {
 				'offset_left' : client_rect.left,
@@ -2376,28 +2377,28 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		return min_max;
 	};
-	
+
 	/**
 	 * Find the the points of each top level element at which a dragged element
 	 * should be placed before or after
-	 * 
+	 *
 	 * This is used everytime the location of an element changes during dragging a row as well
 	 * as the start of a row drag.
-	 * 
+	 *
 	 * Instead of doing the math everytime the over event triggers, do this only when needed
-	 * This allows us to use a simple comparison operator later. 
+	 * This allows us to use a simple comparison operator later.
 	 */
 	this.find_top_level_positions = function () {
 
-		var positions = [];		
+		var positions = [];
 		if ( self.$current_drag.IMHWPB.is_row ) {
 			var $other_top_level_elements = self.get_other_top_level_elements();
-			
+
 			$other_top_level_elements
 				.each( function () {
 					var $this = $(this);
 					var height = $this.outerHeight(true);
-					
+
 					positions.push({
 						'max' : this.getBoundingClientRect().top + height,
 						'element' : $this
@@ -2406,8 +2407,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		return positions;
-	}
-	
+	};
+
 	/**
 	 * When dragging columns, use this to find the right x point of each element
 	 */
@@ -2420,7 +2421,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					var $this = $(this);
 					var width = $this.outerWidth(true);
 					var bounding_rect = this.getBoundingClientRect();
-					
+
 					positions.push({
 						'max' : bounding_rect.left + width,
 						'element' : $this
@@ -2429,7 +2430,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 		return positions;
 	};
-	
+
 	/**
 	 * Set the current drag properties for a column. These are needed for drag over DnD
 	 */
@@ -2438,7 +2439,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$current_drag.IMHWPB.col_pos = self.find_column_sibling_positions();
 		self.$current_drag.IMHWPB.row_min_max = self.find_row_min_max();
 	};
-	
+
 	/**
 	 * Set the current drag properties for a column. These are needed for drag over DnD
 	 */
@@ -2447,94 +2448,94 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$current_drag.IMHWPB.row_pos = self.find_top_level_positions();
 		self.$current_drag.IMHWPB.row_min_max = self.find_page_min_max();
 	};
-	
+
 	/**
-	 * This function is used to drag colummns 
+	 * This function is used to drag colummns
 	 */
 	this.reposition_row = function ( page_y ) {
 		if ( self.$current_drag.IMHWPB.is_row ) {
-			
+
 			if ( page_y < self.$current_drag.IMHWPB.row_min_max.offset_top ) {
 				var $first_elem = self.get_other_top_level_elements().first();
-				
+
 				if ( $first_elem.get(0) != self.$temp_insertion[0] ) {
 					$first_elem.before( self.$temp_insertion );
 					self.recalc_row_pos();
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
 				}
 				return;
-				
+
 			} else if (  page_y > self.$current_drag.IMHWPB.row_min_max.offset_bottom ) {
 				var $last_elem = self.get_other_top_level_elements().last();
-				
+
 				if ( $last_elem.get(0) != self.$temp_insertion[0] ) {
 					$last_elem.after( self.$temp_insertion );
 					self.recalc_row_pos();
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
 				}
-				
+
 				return;
-				
+
 			}
-			
+
 			//Check each column end point position
 			$.each(self.$current_drag.IMHWPB.row_pos, function () {
-				
+
 				if ( page_y < this.max ) {
 					var $other_elements = self.get_other_top_level_elements();
-					
+
 					if ( most_recent_row_enter[0] == this.element[0] ) {
 						return false;
 					}
 					most_recent_row_enter = this.element;
-					
+
 					//Insert Before if not already there
 					if ($other_elements.index(this.element) < $other_elements.index(self.$temp_insertion)) {
 						this.element.before(self.$temp_insertion);
 						//If the element is before me but not immediately before me, insert immediately before me
-					} else if ( $other_elements.index(this.element) > $other_elements.index(self.$temp_insertion) && 
+					} else if ( $other_elements.index(this.element) > $other_elements.index(self.$temp_insertion) &&
 						$other_elements.index(this.element) - 1 != $other_elements.index(self.$temp_insertion)
 					) {
 						this.element.before( self.$temp_insertion );
 					} else {
 						this.element.after(self.$temp_insertion);
 					}
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
-					
+
 					self.recalc_row_pos();
-					
+
 					return false;
-				} 
+				}
 			});
 		}
 	};
-	
+
 	/**
-	 * This function is used to drag colummns 
+	 * This function is used to drag colummns
 	 */
 	this.reposition_column = function ( page_x, page_y  ) {
-		
+
 		if ( self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column == false ) {
-			
-			if ( self.$current_drag.IMHWPB.row_min_max.offset_top > page_y || 
+
+			if ( self.$current_drag.IMHWPB.row_min_max.offset_top > page_y ||
 					self.$current_drag.IMHWPB.row_min_max.offset_bottom < page_y ) {
 
 				self.$current_drag.IMHWPB.unlock_column = true;
 				var $row = self.entered_target.closest( self.row_selectors_string );
 				if ( $row.length ) {
 					self.move_column_to( self.entered_target ); //Dom mod event triggered in here
-				}	
-				
+				}
+
 				return;
 			}
-			
-			//If the element is outside of the row to the left and the temp insertion is not the first column, 
+
+			//If the element is outside of the row to the left and the temp insertion is not the first column,
 			//insert this column as the first column
 			if ( page_x < self.$current_drag.IMHWPB.row_min_max.offset_left ) {
 				var $first_elem = self.$current_drag
@@ -2542,17 +2543,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					.find( self.immediate_column_selectors_string )
 					.not(self.$current_drag)
 					.eq(0);
-				
+
 				if ( $first_elem.get(0) != self.$temp_insertion[0] ) {
 					$first_elem.before( self.$temp_insertion );
 					self.recalc_col_pos();
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
 				}
 				return;
-				
-			//If the element is outside of the row to the right and the temp insertion is not the last column, 
+
+			//If the element is outside of the row to the right and the temp insertion is not the last column,
 			//insert this column as the last column
 			} else if (  page_x > self.$current_drag.IMHWPB.row_min_max.offset_right ) {
 				var $last_elem = self.$current_drag
@@ -2560,53 +2561,53 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				.find( self.immediate_column_selectors_string )
 				.not(self.$current_drag)
 				.last();
-				
+
 				if ( $last_elem.get(0) != self.$temp_insertion[0] ) {
 					$last_elem.after( self.$temp_insertion );
 					self.recalc_col_pos();
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
 				}
 
 				return;
-				
+
 			}
-			
+
 			//Check each column end point position
 			$.each(self.$current_drag.IMHWPB.col_pos, function () {
 				//
 				if ( page_x < this.max ) {
-					
+
 					if ( most_recent_enter[0] == this.element[0] ) {
 						return false;
 					}
 					most_recent_enter = this.element;
-					
+
 					//Insert Before if not already there
 					if (this.element.nextAll().not(self.$current_drag).filter(self.$temp_insertion).length) {
 						this.element.before(self.$temp_insertion);
-					
+
 					//If the element is before me but not immediatly before me, insert immediatly before me
 					} else if ( this.element.prevAll(self.general_column_selectors_string).not(self.$current_drag).get(0) != self.$temp_insertion[0] ) {
 						this.element.before( self.$temp_insertion );
 					} else {
 						this.element.after(self.$temp_insertion);
 					}
-					
+
 					//We have just modified the DOM
 					self.$master_container.trigger( self.boldgrid_modify_event );
-					
+
 					self.recalc_col_pos();
-					
+
 					return false;
-				} 
-				
+				}
+
 			});
-			
+
 		}
 	};
-	
+
 	/**
 	 * This object contains all the event handlers used for DND (Drag and Drop)
 	 */
@@ -2628,7 +2629,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 */
 		drop : function( event ) {
 			if ( self.$current_drag ) {
-				
+
 				self.prevent_default( event );
 				/**
 				 * IE Fix Dragend does not fire occasionally, but drag drop does
@@ -2656,7 +2657,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.restore_row = null;
 			self.$most_recent_row_enter_add = null;
 			self.remove_max_heights();
-			
+
 			if ( self.dragImageSetting == 'actual' ) {
 				self.slide_in_place( self.$current_drag, self.$temp_insertion );
 			} else {
@@ -2676,13 +2677,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.drag_drop_triggered = false;
 			var $this = $(this);
 			var $tooltip = $this.closest( '.draggable-tools-imhwpb' );
-			
+
 			setTimeout( function() {
 				self.$master_container
 					.find( '.draggable-tools-imhwpb' )
 					.addClass( "hidden" );
 			}, 100 );
-			
+
 			self.$current_drag = $tooltip.next().addClass( 'dragging-imhwpb' );
 			self.$master_container.addClass( 'drag-progress' );
 
@@ -2711,7 +2712,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$current_drag.IMHWPB.is_row = false;
 				self.$current_drag.IMHWPB.is_content = true;
 			}
-			
+
 			if ( self.$current_drag.IMHWPB['is_column'] ) {
 				self.$current_drag.IMHWPB['column_size'] = self
 					.find_column_size( self.$current_drag );
@@ -2743,22 +2744,22 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				} ).addClass( 'hidden dragging-started-imhwpb' );
 
 				self.$current_drag.attr( 'data-mce-bogus', "all" );
-				
+
 				//Set the background color to inherit
 				if ( self.color_is(self.$current_drag.css('background-color'), 'transparent') ) {
 					self.$current_drag.css('background-color', 'inherit');
 				}
-				
+
 				setTimeout( function () {
 					//If the background is still transparent, set to white
 					if ( self.color_is ( self.$current_drag.css('background-color'), 'transparent') ) {
-						self.$current_drag.css( { 
+						self.$current_drag.css( {
 							'background-color': 'white',
 							'color': '#333'
 						});
 				  	}
 				}, 100);
-				
+
 				// Setting Drag Image is not allowed in IE, and fails on safari.
 				if ( typeof event.originalEvent.dataTransfer.setDragImage != "undefined" && ! self.isSafari ) {
 
@@ -2791,7 +2792,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.recalc_col_pos();
 
 				//If the row has not stacked with columns, allow the rail dragging && desktop view
-				if ( self.find_row_size( self.$current_drag.closest('.row') ) <= 12 
+				if ( self.find_row_size( self.$current_drag.closest('.row') ) <= 12
 					&& self.active_resize_class == 'col-md'
 					&& self.$current_drag.siblings( self.unformatted_column_selectors_string ).not( self.$temp_insertion ).length
 				//	&& !self.editting_as_row
@@ -2806,10 +2807,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			} else {
 				self.$current_drag.IMHWPB.type = 'content';
 			}
-			
+
 			//Set max height to rows and content
 			self.add_max_heights();
-			
+
 			// This timeout is needed so that there isnt a flsh on the screen in
 			// chrome/ie
 			// You cannot modify the drag object in this event
@@ -2817,16 +2818,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( self.ie_version ) {
 				timeout_length = 150;
 			}
-			
+
 			setTimeout( function() {
 				self.$current_drag.removeClass( 'hidden' );
 				self.$master_container.trigger( self.drag_start_event );
 				self.$master_container
 					.find( '.resizing-imhwpb' )
 					.removeClass( 'resizing-imhwpb' );
-					
+
 			}, timeout_length );
-			
+
 		},
 
 		/**
@@ -2852,13 +2853,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			//Prevent Default is required for IE compatibility
 			//Otherwise you'll exp a intermitent drag end
 			event.preventDefault();
-			
+
 			// Handles Auto Scrolling
 			// Only trigger every 50 microseconds
 			if ( !self.last_auto_scroll_event || self.last_auto_scroll_event + 50 <= (new Date).getTime() ) {
 
 				self.last_auto_scroll_event = (new Date).getTime();
-				
+
 				/**
 				 * HANDLE ROW DRAGGING
 				 * this is important
@@ -2868,19 +2869,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					self.reposition_row( event.originalEvent.pageY );
 					self.reposition_column( event.originalEvent.pageX, event.originalEvent.pageY  );
 				}
-				
+
 				// Don't auto scroll when modifying a nested row.
 				if ( self.$body.hasClass( 'editing-as-row' ) ) {
 					return;
 				}
-				
+
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
 				var buffer_area = 100;
 				var distance_from_top = (event.originalEvent.screenY - toolbar_height)
 					- self.$mce_32[0].getBoundingClientRect().bottom;
 				var scroll_from_top = self.$window.scrollTop();
-				
+
 				if ( scroll_from_top >= 125 && distance_from_top <= buffer_area ) {
 					scrollBy( 0, -scroll_speed );
 				}
@@ -2913,15 +2914,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( !self.$current_drag || self.$current_drag.IMHWPB.is_row ) {
 				return;
 			}
-			
+
 			//Prevent Default here causes an issue on IE
 			if ( !self.ie_version ) {
 				event.preventDefault();
 			}
-			
+
 			var $left = $( event.target );
 			var $entered = self.entered_target;
-			
+
 			// Prevent Multiple Events from being triggered at an X and Y
 			// location
 			if ( self.prevent_duplicate_location_events( event ) || !self.$current_drag ) {
@@ -3000,25 +3001,25 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					var parent_has_content = false;
 					var $content_elements = [];
 					if ( entered_child_of_parent ) {
-						
+
 						if ( self.editting_as_row == false ) {
 							//If in the standard view, just check for content inside the parent,
 							//using the content selector, to find out if it has children
 							var $content_elements = $parent
 								.find( self.content_selectors_string + ', .row:not(.row .row .row)' )
 								.not('.dragging-imhwpb');
-							
+
 							parent_has_content = $content_elements.length > 0;
-							
+
 						} else {
 							var $content_elements = $parent
-								//In the edit nested row view we can no longer use the conte selector 
+								//In the edit nested row view we can no longer use the conte selector
 								//string because the string defines context which is invalid here in this find
 								.find( self.general_content_selector_string )
 								.not('.dragging-imhwpb');
-								
+
 							//TODO: This block allows nested rows content to drag back into its column
-							//For some reason the popover menu is inside that column 
+							//For some reason the popover menu is inside that column
 							parent_has_content = $content_elements.length > 0;
 							if ($content_elements.length == 1 && $content_elements.find('[data-action]')) {
 								parent_has_content = false;
@@ -3029,7 +3030,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 							$entered = $parent;
 						}
 					}
-					
+
 					//Entered Column
 					var current_drag_is_parent = $entered.is( self.unformatted_column_selectors_string );
 
@@ -3038,14 +3039,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					* and column is not empty
 					* and you've entered this column from anything outside this column
 					* 		then Remap to the last element in this column
-					*/ 
+					*/
 					if ( current_drag_is_parent && $content_elements.length ) {
 						if ( $entered.find( $left ).length == false ) {
 							$entered = $content_elements.last();
 							parent_has_content = false;
 						}
 					}
-					
+
 					var current_drag_is_sibling = $entered
 						.is( self.unformatted_content_selectors_string + ',hr:not('
 							+ self.master_container_id + '.row .row hr)' );
@@ -3073,7 +3074,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					// Some work above has been done to rewrite the target under
 					// certain circumstances
 					if ( current_drag_is_sibling ) {
-						
+
 						// Content Siblings
 						if ( $entered.is_before( self.$temp_insertion ) ) {
 							$entered.before( self.$temp_insertion );
@@ -3084,7 +3085,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 						} else {
 							$entered.before( self.$temp_insertion );
 						}
-						
+
 						//We have just modified the DOM
 						self.$master_container.trigger( self.boldgrid_modify_event );
 					}
@@ -3098,16 +3099,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 						$direct_descendents = $entered.find('> div');
 
 						// If the first child of the column is a div prepend it
-						if ( $first_child.length 
-								&& $direct_descendents.length === 1 
+						if ( $first_child.length
+								&& $direct_descendents.length === 1
 								&& false == $first_child.is( self.column_selectors_string + ", .draggable-tools-imhwpb" )
 								&& $first_child.is( 'div' ) ) {
-							
+
 							/**
 							 * If you are dragging a content element  
 							 * 		And you are entering a column from outside of the column
-							 *  	And the column you are entering has a Column > DIV 
-							 *		And this column > div has no current content elements 
+							 *  	And the column you are entering has a Column > DIV
+							 *		And this column > div has no current content elements
 							 * Then that drag enter is remapped to the enter the Column > DIV instead 
 							 * Element will prepend the other element of the column regardless of entry point.
 							 */
@@ -3158,13 +3159,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 				}
 
-				
+
 				// If you are dragging outside of the master container, skip
 				// this event
 				if ( false == self.$master_container.has( $entered ).length ) {
 					return true;
 				}
-				
+
 				if ( $entered[0] == self.$temp_insertion[0] ) {
 					return;
 				}
@@ -3177,32 +3178,31 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				//If this is happening in the same row
 				if ( $entered.siblings().filter( self.$temp_insertion ).length ) {
-					
+
 					// If entering a column from a column
 					if ( $entered.is( self.unformatted_column_selectors_string ) ) {
 
 						// If entered a column that is not my own
 						if ( $entered[0] != self.$current_drag[0] ) {
 
-							var $original_dragenter = self.entered_target;
 							var $original_drag_leave = $( event.target );
-	
+
 							// Ive left from a child of this column or the column
 							// itself
 							if ( $entered.find( $original_drag_leave ).length
 								|| $entered[0] == $original_drag_leave[0] ) {
-								
+
 									return true;
 							}
 						}
 					}
 				}
-				
+
 				//Moves element
 				self.move_column_to( $entered );
 			}
 		},
-		
+
 
 		/**
 		 * When the user drag enters into any element, store the element that
@@ -3217,71 +3217,71 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( !self.$current_drag || self.$current_drag.IMHWPB.is_row  ) {
 				return;
 			}
-			
+
 			//Prevent Default here causes an issue on IE
 			if ( !self.ie_version ) {
 				event.preventDefault();
 			}
-			
+
 			self.entered_target = $( event.target );
 		},
 	};
-	
+
 	/**
 	 * Get IE Version
 	 * Thanks To: http://stackoverflow.com/questions/19999388/check-if-user-is-using-ie-with-jquery
 	 */
 	this.get_ie_version = function() {
 		var ua = window.navigator.userAgent;
-		
+
 		var msie = ua.indexOf('MSIE ');
 		if (msie > 0) {
 			// IE 10 or older => return version number
 			return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
 		}
-		
+
 		var trident = ua.indexOf('Trident/');
 		if (trident > 0) {
 			// IE 11 => return version number
 			var rv = ua.indexOf('rv:');
 			return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
 		}
-		
+
 		var edge = ua.indexOf('Edge/');
 		if (edge > 0) {
 			// Edge (IE 12+) => return version number
 			return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
 		}
-		
+
 		// other browser
 		return;
 	}
-	
+
 	/**
 	 * Determine if current browser is safari.
 	 * Thanks To: http://stackoverflow.com/questions/7944460/detect-safari-browser.
-	 * 
+	 *
 	 * @since 1.1.1.3
-	 * 
+	 *
 	 * @return boolean.
 	 */
 	this.checkIsSafari = function () {
 		return /^((?!chrome|android).)*safari/i.test( navigator.userAgent );
 	}
-	
+
 	/**
 	 * Move the column the passed element
 	 */
 	this.move_column_to = function ( $entered ) {
 		var current_drag_is_sibling = $entered.is( self.unformatted_column_selectors_string );
 		var current_drag_is_parent = $entered.is( self.$current_drag.properties.parent );
-		
+
 		// Calculate Row Size
 		var $new_row = $entered.closest_context( self.row_selectors_string,
 			self.$master_container );
 		var $current_row = self.$temp_insertion.closest_context( self.row_selectors_string,
 			self.$master_container );
-		
+
 		var row_size = self.find_row_size( $new_row );
 		if ( $new_row.length && $current_row[0] != $new_row[0] ) {
 			if ( current_drag_is_parent && (row_size >= self.max_row_size) ) {
@@ -3331,16 +3331,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					// Transform the row to allow for the size of the
 					// row. (Reduce row by 3)
 					column_size = 3;
-					
+
 					if ( self.$current_drag.IMHWPB['column_size'] < column_size ) {
 						column_size = self.$current_drag.IMHWPB['column_size'];
 					}
-					
+
 					for ( var i = 0; i < column_size; i++ ) {
 						self.decrease_row_size( $new_row );
 					}
 				}
-				
+
 				if ( column_size ) {
 					// Set the column Size
 					self.change_column_size( self.$temp_insertion, null, column_size );
@@ -3362,7 +3362,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 			self.record_recent_column_insertion();
 		} else if ( current_drag_is_sibling ) {
-		
+
 			// If dragging into new row
 			if ( $entered.is_before( self.$temp_insertion ) ) {
 				$entered.before( self.$temp_insertion );
@@ -3426,7 +3426,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 			$($element[0].outerHTML).insertBefore($element.parent().closest('.row'));
 			self.wp_media_modal_action( event, $element );
-	
+
 		},
 		nest_row : function( event ) {
 			return;
@@ -3436,35 +3436,35 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if (!$element.length) {
 				return;
 			}
-			
+
 			//Look Before
 			var $row_to_nest_in = $element.prevAll( '.row' ).eq(0);
 			if ( !$row_to_nest_in.length ) {
 				//Look After
 				$row_to_nest_in = $element.nextAll( '.row' ).eq(0);
 			}
-			
+
 			//Not Found?
 			if (!$row_to_nest_in.length) {
 				//Create row and nest it
 				$row_to_nest_in = $('<div class="row"><div class="col-md-8"></div></div>');
 				self.$body.prepend($row_to_nest_in);
 			}
-			
+
 			//Find Column
 			var $column_to_nest_in = $row_to_nest_in.find( self.general_column_selectors_string ).eq(0);
 			if ( !$column_to_nest_in.length ) {
 				$column_to_nest_in = $("<div class='col-md-8'></div>");
 				$row_to_nest_in.prepend( $column_to_nest_in );
 			}
-			
+
 			$column_to_nest_in.prepend($element[0].outerHTML);
 			//Focus element scroll
 			//need to trigger event
 		},
 		add_row : function( event ) {
 			var $empty_row = $( '<div class="row"><div class="col-md-12"></div></div>' );
-			var $new_row = $( this ).closest( '.draggable-tools-imhwpb' ).before( $empty_row );
+			$( this ).closest( '.draggable-tools-imhwpb' ).before( $empty_row );
 
 			$empty_row.addClass( 'added-element' );
 			setTimeout( function() {
@@ -3483,13 +3483,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $row = $current_click.closest( '.draggable-tools-imhwpb' ).next();
 			var row_size = self.find_row_size( $row );
 			var $new_column;
-			
+
 			//If this row is empty( only has a br tag ) make sure its blank before adding a column
 			var $children = $row.find('> *');
 			if ( $children.length === 1 && $children[0].tagName == 'BR') {
 				$row.empty();
 			}
-			
+
 			if ( row_size < self.max_row_size && row_size >= min_row_size ) {
 				$new_column = $( '<div class="col-md-' + (self.max_row_size - row_size)
 					+ ' col-sm-12 col-xs-12"></div>' );
@@ -3600,7 +3600,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			self.$master_container.trigger( self.add_column_event );
 			$current_click.closest( '.popover-menu-imhwpb' ).addClass('hidden');
-			
+
 			if ( self.ie_version ) {
 				self.refresh_handle_location();
 			}
@@ -3614,7 +3614,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $current_click = $( this );
 			var $element = $current_click.closest( '.draggable-tools-imhwpb' ).next();
 			var type = self.get_element_type( $element );
-			
+
 			if ( type == 'column') {
 				$element.html('<p><br> </p>');
 			} else {
@@ -3654,14 +3654,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( native_menu_options.indexOf( $clicked_element.data( 'action' ) ) === -1 ) {
 				self.$boldgrid_menu_action_clicked = $clicked_element.closest(
 					'.draggable-tools-imhwpb' ).next()[0];
-				
+
 				self.wp_media_modal_action( event, $clicked_element );
 			}
-			
+
 			self.$master_container.trigger( self.boldgrid_modify_event );
 		}
 	};
-	
+
 	/**
 	 * Every time that we open the media modal this action should occur
 	 */
@@ -3670,7 +3670,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		$clicked_element.closest( '.popover-menu-imhwpb' ).addClass('hidden');
 		self.window_mouse_leave();
 	};
-	
+
 	/**
 	 * Handle the user typing
 	 */
@@ -3712,14 +3712,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 				} else {
 					$element.removeClass( 'resizing-imhwpb' );
-					
+
 					if ( self.ie_version && tinymce ) {
 						tinymce.activeEditor.getBody().setAttribute( 'contenteditable', true );
 						tinymce.activeEditor.boldgridResize = false;
 					}
 				}
 			}
-			
+
 			// If for some reason drag is still active, remove it.
 			if ( self.$current_drag ) {
 				self.drag_handlers.end( event );
