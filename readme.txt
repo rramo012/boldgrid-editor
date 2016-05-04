@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design
 Requires at least: 4.3
-Tested up to: 4.5
+Tested up to: 4.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.1.3 InProgress =
 * Update:		JIRA WPB-1877	Changing borders to outline for draggable objects.
+* Update:		JIRA WPB-1884	Passed WordPress 4.5.1 testing.
 
 = 1.1.2 =
 * Bug fix:		JIRA WPB-1847	Addressing issues with drag and drop in Safari and Microsoft Edge w/ WP 4.5.
