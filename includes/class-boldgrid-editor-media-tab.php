@@ -225,22 +225,18 @@ class Boldgrid_Editor_Media_Tab {
 		$configs = $this->get_configs();
 
 		// Pass Variables into JS
-		wp_localize_script( 'media-imhwpb', 'IMHWPB',
-			array (
-				'Globals' => array (
-					'isIframe' => true,
-					'tabs' => $configs['route-tabs'],
-					'tab-details' => $configs['tab-details'],
-					'admin-url' => get_admin_url(),
-					'api_configs' => $configs['api_configs'],
-					'post_id' => !empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
-					'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
-					'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' )
-				)
+		wp_localize_script( 'media-imhwpb', 'IMHWPB = IMHWPB || {}; IMHWPB.Globals', array(
+			'isIframe' => true,
+			'tabs' => $configs['route-tabs'],
+			'tab-details' => $configs['tab-details'],
+			'admin-url' => get_admin_url(),
+			'api_configs' => $configs['api_configs'],
+			'post_id' => !empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
+			'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
+			'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' )
 			) );
 
 		wp_enqueue_script( 'media-imhwpb' );
 		wp_enqueue_script( 'boldgrid-media-gridblocks' );
-
 	}
 }

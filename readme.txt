@@ -23,6 +23,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.1.3 InProgress =
 * Update:		JIRA WPB-1877	Changing borders to outline for draggable objects.
 * Update:		JIRA WPB-1884	Passed WordPress 4.5.1 testing.
+* Bug fix:		JIRA WPB-1894	Javascript error in console after loading GridBlocks.
 
 = 1.1.2 =
 * Bug fix:		JIRA WPB-1847	Addressing issues with drag and drop in Safari and Microsoft Edge w/ WP 4.5.
