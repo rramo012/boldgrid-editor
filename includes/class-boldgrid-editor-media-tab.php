@@ -18,34 +18,34 @@ class Boldgrid_Editor_Media_Tab {
 	 * @var array
 	 */
 	private $configs;
-	
+
 	/**
 	 * Paths needed for including other files
 	 *
 	 * @var array
 	 */
 	protected $path_configs;
-	
+
 	/**
 	 * The directory were assets belong should be prefixed by this path name
 	 *
 	 * @var string
 	 */
 	protected $asset_path_prefix;
-	
+
 	/**
 	 * Bring in the configurations from the core plugin class
 	 *
-	 * @param array $configs        	
-	 * @param array $path_configs        	
-	 * @param string $asset_path_prefix        	
+	 * @param array $configs
+	 * @param array $path_configs
+	 * @param string $asset_path_prefix
 	 */
 	public function __construct( $configs, $path_configs, $asset_path_prefix = '' ) {
 		$this->set_configs( $configs );
 		$this->set_path_configs( $path_configs );
 		$this->set_asset_path_prefix( $asset_path_prefix );
 	}
-	
+
 	/**
 	 * Get $this->configs
 	 *
@@ -54,17 +54,17 @@ class Boldgrid_Editor_Media_Tab {
 	protected function get_configs() {
 		return $this->configs;
 	}
-	
+
 	/**
 	 * Set $this->configs
 	 *
-	 * @param array $s        	
+	 * @param array $s
 	 */
 	protected function set_configs( $configs ) {
 		$this->configs = $configs;
 		return true;
 	}
-	
+
 	/**
 	 * Get $this->path_configs
 	 *
@@ -73,7 +73,7 @@ class Boldgrid_Editor_Media_Tab {
 	private function get_path_configs() {
 		return $this->path_configs;
 	}
-	
+
 	/**
 	 * Set $this->path_configs
 	 *
@@ -83,7 +83,7 @@ class Boldgrid_Editor_Media_Tab {
 		$this->path_configs = $path_configs;
 		return true;
 	}
-	
+
 	/**
 	 * Get $this->asset_path_prefix
 	 *
@@ -92,17 +92,17 @@ class Boldgrid_Editor_Media_Tab {
 	private function get_asset_path_prefix() {
 		return $this->asset_path_prefix;
 	}
-	
+
 	/**
 	 * Set $this->asset_path_prefix
 	 *
-	 * @param array $s        	
+	 * @param array $s
 	 */
 	private function set_asset_path_prefix( $asset_path_prefix ) {
 		$this->asset_path_prefix = $asset_path_prefix;
 		return true;
 	}
-	
+
 	/**
 	 * Add actions to create tabs
 	 */
@@ -110,56 +110,56 @@ class Boldgrid_Editor_Media_Tab {
 		$configs = $this->get_configs();
 		add_filter( 'media_upload_tabs', array (
 			$this,
-			'media_upload_tab_name' 
+			'media_upload_tab_name'
 		) );
-		
-		add_action( 'media_upload_' . $configs['slug'], 
+
+		add_action( 'media_upload_' . $configs['slug'],
 			array (
 				$this,
-				'media_upload_tab_content' 
+				'media_upload_tab_content'
 			) );
 	}
-	
+
 	/**
 	 * Return the markup for the tab iframe
 	 */
 	public function print_content() {
 		// Get path configs:
 		$path_configs = $this->get_path_configs();
-		
+
 		// Get asset path prefix:
 		$asset_path_prefix = $this->get_asset_path_prefix();
-		
+
 		$configs = $this->get_configs();
-		
+
 		include $configs['attachments-template'];
 		$this->print_loading_graphic();
 		include $configs['sidebar-template'];
-		
-		
+
+
 		include $path_configs['plugin_dir'] . '/pages/template-gridblock.html';
-		
+
 	}
-	
+
 	/**
 	 * Create a vertical tab
 	 *
-	 * @param array $tabs        	
+	 * @param array $tabs
 	 */
 	public function media_upload_tab_name( $tabs ) {
 		$configs = $this->get_configs();
 		$newtab = array (
-			$configs['slug'] => $configs['title'] 
+			$configs['slug'] => $configs['title']
 		);
-		
+
 		return array_merge( $tabs, $newtab );
 	}
-	
+
 	/**
 	* Display Loading Graphic
 	*/
 	public function print_loading_graphic() {
-		
+
 		// Get path configs:
 		$path_configs = $this->get_path_configs();
 		?>
@@ -172,21 +172,21 @@ class Boldgrid_Editor_Media_Tab {
 				</div>
 			</div>
 		</div>
-		<?php 
+		<?php
 	}
-	
+
 	/**
 	 * Create a tabs content
 	 */
 	public function media_upload_tab_content() {
 		add_action( 'admin_enqueue_scripts', array (
 			$this,
-			'enqueue_header_content' 
+			'enqueue_header_content'
 		) );
-		
+
 		return wp_iframe( array (
 			$this,
-			'print_content' 
+			'print_content'
 		) );
 	}
 	/**
@@ -194,38 +194,38 @@ class Boldgrid_Editor_Media_Tab {
 	 */
 	public function enqueue_header_content() {
 		wp_enqueue_media();
-		
+
 		wp_enqueue_script( 'custom-header' );
-		
+
 		// Get path configs:
 		$path_configs = $this->get_path_configs();
-		
+
 		// Get asset path prefix:
 		$asset_path_prefix = $this->get_asset_path_prefix();
-		
+
 		// Styles for MediaTab iFrame
-		wp_register_style( 'media-tab-css-imhwpb', 
-			plugins_url( $asset_path_prefix . '/assets/css/media-tab.css', 
+		wp_register_style( 'media-tab-css-imhwpb',
+			plugins_url( $asset_path_prefix . '/assets/css/media-tab.css',
 				$path_configs['plugin_filename'] ), array (
-				'media-views' 
+				'media-views'
 			), BOLDGRID_EDITOR_VERSION );
-		
+
 		wp_enqueue_style( 'media-tab-css-imhwpb' );
-		
+
 		// Media Tab Javascript
-		wp_register_script( 'media-imhwpb', 
-			plugins_url( $asset_path_prefix . '/assets/js/media.js', 
+		wp_register_script( 'media-imhwpb',
+			plugins_url( $asset_path_prefix . '/assets/js/media.js',
 				$path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION );
-		
+
 		// Media Tab Gridblocks Javascript
-		wp_register_script( 'boldgrid-media-gridblocks', 
-			plugins_url( $asset_path_prefix . '/assets/js/media.grid-blocks.js', 
+		wp_register_script( 'boldgrid-media-gridblocks',
+			plugins_url( $asset_path_prefix . '/assets/js/media.grid-blocks.js',
 				$path_configs['plugin_filename'] ), array ( 'wp-util' ), BOLDGRID_EDITOR_VERSION );
-		
+
 		$configs = $this->get_configs();
 
 		// Pass Variables into JS
-		wp_localize_script( 'media-imhwpb', 'IMHWPB', 
+		wp_localize_script( 'media-imhwpb', 'IMHWPB',
 			array (
 				'Globals' => array (
 					'isIframe' => true,
@@ -236,11 +236,11 @@ class Boldgrid_Editor_Media_Tab {
 					'post_id' => !empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
 					'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
 					'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' )
-				) 
+				)
 			) );
-		
+
 		wp_enqueue_script( 'media-imhwpb' );
 		wp_enqueue_script( 'boldgrid-media-gridblocks' );
-		
+
 	}
 }
