@@ -193,6 +193,9 @@ class Boldgrid_Editor_Media_Tab {
 	 * Register styles/scripts
 	 */
 	public function enqueue_header_content() {
+		// Get the &tab= from the url.
+		$tab = ( ! empty( $_REQUEST[ 'tab' ] ) ? empty( $_REQUEST[ 'tab' ] ) : null );
+
 		wp_enqueue_media();
 
 		wp_enqueue_script( 'custom-header' );
@@ -218,9 +221,14 @@ class Boldgrid_Editor_Media_Tab {
 				$path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION );
 
 		// Media Tab Gridblocks Javascript
-		wp_register_script( 'boldgrid-media-gridblocks',
-			plugins_url( $asset_path_prefix . '/assets/js/media.grid-blocks.js',
-				$path_configs['plugin_filename'] ), array ( 'wp-util' ), BOLDGRID_EDITOR_VERSION );
+		if( 'insert_layout' === $tab ) {
+			wp_register_script( 'boldgrid-media-gridblocks',
+				plugins_url( $asset_path_prefix . '/assets/js/media.grid-blocks.js',
+				$path_configs['plugin_filename'] ),
+				array ( 'wp-util' ),
+				BOLDGRID_EDITOR_VERSION
+			);
+		}
 
 		$configs = $this->get_configs();
 
