@@ -54,10 +54,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 				wp_enqueue_style( $handle, $directory_url . $theme_style );
 			}
 		}
-
-		wp_enqueue_script( 'boldgrid-existing-layouts',
-			plugins_url( '/assets/js/existing-layouts.js',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ), array (), BOLDGRID_EDITOR_VERSION );
 	}
 
 	/**
@@ -428,6 +424,10 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			// Script Styles
 			$this->add_scripts_and_styles();
 		}
+
+		wp_enqueue_script( 'boldgrid-existing-layouts',
+				plugins_url( '/assets/js/existing-layouts.js',
+						BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ), array (), BOLDGRID_EDITOR_VERSION );
 
 		$this->force_remove_stylesheet( 'buttons' );
 

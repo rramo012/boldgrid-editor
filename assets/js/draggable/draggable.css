@@ -102,11 +102,11 @@
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,
 .receptor-containers-imhwpb {
-    border:1px dashed gray;
+    outline:1px dashed gray;
 }
 
 .editing-as-row .receptor-containers-imhwpb {
-	border-color: transparent;
+	outline-color: transparent;
 }
 
 .cursor-not-allowed-imhwpb {
