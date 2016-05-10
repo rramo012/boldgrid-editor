@@ -194,7 +194,7 @@ class Boldgrid_Editor_Media_Tab {
 	 */
 	public function enqueue_header_content() {
 		// Get the &tab= from the url.
-		$tab = ( ! empty( $_REQUEST[ 'tab' ] ) ? empty( $_REQUEST[ 'tab' ] ) : null );
+		$tab = ( ! empty( $_REQUEST[ 'tab' ] ) ? $_REQUEST[ 'tab' ] : null );
 
 		wp_enqueue_media();
 
