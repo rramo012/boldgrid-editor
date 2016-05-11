@@ -234,7 +234,7 @@ class Boldgrid_Editor {
 		}
 
 		global $wp_customize;
-		if ( ( $edit_post_page || isset( $wp_customize ) ) ) {
+		if ( $edit_post_page || isset( $wp_customize ) ) {
 			// Append Editor Styles
 			add_filter( 'tiny_mce_before_init', array (
 				$this,
