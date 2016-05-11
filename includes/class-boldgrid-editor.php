@@ -224,17 +224,22 @@ class Boldgrid_Editor {
 
 			$this->prepend_editor_styles();
 
-			// Append Editor Styles
-			add_filter( 'tiny_mce_before_init', array (
-				$this,
-				'allow_empty_tags'
-			), 29 );
 
 			// Add ?boldgrid-editor-version=$version_number to each added file
 			add_filter( 'mce_css', array (
 				$this,
 				'add_cache_busting'
 			) );
+
+		}
+
+		global $wp_customize;
+		if ( ( $edit_post_page || isset( $wp_customize ) ) ) {
+			// Append Editor Styles
+			add_filter( 'tiny_mce_before_init', array (
+				$this,
+				'allow_empty_tags'
+			), 29 );
 
 			add_filter( 'mce_buttons_2', array (
 				$this,
