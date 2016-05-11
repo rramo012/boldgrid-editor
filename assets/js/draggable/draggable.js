@@ -2745,9 +2745,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				self.$current_drag.attr( 'data-mce-bogus', "all" );
 
-				//Set the background color to inherit
-				if ( self.color_is(self.$current_drag.css('background-color'), 'transparent') ) {
-					self.$current_drag.css('background-color', 'inherit');
+				// Set the background color to its parents bg color.
+				if ( self.color_is( self.$current_drag.css( 'background-color' ), 'transparent' ) ) {
+					self.$current_drag.parents().each( function(){
+						var $this = $( this ),
+							bgColor = $this.css( 'background-color' );
+
+						if ( ! self.color_is( bgColor, 'transparent' ) ) {
+							self.$current_drag.css( 'background-color', bgColor );
+							return false;
+						}
+					} );
 				}
 
 				setTimeout( function () {
@@ -2814,7 +2822,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			// This timeout is needed so that there isnt a flsh on the screen in
 			// chrome/ie
 			// You cannot modify the drag object in this event
-			var timeout_length = 35;
+			var timeout_length = 100;
 			if ( self.ie_version ) {
 				timeout_length = 150;
 			}

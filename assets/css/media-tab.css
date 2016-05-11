@@ -2,10 +2,9 @@ html {
     background: none;
 }
 
-body, .attachment-preview {
+body {
 	background-color: white !important;
 	background-image: none;
-	box-shadow: none !important;
 }
 
 /**
@@ -14,6 +13,7 @@ body, .attachment-preview {
 .attachments-browser .attachments, .attachments-browser .uploader-inline
 	{
 	top: 0px;
+	background-color: white;
 }
 
 /**
@@ -118,7 +118,7 @@ Google Mpas
 .centered-content-boldgrid {
     height: 100%;
     padding-top: 4px;
-    width: 1180px;
+    width: 1189px;
 }
 
 .attachment .centered-content-boldgrid {
@@ -138,13 +138,19 @@ Google Mpas
     box-shadow: 0 0 0 5px #fff inset, 0 0 0 6px #ccc inset;
 }
 
-.translate-container {
-    transform: translate(-80%, -27%);
-    z-index: -999;
+.wp-core-ui .translate-container.attachment-preview {
+    transform: translate(-81%, -27%);
+    background-color: transparent;
+	box-shadow: none !important;
+}
+
+.boldgrid-markup-container {
+	background-color: white;
 }
 
 .centered-content-boldgrid {
-    transform: scale(0.39);
+    transform: scale(0.38);
+    padding: 0px 22px;
 }
 
 .boldgrid-markup-container .centered-content-boldgrid {
