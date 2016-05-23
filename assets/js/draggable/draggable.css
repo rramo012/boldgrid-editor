@@ -555,6 +555,24 @@
     left:30px;
 }
 
+.container,
+.container-fluid {
+	transition: width .5s;
+}
+
+.container-fluid {
+	width: 100%;
+}
+
+li[data-action="toggle-container"] {
+	display: none;
+}
+
+.boldgrid-section .container-fluid li[data-action="toggle-container"],
+.boldgrid-section .container li[data-action="toggle-container"] {
+	display: block;
+}
+
 /***********************/
 
 

@@ -598,6 +598,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'add-column' : "Add Column",
 			'add-row' : "Add Empty Row",
 			'nest-row' : "",
+			//'toggle-container' : "Toggle Container",
 		},
 		'content' : {
 			'' : "Edit Content",
@@ -657,9 +658,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				popover += '<div title="Edit As Row" class="edit-as-row draggable-button">'
 				+ '<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
 			}
-
-
-
 
 		return popover + '</span></div>';
 	};
@@ -1021,6 +1019,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action="nest-row"]', self.menu_actions.nest_row )
 			.on( 'click.draggable', 'li[data-action="add-row"]', self.menu_actions.add_row )
 			.on( 'click.draggable', 'li[data-action="clone-as-row"]', self.menu_actions.unnest_row )
+			.on( 'click.draggable', 'li[data-action="toggle-container"]', self.menu_actions.toggleContainer )
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 		;
@@ -3525,6 +3524,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			self.$master_container.trigger( self.add_column_event, $new_column );
 			$current_click.closest( '.popover-menu-imhwpb' ).addClass('hidden');
+		},
+
+		toggleContainer : function ( event ) {
+			var $container = $( this ).closest( '.container, .container-fluid' );
+			if ( $container.hasClass( 'container' ) ) {
+				$container.addClass( 'container-fluid' );
+				$container.removeClass( 'container' );
+			} else {
+				$container.addClass( 'container' );
+				$container.removeClass( 'container-fluid' );
+			}
 		},
 
 		/**
