@@ -20,7 +20,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.1.4 InProgress =
+= 1.1.4 =
 * Bug fix:		JIRA WPB-1901	Fixed issue with non BG themes and gridblocks modal.
 * New Feature:	JIRA WPB-1912	Adding font family and font size controls to customizer widgets.
 
