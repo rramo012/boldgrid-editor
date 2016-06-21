@@ -15,6 +15,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var most_recent_enter = [];
 	var most_recent_row_enter = [];
 
+
 	self.ie_version;
 	self.isSafari;
 
@@ -22,6 +23,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * The jQuery object that the user indicated was draggable
 	 */
 	self.$master_container = this;
+	IMHWPB.EDITOR.Instance.init( self.$master_container );
 
 	//Some Jquery Selectors to be reused
 	self.$window = $( window );
@@ -598,7 +600,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'add-column' : "Add Column",
 			'add-row' : "Add Empty Row",
 			'nest-row' : "",
-			//'toggle-container' : "Toggle Container",
+			'toggle-container' : "Toggle Container",
 		},
 		'content' : {
 			'' : "Edit Content",
@@ -1019,7 +1021,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action="nest-row"]', self.menu_actions.nest_row )
 			.on( 'click.draggable', 'li[data-action="add-row"]', self.menu_actions.add_row )
 			.on( 'click.draggable', 'li[data-action="clone-as-row"]', self.menu_actions.unnest_row )
-			.on( 'click.draggable', 'li[data-action="toggle-container"]', self.menu_actions.toggleContainer )
+			//.on( 'click.draggable', 'li[data-action="toggle-container"]', self.menu_actions.toggleContainer )
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 		;
@@ -3524,17 +3526,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			self.$master_container.trigger( self.add_column_event, $new_column );
 			$current_click.closest( '.popover-menu-imhwpb' ).addClass('hidden');
-		},
-
-		toggleContainer : function ( event ) {
-			var $container = $( this ).closest( '.container, .container-fluid' );
-			if ( $container.hasClass( 'container' ) ) {
-				$container.addClass( 'container-fluid' );
-				$container.removeClass( 'container' );
-			} else {
-				$container.addClass( 'container' );
-				$container.removeClass( 'container-fluid' );
-			}
 		},
 
 		/**
