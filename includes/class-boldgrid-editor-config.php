@@ -8,64 +8,69 @@
  * @author BoldGrid.com <wpb@boldgrid.com>
  */
 
-// Prevent direct calls
-if ( ! defined( 'WPINC' ) ) {
+// Prevent direct calls.
+if ( false === defined( 'WPINC' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 }
 
 /**
- * BoldGrid Edit Config class
+ * BoldGrid Edit Config class.
  */
 class Boldgrid_Editor_Config {
 	/**
-	 * Protected class property for $configs:
+	 * Protected class property for $configs.
 	 */
 	private $configs;
-	
+
 	/**
-	 * Getter for $configs:
+	 * Getter for configs.
 	 *
-	 * @return unknown $configs
+	 * @return array
 	 */
 	public function get_configs() {
 		return $this->configs;
 	}
-	
+
 	/**
-	 * Setter for $configs:
+	 * Setter for configs.
 	 *
-	 * @param unknown $s        	
+	 * @param array $configs The configuration array.
 	 */
 	private function set_configs( $configs ) {
 		$this->configs = $configs;
 	}
-	
+
 	/**
-	 * Constructor
-	 *
-	 * @param unknown $settings        	
+	 * Constructor.
 	 */
-	public function __construct( $settings ) {
-		$config_dir = $settings['configDir'];
-		
-		$global_configs = require $config_dir . '/config.plugin.php';
-		
+	public function __construct() {
+		// Define Editor configuration directory, if not defined.
+		if ( false === defined( 'BOLDGRID_EDITOR_CONFIGDIR' ) ) {
+			define( 'BOLDGRID_EDITOR_CONFIGDIR', BOLDGRID_EDITOR_PATH . '/includes/config' );
+		}
+
+		// Get the global configs.
+		$global_configs = require BOLDGRID_EDITOR_CONFIGDIR . '/config.plugin.php';
+
+		// Get the local configs.
 		$local_configs = array ();
-		if ( file_exists( $local_config_filename = $config_dir . '/config.local.php' ) ) {
+		if ( file_exists( $local_config_filename = BOLDGRID_EDITOR_CONFIGDIR . '/config.local.php' ) ) {
 			$local_configs = include $local_config_filename;
 		}
-		
-		// if the user has an api key stored in their database, then set it as the global api_key // BradM //
+
+		// If the user has an api key stored in their database, then set it as the global api_key // BradM //.
 		$api_key_from_database = get_option( 'boldgrid_api_key' );
-		
-		if ( ! empty( $api_key_from_database ) ) {
+
+		if ( false === empty( $api_key_from_database ) ) {
 			$global_configs['api_key'] = $api_key_from_database;
 		}
-		
+
+		// Merge the global and local configs.
 		$configs = array_merge( $global_configs, $local_configs );
-		
+
+		// Set the configs in a class property.
 		$this->set_configs( $configs );
 	}
 }

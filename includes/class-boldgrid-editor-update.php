@@ -13,46 +13,13 @@
  */
 class Boldgrid_Editor_Update {
 	/**
-	 * BoldGrid Editor class object.
-	 *
-	 * @var object The BoldGrid Editor object.
-	 */
-	private $boldgrid_editor = null;
-
-	/**
-	 * Setter for the BoldGrid Editor class object.
-	 *
-	 * @param object $boldgrid_editor The BoldGrid Editor object.
-	 * @return bool
-	 */
-	private function set_boldgrid_editor( $boldgrid_editor ) {
-		$this->boldgrid_editor = $boldgrid_editor;
-		return true;
-	}
-
-	/**
-	 * Getter for the BoldGrid Editor class object.
-	 *
-	 * @return object $this->boldgrid_editor
-	 */
-	protected function get_boldgrid_editor() {
-		return $this->boldgrid_editor;
-	}
-
-	/**
 	 * Constructor.
 	 *
 	 * Add hooks.
 	 *
 	 * @global $pagenow The current WordPress page filename.
-	 *
-	 * @param object $boldgrid_editor The BoldGrid Editor object.
-	 * @return null
 	 */
-	public function __construct( $boldgrid_editor ) {
-		// Set the BoldGrid Editor class object (used to get configs).
-		$this->set_boldgrid_editor( $boldgrid_editor );
-
+	public function __construct() {
 		// Only for wp-admin.
 		if ( is_admin() ) {
 			// Get the current WordPress page filename.
@@ -116,12 +83,22 @@ class Boldgrid_Editor_Update {
 			$version_data = get_transient( 'boldgrid_editor_version_data' );
 		}
 
-		// Get the BoldGrid Editor class object for getting configs.
-		$boldgrid_editor = $this->get_boldgrid_editor();
+		// Set the config class file path.
+		$config_class_path = BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-config.php';
+
+		// If the config class file is not readable, then return the current transient.
+		if ( false === is_readable( $config_class_path ) ) {
+			return $transient;
+		}
+
+		// Include the config class.
+		require_once $config_class_path;
+
+		// Instantiate the config class.
+		$boldgrid_editor_config = new Boldgrid_Editor_Config();
 
 		// Get configs.
-		$configs = $boldgrid_editor->get_config()
-			->get_configs();
+		$configs = $boldgrid_editor_config->get_configs();
 
 		// Get the installed plugin data.
 		$plugin_data = get_plugin_data( BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php', false );
@@ -312,5 +289,68 @@ class Boldgrid_Editor_Update {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Action to add a filter to check if this plugin should be auto-updated.
+	 *
+	 * @since 1.1.5
+	 */
+	public function wp_update_this_plugin () {
+		// Add filters to modify plugin update transient information.
+		add_filter( 'pre_set_site_transient_update_plugins',
+			array (
+				$this,
+				'custom_plugins_transient_update'
+			)
+		);
+
+		add_filter( 'plugins_api',
+			array (
+				$this,
+				'custom_plugins_transient_update'
+			)
+		);
+
+		add_filter( 'site_transient_update_plugins',
+			array (
+				$this,
+				'site_transient_update_plugins'
+			)
+		);
+
+		add_filter( 'auto_update_plugin',
+			array (
+				$this,
+				'auto_update_this_plugin'
+			), 10, 2
+		);
+
+		add_filter( 'auto_update_plugins',
+			array (
+				$this,
+				'auto_update_this_plugin'
+			), 10, 2
+		);
+
+		// Have WordPress check for plugin updates.
+		wp_maybe_auto_update();
+	}
+
+	/**
+	 * Filter to check if this plugin should be auto-updated.
+	 *
+	 * @since 1.1.5
+	 *
+	 * @param bool $update Whether or not this plugin is set to update.
+	 * @param object $item The plugin transient object.
+	 * @return bool Whether or not to update this plugin.
+	 */
+	public function auto_update_this_plugin ( $update, $item ) {
+		if ( isset( $item->slug['boldgrid-editor'] ) && isset( $item->autoupdate ) ) {
+			return true;
+		} else {
+			return $update;
+		}
 	}
 }
