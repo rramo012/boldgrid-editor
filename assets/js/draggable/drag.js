@@ -15,7 +15,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var most_recent_enter = [];
 	var most_recent_row_enter = [];
 
-
 	self.ie_version;
 	self.isSafari;
 
@@ -23,7 +22,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * The jQuery object that the user indicated was draggable
 	 */
 	self.$master_container = this;
-	IMHWPB.EDITOR.Instance.init( self.$master_container );
 
 	//Some Jquery Selectors to be reused
 	self.$window = $( window );
@@ -671,12 +669,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$interaction_container = self.determine_interaction_container();
 
 		//Init fourpan
-		self.$master_container.fourpan({
+		self.$master_container.fourpan( {
 			element_padding : 0,
 			transition_speed: 0,
 			activate: activate_edit_as_row,
 			deactivate: disable_edit_as_row,
-		});
+		} );
 
 		self.ie_version = self.get_ie_version();
 		self.isSafari = self.checkIsSafari();
@@ -687,6 +685,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.validate_markup();
 		self.track_window_size();
 		self.merge_additional_menu_options();
+		
+		BOLDGRID.EDITOR.Controls.init( self.$master_container );
 
 		return self;
 	};

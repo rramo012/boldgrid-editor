@@ -312,11 +312,7 @@ class Boldgrid_Editor {
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
 
 		add_editor_style(
-			plugins_url( '/assets/js/draggable/draggable-before-theme.css',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
-
-		add_editor_style(
-			plugins_url( '/assets/js/draggable/draggable-before-theme.css',
+			plugins_url( '/assets/js/draggable/css/before-theme.css',
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
 
 		add_editor_style( '//fonts.googleapis.com/css?family=Open+Sans:600' );
@@ -581,7 +577,7 @@ class Boldgrid_Editor {
 		$styles[] = plugins_url( '/assets/css/genericons.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
-		$styles[] = plugins_url( '/assets/js/draggable/draggable.css',
+		$styles[] = plugins_url( '/assets/js/draggable/css/draggable.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		// Add Query Args
@@ -834,17 +830,10 @@ class Boldgrid_Editor {
 				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 				'instanceMenu' => $this->get_menu_markup(),
 				'instancePanel' => $this->get_popup_markup(),
+				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ) )
 			) );
 
-		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
-
-		wp_enqueue_script( 'draggable-imhwpb',
-			plugins_url( '/assets/js/draggable/draggable.js', $plugin_file ), array (),
-			BOLDGRID_EDITOR_VERSION, true );
-
-		wp_enqueue_script( 'draggable-instance-imhwpb',
-			plugins_url( '/assets/js/draggable/instance.js', $plugin_file ), array (),
-			BOLDGRID_EDITOR_VERSION, true );
+		//var_dump( json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ) ) );die;
 
 		wp_enqueue_script( 'text-select-boldgrid',
 			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array (),
@@ -853,6 +842,25 @@ class Boldgrid_Editor {
 		wp_enqueue_script( 'is-typing-boldgrid',
 			plugins_url( '/assets/js/jquery/jquery.is-typing.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+
+		wp_enqueue_script( 'boldgrid-editor-drag',
+			plugins_url( '/assets/js/draggable/drag.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls',
+			plugins_url( '/assets/js/draggable/controls.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls-container',
+			plugins_url( '/assets/js/draggable/controls/container.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls-icon',
+			plugins_url( '/assets/js/draggable/controls/icon.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
 	}
 
 	/**
@@ -868,6 +876,7 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
+		wp_enqueue_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	}
 
 	/**
