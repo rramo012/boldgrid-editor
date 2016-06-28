@@ -816,6 +816,8 @@ class Boldgrid_Editor {
 				'jquery-ui-resizable'
 			), BOLDGRID_EDITOR_VERSION, true );
 
+		$fonts = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true );
+
 		// Send Variables to the view
 		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor',
 			array (
@@ -830,10 +832,9 @@ class Boldgrid_Editor {
 				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 				'instanceMenu' => $this->get_menu_markup(),
 				'instancePanel' => $this->get_popup_markup(),
-				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ) )
+				'icons' => $fonts
 			) );
 
-		//var_dump( json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ) ) );die;
 
 		wp_enqueue_script( 'text-select-boldgrid',
 			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array (),
@@ -850,7 +851,7 @@ class Boldgrid_Editor {
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls',
-			plugins_url( '/assets/js/draggable/controls.js', $plugin_file ), array (),
+			plugins_url( '/assets/js/draggable/controls.js', $plugin_file ), array ( 'jquery-ui-draggable' ),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-container',

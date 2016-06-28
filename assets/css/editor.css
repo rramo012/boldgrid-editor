@@ -2,6 +2,7 @@
 /****************/
 
 .editor-panel {
+	display: none;
 	position: fixed;
     top: 300px;
     left: 200px;
@@ -50,6 +51,7 @@
 }
 
 .editor-panel-title {
+    cursor: move;
 	background-color: #1e8cbe;
 	color: white;
 	padding: 15px 10px;
@@ -96,14 +98,22 @@
     background-color: white;
 }
 
+.panel-selection.selected .fa {
+    color: white;
+}
+.panel-selection.selected {
+    background-color: #1e8cbe;
+    color: white;
+}
+
 .editor-panel.icon .panel-selection {
     width: 123px;
     height: 42px;
     text-align: left;
 }
 .editor-panel.icon .panel-selection .name {
-    margin-left: 4px;
-    line-height: 32px;
+    margin-left: 6px;
+    vertical-align: middle;
 }
 
 .editor-panel.icon {

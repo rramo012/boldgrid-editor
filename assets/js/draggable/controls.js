@@ -13,13 +13,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			this.$container.find( 'body' ).css( 'marginTop', '50px' );
 			
-			this.bindEvents();
-			
 			// Create Menu HTML.
 			this.initMenu();
 			
 			// Create Panel HTML.
 			this.initPanel();
+
+			this.bindEvents();
 			
 			//Create all controls.
 			this.setupControls();
@@ -48,13 +48,28 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		initPanel : function() {
 
 			this.$panel = $( BoldgridEditor.instancePanel );
-			$( 'body' )
-				.append( this.$panel );
+			$( 'body' ).append( this.$panel );
+		},
+		
+		onPanelClose : function() {
+			var self = this;
+			this.$panel.on( 'click', '.close-icon', function () {
+				self.$panel.hide();
+			} );
 		},
 		
 		
 		bindEvents : function () {
+			this.onPanelClose();
+			this.setupPanelDrag();
 			this.onEditibleClick();
+		},
+		setupPanelDrag : function() {
+			$( ".editor-panel" ).draggable( { 
+				containment: '#wpwrap',
+				handle: ".editor-panel-title",
+				scroll : false
+			} );
 		},
 		onEditibleClick : function () {
 			var self = this;
