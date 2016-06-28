@@ -11,6 +11,7 @@ var config = {
     dist: './',
 };
 
+// Compile sass files.
 gulp.task( 'scssCompile', function(  ) {
 	  gulp.src( [
 	    config.dist + '/assets/scss/**/*.scss'] )
@@ -31,3 +32,7 @@ gulp.task( 'scssCompile', function(  ) {
 
 // Build.
 gulp.task( 'default', [ 'scssCompile' ] );
+
+gulp.task('watch', function() {
+	gulp.watch( config.src + 'assets/**/*', [ 'scssCompile' ] );
+} );

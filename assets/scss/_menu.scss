@@ -1,10 +1,38 @@
+/************** Instance Menu *******************/
+.mce-container .boldgrid-instance-menu {
+	background-color: #1e8cbe;
+	padding: 8px 0;
+	display: none;
+	
+	ul {
+		text-align:center;
+	}
+	li {
+		display: inline-block;
+		padding: 3px;
+		border-radius: 50%;
+		box-shadow: 0px 1px 3px black;
+		margin: 0 8px;
+		cursor: pointer;
+		background-color: white;
+	}
+	li:hover .genericon {
+		color: #f95b26;
+	}
+	.genericon {
+		font-size: 28px;
+		transition: color .3s;
+	}
+}
+
+/************** TinyMCE Menu *******************/
 #mceu_48 {
 	display: none;
 }
 
 .imhwpb-icon:before { 	
-	-webkit-font-smoothing: antialiased; 	
-	font: normal 20px/1 'dashicons'; 	
+	-webkit-font-smoothing: antialiased;
+	font: normal 20px/1 'dashicons';
 	vertical-align: top; 
 }
 
@@ -12,7 +40,7 @@
 	width:845px;
 }
 
- .mce-viewsize-monitor-imhwpb {
+.mce-viewsize-monitor-imhwpb {
 	min-width:1065px;
 	z-index: 10;
 }

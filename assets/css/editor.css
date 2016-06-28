@@ -6,22 +6,23 @@
   position: fixed;
   top: 300px;
   left: 200px;
-  z-index: 9999; }
-
-.mce-container .boldgrid-instance-menu {
-  background-color: #1e8cbe;
-  padding: 8px 0;
-  display: none; }
-
-.mce-container .boldgrid-instance-menu ul {
-  text-align: center; }
-
-.editor-panel {
+  z-index: 9999;
   width: 310px;
   border: 1px solid #eee;
-  background-color: white; }
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27); }
 
-.editor-panel-title .close-icon {
+.editor-panel .panel-title {
+  cursor: move;
+  background-color: #1e8cbe;
+  color: white;
+  padding: 15px 10px;
+  font-weight: 300;
+  margin: 0;
+  font-size: 14px; }
+
+.editor-panel .panel-title .close-icon {
   position: absolute;
   right: 13px;
   border-radius: 50%;
@@ -31,45 +32,15 @@
   top: 14px;
   cursor: pointer; }
 
-.editor-panel-title .close-icon:hover {
+.editor-panel .panel-title .close-icon:hover {
   background-color: #0073aa;
   color: white; }
 
-.editor-panel-title {
+.editor-panel .panel-title {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px; }
 
-.editor-panel {
-  border-radius: 10px;
-  box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27); }
-
-.editor-panel-title {
-  cursor: move;
-  background-color: #1e8cbe;
-  color: white;
-  padding: 15px 10px;
-  font-weight: 300;
-  margin: 0;
-  font-size: 14px; }
-
-.editor-panel-body {
-  overflow-y: scroll;
-  max-height: 330px;
-  padding: 10px;
-  background-color: white; }
-
-.editor-panel-body .fa {
-  font-size: 26px;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #525252; }
-
-.editor-panel-body ul {
-  text-align: center;
-  margin-top: 0; }
-
-.panel-selection {
+.editor-panel .panel-selection {
   width: 70px;
   height: 70px;
   margin: 3px;
@@ -84,29 +55,92 @@
   padding: 0px 9px;
   overflow: hidden; }
 
-.panel-selection:hover {
+.editor-panel .panel-selection:hover {
   background-color: white; }
 
-.panel-selection.selected .fa {
-  color: white; }
-
-.panel-selection.selected {
+.editor-panel .panel-selection.selected {
   background-color: #1e8cbe;
   color: white; }
 
-.editor-panel.icon .panel-selection {
+/*************** Panel Body ********************/
+.panel-body {
+  overflow-y: scroll;
+  max-height: 330px;
+  padding: 10px;
+  background-color: white; }
+
+.panel-body ul {
+  text-align: center;
+  margin-top: 0; }
+
+/*************** Change Icon Panel ********************/
+.editor-panel[data-type="icon"] {
+  width: 335px; }
+
+.editor-panel[data-type="icon"] .panel-selection {
   width: 123px;
   height: 42px;
   text-align: left; }
 
-.editor-panel.icon .panel-selection .name {
+.editor-panel[data-type="icon"] .panel-body .fa {
+  font-size: 26px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #525252; }
+
+.editor-panel[data-type="icon"] .panel-selection .name {
   margin-left: 6px;
   vertical-align: middle; }
 
-.editor-panel.icon {
-  width: 335px; }
+.editor-panel[data-type="icon"] .panel-selection.selected .fa {
+  color: white; }
 
-.boldgrid-instance-menu li {
+/*************** Change Icon Panel ********************/
+.editor-panel[data-type="image"] {
+  width: 400px; }
+
+.editor-panel[data-type="image"] .panel-selection {
+  background: none;
+  width: 110px;
+  height: auto;
+  padding: 0; }
+
+.editor-panel[data-type="image"] .panel-selection:hover {
+  color: #1e8cbe; }
+
+.editor-panel[data-type="image"] .panel-selection:hover img {
+  border-color: #1e8cbe; }
+
+.editor-panel[data-type="image"] .panel-selection canvas,
+.editor-panel[data-type="image"] .panel-selection img {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  max-width: 100px;
+  border-radius: 7px;
+  border: 2px solid transparent; }
+
+.editor-panel[data-type="image"] .panel-selection.selected {
+  color: #1e8cbe; }
+
+.editor-panel[data-type="image"] .panel-selection.selected canvas,
+.editor-panel[data-type="image"] .panel-selection.selected img {
+  border-color: #1e8cbe; }
+
+/*--------------------------------------------------------------
+# Menu Styles
+--------------------------------------------------------------*/
+/************** Instance Menu *******************/
+.mce-container .boldgrid-instance-menu {
+  background-color: #1e8cbe;
+  padding: 8px 0;
+  display: none; }
+
+.mce-container .boldgrid-instance-menu ul {
+  text-align: center; }
+
+.mce-container .boldgrid-instance-menu li {
   display: inline-block;
   padding: 3px;
   border-radius: 50%;
@@ -115,16 +149,14 @@
   cursor: pointer;
   background-color: white; }
 
-.boldgrid-instance-menu li .genericon {
+.mce-container .boldgrid-instance-menu li:hover .genericon {
+  color: #f95b26; }
+
+.mce-container .boldgrid-instance-menu .genericon {
   font-size: 28px;
   transition: color .3s; }
 
-.boldgrid-instance-menu li:hover .genericon {
-  color: #f95b26; }
-
-/*--------------------------------------------------------------
-# Menu Styles
---------------------------------------------------------------*/
+/************** TinyMCE Menu *******************/
 #mceu_48 {
   display: none; }
 

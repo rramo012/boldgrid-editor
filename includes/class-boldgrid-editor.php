@@ -795,6 +795,10 @@ class Boldgrid_Editor {
 		return file_get_contents( BOLDGRID_EDITOR_PATH . '/includes/popup.html' );
 	}
 
+	public static function get_asset_suffix() {
+		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	}
+
 	/**
 	 * Enqueue all scripts
 	 *
@@ -846,12 +850,20 @@ class Boldgrid_Editor {
 
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
 
+
+		/**
+		 * Drag n Drop Assets.
+		 */
 		wp_enqueue_script( 'boldgrid-editor-drag',
 			plugins_url( '/assets/js/draggable/drag.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-panel',
 			plugins_url( '/assets/js/draggable/panel.js', $plugin_file ), array ( 'jquery-ui-draggable' ),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-menu',
+			plugins_url( '/assets/js/draggable/menu.js', $plugin_file ), array (  ),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls',
@@ -869,6 +881,10 @@ class Boldgrid_Editor {
 		wp_enqueue_script( 'boldgrid-editor-controls-image',
 			plugins_url( '/assets/js/draggable/controls/image.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-caman',
+			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**
@@ -877,11 +893,13 @@ class Boldgrid_Editor {
 	public function add_styles() {
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
+		$suffix = self::get_asset_suffix();
+
 		wp_register_style( 'genericons-imhwpb',
 			plugins_url( '/assets/css/genericons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_register_style( 'editor-css-imhwpb',
-			plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
 		wp_enqueue_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
