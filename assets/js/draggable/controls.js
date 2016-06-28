@@ -5,7 +5,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	
 	BOLDGRID.EDITOR.Controls = {
 		controls : [],
-		$panel : null,
 		$menu : null,
 		$container : null,
 		init: function ( $container ) {
@@ -16,8 +15,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// Create Menu HTML.
 			this.initMenu();
 			
-			// Create Panel HTML.
-			this.initPanel();
+			// Init Panel.
+			BOLDGRID.EDITOR.Panel.init();
 
 			this.bindEvents();
 			
@@ -42,42 +41,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				.append( this.$menu );
 		},
 		
-		/**
-		 * Initialize the panel.
-		 */
-		initPanel : function() {
-
-			this.$panel = $( BoldgridEditor.instancePanel );
-			$( 'body' ).append( this.$panel );
-		},
-		
-		onPanelClose : function() {
-			var self = this;
-			this.$panel.on( 'click', '.close-icon', function () {
-				self.$panel.hide();
-			} );
-		},
-		
 		
 		bindEvents : function () {
-			this.onPanelClose();
-			this.setupPanelDrag();
 			this.onEditibleClick();
 		},
-		setupPanelDrag : function() {
-			$( ".editor-panel" ).draggable( { 
-				containment: '#wpwrap',
-				handle: ".editor-panel-title",
-				scroll : false
-			} );
-		},
+
 		onEditibleClick : function () {
 			var self = this;
 			//TODO this could go into another file.
 			this.$container.on( 'click', function ( e ) {
 				if ( ! e.boldgrid || ! e.boldgrid.menuItem ) {
 					//self.$menu.hide();
-				//	self.$panel.hide();
 				}
 			} );
 			
@@ -140,7 +114,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 
 			// When the user clicks on a menu item, perform the corresponding action.
-			this.$menu.on( 'click', '[data-action="menu-' + control.name + '"]', control.menuCallback );
+			this.$menu.on( 'click', '[data-action="menu-' + control.name + '"]', control.onMenuClick );
 		}
 		
 	};

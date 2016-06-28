@@ -1,0 +1,46 @@
+/**
+* Editor Page overwrites to prevent the bootstrap columns from collapsing early
+* Stretch the outsides of the editor and make the second column narrow
+*/
+
+.folded #wpcontent, .folded #wpfooter {
+    margin-left: 20px;
+}
+
+#poststuff #post-body.columns-2 {
+    margin-right: 208px;
+}
+
+#post-body.columns-2 #postbox-container-1 {
+    margin-right: -214px;
+}
+
+#wpcontent, #wpfooter {
+    margin-left: 142px;
+}
+
+#post-body.columns-2 #postbox-container-1,
+#poststuff #post-body.columns-2 #side-sortables {
+    width: 210px;
+}
+
+.postbox,
+#post-body.columns-2 #side-sortables {
+    min-width: 210px;
+}
+
+.spinner {
+    margin: 4px 4px 0;
+}
+
+.gridblock-icon .wp-media-buttons-icon {
+	background: url('../image/gridblock-icon.svg');
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    transition-duration: 0.8s;
+    transition-property: transform
+}
+
+.gridblock-icon:hover .wp-media-buttons-icon {
+	transform: rotate(120deg);
+}

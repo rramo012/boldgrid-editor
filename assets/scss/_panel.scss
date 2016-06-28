@@ -1,0 +1,135 @@
+.editor-panel {
+	display: none;
+	position: fixed;
+    top: 300px;
+    left: 200px;
+    z-index: 9999;
+}
+
+.mce-container .boldgrid-instance-menu {
+    background-color: #1e8cbe;
+    padding: 8px 0;
+    display: none;
+}
+
+.mce-container .boldgrid-instance-menu ul {
+	text-align:center;
+}
+
+.editor-panel {
+	width: 310px;
+    border: 1px solid #eee;
+    background-color: white;
+}
+
+.editor-panel-title .close-icon {
+    position: absolute;
+    right: 13px;
+    border-radius: 50%;
+    background-color: white;
+    color: #1e8cbe;
+    padding: 1px;
+    top: 14px;
+    cursor: pointer;
+}
+.editor-panel-title .close-icon:hover {
+    background-color: #0073aa;
+	color: white;
+}
+
+.editor-panel-title {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.editor-panel {
+	border-radius: 10px;
+	box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
+}
+
+.editor-panel-title {
+    cursor: move;
+	background-color: #1e8cbe;
+	color: white;
+	padding: 15px 10px;
+	font-weight: 300;
+	margin: 0;
+	font-size: 14px;
+}
+
+.editor-panel-body {
+	overflow-y: scroll;
+	max-height: 330px;
+	padding: 10px;
+	background-color: white;
+}
+.editor-panel-body .fa {
+	font-size: 26px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #525252;
+}
+.editor-panel-body ul {
+	text-align: center;
+	margin-top: 0;
+}
+
+.panel-selection {
+    width: 70px;
+    height: 70px;
+    margin: 3px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #dce3e8;
+    transition: background-color .3s;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0px 9px;
+    overflow: hidden;
+}
+
+.panel-selection:hover {
+    background-color: white;
+}
+
+.panel-selection.selected .fa {
+    color: white;
+}
+.panel-selection.selected {
+    background-color: #1e8cbe;
+    color: white;
+}
+
+.editor-panel.icon .panel-selection {
+    width: 123px;
+    height: 42px;
+    text-align: left;
+}
+.editor-panel.icon .panel-selection .name {
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.editor-panel.icon {
+	width: 335px;
+}
+
+.boldgrid-instance-menu li {
+	display: inline-block;
+	padding: 3px;
+	border-radius: 50%;
+	box-shadow: 0px 1px 3px black;
+	margin: 0 8px;
+	cursor: pointer;
+	background-color: white;
+}
+.boldgrid-instance-menu li .genericon {
+	font-size: 28px;
+	transition: color .3s;
+}
+.boldgrid-instance-menu li:hover .genericon {
+	color: #f95b26;
+}

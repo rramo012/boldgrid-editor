@@ -21,7 +21,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 		
-		menuCallback : function ( e ) {
+		onMenuClick : function ( e ) {
 			var $container = BOLDGRID.EDITOR.Controls.
 				$menu.targetData[ self.name ].closest( '.container, .container-fluid' );
 			

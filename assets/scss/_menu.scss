@@ -1,0 +1,32 @@
+#mceu_48 {
+	display: none;
+}
+
+.imhwpb-icon:before { 	
+	-webkit-font-smoothing: antialiased; 	
+	font: normal 20px/1 'dashicons'; 	
+	vertical-align: top; 
+}
+
+.mce-viewsize-tablet-imhwpb {
+	width:845px;
+}
+
+ .mce-viewsize-monitor-imhwpb {
+	min-width:1065px;
+	z-index: 10;
+}
+
+.mce-viewsize-phone-imhwpb {
+	width:480px;
+}
+
+#resizer-iframe {
+	position: absolute;
+	left: -9999px;
+	top:-9999px;
+}
+
+.boldgrid-highlighted-mce-icon:not(.mce-active) .imhwpb-icon {
+	color: #00a0d2;
+}

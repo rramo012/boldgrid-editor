@@ -21,21 +21,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 		
-		
-		menuCallback : function ( e ) {
-			e.boldgrid = e.boldgrid || {};
-			e.boldgrid.menuItem = true;
-			
-			var $this = $( this );
-			
-			self.openPanel();
-			self.setupPanelClick();
-		},
 		setupPanelClick : function() {
 			var self = this,
-				controls = BOLDGRID.EDITOR.Controls;
+				controls = BOLDGRID.EDITOR.Controls,
+				panel = BOLDGRID.EDITOR.Panel;
 			
-			controls.$panel.on( 'click', '.panel-selection', function () {
+			panel.$element.on( 'click', '.panel-selection', function () {
 				var $menu = controls.$menu,
 					$target = $menu.targetData[ self.name ],
 					$this = $( this );
@@ -45,17 +36,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 				
 				$target.addClass( $this.find( 'i' ).attr( 'class' ) );
-				controls.$panel.find( '.selected' ).removeClass( 'selected' );
+				panel.$element.find( '.selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
 			} );
 		},
 		
-		openPanel : function () {
+		onMenuClick : function () {
 			var self = this,
-				$panel = BOLDGRID.EDITOR.Controls.$panel,
+				$panel = BOLDGRID.EDITOR.Panel.$element,
 				$menu = BOLDGRID.EDITOR.Controls.$menu,
 				$target = $menu.targetData[ self.name ],
 				$selected;
+			
+			self.setupPanelClick();
 			
 			var $ul = $( '<ul></ul>' );
 			$.each( BoldgridEditor.icons, function () {
@@ -68,7 +61,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			$panel.find( '.selected' ).removeClass( 'selected' );
 			
-			$selected = $panel.find( 'i[class="' + $target.attr( 'class' ) + '"]')
+			$selected = $panel.find( 'i[class="' + $target.attr( 'class' ) + '"]' )
 				.closest( '.panel-selection' )
 				.addClass( 'selected' );
 			
