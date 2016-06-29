@@ -129,8 +129,13 @@
 .editor-panel[data-type="image"] .panel-selection.selected img {
   border-color: #73a060; }
 
-.editor-panel[data-type="image"] .activate-customize,
-.editor-panel[data-type="image"] .presets {
+.editor-panel[data-type="image"] .customize {
+  display: none; }
+
+.editor-panel[data-type="image"] .customizing .customize {
+  display: block; }
+
+.editor-panel[data-type="image"] .customizing .presets {
   display: none; }
 
 .editor-panel[data-type="image"] .panel-body {

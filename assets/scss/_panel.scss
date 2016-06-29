@@ -142,9 +142,15 @@
 	.panel-selection.selected img {
 	   border-color: $panel-color;
     }
-    .activate-customize,
-    .presets {
-    	display: none;
+    .customize {
+        display: none;
+    }
+    
+    .customizing .customize {
+        display: block;
+    }
+    .customizing .presets {
+        display: none;
     }
     
     .panel-body {

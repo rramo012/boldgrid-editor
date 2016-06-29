@@ -29,6 +29,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
+		_setupToggleCustomize : function() {
+			var panel = BOLDGRID.EDITOR.Panel,
+			menu = BOLDGRID.EDITOR.Menu;
+			
+			panel.$element.on( 'click', '.presets .activate-customize', function () {
+				panel.$element.find( '.choices' ).addClass( 'customizing' );
+			} );
+			
+			panel.$element.on( 'click', '.customize .activate-presets', function () {
+				panel.$element.find( '.choices' ).removeClass( 'customizing' );
+			} );
+		},
 		setupPanelClick : function() {
 			var panel = BOLDGRID.EDITOR.Panel,
 				menu = BOLDGRID.EDITOR.Menu;
@@ -98,6 +110,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.clear();
 
+			self._setupToggleCustomize();
+			
 			// Target Image Src.
 
 			var fullSrc = $target.attr( 'src' );
