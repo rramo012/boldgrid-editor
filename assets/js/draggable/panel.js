@@ -32,15 +32,20 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				scroll : false
 			} );
 		},
-		
+
 		setupPanelResize : function() {
 			this.$element.resizable();
 		},
 
 		onPanelClose : function() {
 			this.$element.on( 'click', '.close-icon', function () {
-				self.$element.hide();
+				self.closePanel();
 			} );
+		},
+
+		closePanel : function () {
+			self.$element.hide();
+			BOLDGRID.EDITOR.Menu.deactivateControl();
 		},
 
 		_scrollToSelected : function () {
@@ -67,6 +72,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		open : function ( control ) {
 
 			//this._scrollToSelected();
+			BOLDGRID.EDITOR.Menu.activateControl( control );
+
 			this.$element.height( control.panel.height );
 			this.$element.width( control.panel.width );
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );

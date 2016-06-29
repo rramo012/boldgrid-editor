@@ -14,3 +14,13 @@ canvas[data-caman-id] {
     max-width: 100%;
     height: auto;
 }
+
+.fa:hover {
+	color: #f95b26 !important;
+}
+
+
+img,
+.fa {
+	cursor: pointer;
+}

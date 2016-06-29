@@ -55,12 +55,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 				if ( ! self.$menu.items.length ) {
 					self.$menu.hide();
+					BOLDGRID.EDITOR.Panel.closePanel();
 				} else {
 					self.$menu.show();
 				}
 
 				$.each( self.$menu.items, function () {
-					self.$menu.find( '[data-action="menu-' + this + '"]').show();
+					self.$menu.find( '[data-action="menu-' + this + '"]' ).show();
+
+					//If a panel is open.
+					BOLDGRID.EDITOR.Menu.reactivateMenu();
 				} );
 			} );
 		},
@@ -90,6 +94,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				var $this = $( this );
 				self.$menu.targetData = self.$menu.targetData || {};
 				self.$menu.targetData[ control.name ] = $this;
+
+				if ( control.elementClick ) {
+					control.elementClick();
+				}
+
 				self.$menu.items.push( control.name );
 			} );
 

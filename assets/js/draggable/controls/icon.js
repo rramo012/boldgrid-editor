@@ -13,7 +13,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		priority : 10,
 
-		iconClasses : 'genericon genericon-code',
+		iconClasses : 'fa fa-info',
 
 		selectors : [ '.fa' ],
 
@@ -25,6 +25,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
+		},
+
+		elementClick : function() {
+			self.openPanel();
 		},
 
 		setupPanelClick : function() {
@@ -47,6 +51,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		onMenuClick : function () {
+			self.openPanel();
+		},
+
+		openPanel : function () {
 			var $panel = BOLDGRID.EDITOR.Panel.$element,
 				$menu = BOLDGRID.EDITOR.Controls.$menu,
 				$target = $menu.targetData[ self.name ],

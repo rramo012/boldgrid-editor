@@ -7,6 +7,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BOLDGRID.EDITOR.CONTROLS.Image = {
 
+		preview : null,
+
 		name : 'image',
 
 		section : 'row',
@@ -17,8 +19,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel : {
 			title : 'Image Filters',
-			height : '400px',
-			width : '400px',
+			height : '555px',
+			width : '800px',
 		},
 
 		selectors : [ 'img', '[data-caman-id]' ],
@@ -33,22 +35,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.find( '.panel-selection' ).on( 'click', function () {
 				var $this = $( this ),
-					$target = menu.getTarget( self );
+					$target = panel.$element.find( '.preview' ).find( 'img, canvas' );
 
 				panel.$element.find( '.selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
-				
-				var caman = Caman( $target[0], function () {
-					this.reset();
-					this[ $this.data( 'preset' ) ]( '50%' ).render( function ( e ) {
-						menu.$element.targetData[ self.name ] = $( caman.canvas );
-					} );
-					//
+
+				panel.$element.addClass( 'rendering' );
+				self.preview.reset();
+				self.preview[ $this.data( 'preset' ) ]( '50%' ).render( function ( e ) {
+				//	menu.$element.targetData[ self.name ] = $( caman.canvas );
+					panel.$element.removeClass( 'rendering' );
 				} );
+				//
 			} );
+
+			$( ".slider" ).slider();
 		},
 
 		presets : [
+           //{ name : 'None', title : 'None' },
 			{ name : 'vintage', title : 'Vintage' },
 			{ name : 'lomo', title : 'Lomo' },
 			{ name : 'clarity', title : 'Clarity' },
@@ -68,6 +73,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			{ name : 'hemingway', title : 'Hemingway' },
 			{ name : 'concentrate', title : 'Concentrate' }
 		],
+		customizeSettings : [
+		           //{ name : 'None', title : 'None' },
+		           { name : 'brightness', title : 'Brightness' },
+		           { name : 'vibrance', title : 'Vibrance' },
+		           { name : 'hue', title : 'Hue' },
+		           { name : 'gamma', title : 'Gamma' },
+		           { name : 'clip', title : 'Clip' },
+		           { name : 'stackBlur', title : 'Blur' },
+		           { name : 'contrast', title : 'Contrast' },
+		           { name : 'saturation', title : 'Saturation' },
+		           { name : 'exposure', title : 'Exposure' },
+		           { name : 'sepia', title : 'Sepia' },
+		           { name : 'noise', title : 'Noise' },
+		           { name : 'sharpen', title : 'Sharpen' },
+           ],
 
 		onMenuClick : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
@@ -79,8 +99,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			// Target Image Src.
-			
-			var src = $target.attr( 'src' );
+
+			var fullSrc = $target.attr( 'src' );
 			var classNames = $target.attr( 'class' );
 			$.each( BoldgridEditor.images, function () {
 				if ( $target.hasClass( 'wp-image-' + this.attachment_id ) ) {
@@ -88,22 +108,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					return false;
 				}
 			} );
+
+			if ( ! src ) {
+				src = fullSrc;
+			}
+
 			//isRemote(img)
 
-			$ul = $( '<ul></ul>' );
-			$.each( self.presets, function ( ) {
-				var $li = $( '<li data-preset="' + this.name + '" class="panel-selection"><img src="' +
-					src + '"><div class="name">' + this.title +  '</div></li>');
-				$ul.append( $li )
-			} );
+			var template = wp.template( 'boldgrid-editor-image-filter' );
+			var html = template( {
+				'fullSrc' : fullSrc,
+				'src' : src,
+				'presets' : self.presets,
+				'customizeSettings' : self.customizeSettings
+			} ) ;
 
-			panel.$element.find( '.panel-body' ).html( $ul );
+			panel.$element.find( '.panel-body' ).html( html );
+
 			self.setupPanelClick();
 
-			// Run Filters.
-			$.each( self.presets, function ( key ) {
-			} );
-			
 			var count = 0;
 			var process = function () {
 				Caman( '[data-preset="' + self.presets[ count ].name + '"] img', function () {
@@ -115,8 +138,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					} );
 				} );
 			};
-			
 			process();
+
+
+			self.preview = Caman( panel.$element.find( '.preview img' )[0], function () {} );
 
 			panel.open( self );
 		}

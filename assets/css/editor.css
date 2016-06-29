@@ -6,7 +6,7 @@
   position: fixed;
   top: 300px;
   left: 200px;
-  z-index: 9999;
+  z-index: 999999;
   width: 310px;
   border: 1px solid #eee;
   background-color: white;
@@ -15,7 +15,7 @@
 
 .editor-panel .panel-title {
   cursor: move;
-  background-color: #1e8cbe;
+  background-color: #73a060;
   color: white;
   padding: 15px 10px;
   font-weight: 300;
@@ -27,18 +27,19 @@
   right: 13px;
   border-radius: 50%;
   background-color: white;
-  color: #1e8cbe;
+  color: #73a060;
   padding: 1px;
   top: 14px;
   cursor: pointer; }
 
 .editor-panel .panel-title .close-icon:hover {
-  background-color: #0073aa;
+  background-color: #45603a;
   color: white; }
 
 .editor-panel .panel-title {
   border-top-left-radius: 10px;
-  border-top-right-radius: 10px; }
+  border-top-right-radius: 10px;
+  margin-bottom: 10px; }
 
 .editor-panel .panel-selection {
   width: 70px;
@@ -59,14 +60,14 @@
   background-color: white; }
 
 .editor-panel .panel-selection.selected {
-  background-color: #1e8cbe;
+  background-color: #73a060;
   color: white; }
 
 /*************** Panel Body ********************/
 .panel-body {
   overflow-y: scroll;
-  max-height: 330px;
-  padding: 10px;
+  max-height: calc( 100% - 70px);
+  padding: 0 10px;
   background-color: white; }
 
 .panel-body ul {
@@ -96,21 +97,21 @@
 .editor-panel[data-type="icon"] .panel-selection.selected .fa {
   color: white; }
 
-/*************** Change Icon Panel ********************/
+/*************** Change Image Panel ********************/
 .editor-panel[data-type="image"] {
   width: 400px; }
 
 .editor-panel[data-type="image"] .panel-selection {
   background: none;
-  width: 110px;
+  width: auto;
   height: auto;
   padding: 0; }
 
 .editor-panel[data-type="image"] .panel-selection:hover {
-  color: #1e8cbe; }
+  color: #73a060; }
 
 .editor-panel[data-type="image"] .panel-selection:hover img {
-  border-color: #1e8cbe; }
+  border-color: #73a060; }
 
 .editor-panel[data-type="image"] .panel-selection canvas,
 .editor-panel[data-type="image"] .panel-selection img {
@@ -122,18 +123,119 @@
   border: 2px solid transparent; }
 
 .editor-panel[data-type="image"] .panel-selection.selected {
-  color: #1e8cbe; }
+  color: #73a060; }
 
 .editor-panel[data-type="image"] .panel-selection.selected canvas,
 .editor-panel[data-type="image"] .panel-selection.selected img {
-  border-color: #1e8cbe; }
+  border-color: #73a060; }
+
+.editor-panel[data-type="image"] .activate-customize,
+.editor-panel[data-type="image"] .presets {
+  display: none; }
+
+.editor-panel[data-type="image"] .panel-body {
+  position: relative; }
+
+.editor-panel[data-type="image"] .panel-body .preview {
+  text-align: center;
+  margin-top: 4px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.editor-panel[data-type="image"] .panel-body .preview img,
+.editor-panel[data-type="image"] .panel-body .preview canvas {
+  max-width: 85%;
+  text-align: center;
+  border-radius: 5px; }
+
+.editor-panel[data-type="image"] .panel-body .preview .button {
+  display: table;
+  margin: 15px auto; }
+
+.editor-panel[data-type="image"] .panel-body .preview .loading {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center; }
+
+.editor-panel[data-type="image"] .panel-body .preview .spinner {
+  position: relative;
+  margin-top: 50%;
+  transform: translateY(-50%);
+  float: none; }
+
+.editor-panel[data-type="image"].rendering .panel-body .preview .loading {
+  display: block; }
+
+.editor-panel[data-type="image"] .panel-body .choices,
+.editor-panel[data-type="image"] .panel-body .preview {
+  display: inline-block;
+  text-align: center; }
+
+.editor-panel[data-type="image"] .panel-body .choices {
+  width: 50%;
+  margin-left: 20px; }
+
+.editor-panel[data-type="image"] .panel-body .preview {
+  width: calc( 50% - 20px); }
+
+.editor-panel[data-type="image"] .panel-body .choices {
+  border-radius: 12px;
+  padding-bottom: 11px;
+  background-color: #f1f1f1;
+  box-shadow: 0px 0px 4px 0px #b5b5b5;
+  margin-bottom: 8px;
+  margin-top: 3px; }
+
+.editor-panel[data-type="image"] .panel-body ul {
+  overflow-y: scroll;
+  height: 400px;
+  margin: 10px; }
+
+.editor-panel[data-type="image"] .panel-body {
+  overflow: hidden; }
+
+.editor-panel .control {
+  display: block;
+  height: 36px;
+  width: 216px;
+  width: 50%;
+  float: left; }
+
+.editor-panel .control .name {
+  position: relative;
+  top: 4px;
+  float: left; }
+
+.editor-panel .ui-slider-horizontal {
+  height: .1px;
+  border-radius: 0;
+  width: 75px;
+  border-color: #585858;
+  margin: 16px;
+  display: inline-block;
+  float: right; }
+
+.editor-panel .ui-slider-horizontal .ui-slider-handle {
+  left: 0%;
+  margin-top: -5px;
+  border: 3px;
+  height: 1em;
+  width: 1em;
+  border-radius: 0px;
+  background: #73a060;
+  top: -.2em; }
 
 /*--------------------------------------------------------------
 # Menu Styles
 --------------------------------------------------------------*/
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
-  background-color: #1e8cbe;
   padding: 0;
   display: block;
   height: 0px;
@@ -146,30 +248,37 @@
   text-align: center;
   display: inline-block;
   padding: 6px 22px 8px;
-  background-color: #21759b;
+  background-color: #73a060;
   border-radius: 0px 0px 8px 8px;
-  box-shadow: 0px 5px 16px -4px; }
+  box-shadow: 0px 5px 16px -4px;
+  cursor: move;
+  width: auto !important; }
 
 .mce-container .boldgrid-instance-menu li {
   display: inline-block;
   padding: 3px;
   border-radius: 50%;
-  box-shadow: 0px 1px 3px black;
+  box-shadow: 0px 1px 13px -2px black;
   margin: 0 8px;
   cursor: pointer;
   background-color: white; }
 
-.mce-container .boldgrid-instance-menu li:hover .genericon {
+.mce-container .boldgrid-instance-menu li.active span,
+.mce-container .boldgrid-instance-menu li:hover span {
   color: #f95b26; }
 
-.mce-container .boldgrid-instance-menu .genericon {
+.mce-container .boldgrid-instance-menu li span {
   font-size: 28px;
   transition: color .3s; }
 
-/************** TinyMCE Menu *******************/
-#mceu_48 {
-  display: none; }
+.mce-container .boldgrid-instance-menu li .fa-info {
+  padding: 0 9px; }
 
+.mce-container .boldgrid-instance-menu li .fa-text-width {
+  padding: 1px 3px;
+  font-size: 26px; }
+
+/************** TinyMCE Menu *******************/
 .imhwpb-icon:before {
   -webkit-font-smoothing: antialiased;
   font: normal 20px/1 'dashicons';

@@ -234,6 +234,7 @@ class Boldgrid_Editor {
 			add_action( 'media_buttons',
 				function () {
 					wp_enqueue_style( 'genericons-imhwpb' );
+					wp_enqueue_style( 'font-awesome' );
 				} );
 
 			// This has a high priority to override duplicate files in other boldgrid plugins
@@ -287,6 +288,12 @@ class Boldgrid_Editor {
 				'boldgrid_gridblock_html_ajax'
 			) );
 
+		add_action( 'admin_print_footer_scripts',
+			array (
+				$this,
+				'print_scripts'
+			), 25 );
+
 		// Plugin updates
 		require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-update.php';
 
@@ -294,6 +301,10 @@ class Boldgrid_Editor {
 
 		$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
 		$boldgrid_editor_crop->add_hooks();
+	}
+
+	public function print_scripts() {
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
 	}
 
 	/**
@@ -881,7 +892,8 @@ class Boldgrid_Editor {
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-panel',
-			plugins_url( '/assets/js/draggable/panel.js', $plugin_file ), array ( 'jquery-ui-draggable', 'jquery-ui-resizable' ),
+			plugins_url( '/assets/js/draggable/panel.js', $plugin_file ), array (
+					'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider' ),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-menu',
@@ -920,6 +932,12 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
+			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
+			false,
+			BOLDGRID_EDITOR_VERSION,
+			false);
+
 	}
 
 	/**
@@ -937,7 +955,7 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
-		wp_enqueue_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+		wp_register_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	}
 
 	/**

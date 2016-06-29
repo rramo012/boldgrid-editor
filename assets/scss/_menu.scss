@@ -1,6 +1,5 @@
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
-	background-color: #1e8cbe;
 	padding: 0;
 	display: block;
     height: 0px;
@@ -12,33 +11,42 @@
 	ul {
 	    text-align: center;
 	    display: inline-block;
-	    padding: 6px 22px 8px;
-	    background-color: rgb(33, 117, 155);
+	    padding: 6px 22px 8px; 
+	    background-color: $menu-color;
 	    border-radius: 0px 0px 8px 8px;
 	    box-shadow: 0px 5px 16px -4px;
+	    cursor: move;
+	    width: auto !important;
 	}
 	li {
 		display: inline-block;
 		padding: 3px;
 		border-radius: 50%;
-		box-shadow: 0px 1px 3px black;
+		box-shadow: 0px 1px 13px -2px black;
 		margin: 0 8px;
 		cursor: pointer;
 		background-color: white;
 	}
-	li:hover .genericon {
+	li.active span,
+	li:hover span {
 		color: #f95b26;
 	}  
-	.genericon {
+	li span {
 		font-size: 28px;
 		transition: color .3s;
+	}
+	
+	li .fa-info {
+		padding: 0 9px;
+	}
+	
+	li .fa-text-width {
+	    padding: 1px 3px;
+	    font-size: 26px;
 	}
 }
 
 /************** TinyMCE Menu *******************/
-#mceu_48 {
-	display: none;
-}
 
 .imhwpb-icon:before { 	
 	-webkit-font-smoothing: antialiased;
