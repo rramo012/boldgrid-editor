@@ -134,11 +134,21 @@
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
   background-color: #1e8cbe;
-  padding: 8px 0;
-  display: none; }
+  padding: 0;
+  display: block;
+  height: 0px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center; }
 
 .mce-container .boldgrid-instance-menu ul {
-  text-align: center; }
+  text-align: center;
+  display: inline-block;
+  padding: 6px 22px 8px;
+  background-color: #21759b;
+  border-radius: 0px 0px 8px 8px;
+  box-shadow: 0px 5px 16px -4px; }
 
 .mce-container .boldgrid-instance-menu li {
   display: inline-block;

@@ -16,6 +16,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.create();
 			this.onPanelClose();
 			this.setupPanelDrag();
+			this.setupPanelResize();
 
 			return this.$element;
 		},
@@ -30,6 +31,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				handle: '.panel-title',
 				scroll : false
 			} );
+		},
+		
+		setupPanelResize : function() {
+			this.$element.resizable();
 		},
 
 		onPanelClose : function() {

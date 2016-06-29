@@ -1,11 +1,21 @@
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
 	background-color: #1e8cbe;
-	padding: 8px 0;
-	display: none;
-	
+	padding: 0;
+	display: block;
+    height: 0px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    
 	ul {
-		text-align:center;
+	    text-align: center;
+	    display: inline-block;
+	    padding: 6px 22px 8px;
+	    background-color: rgb(33, 117, 155);
+	    border-radius: 0px 0px 8px 8px;
+	    box-shadow: 0px 5px 16px -4px;
 	}
 	li {
 		display: inline-block;
@@ -18,7 +28,7 @@
 	}
 	li:hover .genericon {
 		color: #f95b26;
-	}
+	}  
 	.genericon {
 		font-size: 28px;
 		transition: color .3s;
