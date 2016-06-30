@@ -16,7 +16,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.create();
 			this.onPanelClose();
 			this.setupPanelDrag();
-			this.setupPanelResize();
+			//this.setupPanelResize();
 
 			return this.$element;
 		},
@@ -31,6 +31,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				handle: '.panel-title',
 				scroll : false
 			} );
+		},
+		
+		clearSelected : function () {
+			BOLDGRID.EDITOR.Panel.$element.find( '.selected' ).removeClass( 'selected' );
 		},
 
 		setupPanelResize : function() {

@@ -9,14 +9,14 @@
 				</li>
 			<# }); #>
 			</ul>
-			<a class='button activate-customize'>Customize</a>
+			<a class='button activate-customize'>Custom</a>
 		</div>
 		<div class='customize'>
 			<ul>
-			<# _.each( data.customizeSettings, function ( setting ) { #>
+			<# _.each( data.customizeSettings, function ( setting, name ) { #>
 				<li class='control'>
 					<span class='name'>{{setting.title}}</span>
-					<div class="slider" data-control="{{setting.name}}"></div>
+					<div class="slider" data-type="{{setting.type}}" data-control="{{name}}"></div>
 				</li>
 			<# }); #>
 			</ul>
@@ -26,6 +26,6 @@
 	<div class='preview'>
 		<img src="{{data.fullSrc}}">
 		<span class='loading'><span class="spinner is-active"></span></span>
-		<a class='button button-primary'>Apply Changes</a>
+		<a class='button button-primary insert-image'>Insert Image</a>
 	</div>
 </script>

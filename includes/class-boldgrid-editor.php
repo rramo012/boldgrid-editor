@@ -157,8 +157,8 @@ class Boldgrid_Editor {
 		$this->add_hooks();
 	}
 
-	public function get_post_images() {
-		$current_post_id = $_REQUEST['post'];
+	public function get_post_images( $post_id = null ) {
+		$current_post_id = $post_id ? $post_id : $_REQUEST['post'];
 		$attachments = get_children( array( 'post_parent' => $current_post_id,
 			'post_status' => 'inherit',
 			'post_type' => 'attachment',
@@ -273,6 +273,12 @@ class Boldgrid_Editor {
 			array (
 				$this,
 				'boldgrid_gridblock_image_ajax'
+			) );
+
+		add_action( 'wp_ajax_boldgrid_canvas_image',
+			array (
+				$this,
+				'upload_canvas_image_ajax'
 			) );
 
 		// Save a users selection for enabling draggable.
@@ -432,6 +438,68 @@ class Boldgrid_Editor {
 
 			$media_tab->create();
 		}
+	}
+
+	public function upload_canvas_image_ajax() {
+		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
+		$attachement_id = ! empty( $_POST['attachement_id'] ) ? $_POST['attachement_id'] : null;
+
+		$original_attachment = ( array ) get_post ( $attachement_id );
+
+		$image_data = str_replace( 'data:image/png;base64,', '', $image_data );
+		$image_data = str_replace( ' ', '+', $image_data );
+		$data = base64_decode( $image_data );
+		$filename = mktime() . ".png";
+		$uploaded = wp_upload_bits( $filename, null, $data );
+
+		$success = false;
+		$response = array();
+		if ( empty( $uploaded['error'] ) ) {
+
+			// Retrieve the file type from the file name.
+			$wp_filetype = wp_check_filetype( $uploaded['file'], null );
+
+			// Generate the attachment data.
+			unset( $original_attachment['ID'] );
+			unset( $original_attachment['post_name'] );
+			unset( $original_attachment['post_date'] );
+			unset( $original_attachment['post_date_gmt'] );
+			unset( $original_attachment['post_modified'] );
+			unset( $original_attachment['post_modified_gmt'] );
+			$attachment = array (
+				'post_mime_type' => $wp_filetype['type'],
+				'guid' => $uploaded['url'],
+			);
+
+			$attachment = array_merge( $original_attachment, $attachment );
+
+			/*
+			 * Insert the attachment into the media library.
+			 * $attachment_id is the ID of the entry created in the wp_posts table.
+			 */
+			$attachment_id = wp_insert_attachment(
+				$attachment,
+				$uploaded['file'],
+				$original_attachment['post_parent']
+			);
+
+			if ( 0 != $attachment_id ) {
+				$success = true;
+
+				$attach_data = wp_generate_attachment_metadata( $attachment_id, $uploaded['file'] );
+				$result = wp_update_attachment_metadata( $attachment_id, $attach_data );
+
+				$response = array(
+					'attachment_id' => $attachment_id,
+					'url' => $uploaded['url'],
+					'images' => $this->get_post_images( $original_attachment['post_parent'] )
+				);
+			}
+		}
+
+		$response['success'] = $success;
+		print json_encode( $response );
+		wp_die();
 	}
 
 	/**

@@ -3,13 +3,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 ( function ( $ ) {
+	"use strict"; 
+
 	var self;
 
 	BOLDGRID.EDITOR.CONTROLS.Container = {
 
 		name : 'container',
-
-		section : 'row',
 
 		priority : 10,
 

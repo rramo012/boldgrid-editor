@@ -32,7 +32,7 @@
 	}
 	
 	.panel-title .close-icon:hover {
-	    background-color: darken( $panel-color, 20% );
+	    background-color: $hover-color;
 		color: white;
 	}
 	
@@ -63,7 +63,7 @@
 	}
 	
 	.panel-selection.selected {
-	    background-color: $panel-color;
+	    background-color: $hover-color;
 	    color: white;
 	}
 }
@@ -119,6 +119,7 @@
 	    &:hover {
 	    	color : $panel-color;
 	    	
+	    	canvas,
 		    img {
 		    	border-color: $panel-color;
 		    }
@@ -136,11 +137,11 @@
     }
     
 	.panel-selection.selected {
-	   color: $panel-color;
+	   color: $hover-color;
     }
 	.panel-selection.selected canvas,
 	.panel-selection.selected img {
-	   border-color: $panel-color;
+	   border-color: $hover-color;
     }
     .customize {
         display: none;
@@ -247,13 +248,15 @@
 }
 
 .editor-panel .ui-slider-horizontal {
-    height: .1px;
+    height: 3px;
     border-radius: 0;
     width: 75px;
     border-color: #585858;
     margin: 16px;
+    margin-top: 10px;
     display: inline-block;
     float: right;
+    cursor: pointer;
 }
 
 .editor-panel .ui-slider-horizontal .ui-slider-handle {
@@ -263,7 +266,8 @@
     height: 1em;
     width: 1em;
     border-radius: 0px;
-    background: rgb(115, 160, 96);
-    top: -.2em;
+    background: $panel-color;
+    top: -1px;
+    cursor: pointer;
 }
 

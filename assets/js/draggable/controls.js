@@ -83,6 +83,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		setupControl : function ( control ) {
 			this.bindControlHandler( control );
 			BOLDGRID.EDITOR.Menu.createListItem( control );
+			
+			if ( control.setup ) {
+				control.setup();
+			}
 		},
 
 		bindControlHandler : function ( control ) {
