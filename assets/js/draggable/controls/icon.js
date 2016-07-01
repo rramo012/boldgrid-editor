@@ -13,7 +13,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		priority : 5,
 
-		iconClasses : 'fa fa-info',
+		iconClasses : 'fa fa-cog',
 
 		selectors : [ '.fa' ],
 

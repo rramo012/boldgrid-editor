@@ -15,7 +15,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.create();
 			this.onPanelClose();
-			this.setupPanelDrag();
+			this._setupDrag();
 			//this.setupPanelResize();
 
 			return this.$element;
@@ -25,6 +25,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$( 'body' ).append( this.$element );
 		},
 		
+		initScroll : function () {
+			
+			this.$element.find( '.panel-body' ).slimScroll( {
+			    color: '#32373c',
+			    size: '7px',
+			  //66px styling offset.
+			    height: this.$element.height() - 66, 
+			    wheelStep: 5,
+			} );
+		},
 		
 		isOpenControl : function ( control ) {
 			var isOpenControl = false;
@@ -36,7 +46,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return isOpenControl;
 		},
 
-		setupPanelDrag : function() {
+		_setupDrag : function() {
 			this.$element.draggable( {
 				containment: '#wpwrap',
 				handle: '.panel-title',
@@ -93,6 +103,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
 			this.$element.show();
+			this.initScroll();
 			this._scrollToSelected();
 		}
 

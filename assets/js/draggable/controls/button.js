@@ -16,6 +16,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		iconClasses : 'fa fa-cog',
 
 		selectors : [ 'a.button', 'a.button-secondary', 'a.button-primary' ],
+		
+		classes : [
+			{ name : 'boldgrid-button boldgrid-button-rounded boldgrid-button-flat' },
+			{ name : 'boldgrid-button boldgrid-button-pill boldgrid-button-flat' },
+			{ name : 'boldgrid-button boldgrid-button-flat' },
+			{ name : 'boldgrid-button glow' },
+			{ name : 'boldgrid-button boldgrid-button-rounded' },
+			{ name : 'boldgrid-button boldgrid-button-3d' },
+			{ name : 'boldgrid-button boldgrid-button-border' },
+			{ name : 'boldgrid-button boldgrid-button-pill' },
+			{ name : 'boldgrid-button boldgrid-button-circle' },
+			{ name : 'boldgrid-button boldgrid-button-circle boldgrid-button-flat' },
+		],
 
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
@@ -23,21 +36,48 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		panel : {
 			title : 'Button Design',
-			height : '600px',
-			width : '400px',
+			height : '400px',
+			width : '350px',
+		},
+		
+		setup : function () {
+			self._setupPanelClick();
 		},
 
+		_setupPanelClick : function() {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			panel.$element.on( 'click', '.button-design .panel-selection', function () {
+				var $this = $( this ),
+					preset = $this.data( 'preset' ),
+					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
+				
+				panel.clearSelected();
+				$this.addClass( 'selected' );
+				
+				// Aply changes to editor.
+				$target.attr( 'class', '' );
+				$target.addClass( preset );
+			} );
+		},
+		
+		
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 		openPanel : function () {
-			var panel = BOLDGRID.EDITOR.Panel;
+			var panel = BOLDGRID.EDITOR.Panel,
+				template = wp.template( 'boldgrid-editor-button' );
 			
 			// Remove all content from the panel.
 			panel.clear();
 			
-			panel.$element.find('.panel-body').html('<h1>Coming Soon</h1>');
-
+			// Set markup for panel.
+			panel.$element.find( '.panel-body' ).html( template( {
+				'text' : 'for sale',
+				'presets' : self.classes,
+			} ) );
+			
 			// Open Panel.
 			panel.open( self );
 		}

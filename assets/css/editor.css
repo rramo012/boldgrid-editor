@@ -67,7 +67,6 @@
 /*************** Panel Body ********************/
 .panel-body {
   overflow-y: scroll;
-  max-height: calc( 100% - 70px);
   padding: 0 10px;
   background-color: white; }
 
@@ -108,6 +107,15 @@
 .editor-panel[data-type="image"] img {
   max-width: 100px;
   max-height: 100px; }
+
+.editor-panel[data-type="button"] .panel-selection {
+  width: 125px;
+  height: auto;
+  background-color: white;
+  padding: 13px; }
+
+.editor-panel[data-type="button"] .boldgrid-button {
+  text-transform: uppercase; }
 
 /*************** Change Image Panel ********************/
 .editor-panel[data-type="image-filter"] {
@@ -396,7 +404,7 @@
 #tinymce .img-mod-3,
 #page .img-mod-3 {
   border-radius: 50%;
-  border: 0.25em solid black; }
+  border: 0.25em solid #c3c3c3; }
 
 .editor-panel .img-mod-4,
 #tinymce .img-mod-4,
@@ -424,7 +432,7 @@
 #tinymce .img-mod-8,
 #page .img-mod-8 {
   border: 8px solid white;
-  box-shadow: 0px 0px 0px 5px #555555; }
+  box-shadow: 0px 0px 0px .3em #8e8e8e; }
 
 .editor-panel .img-mod-9,
 #tinymce .img-mod-9,
@@ -432,3 +440,10 @@
   border: .5em solid white;
   border-bottom-width: 2em;
   box-shadow: 0px 0.2em .2em 0px #555555; }
+
+.editor-panel .img-mod-10,
+#tinymce .img-mod-10,
+#page .img-mod-10 {
+  border: 6px solid white;
+  box-shadow: 0px 0px 0px .2em #8e8e8e;
+  border-radius: 15px; }

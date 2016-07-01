@@ -310,6 +310,7 @@ class Boldgrid_Editor {
 	}
 
 	public function print_scripts() {
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/button.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
 	}
@@ -684,6 +685,9 @@ class Boldgrid_Editor {
 		$styles[] = plugins_url( '/assets/css/editor.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
+		$styles[] = plugins_url( '/assets/buttons/css/buttons.css',
+			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+
 		// Add Query Args
 		$mce_css = array ();
 		foreach ( $styles as $editor_style ) {
@@ -1008,6 +1012,10 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-slim-scroll',
+			plugins_url( '/assets/js/slimscroll/jquery.slimscroll.min.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
 			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
 			false,
@@ -1029,6 +1037,9 @@ class Boldgrid_Editor {
 
 		wp_register_style( 'editor-css-imhwpb',
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+		wp_enqueue_style( 'button-css-imhwpb',
+			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
 		wp_register_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );

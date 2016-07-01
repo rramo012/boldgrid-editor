@@ -11,14 +11,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 		classes : [
 			{ name : 'boldgrid-image img-mod-1' },
+			{ name : 'boldgrid-image img-mod-9' },
 			{ name : 'boldgrid-image img-mod-2' },
 			{ name : 'boldgrid-image img-mod-3' },
-			{ name : 'boldgrid-image img-mod-4' },
-			{ name : 'boldgrid-image img-mod-5' },
 			{ name : 'boldgrid-image img-mod-6' },
+			{ name : 'boldgrid-image img-mod-5' },
+			{ name : 'boldgrid-image img-mod-4' },
 			{ name : 'boldgrid-image img-mod-7' },
 			{ name : 'boldgrid-image img-mod-8' },
-			{ name : 'boldgrid-image img-mod-9' }
+			{ name : 'boldgrid-image img-mod-10' },
 		],
 
 		name : 'image',

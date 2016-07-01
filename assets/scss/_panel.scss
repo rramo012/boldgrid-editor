@@ -73,7 +73,6 @@
 
 .panel-body {
 	overflow-y: scroll;
-    max-height: calc( 100% - 70px);
     padding: 0 10px;
 	background-color: white;
 }
@@ -119,6 +118,18 @@
     img {
         max-width: 100px;
         max-height: 100px;
+    }
+}
+.editor-panel[data-type="button"] {
+    .panel-selection {
+	    width: 125px;
+	    height: auto;
+	    background-color: white; 
+	    padding: 13px;
+    }
+    
+    .boldgrid-button {
+        text-transform: uppercase;
     }
 }
 
