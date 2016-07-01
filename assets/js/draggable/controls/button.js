@@ -7,22 +7,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	var self;
 
-	BOLDGRID.EDITOR.CONTROLS.Font = {
+	BOLDGRID.EDITOR.CONTROLS.Button = {
 
-		name : 'font',
+		name : 'button',
 
-		priority : 10,
+		priority : 2,
 
-		iconClasses : 'fa fa-text-width',
+		iconClasses : 'fa fa-cog',
 
-		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section' ],
+		selectors : [ 'a.button', 'a.button-secondary', 'a.button-primary' ],
 
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
-
+		
 		panel : {
-			title : 'Font',
+			title : 'Button Design',
 			height : '600px',
 			width : '400px',
 		},
@@ -41,9 +41,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			// Open Panel.
 			panel.open( self );
 		}
+
 	};
 
-	BOLDGRID.EDITOR.CONTROLS.Font.init();
-	self = BOLDGRID.EDITOR.CONTROLS.Font;
+	BOLDGRID.EDITOR.CONTROLS.Button.init();
+	self = BOLDGRID.EDITOR.CONTROLS.Button;
 
 } )( jQuery );

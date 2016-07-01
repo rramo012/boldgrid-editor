@@ -74,6 +74,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		setupControls : function () {
 			var self = this;
+			
+			// Sort Controls by priority.
+			var compare = function ( a, b ) {
+				
+				if ( a.priority < b.priority ) {
+					return -1;
+				}
+				
+				if ( a.priority > b.priority ) {
+					return 1;
+				}
+				
+				return 0;
+			}
+			
+			this.controls.sort( compare );
+			
+			
 			// Bind each menu control.
 			$.each( this.controls, function () {
 				self.setupControl( this );

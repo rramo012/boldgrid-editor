@@ -310,6 +310,7 @@ class Boldgrid_Editor {
 	}
 
 	public function print_scripts() {
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
 	}
 
@@ -680,6 +681,9 @@ class Boldgrid_Editor {
 		$styles[] = plugins_url( '/assets/js/draggable/css/draggable.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
+		$styles[] = plugins_url( '/assets/css/editor.css',
+			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+
 		// Add Query Args
 		$mce_css = array ();
 		foreach ( $styles as $editor_style ) {
@@ -984,12 +988,16 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/js/draggable/controls/image.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-controls-font',
-			plugins_url( '/assets/js/draggable/controls/font.js', $plugin_file ), array (),
+		wp_enqueue_script( 'boldgrid-editor-controls-button',
+			plugins_url( '/assets/js/draggable/controls/button.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-controls-color',
-			plugins_url( '/assets/js/draggable/controls/color.js', $plugin_file ), array (),
+		wp_enqueue_script( 'boldgrid-editor-controls-image-filter',
+			plugins_url( '/assets/js/draggable/controls/image-filter.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls-font',
+			plugins_url( '/assets/js/draggable/controls/font.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-background',

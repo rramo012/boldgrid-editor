@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-boldgrid-editor-image-filter">
-	<div class='choices'>
+	<div class='choices image-filter'>
 		<div class='presets'>
 			<ul>
 			<# _.each( data.presets, function ( preset ) { #>

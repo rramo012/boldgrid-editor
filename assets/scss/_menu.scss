@@ -1,7 +1,7 @@
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
 	padding: 0;
-	display: block;
+	display: none;
     height: 0px;
     position: absolute;
     left: 0;
@@ -11,7 +11,7 @@
 	ul {
 	    text-align: center;
 	    display: inline-block;
-	    padding: 6px 22px 8px; 
+	    padding: 6px 15px 8px; 
 	    background-color: $menu-color;
 	    border-radius: 0px 0px 8px 8px;
 	    box-shadow: 0px 5px 16px -4px;
@@ -22,27 +22,35 @@
 		display: inline-block;
 		padding: 3px;
 		border-radius: 50%;
-		box-shadow: 0px 1px 13px -2px black;
 		margin: 0 8px;
 		cursor: pointer;
 		background-color: white;
+		transition: box-shadow .3s;
 	}
-	li.active span,
-	li:hover span {
-		color: #f95b26;
-	}  
+	li.active,
+	li:hover {
+	    box-shadow: 0px 0px 5px 1px #969696 inset;
+        span {
+            color: #f95b26;
+	   }
+    }
 	li span {
-		font-size: 28px;
+		font-size: 23px;
 		transition: color .3s;
+		padding: 2px;
 	}
 	
 	li .fa-info {
-		padding: 0 9px;
+        padding: 2px 9.5px;
 	}
 	
 	li .fa-text-width {
-	    padding: 1px 3px;
-	    font-size: 26px;
+        padding: 3.5px 5px;
+        font-size: 20px;
+	}
+	
+	li .fa-cog {
+        padding: 2px 3.75px;
 	}
 }
 

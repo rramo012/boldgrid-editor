@@ -11,7 +11,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'background',
 
-		priority : 10,
+		priority : 80,
 
 		iconClasses : 'genericon genericon-gallery',
 
@@ -21,8 +21,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
-		onMenuClick : function ( e ) {
+		panel : {
+			title : 'Background',
+			height : '600px',
+			width : '400px',
+		},
 
+		onMenuClick : function ( e ) {
+			self.openPanel();
+		},
+		openPanel : function () {
+			var panel = BOLDGRID.EDITOR.Panel;
+			
+			// Remove all content from the panel.
+			panel.clear();
+			
+			panel.$element.find('.panel-body').html('<h1>Coming Soon</h1>');
+
+			// Open Panel.
+			panel.open( self );
 		}
 
 	};

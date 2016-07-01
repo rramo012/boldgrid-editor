@@ -24,6 +24,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element = $( BoldgridEditor.instancePanel );
 			$( 'body' ).append( this.$element );
 		},
+		
+		
+		isOpenControl : function ( control ) {
+			var isOpenControl = false;
+			
+			if ( this.$element.is( ':visible' ) && this.$element.attr( 'data-type' ) == control.name ) {
+				isOpenControl = true;
+			}
+			
+			return isOpenControl;
+		},
 
 		setupPanelDrag : function() {
 			this.$element.draggable( {
@@ -53,16 +64,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		_scrollToSelected : function () {
-			//$selected[0].scrollIntoView();
-			console.log( $selected[0].getBoundingClientRect() );
-			console.log( $selected.offset().top );
-			console.log( $selected.scrollTop() );
-			$panel.find( '.panel-body' )[0].scrollTop = $selected.offset().top - 900;
-			/*
-			$panel.find( '.editor-panel-body' ).animate({
-	            scrollTop: $selected.offset().top + 'px'
-	        }, 'fast');
-			*/
+			var $selected = self.$element.find( '.selected' );
+			
+			this.$element.find( '.panel-body' ).scrollTop( 0 );
+			
+			if ( ! $selected.length ) {
+				return;
+			}
+			
+			this.$element.find( '.panel-body' )
+				.scrollTop( $selected.position().top - ( self.$element.height() / 2 ) );
 		},
 
 		clear : function () {
@@ -75,7 +86,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		open : function ( control ) {
 
-			//this._scrollToSelected();
 			BOLDGRID.EDITOR.Menu.activateControl( control );
 
 			this.$element.height( control.panel.height );
@@ -83,6 +93,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
 			this.$element.show();
+			this._scrollToSelected();
 		}
 
 	};

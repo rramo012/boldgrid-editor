@@ -17,24 +17,25 @@
   cursor: move;
   background-color: #32373c;
   color: white;
-  padding: 15px 10px;
+  padding: 15px 22px;
   font-weight: 300;
   margin: 0;
-  font-size: 14px; }
+  font-size: 16px; }
 
 .editor-panel .panel-title .close-icon {
   position: absolute;
-  right: 13px;
+  right: 25px;
   border-radius: 50%;
   background-color: white;
   color: #32373c;
   padding: 1px;
   top: 14px;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: box-shadow .3s; }
 
 .editor-panel .panel-title .close-icon:hover {
-  background-color: #f95b26;
-  color: white; }
+  box-shadow: 0px 0px 5px 1px #969696 inset;
+  color: #f95b26; }
 
 .editor-panel .panel-title {
   border-top-left-radius: 10px;
@@ -97,25 +98,36 @@
 .editor-panel[data-type="icon"] .panel-selection.selected .fa {
   color: white; }
 
+.editor-panel[data-type="image"] .panel-selection {
+  width: 147px;
+  height: auto;
+  background-color: white;
+  padding: 9px 0px;
+  margin: 0; }
+
+.editor-panel[data-type="image"] img {
+  max-width: 100px;
+  max-height: 100px; }
+
 /*************** Change Image Panel ********************/
-.editor-panel[data-type="image"] {
+.editor-panel[data-type="image-filter"] {
   width: 400px; }
 
-.editor-panel[data-type="image"] .panel-selection {
+.editor-panel[data-type="image-filter"] .panel-selection {
   background: none;
   width: auto;
   height: auto;
   padding: 0; }
 
-.editor-panel[data-type="image"] .panel-selection:hover {
+.editor-panel[data-type="image-filter"] .panel-selection:hover {
   color: #32373c; }
 
-.editor-panel[data-type="image"] .panel-selection:hover canvas,
-.editor-panel[data-type="image"] .panel-selection:hover img {
+.editor-panel[data-type="image-filter"] .panel-selection:hover canvas,
+.editor-panel[data-type="image-filter"] .panel-selection:hover img {
   border-color: #32373c; }
 
-.editor-panel[data-type="image"] .panel-selection canvas,
-.editor-panel[data-type="image"] .panel-selection img {
+.editor-panel[data-type="image-filter"] .panel-selection canvas,
+.editor-panel[data-type="image-filter"] .panel-selection img {
   width: 100%;
   height: auto;
   max-height: 100px;
@@ -123,43 +135,43 @@
   border-radius: 7px;
   border: 2px solid transparent; }
 
-.editor-panel[data-type="image"] .panel-selection.selected {
+.editor-panel[data-type="image-filter"] .panel-selection.selected {
   color: #f95b26; }
 
-.editor-panel[data-type="image"] .panel-selection.selected canvas,
-.editor-panel[data-type="image"] .panel-selection.selected img {
+.editor-panel[data-type="image-filter"] .panel-selection.selected canvas,
+.editor-panel[data-type="image-filter"] .panel-selection.selected img {
   border-color: #f95b26; }
 
-.editor-panel[data-type="image"] .customize {
+.editor-panel[data-type="image-filter"] .customize {
   display: none; }
 
-.editor-panel[data-type="image"] .customizing .customize {
+.editor-panel[data-type="image-filter"] .customizing .customize {
   display: block; }
 
-.editor-panel[data-type="image"] .customizing .presets {
+.editor-panel[data-type="image-filter"] .customizing .presets {
   display: none; }
 
-.editor-panel[data-type="image"] .panel-body {
+.editor-panel[data-type="image-filter"] .panel-body {
   position: relative; }
 
-.editor-panel[data-type="image"] .panel-body .preview {
+.editor-panel[data-type="image-filter"] .panel-body .preview {
   text-align: center;
   margin-top: 4px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%); }
 
-.editor-panel[data-type="image"] .panel-body .preview img,
-.editor-panel[data-type="image"] .panel-body .preview canvas {
+.editor-panel[data-type="image-filter"] .panel-body .preview img,
+.editor-panel[data-type="image-filter"] .panel-body .preview canvas {
   max-width: 85%;
   text-align: center;
   border-radius: 5px; }
 
-.editor-panel[data-type="image"] .panel-body .preview .button {
+.editor-panel[data-type="image-filter"] .panel-body .preview .button {
   display: table;
   margin: 15px auto; }
 
-.editor-panel[data-type="image"] .panel-body .preview .loading {
+.editor-panel[data-type="image-filter"] .panel-body .preview .loading {
   display: none;
   position: absolute;
   top: 0;
@@ -169,28 +181,28 @@
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center; }
 
-.editor-panel[data-type="image"] .panel-body .preview .spinner {
+.editor-panel[data-type="image-filter"] .panel-body .preview .spinner {
   position: relative;
   margin-top: 50%;
   transform: translateY(-50%);
   float: none; }
 
-.editor-panel[data-type="image"].rendering .panel-body .preview .loading {
+.editor-panel[data-type="image-filter"].rendering .panel-body .preview .loading {
   display: block; }
 
-.editor-panel[data-type="image"] .panel-body .choices,
-.editor-panel[data-type="image"] .panel-body .preview {
+.editor-panel[data-type="image-filter"] .panel-body .choices,
+.editor-panel[data-type="image-filter"] .panel-body .preview {
   display: inline-block;
   text-align: center; }
 
-.editor-panel[data-type="image"] .panel-body .choices {
+.editor-panel[data-type="image-filter"] .panel-body .choices {
   width: 50%;
   margin-left: 20px; }
 
-.editor-panel[data-type="image"] .panel-body .preview {
+.editor-panel[data-type="image-filter"] .panel-body .preview {
   width: calc( 50% - 20px); }
 
-.editor-panel[data-type="image"] .panel-body .choices {
+.editor-panel[data-type="image-filter"] .panel-body .choices {
   border-radius: 12px;
   padding-bottom: 11px;
   background-color: #f1f1f1;
@@ -198,12 +210,12 @@
   margin-bottom: 8px;
   margin-top: 3px; }
 
-.editor-panel[data-type="image"] .panel-body ul {
+.editor-panel[data-type="image-filter"] .panel-body ul {
   overflow-y: scroll;
   height: 400px;
   margin: 10px; }
 
-.editor-panel[data-type="image"] .panel-body {
+.editor-panel[data-type="image-filter"] .panel-body {
   overflow: hidden; }
 
 .editor-panel .control {
@@ -236,7 +248,7 @@
   height: 1em;
   width: 1em;
   border-radius: 0px;
-  background: #32373c;
+  background: #f95b26;
   top: -1px;
   cursor: pointer; }
 
@@ -246,7 +258,7 @@
 /************** Instance Menu *******************/
 .mce-container .boldgrid-instance-menu {
   padding: 0;
-  display: block;
+  display: none;
   height: 0px;
   position: absolute;
   left: 0;
@@ -256,7 +268,7 @@
 .mce-container .boldgrid-instance-menu ul {
   text-align: center;
   display: inline-block;
-  padding: 6px 22px 8px;
+  padding: 6px 15px 8px;
   background-color: #32373c;
   border-radius: 0px 0px 8px 8px;
   box-shadow: 0px 5px 16px -4px;
@@ -267,25 +279,33 @@
   display: inline-block;
   padding: 3px;
   border-radius: 50%;
-  box-shadow: 0px 1px 13px -2px black;
   margin: 0 8px;
   cursor: pointer;
-  background-color: white; }
+  background-color: white;
+  transition: box-shadow .3s; }
+
+.mce-container .boldgrid-instance-menu li.active,
+.mce-container .boldgrid-instance-menu li:hover {
+  box-shadow: 0px 0px 5px 1px #969696 inset; }
 
 .mce-container .boldgrid-instance-menu li.active span,
 .mce-container .boldgrid-instance-menu li:hover span {
   color: #f95b26; }
 
 .mce-container .boldgrid-instance-menu li span {
-  font-size: 28px;
-  transition: color .3s; }
+  font-size: 23px;
+  transition: color .3s;
+  padding: 2px; }
 
 .mce-container .boldgrid-instance-menu li .fa-info {
-  padding: 0 9px; }
+  padding: 2px 9.5px; }
 
 .mce-container .boldgrid-instance-menu li .fa-text-width {
-  padding: 1px 3px;
-  font-size: 26px; }
+  padding: 3.5px 5px;
+  font-size: 20px; }
+
+.mce-container .boldgrid-instance-menu li .fa-cog {
+  padding: 2px 3.75px; }
 
 /************** TinyMCE Menu *******************/
 .imhwpb-icon:before {
@@ -350,3 +370,65 @@
 
 .gridblock-icon:hover .wp-media-buttons-icon {
   transform: rotate(120deg); }
+
+/*--------------------------------------------------------------
+# Image Modules
+--------------------------------------------------------------*/
+.editor-panel .boldgrid-image,
+#tinymce .boldgrid-image,
+#page .boldgrid-image {
+  border: none;
+  box-shadow: none; }
+
+.editor-panel .img-mod-1,
+#tinymce .img-mod-1,
+#page .img-mod-1 {
+  border: 3px solid #fff;
+  padding: 0;
+  box-shadow: 0px 5px 5px 0px #555555; }
+
+.editor-panel .img-mod-2,
+#tinymce .img-mod-2,
+#page .img-mod-2 {
+  border-radius: 50%; }
+
+.editor-panel .img-mod-3,
+#tinymce .img-mod-3,
+#page .img-mod-3 {
+  border-radius: 50%;
+  border: 0.25em solid black; }
+
+.editor-panel .img-mod-4,
+#tinymce .img-mod-4,
+#page .img-mod-4 {
+  border-radius: 10px; }
+
+.editor-panel .img-mod-5,
+#tinymce .img-mod-5,
+#page .img-mod-5 {
+  border-radius: 35px; }
+
+.editor-panel .img-mod-6,
+#tinymce .img-mod-6,
+#page .img-mod-6 {
+  border-radius: 50%;
+  border: 8px solid white;
+  box-shadow: 0px 0px 3px 0px #555555; }
+
+.editor-panel .img-mod-7,
+#tinymce .img-mod-7,
+#page .img-mod-7 {
+  box-shadow: .3em .3em 0 0 #8e8e8e; }
+
+.editor-panel .img-mod-8,
+#tinymce .img-mod-8,
+#page .img-mod-8 {
+  border: 8px solid white;
+  box-shadow: 0px 0px 0px 5px #555555; }
+
+.editor-panel .img-mod-9,
+#tinymce .img-mod-9,
+#page .img-mod-9 {
+  border: .5em solid white;
+  border-bottom-width: 2em;
+  box-shadow: 0px 0.2em .2em 0px #555555; }

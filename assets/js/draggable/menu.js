@@ -51,6 +51,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		activateControl : function ( control ) {
+			self.deactivateControl();
 			this.$activeElement = BOLDGRID.EDITOR.Menu.$element
 				.find( '[data-action="menu-' + control.name + '"]')
 				.addClass( 'active' );

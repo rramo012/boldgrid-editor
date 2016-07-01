@@ -11,7 +11,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'container',
 
-		priority : 10,
+		priority : 90,
 
 		iconClasses : 'fa fa-arrows-h',
 
