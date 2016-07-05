@@ -290,6 +290,8 @@ IMHWPB.Editor = function( $ ) {
 			} );
 
 			editor.on( 'KeyDown', function( e ) {
+				var $structure, $newParagraph;
+
 				if ( !self.draggable ) {
 					return true;
 				}
@@ -314,15 +316,15 @@ IMHWPB.Editor = function( $ ) {
 
 						//the key pressed was alphanumeric
 						if ( is_column ) {
-							var $new_paragraph = $('<p></p>');
-							var $structure = $new_paragraph;
+							$newParagraph  = $( '<p><br></p>' );
+							$structure = $newParagraph;
 						} else {
-							var $structure = $('<div class="col-md-12"><p></p></div>');
-							var $new_paragraph = $structure.find('p');
+							$structure = $( '<div class="col-md-12"><p><br></p></div>' );
+							$newParagraph = $structure.find('p');
 						}
 
 						$current_node.html($structure);
-						editor.selection.setCursorLocation( $new_paragraph[0], 0);
+						editor.selection.setCursorLocation( $newParagraph[0], 0);
 					}
 				} else if ( is_anchor ) {
 					//Backspace or Delete Key

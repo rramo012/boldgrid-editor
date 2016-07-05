@@ -2885,7 +2885,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
-				var buffer_area = 100;
+				var buffer_area = 50;
 				var distance_from_top = (event.originalEvent.screenY - toolbar_height)
 					- self.$mce_32[0].getBoundingClientRect().bottom;
 				var scroll_from_top = self.$window.scrollTop();

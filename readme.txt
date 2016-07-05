@@ -23,6 +23,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.1.5 In progress =
 * New feature:	JIRA WPB-2037	Added capability for auto-updates by BoldGrid API response.
 * Testing:		JIRA WPB-2046	Tested on WordPress 4.5.3.
+* Bug fix:		JIRA WPB-2086	Adding a new row was not allowing you to type in it.
 
 = 1.1.4 =
 * Bug fix:		JIRA WPB-1901	Fixed issue with non BG themes and gridblocks modal.
