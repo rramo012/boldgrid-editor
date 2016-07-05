@@ -15,7 +15,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		iconClasses : 'fa fa-cog',
 
-		selectors : [ 'a.button', 'a.button-secondary', 'a.button-primary' ],
+		selectors : [ '.boldgrid-button', 'a.button', 'a.button-secondary', 'a.button-primary' ],
 		
 		classes : [
 			{ name : 'boldgrid-button boldgrid-button-rounded boldgrid-button-flat' },
