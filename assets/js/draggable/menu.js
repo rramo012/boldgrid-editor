@@ -2,6 +2,8 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function ( $ ) {
+	"use strict";
+
 	var self;
 
 	BOLDGRID.EDITOR.Menu = {

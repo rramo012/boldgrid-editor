@@ -1008,6 +1008,10 @@ class Boldgrid_Editor {
 			plugins_url( '/assets/js/draggable/controls/background.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-resize-row',
+			plugins_url( '/assets/js/draggable/resize/row.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-caman',
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );

@@ -685,7 +685,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.validate_markup();
 		self.track_window_size();
 		self.merge_additional_menu_options();
-		
+
+		BOLDGRID.EDITOR.RESIZE.Row.init( self.$master_container );
 		BOLDGRID.EDITOR.Controls.init( self.$master_container );
 
 		return self;

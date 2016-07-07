@@ -447,3 +447,14 @@
   border: 6px solid white;
   box-shadow: 0px 0px 0px .2em #8e8e8e;
   border-radius: 15px; }
+
+/*--------------------------------------------------------------
+# Image Modules
+--------------------------------------------------------------*/
+.draghandle {
+  width: 25px;
+  height: 25px;
+  z-index: 99999;
+  background-color: yellow;
+  position: fixed;
+  cursor: ns-resize; }

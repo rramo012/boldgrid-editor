@@ -2,6 +2,8 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function ( $ ) {
+	"use strict";
+
 	var self;
 
 	BOLDGRID.EDITOR.Panel = {
@@ -24,25 +26,25 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element = $( BoldgridEditor.instancePanel );
 			$( 'body' ).append( this.$element );
 		},
-		
+
 		initScroll : function () {
-			
+
 			this.$element.find( '.panel-body' ).slimScroll( {
 			    color: '#32373c',
 			    size: '7px',
 			  //66px styling offset.
-			    height: this.$element.height() - 66, 
+			    height: this.$element.height() - 66,
 			    wheelStep: 5,
 			} );
 		},
-		
+
 		isOpenControl : function ( control ) {
 			var isOpenControl = false;
-			
+
 			if ( this.$element.is( ':visible' ) && this.$element.attr( 'data-type' ) == control.name ) {
 				isOpenControl = true;
 			}
-			
+
 			return isOpenControl;
 		},
 
@@ -53,7 +55,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				scroll : false
 			} );
 		},
-		
+
 		clearSelected : function () {
 			BOLDGRID.EDITOR.Panel.$element.find( '.selected' ).removeClass( 'selected' );
 		},
@@ -75,13 +77,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		_scrollToSelected : function () {
 			var $selected = self.$element.find( '.selected' );
-			
+
 			this.$element.find( '.panel-body' ).scrollTop( 0 );
-			
+
 			if ( ! $selected.length ) {
 				return;
 			}
-			
+
 			this.$element.find( '.panel-body' )
 				.scrollTop( $selected.position().top - ( self.$element.height() / 2 ) );
 		},
