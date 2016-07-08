@@ -21,7 +21,7 @@ IMHWPB.Editor = function( $ ) {
 	this.column_selector_string = '';
 	this.currently_selected_size = null;
 
-	this.crop = BoldgridEditor.crop( $ );
+	this.crop = new BoldgridEditor.crop( $ );
 
 	/**
 	 * Select alignment from media modal

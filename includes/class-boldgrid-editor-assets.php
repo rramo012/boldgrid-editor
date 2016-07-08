@@ -57,7 +57,7 @@ class Boldgrid_Editor_Assets {
 			), BOLDGRID_EDITOR_VERSION, true );
 
 		// Send Variables to the view
-		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor',
+		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
 			array (
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),

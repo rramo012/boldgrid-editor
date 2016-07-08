@@ -37,7 +37,6 @@ gulp.task( 'jsmin-drag', function ( cb ) {
 		gulp.src( [ 
 			config.src + 'assets/js/draggable/**/*.js',
 			config.src + 'assets/js/jquery/**/*.js',
-			config.src + 'assets/js/editor/**/*.js'
 		] ),
 		concat( 'editor.js' ),
 		uglify(),
@@ -86,5 +85,5 @@ gulp.task( 'default',
 );
 
 gulp.task('watch', function() {
-	gulp.watch( config.src + 'assets/**/*', [ 'scssCompile' ] );
+	gulp.watch( config.src + 'assets/**/*', [ 'default' ] );
 } );
