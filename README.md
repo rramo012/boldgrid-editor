@@ -7,7 +7,7 @@
   
 **Requires at least:** 4.3
   
-**Tested up to:** 4.4.2
+**Tested up to:** 4.5.3
   
 **License:** GPLv2 or later
   

@@ -2,8 +2,10 @@ var gulp    = require( 'gulp' ),
     uglify  = require( 'gulp-uglify' ),
     cssnano = require( 'gulp-cssnano' ),
     rename  = require( 'gulp-rename' ),
-    sass    = require( 'gulp-sass' );
-
+    sass    = require( 'gulp-sass' ),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+	pump = require('pump');
 
 // Configs.
 var config = {
@@ -28,6 +30,24 @@ gulp.task( 'scssCompile', function(  ) {
 	      } ) )
 	    .pipe( rename( { suffix: '.min' } ) )
 	    .pipe( gulp.dest( config.dist + '/assets/css' ) );
+} );
+
+gulp.task( 'js-compress', function ( cb ) {
+	pump( [
+		gulp.src( [ 
+			config.src + 'assets/js/draggable/**/*.js',
+			config.src + 'assets/js/jquery/**/*.js',
+			config.src + 'assets/js/editor/**/*.js'
+		] ),
+		concat( 'editor.js' ),
+		uglify(),
+		rename( {
+			suffix: '.min'
+		} ),
+		gulp.dest(  config.dist + 'assets/js' )
+    ],
+    cb
+  );
 } );
 
 // Build.
