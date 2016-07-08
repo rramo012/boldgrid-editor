@@ -217,13 +217,13 @@ class Boldgrid_Editor_Media_Tab {
 
 		// Media Tab Javascript
 		wp_register_script( 'media-imhwpb',
-			plugins_url( $asset_path_prefix . '/assets/js/media.js',
+			plugins_url( $asset_path_prefix . Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media' ),
 				$path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION );
 
 		// Media Tab Gridblocks Javascript
 		if( 'insert_layout' === $tab ) {
 			wp_register_script( 'boldgrid-media-gridblocks',
-				plugins_url( $asset_path_prefix . '/assets/js/media.grid-blocks.js',
+				plugins_url( $asset_path_prefix . Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media.grid-blocks' ),
 				$path_configs['plugin_filename'] ),
 				array ( 'wp-util' ),
 				BOLDGRID_EDITOR_VERSION

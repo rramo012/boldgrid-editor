@@ -32,7 +32,7 @@ gulp.task( 'scssCompile', function(  ) {
 	    .pipe( gulp.dest( config.dist + '/assets/css' ) );
 } );
 
-gulp.task( 'js-compress', function ( cb ) {
+gulp.task( 'jsmin-drag', function ( cb ) {
 	pump( [
 		gulp.src( [ 
 			config.src + 'assets/js/draggable/**/*.js',
@@ -49,9 +49,41 @@ gulp.task( 'js-compress', function ( cb ) {
     cb
   );
 } );
+gulp.task( 'jsmin-media', function ( cb ) {
+	pump( [
+		gulp.src( [ 
+			'!' + config.src + 'assets/js/media/**/*.min.js',
+			config.src + 'assets/js/media/**/*.js'
+		] ),
+		uglify(),
+		rename( {
+			suffix: '.min'
+		} ),
+		gulp.dest(  config.dist + 'assets/js/media' )
+	],
+	cb
+	);
+} );
+gulp.task( 'jsmin-editor', function ( cb ) {
+	pump( [
+	       gulp.src( [
+				'!' + config.src + 'assets/js/editor/**/*.min.js',
+				config.src + 'assets/js/editor/**/*.js'
+			] ),
+	       uglify(),
+	       rename( {
+	    	   suffix: '.min'
+	       } ),
+	       gulp.dest(  config.dist + 'assets/js/editor' )
+	       ],
+	       cb
+	);
+} );
 
 // Build.
-gulp.task( 'default', [ 'scssCompile' ] );
+gulp.task( 'default', 
+	[ /*'scssCompile',*/ 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
+);
 
 gulp.task('watch', function() {
 	gulp.watch( config.src + 'assets/**/*', [ 'scssCompile' ] );

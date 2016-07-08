@@ -60,7 +60,7 @@ class Boldgrid_Editor {
 	 *
 	 * @var string
 	 */
-	private $theme_stylesheet;
+	//private $theme_stylesheet;
 
 	/**
 	 * Get $this->settings
@@ -173,11 +173,11 @@ class Boldgrid_Editor {
 
 		$boldgrid_editor_ajax     = new Boldgrid_Editor_Ajax();
 		$boldgrid_editor_assets   = new Boldgrid_Editor_Assets();
-		$boldgrid_editor_mce      = new Boldgrid_Editor_MCE();
-		$boldgrid_editor_theme    = new Boldgrid_Editor_Theme();
 		$boldgrid_editor_builder  = new Boldgrid_Editor_Builder();
-		$boldgrid_editor_version  = new Boldgrid_Editor_Version();
+		$boldgrid_editor_mce      = new Boldgrid_Editor_MCE();
 		$boldgrid_editor_media    = new Boldgrid_Editor_Media();
+		$boldgrid_editor_theme    = new Boldgrid_Editor_Theme();
+		$boldgrid_editor_version  = new Boldgrid_Editor_Version();
 
 		// Admin hooks:
 		if ( is_admin() ) {
@@ -207,14 +207,14 @@ class Boldgrid_Editor {
 			}
 
 			add_action( 'media_buttons', array( $boldgrid_editor_mce, 'load_editor_hooks' ) );
+			add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
 
 			// Creates all tabs as specified by the configuration.
 			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 			$this->set_is_boldgrid_theme( $is_boldgrid_theme );
-			$this->theme_body_class = $boldgrid_editor_theme->theme_body_class();
 
 			// Create media modal tabs.
-			$boldgrid_editor_media->create_tabs();
+			$boldgrid_editor_media->create_tabs( $this->get_tab_configs(), $is_boldgrid_theme );
 
 			// Add screen display buttons.
 			$boldgrid_editor_mce->add_window_size_buttons();
@@ -224,7 +224,7 @@ class Boldgrid_Editor {
 			// This has a high priority to override duplicate files in other boldgrid plugins.
 			add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
 
-			$this->prepend_editor_styles();
+			$boldgrid_editor_mce->prepend_editor_styles();
 
 			// Add ?boldgrid-editor-version=$version_number to each added file.
 			add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );

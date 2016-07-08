@@ -88,7 +88,7 @@ class Boldgrid_Editor_Ajax {
 				$response = array(
 					'attachment_id' => $attachment_id,
 					'url' => $uploaded['url'],
-					'images' => $this->get_post_images( $original_attachment['post_parent'] )
+					'images' => Boldgrid_Editor_Builder::get_post_images( $original_attachment['post_parent'] )
 				);
 			}
 		}

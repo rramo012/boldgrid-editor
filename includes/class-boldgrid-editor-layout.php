@@ -426,7 +426,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		}
 
 		wp_enqueue_script( 'boldgrid-existing-layouts',
-				plugins_url( '/assets/js/existing-layouts.js',
+				plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/existing-layouts' ),
 						BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ), array (), BOLDGRID_EDITOR_VERSION );
 
 		$this->force_remove_stylesheet( 'buttons' );

@@ -46,7 +46,7 @@ class Boldgrid_Editor_Theme {
 	 *
 	 * @return string
 	 */
-	public function theme_body_class() {
+	public static function theme_body_class() {
 		$post_id = ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : null;
 
 		$stylesheet = get_stylesheet();
@@ -63,7 +63,7 @@ class Boldgrid_Editor_Theme {
 			}
 		}
 
-		$this->theme_stylesheet = $stylesheet;
+		//$this->theme_stylesheet = $stylesheet;
 
 		$theme_mods = get_option( 'theme_mods_' . $stylesheet );
 

@@ -26,8 +26,7 @@ class Boldgrid_Editor_Media {
 	 *
 	 * @since 1.0
 	 */
-	public function create_tabs() {
-		$configs = $this->get_tab_configs();
+	public function create_tabs( $configs, $is_bg_theme ) {
 		$tabs = $configs['tabs'];
 
 		// Create each tab specified from the configuraiton.
@@ -38,10 +37,10 @@ class Boldgrid_Editor_Media {
 				$media_tab_class = $tab['content-class'];
 			}
 
-			$tab['is-boldgrid-theme'] = $this->get_is_boldgrid_theme();
+			$tab['is-boldgrid-theme'] = $is_bg_theme;
 			$tab['api_configs'] = array();
 
-			$media_tab = new $media_tab_class( $tab, $this->get_path_configs(), '/' );
+			$media_tab = new $media_tab_class( $tab, $configs, '/' );
 
 			$media_tab->create();
 		}

@@ -13,6 +13,10 @@ class Boldgrid_Editor_Assets {
 		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	}
 
+	public static function get_minified_js( $script_name ) {
+		return $script_name . self::get_asset_suffix() . '.js';
+	}
+
 	/**
 	 * This is the action occur on the enqueue scripts action.
 	 * Enqueues stylesheets and script for the editor page.
@@ -45,8 +49,38 @@ class Boldgrid_Editor_Assets {
 		return ( $permalink ? $permalink : get_site_url() );
 	}
 
+	function enqueue_mce_interface( $plugin_file ) {
+		wp_register_script( 'wp-mce-draggable-imhwpb',
+			plugins_url( self::get_minified_js( '/assets/js/editor/wp-mce-draggable' ), $plugin_file ),
+			array (
+				'jquery-ui-resizable'
+			), BOLDGRID_EDITOR_VERSION, true );
+
+		// Send Variables to the view
+		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor',
+			array (
+				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
+				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
+				'post_id' => ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : null,
+				'site_url' => $this->get_post_url(),
+				'plugin_url' => plugins_url( '', $plugin_file ),
+				'is_IE' => $is_IE,
+				'version' => BOLDGRID_EDITOR_VERSION,
+				'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
+				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
+				'instanceMenu' => Boldgrid_Editor_Builder::get_menu_markup(),
+				'instancePanel' => Boldgrid_Editor_Builder::get_popup_markup(),
+				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
+				'images' => Boldgrid_Editor_Builder::get_post_images()
+			) );
+
+		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+	}
+
 	/**
 	 * Enqueue all scripts
+	 *
+	 * @global $is_IE
 	 *
 	 * @param int $_REQUEST['post']
 	 */
@@ -54,65 +88,55 @@ class Boldgrid_Editor_Assets {
 		global $is_IE;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
-		wp_enqueue_script( 'boldgrid-fourpan', plugins_url( '/assets/js/jquery/jquery.fourpan.js', $plugin_file ),
+
+		wp_enqueue_script( 'media-imhwpb',
+			plugins_url( self::get_minified_js( '/assets/js/media/media' ), $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'media-imhwpb', plugins_url( '/assets/js/media.js', $plugin_file ),
-			array (), BOLDGRID_EDITOR_VERSION, true );
+		$this->enqueue_mce_interface( $plugin_file );
 
-		wp_register_script( 'wp-mce-draggable-imhwpb',
-			plugins_url( '/assets/js/wp-mce-draggable.js', $plugin_file ),
-			array (
-				'jquery-ui-resizable'
-			), BOLDGRID_EDITOR_VERSION, true );
+		// Drag n Drop Assets.
+		$this->enqueue_drag_scripts( $plugin_file );
 
-		$fonts = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true );
-
-		// Send Variables to the view
-		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor',
-			array (
-				'is_boldgrid_theme' => $this->get_is_boldgrid_theme(),
-				'body_class' => $this->theme_body_class,
-				'post_id' => ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : null,
-				'site_url' => $this->get_post_url(),
-				'plugin_url' => plugins_url( '', $plugin_file ),
-				'is_IE' => $is_IE,
-				'version' => BOLDGRID_EDITOR_VERSION,
-				'hasDraggableEnabled' => $this->has_draggable_enabled(),
-				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
-				'instanceMenu' => $this->get_menu_markup(),
-				'instancePanel' => $this->get_popup_markup(),
-				'icons' => $fonts,
-				'images' => $this->get_post_images()
-			) );
-
-
-		wp_enqueue_script( 'text-select-boldgrid',
-			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array (),
+		wp_enqueue_script( 'boldgrid-editor-caman',
+			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'is-typing-boldgrid',
-			plugins_url( '/assets/js/jquery/jquery.is-typing.js', $plugin_file ), array (),
+		wp_enqueue_script( 'boldgrid-editor-slim-scroll',
+			plugins_url( '/assets/js/slimscroll/jquery.slimscroll.min.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
+			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
+			false,
+			BOLDGRID_EDITOR_VERSION,
+			false);
+	}
 
 
-		/**
-		 * Drag n Drop Assets.
-		 */
+	public function enqueue_drag_scripts( $plugin_file ) {
+
+		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider' );
+
+		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
+			wp_enqueue_script( 'boldgrid-editor-drag',
+				plugins_url( '/assets/js/editor.min.js', $plugin_file ),
+				$deps, BOLDGRID_EDITOR_VERSION, true );
+
+			return;
+		}
+
 		wp_enqueue_script( 'boldgrid-editor-drag',
 			plugins_url( '/assets/js/draggable/drag.js', $plugin_file ),
-			array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider' ),
-			BOLDGRID_EDITOR_VERSION, true );
+			$deps, BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-panel',
 			plugins_url( '/assets/js/draggable/panel.js', $plugin_file ),
-			 array (),
+			array(),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-menu',
-			plugins_url( '/assets/js/draggable/menu.js', $plugin_file ), array (  ),
+			plugins_url( '/assets/js/draggable/menu.js', $plugin_file ), array(),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls',
@@ -147,23 +171,21 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/controls/background.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-resize-row',
+		/*wp_enqueue_script( 'boldgrid-editor-resize-row',
 			plugins_url( '/assets/js/draggable/resize/row.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
-
-		wp_enqueue_script( 'boldgrid-editor-caman',
-			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
+		*/
+		wp_enqueue_script( 'text-select-boldgrid',
+			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-slim-scroll',
-			plugins_url( '/assets/js/slimscroll/jquery.slimscroll.min.js', $plugin_file ), array (),
+		wp_enqueue_script( 'is-typing-boldgrid',
+			plugins_url( '/assets/js/jquery/jquery.is-typing.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
-			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
-			false,
-			BOLDGRID_EDITOR_VERSION,
-			false);
+		wp_enqueue_script( 'boldgrid-fourpan',
+			plugins_url( '/assets/js/jquery/jquery.fourpan.js', $plugin_file ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**

@@ -20,16 +20,15 @@
  */
 class Boldgrid_Editor_Builder {
 
-
-	public function get_menu_markup() {
+	public static function get_menu_markup() {
 		return file_get_contents( BOLDGRID_EDITOR_PATH . '/includes/temp.html' );
 	}
 
-	public function get_popup_markup() {
+	public static function get_popup_markup() {
 		return file_get_contents( BOLDGRID_EDITOR_PATH . '/includes/popup.html' );
 	}
 
-	public function enqueue() {
+	public function enqueue_styles() {
 		wp_enqueue_style( 'genericons-imhwpb' );
 		wp_enqueue_style( 'font-awesome' );
 	}
@@ -41,11 +40,7 @@ class Boldgrid_Editor_Builder {
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
 	}
 
-	public function init() {
-		add_action( 'media_buttons', array( $this, 'enqueue' ) );
-	}
-
-	public function get_post_images( $post_id = null ) {
+	public static function get_post_images( $post_id = null ) {
 		$current_post_id = $post_id ? $post_id : $_REQUEST['post'];
 		$attachments = get_children( array( 'post_parent' => $current_post_id,
 			'post_status' => 'inherit',

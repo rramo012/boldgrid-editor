@@ -27,7 +27,7 @@ class Boldgrid_Editor_MCE {
 	 */
 	public function help_pointers() {
 		// Dont add the help pointer if this is a boldgrid theme
-		if ( $this->get_is_boldgrid_theme() ) {
+		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
 			return;
 		}
 
@@ -61,8 +61,8 @@ class Boldgrid_Editor_MCE {
 	 *
 	 * @return boolean Whether or not drggable is enabled.
 	 */
-	public function has_draggable_enabled() {
-		return get_theme_mod( 'boldgrid_draggable_enabled', $this->get_is_boldgrid_theme() );
+	public static function has_draggable_enabled() {
+		return get_theme_mod( 'boldgrid_draggable_enabled', Boldgrid_Editor_Theme::is_editing_boldgrid_theme() );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Boldgrid_Editor_MCE {
 	 * @return array
 	 */
 	public function add_tinymce_plugin( $plugin_array ) {
-		$editor_js_file = plugins_url( '/assets/js/editor.js',
+		$editor_js_file = plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/editor/editor' ),
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		$plugin_array['monitor_view_imhwpb'] = $editor_js_file;
