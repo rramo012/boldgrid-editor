@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict"; 
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Font = {
 
@@ -24,19 +25,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		panel : {
 			title : 'Font',
 			height : '600px',
-			width : '400px',
+			width : '268px',
 		},
 
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 		openPanel : function () {
-			var panel = BOLDGRID.EDITOR.Panel;
+			var panel = BG.Panel,
+				colorControls = BG.CONTROLS.Color.create();
 			
 			// Remove all content from the panel.
 			panel.clear();
 			
-			panel.$element.find('.panel-body').html('<h1>Coming Soon</h1>');
+			panel.$element.find('.panel-body').html( colorControls );
 
 			// Open Panel.
 			panel.open( self );

@@ -449,12 +449,16 @@
   border-radius: 15px; }
 
 /*--------------------------------------------------------------
-# Image Modules
+# Drag n Drop Resize
 --------------------------------------------------------------*/
-.draghandle {
-  width: 25px;
-  height: 25px;
-  z-index: 99999;
-  background-color: yellow;
-  position: fixed;
-  cursor: ns-resize; }
+/*@import "resize";*/
+/*--------------------------------------------------------------
+# Color Controls
+--------------------------------------------------------------*/
+.editor-panel .colors {
+  border: 2px solid #E1E1E1; }
+
+.editor-panel .colors li {
+  height: 70px;
+  width: 40px;
+  display: inline-block; }

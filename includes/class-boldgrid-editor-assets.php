@@ -35,6 +35,7 @@ class Boldgrid_Editor_Assets {
 
 		$this->enqueue_scripts();
 		$this->add_styles();
+
 	}
 
 	/**
@@ -71,7 +72,8 @@ class Boldgrid_Editor_Assets {
 				'instanceMenu' => Boldgrid_Editor_Builder::get_menu_markup(),
 				'instancePanel' => Boldgrid_Editor_Builder::get_popup_markup(),
 				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
-				'images' => Boldgrid_Editor_Builder::get_post_images()
+				'images' => Boldgrid_Editor_Builder::get_post_images(),
+				'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
 			) );
 
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
@@ -169,6 +171,10 @@ class Boldgrid_Editor_Assets {
 
 		wp_enqueue_script( 'boldgrid-editor-controls-background',
 			plugins_url( '/assets/js/draggable/controls/background.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls-color',
+			plugins_url( '/assets/js/draggable/controls/color.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		/*wp_enqueue_script( 'boldgrid-editor-resize-row',

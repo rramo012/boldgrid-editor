@@ -33,11 +33,11 @@ class Boldgrid_Editor_Builder {
 		wp_enqueue_style( 'font-awesome' );
 	}
 
-
 	public function print_scripts() {
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/button.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/color.php';
 	}
 
 	public static function get_post_images( $post_id = null ) {

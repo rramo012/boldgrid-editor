@@ -39,6 +39,27 @@ class Boldgrid_Editor_Theme {
 			return $current_boldgrid_theme;
 	}
 
+
+	public static function get_color_palettes() {
+
+		$color_palettes = get_theme_mod( 'boldgrid_color_palette', array() );
+		$color_palettes_decoded = json_decode( $color_palettes, 1 );
+		$active_palette = ! empty( $color_palettes_decoded['state']['active-palette'] ) ?
+			$color_palettes_decoded['state']['active-palette'] : '';
+
+		$colors = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] ) ?
+			$color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] : array();
+
+		$neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
+			$color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
+
+		if ( $neutral && ! empty( $colors ) ) {
+			$colors[] = $neutral;
+		}
+
+		return $colors;
+	}
+
 	/**
 	 * Get the correct theme body class
 	 *
@@ -67,7 +88,8 @@ class Boldgrid_Editor_Theme {
 
 		$theme_mods = get_option( 'theme_mods_' . $stylesheet );
 
-		$boldgrid_palette_class = ! empty( $theme_mods['boldgrid_palette_class'] ) ? $theme_mods['boldgrid_palette_class'] : 'palette-primary';
+		$boldgrid_palette_class = ! empty( $theme_mods['boldgrid_palette_class'] ) ?
+			$theme_mods['boldgrid_palette_class'] : 'palette-primary';
 
 		return ( $boldgrid_palette_class ? $boldgrid_palette_class : $stylzr_palette_class );
 	}
