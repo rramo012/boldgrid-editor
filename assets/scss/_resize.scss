@@ -1,0 +1,8 @@
+.draghandle {
+	width: 25px;
+	height: 25px;
+	z-index: 99999;
+	background-color: yellow;
+	position: fixed;
+	cursor: ns-resize;
+}
