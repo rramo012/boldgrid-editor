@@ -38,6 +38,7 @@ class Boldgrid_Editor_Builder {
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/color.php';
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/font.php';
 	}
 
 	public static function get_post_images( $post_id = null ) {

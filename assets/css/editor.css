@@ -8,7 +8,7 @@
   left: 200px;
   z-index: 999999;
   width: 310px;
-  border: 1px solid #eee;
+  border: none;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27); }
@@ -74,7 +74,7 @@
   text-align: center;
   margin-top: 0; }
 
-/*************** Change Icon Panel ********************/
+/*************** Icon Panel ********************/
 .editor-panel[data-type="icon"] {
   width: 335px; }
 
@@ -97,6 +97,7 @@
 .editor-panel[data-type="icon"] .panel-selection.selected .fa {
   color: white; }
 
+/*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {
   width: 147px;
   height: auto;
@@ -108,6 +109,7 @@
   max-width: 100px;
   max-height: 100px; }
 
+/*************** Button Panel ********************/
 .editor-panel[data-type="button"] .panel-selection {
   width: 125px;
   height: auto;
@@ -117,7 +119,48 @@
 .editor-panel[data-type="button"] .boldgrid-button {
   text-transform: uppercase; }
 
-/*************** Change Image Panel ********************/
+/*************** Text Settings Panel ********************/
+.editor-panel[data-type="font"] .panel-title {
+  margin-bottom: 0px; }
+
+.editor-panel[data-type="font"] .panel-body {
+  padding: 0; }
+
+.editor-panel[data-type="font"] .section {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 18px 21px; }
+
+.editor-panel[data-type="font"] .ui-slider-horizontal {
+  float: none;
+  margin-left: 4px;
+  width: 165px;
+  margin-bottom: 8px; }
+
+.editor-panel[data-type="font"] .value {
+  font-size: 20px;
+  position: relative;
+  top: -14px;
+  left: 5px; }
+
+.editor-panel[data-type="font"] h4 {
+  font-weight: normal;
+  font-size: 15px;
+  margin-bottom: 12px;
+  margin-top: 0; }
+
+.editor-panel[data-type="font"] .section.effects .panel-selection {
+  height: 35px;
+  width: 35px;
+  padding: 8px;
+  color: #868686;
+  font-size: 37px;
+  line-height: 33px;
+  margin: 1px; }
+
+.editor-panel[data-type="font"] .section.effects .panel-selection.selected {
+  color: white; }
+
+/*************** Image Panel ********************/
 .editor-panel[data-type="image-filter"] {
   width: 400px; }
 
@@ -242,7 +285,7 @@
   height: 3px;
   border-radius: 0;
   width: 75px;
-  border-color: #585858;
+  border-color: #cecece;
   margin: 16px;
   margin-top: 10px;
   display: inline-block;
@@ -456,9 +499,11 @@
 # Color Controls
 --------------------------------------------------------------*/
 .editor-panel .colors {
-  border: 2px solid #E1E1E1; }
+  margin: 0 auto;
+  display: table; }
 
 .editor-panel .colors li {
   height: 70px;
   width: 40px;
-  display: inline-block; }
+  display: inline-block;
+  border: 2px solid #E1E1E1; }

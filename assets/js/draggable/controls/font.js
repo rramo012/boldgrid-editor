@@ -23,23 +23,39 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		panel : {
-			title : 'Font',
-			height : '600px',
+			title : 'Text Setting',
+			height : '450px',
 			width : '268px',
 		},
 
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
+		
+		initSlider : function ( $container ) {
+			$container.find( '.slider' ).slider( {
+				min : 8,
+				max : 44,
+				value : 8,
+				range : 'max',
+				slide : function( event, ui ) {
+					$container.find( '.section.size .value' ).html( ui.value );
+				}
+			} );
+		},
+		
 		openPanel : function () {
 			var panel = BG.Panel,
-				colorControls = BG.CONTROLS.Color.create();
-			
+				colorControls = BG.CONTROLS.Color.create(),
+				template = wp.template( 'boldgrid-editor-font' );
+
 			// Remove all content from the panel.
 			panel.clear();
 			
-			panel.$element.find('.panel-body').html( colorControls );
+			panel.$element.find('.panel-body').html( template() );
 
+			self.initSlider( panel.$element );
+			
 			// Open Panel.
 			panel.open( self );
 		}

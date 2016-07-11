@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-boldgrid-editor-color">
-	<h3>Colors</h3>
+	<h4>Colors</h4>
 	<ul class='colors'>
 		<li style='background-color: blue'></li>
 		<li style='background-color: red'></li>
