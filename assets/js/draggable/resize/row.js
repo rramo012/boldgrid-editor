@@ -43,31 +43,52 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 				.after( self.$bottomHandle );
 		},
 		initDraggable : function () {
+			var startPadding, setting,
+			$body = self.$container.find( 'body' );
+
 			self.$container.find( '.draghandle' ).draggable( {
+				scroll: false,
 				axis: 'y',
 				start : function ( e, ui ) {
 					self.currentlyDragging = true;
+					setting = $( this ).data( 'setting' );
+					startPadding = parseInt( self.$currentRow.css( setting ) );
+					self.$currentRow.addClass( 'changing-padding' );
+					$body.addClass( 'no-select-imhwpb' ).addClass( 'changing-' + setting );
 				},
 				stop : function ( e, ui ) {
 					self.currentlyDragging = false;
+					self.$currentRow.removeClass( 'changing-padding' );
+					$body.removeClass( 'no-select-imhwpb' ).removeClass( 'changing-' + setting );
 				},
 				drag : function ( e, ui ) {
-					//scroll the page down at the same time that you add padding
-					var padding,
-						$this = $( this ),
-						diff = ui.position.top - ui.originalPosition.top,
-						setting = $this.data('setting');
+					var padding, rowPos, relativePos,
+						diff = ui.position.top - ui.originalPosition.top;
 
 					if ( 'padding-top' == setting ) {
-						diff = 0 - diff;
+						padding = parseInt( self.$currentRow.css( setting ) ) - diff;
+						relativePos = 'top';
+						if ( padding > 0 ) {
+							window.scrollBy( 0, - diff );
+						}
+					} else {
+						padding = startPadding + diff;
+						relativePos = 'bottom';
 					}
 
-					padding = Math.max( diff, 0 );
+					// If padding is less than 0, prevent movement of handle.
+					if ( padding < 0 ) {
+						rowPos = self.$currentRow[0].getBoundingClientRect();
+						ui.position.top = rowPos[ relativePos ] - self.handleOffset;
+					} else {
+						self.$currentRow.css( setting, padding );
+					}
 
-					self.$currentRow.css( setting, padding + 'px' );
+					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
 				}
 			} );
 		},
+
 		bindHandlers : function () {
 			self.$container.on( 'mouseenter', '.row:not(.row .row)', self.positionHandles );
 			self.$container.on( 'mouseleave', '.row:not(.row .row)', self.hideHandles );
@@ -75,7 +96,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		positionHandles : function() {
 			var pos = this.getBoundingClientRect(),
 				$this = $( this ),
-				rightOffset = pos.right - 100 + 'px';
+				rightOffset = pos.right - 100;
 
 			if ( self.currentlyDragging ) {
 				return false;
@@ -95,15 +116,19 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			} ).show();
 
 		},
-		hideHandles : function () {
+		hideHandles : function ( e ) {
 			var $this = $( this );
+
+			if ( e.relatedTarget && $( e.relatedTarget ).hasClass('draghandle') ) {
+				return;
+			}
 
 			if ( self.currentlyDragging ) {
 				return false;
 			}
 
-			//self.$topHandle.hide();
-			//self.$bottomHandle.hide();
+			self.$topHandle.hide();
+			self.$bottomHandle.hide();
 		}
 
 	};

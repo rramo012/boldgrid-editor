@@ -2,7 +2,37 @@
 	width: 25px;
 	height: 25px;
 	z-index: 99999;
-	background-color: yellow;
 	position: fixed;
 	cursor: ns-resize;
+	background-color: $menu-color;
+    border-radius: 6px;
+    color: white;
+    box-shadow: 0px 0px 9px -1px $menu-color;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 26px;
+    text-align: center;
+    line-height: 25px;
+    
+    &:hover {
+    	color: $hover-color;
+    }
+    
+	&.top:before {
+		content: "\f106";
+	}
+	&.bottom:before {
+		content: "\f107";
+	}
+}
+
+.changing-padding-top ~ .draghandle.top,
+.changing-padding-bottom ~ .draghandle.bottom {
+	color: $hover-color;
+}
+
+.changing-padding-top ~ .draghandle.bottom {
+	display: none !important;
+}
+.changing-padding-bottom ~ .draghandle.top {
+	display: none !important;
 }

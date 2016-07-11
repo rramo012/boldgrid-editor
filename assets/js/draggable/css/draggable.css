@@ -92,6 +92,7 @@
     box-shadow: 0 0 15px 5px rgba(33, 117, 155, 1);
 }
 
+.changing-padding,
 .added-element,
 .content-border-imhwpb,
 .resize-border-right-imhwpb,
@@ -328,7 +329,7 @@
 	cursor: ew-resize;
 	display: none;
 }
-.no-select-imhwpb + #boldgrid-draggable-resizing-overlay {
+.no-select-imhwpb ~ #boldgrid-draggable-resizing-overlay {
 	display: block;
 	background-color: none;
 }

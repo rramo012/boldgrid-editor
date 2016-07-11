@@ -41,6 +41,8 @@ class Boldgrid_Editor_Assets {
 	/**
 	 * Get the site url or permalink whichever is found
 	 *
+	 * @global $is_IE
+	 *
 	 * @param int $_REQUEST['post']
 	 *
 	 * @return string
@@ -50,7 +52,9 @@ class Boldgrid_Editor_Assets {
 		return ( $permalink ? $permalink : get_site_url() );
 	}
 
-	function enqueue_mce_interface( $plugin_file ) {
+	public function enqueue_mce_interface( $plugin_file ) {
+		global $is_IE;
+
 		wp_register_script( 'wp-mce-draggable-imhwpb',
 			plugins_url( self::get_minified_js( '/assets/js/editor/wp-mce-draggable' ), $plugin_file ),
 			array (
@@ -82,12 +86,9 @@ class Boldgrid_Editor_Assets {
 	/**
 	 * Enqueue all scripts
 	 *
-	 * @global $is_IE
-	 *
 	 * @param int $_REQUEST['post']
 	 */
 	public function enqueue_scripts() {
-		global $is_IE;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
@@ -118,7 +119,7 @@ class Boldgrid_Editor_Assets {
 
 	public function enqueue_drag_scripts( $plugin_file ) {
 
-		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider' );
+		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable' );
 
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
 			wp_enqueue_script( 'boldgrid-editor-drag',
@@ -177,10 +178,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/controls/color.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
-		/*wp_enqueue_script( 'boldgrid-editor-resize-row',
+		wp_enqueue_script( 'boldgrid-editor-resize-row',
 			plugins_url( '/assets/js/draggable/resize/row.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
-		*/
+
 		wp_enqueue_script( 'text-select-boldgrid',
 			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );

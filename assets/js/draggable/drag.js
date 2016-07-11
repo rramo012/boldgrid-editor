@@ -95,9 +95,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * A value indicating how fast the auto scroll will move per element.
 	 */
 	this.scroll_speeds = settings.scroll_speeds || {
-		'content' : 15,
-		'column' : 15,
-		'row' : 25,
+		'content' : 6,
+		'column' : 6,
+		'row' : 6,
 	};
 
 	// this.master_container_id = '#' + .uniqueId().attr('id');
@@ -686,7 +686,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.track_window_size();
 		self.merge_additional_menu_options();
 
-//		BOLDGRID.EDITOR.RESIZE.Row.init( self.$master_container );
+		BOLDGRID.EDITOR.RESIZE.Row.init( self.$master_container );
 		BOLDGRID.EDITOR.Controls.init( self.$master_container );
 
 		return self;
@@ -2865,8 +2865,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			event.preventDefault();
 
 			// Handles Auto Scrolling
-			// Only trigger every 50 microseconds
-			if ( !self.last_auto_scroll_event || self.last_auto_scroll_event + 50 <= (new Date).getTime() ) {
+			// Only trigger every 10 microseconds
+			if ( !self.last_auto_scroll_event || self.last_auto_scroll_event + 10 <= (new Date).getTime() ) {
 
 				self.last_auto_scroll_event = (new Date).getTime();
 
