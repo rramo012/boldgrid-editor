@@ -15,7 +15,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		iconClasses : 'fa fa-arrows-h',
 
-		selectors : [ '.container' ],
+		selectors : [ '.boldgrid-section .container', '.boldgrid-section .container-fluid' ],
 
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );

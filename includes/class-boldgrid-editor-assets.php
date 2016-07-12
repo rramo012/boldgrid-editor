@@ -110,7 +110,7 @@ class Boldgrid_Editor_Assets {
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
-			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
+			'//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
 			false,
 			BOLDGRID_EDITOR_VERSION,
 			false);
@@ -213,7 +213,7 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
-		wp_register_style( 'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+		wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	}
 
 
