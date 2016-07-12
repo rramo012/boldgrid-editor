@@ -50,8 +50,8 @@ class Boldgrid_Editor_Theme {
 		$colors = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] ) ?
 			$color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] : array();
 
-		$neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
-			$color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
+	//	$neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
+	//		$color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
 
 		if ( $neutral && ! empty( $colors ) ) {
 			$colors[] = $neutral;

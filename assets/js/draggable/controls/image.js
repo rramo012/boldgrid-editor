@@ -71,7 +71,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.clearSelected();
 				$this.addClass( 'selected' );
 				
-				// Aply changes to editor.
+				// Apply changes to editor.
 				$target.removeClass ( function ( index, css ) {
 				    return (css.match (/(^|\s)img-mod-\S+/g) || []).join(' ');
 				} ).addClass( preset );

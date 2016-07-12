@@ -167,8 +167,16 @@
     h4 {
         font-weight: normal;
         font-size: 15px;
-        margin-bottom: 12px;
+        margin-bottom: 18px;
         margin-top: 0;
+    }
+    
+    select {
+        width: 100%;
+    }
+    
+    .spacing p {
+        margin-bottom: 4px;
     }
     
     .section.effects .panel-selection {
@@ -181,6 +189,12 @@
 	    margin: 1px;
     }
     .section.effects .panel-selection.selected {
+        color: white;
+    }
+    .section.effects .fa-ban {
+        color: #b50000;
+    }
+    .section.effects .panel-selection.selected .fa-ban {
         color: white;
     }
 }
