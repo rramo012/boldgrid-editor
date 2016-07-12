@@ -146,8 +146,12 @@
 	    padding: 0;
     }
     .section {
-	    border-bottom: 1px solid #f1f1f1;
+	    border-bottom: 1px solid #dadada;
 	    padding: 18px 21px;
+	    
+	    &:last-of-type {
+	    	border-color: transparent;
+	    }
     }
     
     .ui-slider-horizontal {
@@ -361,5 +365,6 @@
     background: $hover-color;
     top: -1px;
     cursor: pointer;
+    border-radius: 50%;
 }
 
