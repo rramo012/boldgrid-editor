@@ -296,7 +296,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.boldgrid_tool_click = function() {
 		self.remove_mce_resize_handles();
-		
+
 		if ( ! self.draggable_instance.ie_version ) {
 			tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.getBody(), true);
 			tinyMCE.activeEditor.selection.collapse(false);
@@ -411,6 +411,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 			//Remove Elements that we dont want loaded
 			$temp_loaded_container.find('script, meta, title').remove();
 			$temp_loaded_container.find('img').attr('src', '');
+			$temp_loaded_container.find('img').attr('srcset', '');
 			$temp_loaded_container.find('[onload]').removeAttr('onload');
 
 			$stripped_without_styles = $temp_loaded_container.clone();
@@ -451,16 +452,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 					$window.trigger('resize');
 				};
 			}
-
-			setTimeout( function () {
-				if (navigator.appName == 'Microsoft Internet Explorer') {
-						window.frames[1].document.execCommand('Stop');
-				} else {
-					if ( typeof window.frames[1].stop == 'function' ) {
-						window.frames[1].stop();
-					}
-				}
-			}, 3000);
 		});
 	};
 

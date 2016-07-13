@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.1.6 In progress =
+* Bug fix:		JIRA WPB-2103	Sporadic issue, images load but then disappear within editor.
+
 = 1.1.5 =
 * New feature:	JIRA WPB-2037	Added capability for auto-updates by BoldGrid API response.
 * Testing:		JIRA WPB-2046	Tested on WordPress 4.5.3.
