@@ -339,6 +339,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row .row',
 		'[data-imhwpb-draggable="true"]',
 		'.wpview-wrap',
+		'.wpview',
 		'blockquote',
 		'code',
 		'abbr',
@@ -391,6 +392,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// WP specific wrapper
 		'.wpview-wrap:not(' + self.master_container_id + ' .row .row .wpview-wrap)',
+		'.wpview:not(' + self.master_container_id + ' .row .row .wpview)',
 
 		'blockquote:not(.row .row blockquote)',
 		'code:not(.row .row code)',
@@ -437,6 +439,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// WP specific wrapper
 		'.row .row .wpview-wrap',
+		'.row .row .wpview',
 		'.row .row code',
 		'.row .row blockquote',
 		'.row .row abbr',
@@ -469,6 +472,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row:not(.row .row)',
 		'> [data-imhwpb-draggable="true"]',
 		'> .wpview-wrap',
+		'> .wpview',
 		'> code',
 		'> blockquote',
 		'> abbr'
