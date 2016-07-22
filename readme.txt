@@ -20,7 +20,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.1.6 In progress =
+= 1.2 =
 * Bug fix:		JIRA WPB-2126	Fixing issue with column popover size when zooming out.
 * Bug fix:		JIRA WPB-2103	Sporadic issue, images load but then disappear within editor.
 
