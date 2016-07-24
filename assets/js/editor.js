@@ -304,7 +304,7 @@ IMHWPB.Editor = function( $ ) {
 
 				if ( is_column || is_row ) {
 					//Any Character
-					if ( (e.which >= 48 && e.which <= 90) || (e.which >= 96 && e.which <= 105) ) {
+					if ( (e.which >= 48 && e.which <= 90) || (e.which >= 96 && e.which <= 105) || 13 == e.which ) {
 
 						//Do not delete an element with content
 						//TODO: I believe this is triggering sometimes on nested content incorrectly
@@ -312,6 +312,14 @@ IMHWPB.Editor = function( $ ) {
 							if ( $current_node.find('> br').siblings().length !== 0 ) {
 								return;
 							}
+						}
+
+						// When a user presses enter in an empty column. Create a new empty row with a new column inside.
+						if ( 13 == e.which ) {
+							$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
+							$current_node.closest('.row').after( $structure );
+							editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
+							return false;
 						}
 
 						//the key pressed was alphanumeric
@@ -324,7 +332,8 @@ IMHWPB.Editor = function( $ ) {
 						}
 
 						$current_node.html($structure);
-						editor.selection.setCursorLocation( $newParagraph[0], 0);
+						editor.selection.setCursorLocation( $newParagraph[0], 0 );
+
 					}
 				} else if ( is_anchor ) {
 					//Backspace or Delete Key
