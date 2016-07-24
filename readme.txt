@@ -23,6 +23,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.2 =
 * Bug fix:		JIRA WPB-2126	Fixing issue with column popover size when zooming out.
 * Bug fix:		JIRA WPB-2103	Sporadic issue, images load but then disappear within editor.
+* Bug fix:		JIRA WPB-2149	Fixed issue with gridblocks getting images updated.
 
 = 1.1.5 =
 * New feature:	JIRA WPB-2037	Added capability for auto-updates by BoldGrid API response.
