@@ -429,6 +429,13 @@ IMHWPB.WP_MCE_Draggable = function() {
 				.find( 'article[class^="post-"]' )
 				.closest('.container, .container-fluid');
 
+			if ( ! $container.length ) {
+				$container =  self.$resizing_iframe
+					.contents()
+					.find( 'article[class^="post-"] .entry-content > :first-child' )
+					.closest( '.container, .container-fluid' );
+			}
+
 			if ( $container.hasClass('container') ) {
 				self.bootstrap_container = 'container';
 			} else if ( $container.hasClass('container-fluid') ) {
