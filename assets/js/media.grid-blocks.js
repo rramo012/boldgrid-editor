@@ -137,7 +137,7 @@ IMHWPB.Media = IMHWPB.Media || {};
 					var id_from_provider = $this.attr('data-id-from-provider');
 					
 					if ( dynamic_image && !this.boldgrid_updated_src ) {
-						var random = Math.random().toString().replace('0.','');
+						var random = Math.random().toString().replace('0.','').substring(0, 8);
 						var data = {
 							'post_id' : IMHWPB.Globals.post_id,
 							'id_from_provider' : id_from_provider,
@@ -250,7 +250,6 @@ IMHWPB.Media = IMHWPB.Media || {};
 								self.remove_attribution_attributes( $image );
 							}
 						});
-						
 						if ( gridblock_data && gridblock_data['build_profile_id'] ) {
 							//Foreach dynamic image.
 							$.each( dynamic_image_response, function ( index, dynamic_image_data ) {
@@ -260,7 +259,7 @@ IMHWPB.Media = IMHWPB.Media || {};
 											
 											//If the image id matches, update the src
 											if ( dynamic_image_data.rand_image_id == this.boldgrid_rand_image_id ) {
-												
+
 												var $image = $(this);
 												this.boldgrid_updated_src = true;
 												add_image_attr( $image, dynamic_image_data );
