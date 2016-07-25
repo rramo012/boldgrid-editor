@@ -18,7 +18,7 @@ if ( false === defined( 'WPINC' ) ) {
 
 // Define Editor version.
 if ( false === defined( 'BOLDGRID_EDITOR_VERSION' ) ) {
-	define( 'BOLDGRID_EDITOR_VERSION', '1.2.1 );
+	define( 'BOLDGRID_EDITOR_VERSION', '1.2.1' );
 }
 
 // Define Editor path.
