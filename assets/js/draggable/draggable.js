@@ -517,12 +517,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.dragTypeSetting = settings.dragType || 'dragEnter';
 
 	/**
-	 * A overrideable setting that will determine if a popover will fade or
-	 * simply be removed when the user drags outside of that corresponding area.
-	 */
-	this.popover_fade = settings.popover_fade || false;
-
-	/**
 	 * Scenarios that outline how a specific layout should transform into
 	 * another
 	 */
@@ -681,7 +675,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			activate: activate_edit_as_row,
 			deactivate: disable_edit_as_row,
 		});
-
 		self.ie_version = self.get_ie_version();
 		self.isSafari = self.checkIsSafari();
 		self.create_selector_strings();
@@ -1083,13 +1076,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Removes a popover
 	 */
 	$.fn.remove_popover_imhwpb = function() {
-		if ( true == self.popover_fade ) {
-			this.attr( 'fading-imhwpb', 'true' ).fadeOut( 'fast', function() {
-				$( this ).remove();
-			} );
-		} else if ( !self.popover_placement_testing ) {
-			$( this ).remove();
-		}
+		$( this ).remove();
 	};
 
 	/**
@@ -1424,7 +1411,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( $element_next.length ) {
 				$element_next[0].popover = null;
 			}
-			$element.remove_popover_imhwpb();
+			// Wait for keypress events before removing element.
+			setTimeout( function () {
+				$element.remove();
+			} );
 		} );
 	};
 
