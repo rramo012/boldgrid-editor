@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design
 Requires at least: 4.3
-Tested up to: 4.5.2
+Tested up to: 4.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,23 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.1.4 InProgress =
+= 1.2.2 =
+* Bug fix:		JIRA WPB-2175	Issue causing parent row to be deleted when removing icon or anchor.
+
+= 1.2.1 =
+* Bug fix:		JIRA WPB-2146	Issue with pressing enter on an empty .row > .column.
+* Bug fix:		JIRA WPB-2149	Fixed issue with gridblocks getting images updated.
+
+= 1.2 =
+* Bug fix:		JIRA WPB-2126	Fixing issue with column popover size when zooming out.
+* Bug fix:		JIRA WPB-2103	Sporadic issue, images load but then disappear within editor.
+
+= 1.1.5 =
+* New feature:	JIRA WPB-2037	Added capability for auto-updates by BoldGrid API response.
+* Testing:		JIRA WPB-2046	Tested on WordPress 4.5.3.
+* Bug fix:		JIRA WPB-2086	Adding a new row was not allowing you to type in it.
+
+= 1.1.4 =
 * Bug fix:		JIRA WPB-1901	Fixed issue with non BG themes and gridblocks modal.
 * New Feature:	JIRA WPB-1912	Adding font family and font size controls to customizer widgets.
 

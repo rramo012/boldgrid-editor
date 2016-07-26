@@ -167,6 +167,7 @@
 }
 
 .draggable-tools-imhwpb {
+    text-align: center;
     position: fixed;
     z-index: 99999;
     cursor: auto;
@@ -184,7 +185,7 @@
   font-size: 12px;
   padding: 5px 6px;
   position: absolute;
-  width: 75px;
+  width: 73px;
 }
 
 .popover-imhwpb,
@@ -276,8 +277,7 @@
 }
 
 .top-popover-imhwpb div.draggable-button {
-    margin-left: 3px;
-    margin-right: 3px;
+    margin: 0 1px;
 }
 
 .row-popover-imhwpb {

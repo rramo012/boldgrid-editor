@@ -339,6 +339,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row .row',
 		'[data-imhwpb-draggable="true"]',
 		'.wpview-wrap',
+		'.wpview',
 		'blockquote',
 		'code',
 		'abbr',
@@ -391,6 +392,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// WP specific wrapper
 		'.wpview-wrap:not(' + self.master_container_id + ' .row .row .wpview-wrap)',
+		'.wpview:not(' + self.master_container_id + ' .row .row .wpview)',
 
 		'blockquote:not(.row .row blockquote)',
 		'code:not(.row .row code)',
@@ -437,6 +439,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// WP specific wrapper
 		'.row .row .wpview-wrap',
+		'.row .row .wpview',
 		'.row .row code',
 		'.row .row blockquote',
 		'.row .row abbr',
@@ -469,6 +472,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row:not(.row .row)',
 		'> [data-imhwpb-draggable="true"]',
 		'> .wpview-wrap',
+		'> .wpview',
 		'> code',
 		'> blockquote',
 		'> abbr'
@@ -511,12 +515,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * dragEnter - proximity
 	 */
 	this.dragTypeSetting = settings.dragType || 'dragEnter';
-
-	/**
-	 * A overrideable setting that will determine if a popover will fade or
-	 * simply be removed when the user drags outside of that corresponding area.
-	 */
-	this.popover_fade = settings.popover_fade || false;
 
 	/**
 	 * Scenarios that outline how a specific layout should transform into
@@ -1081,13 +1079,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Removes a popover
 	 */
 	$.fn.remove_popover_imhwpb = function() {
-		if ( true == self.popover_fade ) {
-			this.attr( 'fading-imhwpb', 'true' ).fadeOut( 'fast', function() {
-				$( this ).remove();
-			} );
-		} else if ( !self.popover_placement_testing ) {
-			$( this ).remove();
-		}
+		$( this ).remove();
 	};
 
 	/**
@@ -1422,7 +1414,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( $element_next.length ) {
 				$element_next[0].popover = null;
 			}
-			$element.remove_popover_imhwpb();
+			// Wait for keypress events before removing element.
+			setTimeout( function () {
+				$element.remove();
+			} );
 		} );
 	};
 
@@ -2887,7 +2882,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
-				var buffer_area = 100;
+				var buffer_area = 50;
 				var distance_from_top = (event.originalEvent.screenY - toolbar_height)
 					- self.$mce_32[0].getBoundingClientRect().bottom;
 				var scroll_from_top = self.$window.scrollTop();

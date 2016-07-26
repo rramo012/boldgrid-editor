@@ -139,12 +139,10 @@ class Boldgrid_Editor {
 	}
 
 	/**
-	 * Constructor
-	 *
-	 * @param array $settings
+	 * Constructor.
 	 */
-	public function __construct( $settings ) {
-		$config = new Boldgrid_Editor_Config( $settings );
+	public function __construct() {
+		$config = new Boldgrid_Editor_Config();
 		$this->set_config( $config );
 
 		$tab_configs = require BOLDGRID_EDITOR_PATH . '/includes/config/layouts.php';
