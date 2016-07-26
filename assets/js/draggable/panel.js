@@ -12,32 +12,52 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Initialize the panel.
+		 *
+		 * @since 1.3
+		 *
+		 * @return jQuery $this.$element Panel Element
 		 */
 		init : function () {
 
 			this.create();
-			this.onPanelClose();
+			this._setupPanelClose();
 			this._setupDrag();
-			//this.setupPanelResize();
+			//this._setupPanelResize();
 
 			return this.$element;
 		},
+
+		/**
+		 * Create Panel HTML.
+		 *
+		 * @since 1.3
+		 */
 		create : function () {
 			this.$element = $( BoldgridEditor.instancePanel );
 			$( 'body' ).append( this.$element );
 		},
 
+		/**
+		 * Setup Scrolling within the panel.
+		 *
+		 * @since 1.3
+		 */
 		initScroll : function () {
 
 			this.$element.find( '.panel-body' ).slimScroll( {
 			    color: '#32373c',
 			    size: '7px',
-			  //66px styling offset.
+			    // 66px styling offset.
 			    height: this.$element.height() - 66,
 			    wheelStep: 5,
 			} );
 		},
 
+		/**
+		 * Check if a control is currently open.
+		 *
+		 * @since 1.3
+		 */
 		isOpenControl : function ( control ) {
 			var isOpenControl = false;
 
@@ -48,6 +68,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return isOpenControl;
 		},
 
+		/**
+		 * Initialize dragging of the panel.
+		 *
+		 * @since 1.3
+		 */
 		_setupDrag : function() {
 			this.$element.draggable( {
 				containment: '#wpwrap',
@@ -56,15 +81,30 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 
+		/**
+		 * Remove all selected options.
+		 *
+		 * @since 1.3
+		 */
 		clearSelected : function () {
 			BOLDGRID.EDITOR.Panel.$element.find( '.selected' ).removeClass( 'selected' );
 		},
 
-		setupPanelResize : function() {
+		/**
+		 * Setup resizing of the panel.
+		 *
+		 * @since 1.3
+		 */
+		_setupPanelResize : function() {
 			this.$element.resizable();
 		},
 
-		onPanelClose : function() {
+		/**
+		 * Setup resizing of the panel.
+		 *
+		 * @since 1.3
+		 */
+		_setupPanelClose : function() {
 			this.$element.on( 'click', '.close-icon', function () {
 				self.closePanel();
 			} );

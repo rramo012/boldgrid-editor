@@ -387,10 +387,10 @@
 }
 
 .popover-menu-imhwpb li[data-action="delete"]::before {
-	background-image: url("../../image/icons/delete.png");
+	background-image: url("../../../image/icons/delete.png");
 }
 .popover-menu-imhwpb li[data-action="clear"]::before {
-	background-image: url("../../image/icons/clear-contents.png");
+	background-image: url("../../../image/icons/clear-contents.png");
 }
 .popover-menu-imhwpb li[data-action="add-media"]::before {
 	font: 400 18px/1 dashicons;
@@ -402,57 +402,57 @@
     padding-top: 2px;
 }
 .popover-menu-imhwpb li[data-action="Insert Form"]::before {
-	background-image: url("../../image/icons/insert-form.png");
+	background-image: url("../../../image/icons/insert-form.png");
 }
 .popover-menu-imhwpb li[data-action="duplicate"]::before {
-	background-image: url("../../image/icons/clone.png");
+	background-image: url("../../../image/icons/clone.png");
 }
 .popover-menu-imhwpb li[data-action="insert-layout"]::before {
-	background-image: url("../../image/icons/insert-gridblock.png");
+	background-image: url("../../../image/icons/insert-gridblock.png");
 }
 .popover-menu-imhwpb li[data-action="add-column"]::before {
-	background-image: url("../../image/icons/add-column.png");
+	background-image: url("../../../image/icons/add-column.png");
 }
 .popover-menu-imhwpb li[data-action="add-row"]::before {
-	background-image: url("../../image/icons/add-row.png");
+	background-image: url("../../../image/icons/add-row.png");
 }
 .popover-menu-imhwpb li[data-action="nest-row"]::before {
-	background-image: url("../../image/icons/drag-as-content.png");
+	background-image: url("../../../image/icons/drag-as-content.png");
 }
 
 .popover-menu-imhwpb li[data-action="delete"]:hover::before {
-	background-image: url("../../image/icons/delete-hover.png");
+	background-image: url("../../../image/icons/delete-hover.png");
 }
 .popover-menu-imhwpb li[data-action="clear"]:hover::before {
-	background-image: url("../../image/icons/clear-contents-hover.png");
+	background-image: url("../../../image/icons/clear-contents-hover.png");
 }
 .popover-menu-imhwpb li[data-action="add-media"]:hover::before {
     color: white;
 }
 .popover-menu-imhwpb li[data-action="Insert Form"]:hover::before {
-	background-image: url("../../image/icons/insert-form-hover.png");
+	background-image: url("../../../image/icons/insert-form-hover.png");
 }
 .popover-menu-imhwpb li[data-action="duplicate"]:hover::before {
-	background-image: url("../../image/icons/clone-hover.png");
+	background-image: url("../../../image/icons/clone-hover.png");
 }
 .popover-menu-imhwpb li[data-action="insert-layout"]:hover::before {
-	background-image: url("../../image/icons/insert-gridblock-hover.png");
+	background-image: url("../../../image/icons/insert-gridblock-hover.png");
 }
 .popover-menu-imhwpb li[data-action="add-column"]:hover::before {
-	background-image: url("../../image/icons/add-column-hover.png");
+	background-image: url("../../../image/icons/add-column-hover.png");
 }
 .popover-menu-imhwpb li[data-action="add-row"]:hover::before {
-	background-image: url("../../image/icons/add-row-hover.png");
+	background-image: url("../../../image/icons/add-row-hover.png");
 }
 .popover-menu-imhwpb li[data-action="nest-row"]:hover::before {
-	background-image: url("../../image/icons/drag-as-content-hover.png");
+	background-image: url("../../../image/icons/drag-as-content-hover.png");
 }
 
 .popover-menu-imhwpb li[data-action="clone-as-row"]::before {
-	background-image: url("../../image/icons/clone-as-row.png");
+	background-image: url("../../../image/icons/clone-as-row.png");
 }
 .popover-menu-imhwpb li[data-action="clone-as-row"]:hover::before {
-	background-image: url("../../image/icons/clone-as-row-hover.png");
+	background-image: url("../../../image/icons/clone-as-row-hover.png");
 }
 
 .popover-menu-imhwpb li:first-child {

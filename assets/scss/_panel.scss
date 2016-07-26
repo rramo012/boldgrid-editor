@@ -106,6 +106,76 @@
 	    color: white;
 	}
 }
+/*************** Background Panel ********************/
+.editor-panel[data-type="background"] {
+	img {
+		max-width: 100%;
+	}
+
+	.panel-title {
+		margin-bottom: 0px;
+	}
+
+	.panel-body {
+		padding: 0;
+	}
+	
+	.current-selection {
+		position: relative;
+		height: 180px;
+		overflow: hidden;
+	}
+	
+	.current-selection img { 
+		max-width: 100%;
+	}
+	.filters {
+	    background-color: rgba(0, 0, 0, 0.4);
+	    padding: 10px;
+	    position: absolute;
+	    bottom: 0;
+	    right: 0;
+	    left: 0;
+	}
+	
+	.filter {
+		background-color: white;
+		text-decoration: none;
+		padding: 7px 15px;
+		border-radius: 15px;
+		margin: 0 4px;
+		transition: background-color .25s, color .25s;
+		
+		&:hover {
+			background-color: $hover-color;
+			color: white;
+		}
+	}
+	
+	.presets {
+		padding: 0 20px;
+		
+		ul > li {
+			overflow: hidden;
+    		margin: 15px 0;
+    		height: 53px;
+    		border: 1px solid #bdbcbc;
+    		cursor: pointer;
+		}
+		
+		.title {
+			padding-bottom: 0;
+			border-bottom: 1px solid $panel-color;
+			margin-bottom: 17px;
+    		font-size: 15px;
+		}
+		
+		h4 {
+			font-weight: normal;
+			margin: 13px 0 6px;
+		}
+	}
+}
 
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] {

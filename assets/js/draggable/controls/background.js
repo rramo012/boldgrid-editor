@@ -3,7 +3,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 ( function ( $ ) {
-	"use strict"; 
+	"use strict";
 
 	var self;
 
@@ -23,20 +23,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel : {
 			title : 'Background',
-			height : '600px',
-			width : '400px',
+			height : '500px',
+			width : '300px',
 		},
 
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 		openPanel : function () {
-			var panel = BOLDGRID.EDITOR.Panel;
-			
+			var panel = BOLDGRID.EDITOR.Panel,
+				template = wp.template( 'boldgrid-editor-background' );
+
+
 			// Remove all content from the panel.
 			panel.clear();
-			
-			panel.$element.find('.panel-body').html('<h1>Coming Soon</h1>');
+
+			panel.$element.find('.panel-body').html( template() );
 
 			// Open Panel.
 			panel.open( self );

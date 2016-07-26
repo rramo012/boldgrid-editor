@@ -10,7 +10,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 	BOLDGRID.EDITOR.RESIZE.Row = {
 
 		$body : $( 'body' ),
-		handleSize : 25,
+		handleSize : 20,
 		$container : null,
 		$topHandle : null,
 		$bottomHandle : null,

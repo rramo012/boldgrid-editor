@@ -97,6 +97,64 @@
 .editor-panel[data-type="icon"] .panel-selection.selected .fa {
   color: white; }
 
+/*************** Background Panel ********************/
+.editor-panel[data-type="background"] img {
+  max-width: 100%; }
+
+.editor-panel[data-type="background"] .panel-title {
+  margin-bottom: 0px; }
+
+.editor-panel[data-type="background"] .panel-body {
+  padding: 0; }
+
+.editor-panel[data-type="background"] .current-selection {
+  position: relative;
+  height: 180px;
+  overflow: hidden; }
+
+.editor-panel[data-type="background"] .current-selection img {
+  max-width: 100%; }
+
+.editor-panel[data-type="background"] .filters {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0; }
+
+.editor-panel[data-type="background"] .filter {
+  background-color: white;
+  text-decoration: none;
+  padding: 7px 15px;
+  border-radius: 15px;
+  margin: 0 4px;
+  transition: background-color .25s, color .25s; }
+
+.editor-panel[data-type="background"] .filter:hover {
+  background-color: #f95b26;
+  color: white; }
+
+.editor-panel[data-type="background"] .presets {
+  padding: 0 20px; }
+
+.editor-panel[data-type="background"] .presets ul > li {
+  overflow: hidden;
+  margin: 15px 0;
+  height: 53px;
+  border: 1px solid #bdbcbc;
+  cursor: pointer; }
+
+.editor-panel[data-type="background"] .presets .title {
+  padding-bottom: 0;
+  border-bottom: 1px solid #32373c;
+  margin-bottom: 17px;
+  font-size: 15px; }
+
+.editor-panel[data-type="background"] .presets h4 {
+  font-weight: normal;
+  margin: 13px 0 6px; }
+
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {
   width: 147px;
@@ -510,8 +568,8 @@
 # Drag n Drop Resize
 --------------------------------------------------------------*/
 .draghandle {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   z-index: 99999;
   position: fixed;
   cursor: ns-resize;
@@ -520,9 +578,9 @@
   color: white;
   box-shadow: 0px 0px 9px -1px #32373c;
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 26px;
+  font-size: 20px;
   text-align: center;
-  line-height: 25px; }
+  line-height: 21px; }
 
 .draghandle:hover {
   color: #f95b26; }
