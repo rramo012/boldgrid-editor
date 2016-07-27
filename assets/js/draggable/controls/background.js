@@ -5,12 +5,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict";
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Background = {
 
 		name : 'background',
-		
+
 
 		priority : 80,
 
@@ -33,9 +34,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
-		
+
+
+		setup : function () {
+			self._setupBackgroundClick();
+		},
+
 		centerImages : function () {
-			setTimeout( function () {
+			//setTimeout( function () {
 				$( '.presets img, .current-selection img' ).each( function () {
 					var $this = $( this ),
 						imageHeight = $this.height(),
@@ -43,11 +49,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						heightDiff = imageHeight- parentHeight;
 					console.log( heightDiff, parentHeight, imageHeight );
 					$this.css( 'top', - ( heightDiff / 2 ) );
-					
+
 				} );
-			}, 300 );
+			//}, 300 );
 		},
-		
+
+		_setupBackgroundClick : function() {
+			var panel = BG.Panel;
+
+		/*	panel.$element.on( 'click', '.panel-selection', function () {
+				$.get('https://source.unsplash.com/featured/', {}, function(response, status, request) {
+					console.log( request )
+					});
+			} );*/
+		},
+
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-background' );
@@ -57,9 +73,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			panel.$element.find('.panel-body').html( template() );
-			
-			self.centerImages();
-			
+
+			panel.$element.find('.panel-body').imagesLoaded( {}, function() {
+				self.centerImages();
+			} );
+
 			// Open Panel.
 			panel.open( self );
 		}
