@@ -10,6 +10,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	BOLDGRID.EDITOR.CONTROLS.Background = {
 
 		name : 'background',
+		
 
 		priority : 80,
 
@@ -25,11 +26,28 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title : 'Background',
 			height : '500px',
 			width : '300px',
+			scrollTarget : '.presets',
+			sizeOffset : -170,
 		},
 
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
+		
+		centerImages : function () {
+			setTimeout( function () {
+				$( '.presets img, .current-selection img' ).each( function () {
+					var $this = $( this ),
+						imageHeight = $this.height(),
+						parentHeight = $this.parent().height(),
+						heightDiff = imageHeight- parentHeight;
+					console.log( heightDiff, parentHeight, imageHeight );
+					$this.css( 'top', - ( heightDiff / 2 ) );
+					
+				} );
+			}, 300 );
+		},
+		
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-background' );
@@ -39,7 +57,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			panel.$element.find('.panel-body').html( template() );
-
+			
+			self.centerImages();
+			
 			// Open Panel.
 			panel.open( self );
 		}

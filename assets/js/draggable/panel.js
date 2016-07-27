@@ -42,13 +42,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		initScroll : function () {
+		initScroll : function ( control ) {
+			
+			var target = '.panel-body',
+				sizeOffset = -66;
+			
+			if ( control.panel && control.panel.scrollTarget ) {
+				target = control.panel.scrollTarget;
+			}
 
-			this.$element.find( '.panel-body' ).slimScroll( {
+			if ( control.panel && control.panel.sizeOffset ) {
+				sizeOffset = control.panel.sizeOffset;
+			}
+
+			$(".panel-body").slimScroll({destroy: true}).attr('style', '');
+			this.$element.find( target ).slimScroll( {
 			    color: '#32373c',
 			    size: '7px',
-			    // 66px styling offset.
-			    height: this.$element.height() - 66,
+			    height: parseInt( control.panel.height ) + sizeOffset,
 			    wheelStep: 5,
 			} );
 		},
@@ -145,7 +156,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
 			this.$element.show();
-			this.initScroll();
+			this.initScroll( control );
 			this._scrollToSelected();
 		}
 

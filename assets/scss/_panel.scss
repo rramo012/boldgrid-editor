@@ -108,6 +108,7 @@
 }
 /*************** Background Panel ********************/
 .editor-panel[data-type="background"] {
+	
 	img {
 		max-width: 100%;
 	}
@@ -118,6 +119,8 @@
 
 	.panel-body {
 		padding: 0;
+		overflow: hidden;
+		border-radius: 0 0 10px 10px;
 	}
 	
 	.current-selection {
@@ -152,6 +155,11 @@
 		}
 	}
 	
+	.current-selection img,
+	.presets img {
+        position: relative;
+	}
+	
 	.presets {
 		padding: 0 20px;
 		
@@ -161,6 +169,7 @@
     		height: 53px;
     		border: 1px solid #bdbcbc;
     		cursor: pointer;
+
 		}
 		
 		.title {

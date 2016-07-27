@@ -43,7 +43,7 @@ class Boldgrid_Editor_Theme {
 	public static function get_color_palettes() {
 
 		$color_palettes = get_theme_mod( 'boldgrid_color_palette', array() );
-		$color_palettes_decoded = json_decode( $color_palettes, 1 );
+		$color_palettes_decoded = is_array( $color_palettes ) ? $color_palettes : json_decode( $color_palettes, 1 );
 		$active_palette = ! empty( $color_palettes_decoded['state']['active-palette'] ) ?
 			$color_palettes_decoded['state']['active-palette'] : '';
 
