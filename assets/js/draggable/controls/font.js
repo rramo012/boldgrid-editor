@@ -168,7 +168,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var panel = BG.Panel,
 				colorControls = BG.CONTROLS.Color.create(),
 				template = wp.template( 'boldgrid-editor-font' ),
-				$target = BG.Menu.$element.targetData[ self.name ];
+				$target = BG.Menu.getTarget( self );
 
 			// Remove all content from the panel.
 			panel.clear();

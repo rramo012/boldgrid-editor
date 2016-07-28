@@ -112,10 +112,9 @@
 .editor-panel[data-type="background"] .current-selection {
   position: relative;
   height: 180px;
-  overflow: hidden; }
-
-.editor-panel[data-type="background"] .current-selection img {
-  max-width: 100%; }
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50%; }
 
 .editor-panel[data-type="background"] .filters {
   background-color: rgba(0, 0, 0, 0.4);
@@ -151,6 +150,10 @@
   border: 1px solid #bdbcbc;
   cursor: pointer; }
 
+.editor-panel[data-type="background"] .presets [data-type="image"] {
+  background-size: cover;
+  background-position: 50%; }
+
 .editor-panel[data-type="background"] .presets .title {
   padding-bottom: 0;
   border-bottom: 1px solid #32373c;
@@ -160,6 +163,18 @@
 .editor-panel[data-type="background"] .presets h4 {
   font-weight: normal;
   margin: 13px 0 6px; }
+
+.editor-panel[data-type="background"] .selection {
+  position: relative; }
+
+.editor-panel[data-type="background"] .presets .selected:after {
+  content: "\f058";
+  font: normal normal normal 14px/1 FontAwesome;
+  width: 5px;
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  color: #f95b26; }
 
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {

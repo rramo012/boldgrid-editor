@@ -1,7 +1,6 @@
 <script type="text/html" id="tmpl-boldgrid-editor-background">
 	<div class='background-design'>
-		<div class='current-selection'>
-			<img src="//images.unsplash.com/photo-1468245856972-a0333f3f8293?dpr=1&auto=compress,format&crop=entropy&fit=crop&w=767&h=511&q=80">
+		<div class='current-selection' style='background-image: url(https://images.unsplash.com/photo-1468245856972-a0333f3f8293?dpr=1&auto=compress,format&crop=entropy&fit=crop&w=767&h=511&q=80)'>
 			<div class='filters'>
 				<a href="#" class='filter'><i class="fa fa-paint-brush" aria-hidden="true"></i> Color</a>
 				<a href="#" class='filter'><i class="fa fa-picture-o" aria-hidden="true"></i> Image</a>
@@ -13,44 +12,13 @@
 				<h4>Sample Backgrounds</h4>
 			</div>
 			<ul>
-       <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
-                        <li class='panel-selection1'><img src="https://source.unsplash.com/featured/<?php echo rand ()?> "></li>
+			<# _.each( data.images, function ( typeSet, type ) { #>
+			<# console.log( type ); #>
+				<# _.each( typeSet, function ( image ) { #>
+				<li data-type="{{type}}" class='selection' style="background-image: url({{image}})">
+				</li>
+				<# }); #>
+			<# }); #>
 			</ul>
 		</div>
 	</div>

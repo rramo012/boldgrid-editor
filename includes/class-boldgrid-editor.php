@@ -160,31 +160,6 @@ class Boldgrid_Editor {
 		// Add hooks:
 		$this->add_hooks();
 
-		$targets = array();
-		for( $i=0; $i<30; $i++ ) {
-			$url = 'https://source.unsplash.com/featured';
-			/*
-		    $ch = curl_init($url);
-		    curl_setopt($ch, CURLOPT_NOBODY, 1);
-		    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // follow redirects
-		    curl_setopt($ch, CURLOPT_AUTOREFERER, 1); // set referer on redirect
-		    curl_exec($ch);
-		    $target = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-		    $targets[] = $target;
-		    curl_close($ch);*/
-
-			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_HEADER, 1);
-			curl_setopt($ch, CURLOPT_NOBODY, 1);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$headers = curl_exec($ch);
-			curl_close($ch);
-			// Check if there's a Location: header (redirect)
-			if (preg_match('/^Location: (.+)$/im', $headers, $matches))
-				 $targets[] = trim($matches[1]);
-		}
-	    var_dump( $targets );die;
-
 	}
 
 	/**

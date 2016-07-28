@@ -78,6 +78,7 @@ class Boldgrid_Editor_Assets {
 				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
 				'images' => Boldgrid_Editor_Builder::get_post_images(),
 				'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
+				'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
 			) );
 
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );

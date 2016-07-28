@@ -40,43 +40,41 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupBackgroundClick();
 		},
 
-		centerImages : function () {
-			//setTimeout( function () {
-				$( '.presets img, .current-selection img' ).each( function () {
-					var $this = $( this ),
-						imageHeight = $this.height(),
-						parentHeight = $this.parent().height(),
-						heightDiff = imageHeight- parentHeight;
-					console.log( heightDiff, parentHeight, imageHeight );
-					$this.css( 'top', - ( heightDiff / 2 ) );
-
-				} );
-			//}, 300 );
-		},
-
 		_setupBackgroundClick : function() {
 			var panel = BG.Panel;
 
-		/*	panel.$element.on( 'click', '.panel-selection', function () {
-				$.get('https://source.unsplash.com/featured/', {}, function(response, status, request) {
-					console.log( request )
-					});
-			} );*/
+			panel.$element.on( 'click', '.selection', function () {
+				var $this = $( this ),
+					$target = BG.Menu.getTarget( self ),
+					imageSrc = $this.css('background-image');
+				
+				panel.clearSelected();
+				$this.addClass( 'selected' );
+				panel.$element.find( '.current-selection' ).css( 'background-image', imageSrc );
+				
+				if ( 'image' == $this.data('type') ) {
+					$target.css( {
+						'background' : imageSrc,
+						'background-size' : 'cover',
+					} );
+				} else {
+					$target.css( {
+						'background' : imageSrc,
+					} );
+				}
+			} );
 		},
 
 		openPanel : function () {
-			var panel = BOLDGRID.EDITOR.Panel,
+			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-background' );
-
 
 			// Remove all content from the panel.
 			panel.clear();
 
-			panel.$element.find('.panel-body').html( template() );
-
-			panel.$element.find('.panel-body').imagesLoaded( {}, function() {
-				self.centerImages();
-			} );
+			panel.$element.find('.panel-body').html( template( {
+				images : BoldgridEditor.sample_backgrounds
+			} ) );
 
 			// Open Panel.
 			panel.open( self );

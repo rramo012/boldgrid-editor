@@ -127,11 +127,10 @@
 		position: relative;
 		height: 180px;
 		overflow: hidden;
+		background-size: cover;
+        background-position: 50%;
 	}
 	
-	.current-selection img { 
-		max-width: 100%;
-	}
 	.filters {
 	    background-color: rgba(0, 0, 0, 0.4);
 	    padding: 10px;
@@ -168,8 +167,12 @@
     		margin: 15px 0;
     		height: 53px;
     		border: 1px solid #bdbcbc;
-    		cursor: pointer;
-
+    		cursor: pointer; 
+		}
+		
+		[data-type="image"] {
+		    background-size: cover;
+            background-position: 50%;
 		}
 		
 		.title {
@@ -183,6 +186,20 @@
 			font-weight: normal;
 			margin: 13px 0 6px;
 		}
+	}
+	
+	.selection {
+	   position: relative;
+	}
+	
+	.presets .selected:after {
+	    content: "\f058";
+	    font: normal normal normal 14px/1 FontAwesome;
+	    width: 5px;
+	    position: absolute;
+	    top: 3px;
+	    right: 10px;
+	    color: #f95b26;
 	}
 }
 

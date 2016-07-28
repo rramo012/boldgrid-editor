@@ -33,6 +33,29 @@ class Boldgrid_Editor_Builder {
 		wp_enqueue_style( 'font-awesome' );
 	}
 
+	public static function get_patterns() {
+		$patterns = scandir( BOLDGRID_EDITOR_PATH . '/assets/image/patterns' );
+		$patterns = array_diff( $patterns, array( '..', '.' ) );
+
+		$pattern_data = array();
+		foreach ( $patterns as $pattern ) {
+			$pattern_data[] = plugins_url( '/assets/image/patterns/' . $pattern, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php');
+		}
+
+		return $pattern_data;
+	}
+
+	public static function get_sample_images() {
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/sample-images.json' ) );
+	}
+
+	public static function get_background_data() {
+		return array(
+			'image' => self::get_sample_images(),
+			'pattern' => self::get_patterns(),
+		);
+	}
+
 	public function print_scripts() {
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/button.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';

@@ -23,6 +23,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		getTarget : function ( control ) {
+			console.log( this.$element.targetData );
 			return this.$element.targetData[ control.name ];
 		},
 
