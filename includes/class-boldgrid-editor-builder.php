@@ -53,6 +53,10 @@ class Boldgrid_Editor_Builder {
 		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/gradients.json' ) );
 	}
 
+	public static function get_builder_config() {
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ) );
+	}
+
 	public static function get_background_data() {
 		return array(
 			'image' => self::get_sample_images(),

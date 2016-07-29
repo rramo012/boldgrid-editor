@@ -769,3 +769,47 @@
 
 .box.rounded-bottom-left {
   border-bottom-left-radius: 15px; }
+
+.box.pointer {
+  position: relative; }
+
+.box.pointer:after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50px;
+  border-width: 15px 15px 0;
+  border-style: solid;
+  border-color: #f3961c transparent;
+  display: block;
+  width: 0; }
+
+.box.pointer.pointer-left:after {
+  top: calc(50% - 16px);
+  left: -20px;
+  bottom: auto;
+  border-width: 12px 20px 13px 0px;
+  border-color: transparent #f3961c; }
+
+.box.pointer.pointer-right:after {
+  top: calc(50% - 16px);
+  right: -20px;
+  bottom: auto;
+  left: auto;
+  border-width: 12px 0 13px 20px;
+  border-color: transparent #f3961c; }
+
+.box.pointer.pointer-bottom:after {
+  left: calc(50% - 16px); }
+
+.box.pointer.pointer-top:after {
+  top: -15px;
+  bottom: auto;
+  border-width: 0 15px 15px;
+  left: calc(50% - 16px); }
+
+.box.shadow-bottom-right {
+  box-shadow: 3px 3px 0px 0 grey; }
+
+.box.shadow-bottom-left {
+  box-shadow: -3px 3px 0px 0 grey; }

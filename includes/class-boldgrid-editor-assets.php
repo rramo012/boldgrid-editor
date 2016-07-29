@@ -79,6 +79,7 @@ class Boldgrid_Editor_Assets {
 				'images' => Boldgrid_Editor_Builder::get_post_images(),
 				'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
 				'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
+				'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
 			) );
 
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );

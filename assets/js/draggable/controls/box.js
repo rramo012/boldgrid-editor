@@ -69,14 +69,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-box' );
 
+			console.log( BoldgridEditor.builder_config );
+			
 			// Remove all content from the panel.
 			panel.clear();
 
 			panel.$element.find('.panel-body').html( template() );
 			
 			BOLDGRID.EDITOR.Panel.open( self );
+		},
+		
+		createBoxMarkup : function () {
+			
 		}
-
+		
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Box.init();

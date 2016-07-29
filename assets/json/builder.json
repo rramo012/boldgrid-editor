@@ -1,0 +1,35 @@
+{
+	"boxes" : {
+		"shapes" : [
+			"box square",
+			"box edged",
+			"box rounded",
+			"box circle",
+
+			"box rounded-top-left",
+			"box rounded-top-right",
+			"box rounded-bottom-left",
+			"box rounded-bottom-right",
+
+			"box rounded-bottom-left rounded-top-right",
+			"box rounded-bottom-left rounded-bottom-right",
+			"box rounded-bottom-left rounded-top-left",
+
+			"box rounded-bottom-right rounded-top-left",
+			"box rounded-bottom-right rounded-top-right",
+
+			"box rounded-top-left rounded-top-right",
+			"box rounded-top-right rounded-bottom-left"
+		],
+		"shadows" : [
+			"shadow-bottom-left",
+			"shadow-bottom-right"
+		],
+		"pointers" : [
+			"pointer pointer-left",
+			"pointer pointer-right",
+			"pointer pointer-top",
+			"pointer pointer-bottom"
+		]
+	}
+}
