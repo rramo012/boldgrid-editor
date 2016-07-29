@@ -129,6 +129,11 @@
 		overflow: hidden;
 		background-size: cover;
         background-position: 50%;
+        
+        &[data-type="pattern"] {
+            background-size: initial;
+            background-repeat: repeat;
+        }
 	}
 	
 	.filters {
@@ -148,9 +153,19 @@
 		margin: 0 4px;
 		transition: background-color .25s, color .25s;
 		
+		&:focus {
+			box-shadow: none;
+		}
 		&:hover {
+			background-color: lighten( $hover-color, 15% );
+			color: white;
+		}
+		&.selected {
 			background-color: $hover-color;
 			color: white;
+		}
+		&:active{
+			box-shadow: 0px 0px 8px black inset;
 		}
 	}
 	

@@ -179,6 +179,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/controls/color.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-builder',
+			plugins_url( '/assets/js/draggable/controls/box.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-resize-row',
 			plugins_url( '/assets/js/draggable/resize/row.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );

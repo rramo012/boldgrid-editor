@@ -116,6 +116,10 @@
   background-size: cover;
   background-position: 50%; }
 
+.editor-panel[data-type="background"] .current-selection[data-type="pattern"] {
+  background-size: initial;
+  background-repeat: repeat; }
+
 .editor-panel[data-type="background"] .filters {
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
@@ -132,9 +136,19 @@
   margin: 0 4px;
   transition: background-color .25s, color .25s; }
 
+.editor-panel[data-type="background"] .filter:focus {
+  box-shadow: none; }
+
 .editor-panel[data-type="background"] .filter:hover {
+  background-color: #fb9370;
+  color: white; }
+
+.editor-panel[data-type="background"] .filter.selected {
   background-color: #f95b26;
   color: white; }
+
+.editor-panel[data-type="background"] .filter:active {
+  box-shadow: 0px 0px 8px black inset; }
 
 .editor-panel[data-type="background"] .current-selection img,
 .editor-panel[data-type="background"] .presets img {
@@ -452,6 +466,9 @@
 .mce-container .boldgrid-instance-menu li .fa-cog {
   padding: 2px 3.75px; }
 
+.mce-container .boldgrid-instance-menu li .fa-columns {
+  padding: 2px 3px; }
+
 /************** TinyMCE Menu *******************/
 .imhwpb-icon:before {
   -webkit-font-smoothing: antialiased;
@@ -725,3 +742,30 @@
 
 .mod-text-effect.stroke {
   text-shadow: -1px -1px 0 #bdbdbd, 1px -1px 0 #bdbdbd, -1px 1px 0 #bdbdbd, 1px 1px 0 #bdbdbd; }
+
+/*--------------------------------------------------------------
+# Color Controls
+--------------------------------------------------------------*/
+.box.square {
+  border-radius: 0; }
+
+.box.circle {
+  border-radius: 50%; }
+
+.box.rounded {
+  border-radius: 15px; }
+
+.box.edged {
+  border-radius: 5px; }
+
+.box.rounded-top-left {
+  border-top-left-radius: 15px; }
+
+.box.rounded-top-right {
+  border-top-right-radius: 15px; }
+
+.box.rounded-bottom-right {
+  border-bottom-right-radius: 15px; }
+
+.box.rounded-bottom-left {
+  border-bottom-left-radius: 15px; }

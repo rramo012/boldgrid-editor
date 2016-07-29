@@ -49,10 +49,15 @@ class Boldgrid_Editor_Builder {
 		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/sample-images.json' ) );
 	}
 
+	public static function get_sample_gradients() {
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/gradients.json' ) );
+	}
+
 	public static function get_background_data() {
 		return array(
 			'image' => self::get_sample_images(),
 			'pattern' => self::get_patterns(),
+			'gradients' => self::get_sample_gradients(),
 		);
 	}
 
@@ -63,6 +68,7 @@ class Boldgrid_Editor_Builder {
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/color.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/font.php';
 		print include BOLDGRID_EDITOR_PATH . '/includes/template/background.php';
+		print include BOLDGRID_EDITOR_PATH . '/includes/template/box.php';
 	}
 
 	public static function get_post_images( $post_id = null ) {

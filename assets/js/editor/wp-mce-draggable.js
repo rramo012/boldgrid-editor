@@ -472,7 +472,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 			var $iframe_body = self.tinymce_body_container;
 			if ( !self.bootstrap_container ) {
 				//Something went wrong
-				if ( !self.$post_container.width() ) {
+				if ( ! self.$post_container || ! self.$post_container.width() ) {
 					return;
 				}
 
