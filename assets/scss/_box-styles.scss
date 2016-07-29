@@ -1,0 +1,31 @@
+
+$rounded : 15px;
+
+.box {
+	&.square {
+	   border-radius: 0;
+	}
+	&.circle {
+	   border-radius: 50%;
+	}
+	&.rounded {
+	   border-radius: $rounded;
+	}
+	&.edged {
+	   border-radius: 5px;
+	}
+	
+	&.rounded-top-left {
+       border-top-left-radius: $rounded;
+	}
+	&.rounded-top-right {
+        border-top-right-radius: $rounded;
+	}
+	&.rounded-bottom-right {
+        border-bottom-right-radius: $rounded;
+	}
+	&.rounded-bottom-left {
+        border-bottom-left-radius: $rounded;
+	}
+	
+}
