@@ -41,7 +41,6 @@ $( function() {
 
 
 	var numBoxes = $( '.box' ).length;
-	var boxPerColor = Math.floor( numBoxes / 6 );
 
 	var colorCount = 0
 	$( '.box' ).each( function ( index ) {
@@ -57,10 +56,12 @@ $( function() {
 		}
 	} );
 
-	$('.grid').masonry({
-		  columnWidth: 200,
-		  itemSelector: '.box'
-	} );
+	setTimeout( function () {
+		$('.grid').masonry({
+			  columnWidth: 100,
+			  itemSelector: '.box'
+		} );
+	},100 );
 
 } );
 

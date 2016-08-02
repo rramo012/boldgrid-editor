@@ -43,7 +43,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		initScroll : function ( control ) {
-			
 			var target = '.panel-body',
 				sizeOffset = -66;
 			

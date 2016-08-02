@@ -6,20 +6,46 @@
 			"box rounded",
 			"box circle",
 
-			"box rounded-top-left",
-			"box rounded-top-right",
-			"box rounded-bottom-left",
-			"box rounded-bottom-right",
-
-			"box rounded-bottom-left rounded-top-right",
-			"box rounded-bottom-left rounded-bottom-right",
 			"box rounded-bottom-left rounded-top-left",
-
-			"box rounded-bottom-right rounded-top-left",
-			"box rounded-bottom-right rounded-top-right",
-
+			"box rounded-bottom-left rounded-bottom-right",
 			"box rounded-top-left rounded-top-right",
-			"box rounded-top-right rounded-bottom-left"
+			"box rounded-bottom-right rounded-top-right",
+			
+			"box rounded-bottom-right rounded-top-left",
+			"box rounded-bottom-left rounded-top-right",
+
+			
+			"box square shadow-bottom-left",
+			"box edged shadow-bottom-right",
+			"box circle shadow-bottom-right",
+
+			"box square border-thin",
+			"box rounded border-thin",
+			"box circle border-thin",
+
+			"box circle border-normal",
+			"box rounded border-normal",
+			"box square border-normal",
+
+			"box rounded border-thick",
+			"box square border-thick",
+			"box circle border-thick",
+
+			"box rounded border-dashed",
+			"box square border-dashed",
+			"box circle border-dashed",
+
+			"box rounded border-dashed-thick",
+			"box square border-dashed-thick",
+			"box circle border-dashed-thick",
+
+			"box rounded border-double",
+			"box square border-double",
+			"box circle border-double",
+
+			"box rounded border-double-thick",
+			"box square border-double-thick",
+			"box circle border-double-thick"
 		],
 		"shadows" : [
 			"shadow-bottom-left",
