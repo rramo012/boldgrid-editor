@@ -2,23 +2,81 @@
 				
 	.colors {
         margin-bottom: 0px;
+        width: 220px;
+    	margin: 0 auto;
 	
 		li {
 		    height: 25px;
 		    width: 25px;
 		    display: inline-block;
-		    border: 1px solid #E1E1E1;
+		    border: 2px solid #E1E1E1;
 		    border-radius: 50%;
 		    margin: 5px;
 		    cursor: pointer;
 		    padding: 0px;
 		    
 		    &:hover {
-		      border-color: $panel-color;
+		      border-color: $hover-color;
 		    }
 		}
 		li.selected {
 	       border-color: $hover-color;
 		}
+		
+		.custom-color {
+			background-color: white;
+    		text-align: center;
+			border-color: $hover-color;
+    		
+    		i {
+    			color: $hover-color;
+    			font-size: 15px;
+    			line-height: 25px;
+    			padding-left: 1px;
+    		}
+    		
+    		&.selected,
+    		&:hover {
+    			background-color: $hover-color;
+    			border-color: $hover-color;
+    			
+    			i {
+    				color: white;
+    			}
+    		}
+		}
+		
+	}
+	.color-picker-wrap {
+		position: relative;
+	
+		.iris-picker {
+			margin: 15px auto 0;
+		}
+		input {
+			display: none;
+		}
+		
+		.links {
+			width: 200px;
+			margin: 3px auto 20px;
+			display: none;
+
+			a {
+	    		text-decoration: none;
+				&.cancel {
+		    		color: #a00;
+					float: left;
+				}
+				&.save {
+		    		color: #0073aa;
+					float: right;
+				}
+	    		&:hover {
+		    		text-decoration: underline;
+	    		}
+			}
+		}
+		
 	}
 }

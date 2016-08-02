@@ -1,5 +1,6 @@
 
 $rounded : 15px;
+$circle-radius : 1000px;
 
 
 .box {
@@ -9,7 +10,7 @@ $rounded : 15px;
 	   border-radius: 0;
 	}
 	&.circle {
-	   border-radius: 50%;
+	   border-radius: $circle-radius;
        padding: 4em;
 	}
 	&.rounded {
@@ -86,22 +87,22 @@ $rounded : 15px;
 		border: 2px solid;
 	}
 	&.border-thick {
-        border: 4px solid;
+        border: 3px solid;
 	}
 
 	&.border-dashed {
 		border: 2px dashed;
 	}
 	&.border-dashed-thick {
-		border: 4px dashed;
+		border: 3px dashed;
 	}
 	
 	&.border-double {
 		border: 2px solid;
-        box-shadow: 0px 0px 0px 2px white inset, 0px 0px 0px 4px black inset;
+        box-shadow: 0px 0px 0px 2px white inset, 0px 0px 0px 3px black inset;
 	}
 	&.border-double-thick {
-		border: 4px solid;
+		border: 2px solid;
         box-shadow: 0px 0px 0px 5px white inset, 0px 0px 0px 7px black inset;
 	}
 	

@@ -142,6 +142,35 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-title .name' ).empty();
 			this.$element.find( '.panel-body' ).empty();
 		},
+		
+		_enableFooter : function ( config ) {
+			if ( config && config.includeFooter ) {
+				self.showFooter()
+			} else {
+				self.hideFooter();
+			}
+		},
+		
+		hideFooter : function () {
+			this.$element.find('.panel-footer').hide();
+		},
+		showFooter : function () {
+			this.$element.find('.panel-footer').show();
+		},
+		
+		_setupCustomize : function ( control ) {
+			
+			if ( ! control.panel.customizeCallback ) {
+				return;
+			}
+			
+			self.$element.find('.customize .panel-button').on( 'click', function ( e ) {
+				e.preventDefault();
+				if ( self.$element.attr('data-type') == control.name ) {
+					control.panel.customizeCallback();
+				}
+			} );
+		},
 
 		/**
 		 * Open a panel for a control
@@ -154,9 +183,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.width( control.panel.width );
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
+			this._enableFooter( control.panel );
+			this._setupCustomize( control );
 			this.$element.show();
 			this.initScroll( control );
 			this._scrollToSelected();
+			
 		}
 
 	};

@@ -46,11 +46,11 @@ class Boldgrid_Editor_Builder {
 	}
 
 	public static function get_sample_images() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/sample-images.json' ) );
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) );
 	}
 
 	public static function get_sample_gradients() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/includes/template/gradients.json' ) );
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) );
 	}
 
 	public static function get_builder_config() {

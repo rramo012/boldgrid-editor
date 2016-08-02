@@ -6,6 +6,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	BOLDGRID.EDITOR.Controls = {
 		$panel : null,
 		$menu : null,
+		$colorControl : null,
 		controls : [],
 		$container : null,
 		init: function ( $container ) {
@@ -18,6 +19,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			// Init Panel.
 			this.$panel = BOLDGRID.EDITOR.Panel.init();
+			
+			// Init Color Control.
+			this.colorControl = BOLDGRID.EDITOR.CONTROLS.Color.init();
 
 			this.bindEvents();
 

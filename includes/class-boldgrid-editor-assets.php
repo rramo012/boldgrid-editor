@@ -123,6 +123,11 @@ class Boldgrid_Editor_Assets {
 
 		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable' );
 
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script(
+				'iris', admin_url( 'js/iris.min.js' ),
+				array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), false, 1 );
+
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
 			wp_enqueue_script( 'boldgrid-editor-drag',
 				plugins_url( '/assets/js/editor.min.js', $plugin_file ),

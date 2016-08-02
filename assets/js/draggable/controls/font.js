@@ -50,7 +50,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		setup : function () {
 			self._setupEffectClick();
-			self._setupColorClick();
+		},
+		
+		
+		colors : {
+			title : 'Background Color',
+			selectCallback : function ( selection ) {
+				$target = BG.Menu.$element.targetData[ self.name ];
+				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
+				
+				if ( selection['class'] ) {
+					$target.addClass( selection['class'] );
+				}
+			},
 		},
 
 		_setupEffectClick : function() {
@@ -65,30 +77,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 
 				$target.addClass( $this.data( 'preset' ) );
-				$this.siblings().removeClass( 'selected' );
-				$this.addClass( 'selected' );
-			} );
-		},
-
-		_setupColorClick : function() {
-			var panel = BG.Panel;
-
-			panel.$element.on( 'click', '.section.colors .panel-selection', function () {
-				var colorClasses,
-					$this = $( this ),
-					$target = BG.Menu.$element.targetData[ self.name ];
-
-				colorClasses = [
-					'color1-color',
-					'color2-color',
-					'color3-color',
-					'color4-color',
-					'color5-color'
-				];
-
-				$target.removeClass( colorClasses.join(' ') );
-				$target.addClass( $this.data( 'preset' ) );
-
 				$this.siblings().removeClass( 'selected' );
 				$this.addClass( 'selected' );
 			} );
@@ -166,7 +154,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		openPanel : function () {
 			var panel = BG.Panel,
-				colorControls = BG.CONTROLS.Color.create(),
+				colorControls = BG.CONTROLS.Color.create( self ),
 				template = wp.template( 'boldgrid-editor-font' ),
 				$target = BG.Menu.getTarget( self );
 
