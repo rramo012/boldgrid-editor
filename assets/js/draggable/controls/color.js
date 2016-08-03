@@ -18,44 +18,94 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'color5-color'
 		],
 		
-		customColors : ['yellow', 'orange'], 
+		customColors : [], 
 		
 		init : function () {
+			self._setupAddNew();
 			self._setupColorPicker();
+			self._setupAccept();
+			self._setupAutoHide();
 			
 			return self;
 		},
 		
+		_setupAutoHide : function () {
+			$('body').on( 'click', function () {
+				BG.Panel.$element.find('.color-picker-wrap').hide();
+			} );
+			BG.Panel.$element.on( 'click', '.iris-picker', function ( e ) {
+				e.stopPropagation();
+			} );
+		},
+		
+		_setupAccept : function () {
+			BG.Panel.$element.on( 'click', '.color-picker-wrap .save', function () {
+				$( this ).closest( '.color-control' ).find( '.color-picker-wrap' ).hide();
+			} );
+		},
+		
 		_setupColorPicker : function () {
+			var defaultPickerColor = '#e3e',
+				$controls = BG.Panel.$element.find('.color-control'),
+				$selected = $controls.find('.panel-selection.selected[data-preset]');
+			
+			if ( $selected.length ) {
+				defaultPickerColor = $selected.css('background-color');
+			}
+			
+			BG.Panel.$element.find('.boldgrid-color-picker').val( defaultPickerColor );
+			BG.Panel.$element.find('.boldgrid-color-picker').iris( {  
+				defaultColor: defaultPickerColor,
+				change: function( event, ui ){
+					var $this = $(this),
+						$selection = $this.closest('.color-control')
+							.find('.colors .panel-selection.selected[data-preset]');
+					
+					if ( $selection.length && $selection.is('[data-type="default"]') ) {
+						self._copyColor( $selection.css('background-color') );
+						return false;
+					} else {
+						$selection.css( 'background-color', ui.color.toCSS() );
+					}
+				},
+				clear: function() {},
+				hide: false,
+				palettes: true
+			} ).closest('.color-control')
+				.show();
+			
+			BG.Panel.$element.find('.color-picker-wrap').show();
+			BG.Panel.$element.find( '.color-picker-wrap .links' ).show();
+		},
+		
+		_copyColor : function ( defaultPickerColor ) {
+			var $controls;
+			
+			self.customColors.push( defaultPickerColor );
+			BG.Panel.$element.find('.color-control').replaceWith( 
+				self.create()
+			);
+			
+			$controls = BG.Panel.$element.find('.color-control');
+			$controls.find('.panel-selection').removeClass( 'selected' );
+			$controls.find('.panel-selection:last-of-type').addClass( 'selected' );
+			$controls.find('.panel-selection.custom-color').addClass( 'selected' );
+			
+			self._setupColorPicker();
+		},
+		
+		_setupAddNew : function () {
 			BG.Panel.$element.on( 'click', '.colors .panel-selection.custom-color', function () {
-				var $controls, $newControl,
+				var $selected,
+					defaultPickerColor = '#e3e',
 					$this = $( this );
 				
 				if ( $this.hasClass( 'selected' ) ) {
 					return false;
 				}
-				
-				self.customColors.push( 'yellow' );
-				BG.Panel.$element.find('.color-control').replaceWith( 
-					self.create()
-				);
-				
-				$controls = BG.Panel.$element.find('.color-control');
-				$controls.find('.panel-selection').removeClass( 'selected' );
-				$newControl = $controls.find('.panel-selection:last-of-type').addClass( 'selected' );
-				$controls.find('.panel-selection.custom-color').addClass( 'selected' );
-				
-				BG.Panel.$element.find('.boldgrid-color-picker').iris( {
-					defaultColor: true,
-					change: function( event, ui ){
-						$newControl.css( 'background-color', ui.color.toCSS() );
-					},
-					clear: function() {},
-					hide: false,
-					palettes: true
-				} );
-				
-				BG.Panel.$element.find( '.color-picker-wrap .links' ).show();
+
+				self._copyColor( defaultPickerColor );
+
 			} );
 		},
 
@@ -86,14 +136,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		_setupRemove : function () {
 			BG.Panel.$element.on( 'click', '.color-picker-wrap .cancel', function ( e ) {
-				var colorClasses, $selection,
+				var colorClasses, $selection, $control,
 					$this = $( this );
 				
 				e.preventDefault();
 				
-				$selection = $this.closest( '.color-control' ).find( '.colors .selected[data-type="custom"]' );
+				$control = $this.closest( '.color-control' );
+				$control.find( '.color-picker-wrap' ).hide();
+				$control.find('.custom-color').removeClass( 'selected' );
+				
+				$selection = $control.find( '.colors .selected[data-type="custom"]' );
 				if ( $selection.length ){
-					$selection.remove()
+					self.customColors.splice( $selection.data('index'), 1 );
+					$selection.remove();
 				}
 				
 			} );
@@ -106,7 +161,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return;
 			} 
 
-			panel.$element.on( 'click', '.section.colors .panel-selection', function () {
+			panel.$element.on( 'click', '.section.colors .panel-selection', function ( e ) {
+				e.stopPropagation();
+				
 				var colorClasses, selection,
 					$this = $( this );
 				
@@ -127,6 +184,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				$this.siblings().removeClass( 'selected' );
 				$this.addClass( 'selected' );
+				self._setupColorPicker();
 			} );
 		}
 	};
