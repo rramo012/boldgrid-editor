@@ -88,7 +88,7 @@
   color: white; }
 
 .editor-panel .panel-button:active {
-  box-shadow: 0px 0px 8px black inset; }
+  box-shadow: 0px 0px 49px -12px black inset; }
 
 .editor-panel .panel-button:hover {
   background-color: #fa794e; }
@@ -122,6 +122,63 @@
   position: relative;
   top: -1px;
   left: -1px; }
+
+.editor-panel .ui-slider-horizontal {
+  height: 3px;
+  border-radius: 0;
+  width: 75px;
+  border-color: #cecece;
+  margin: 16px;
+  margin-top: 10px;
+  display: inline-block;
+  float: right;
+  cursor: pointer; }
+
+.editor-panel .ui-slider-horizontal .ui-slider-handle {
+  left: 0%;
+  margin-top: -5px;
+  border: 3px;
+  height: 1em;
+  width: 1em;
+  border-radius: 0px;
+  background: #f95b26;
+  top: -1px;
+  cursor: pointer;
+  border-radius: 50%; }
+
+.editor-panel .section {
+  border-bottom: 1px solid #cecdcd;
+  padding: 18px 21px;
+  color: #636363; }
+
+.editor-panel .section:last-of-type {
+  border-color: transparent; }
+
+.editor-panel .section h4 {
+  font-size: 14px;
+  font-weight: normal;
+  color: #636363;
+  margin-bottom: 12px;
+  margin-top: 0; }
+
+.editor-panel .section .ui-slider-horizontal {
+  float: none;
+  margin-left: 4px;
+  width: 75%;
+  margin-bottom: 8px; }
+
+.editor-panel .section .slider ~ .value {
+  font-size: 20px;
+  position: relative;
+  top: -14px;
+  left: 5px; }
+
+.editor-panel .section label {
+  display: table;
+  margin: 10px 0; }
+
+.editor-panel .section input[type="radio"]:checked:before {
+  background-color: #f95b26; }
 
 /*************** Panel Body ********************/
 .panel-body {
@@ -227,6 +284,12 @@
   overflow: hidden;
   border-radius: 0 0 10px 10px; }
 
+.editor-panel[data-type="background"] .panel-body ul {
+  padding-bottom: 40px; }
+
+.editor-panel[data-type="background"] .panel-footer {
+  bottom: -59px; }
+
 .editor-panel[data-type="background"] .current-selection {
   position: relative;
   height: 180px;
@@ -265,14 +328,20 @@
   color: white; }
 
 .editor-panel[data-type="background"] .filter:active {
-  box-shadow: 0px 0px 8px black inset; }
+  box-shadow: 0px 0px 49px -12px black inset; }
+
+.editor-panel[data-type="background"] .filter:hover {
+  background-color: #495158; }
+
+.editor-panel[data-type="background"] .filter.selected {
+  background-color: #32373c; }
 
 .editor-panel[data-type="background"] .current-selection img,
 .editor-panel[data-type="background"] .presets img {
   position: relative; }
 
 .editor-panel[data-type="background"] .presets {
-  padding: 0 20px; }
+  padding: 0 20px 40px; }
 
 .editor-panel[data-type="background"] .presets ul > li {
   margin: 15px 0;
@@ -312,6 +381,12 @@
   text-align: center;
   font-size: 20px; }
 
+.editor-panel[data-type="background"] .background-design .customize {
+  display: none; }
+
+.editor-panel[data-type="background"] .background-design .customize .back {
+  margin-bottom: 0px; }
+
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {
   width: 147px;
@@ -340,32 +415,6 @@
 
 .editor-panel[data-type="font"] .panel-body {
   padding: 0; }
-
-.editor-panel[data-type="font"] .section {
-  border-bottom: 1px solid #dadada;
-  padding: 18px 21px; }
-
-.editor-panel[data-type="font"] .section:last-of-type {
-  border-color: transparent; }
-
-.editor-panel[data-type="font"] .ui-slider-horizontal {
-  float: none;
-  margin-left: 4px;
-  width: 165px;
-  margin-bottom: 8px; }
-
-.editor-panel[data-type="font"] .value {
-  font-size: 20px;
-  position: relative;
-  top: -14px;
-  left: 5px; }
-
-.editor-panel[data-type="font"] h4 {
-  font-size: 15px;
-  margin-bottom: 18px;
-  margin-top: 0;
-  color: #636363;
-  font-weight: normal; }
 
 .editor-panel[data-type="font"] select {
   width: 100%; }
@@ -512,29 +561,6 @@
   position: relative;
   top: 4px;
   float: left; }
-
-.editor-panel .ui-slider-horizontal {
-  height: 3px;
-  border-radius: 0;
-  width: 75px;
-  border-color: #cecece;
-  margin: 16px;
-  margin-top: 10px;
-  display: inline-block;
-  float: right;
-  cursor: pointer; }
-
-.editor-panel .ui-slider-horizontal .ui-slider-handle {
-  left: 0%;
-  margin-top: -5px;
-  border: 3px;
-  height: 1em;
-  width: 1em;
-  border-radius: 0px;
-  background: #f95b26;
-  top: -1px;
-  cursor: pointer;
-  border-radius: 50%; }
 
 /*--------------------------------------------------------------
 # Menu Styles

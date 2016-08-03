@@ -64,6 +64,8 @@ if ( true === defined( 'DOING_CRON' ) && DOING_CRON ){
 function boldgrid_editor_init() {
 	if ( is_admin() && current_user_can( 'edit_pages' ) ) {
 		$editor = new Boldgrid_Editor();
+	} else {
+		Boldgrid_Editor::frontEndHooks();
 	}
 }
 

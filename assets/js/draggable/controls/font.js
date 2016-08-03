@@ -95,7 +95,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$container.find( '.section.size .value' ).html( defaultSize );
 			$container.find( '.section.size .slider' ).slider( {
 				min : 5,
-				max : 44,
+				max : 115,
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
@@ -118,7 +118,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
-					BG.Panel.$element.find( '.section.spacing .character .value' ).html( ui.value );
 					$el.css( 'letter-spacing', ui.value );
 				},
 			} );
@@ -137,7 +136,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
-					BG.Panel.$element.find( '.section.spacing .line .value' ).html( ui.value);
 					$el.css( 'line-height', ui.value );
 				},
 			} );

@@ -162,6 +162,18 @@ class Boldgrid_Editor {
 
 	}
 
+	public static function frontEndHooks() {
+		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
+
+		wp_enqueue_script(
+				'boldgrid-parallax', plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
+				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script(
+				'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
+				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+	}
+
 	/**
 	 * Create tabs on post, post-new, media-upload
 	 *
@@ -186,6 +198,8 @@ class Boldgrid_Editor {
 			// Provide a way to access gridblock files in this plugin.
 			add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
 		}
+
+		add_action( 'enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_front_end' ) );
 
 		$valid_pages = array (
 			'post.php',
