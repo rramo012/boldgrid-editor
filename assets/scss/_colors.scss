@@ -1,8 +1,49 @@
 .editor-panel {
+	input.color-control {
+		display: none;
+	}
+	
+	label.color-preview {
+    	width: 28px;
+	    height: 28px;
+	    border-radius: 7px;
+	    border: 1px solid #d2d2d2;
+	    cursor: pointer;
+	    background-color: #333;
+	    display: inline-block;
+	    
+	   	&:before {
+		    content: "\f1fc";
+		    font: normal normal normal 14px/1 FontAwesome;
+		    position: absolute;
+		    top: -28px;
+		    font-size: 16px;
+		    right: 4px;
+	    }
+	}
+}
+
+.color-panel {
+
+	display: none;
+	width: 230px;
+	height: auto !important;
+
+	.panel-title {
+    	padding: 15px;
+	}
+	
+	h4 {
+		margin: 10px 0;
+    	font-weight: normal;
+	}
+	
+	.color-control {
+		padding: 0 15px 15px;
+	}
 				
 	.colors {
         margin-bottom: 0px;
-        width: 220px;
     	margin: 0 auto;
 	
 		li {
@@ -11,7 +52,7 @@
 		    display: inline-block;
 		    border: 2px solid #E1E1E1;
 		    border-radius: 50%;
-		    margin: 5px;
+		    margin: 3px;
 		    cursor: pointer;
 		    padding: 0px;
 		    
@@ -47,6 +88,7 @@
 		}
 		
 	}
+	
 	.color-picker-wrap {
 		position: relative;
 	
@@ -66,10 +108,6 @@
 	    		text-decoration: none;
 				&.cancel {
 		    		color: #a00;
-					float: left;
-				}
-				&.save {
-		    		color: #0073aa;
 					float: right;
 				}
 	    		&:hover {
@@ -77,6 +115,9 @@
 	    		}
 			}
 		}
+	}
 		
+	&[current-selection="custom"] .links {
+		display: block;
 	}
 }

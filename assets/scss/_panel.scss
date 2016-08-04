@@ -39,6 +39,7 @@
 	}
 }
 
+.color-panel,
 .editor-panel {
 	display: none;
 	position: fixed;
@@ -201,6 +202,10 @@
     		color: $heading-text-color;
     		margin-bottom: 12px;
         	margin-top: 0;
+		}
+		
+		.section.family h4 {
+			margin: 0;
 		}
 		
 		.ui-slider-horizontal {
@@ -503,8 +508,14 @@
 	    padding: 0;
     }
     
-    select {
-        width: 100%;
+    select.google-fonts {
+        width: 185px;
+    }
+    
+    .color-preview {
+        position: absolute;
+	    top: 37px;
+	    margin-left: 5px;
     }
     
     .spacing p {

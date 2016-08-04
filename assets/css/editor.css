@@ -1,6 +1,7 @@
 /*--------------------------------------------------------------
 # Panel Styles
 --------------------------------------------------------------*/
+.color-panel,
 .editor-panel {
   display: none;
   position: fixed;
@@ -13,6 +14,7 @@
   border-radius: 10px;
   box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27); }
 
+.color-panel .panel-title,
 .editor-panel .panel-title {
   cursor: move;
   background-color: #32373c;
@@ -22,6 +24,7 @@
   margin: 0;
   font-size: 16px; }
 
+.color-panel .panel-title .close-icon,
 .editor-panel .panel-title .close-icon {
   position: absolute;
   right: 25px;
@@ -33,15 +36,18 @@
   cursor: pointer;
   transition: box-shadow .3s; }
 
+.color-panel .panel-title .close-icon:hover,
 .editor-panel .panel-title .close-icon:hover {
   box-shadow: 0px 0px 5px 1px #969696 inset;
   color: #f95b26; }
 
+.color-panel .panel-title,
 .editor-panel .panel-title {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin-bottom: 10px; }
 
+.color-panel .panel-selection,
 .editor-panel .panel-selection {
   width: 70px;
   height: 70px;
@@ -57,13 +63,16 @@
   padding: 0px 9px;
   overflow: hidden; }
 
+.color-panel .panel-selection:hover,
 .editor-panel .panel-selection:hover {
   background-color: white; }
 
+.color-panel .panel-selection.selected,
 .editor-panel .panel-selection.selected {
   background-color: #f95b26;
   color: white; }
 
+.color-panel .panel-button,
 .editor-panel .panel-button {
   background-color: white;
   text-decoration: none;
@@ -76,23 +85,29 @@
   padding: 7px 20px;
   color: white; }
 
+.color-panel .panel-button:focus,
 .editor-panel .panel-button:focus {
   box-shadow: none; }
 
+.color-panel .panel-button:hover,
 .editor-panel .panel-button:hover {
   background-color: #fb9370;
   color: white; }
 
+.color-panel .panel-button.selected,
 .editor-panel .panel-button.selected {
   background-color: #f95b26;
   color: white; }
 
+.color-panel .panel-button:active,
 .editor-panel .panel-button:active {
   box-shadow: 0px 0px 49px -12px black inset; }
 
+.color-panel .panel-button:hover,
 .editor-panel .panel-button:hover {
   background-color: #fa794e; }
 
+.color-panel .panel-footer,
 .editor-panel .panel-footer {
   display: none;
   position: absolute;
@@ -105,27 +120,33 @@
   text-align: center;
   border-radius: 0 0 10px 10px; }
 
+.color-panel .panel-footer .add-media,
 .editor-panel .panel-footer .add-media {
   display: none; }
 
+.color-panel .back,
 .editor-panel .back {
   padding: 10px 0;
   margin-bottom: 20px; }
 
+.color-panel .back .panel-button,
 .editor-panel .back .panel-button {
   background-color: #636363;
   padding: 4px 12px;
   font-size: 12px; }
 
+.color-panel .back .panel-button:hover,
 .editor-panel .back .panel-button:hover {
   background-color: #fa794e; }
 
+.color-panel .back .fa,
 .editor-panel .back .fa {
   font-size: 8px;
   position: relative;
   top: -1px;
   left: -1px; }
 
+.color-panel .ui-slider-horizontal,
 .editor-panel .ui-slider-horizontal {
   height: 3px;
   border-radius: 0;
@@ -137,6 +158,7 @@
   float: right;
   cursor: pointer; }
 
+.color-panel .ui-slider-horizontal .ui-slider-handle,
 .editor-panel .ui-slider-horizontal .ui-slider-handle {
   left: 0%;
   margin-top: -5px;
@@ -149,14 +171,17 @@
   cursor: pointer;
   border-radius: 50%; }
 
+.color-panel .section,
 .editor-panel .section {
   border-bottom: 1px solid #cecdcd;
   padding: 18px 21px;
   color: #636363; }
 
+.color-panel .section:last-of-type,
 .editor-panel .section:last-of-type {
   border-color: transparent; }
 
+.color-panel .section h4,
 .editor-panel .section h4 {
   font-size: 14px;
   font-weight: normal;
@@ -164,22 +189,30 @@
   margin-bottom: 12px;
   margin-top: 0; }
 
+.color-panel .section .section.family h4,
+.editor-panel .section .section.family h4 {
+  margin: 0; }
+
+.color-panel .section .ui-slider-horizontal,
 .editor-panel .section .ui-slider-horizontal {
   float: none;
   margin-left: 4px;
   width: 75%;
   margin-bottom: 8px; }
 
+.color-panel .section .slider ~ .value,
 .editor-panel .section .slider ~ .value {
   font-size: 20px;
   position: relative;
   top: -14px;
   left: 5px; }
 
+.color-panel .section label,
 .editor-panel .section label {
   display: table;
   margin: 10px 0; }
 
+.color-panel .section input[type="radio"]:checked:before,
 .editor-panel .section input[type="radio"]:checked:before {
   background-color: #f95b26; }
 
@@ -447,8 +480,13 @@
 .editor-panel[data-type="font"] .panel-body {
   padding: 0; }
 
-.editor-panel[data-type="font"] select {
-  width: 100%; }
+.editor-panel[data-type="font"] select.google-fonts {
+  width: 185px; }
+
+.editor-panel[data-type="font"] .color-preview {
+  position: absolute;
+  top: 37px;
+  margin-left: 5px; }
 
 .editor-panel[data-type="font"] .spacing p {
   margin-bottom: 4px;
@@ -824,72 +862,105 @@
 /*--------------------------------------------------------------
 # Color Controls
 --------------------------------------------------------------*/
-.editor-panel .colors {
+.editor-panel input.color-control {
+  display: none; }
+
+.editor-panel label.color-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid #d2d2d2;
+  cursor: pointer;
+  background-color: #333;
+  display: inline-block; }
+
+.editor-panel label.color-preview:before {
+  content: "\f1fc";
+  font: normal normal normal 14px/1 FontAwesome;
+  position: absolute;
+  top: -28px;
+  font-size: 16px;
+  right: 4px; }
+
+.color-panel {
+  display: none;
+  width: 230px;
+  height: auto !important; }
+
+.color-panel .panel-title {
+  padding: 15px; }
+
+.color-panel h4 {
+  margin: 10px 0;
+  font-weight: normal; }
+
+.color-panel .color-control {
+  padding: 0 15px 15px; }
+
+.color-panel .colors {
   margin-bottom: 0px;
-  width: 220px;
   margin: 0 auto; }
 
-.editor-panel .colors li {
+.color-panel .colors li {
   height: 25px;
   width: 25px;
   display: inline-block;
   border: 2px solid #E1E1E1;
   border-radius: 50%;
-  margin: 5px;
+  margin: 3px;
   cursor: pointer;
   padding: 0px; }
 
-.editor-panel .colors li:hover {
+.color-panel .colors li:hover {
   border-color: #f95b26; }
 
-.editor-panel .colors li.selected {
+.color-panel .colors li.selected {
   border-color: #f95b26; }
 
-.editor-panel .colors .custom-color {
+.color-panel .colors .custom-color {
   background-color: white;
   text-align: center;
   border-color: #f95b26; }
 
-.editor-panel .colors .custom-color i {
+.color-panel .colors .custom-color i {
   color: #f95b26;
   font-size: 15px;
   line-height: 25px;
   padding-left: 1px; }
 
-.editor-panel .colors .custom-color.selected, .editor-panel .colors .custom-color:hover {
+.color-panel .colors .custom-color.selected, .color-panel .colors .custom-color:hover {
   background-color: #f95b26;
   border-color: #f95b26; }
 
-.editor-panel .colors .custom-color.selected i, .editor-panel .colors .custom-color:hover i {
+.color-panel .colors .custom-color.selected i, .color-panel .colors .custom-color:hover i {
   color: white; }
 
-.editor-panel .color-picker-wrap {
+.color-panel .color-picker-wrap {
   position: relative; }
 
-.editor-panel .color-picker-wrap .iris-picker {
+.color-panel .color-picker-wrap .iris-picker {
   margin: 15px auto 0; }
 
-.editor-panel .color-picker-wrap input {
+.color-panel .color-picker-wrap input {
   display: none; }
 
-.editor-panel .color-picker-wrap .links {
+.color-panel .color-picker-wrap .links {
   width: 200px;
   margin: 3px auto 20px;
   display: none; }
 
-.editor-panel .color-picker-wrap .links a {
+.color-panel .color-picker-wrap .links a {
   text-decoration: none; }
 
-.editor-panel .color-picker-wrap .links a.cancel {
+.color-panel .color-picker-wrap .links a.cancel {
   color: #a00;
-  float: left; }
-
-.editor-panel .color-picker-wrap .links a.save {
-  color: #0073aa;
   float: right; }
 
-.editor-panel .color-picker-wrap .links a:hover {
+.color-panel .color-picker-wrap .links a:hover {
   text-decoration: underline; }
+
+.color-panel[current-selection="custom"] .links {
+  display: block; }
 
 /*--------------------------------------------------------------
 # Color Controls

@@ -1,17 +1,16 @@
 <script type="text/html" id="tmpl-boldgrid-editor-font">
 	<div class='section family'>
 		<h4>Font</h4>
-<select class='google-fonts'>
-  <option value="pending">All Google Fonts</option>
-</select>
+		<select class='google-fonts'>
+  			<option value="pending">All Google Fonts</option>
+		</select>
+		<label for="font-color" class='color-preview'></label>
+		<input type="text" name='font-color' class='color-control' value=''>
 	</div>
 	<div class='section size'>
 		<h4>Font Size (px)</h4>
 		<div class="slider"></div>
 		<span class='value'></span>
-	</div>
-	<div class='section colors'>
-		{{{data.colorControls}}}
 	</div>
 	<div class='section effects'>
 		<h4>Effects</h4>
