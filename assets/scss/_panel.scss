@@ -35,7 +35,7 @@
 		color: white;
 	}
 	&:active{
-		box-shadow: 0px 0px 8px black inset;
+		box-shadow: 0px 0px 49px -12px black inset;
 	}
 }
 
@@ -155,6 +155,72 @@
 			left: -1px;
 		}
 	}
+	
+	.ui-slider-horizontal {
+	    height: 3px;
+	    border-radius: 0;
+	    width: 75px;
+	    border-color: #cecece;
+	    margin: 16px;
+	    margin-top: 10px;
+	    display: inline-block;
+	    float: right;
+	    cursor: pointer;
+	    
+	    .ui-slider-handle {
+		    left: 0%;
+		    margin-top: -5px;
+		    border: 3px;
+		    height: 1em;
+		    width: 1em;
+		    border-radius: 0px;
+		    background: $hover-color;
+		    top: -1px;
+		    cursor: pointer;
+		    border-radius: 50%;
+		}
+	}
+
+	.section {
+		border-bottom: 1px solid $title-border-color;
+		padding: 18px 21px;
+		color: $heading-text-color;
+		
+		&:last-of-type {
+	    	border-color: transparent;
+	    }
+	
+		h4 {
+			font-size: 14px;
+    		font-weight: normal;
+    		color: $heading-text-color;
+    		margin-bottom: 12px;
+        	margin-top: 0;
+		}
+		
+		.ui-slider-horizontal {
+	        float: none;
+	        margin-left: 4px;
+	        width: 75%;
+	        margin-bottom: 8px;
+	    }
+	    
+	     .slider ~ .value {
+	        font-size: 20px;
+		    position: relative;
+		    top: -14px;
+		    left: 5px;
+	    }
+	    
+	    label {
+	    	display: table;
+    		margin: 10px 0;
+	    }
+	    
+	    input[type="radio"]:checked:before {
+		    background-color: $hover-color;
+		}
+	}
 }
 
 /*************** Panel Body ********************/
@@ -265,6 +331,14 @@
 		padding: 0;
 		overflow: hidden;
 		border-radius: 0 0 10px 10px;
+		
+		ul {
+			padding-bottom: 40px;
+		}
+	}
+	
+	.panel-footer {
+    	bottom: -59px; 
 	}
 	
 	.current-selection {
@@ -290,6 +364,13 @@
 	
 	.filter {
 		@include panel-button();
+		
+		&:hover {
+			background-color: lighten( $panel-color, 10% );
+		}
+		&.selected {
+			background-color: $panel-color;
+		}
 	}
 	
 	.current-selection img,
@@ -298,7 +379,7 @@
 	}
 	
 	.presets {
-		padding: 0 20px;
+		padding: 0 20px 40px;
 		
 		ul > li {
     		margin: 15px 0;
@@ -331,6 +412,15 @@
 	
 	.presets .selected {
 	   @include selected-preset();
+	}
+	
+	.background-design .customize {
+		display: none;
+		
+		.back {
+			margin-bottom: 0px;
+		}
+		
 	}
 }
 
@@ -371,36 +461,6 @@
 	}
     .panel-body {
 	    padding: 0;
-    }
-    .section {
-	    border-bottom: 1px solid #dadada;
-	    padding: 18px 21px;
-	    
-	    &:last-of-type {
-	    	border-color: transparent;
-	    }
-    }
-    
-    .ui-slider-horizontal {
-        float: none;
-        margin-left: 4px;
-        width: 165px;
-        margin-bottom: 8px;
-    }
-    
-    .value {
-        font-size: 20px;
-	    position: relative;
-	    top: -14px;
-	    left: 5px;
-    }
-    
-    h4 {
-        font-size: 15px;
-        margin-bottom: 18px;
-        margin-top: 0;
-	    color: $heading-text-color;
-	    font-weight: normal;
     }
     
     select {
@@ -572,29 +632,3 @@
     top: 4px;
     float: left;
 }
-
-.editor-panel .ui-slider-horizontal {
-    height: 3px;
-    border-radius: 0;
-    width: 75px;
-    border-color: #cecece;
-    margin: 16px;
-    margin-top: 10px;
-    display: inline-block;
-    float: right;
-    cursor: pointer;
-}
-
-.editor-panel .ui-slider-horizontal .ui-slider-handle {
-    left: 0%;
-    margin-top: -5px;
-    border: 3px;
-    height: 1em;
-    width: 1em;
-    border-radius: 0px;
-    background: $hover-color;
-    top: -1px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-

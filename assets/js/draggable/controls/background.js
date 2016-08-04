@@ -29,6 +29,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			width : '300px',
 			scrollTarget : '.presets',
 			sizeOffset : -170,
+			includeFooter : true,
+			customizeCallback : function () {
+				BG.Panel.$element.find('.preset-wrapper').hide();
+				BG.Panel.$element.find('.background-design .customize').show();
+				BG.Panel.hideFooter();
+			},
 		},
 
 		onMenuClick : function ( e ) {
@@ -38,6 +44,58 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		setup : function () {
 			self._setupBackgroundClick();
 			self._setupFilterClick();
+			self._setupCustomizeLeave();
+			self._setupBackgroundSize();
+			self._setupScrollEffects();
+		},
+		
+		_setupScrollEffects : function () {
+			var panel = BG.Panel,
+				availableEffects = [
+				    'background-zoom',
+				    'background-parallax',
+				];
+			
+			panel.$element.on( 'change', '.background-design input[name="scroll-effects"]', function ( e ) {
+				var $this = $( this ),
+					$target = BG.Menu.getTarget( self );
+				
+				if ( 'none' == $this.val() ) {
+					$target.removeClass( availableEffects.join(' ') );
+				} else {
+					$target.removeClass( availableEffects.join(' ') );
+					$target.addClass( $this.val() );
+				}
+			} );
+		},
+		_setupBackgroundSize : function () {
+			var panel = BG.Panel;
+			
+			panel.$element.on( 'change', '.background-design input[name="background-size"]', function ( e ) {
+				var $this = $( this ),
+				$target = BG.Menu.getTarget( self );
+				
+				if ( 'tiled' == $this.val() ) {
+					$target.css( 'background-size', 'auto auto' );
+					$target.css( 'background-repeat', 'repeat' );
+				} else if ( 'cover' == $this.val() ) {
+					$target.css( 'background-size', 'cover' );
+					$target.css( 'background-repeat', 'no-repeat' );
+				}
+				
+			} );
+		},
+		
+		_setupCustomizeLeave : function () {
+			var panel = BG.Panel;
+			
+			panel.$element.on( 'click', '.background-design .back .panel-button', function ( e ) {
+				e.preventDefault();
+				
+				panel.$element.find('.preset-wrapper').show();
+				panel.$element.find('.background-design .customize').hide();
+				panel.showFooter();
+			} );
 		},
 		
 		_setupFilterClick : function () {
@@ -69,6 +127,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'click', '.background-design .selection', function () {
 				var $this = $( this ),
 					$target = BG.Menu.getTarget( self ),
+					imageUrl = $this.data('image-url'),
 					imageSrc = $this.css('background-image');
 				
 				panel.$element.find( '.presets .selected' ).removeClass( 'selected' );
@@ -82,12 +141,57 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						'background' : imageSrc,
 						'background-size' : 'cover',
 					} );
+					
+					$target.data( 'image-url', imageUrl );
+					
 				} else {
 					$target.css( {
 						'background' : imageSrc,
 					} );
 				}
 			} );
+		},
+		
+		_initSliders : function () {
+
+			self._initVerticleSlider();
+			//self._initOpacitySlider();
+
+		},
+		
+		_initVerticleSlider : function () {
+			
+			var defaultPos = 50;
+			
+			BG.Panel.$element.find( '.background-design .vertical-position .slider' ).slider( {
+				min : 0,
+				max : 100,
+				value : defaultPos,
+				range : 'max',
+				slide : function( event, ui ) {
+					var $this = $( this ),
+						$target = BG.Menu.getTarget( self );
+					if ( $target.css('background-image' ) ) {
+						console.log('here');
+						$target.css( 'background-position', '50% ' + ui.value + '%' );
+					}
+				},
+			} ).siblings( '.value' ).html( defaultPos );
+		},
+		
+		_initOpacitySlider : function () {
+			var defaultPos = 100;
+
+			BG.Panel.$element.find( '.background-design .image-opacity .slider' ).slider( {
+				min : 0,
+				max : 100,
+				value : defaultPos,
+				range : 'max',
+				slide : function( event, ui ) {
+					
+					
+				},
+			} ).siblings( '.value' ).html( defaultPos );
 		},
 
 		openPanel : function () {
@@ -100,6 +204,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find('.panel-body').html( template( {
 				images : BoldgridEditor.sample_backgrounds
 			} ) );
+			
+			self._initSliders();
 
 			panel.$element.find( '.filter[data-default="1"]' ).click();
 			

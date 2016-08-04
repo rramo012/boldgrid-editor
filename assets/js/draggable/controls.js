@@ -25,8 +25,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.bindEvents();
 
+			this.setupSliders();
+
 			//Create all controls.
 			this.setupControls();
+		},
+		
+		setupSliders : function () {
+			this.$panel.on( "slide", '.section .slider', function( event, ui ) {
+				var $this = $( this );
+				$this.siblings( '.value' ).html( ui.value );
+			} );
 		},
 
 		/**
