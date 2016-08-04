@@ -1,11 +1,14 @@
 <script type="text/html" id="tmpl-boldgrid-editor-background">
 	<div class='background-design'>
 		<div class='preset-wrapper'>
-		<div class='current-selection' style='background-image: url(https://images.unsplash.com/photo-1468245856972-a0333f3f8293?dpr=1&auto=compress,format&crop=entropy&fit=crop&w=767&h=511&q=80)'>
+		<div class='current-selection'>
 			<div class='filters'>
 				<a href="#" data-type='["color","gradients"]' data-label="Flat Colors & Gradients" class='filter'><i class="fa fa-paint-brush" aria-hidden="true"></i> Color</a>
 				<a href="#" data-type='["image"]' data-default="1" data-label="Images" class='filter'><i class="fa fa-picture-o" aria-hidden="true"></i> Image</a>
 				<a href="#" data-type='["pattern"]' data-label="Patterns" class='filter'><i class="fa fa-wpforms" aria-hidden="true"></i> Pattern</a>
+			</div>
+			<div class='settings'>
+				<a href="#" class='panel-button'><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
 			</div>
 		</div>
 		<div class='presets'>
@@ -14,8 +17,10 @@
 			</div>
 			<ul>
 			<# _.each( data.images, function ( typeSet, type ) { #>
-				<# _.each( typeSet, function ( image ) { #>
-				<# if( 'gradients' == type ) { #>
+				<# _.each( typeSet, function ( image, index ) { #>
+				<# if( 'color' == type ) { #>
+					<li data-type="{{type}}" data-class='{{index}}' class='selection' style="background: {{image}}"></li>
+				<# } else if( 'gradients' == type ) { #>
 					<li data-type="{{type}}" class='selection' style="background-image: linear-gradient(to left, {{image.colors[0]}}, {{image.colors[1]}}"></li>
 				<# } else { #>
 					<li data-type="{{type}}" data-image-url="{{image}}" class='selection' style="background-image: url({{image}})"></li>

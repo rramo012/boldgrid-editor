@@ -12,6 +12,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'background',
 
+		uploadFrame : null,
 
 		priority : 80,
 
@@ -31,9 +32,36 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			sizeOffset : -170,
 			includeFooter : true,
 			customizeCallback : function () {
-				BG.Panel.$element.find('.preset-wrapper').hide();
-				BG.Panel.$element.find('.background-design .customize').show();
-				BG.Panel.hideFooter();
+				event.preventDefault();
+				// If the media frame already exists, reopen it.
+				if ( self.uploadFrame ) {
+					self.uploadFrame.open();
+					return;
+				}
+
+				// Create a new media frame.
+				self.uploadFrame = wp.media({
+					title: 'Select Background Image',
+					button: {
+						text: 'Use this media'
+					},
+					 // Set to true to allow multiple files to be selected.
+					multiple: false 
+				} );
+
+				// When an image is selected in the media frame.
+				self.uploadFrame.on( 'select', function() {
+
+					// Get media attachment details from the frame state.
+					var attachment = self.uploadFrame.state().get('selection').first().toJSON();
+					
+					// Set As current selection and apply to background.
+					self.setImageSelection( 'url(' + attachment.url + ')', 'image' );
+					self.setImageBackground( attachment.url );
+				} );
+
+				// Finally, open the modal on click.
+				self.uploadFrame.open();
 			},
 		},
 
@@ -47,6 +75,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupCustomizeLeave();
 			self._setupBackgroundSize();
 			self._setupScrollEffects();
+			self._setupCustomization();
+		},
+		
+		_setupCustomization : function() {
+			var panel = BG.Panel;
+		
+			panel.$element.on( 'click', '.current-selection .settings .panel-button', function ( e ) {
+				e.preventDefault();
+				self.openCustomization();
+			} );
 		},
 		
 		_setupScrollEffects : function () {
@@ -128,28 +166,51 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					$target = BG.Menu.getTarget( self ),
 					imageUrl = $this.data('image-url'),
-					imageSrc = $this.css('background-image');
+					imageSrc = $this.css('background-image'),
+					background = $this.css('background');
 				
 				panel.$element.find( '.presets .selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
-				panel.$element.find( '.current-selection' )
-					.css( 'background-image', imageSrc )
-					.attr( 'data-type', $this.data('type') );
+				self.setImageSelection( imageSrc, $this.data('type'), background );
+				
+				// Remove all color classes.
+				$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 				
 				if ( 'image' == $this.data('type') ) {
-					$target.css( {
-						'background' : imageSrc,
-						'background-size' : 'cover',
-					} );
-					
-					$target.data( 'image-url', imageUrl );
-					
+					self.setImageBackground( imageUrl );
+				} else if ( 'color' == $this.data('type') ) {
+					$target.addClass( $this.data('class') );
+					$target.css( 'background-image', '' );
 				} else {
 					$target.css( {
 						'background' : imageSrc,
 					} );
 				}
 			} );
+		},
+		
+		setImageSelection : function ( imageSrc, type, prop ) {
+			var $currentSelection = BG.Panel.$element.find( '.current-selection' );
+			$currentSelection.css( 'background', '' );
+
+			if ( 'color' == type ) {
+				$currentSelection.css( 'background', prop );
+			} else {
+				$currentSelection.css( 'background-image', imageSrc )
+			}
+			
+			$currentSelection.attr( 'data-type', type );
+		},
+		
+		setImageBackground : function ( url ) {
+			var $target = BG.Menu.getTarget( self );
+
+			$target.css( {
+				'background' : 'url(' + url + ')',
+				'background-size' : 'cover'
+			} );
+			
+			$target.data( 'image-url', url );
 		},
 		
 		_initSliders : function () {
@@ -172,7 +233,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					var $this = $( this ),
 						$target = BG.Menu.getTarget( self );
 					if ( $target.css('background-image' ) ) {
-						console.log('here');
 						$target.css( 'background-position', '50% ' + ui.value + '%' );
 					}
 				},
@@ -189,20 +249,27 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				range : 'max',
 				slide : function( event, ui ) {
 					
-					
 				},
 			} ).siblings( '.value' ).html( defaultPos );
+		},
+		
+		openCustomization : function () {
+			BG.Panel.$element.find('.preset-wrapper').hide();
+			BG.Panel.$element.find('.background-design .customize').show();
+			BG.Panel.hideFooter();
 		},
 
 		openPanel : function () {
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-background' );
+			
+			BoldgridEditor.sample_backgrounds.color = BG.CONTROLS.Color.getPaletteBackgroundColors();
 
 			// Remove all content from the panel.
 			panel.clear();
 
 			panel.$element.find('.panel-body').html( template( {
-				images : BoldgridEditor.sample_backgrounds
+				images : BoldgridEditor.sample_backgrounds,
 			} ) );
 			
 			self._initSliders();

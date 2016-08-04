@@ -164,7 +164,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				return;
 			}
 			
-			self.$element.find('.customize .panel-button').on( 'click', function ( e ) {
+			self.$element.find('.panel-footer .customize .panel-button').on( 'click', function ( e ) {
 				e.preventDefault();
 				if ( self.$element.attr('data-type') == control.name ) {
 					control.panel.customizeCallback();

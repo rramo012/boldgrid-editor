@@ -6,7 +6,7 @@
   position: fixed;
   top: 300px;
   left: 200px;
-  z-index: 999999;
+  z-index: 99999;
   width: 310px;
   border: none;
   background-color: white;
@@ -104,6 +104,9 @@
   padding: 20px;
   text-align: center;
   border-radius: 0 0 10px 10px; }
+
+.editor-panel .panel-footer .add-media {
+  display: none; }
 
 .editor-panel .back {
   padding: 10px 0;
@@ -300,6 +303,25 @@
   background-size: initial;
   background-repeat: repeat; }
 
+.editor-panel[data-type="background"] .current-selection[data-type] .settings {
+  display: block; }
+
+.editor-panel[data-type="background"] .current-selection .settings {
+  display: none;
+  text-align: center;
+  position: relative;
+  top: 59px; }
+
+.editor-panel[data-type="background"] .current-selection .settings .panel-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid white;
+  color: white;
+  padding: 5px 11px 6px; }
+
+.editor-panel[data-type="background"] .current-selection .settings .panel-button:hover {
+  color: #f95b26;
+  border-color: #f95b26; }
+
 .editor-panel[data-type="background"] .filters {
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
@@ -353,6 +375,9 @@
   background-size: cover;
   background-position: 50%; }
 
+.editor-panel[data-type="background"] .presets [data-type="pattern"] {
+  background-color: #d6d6d6; }
+
 .editor-panel[data-type="background"] .presets .title {
   padding-bottom: 0;
   border-bottom: 1px solid #32373c;
@@ -386,6 +411,12 @@
 
 .editor-panel[data-type="background"] .background-design .customize .back {
   margin-bottom: 0px; }
+
+.editor-panel[data-type="background"] .panel-footer .customize-design {
+  display: none; }
+
+.editor-panel[data-type="background"] .panel-footer .add-media {
+  display: inline; }
 
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {

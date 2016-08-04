@@ -59,6 +59,7 @@ class Boldgrid_Editor_Builder {
 
 	public static function get_background_data() {
 		return array(
+			'color' => array(),
 			'image' => self::get_sample_images(),
 			'pattern' => self::get_patterns(),
 			'gradients' => self::get_sample_gradients(),

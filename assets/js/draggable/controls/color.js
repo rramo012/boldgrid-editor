@@ -17,6 +17,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'color4-color',
 			'color5-color'
 		],
+		backgroundColorClasses : [
+			'color1-background-color',
+			'color2-background-color',
+			'color3-background-color',
+			'color4-background-color',
+			'color5-background-color',
+		],
 		
 		customColors : [], 
 		
@@ -27,6 +34,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupAutoHide();
 			
 			return self;
+		},
+		
+		getPaletteBackgroundColors : function () {
+			var backgroundColors = {};
+			
+			$.each( BoldgridEditor.colors, function ( index ) {
+				backgroundColors[ 'color' + ( index + 1 ) + '-' + 'background-color' ] = this; 
+			} );
+			
+			return backgroundColors;
 		},
 		
 		_setupAutoHide : function () {
