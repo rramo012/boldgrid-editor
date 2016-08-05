@@ -46,7 +46,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						text: 'Use this media'
 					},
 					 // Set to true to allow multiple files to be selected.
-					multiple: false 
+					multiple: false
 				} );
 
 				// When an image is selected in the media frame.
@@ -54,7 +54,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 					// Get media attachment details from the frame state.
 					var attachment = self.uploadFrame.state().get('selection').first().toJSON();
-					
+
 					// Set As current selection and apply to background.
 					self.setImageSelection( 'url(' + attachment.url + ')', 'image' );
 					self.setImageBackground( attachment.url );
@@ -78,7 +78,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupScrollEffects();
 			self._setupCustomization();
 		},
-		
+
 		_setupBackgroundColor : function () {
 			var panel = BG.Panel;
 
@@ -91,23 +91,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
 
 				if ( 'class' == type ) {
-					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) ); 
+					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
 					$target.css( 'background-color', value );
 				}
 			} );
 
 		},
-		
+
 		_setupCustomization : function() {
 			var panel = BG.Panel;
-		
+
 			panel.$element.on( 'click', '.current-selection .settings .panel-button', function ( e ) {
 				e.preventDefault();
 				self.openCustomization();
 			} );
 		},
-		
+
 		_setupScrollEffects : function () {
 			var panel = BG.Panel,
 				availableEffects = [
@@ -115,11 +115,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				    'background-parallax',
 				    'background-fixed',
 				];
-			
+
 			panel.$element.on( 'change', '.background-design input[name="scroll-effects"]', function ( e ) {
 				var $this = $( this ),
 					$target = BG.Menu.getTarget( self );
-				
+
 				if ( 'none' == $this.val() ) {
 					$target.removeClass( availableEffects.join(' ') );
 				} else {
@@ -130,11 +130,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		_setupBackgroundSize : function () {
 			var panel = BG.Panel;
-			
+
 			panel.$element.on( 'change', '.background-design input[name="background-size"]', function ( e ) {
 				var $this = $( this ),
 				$target = BG.Menu.getTarget( self );
-				
+
 				if ( 'tiled' == $this.val() ) {
 					$target.css( 'background-size', 'auto auto' );
 					$target.css( 'background-repeat', 'repeat' );
@@ -142,41 +142,41 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target.css( 'background-size', 'cover' );
 					$target.css( 'background-repeat', 'no-repeat' );
 				}
-				
+
 			} );
 		},
-		
+
 		_setupCustomizeLeave : function () {
 			var panel = BG.Panel;
-			
+
 			panel.$element.on( 'click', '.background-design .back .panel-button', function ( e ) {
 				e.preventDefault();
-				
+
 				panel.$element.find('.preset-wrapper').show();
 				panel.$element.find('.background-design .customize').hide();
 				panel.showFooter();
 			} );
 		},
-		
+
 		_setupFilterClick : function () {
 			var panel = BG.Panel;
 
 			panel.$element.on( 'click', '.background-design .filter', function ( e ) {
 				e.preventDefault();
-				
+
 				var $this = $( this ),
 					type = $this.data('type'),
 					label = $this.data('label');
-				
-				
+
+
 				panel.$element.find('.filter').removeClass('selected');
 				$this.addClass( 'selected' );
-				
+
 				panel.$element.find('.presets .selection').hide();
 				$.each( type, function () {
 					panel.$element.find('.presets .selection[data-type="' + this + '"]').show();
 				} );
-				
+
 				panel.$element.find( '.presets .title > *' ).text( label );
 			} );
 		},
@@ -190,19 +190,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					imageUrl = $this.data('image-url'),
 					imageSrc = $this.css('background-image'),
 					background = $this.css('background');
-				
+
 				panel.$element.find( '.presets .selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
 				self.setImageSelection( imageSrc, $this.data('type'), background );
-				
+
 				// Remove all color classes.
 				$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
-				
+
 				if ( 'image' == $this.data('type') ) {
 					self.setImageBackground( imageUrl );
 				} else if ( 'color' == $this.data('type') ) {
 					$target.addClass( $this.data('class') );
 					$target.css( 'background-image', '' );
+				} else if ( 'pattern' == $this.data('type') ) {
+					$target.css( 'background-size', 'auto auto' );
+					$target.css( 'background-repeat', 'repeat' );
+					$target.css( 'background-image', imageSrc );
 				} else {
 					$target.css( {
 						'background-image' : imageSrc,
@@ -210,7 +214,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
-		
+
 		setImageSelection : function ( imageSrc, type, prop ) {
 			var $currentSelection = BG.Panel.$element.find( '.current-selection' );
 			$currentSelection.css( 'background', '' );
@@ -220,10 +224,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} else {
 				$currentSelection.css( 'background-image', imageSrc )
 			}
-			
+
 			$currentSelection.attr( 'data-type', type );
 		},
-		
+
 		setImageBackground : function ( url ) {
 			var $target = BG.Menu.getTarget( self );
 
@@ -231,21 +235,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'background' : 'url(' + url + ')',
 				'background-size' : 'cover'
 			} );
-			
+
 			$target.data( 'image-url', url );
 		},
-		
+
 		_initSliders : function () {
 
 			self._initVerticleSlider();
 			//self._initOpacitySlider();
 
 		},
-		
+
 		_initVerticleSlider : function () {
-			
+
 			var defaultPos = 50;
-			
+
 			BG.Panel.$element.find( '.background-design .vertical-position .slider' ).slider( {
 				min : 0,
 				max : 100,
@@ -260,7 +264,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				},
 			} ).siblings( '.value' ).html( defaultPos );
 		},
-		
+
 		_initOpacitySlider : function () {
 			var defaultPos = 100;
 
@@ -270,18 +274,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultPos,
 				range : 'max',
 				slide : function( event, ui ) {
-					
+
 				},
 			} ).siblings( '.value' ).html( defaultPos );
 		},
-		
+
 		openCustomization : function () {
 			BG.Panel.$element.find('.preset-wrapper').hide();
 			BG.Panel.$element.find('.background-design .customize').show();
 			BG.Panel.$element.find('.preset-wrapper').attr('data-type', BG.Panel.$element.find('.current-selection').attr('data-type') );
 			BG.Panel.hideFooter();
 		},
-		
+
 		_renderGradients : function () {
 			var directions = [
 				'to left',
@@ -289,7 +293,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'to right',
 				'to top',
 			];
-			
+
 			BG.Panel.$element.find( '.selection[data-type="gradients"]' ).each( function () {
 				var $this = $( this ),
 					color1 = $this.data('color-1'),
@@ -299,7 +303,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$this.css( 'background-image', 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' );
 			} );
 		},
-		
+
 		setPaletteGradients : function () {
 			var combos = [];
 			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
@@ -315,7 +319,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					}
 				} );
 			}
-			
+
 			$.each( combos, function () {
 				BoldgridEditor.sample_backgrounds.gradients.unshift( this );
 			} );
@@ -324,22 +328,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		openPanel : function () {
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-background' );
-			
+
 			BoldgridEditor.sample_backgrounds.color = BG.CONTROLS.Color.getPaletteBackgroundColors();
 
 			// Remove all content from the panel.
 			panel.clear();
-			
+
 			self.setPaletteGradients();
 			panel.$element.find('.panel-body').html( template( {
 				images : BoldgridEditor.sample_backgrounds,
 			} ) );
-			
+
 			self._renderGradients();
 			self._initSliders();
 
 			panel.$element.find( '.filter[data-default="1"]' ).click();
-			
+
 			// Open Panel.
 			panel.open( self );
 		}
