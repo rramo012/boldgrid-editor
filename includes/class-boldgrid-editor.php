@@ -172,6 +172,13 @@ class Boldgrid_Editor {
 		wp_enqueue_script(
 				'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
 				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+
+
+		wp_enqueue_style( 'editor-css-imhwpb',
+			plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+		wp_enqueue_style( 'button-css-imhwpb',
+			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 	}
 
 	/**

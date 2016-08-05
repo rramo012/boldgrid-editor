@@ -5,8 +5,8 @@
 .editor-panel {
   display: none;
   position: fixed;
-  top: 300px;
-  left: 200px;
+  top: 200px;
+  right: 200px;
   z-index: 99999;
   width: 310px;
   border: none;
@@ -395,6 +395,24 @@
 .editor-panel[data-type="background"] .presets img {
   position: relative; }
 
+.editor-panel[data-type="background"] .customize .section:not(.back) {
+  display: none; }
+
+.editor-panel[data-type="background"] .preset-wrapper[data-type="color"] ~ .customize .background-color {
+  display: block; }
+
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .background-color {
+  display: block; }
+
+.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .scroll-effects,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .background-color {
+  display: block; }
+
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .scroll-effects,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .vertical-position,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .size {
+  display: block; }
+
 .editor-panel[data-type="background"] .presets {
   padding: 0 20px 40px; }
 
@@ -758,66 +776,69 @@
 --------------------------------------------------------------*/
 .editor-panel .boldgrid-image,
 #tinymce .boldgrid-image,
-#page .boldgrid-image {
+.page .boldgrid-image {
   border: none;
   box-shadow: none; }
 
+.page .background-fixed {
+  background-attachment: fixed !important; }
+
 .editor-panel .img-mod-1,
 #tinymce .img-mod-1,
-#page .img-mod-1 {
+.page .img-mod-1 {
   border: 3px solid #fff;
   padding: 0;
   box-shadow: 0px 5px 5px 0px #555555; }
 
 .editor-panel .img-mod-2,
 #tinymce .img-mod-2,
-#page .img-mod-2 {
+.page .img-mod-2 {
   border-radius: 50%; }
 
 .editor-panel .img-mod-3,
 #tinymce .img-mod-3,
-#page .img-mod-3 {
+.page .img-mod-3 {
   border-radius: 50%;
   border: 0.25em solid #c3c3c3; }
 
 .editor-panel .img-mod-4,
 #tinymce .img-mod-4,
-#page .img-mod-4 {
+.page .img-mod-4 {
   border-radius: 10px; }
 
 .editor-panel .img-mod-5,
 #tinymce .img-mod-5,
-#page .img-mod-5 {
+.page .img-mod-5 {
   border-radius: 35px; }
 
 .editor-panel .img-mod-6,
 #tinymce .img-mod-6,
-#page .img-mod-6 {
+.page .img-mod-6 {
   border-radius: 50%;
   border: 8px solid white;
   box-shadow: 0px 0px 3px 0px #555555; }
 
 .editor-panel .img-mod-7,
 #tinymce .img-mod-7,
-#page .img-mod-7 {
+.page .img-mod-7 {
   box-shadow: .3em .3em 0 0 #8e8e8e; }
 
 .editor-panel .img-mod-8,
 #tinymce .img-mod-8,
-#page .img-mod-8 {
+.page .img-mod-8 {
   border: 8px solid white;
   box-shadow: 0px 0px 0px .3em #8e8e8e; }
 
 .editor-panel .img-mod-9,
 #tinymce .img-mod-9,
-#page .img-mod-9 {
+.page .img-mod-9 {
   border: .5em solid white;
   border-bottom-width: 2em;
   box-shadow: 0px 0.2em .2em 0px #555555; }
 
 .editor-panel .img-mod-10,
 #tinymce .img-mod-10,
-#page .img-mod-10 {
+.page .img-mod-10 {
   border: 6px solid white;
   box-shadow: 0px 0px 0px .2em #8e8e8e;
   border-radius: 15px; }
@@ -884,18 +905,31 @@
 
 .color-panel {
   display: none;
-  width: 230px;
-  height: auto !important; }
+  width: 275px;
+  height: auto !important;
+  top: 200px;
+  right: 300px; }
+
+.color-panel .wp-color-result {
+  display: none; }
 
 .color-panel .panel-title {
-  padding: 15px; }
+  padding: 15px;
+  background-color: white;
+  color: #333;
+  border-bottom: 1px solid #ececec; }
+
+.color-panel .panel-title .close-icon {
+  background-color: #32373c;
+  color: white;
+  right: 15px; }
 
 .color-panel h4 {
   margin: 10px 0;
   font-weight: normal; }
 
 .color-panel .color-control {
-  padding: 0 15px 15px; }
+  padding: 0 7px 15px; }
 
 .color-panel .colors {
   margin-bottom: 0px;

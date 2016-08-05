@@ -50,20 +50,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		setup : function () {
 			self._setupEffectClick();
-			self._setupColorClick();
+			self._setupFamilyColor();
 		},
 
-		_setupColorClick : function () {
+		_setupFamilyColor : function () {
 			var panel = BG.Panel;
 
-			panel.$element.on( 'click', '.panel-selection', function () {
+			panel.$element.on( 'change', '.section.family [name="font-color"]', function () {
 				var $this = $( this ),
-					$target = BG.Menu.$element.targetData[ self.name ];
+					$target = BG.Menu.$element.targetData[ self.name ],
+					value = $this.val(),
+					type = $this.data('type');
+					
+				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') ).css( 'color', '' );
 
-				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
-
-				if ( selection['class'] ) {
-					$target.addClass( selection['class'] );
+				if ( 'class' == type ) {
+					$target.addClass( BG.CONTROLS.Color.getColorClass( 'color', value ) );
+				} else {
+					$target.css( 'color', value );
 				}
 			} );
 
@@ -153,6 +157,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.openPanel();
 			}
 		},
+		
+		_initTextColor : function ( $target ) {
+			var textColor = '#333';
+			 BG.Panel.$element.find('[name="font-color"]')
+			 	.data('type', 'color')
+			 	.val( textColor );
+		},
 
 		openPanel : function () {
 			var panel = BG.Panel,
@@ -169,6 +180,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.initSizeSlider( panel.$element, $target );
 			self.charSpacingSlider( $target );
 			self.lineSpacingSlider( $target );
+			self._initTextColor( $target );
 
 			// Open Panel.
 			panel.open( self );

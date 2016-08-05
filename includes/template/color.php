@@ -2,7 +2,7 @@
 	<h4>Theme Colors</h4>
 	<ul class='colors theme-colors'>
 		<# _.each( data.colors, function ( preset ) { #>
-			<li data-type="default" data-preset="{{preset.colorClass}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
+			<li data-type="default" data-preset="{{preset.number}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
 		<# }); #>
 	</ul>
 	<h4>My Colors</h4>
@@ -23,7 +23,7 @@
 	<div class='colors-wrap'>
 	</div>
 	<div class='color-picker-wrap'>
-		<input type="text" class='boldgrid-color-picker' value="#d41d1d" />
+		<input type="text" data-alpha="true" class='boldgrid-color-picker' value="#d41d1d" />
 		<div class="links">
 			<a href='#' class='cancel'>Remove</a>
 		</div>

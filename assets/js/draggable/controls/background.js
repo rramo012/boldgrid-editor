@@ -74,8 +74,29 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupFilterClick();
 			self._setupCustomizeLeave();
 			self._setupBackgroundSize();
+			self._setupBackgroundColor();
 			self._setupScrollEffects();
 			self._setupCustomization();
+		},
+		
+		_setupBackgroundColor : function () {
+			var panel = BG.Panel;
+
+			panel.$element.on( 'change', '.background-design [name="section-background-color"]', function () {
+				var $this = $( this ),
+					$target = BG.Menu.$element.targetData[ self.name ],
+					value = $this.val(),
+					type = $this.data('type');
+
+				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
+
+				if ( 'class' == type ) {
+					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) ); 
+				} else {
+					$target.css( 'background-color', value );
+				}
+			} );
+
 		},
 		
 		_setupCustomization : function() {
@@ -92,6 +113,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				availableEffects = [
 				    'background-zoom',
 				    'background-parallax',
+				    'background-fixed',
 				];
 			
 			panel.$element.on( 'change', '.background-design input[name="scroll-effects"]', function ( e ) {
@@ -183,7 +205,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target.css( 'background-image', '' );
 				} else {
 					$target.css( {
-						'background' : imageSrc,
+						'background-image' : imageSrc,
 					} );
 				}
 			} );
@@ -256,7 +278,47 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		openCustomization : function () {
 			BG.Panel.$element.find('.preset-wrapper').hide();
 			BG.Panel.$element.find('.background-design .customize').show();
+			BG.Panel.$element.find('.preset-wrapper').attr('data-type', BG.Panel.$element.find('.current-selection').attr('data-type') );
 			BG.Panel.hideFooter();
+		},
+		
+		_renderGradients : function () {
+			var directions = [
+				'to left',
+				'to bottom',
+				'to right',
+				'to top',
+			];
+			
+			BG.Panel.$element.find( '.selection[data-type="gradients"]' ).each( function () {
+				var $this = $( this ),
+					color1 = $this.data('color-1'),
+					color2 = $this.data('color-2'),
+					direction = directions[Math.floor(Math.random()*directions.length)];
+
+				$this.css( 'background-image', 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' );
+			} );
+		},
+		
+		setPaletteGradients : function () {
+			var combos = [];
+			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
+				$.each( [0,1,2,3,4,5], function () {
+					var combo = {}, color1, color2;
+					combo.colors = [];
+					color1 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
+					color2 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
+					if ( color1 != color2 ) {
+						combo.colors.push( color1 );
+						combo.colors.push( color2 );
+						combos.push( combo );
+					}
+				} );
+			}
+			
+			$.each( combos, function () {
+				BoldgridEditor.sample_backgrounds.gradients.unshift( this );
+			} );
 		},
 
 		openPanel : function () {
@@ -267,11 +329,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			// Remove all content from the panel.
 			panel.clear();
-
+			
+			self.setPaletteGradients();
 			panel.$element.find('.panel-body').html( template( {
 				images : BoldgridEditor.sample_backgrounds,
 			} ) );
 			
+			self._renderGradients();
 			self._initSliders();
 
 			panel.$element.find( '.filter[data-default="1"]' ).click();

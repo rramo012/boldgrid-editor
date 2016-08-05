@@ -64,6 +64,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 
 			this.$container.on( 'click', function ( e ) {
+				
 				self.$menu.find( 'li' ).hide();
 
 				if ( ! self.$menu.items.length ) {
@@ -79,6 +80,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					//If a panel is open.
 					BOLDGRID.EDITOR.Menu.reactivateMenu();
 				} );
+				
+				BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
 			} );
 		},
 

@@ -26,11 +26,26 @@
 .color-panel {
 
 	display: none;
-	width: 230px;
+	width: 275px;
 	height: auto !important;
+	top: 200px;
+    right: 300px;
+    
+	.wp-color-result {
+	   display: none;
+	}
 
 	.panel-title {
     	padding: 15px;
+    	background-color: white;
+        color: #333;
+        border-bottom: 1px solid #ececec;
+        
+        .close-icon {
+            background-color: #32373c;
+            color: white;
+            right: 15px;
+        }
 	}
 	
 	h4 {
@@ -39,7 +54,7 @@
 	}
 	
 	.color-control {
-		padding: 0 15px 15px;
+		padding: 0 7px 15px;
 	}
 				
 	.colors {

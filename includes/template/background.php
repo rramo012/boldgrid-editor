@@ -21,7 +21,7 @@
 				<# if( 'color' == type ) { #>
 					<li data-type="{{type}}" data-class='{{index}}' class='selection' style="background: {{image}}"></li>
 				<# } else if( 'gradients' == type ) { #>
-					<li data-type="{{type}}" class='selection' style="background-image: linear-gradient(to left, {{image.colors[0]}}, {{image.colors[1]}}"></li>
+					<li data-type="{{type}}" class='selection' data-color-1="{{image.colors[0]}}" data-color-2="{{image.colors[1]}}"></li>
 				<# } else { #>
 					<li data-type="{{type}}" data-image-url="{{image}}" class='selection' style="background-image: url({{image}})"></li>
 				<# } #>
@@ -41,8 +41,8 @@
 			</div>
 			<div class='background-color section'>
 				<h4>Background Color</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
+				<label for="section-background-color" class='color-preview'></label>
+				<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
 			</div>
 			<div class='vertical-position section'>
 				<h4>Verticle Position (%)</h4>
@@ -65,6 +65,9 @@
 				</label>
     			<label>
 					<input type="radio" name="scroll-effects" value="background-parallax">Parallax
+				</label>
+    			<label>
+	    			<input type="radio" name="scroll-effects" value="background-fixed">Fixed
 				</label>
     			<label>
 	    			<input type="radio" name="scroll-effects" value="background-zoom">Zoom

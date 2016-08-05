@@ -42,13 +42,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			},
 		},
 
-		colors : {
-			title : 'Background Color',
-			selectCallback : function ( selection ) {
-				console.log( selection );
-			},
-		},
-
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
@@ -70,10 +63,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupPresetClick();
 			self._setupPresetHover();
 			self._setupPanelLeave();
+			self._setupBackgroundColor();
 			self._setupCustomizeLeave();
 			var presets = self.getBoxMarkup();
 			self.$presets = self.applyUiStyles( presets );
-			//self.colorControls = BG.CONTROLS.Color.create( self );
 		},
 
 		_setupCustomizeLeave : function () {
@@ -125,15 +118,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.on( 'click', '.box-design .presets .box', function ( e ) {
 				e.preventDefault();
-				var $this = $( this );
+				var $module,
+					$this = $( this );
 
-				self.addBox( $this );
-				panel.clearSelected();
-
-				// Save Classes so that when the user mouse leaves we know that these classes are permanent.
-				self._saveModuleClasses();
-				$this.addClass( 'selected' );
+				if ( $this.hasClass( 'selected' ) ) {
+					$module = self.findModule( BG.Menu.getTarget( self ) );
+					panel.clearSelected();
+					self.removeModuleClasses( $module );
+					panel.hideFooter();
+					self._clearModuleClasses();
+				} else {
+					self.addBox( $this );
+					panel.clearSelected();
+					
+					// Save Classes so that when the user mouse leaves we know that these classes are permanent.
+					self._saveModuleClasses();
+					$this.addClass( 'selected' );
+					panel.showFooter();
+				}
+				
 			} );
+		},
+		
+		_clearModuleClasses : function () {
+			self.targetClasses = '';
+			self.targetColor = '';
 		},
 
 		_saveModuleClasses : function () {
@@ -147,6 +156,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find('.customize').show();
 			panel.$element.find('.presets').hide();
 			panel.$element.find('.box-design > .title').hide();
+			BG.CONTROLS.Color.$colorPicker.iris( 'color',  self.targetColor );
+			panel.$element.find('.box-design [name="box-bg-color"]').val( self.targetColor ).change();
 			panel.hideFooter();
 		},
 
@@ -173,56 +184,141 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		addBox : function ( $this ) {
-			var setBackgroundColor,
-				$target = BG.Menu.getTarget( self ),
+			var $target = BG.Menu.getTarget( self ),
 				value = $this.data('value'),
 				backgroundColor = $this.css('background-color'),
 				$module = self.findModule( $target );
 
-			setBackgroundColor = function ( $module ) {
-				$module.css( 'background-color', backgroundColor );
-			};
-
 			self.removeModuleClasses( $module );
-			$module.css( 'background-color', backgroundColor );
-			setBackgroundColor( $module );
+			
 			$module.addClass( value );
+			if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) ) ) {
+				$module.css( 'background-color', backgroundColor );
+			}
 		},
 
 		removeModuleClasses : function ( $module ) {
 			$.each( BoldgridEditor.builder_config.boxes, function () {
 				$module.removeClass( this );
 			} );
-
+			
+			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 			$module.css( 'background-color', '' );
 		},
 
-		colorCallback : function( selection ) {
-			console.log( selection );
+		_initSliders : function () {
+
+			self._initPaddingSlider();
+			self._initMarginSlider();
+		},
+
+		_setupBackgroundColor : function () {
+			var panel = BG.Panel;
+
+			panel.$element.on( 'change', '.box-design [name="box-bg-color"]', function () {
+				var $this = $( this ),
+					$target = BG.Menu.$element.targetData[ self.name ],
+					$module = self.findModule( $target ),
+					value = $this.val(),
+					type = $this.data('type');
+
+				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
+
+				if ( 'class' == type ) {
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) ); 
+				} else {
+					$module.css( 'background-color', value );
+				}
+
+				self._saveModuleClasses();
+			} );
+
+		},
+		
+		_initPaddingSlider : function () {
+			var defaultPos = 1;
+			
+			BG.Panel.$element.find( '.box-design .padding .slider' ).slider( {
+				min : 0,
+				max : 7,
+				value : defaultPos,
+				step: 0.1,
+				range : 'max',
+				slide : function( event, ui ) {
+					var $this = $( this ),
+						$target = BG.Menu.getTarget( self ),
+						$module = self.findModule( $target );
+
+					$module.css( 'padding-left', ui.value + 'em' );
+					$module.css( 'padding-right', ui.value + 'em' );
+				},
+			} ).siblings( '.value' ).html( defaultPos );
+		},
+		
+		_initMarginSlider : function () {
+			var defaultPos = 0;
+			
+			BG.Panel.$element.find( '.box-design .margin .slider' ).slider( {
+				min : -15,
+				max : 50,
+				value : defaultPos,
+				range : 'max',
+				slide : function( event, ui ) {
+					var $this = $( this ),
+						$target = BG.Menu.getTarget( self ),
+						$module = self.findModule( $target );
+
+					$module.css( 'margin-left', ui.value );
+					$module.css( 'margin-right', ui.value );
+				},
+			} ).siblings( '.value' ).html( defaultPos );
 		},
 
 		applyUiStyles : function( presets ) {
 			var $newElement,
 				presetsHtml = '',
 				colorCount = 0,
+				backgrounds = [],
+				backgroundColors = BG.CONTROLS.Color.getPaletteBackgroundColors(),
 				colors = [
-				    '#1abc9c',
+				    '#ffffff',
 				    '#2980b9',
 				    '#bdc3c7',
 				    '#e74c3c',
 				    '#34495e',
 				    '#f39c12'
 				];
+			
+			$.each( backgroundColors, function ( colorClass ) {
+				backgrounds.push( {
+					'color' : this,
+					'colorClass' : colorClass,
+				} );
+			} );
+			
+			console.log( backgrounds )
+			
+			$.each( colors, function () {
+				backgrounds.push( {
+					'color' : this
+				} );
+			} );
 
 			$.each( presets, function ( index ) {
 				$newElement = $( this );
-				$newElement.css( 'background-color', colors[ colorCount ] );
+				
+				if ( backgrounds[ colorCount ].colorClass ) {
+					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass )
+					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
+				} else {
+					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
+				}
 
 				if ( index % 4 == 0 && index != 0 ) {
 					colorCount++;
 				}
 
-				if ( colorCount > 5 ) {
+				if ( ! backgrounds[ colorCount ] ) {
 					colorCount = 0;
 				}
 
@@ -264,7 +360,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find( '.grid' ).masonry({
 				itemSelector: '.box',
 			} );
-
+			
+			self._initSliders();
+			panel.hideFooter();
 		},
 
 	};

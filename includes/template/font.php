@@ -5,7 +5,7 @@
   			<option value="pending">All Google Fonts</option>
 		</select>
 		<label for="font-color" class='color-preview'></label>
-		<input type="text" name='font-color' class='color-control' value=''>
+		<input type="text" data-type="" name='font-color' class='color-control' value=''>
 	</div>
 	<div class='section size'>
 		<h4>Font Size (px)</h4>

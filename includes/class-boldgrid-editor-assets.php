@@ -121,6 +121,15 @@ class Boldgrid_Editor_Assets {
 
 	public function enqueue_drag_scripts( $plugin_file ) {
 
+
+		wp_enqueue_script(
+			'alpha-color-picker',
+			plugins_url( '/assets/js/alpha-color-picker/alpha-color-picker.js', $plugin_file ), // Update to where you put the file.
+			array( 'jquery', 'wp-color-picker' ), // You must include these here.
+			null,
+			true
+		);
+
 		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable' );
 
 		wp_enqueue_style( 'wp-color-picker' );

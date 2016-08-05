@@ -10,8 +10,20 @@
 			<div class='back'>
 				<a class='panel-button' href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Preset Designs</a>
 			</div>
-			<div class='color-controls'>
-				{{{data.colorControls}}}
+			<div class='color-controls section'>
+				<h4>Background Color</h4>
+				<label for="box-bg-color" class='color-preview'></label>
+				<input type="text" data-type="" name='box-bg-color' class='color-control' value=''>
+			</div>
+			<div class='padding section'>
+				<h4>Padding (em)</h4>
+				<div class="slider"></div>
+				<span class='value'></span>
+			</div>
+			<div class='margin section'>
+				<h4>Margin (px)</h4>
+				<div class="slider"></div>
+				<span class='value'></span>
 			</div>
 		</div>
 	</div>

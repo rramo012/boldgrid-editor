@@ -1,13 +1,18 @@
 .editor-panel .boldgrid-image,
 #tinymce .boldgrid-image,
-#page .boldgrid-image {
+.page .boldgrid-image {
     border: none;
     box-shadow: none;
 }
 
+.page .background-fixed  {
+    background-attachment: fixed !important;
+}
+
 .editor-panel,
 #tinymce,
-#page {
+.page {
+				
     .img-mod-1 {
         border: 3px solid #fff; 
         padding: 0;
