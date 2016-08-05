@@ -30,7 +30,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		iconClasses : 'fa fa-columns',
 
-		selectors : [ '.row [class*="col-md"]:not(.row .row [class*="col-md"])' ],
+		//selectors : [ '.row [class*="col-md"]:not(.row .row [class*="col-md"])' ],
+		selectors : [ '.row [class*="col-md"]' ],
 
 		panel : {
 			title : 'Text Background',
@@ -130,16 +131,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} else {
 					self.addBox( $this );
 					panel.clearSelected();
-					
+
 					// Save Classes so that when the user mouse leaves we know that these classes are permanent.
 					self._saveModuleClasses();
 					$this.addClass( 'selected' );
 					panel.showFooter();
 				}
-				
+
 			} );
 		},
-		
+
 		_clearModuleClasses : function () {
 			self.targetClasses = '';
 			self.targetColor = '';
@@ -190,7 +191,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$module = self.findModule( $target );
 
 			self.removeModuleClasses( $module );
-			
+
 			$module.addClass( value );
 			if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) ) ) {
 				$module.css( 'background-color', backgroundColor );
@@ -201,7 +202,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$.each( BoldgridEditor.builder_config.boxes, function () {
 				$module.removeClass( this );
 			} );
-			
+
 			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 			$module.css( 'background-color', '' );
 		},
@@ -225,7 +226,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
 
 				if ( 'class' == type ) {
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) ); 
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
 					$module.css( 'background-color', value );
 				}
@@ -234,10 +235,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 
 		},
-		
+
 		_initPaddingSlider : function () {
 			var defaultPos = 1;
-			
+
 			BG.Panel.$element.find( '.box-design .padding .slider' ).slider( {
 				min : 0,
 				max : 7,
@@ -253,11 +254,27 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$module.css( 'padding-right', ui.value + 'em' );
 				},
 			} ).siblings( '.value' ).html( defaultPos );
+
+			BG.Panel.$element.find( '.box-design .padding-top .slider' ).slider( {
+				min : 0,
+				max : 200,
+				value : defaultPos,
+				step: 1,
+				range : 'max',
+				slide : function( event, ui ) {
+					var $this = $( this ),
+					$target = BG.Menu.getTarget( self ),
+					$module = self.findModule( $target );
+
+					$module.css( 'padding-top', ui.value + 'px' );
+					$module.css( 'padding-bottom', ui.value + 'px' );
+				},
+			} ).siblings( '.value' ).html( defaultPos );
 		},
-		
+
 		_initMarginSlider : function () {
 			var defaultPos = 0;
-			
+
 			BG.Panel.$element.find( '.box-design .margin .slider' ).slider( {
 				min : -15,
 				max : 50,
@@ -270,6 +287,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 					$module.css( 'margin-left', ui.value );
 					$module.css( 'margin-right', ui.value );
+				},
+			} ).siblings( '.value' ).html( defaultPos );
+
+			BG.Panel.$element.find( '.box-design .margin-top .slider' ).slider( {
+				min : 0,
+				max : 200,
+				value : defaultPos,
+				range : 'max',
+				slide : function( event, ui ) {
+					var $this = $( this ),
+					$target = BG.Menu.getTarget( self ),
+					$module = self.findModule( $target );
+
+					$module.css( 'margin-top', ui.value );
+					$module.css( 'margin-bottom', ui.value );
 				},
 			} ).siblings( '.value' ).html( defaultPos );
 		},
@@ -288,16 +320,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				    '#34495e',
 				    '#f39c12'
 				];
-			
+
 			$.each( backgroundColors, function ( colorClass ) {
 				backgrounds.push( {
 					'color' : this,
 					'colorClass' : colorClass,
 				} );
 			} );
-			
+
 			console.log( backgrounds )
-			
+
 			$.each( colors, function () {
 				backgrounds.push( {
 					'color' : this
@@ -306,7 +338,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			$.each( presets, function ( index ) {
 				$newElement = $( this );
-				
+
 				if ( backgrounds[ colorCount ].colorClass ) {
 					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass )
 					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
@@ -343,6 +375,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		openPanel : function ( e ) {
+
+			console.log('ffff');
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-box' );
 
@@ -360,7 +394,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find( '.grid' ).masonry({
 				itemSelector: '.box',
 			} );
-			
+
 			self._initSliders();
 			panel.hideFooter();
 		},

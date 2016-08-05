@@ -19,7 +19,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			// Init Panel.
 			this.$panel = BOLDGRID.EDITOR.Panel.init();
-			
+
 			// Init Color Control.
 			this.colorControl = BOLDGRID.EDITOR.CONTROLS.Color.init();
 
@@ -30,7 +30,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			//Create all controls.
 			this.setupControls();
 		},
-		
+
 		setupSliders : function () {
 			this.$panel.on( "slide", '.section .slider', function( event, ui ) {
 				var $this = $( this );
@@ -64,7 +64,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 
 			this.$container.on( 'click', function ( e ) {
-				
+
 				self.$menu.find( 'li' ).hide();
 
 				if ( ! self.$menu.items.length ) {
@@ -80,7 +80,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					//If a panel is open.
 					BOLDGRID.EDITOR.Menu.reactivateMenu();
 				} );
-				
+
 				BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
 			} );
 		},
@@ -90,24 +90,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		setupControls : function () {
 			var self = this;
-			
+
 			// Sort Controls by priority.
 			var compare = function ( a, b ) {
-				
+
 				if ( a.priority < b.priority ) {
 					return -1;
 				}
-				
+
 				if ( a.priority > b.priority ) {
 					return 1;
 				}
-				
+
 				return 0;
 			}
-			
+
 			this.controls.sort( compare );
-			
-			
+
+
 			// Bind each menu control.
 			$.each( this.controls, function () {
 				self.setupControl( this );
@@ -117,7 +117,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		setupControl : function ( control ) {
 			this.bindControlHandler( control );
 			BOLDGRID.EDITOR.Menu.createListItem( control );
-			
+
 			if ( control.setup ) {
 				control.setup();
 			}
@@ -130,6 +130,33 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// Add that control to the list of controls to be made visible.
 			this.$container.on( 'click', control.selectors.join(), function ( e ) {
 				var $this = $( this );
+				if ( 'box' == control.name ) {
+					if ( e.boxFound ) {
+						return;
+					}
+
+					var transparentColors = [
+					    'rgba(0, 0, 0, 0)',
+					    'transparent'
+					];
+
+					if ( $this.closest('.editing-as-row').length ) {
+						e.boxFound = true;
+					}
+
+					if ( ! e.boxFound && $this.parent().closest('[class*="col-md"]').length ) {
+						var $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this );
+						var backgroundColor = $module.css('background-color');
+						if ( transparentColors.indexOf( backgroundColor ) == -1 ) {
+							console.log('box found')
+							e.boxFound = true;
+						} else {
+							return;
+						}
+					}
+
+				}
+
 				self.$menu.targetData = self.$menu.targetData || {};
 				self.$menu.targetData[ control.name ] = $this;
 
