@@ -33,7 +33,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		create : function () {
-			this.$element = $( BoldgridEditor.instancePanel );
+			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
 			$( 'body' ).append( this.$element );
 		},
 

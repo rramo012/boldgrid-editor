@@ -10,7 +10,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BOLDGRID.EDITOR.CONTROLS.Box = {
 
-
 		uiBoxDimensions : {
 			'box rounded' : 'box-wide',
 			'box rounded-bottom-left rounded-bottom-right' : 'box-long',
@@ -23,14 +22,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'box square border-dashed-thick' : 'box-long',
 			'box circle border-double-thick' : 'box-wide',
 		},
+		
 
 		name : 'box',
 
 		priority : 10,
 
-		iconClasses : 'fa fa-columns',
+		iconClasses : 'genericon genericon-gallery',
 
-		//selectors : [ '.row [class*="col-md"]:not(.row .row [class*="col-md"])' ],
+		tooltip : 'Text Background',
+
 		selectors : [ '.row [class*="col-md"]' ],
 
 		panel : {
@@ -327,8 +328,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					'colorClass' : colorClass,
 				} );
 			} );
-
-			console.log( backgrounds )
 
 			$.each( colors, function () {
 				backgrounds.push( {

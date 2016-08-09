@@ -10,6 +10,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	BOLDGRID.EDITOR.CONTROLS.Container = {
 
 		name : 'container',
+		
+		tooltip : 'Section Width',
 
 		priority : 90,
 

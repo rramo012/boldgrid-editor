@@ -36,9 +36,18 @@ class Boldgrid_Editor_Ajax {
 		wp_die( 1 );
 	}
 
+	/**
+	 * Save Image data to the media library.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @param string $_POST['image_data'].
+	 * @param integer $_POST['attachement_id'].
+	 */
 	public function upload_canvas_image_ajax() {
+		//@TODO: Sanatize this data.
 		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
-		$attachement_id = ! empty( $_POST['attachement_id'] ) ? $_POST['attachement_id'] : null;
+		$attachement_id = ! empty( $_POST['attachement_id'] ) ? (int) $_POST['attachement_id'] : null;
 
 		$original_attachment = ( array ) get_post ( $attachement_id );
 

@@ -101,7 +101,7 @@ class Boldgrid_Editor_Crop {
 	 */
 	public function admin_footer() {
 		if ( $this->should_be_loaded ) {
-			require_once BOLDGRID_EDITOR_PATH . '/pages/templates/crop.php';
+			require_once BOLDGRID_EDITOR_PATH . '/includes/template/crop.php';
 		}
 	}
 

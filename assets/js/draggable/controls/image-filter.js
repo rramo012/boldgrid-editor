@@ -15,6 +15,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		iconClasses : 'genericon genericon-image',
 		
+		tooltip : 'Image Filter',
+		
 		/**
 		 * List of all Caman values.
 		 */

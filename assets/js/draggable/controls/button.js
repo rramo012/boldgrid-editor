@@ -12,6 +12,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		name : 'button',
 
 		priority : 2,
+		
+		tooltip : 'Button Design',
 
 		iconClasses : 'fa fa-cog',
 

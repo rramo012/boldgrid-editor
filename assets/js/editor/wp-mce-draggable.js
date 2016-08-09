@@ -401,9 +401,10 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.create_front_page_iframe = function () {
 		var $temp_loaded_container = $('<div class="hidden temp-container">');
+		$.get( BoldgridEditor.site_url, function( data ){
 
-		$temp_loaded_container.load(BoldgridEditor.site_url , function(what){
-
+			$temp_loaded_container.html( data );
+			
 			//Create Iframe
 			$('html').append('<iframe id="resizer-iframe" width="1600" height="600"></iframe>');
 			self.$resizing_iframe = $('#resizer-iframe');

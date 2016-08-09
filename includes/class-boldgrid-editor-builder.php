@@ -20,19 +20,53 @@
  */
 class Boldgrid_Editor_Builder {
 
-	public static function get_menu_markup() {
-		return file_get_contents( BOLDGRID_EDITOR_PATH . '/includes/temp.html' );
-	}
-
-	public static function get_popup_markup() {
-		return file_get_contents( BOLDGRID_EDITOR_PATH . '/includes/popup.html' );
-	}
-
+	/**
+	 * Enqueue Styles.
+	 *
+	 * @since 1.2.3
+	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'genericons-imhwpb' );
 		wp_enqueue_style( 'font-awesome' );
 	}
 
+	/**
+	 * Get configuration to be used in the page styler.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return array Configs for the styler.
+	 */
+	public static function get_builder_config() {
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ) );
+	}
+
+	/**
+	 * Print templates used in page and post editor.
+	 *
+	 * @since 1.2.3
+	 */
+	public function print_scripts() {
+		$template_path = BOLDGRID_EDITOR_PATH . '/includes/template';
+
+		print include $template_path . '/tooltip.php';
+		print include $template_path . '/button.php';
+		print include $template_path . '/image.php';
+		print include $template_path . '/image-filter.php';
+		print include $template_path . '/color.php';
+		print include $template_path . '/font.php';
+		print include $template_path . '/background.php';
+		print include $template_path . '/box.php';
+		print include $template_path . '/panel.php';
+	}
+
+	/**
+	 * Get configuration to be used in the page styler.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return array Pattern image data.
+	 */
 	public static function get_patterns() {
 		$patterns = scandir( BOLDGRID_EDITOR_PATH . '/assets/image/patterns' );
 		$patterns = array_diff( $patterns, array( '..', '.' ) );
@@ -45,37 +79,28 @@ class Boldgrid_Editor_Builder {
 		return $pattern_data;
 	}
 
-	public static function get_sample_images() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) );
-	}
-
-	public static function get_sample_gradients() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) );
-	}
-
-	public static function get_builder_config() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ) );
-	}
-
+	/**
+	 * Get configurations of assets.
+	 *
+	 * @return array Configurations.
+	 */
 	public static function get_background_data() {
 		return array(
 			'color' => array(),
-			'image' => self::get_sample_images(),
+			'image' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
 			'pattern' => self::get_patterns(),
-			'gradients' => self::get_sample_gradients(),
+			'gradients' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) )
 		);
 	}
 
-	public function print_scripts() {
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/button.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/image.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/image-filter.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/color.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/font.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/background.php';
-		print include BOLDGRID_EDITOR_PATH . '/includes/template/box.php';
-	}
-
+	/**
+	 * Get images used on the current post.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @param integer $post_id.
+	 * @return array $image_lookups
+	 */
 	public static function get_post_images( $post_id = null ) {
 		$current_post_id = $post_id ? $post_id : $_REQUEST['post'];
 		$attachments = get_children( array( 'post_parent' => $current_post_id,

@@ -234,7 +234,8 @@ class Boldgrid_Editor {
 			$this->set_is_boldgrid_theme( $is_boldgrid_theme );
 
 			// Create media modal tabs.
-			$boldgrid_editor_media->create_tabs( $this->get_tab_configs(), $is_boldgrid_theme );
+			$configs = array_merge( $this->get_path_configs(), $this->get_tab_configs() );
+			$boldgrid_editor_media->create_tabs( $configs, $is_boldgrid_theme );
 
 			// Add screen display buttons.
 			$boldgrid_editor_mce->add_window_size_buttons();

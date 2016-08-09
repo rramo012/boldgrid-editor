@@ -1,3 +1,4 @@
+<script type="text/html" id="tmpl-boldgrid-editor-panel">
 <div class='editor-panel ui-widget-content'>
 	<div class='panel-title'>
 		<span class="name"></span>
@@ -14,3 +15,19 @@
 		</div>
 	</div>
 </div>
+</script>
+
+<script type="text/html" id="tmpl-boldgrid-editor-control-menu">
+<div id='boldgrid-instance-menu' class='boldgrid-instance-menu'>
+	<ul>
+	</ul>
+</div>
+</script>
+<script type="text/html" id="tmpl-boldgrid-editor-tooltip">
+<div class="boldgrid-tooltip">
+	<div class="boldgrid-tooltip-arrow"></div>
+	<div class="boldgrid-tooltip-inner">
+		{{data.message}}
+	</div>
+</div>
+</script>

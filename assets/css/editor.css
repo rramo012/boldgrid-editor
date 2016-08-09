@@ -653,7 +653,7 @@
 # Menu Styles
 --------------------------------------------------------------*/
 /************** Instance Menu *******************/
-.mce-container .boldgrid-instance-menu {
+#boldgrid-instance-menu {
   padding: 0;
   display: none;
   height: 0px;
@@ -662,7 +662,7 @@
   right: 0;
   text-align: center; }
 
-.mce-container .boldgrid-instance-menu ul {
+#boldgrid-instance-menu ul {
   text-align: center;
   display: inline-block;
   padding: 6px 15px 8px;
@@ -672,39 +672,49 @@
   cursor: move;
   width: auto !important; }
 
-.mce-container .boldgrid-instance-menu li {
+#boldgrid-instance-menu li {
   display: inline-block;
   padding: 3px;
   border-radius: 50%;
   margin: 0 8px;
   cursor: pointer;
   background-color: white;
-  transition: box-shadow .3s; }
+  transition: box-shadow .3s;
+  position: relative; }
 
-.mce-container .boldgrid-instance-menu li.active,
-.mce-container .boldgrid-instance-menu li:hover {
+#boldgrid-instance-menu li:hover .boldgrid-tooltip {
+  top: 39px;
+  display: block;
+  left: 50%;
+  transform: translateX(-50%); }
+
+#boldgrid-instance-menu li:hover .boldgrid-tooltip .boldgrid-tooltip-inner {
+  white-space: nowrap; }
+
+#boldgrid-instance-menu li.active,
+#boldgrid-instance-menu li:hover {
   box-shadow: 0px 0px 5px 1px #969696 inset; }
 
-.mce-container .boldgrid-instance-menu li.active span,
-.mce-container .boldgrid-instance-menu li:hover span {
+#boldgrid-instance-menu li.active span,
+#boldgrid-instance-menu li:hover span {
   color: #f95b26; }
 
-.mce-container .boldgrid-instance-menu li span {
+#boldgrid-instance-menu li span {
   font-size: 23px;
   transition: color .3s;
   padding: 2px; }
 
-.mce-container .boldgrid-instance-menu li .fa-info {
+#boldgrid-instance-menu li .fa-info {
   padding: 2px 9.5px; }
 
-.mce-container .boldgrid-instance-menu li .fa-text-width {
+#boldgrid-instance-menu li .fa-text-width {
   padding: 3.5px 5px;
   font-size: 20px; }
 
-.mce-container .boldgrid-instance-menu li .fa-cog {
+#boldgrid-instance-menu li .fa-cog {
   padding: 2px 3.75px; }
 
-.mce-container .boldgrid-instance-menu li .fa-columns {
+#boldgrid-instance-menu li .fa-columns {
   padding: 2px 3px; }
 
 /************** TinyMCE Menu *******************/
@@ -770,6 +780,48 @@
 
 .gridblock-icon:hover .wp-media-buttons-icon {
   transform: rotate(120deg); }
+
+/*--------------------------------------------------------------
+# Tooltip
+--------------------------------------------------------------*/
+.wp-admin.post-php .boldgrid-tooltip {
+  margin-top: 2px;
+  position: absolute;
+  padding: 5px;
+  opacity: .8;
+  filter: alpha(opacity=80);
+  zoom: 1;
+  display: none;
+  z-index: 9999; }
+
+.wp-admin.post-php .boldgrid-tooltip-inner {
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 12px;
+  font-size: 11px;
+  background-color: #000;
+  color: #fff;
+  max-width: 200px;
+  padding: 5px 8px 4px 8px;
+  text-align: center;
+  white-space: normal; }
+
+.wp-admin.post-php .boldgrid-tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-bottom-style: solid;
+  border: 5px dashed #000;
+  border-top: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  position: absolute;
+  width: 0;
+  height: 0;
+  line-height: 0; }
 
 /*--------------------------------------------------------------
 # Image Modules

@@ -11,6 +11,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	BOLDGRID.EDITOR.CONTROLS.Font = {
 
 		name : 'font',
+		
+		tooltip : 'Font',
 
 		priority : 10,
 

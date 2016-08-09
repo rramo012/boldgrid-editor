@@ -1,5 +1,5 @@
 /************** Instance Menu *******************/
-.mce-container .boldgrid-instance-menu {
+#boldgrid-instance-menu {
 	padding: 0;
 	display: none;
     height: 0px;
@@ -26,6 +26,18 @@
 		cursor: pointer;
 		background-color: white;
 		transition: box-shadow .3s;
+		position: relative;
+
+	   &:hover .boldgrid-tooltip {
+		    top: 39px;
+	   		display: block;
+		    left: 50%;
+		    transform: translateX(-50%);
+ 		    
+ 		    .boldgrid-tooltip-inner {
+ 		    	white-space: nowrap;
+ 		    }
+	   }
 	}
 	li.active,
 	li:hover {

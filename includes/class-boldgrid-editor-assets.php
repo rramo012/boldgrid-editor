@@ -1,18 +1,43 @@
 <?php
 /**
- * BoldGrid Source Code
+ * Class: Boldgrid_Editor_Assets
  *
- * @package Boldgrid_Layout
- * @copyright BoldGrid.com
- * @version $Id$
- * @author BoldGrid.com <wpb@boldgrid.com>
+ * Handle enqueues of styles and scripts.
+ *
+ * @since      1.2.3
+ * @package    Boldgrid_Editor
+ * @subpackage Boldgrid_Editor_Assets
+ * @author     BoldGrid <support@boldgrid.com>
+ * @link       https://boldgrid.com
+ */
+
+/**
+ * Class: Boldgrid_Editor_Assets
+ *
+ * Handle enqueues of styles and scripts.
+ *
+ * @since      1.2.3
  */
 class Boldgrid_Editor_Assets {
 
+	/**
+	 * Get minified or unminified asset suffix.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return string Minified or empty string.
+	 */
 	public static function get_asset_suffix() {
 		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	}
 
+	/**
+	 * Append min.js or .js to a string depending on whether or not script debug is on.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @return string Minified or empty string.
+	 */
 	public static function get_minified_js( $script_name ) {
 		return $script_name . self::get_asset_suffix() . '.js';
 	}
@@ -35,25 +60,31 @@ class Boldgrid_Editor_Assets {
 
 		$this->enqueue_scripts();
 		$this->add_styles();
-
 	}
 
 	/**
-	 * Get the site url or permalink whichever is found
+	 * Get the site url or permalink whichever is found.
 	 *
 	 * @global $is_IE
 	 *
 	 * @param int $_REQUEST['post']
-	 *
-	 * @return string
 	 */
 	public function get_post_url() {
 		$permalink = ! empty( $_REQUEST['post'] ) ? get_permalink( intval( $_REQUEST['post'] ) ) : null;
 		return ( $permalink ? $permalink : get_site_url() );
 	}
 
-	public function enqueue_mce_interface( $plugin_file ) {
+	/**
+	 * Enqueue WPMCE Draggable.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @global $is_IE
+	 */
+	public function enqueue_mce_interface() {
 		global $is_IE;
+
+		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
 		wp_register_script( 'wp-mce-draggable-imhwpb',
 			plugins_url( self::get_minified_js( '/assets/js/editor/wp-mce-draggable' ), $plugin_file ),
@@ -73,8 +104,6 @@ class Boldgrid_Editor_Assets {
 				'version' => BOLDGRID_EDITOR_VERSION,
 				'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
 				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
-				'instanceMenu' => Boldgrid_Editor_Builder::get_menu_markup(),
-				'instancePanel' => Boldgrid_Editor_Builder::get_popup_markup(),
 				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
 				'images' => Boldgrid_Editor_Builder::get_post_images(),
 				'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
@@ -86,9 +115,11 @@ class Boldgrid_Editor_Assets {
 	}
 
 	/**
-	 * Enqueue all scripts
+	 * Enqueue all scripts.
 	 *
-	 * @param int $_REQUEST['post']
+	 * @since 1.2.3
+	 *
+	 * @param int $_REQUEST['post'].
 	 */
 	public function enqueue_scripts() {
 
@@ -98,10 +129,9 @@ class Boldgrid_Editor_Assets {
 			plugins_url( self::get_minified_js( '/assets/js/media/media' ), $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
 
-		$this->enqueue_mce_interface( $plugin_file );
-
 		// Drag n Drop Assets.
-		$this->enqueue_drag_scripts( $plugin_file );
+		$this->enqueue_mce_interface();
+		$this->enqueue_drag_scripts();
 
 		wp_enqueue_script( 'boldgrid-editor-caman',
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array (),
@@ -118,24 +148,23 @@ class Boldgrid_Editor_Assets {
 			false);
 	}
 
+	/**
+	 * Enqueue scripts to be used on the page and post editor.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @param int $_REQUEST['post'].
+	 */
+	public function enqueue_drag_scripts() {
+		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
-	public function enqueue_drag_scripts( $plugin_file ) {
+		// Color Picker with alpha channel: https://github.com/23r9i0/wp-color-picker-alpha.
+		wp_enqueue_script( 'wp-color-picker-alpha',
+			plugins_url( '/assets/js/wp-color-picker-alpha/wp-color-picker-alpha.js', $plugin_file ),
+			array( 'jquery', 'wp-color-picker' ), null, true );
 
-
-		wp_enqueue_script(
-			'alpha-color-picker',
-			plugins_url( '/assets/js/alpha-color-picker/alpha-color-picker.js', $plugin_file ), // Update to where you put the file.
-			array( 'jquery', 'wp-color-picker' ), // You must include these here.
-			null,
-			true
-		);
-
+		// Dependencies:
 		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable' );
-
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script(
-				'iris', admin_url( 'js/iris.min.js' ),
-				array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), false, 1 );
 
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
 			wp_enqueue_script( 'boldgrid-editor-drag',
@@ -164,6 +193,10 @@ class Boldgrid_Editor_Assets {
 
 		wp_enqueue_script( 'boldgrid-editor-controls-container',
 			plugins_url( '/assets/js/draggable/controls/container.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-controls-add',
+			plugins_url( '/assets/js/draggable/controls/add.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-icon',
@@ -216,7 +249,9 @@ class Boldgrid_Editor_Assets {
 	}
 
 	/**
-	 * Add All Styles needed for the editor
+	 * Add All Styles needed for the editor.
+	 *
+	 * @since 1.0
 	 */
 	public function add_styles() {
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
@@ -235,6 +270,4 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'editor-css-imhwpb' );
 		wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	}
-
-
 }

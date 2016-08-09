@@ -23,6 +23,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		name : 'image',
+		
+		tooltip : 'Image Design',
 
 		priority : 2,
 

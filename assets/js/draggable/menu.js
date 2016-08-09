@@ -27,8 +27,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		create : function () {
-			this.$element = $( BoldgridEditor.instanceMenu );
-
+			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			$( '#mceu_34' ).append( this.$element );
 
 		},
@@ -48,6 +47,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				$icon = $( '<span></span>' ).addClass( control.iconClasses );
 
 			$li.append( $icon );
+			
+			if ( control.tooltip ) {
+				$li.append( wp.template( 'boldgrid-editor-tooltip' )( {
+					'message' : control.tooltip
+				} ) );
+			}
 
 			this.$element.find( 'ul' ).append( $li );
 		},

@@ -11,12 +11,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	BOLDGRID.EDITOR.CONTROLS.Background = {
 
 		name : 'background',
+		
+		tooltip : 'Section Background',
 
 		uploadFrame : null,
 
 		priority : 80,
 
-		iconClasses : 'genericon genericon-gallery',
+		iconClasses : 'genericon genericon-picture',
 
 		selectors : [ '.boldgrid-section' ],
 
