@@ -65,7 +65,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.$container.on( 'click', function ( e ) {
 
-				self.$menu.find( 'li' ).hide();
+				self.$menu.find( 'li[data-action]' ).hide();
 
 				if ( ! self.$menu.items.length ) {
 					self.$menu.hide();

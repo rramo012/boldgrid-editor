@@ -42,7 +42,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var additional_menu_items = settings.menu_items || [];
 
 	/** Testing and debug flag that prevents popovers from being removed. Useful for testing placements **/
-	this.popover_placement_testing = settings.popover_placement_testing || false;
+	this.popover_placement_testing = settings.popover_placement_testing || true;
 
 	/** How long should we wait before removing or displaying a new popover **/
 	this.hover_timout = settings.hover_timout || 175;
@@ -596,7 +596,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'add-column' : "Add Column",
 			'add-row' : "Add Empty Row",
 			'nest-row' : "",
-			'toggle-container' : "Toggle Container",
 		},
 		'content' : {
 			'' : "Edit Content",
@@ -1020,7 +1019,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action="nest-row"]', self.menu_actions.nest_row )
 			.on( 'click.draggable', 'li[data-action="add-row"]', self.menu_actions.add_row )
 			.on( 'click.draggable', 'li[data-action="clone-as-row"]', self.menu_actions.unnest_row )
-			//.on( 'click.draggable', 'li[data-action="toggle-container"]', self.menu_actions.toggleContainer )
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 		;

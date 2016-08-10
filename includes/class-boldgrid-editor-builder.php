@@ -49,7 +49,6 @@ class Boldgrid_Editor_Builder {
 	public function print_scripts() {
 		$template_path = BOLDGRID_EDITOR_PATH . '/includes/template';
 
-		print include $template_path . '/tooltip.php';
 		print include $template_path . '/button.php';
 		print include $template_path . '/image.php';
 		print include $template_path . '/image-filter.php';

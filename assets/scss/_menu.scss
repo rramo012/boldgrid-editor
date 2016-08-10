@@ -67,6 +67,106 @@
 	li .fa-columns {
         padding: 2px 3px;
 	}
+	
+	.active .bg-editor-menu-dropdown {
+	   display: block;
+	}
+	
+	.bg-editor-menu-dropdown {
+	   display: none;
+	    background-color: white;
+	    position: absolute;
+	    z-index: 1;
+	    left: -12px;
+	    top: 48px;
+	    box-shadow: 0px 0px 12px rgba(0,0,0,.175);
+	    border: 1px solid rgba(0,0,0,.15);
+	    border-radius: 5px;
+	    cursor: default;
+	    padding: 0;
+        min-width: 150px;
+        border: 2px solid $menu-color;
+	    
+	    &:before {
+		    content: ' ';
+		    top: -9px;
+		    left: 23px;
+		    margin-left: -5px;
+		    border-bottom-style: solid;
+		    border: 9px dashed $menu-color;
+		    border-top: none;
+		    border-left-color: transparent;
+		    border-right-color: transparent;
+		    position: absolute;
+		    width: 0;
+		    height: 0;
+		    line-height: 0;
+	    }
+	    
+	    li {
+	       display: list-item;
+            border-radius: 0;
+            margin: 0;
+            padding: 8px 12px 8px 38px;
+            min-height: 1px;
+            line-height: 1em;
+            text-align: left;
+            font-size: 12px !important;
+            font-weight: 600;
+	       
+	       &:hover {
+		        background-color: #f5f5f5;
+	           box-shadow: none;
+	           background-color: #32373c;
+               color: white;
+	       }
+	       
+	       &:before {
+	           display: block;
+			    position: absolute;
+			    content: " ";
+			    left: 0px;
+			    top: 0px;
+			    bottom: 0px;
+			    width: 28px;
+			    background-color: $menu-color;
+			    background-repeat: no-repeat;
+			    background-position: 6px 5px;
+	       }
+	       
+			&.add-gridblock::before {
+			    background-image: url("../image/icons/insert-gridblock.png");
+			}
+		    &.add-gridblock:hover::before {
+			    background-image: url("../image/icons/insert-gridblock-hover.png");
+			}
+			&.add-row::before {
+			    background-image: url("../image/icons/add-row.png");
+			}
+		    &.add-row:hover::before {
+			    background-image: url("../image/icons/add-row-hover.png");
+			}
+			
+			&.font-awesome::before {
+		        color: grey;
+		        font: normal normal normal 14px/1 FontAwesome;
+		        text-align: center;
+                line-height: 28px;
+			}
+		    &.font-awesome:hover::before {
+			    color: white;
+			}
+			
+			&.add-button::before {
+		        content: "\f205";
+			}
+			
+			&.add-icon::before {
+		        content: "\f129";
+			}
+	    }
+	    
+	}
 }
 
 /************** TinyMCE Menu *******************/

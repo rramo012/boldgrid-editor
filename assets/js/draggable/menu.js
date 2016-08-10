@@ -43,18 +43,27 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		createListItem : function ( control ) {
 
-			var $li = $('<li></li>').attr( 'data-action', 'menu-' + control.name ),
+			var $dropdownUl,
+				$li = $('<li></li>').attr( 'data-action', 'menu-' + control.name ),
 				$icon = $( '<span></span>' ).addClass( control.iconClasses );
 
 			$li.append( $icon );
 			
 			if ( control.tooltip ) {
-				$li.append( wp.template( 'boldgrid-editor-tooltip' )( {
+				$li.append( wp.template( 'boldgrid-editor-tooltip' )( { 
 					'message' : control.tooltip
 				} ) );
 			}
+			
+			if ( control.menuDropDown ) {
+				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
+				$.each( control.menuDropDown, function () {
+					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
+				} ); 
+				$li.append( $dropdownUl );
+			}
 
-			this.$element.find( 'ul' ).append( $li );
+			this.$element.find( '> ul' ).append( $li );
 		},
 
 		activateControl : function ( control ) {

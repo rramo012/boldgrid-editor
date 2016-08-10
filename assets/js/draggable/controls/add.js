@@ -19,10 +19,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors : [ '*' ],
 
+		menuDropDown : [
+			{
+				'name' : 'Add Button',
+				'class' : 'font-awesome add-button'
+			},
+			{
+				'name' : 'Add Icon',
+				'class' : 'font-awesome add-icon'
+			},
+			{
+				'name' : 'Add GridBlock',
+				'class' : 'add-gridblock'
+			},
+			{
+				'name' : 'Add Empty Row',
+				'class' : 'add-row'
+			}
+		],
+		
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
-
+		onMenuClick : function ( e ) {
+			$(this).toggleClass('active');
+		}
 
 	};
 
