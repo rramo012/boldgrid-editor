@@ -29,7 +29,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		create : function () {
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			$( '#mceu_34' ).append( this.$element );
-
 		},
 
 		setupMenuDrag : function() {
@@ -38,7 +37,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				//handle: '.boldgrid-instance-menu ul',
 				scroll : false,
 				axis: "x"
-			} )
+			} );
 		},
 
 		createListItem : function ( control ) {
@@ -49,18 +48,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			$li.append( $icon );
 			
+			if ( control.menuDropDown ) {
+				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
+				$dropdownUl.html('<li class="title">' + control.menuDropDown.title + '</li>')
+				$.each( control.menuDropDown.options, function () {
+					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
+				} ); 
+				$li.append( $dropdownUl );
+			}
+			
 			if ( control.tooltip ) {
 				$li.append( wp.template( 'boldgrid-editor-tooltip' )( { 
 					'message' : control.tooltip
 				} ) );
-			}
-			
-			if ( control.menuDropDown ) {
-				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
-				$.each( control.menuDropDown, function () {
-					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
-				} ); 
-				$li.append( $dropdownUl );
 			}
 
 			this.$element.find( '> ul' ).append( $li );

@@ -44,7 +44,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		registerControl : function ( control ) {
 			this.controls.push( control );
 		},
-
+		
+		editorMceInstance : function () {
+			var instance = false;
+			
+			if ( IMHWPB.WP_MCE_Draggable && IMHWPB.WP_MCE_Draggable.instance ) {
+				instance = IMHWPB.WP_MCE_Draggable.instance;
+			}
+			
+			return instance;
+		},
 
 		bindEvents : function () {
 			this.onEditibleClick();
@@ -107,7 +116,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.controls.sort( compare );
 
-
 			// Bind each menu control.
 			$.each( this.controls, function () {
 				self.setupControl( this );
@@ -130,6 +138,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// Add that control to the list of controls to be made visible.
 			this.$container.on( 'click', control.selectors.join(), function ( e ) {
 				var $this = $( this );
+				
+				//@TODO: Move this.
 				if ( 'box' == control.name ) {
 					if ( e.boxFound ) {
 						return;

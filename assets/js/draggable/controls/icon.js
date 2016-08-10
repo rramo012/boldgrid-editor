@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict"; 
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Icon = {
 
@@ -30,6 +31,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		elementClick : function() {
+			self.openPanel();
+		},
+		
+		insertNew : function () {
+			var $insertedIcon;
+			
+			send_to_editor( '<i class="fa fa-cog bg-inserted-icon" aria-hidden="true"> </i>' );
+			$insertedIcon = BG.Controls.$container.find( '.bg-inserted-icon' ).last();
+			BG.Controls.$container.find( '.bg-inserted-icon' ).removeClass('bg-inserted-icon');
+			BG.Controls.$menu.targetData[ self.name ] = $insertedIcon;
+			$insertedIcon.click();
 			self.openPanel();
 		},
 
@@ -57,8 +69,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		openPanel : function () {
-			var $panel = BOLDGRID.EDITOR.Panel.$element,
-				$menu = BOLDGRID.EDITOR.Controls.$menu,
+			var $panel = BG.Panel.$element,
+				$menu = BG.Controls.$menu,
 				$target = $menu.targetData[ self.name ],
 				$selected;
 

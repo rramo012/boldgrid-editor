@@ -101,7 +101,13 @@ class Boldgrid_Editor_Builder {
 	 * @return array $image_lookups
 	 */
 	public static function get_post_images( $post_id = null ) {
-		$current_post_id = $post_id ? $post_id : $_REQUEST['post'];
+		$request_post = ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : false;
+		$current_post_id = $post_id ? $post_id : $request_post;
+
+		if ( ! $current_post_id ) {
+			return array();
+		}
+
 		$attachments = get_children( array( 'post_parent' => $current_post_id,
 			'post_status' => 'inherit',
 			'post_type' => 'attachment',

@@ -3405,6 +3405,50 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 		return prevent;
 	};
+	
+	
+	this.createEmptyRow = function () {
+		return $( '<div class="row"><div class="col-md-12"></div></div>' );
+	};
+	
+	this.postAddRow = function ( $empty_row ) {
+		$empty_row.addClass( 'added-element' );
+		setTimeout( function() {
+			self.$master_container.find( '.added-element' ).removeClass( 'added-element' );
+		}, 1000 );
+		
+		self.$master_container.trigger( self.add_row_event, $empty_row.find( '.col-md-12' ) );
+	};
+	
+	this.insertEmptyRow = function ( $currentNode, $empty_row ) {
+		var $insertBefore, curNode, $parentRow;
+		
+		// If clicked on add row.
+		if ( $currentNode && $currentNode.closest( '.draggable-tools-imhwpb' ).length ) {
+			$insertBefore = $currentNode.closest( '.draggable-tools-imhwpb' );
+		}
+	
+		// If current cursor inside of a row.
+		if ( ! $insertBefore || ! $insertBefore.length && tinymce && tinymce.activeEditor ) {
+			curNode = tinymce.activeEditor.selection.getNode();
+			if ( curNode ) {
+				curNode = $( curNode );
+				$parentRow = curNode.parents('.row').last();
+				
+				if ( $parentRow.length ) {
+					$insertBefore = $parentRow;
+				}
+			}
+		}
+		
+		// Otherwise put at top of page.
+		if ( ! $insertBefore || ! $insertBefore.length ) {
+			self.$body.prepend( $empty_row );
+		} else {
+			$insertBefore.before( $empty_row );
+		}
+
+	};
 
 	/**
 	 * An object with the actions that occur when a user clicks on the options
@@ -3465,17 +3509,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			//Focus element scroll
 			//need to trigger event
 		},
-		add_row : function( event ) {
-			var $empty_row = $( '<div class="row"><div class="col-md-12"></div></div>' );
-			$( this ).closest( '.draggable-tools-imhwpb' ).before( $empty_row );
-
-			$empty_row.addClass( 'added-element' );
-			setTimeout( function() {
-				self.$master_container.find( '.added-element' ).removeClass( 'added-element' );
-			}, 1000 );
-
-			self.$master_container.trigger( self.add_row_event, $empty_row.find( '.col-md-12' ) );
+		
+		add_row : function( e ) {
+			var $empty_row, $target;
+			
+			if ( e ) {
+				$target = $( this );
+			}
+			
+			$empty_row = self.createEmptyRow();
+			self.insertEmptyRow( $target, $empty_row );
+			self.postAddRow( $empty_row );
 		},
+		
 		/**
 		 * Adding a column to a row. Available from the row popovers
 		 */

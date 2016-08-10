@@ -301,7 +301,7 @@ IMHWPB.Editor = function( $ ) {
 				var is_column = $current_node.is( self.draggable.column_selectors_string ) ;
 				var is_row = $current_node.is( self.draggable.row_selectors_string );
 				var is_anchor = $current_node.is('A');
-
+				
 				if ( is_column || is_row ) {
 					//Any Character
 					if ( (e.which >= 48 && e.which <= 90) || (e.which >= 96 && e.which <= 105) || 13 == e.which ) {
