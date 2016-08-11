@@ -175,7 +175,8 @@
 .editor-panel .section {
   border-bottom: 1px solid #cecdcd;
   padding: 18px 21px;
-  color: #636363; }
+  color: #636363;
+  position: relative; }
 
 .color-panel .section:last-of-type,
 .editor-panel .section:last-of-type {
@@ -892,6 +893,12 @@
   display: none;
   z-index: 9999; }
 
+.wp-admin.wp-core-ui .boldgrid-help-icon {
+  cursor: help; }
+
+.wp-admin.wp-core-ui .boldgrid-help-icon:hover ~ .boldgrid-tooltip {
+  display: block; }
+
 .wp-admin.wp-core-ui .boldgrid-tooltip-inner {
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -920,6 +927,25 @@
   width: 0;
   height: 0;
   line-height: 0; }
+
+.wp-admin.wp-core-ui .boldgrid-tooltip-wrap {
+  position: absolute;
+  right: 20px; }
+
+.wp-admin.wp-core-ui .panel-body .boldgrid-tooltip {
+  right: 20px;
+  top: -9px;
+  width: 160px; }
+
+.wp-admin.wp-core-ui .panel-body .boldgrid-tooltip-arrow,
+.wp-admin.wp-core-ui .right-arrow {
+  top: 12px;
+  left: 100%;
+  border-right: none;
+  border-top: 5px dashed #000;
+  border-left-color: #000;
+  border-bottom-color: transparent;
+  border-top-color: transparent; }
 
 /*--------------------------------------------------------------
 # Image Modules

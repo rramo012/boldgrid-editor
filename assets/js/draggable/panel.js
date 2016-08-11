@@ -185,10 +185,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.attr( 'data-type', control.name );
 			this._enableFooter( control.panel );
 			this._setupCustomize( control );
+			BOLDGRID.EDITOR.Tooltip.renderTooltips();
 			this.$element.show();
 			this.initScroll( control );
 			this._scrollToSelected();
-			
 		}
 
 	};

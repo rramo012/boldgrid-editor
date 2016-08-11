@@ -10,6 +10,14 @@
 	    z-index: 9999;
 	}
 	
+	.boldgrid-help-icon {
+	   cursor: help;
+	   
+	   &:hover ~ .boldgrid-tooltip {
+	       display: block;
+	   }
+	}
+	
 	.boldgrid-tooltip-inner {
 	    -webkit-border-radius: 3px;
 	    border-radius: 3px;
@@ -39,5 +47,28 @@
 	    width: 0;
 	    height: 0;
 	    line-height: 0;
+	}
+	
+	.boldgrid-tooltip-wrap {
+	    position: absolute;
+        right: 20px;
+	}
+	
+	.panel-body .boldgrid-tooltip {
+	    right: 20px;
+	    top: -9px;
+	    width: 160px;
+	}
+	
+	
+	.panel-body .boldgrid-tooltip-arrow,
+	.right-arrow {
+	    top: 12px;
+	    left: 100%;
+	    border-right: none;
+	    border-top: 5px dashed #000;
+	    border-left-color: #000;
+	    border-bottom-color: transparent;
+	    border-top-color: transparent;
 	}
 }

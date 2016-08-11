@@ -191,6 +191,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/controls.js', $plugin_file ), array (  ),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-tooltips',
+			plugins_url( '/assets/js/draggable/tooltips.js', $plugin_file ), array (  ),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-container',
 			plugins_url( '/assets/js/draggable/controls/container.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );

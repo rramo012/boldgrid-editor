@@ -191,6 +191,7 @@
 		border-bottom: 1px solid $title-border-color;
 		padding: 18px 21px;
 		color: $heading-text-color;
+		position: relative;
 		
 		&:last-of-type {
 	    	border-color: transparent;

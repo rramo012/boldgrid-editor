@@ -24,10 +24,13 @@
 </div>
 </script>
 <script type="text/html" id="tmpl-boldgrid-editor-tooltip">
+<div class='boldgrid-tooltip-wrap'>
+<span class="dashicons dashicons-editor-help boldgrid-help-icon"></span>
 <div class="boldgrid-tooltip">
 	<div class="boldgrid-tooltip-arrow"></div>
 	<div class="boldgrid-tooltip-inner">
 		{{data.message}}
 	</div>
+</div>
 </div>
 </script>

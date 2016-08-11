@@ -12,11 +12,10 @@
 		<div class="slider"></div>
 		<span class='value'></span>
 	</div>
-	<div class='section effects'>
+	<div class='section effects' data-tooltip-id='text-effect'>
 		<h4>Effects</h4>
 		<ul>
 			<li class='panel-selection'><i class="fa fa-ban" aria-hidden="true"></i></li>
-
 			<# _.each( data.textEffectClasses, function ( preset ) { #>
 				<li data-preset="{{preset.name}}" class="panel-selection">
 					<span class="{{preset.name}}">A</span>
@@ -24,7 +23,7 @@
 			<# }); #>
 		</ul>
 	</div>
-	<div class='section spacing'>
+	<div class='section spacing' data-tooltip-id='spacing'>
 		<h4>Spacing</h4>
 		<div class='character'>
 			<p>Letter Spacing</p>
