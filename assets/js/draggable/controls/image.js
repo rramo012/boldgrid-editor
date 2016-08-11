@@ -3,12 +3,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 ( function ( $ ) {
-	"use strict"; 
+	"use strict";
 
 	var self;
 
 	BOLDGRID.EDITOR.CONTROLS.Image = {
-			
+
 		classes : [
 			{ name : 'boldgrid-image img-mod-1' },
 			{ name : 'boldgrid-image img-mod-9' },
@@ -23,7 +23,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		name : 'image',
-		
+
 		tooltip : 'Image Design',
 
 		priority : 2,
@@ -35,17 +35,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
-		
+
 		panel : {
 			title : 'Image Design',
 			height : '500px',
-			width : '340px',
+			width : '280px',
 		},
 
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
-		
+
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
 		 */
@@ -54,14 +54,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.openPanel();
 			}
 		},
-		
+
 		/**
 		 * Bind Handlers.
 		 */
 		setup : function () {
 			self._setupPanelClick();
 		},
-		
+
 		_setupPanelClick : function() {
 			var panel = BOLDGRID.EDITOR.Panel;
 
@@ -69,40 +69,40 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
 					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
-				
+
 				panel.clearSelected();
 				$this.addClass( 'selected' );
-				
+
 				// Apply changes to editor.
 				$target.removeClass ( function ( index, css ) {
 				    return (css.match (/(^|\s)img-mod-\S+/g) || []).join(' ');
 				} ).addClass( preset );
-				
+
 				tinyMCE.activeEditor.selection.collapse(false);
 			} );
 		},
-		
+
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				$target = BOLDGRID.EDITOR.Menu.getTarget( self ),
 				template = wp.template( 'boldgrid-editor-image' );
-			
+
 			// Remove all content from the panel.
 			panel.clear();
-			
+
 			// Set markup for panel.
 			panel.$element.find( '.panel-body' ).html( template( {
 				'src' : $target.attr( 'src' ),
 				'presets' : self.classes,
 			} ) );
-			
-			
+
+
 			$.each( self.classes, function () {
 				if ( $target.hasClass( this.name ) ) {
 					panel.$element.find( '[data-preset="' + this.name + '"]' ).addClass( 'selected' );
 				}
 			} );
-			
+
 			// Open Panel.
 			panel.open( self );
 		}

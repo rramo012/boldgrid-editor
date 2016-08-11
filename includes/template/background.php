@@ -39,7 +39,7 @@
 				<div class="slider"></div>
 				<span class='value'></span>
 			</div>
-			<div class='background-color section'>
+			<div class='background-color section color-controls'>
 				<h4>Background Color</h4>
 				<label for="section-background-color" class='color-preview'></label>
 				<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
@@ -49,7 +49,7 @@
 				<div class="slider"></div>
 				<span class='value'></span>
 			</div>
-			<div class='size section'>
+			<div class='size section' data-tooltip-id='background-size'>
 				<h4>Size</h4>
     			<label>
 					<input type="radio" checked="checked" name="background-size" value="cover">Cover Area
@@ -58,7 +58,7 @@
 	    			<input type="radio" name="background-size" value="tiled">Tiled
 				</label>
 			</div>
-			<div class='scroll-effects section'>
+			<div class='scroll-effects section' data-tooltip-id='background-scroll-effects'>
 				<h4>Scroll Effects</h4>
     			<label>
 					<input type="radio" checked="checked" name="scroll-effects" value="none">None
@@ -68,9 +68,6 @@
 				</label>
     			<label>
 	    			<input type="radio" name="scroll-effects" value="background-fixed">Fixed
-				</label>
-    			<label>
-	    			<input type="radio" name="scroll-effects" value="background-zoom">Zoom
 				</label>
 			</div>
 		</div>

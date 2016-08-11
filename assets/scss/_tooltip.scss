@@ -8,6 +8,10 @@
 	    zoom: 1;
 	    display: none;
 	    z-index: 9999;
+	    
+	    a {
+	    	color: white;
+	    }
 	}
 	
 	.boldgrid-help-icon {
@@ -49,26 +53,27 @@
 	    line-height: 0;
 	}
 	
-	.boldgrid-tooltip-wrap {
+	.editor-panel .boldgrid-tooltip-wrap {
 	    position: absolute;
         right: 20px;
+        color: $tooltip-color;
+        
+        .boldgrid-tooltip {
+		    right: 20px;
+		    top: -9px;
+		    width: 160px;
+		    
+			.boldgrid-tooltip-arrow {
+			    top: 12px;
+			    left: 100%;
+			    border-right: none;
+			    border-top: 5px dashed #000;
+			    border-left-color: #000;
+			    border-bottom-color: transparent;
+			    border-top-color: transparent;
+			}
+		}
 	}
 	
-	.panel-body .boldgrid-tooltip {
-	    right: 20px;
-	    top: -9px;
-	    width: 160px;
-	}
-	
-	
-	.panel-body .boldgrid-tooltip-arrow,
-	.right-arrow {
-	    top: 12px;
-	    left: 100%;
-	    border-right: none;
-	    border-top: 5px dashed #000;
-	    border-left-color: #000;
-	    border-bottom-color: transparent;
-	    border-top-color: transparent;
-	}
+
 }

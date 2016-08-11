@@ -3,7 +3,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 ( function ( $ ) {
-	"use strict"; 
+	"use strict";
 
 	var self,
 		BG = BOLDGRID.EDITOR;
@@ -13,13 +13,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		name : 'button',
 
 		priority : 2,
-		
+
 		tooltip : 'Button Design',
 
 		iconClasses : 'fa fa-cog',
 
 		selectors : [ '.boldgrid-button', 'a.button', 'a.button-secondary', 'a.button-primary' ],
-		
+
 		classes : [
 			{ name : 'boldgrid-button boldgrid-button-rounded boldgrid-button-flat' },
 			{ name : 'boldgrid-button boldgrid-button-pill boldgrid-button-flat' },
@@ -36,13 +36,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
-		
+
 		panel : {
 			title : 'Button Design',
-			height : '400px',
-			width : '350px',
+			height : '500px',
+			width : '315px',
 		},
-		
+
 		setup : function () {
 			self._setupPanelClick();
 		},
@@ -54,19 +54,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
 					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
-				
+
 				panel.clearSelected();
 				$this.addClass( 'selected' );
-				
+
 				// Aply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
 			} );
 		},
-		
+
 		insertNew : function () {
 			var $insertedButton;
-			
+
 			send_to_editor( '<a class="button-primary bg-inserted-button" href="#">Button</a>' );
 			$insertedButton = BG.Controls.$container.find( '.bg-inserted-button' ).last();
 			BG.Controls.$container.find( '.bg-inserted-button' ).removeClass('bg-inserted-button');
@@ -74,23 +74,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$insertedButton.click();
 			self.openPanel();
 		},
-		
+
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-button' );
-			
+
 			// Remove all content from the panel.
 			panel.clear();
-			
+
 			// Set markup for panel.
 			panel.$element.find( '.panel-body' ).html( template( {
 				'text' : 'for sale',
 				'presets' : self.classes,
 			} ) );
-			
+
 			// Open Panel.
 			panel.open( self );
 		}

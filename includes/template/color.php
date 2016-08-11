@@ -1,17 +1,21 @@
 <script type="text/html" id="tmpl-boldgrid-editor-color">
-	<h4>Theme Colors</h4>
-	<ul class='colors theme-colors'>
-		<# _.each( data.colors, function ( preset ) { #>
-			<li data-type="default" data-preset="{{preset.number}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
-		<# }); #>
-	</ul>
-	<h4>My Colors</h4>
-	<ul class='colors my-colors'>
-		<li class='panel-selection custom-color'><i class="fa fa-plus" aria-hidden="true"></i></li>
-		<# _.each( data.customColors, function ( customColor, index ) { #>
-			<li data-type="custom" data-index="{{index}}" data-preset="{{customColor}}" style='background-color:{{customColor}}' class="panel-selection"></li>
-		<# }); #>
-	</ul>
+	<div class='theme-colors-wrap' data-tooltip-id='color-theme'>
+		<h4>Theme Colors</h4>
+		<ul class='colors theme-colors'>
+			<# _.each( data.colors, function ( preset ) { #>
+				<li data-type="default" data-preset="{{preset.number}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
+			<# }); #>
+		</ul>
+	</div>
+	<div data-tooltip-id='color-saved'>
+		<h4>My Colors</h4>
+		<ul class='colors my-colors'>
+			<li class='panel-selection custom-color'><i class="fa fa-plus" aria-hidden="true"></i></li>
+			<# _.each( data.customColors, function ( customColor, index ) { #>
+				<li data-type="custom" data-index="{{index}}" data-preset="{{customColor}}" style='background-color:{{customColor}}' class="panel-selection"></li>
+			<# }); #>
+		</ul>
+	</div>
 </script>
 <script type="text/html" id="tmpl-boldgrid-editor-color-panel">
 <div class='color-panel editor-panel'>

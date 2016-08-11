@@ -15,25 +15,31 @@
 				<label for="box-bg-color" class='color-preview'></label>
 				<input type="text" data-type="" name='box-bg-color' class='color-control' value=''>
 			</div>
-			<div class='padding section'>
-				<h4>Horizontal Padding (em)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
+			<div class='section' data-tooltip-id='box-padding'>
+				<h4>Padding</h4>
+				<div class='padding'>
+					<p>Horizontal (em)</p>
+					<div class="slider"></div>
+					<span class='value'></span>
+				</div>
+				<div class='padding-top'>
+					<p>Vertical (em)</>
+					<div class="slider"></div>
+					<span class='value'></span>
+				</div>
 			</div>
-			<div class='padding-top section'>
-				<h4>Vertical Padding (em)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
-			</div>
-			<div class='margin section'>
-				<h4>Horizontal Margin (px)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
-			</div>
-			<div class='margin-top section'>
-				<h4>Vertical Margin (em)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
+			<div class='section' data-tooltip-id='box-margin'>
+				<h4>Margin</h4>
+				<div class='margin'>
+					<p>Horizontal (px)</p>
+					<div class="slider"></div>
+					<span class='value'></span>
+				</div>
+				<div class='margin-top'>
+					<p>Vertical (em)</p>
+					<div class="slider"></div>
+					<span class='value'></span>
+				</div>
 			</div>
 		</div>
 	</div>

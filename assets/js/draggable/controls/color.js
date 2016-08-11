@@ -48,17 +48,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			return self;
 		},
-		
+
 		_setupAutoHide : function () {
 			$( 'body' ).on( 'click', function () {
 				self.closePicker();
 			} );
-			
+
 			self.$colorPanel.on( 'click', function ( e ) {
 				e.stopPropagation();
 			} );
 		},
-		
+
 		getColorClass : function ( type, index ) {
 			return 'color' + index + '-' + type;
 		},
@@ -80,7 +80,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $currentSelection,
 					$preview = $( this ),
 					$input = BG.Panel.$element.find('input[name="' + $preview.attr('for') + '"]');
-				
+
 				if ( 'color' == $input.data('type') ) {
 					// Select Color From My Colors.
 					self.$colorPanel.find('[data-type="custom"].panel-selection').each( function () {
@@ -90,15 +90,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 							return false;
 						}
 					} );
-					
+
 				} else if ( 'class' == $input.data('type') ) {
 					$currentSelection = self.$colorPanel.find('.panel-selection[data-preset="' + $input.val() + '"]');
 				}
-				
+
 				if ( $currentSelection ) {
 					self.selectColor( $currentSelection );
 				}
-				
+
 				self.$colorPicker.iris( 'color', $preview.css( 'background-color' ) );
 				self.openPicker( $input );
 			} );
@@ -135,7 +135,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_setupColorPicker : function () {
-			var type = 'color', 
+			var type = 'color',
 				defaultPickerColor = '#e3e',
 				$selected = self.$colorPanel.find('.panel-selection.selected[data-preset]');
 
@@ -164,7 +164,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						self.$currentInput.val( ui.color.toCSS() );
 						self.$currentInput.data( 'type', type );
 						self.$currentInput.change();
-						
+
 					}
 				},
 				hide: false,
@@ -215,6 +215,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'colors' : colors,
 				'customColors' : self.customColors
 			} ) );
+
+			BOLDGRID.EDITOR.Tooltip.renderTooltips();
 		},
 
 		_create : function () {
@@ -270,7 +272,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.$colorPanel.find('ul.colors .panel-selection').removeClass( 'selected' );
 				self.$colorPicker.iris( 'color', $this.css( 'background-color' ) );
 				self.selectColor( $this );
-				
+
 				self.$currentInput.val( $this.data('preset') );
 				self.$currentInput.data( 'type', 'class' );
 				self.$currentInput.change();

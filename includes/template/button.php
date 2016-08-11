@@ -1,5 +1,8 @@
 <script type="text/html" id="tmpl-boldgrid-editor-button">
 	<div class='choices button-design'>
+		<div class='title'>
+			<h4>Sample Designs</h4>
+		</div>
 		<div class='presets'>
 			<ul>
 			<# _.each( data.presets, function ( preset ) { #>

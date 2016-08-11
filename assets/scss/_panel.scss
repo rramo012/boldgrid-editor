@@ -188,7 +188,7 @@
 	}
 
 	.section {
-		border-bottom: 1px solid $title-border-color;
+		border-bottom: 2px solid $title-border-color;
 		padding: 18px 21px;
 		color: $heading-text-color;
 		position: relative;
@@ -205,6 +205,23 @@
         	margin-top: 0;
 		}
 		
+		    
+	    &.color-controls {
+	    	text-align: center;
+	    	
+	    	h4 {
+	    		font-size: 15px;
+	    		margin-bottom: 5px;
+	    		margin-top: 0;
+	    	}
+	    }
+	    
+		p {
+    		margin-bottom: 4px;
+    		color: $heading-text-color;
+    		font-weight: lighter;
+    	}
+    
 		.section.family h4 {
 			margin: 0;
 		}
@@ -232,6 +249,22 @@
 		    background-color: $hover-color;
 		}
 	}
+	
+	.title {
+	    padding-bottom: 0;
+	    border-bottom: 1px solid #32373c;
+	    font-size: 15px;
+	    margin: 0 15px 17px;
+	    color: $heading-text-color;
+	    border-color: $title-border-color;
+	    
+	    h4 {
+		   font-size: 16px;
+	       font-weight: normal;
+	       margin: 10px 0;
+	    }
+    }
+    
 }
 
 /*************** Panel Body ********************/
@@ -293,22 +326,11 @@
 	   height:100%;
 	   width: 100%;
 	}
+	
+	.back {
+		margin-bottom: 0;
+	}
 	       
-    .title {
-	    padding-bottom: 0;
-	    border-bottom: 1px solid #32373c;
-	    font-size: 15px;
-	    margin: 0 15px 17px;
-	    color: $heading-text-color;
-	    border-color: $title-border-color;
-	    
-	    h4 {
-		   font-size: 16px;
-	       font-weight: normal;
-	       margin: 10px 0;
-	    }
-    }
-    
     .presets {
 	    margin: 0 10px;
 	    padding-bottom: 40px;
@@ -457,10 +479,9 @@
 		}
 		
 		.title {
-			padding-bottom: 0;
-			border-bottom: 1px solid $panel-color;
 			margin-bottom: 17px;
-    		font-size: 15px;
+    		margin-left: 0;
+    		margin-right: 0;
 		}
 		
 		h4 {
@@ -498,7 +519,7 @@
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] {
     .panel-selection {
-	    width: 147px;
+	    width: calc(50% - 2px);
 	    height: auto;
 	    background-color: white;
 	    padding: 9px 0px;
@@ -514,10 +535,15 @@
 /*************** Button Panel ********************/
 .editor-panel[data-type="button"] {
     .panel-selection {
-	    width: 125px;
+	    width: 48%;
 	    height: auto;
-	    background-color: white; 
-	    padding: 13px;
+	    background-color: white;
+	    padding: 10px 0;
+	    margin: 0;
+    }
+    
+    .panel-body {
+    	padding: 0;
     }
     
     .boldgrid-button {
@@ -540,13 +566,8 @@
     
     .color-preview {
         position: absolute;
-	    top: 37px;
+	    top: 23px;
 	    margin-left: 5px;
-    }
-    
-    .spacing p {
-        margin-bottom: 4px;
-        color: $heading-text-color;
     }
     
     .section.effects .panel-selection {

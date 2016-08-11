@@ -72,7 +72,11 @@
 	   display: block;
 	}
 	
-    .active .bg-editor-menu-dropdown ~ .boldgrid-tooltip {
+    .active .bg-editor-menu-dropdown ~ .boldgrid-tooltip-wrap {
+    	display: none;
+    }
+    
+    .boldgrid-help-icon {
     	display: none;
     }
 	

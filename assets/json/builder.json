@@ -53,7 +53,13 @@
 		"pointer pointer-bottom"
 	],
 	"helpTooltip" : {
+		"[data-tooltip-id='color-saved']" : "Add colors to this section to reuse them. Upon updating your page, these colors will be saved.",
+		"[data-tooltip-id='color-theme']" : "These colors are determined by your theme. You can change these colors by customizing your theme.",
+		"[data-tooltip-id='background-size']" : "The cover area background size is recomended for images that should span the full width of an area. Tiled background size is ideal for patterns and small images.",
+		"[data-tooltip-id='background-scroll-effects']" : "Control the way your background image moves as a visiter scrolls down the page. To preview these effects visit your site outside of the Page & Post Editor.",
 		"[data-tooltip-id='text-effect']" : "Use Effects to add shadows and make text more pronounced.",
+		"[data-tooltip-id='box-padding']" : "Padding is used to create space around your content, inside your text background.",
+		"[data-tooltip-id='box-margin']" : "Margin is used to create space around your background, outside your text background.",
 		"[data-tooltip-id='spacing']" : "Letter Spacing will change the distance between characters. Line Spacing changes the distances between lines."
 	}
 }

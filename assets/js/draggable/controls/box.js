@@ -22,7 +22,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'box square border-dashed-thick' : 'box-long',
 			'box circle border-double-thick' : 'box-wide',
 		},
-		
+
 
 		name : 'box',
 
@@ -375,7 +375,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		openPanel : function ( e ) {
 
-			console.log('ffff');
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-box' );
 
@@ -384,11 +383,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			// Remove all content from the panel.
 			panel.clear();
 
-			BOLDGRID.EDITOR.Panel.open( self );
 			panel.$element.find('.panel-body').html( template( {
 				'presets' : self.$presets,
 				'colorControls' : self.colorControls,
 			} ) );
+
+			BOLDGRID.EDITOR.Panel.open( self );
 
 			panel.$element.find( '.grid' ).masonry({
 				itemSelector: '.box',

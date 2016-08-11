@@ -29,7 +29,7 @@
 <div class="boldgrid-tooltip">
 	<div class="boldgrid-tooltip-arrow"></div>
 	<div class="boldgrid-tooltip-inner">
-		{{data.message}}
+		{{{data.message}}}
 	</div>
 </div>
 </div>
