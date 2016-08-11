@@ -282,7 +282,7 @@
   color: white; }
 
 /*************** Background Panel ********************/
-.editor-panel[data-type="box"] .box {
+.editor-panel[data-type="box"] .bg-box {
   width: 45px;
   height: 45px;
   margin: 12px 8px;
@@ -290,10 +290,10 @@
   cursor: pointer;
   box-sizing: border-box; }
 
-.editor-panel[data-type="box"] .box.box-long {
+.editor-panel[data-type="box"] .bg-box.box-long {
   height: 114px; }
 
-.editor-panel[data-type="box"] .box.box-wide {
+.editor-panel[data-type="box"] .bg-box.box-wide {
   width: 106px; }
 
 .editor-panel[data-type="box"] .panel-body,
@@ -903,6 +903,28 @@
 .gridblock-icon:hover .wp-media-buttons-icon {
   transform: rotate(120deg); }
 
+body.boldgrid-editor-fullscreen {
+  overflow: hidden; }
+
+.boldgrid-editor-fullscreen #wp-content-editor-container {
+  position: fixed;
+  top: 34px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99999; }
+
+.boldgrid-editor-fullscreen #content_ifr {
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 101px;
+  left: 0px;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+  max-height: calc( 100% - 101px); }
+
 /*--------------------------------------------------------------
 # Tooltip
 --------------------------------------------------------------*/
@@ -1290,38 +1312,38 @@
 /*--------------------------------------------------------------
 # Color Controls
 --------------------------------------------------------------*/
-.box {
+.bg-box {
   padding: 1em; }
 
-.box.square {
+.bg-box.bg-box-square {
   border-radius: 0; }
 
-.box.circle {
+.bg-box.bg-box-circle {
   border-radius: 1000px;
   padding: 4em; }
 
-.box.rounded {
+.bg-box.bg-box-rounded {
   border-radius: 15px; }
 
-.box.edged {
+.bg-box.bg-box-edged {
   border-radius: 5px; }
 
-.box.rounded-top-left {
+.bg-box.bg-box-rounded-top-left {
   border-top-left-radius: 15px; }
 
-.box.rounded-top-right {
+.bg-box.bg-box-rounded-top-right {
   border-top-right-radius: 15px; }
 
-.box.rounded-bottom-right {
+.bg-box.bg-box-rounded-bottom-right {
   border-bottom-right-radius: 15px; }
 
-.box.rounded-bottom-left {
+.bg-box.bg-box-rounded-bottom-left {
   border-bottom-left-radius: 15px; }
 
-.box.pointer {
+.bg-box.bg-box-pointer {
   position: relative; }
 
-.box.pointer:after {
+.bg-box.bg-box-pointer:after {
   content: "";
   position: absolute;
   bottom: -15px;
@@ -1332,14 +1354,14 @@
   display: block;
   width: 0; }
 
-.box.pointer.pointer-left:after {
+.bg-box.bg-box-pointer.bg-box-pointer-left:after {
   top: calc(50% - 16px);
   left: -20px;
   bottom: auto;
   border-width: 12px 20px 13px 0px;
   border-color: transparent #f3961c; }
 
-.box.pointer.pointer-right:after {
+.bg-box.bg-box-pointer.bg-box-pointer-right:after {
   top: calc(50% - 16px);
   right: -20px;
   bottom: auto;
@@ -1347,40 +1369,40 @@
   border-width: 12px 0 13px 20px;
   border-color: transparent #f3961c; }
 
-.box.pointer.pointer-bottom:after {
+.bg-box.bg-box-pointer.bg-box-pointer-bottom:after {
   left: calc(50% - 16px); }
 
-.box.pointer.pointer-top:after {
+.bg-box.bg-box-pointer.bg-box-pointer-top:after {
   top: -15px;
   bottom: auto;
   border-width: 0 15px 15px;
   left: calc(50% - 16px); }
 
-.box.shadow-bottom-right {
+.bg-box.bg-box-shadow-bottom-right {
   box-shadow: 3px 3px 0px 0 grey; }
 
-.box.shadow-bottom-left {
+.bg-box.bg-box-shadow-bottom-left {
   box-shadow: -3px 3px 0px 0 grey; }
 
-.box.border-thin {
+.bg-box.bg-box-border-thin {
   border: 1px solid; }
 
-.box.border-normal {
+.bg-box.bg-box-border-normal {
   border: 2px solid; }
 
-.box.border-thick {
+.bg-box.bg-box-border-thick {
   border: 3px solid; }
 
-.box.border-dashed {
+.bg-box.bg-box-border-dashed {
   border: 2px dashed; }
 
-.box.border-dashed-thick {
+.bg-box.bg-box-border-dashed-thick {
   border: 3px dashed; }
 
-.box.border-double {
+.bg-box.bg-box-border-double {
   border: 2px solid;
   box-shadow: 0px 0px 0px 2px white inset, 0px 0px 0px 3px black inset; }
 
-.box.border-double-thick {
+.bg-box.bg-box-border-double-thick {
   border: 2px solid;
   box-shadow: 0px 0px 0px 5px white inset, 0px 0px 0px 7px black inset; }

@@ -1,56 +1,56 @@
 {
 	"boxes" : [
-		"box square",
-		"box edged",
-		"box rounded",
-		"box circle",
+		"bg-box bg-box-square",
+		"bg-box bg-box-edged",
+		"bg-box bg-box-rounded",
+		"bg-box bg-box-circle",
 
-		"box rounded-bottom-left rounded-top-left",
-		"box rounded-bottom-left rounded-bottom-right",
-		"box rounded-top-left rounded-top-right",
-		"box rounded-bottom-right rounded-top-right",
+		"bg-box bg-box-rounded-bottom-left bg-box-rounded-top-left",
+		"bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right",
+		"bg-box bg-box-rounded-top-left bg-box-rounded-top-right",
+		"bg-box bg-box-rounded-bottom-right bg-box-rounded-top-right",
 		
-		"box rounded-bottom-right rounded-top-left",
-		"box rounded-bottom-left rounded-top-right",
+		"bg-box bg-box-rounded-bottom-right bg-box-rounded-top-left",
+		"bg-box bg-box-rounded-bottom-left bg-box-rounded-top-right",
 
 		
-		"box square shadow-bottom-left",
-		"box edged shadow-bottom-right",
-		"box circle shadow-bottom-right",
+		"bg-box bg-box-square bg-box-shadow-bottom-left",
+		"bg-box bg-box-edged bg-box-shadow-bottom-right",
+		"bg-box bg-box-circle bg-box-shadow-bottom-right",
 
-		"box square border-thin",
-		"box rounded border-thin",
-		"box circle border-thin",
+		"bg-box bg-box-square bg-box-border-thin",
+		"bg-box bg-box-rounded bg-box-border-thin",
+		"bg-box bg-box-circle bg-box-border-thin",
 
-		"box circle border-normal",
-		"box rounded border-normal",
-		"box square border-normal",
+		"bg-box bg-box-circle bg-box-border-normal",
+		"bg-box bg-box-rounded bg-box-border-normal",
+		"bg-box bg-box-square bg-box-border-normal",
 
-		"box rounded border-thick",
-		"box square border-thick",
-		"box circle border-thick",
+		"bg-box bg-box-rounded bg-box-border-thick",
+		"bg-box bg-box-square bg-box-border-thick",
+		"bg-box bg-box-circle bg-box-border-thick",
 
-		"box rounded border-dashed",
-		"box square border-dashed",
-		"box circle border-dashed",
+		"bg-box bg-box-rounded bg-box-border-dashed",
+		"bg-box bg-box-square bg-box-border-dashed",
+		"bg-box bg-box-circle bg-box-border-dashed",
 
-		"box rounded border-dashed-thick",
-		"box square border-dashed-thick",
-		"box circle border-dashed-thick",
+		"bg-box bg-box-rounded bg-box-border-dashed-thick",
+		"bg-box bg-box-square bg-box-border-dashed-thick",
+		"bg-box bg-box-circle bg-box-border-dashed-thick",
 
-		"box rounded border-double",
-		"box square border-double",
-		"box circle border-double",
+		"bg-box bg-box-rounded bg-box-border-double",
+		"bg-box bg-box-square bg-box-border-double",
+		"bg-box bg-box-circle bg-box-border-double",
 
-		"box rounded border-double-thick",
-		"box circle border-double-thick",
-		"box square border-double-thick"
+		"bg-box bg-box-rounded bg-box-border-double-thick",
+		"bg-box bg-box-circle bg-box-border-double-thick",
+		"bg-box bg-box-square bg-box-border-double-thick"
 	],
 	"pointers" : [
-		"pointer pointer-left",
-		"pointer pointer-right",
-		"pointer pointer-top",
-		"pointer pointer-bottom"
+		"bg-box-pointer bg-box-pointer-left",
+		"bg-box-pointer bg-box-pointer-right",
+		"bg-box-pointer bg-box-pointer-top",
+		"bg-box-pointer bg-box-pointer-bottom"
 	],
 	"helpTooltip" : {
 		"[data-tooltip-id='color-saved']" : "Add colors to this section to reuse them. Upon updating your page, these colors will be saved.",

@@ -306,7 +306,7 @@
 }
 /*************** Background Panel ********************/
 .editor-panel[data-type="box"] {
-    .box {
+    .bg-box {
 	    width: 45px;
 	    height: 45px;
 	    margin: 12px 8px;
@@ -315,10 +315,10 @@
 		box-sizing: border-box;
 	}
 	
-	.box.box-long {
+	.bg-box.box-long {
 	    height: 114px;
 	}
-	.box.box-wide {
+	.bg-box.box-wide {
 	    width: 106px;
 	}
 	.panel-body,

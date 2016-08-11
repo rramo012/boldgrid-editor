@@ -151,8 +151,16 @@ class Boldgrid_Editor_MCE {
 	 * @return array
 	 */
 	public function mce_buttons( $buttons ) {
-		array_unshift( $buttons, 'fontselect' ); // Add Font Select
-		array_unshift( $buttons, 'fontsizeselect' ); // Add Font Size Select
+		//array_unshift( $buttons, 'fontselect' ); // Add Font Select
+		//array_unshift( $buttons, 'fontsizeselect' ); // Add Font Size Select
+
+		// Remove text color from tinymce.
+		/*
+		$key = array_search( 'forecolor', $buttons );
+		if ( false !== $key ) {
+			unset( $buttons[$key] );
+		}*/
+
 		return $buttons;
 	}
 

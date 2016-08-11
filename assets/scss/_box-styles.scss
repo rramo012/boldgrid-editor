@@ -1,38 +1,37 @@
-
+$namespace: bg-box;
 $rounded : 15px;
 $circle-radius : 1000px;
 
-
-.box {
+.#{$namespace} {
 	padding: 1em;
 	
-	&.square {
+	&.#{$namespace}-square {
 	   border-radius: 0;
 	}
-	&.circle {
+	&.#{$namespace}-circle {
 	   border-radius: $circle-radius;
        padding: 4em;
 	}
-	&.rounded {
+	&.#{$namespace}-rounded {
 	   border-radius: $rounded;
 	}
-	&.edged {
+	&.#{$namespace}-edged {
 	   border-radius: 5px;
 	}
 	
-	&.rounded-top-left {
+	&.#{$namespace}-rounded-top-left {
        border-top-left-radius: $rounded;
 	}
-	&.rounded-top-right {
+	&.#{$namespace}-rounded-top-right {
         border-top-right-radius: $rounded;
 	}
-	&.rounded-bottom-right {
+	&.#{$namespace}-rounded-bottom-right {
         border-bottom-right-radius: $rounded;
 	}
-	&.rounded-bottom-left {
+	&.#{$namespace}-rounded-bottom-left {
         border-bottom-left-radius: $rounded;
 	}
-	&.pointer {
+	&.#{$namespace}-pointer {
 		position: relative;
 	
 		&:after {
@@ -46,14 +45,14 @@ $circle-radius : 1000px;
 		    display: block;
 		    width: 0;
 		}
-		&.pointer-left:after {
+		&.#{$namespace}-pointer-left:after {
 		    top: calc(50% - 16px);
 		    left: -20px;
 		    bottom: auto;
 		    border-width: 12px 20px 13px 0px;
 		    border-color: transparent #f3961c;
 		}
-		&.pointer-right:after {
+		&.#{$namespace}-pointer-right:after {
 		    top: calc(50% - 16px);
 		    right: -20px;
 		    bottom: auto;
@@ -61,10 +60,10 @@ $circle-radius : 1000px;
 		    border-width: 12px 0 13px 20px;
 		    border-color: transparent #f3961c;
 		}
-		&.pointer-bottom:after {
+		&.#{$namespace}-pointer-bottom:after {
 		    left: calc(50% - 16px);
 		}
-		&.pointer-top:after {
+		&.#{$namespace}-pointer-top:after {
 			top: -15px;
 			bottom: auto;
 		    border-width: 0 15px 15px;
@@ -73,35 +72,35 @@ $circle-radius : 1000px;
 		
 	}
 	
-	&.shadow-bottom-right {
+	&.#{$namespace}-shadow-bottom-right {
 		box-shadow: 3px 3px 0px 0 grey;
 	}
-	&.shadow-bottom-left {
+	&.#{$namespace}-shadow-bottom-left {
 		box-shadow: -3px 3px 0px 0 grey;
 	}
 	
-	&.border-thin {
+	&.#{$namespace}-border-thin {
 		border: 1px solid;
 	}
-	&.border-normal {
+	&.#{$namespace}-border-normal {
 		border: 2px solid;
 	}
-	&.border-thick {
+	&.#{$namespace}-border-thick {
         border: 3px solid;
 	}
 
-	&.border-dashed {
+	&.#{$namespace}-border-dashed {
 		border: 2px dashed;
 	}
-	&.border-dashed-thick {
+	&.#{$namespace}-border-dashed-thick {
 		border: 3px dashed;
 	}
 	
-	&.border-double {
+	&.#{$namespace}-border-double {
 		border: 2px solid;
         box-shadow: 0px 0px 0px 2px white inset, 0px 0px 0px 3px black inset;
 	}
-	&.border-double-thick {
+	&.#{$namespace}-border-double-thick {
 		border: 2px solid;
         box-shadow: 0px 0px 0px 5px white inset, 0px 0px 0px 7px black inset;
 	}

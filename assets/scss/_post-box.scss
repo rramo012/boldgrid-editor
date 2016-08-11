@@ -44,3 +44,27 @@
 .gridblock-icon:hover .wp-media-buttons-icon {
 	transform: rotate(120deg);
 }
+
+body.boldgrid-editor-fullscreen {
+	overflow: hidden;
+}
+.boldgrid-editor-fullscreen #wp-content-editor-container {
+    position: fixed;
+    top: 34px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99999;
+}
+
+.boldgrid-editor-fullscreen #content_ifr {	
+	width: 100%;
+    position: fixed;
+    z-index: 9999;
+    top: 101px;
+    left: 0px;
+    bottom: 0;
+    right: 0;
+    overflow: scroll;
+    max-height: calc( 100% - 101px );
+}

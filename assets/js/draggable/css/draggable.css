@@ -1,3 +1,7 @@
+html.boldgrid-editor-fullscreen {
+	overflow: auto !important;
+}
+
 .hidden {
     display: none !important;
 }

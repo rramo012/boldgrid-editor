@@ -10,19 +10,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BOLDGRID.EDITOR.CONTROLS.Box = {
 
+
 		uiBoxDimensions : {
-			'box rounded' : 'box-wide',
-			'box rounded-bottom-left rounded-bottom-right' : 'box-long',
-			'box rounded-bottom-right rounded-top-right' : 'box-wide',
-			'box edged shadow-bottom-right' : 'box-wide',
-			'box square border-thin' : 'box-long',
-			'box square border-thick' : 'box-wide',
-			'box square border-dashed' : 'box-wide',
-			'box rounded border-dashed' : 'box-long',
-			'box square border-dashed-thick' : 'box-long',
-			'box circle border-double-thick' : 'box-wide',
+			'bg-box bg-box-rounded' : 'box-wide',
+			'bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right' : 'box-long',
+			'bg-box bg-box-rounded-bottom-right bg-box-rounded-top-right' : 'box-wide',
+			'bg-box bg-box-edged bg-box-shadow-bottom-right' : 'box-wide',
+			'bg-box bg-box-square bg-box-border-thin' : 'box-long',
+			'bg-box bg-box-square bg-box-border-thick' : 'box-wide',
+			'bg-box bg-box-square bg-box-border-dashed' : 'box-wide',
+			'bg-box bg-box-rounded bg-box-border-dashed' : 'box-long',
+			'bg-box bg-box-square bg-box-border-dashed-thick' : 'box-long',
+			'bg-box bg-box-circle bg-box-border-double-thick' : 'box-wide',
 		},
 
+		namespace : 'bg-box',
 
 		name : 'box',
 
@@ -47,7 +49,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
-
 
 		colorControls : null,
 
@@ -111,14 +112,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 					self.addBox( $this );
 				},
-			    selector: '.box-design .presets .box'
+			    selector: '.box-design .presets .' + self.namespace
 			} );
 		},
 
 		_setupPresetClick : function () {
 			var panel = BG.Panel;
 
-			panel.$element.on( 'click', '.box-design .presets .box', function ( e ) {
+			panel.$element.on( 'click', '.box-design .presets .' + self.namespace, function ( e ) {
 				e.preventDefault();
 				var $module,
 					$this = $( this );
@@ -345,6 +346,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
 				}
 
+				$newElement.attr( 'data-id', index );
+
 				if ( index % 4 == 0 && index != 0 ) {
 					colorCount++;
 				}
@@ -373,6 +376,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return presets;
 		},
 
+		preselectBox : function () {
+			var $target = BG.Menu.getTarget( self ),
+				$module = self.findModule( $target ),
+				moduleClasses = $module.attr('class');
+
+console.log( moduleClasses );
+			BG.Panel.$element.find( '.presets > div' ).each( function () {
+				var $this = $( this ),
+					presetId = $this.data('id');
+
+				console.log( BoldgridEditor.builder_config.boxes[ presetId ], presetId );
+
+				//if ( $this.hasClass)
+			} );
+
+			console.log( );
+			// Grab all classes that start with bg-box from the target
+			// Foreach preset
+				// grab all classes that start with bg-box from the preset
+				// if all the module bg-box styles exist on the the preset, then this preset is selected.
+
+
+
+		},
+
 		openPanel : function ( e ) {
 
 			var panel =  BG.Panel,
@@ -391,10 +419,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Panel.open( self );
 
 			panel.$element.find( '.grid' ).masonry({
-				itemSelector: '.box',
+				itemSelector: '.' + self.namespace,
 			} );
 
 			self._initSliders();
+			self.preselectBox();
 			panel.hideFooter();
 		},
 
