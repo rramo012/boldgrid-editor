@@ -379,26 +379,39 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		preselectBox : function () {
 			var $target = BG.Menu.getTarget( self ),
 				$module = self.findModule( $target ),
-				moduleClasses = $module.attr('class');
+				moduleClasses = $module.attr('class'),
+				moduleClasses = moduleClasses ? moduleClasses.split( ' ' ) : [],
+				moduleBoxClasses = [];
 
-console.log( moduleClasses );
-			BG.Panel.$element.find( '.presets > div' ).each( function () {
-				var $this = $( this ),
-					presetId = $this.data('id');
-
-				console.log( BoldgridEditor.builder_config.boxes[ presetId ], presetId );
-
-				//if ( $this.hasClass)
+			$.each( moduleClasses, function () {
+				if ( this.indexOf('bg-box') === 0 ) {
+					moduleBoxClasses.push( this );
+				}
 			} );
+			
+			moduleBoxClasses = moduleBoxClasses.join(' ');
+				
+			/**
+			 * Grab all classes that start with bg-box from the target
+			 * Foreach preset
+			 * 	   if all the module bg-box styles exist on the the preset, then this preset is selected.
+			 */
+			BG.Panel.$element.find( '.presets > div' ).each( function () {
+				var $this = $( this );
 
-			console.log( );
-			// Grab all classes that start with bg-box from the target
-			// Foreach preset
-				// grab all classes that start with bg-box from the preset
-				// if all the module bg-box styles exist on the the preset, then this preset is selected.
-
-
-
+				if ( moduleBoxClasses && $this.hasClass( moduleBoxClasses ) ) {
+					$this.addClass( 'selected' );
+					return false;
+				}
+			} );
+		},
+		
+		toggleFooter : function () {
+			if ( BG.Panel.$element.find('.selected').length ) {
+				BG.Panel.showFooter();
+			} else {
+				BG.Panel.hideFooter();
+			}
 		},
 
 		openPanel : function ( e ) {
@@ -418,12 +431,16 @@ console.log( moduleClasses );
 
 			BOLDGRID.EDITOR.Panel.open( self );
 
+			self.preselectBox();
 			panel.$element.find( '.grid' ).masonry({
 				itemSelector: '.' + self.namespace,
 			} );
-
+			
 			self._initSliders();
-			self.preselectBox();
+
+			panel.initScroll( self );
+			panel.scrollToSelected();
+			
 			panel.hideFooter();
 		},
 

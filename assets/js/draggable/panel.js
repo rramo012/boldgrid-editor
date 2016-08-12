@@ -125,17 +125,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			BOLDGRID.EDITOR.Menu.deactivateControl();
 		},
 
-		_scrollToSelected : function () {
-			var $selected = self.$element.find( '.selected' );
+		scrollToSelected : function () {
+			var scrollPos, 
+				$selected = self.$element.find( '.selected' );
 
-			this.$element.find( '.panel-body' ).scrollTop( 0 );
+			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : 0 } );
 
 			if ( ! $selected.length ) {
 				return;
 			}
 
-			this.$element.find( '.panel-body' )
-				.scrollTop( $selected.position().top - ( self.$element.height() / 2 ) );
+			scrollPos = $selected.position().top - ( self.$element.height() / 2 )
+			console.log( scrollPos );
+			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : scrollPos + 'px' } );
 		},
 
 		clear : function () {
@@ -188,7 +190,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			BOLDGRID.EDITOR.Tooltip.renderTooltips();
 			this.$element.show();
 			this.initScroll( control );
-			this._scrollToSelected();
+			this.scrollToSelected();
 		}
 
 	};
