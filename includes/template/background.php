@@ -21,7 +21,7 @@
 				<# if( 'color' == type ) { #>
 					<li data-type="{{type}}" data-class='{{index}}' class='selection' style="background: {{image}}"></li>
 				<# } else if( 'gradients' == type ) { #>
-					<li data-type="{{type}}" class='selection' data-color-1="{{image.colors[0]}}" data-color-2="{{image.colors[1]}}"></li>
+					<li data-type="{{type}}" class='selection' style="background-image: {{image}}"></li>
 				<# } else { #>
 					<li data-type="{{type}}" data-image-url="{{image}}" class='selection' style="background-image: url({{image}})"></li>
 				<# } #>

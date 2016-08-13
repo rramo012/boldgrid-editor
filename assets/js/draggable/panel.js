@@ -9,6 +9,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	BOLDGRID.EDITOR.Panel = {
 
 		$element : null,
+		
+		currentControl : null,
 
 		/**
 		 * Initialize the panel.
@@ -43,13 +45,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		initScroll : function ( control ) {
-			var target = '.panel-body',
+			var target = self.getScrollTarget(),
 				sizeOffset = -66;
 			
-			if ( control.panel && control.panel.scrollTarget ) {
-				target = control.panel.scrollTarget;
-			}
-
 			if ( control.panel && control.panel.sizeOffset ) {
 				sizeOffset = control.panel.sizeOffset;
 			}
@@ -126,21 +124,35 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		scrollToSelected : function () {
-			var scrollPos, 
-				$selected = self.$element.find( '.selected' );
+			var scrollPos, scrollOffset,
+				$selected = self.$element.find( '.selected:not(.filters .selected)' );
 
 			self.scrollTo(0);
 
 			if ( ! $selected.length ) {
 				return;
 			}
+			
+			scrollOffset = 0;
+			if ( self.currentControl.panel.scrollOffset ) {
+				scrollOffset = self.currentControl.panel.scrollOffset;
+			}
 
-			scrollPos = $selected.position().top - ( self.$element.height() / 2 )
+			scrollPos = $selected.position().top - ( self.$element.height() / 2 ) + scrollOffset;
 			self.scrollTo( scrollPos + 'px' );
 		},
 		
+		getScrollTarget : function () {
+			var target = '.panel-body'; 
+			if ( self.currentControl && self.currentControl.panel.scrollTarget ) {
+				target = self.currentControl.panel.scrollTarget;
+			}
+			
+			return target;
+		},
+		
 		scrollTo : function ( to ) {
-			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : to } );
+			this.$element.find( self.getScrollTarget() ).slimScroll( { scrollTo : to } );
 		},
 
 		clear : function () {
@@ -183,6 +195,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		open : function ( control ) {
 
 			BOLDGRID.EDITOR.Menu.activateControl( control );
+			
+			self.currentControl = control;
 
 			this.$element.height( control.panel.height );
 			this.$element.width( control.panel.width );

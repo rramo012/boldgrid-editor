@@ -31,6 +31,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			height : '500px',
 			width : '300px',
 			scrollTarget : '.presets',
+			scrollOffset : 130,
 			sizeOffset : -170,
 			includeFooter : true,
 			customizeCallback : function () {
@@ -156,6 +157,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				panel.$element.find('.preset-wrapper').show();
 				panel.$element.find('.background-design .customize').hide();
+				panel.scrollToSelected();
 				panel.showFooter();
 			} );
 		},
@@ -216,6 +218,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
+		
+		activateFilter : function ( type ) {
+			var filterFound = false;
+
+			BG.Panel.$element.find( '.current-selection .filter').each( function () {
+				var $this = $( this ),
+					filterTypes = $this.data( 'type' );
+				
+				if ( type && -1 !== filterTypes.indexOf( type ) ) {
+					$this.click();
+					filterFound = true;
+					return false;
+				}
+				
+			} );
+
+			if ( false === filterFound ) {
+				BG.Panel.$element.find( '.filter[data-default="1"]' ).click();
+			}
+		},
 
 		setImageSelection : function ( imageSrc, type, prop ) {
 			var $currentSelection = BG.Panel.$element.find( '.current-selection' );
@@ -249,19 +271,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_initVerticleSlider : function () {
-
-			var defaultPos = 50;
-
+			var $target = BG.Menu.getTarget( self ),
+				defaultPos = $target.css( 'background-position-y' );
+			 
+			defaultPos = defaultPos ? parseInt( defaultPos ) : 0;
+			
 			BG.Panel.$element.find( '.background-design .vertical-position .slider' ).slider( {
 				min : 0,
 				max : 100,
 				value : defaultPos,
 				range : 'max',
 				slide : function( event, ui ) {
-					var $this = $( this ),
-						$target = BG.Menu.getTarget( self );
 					if ( $target.css('background-image' ) ) {
-						$target.css( 'background-position', '50% ' + ui.value + '%' );
+						$target.css( 'background-position', '0% ' + ui.value + '%' );
 					}
 				},
 			} ).siblings( '.value' ).html( defaultPos );
@@ -285,17 +307,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find('.preset-wrapper').hide();
 			BG.Panel.$element.find('.background-design .customize').show();
 			BG.Panel.$element.find('.preset-wrapper').attr('data-type', BG.Panel.$element.find('.current-selection').attr('data-type') );
+			self._initSliders();
 			BG.Panel.hideFooter();
 		},
 
+		// Randomize gradients.
+		// Deprecated
 		_renderGradients : function () {
 			var directions = [
 				'to left',
-				'to bottom',
 				'to right',
+				'to bottom',
 				'to top',
 			];
-
+			
 			BG.Panel.$element.find( '.selection[data-type="gradients"]' ).each( function () {
 				var $this = $( this ),
 					color1 = $this.data('color-1'),
@@ -309,15 +334,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		setPaletteGradients : function () {
 			var combos = [];
 			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
-				$.each( [0,1,2,3,4,5], function () {
-					var combo = {}, color1, color2;
-					combo.colors = [];
+				$.each( [0,1], function () {
+					var color1, color2;
 					color1 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
 					color2 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
 					if ( color1 != color2 ) {
-						combo.colors.push( color1 );
-						combo.colors.push( color2 );
-						combos.push( combo );
+						combos.push( 'linear-gradient(to right,' + color1 + ',' + color2 + ')' );
 					}
 				} );
 			}
@@ -325,6 +347,67 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$.each( combos, function () {
 				BoldgridEditor.sample_backgrounds.gradients.unshift( this );
 			} );
+		},
+		
+		preselectBackground : function () {
+			var type = 'color',
+				$target = BG.Menu.getTarget( self ),
+				classes = $target.attr( 'class' ), 
+				backgroundColor = $target.css( 'background-color' ), 
+				backgroundUrl = $target.css( 'background-image' ),
+				$currentSelection = BG.Panel.$element.find( '.current-selection' ),
+				hasGradient = backgroundUrl.indexOf( 'linear-gradient' ) != '-1',
+				matchFound = false;
+			
+			//@TODO: update the preview screen when pressing back from the customize section. 
+			
+			// Set the background color, and background image of the current section to the preview.
+			$currentSelection.css( { 
+				'background-image' : backgroundUrl,
+				'background-color' : backgroundColor
+			} );
+
+			BG.Panel.$element.find( '.selection' ).each( function () {
+				var $this = $( this ),
+					selectionType = $this.data('type'),
+					dataClass = $this.data('class');
+				
+				switch ( selectionType ) {
+					case 'color' :
+						if ( dataClass && $target.hasClass( dataClass ) ) {
+							$this.addClass( 'selected' );
+							type = selectionType;
+							matchFound = true;
+							self.activateFilter( type );
+							return false;
+						}
+						break;
+					case 'gradients' :
+					case 'image' :
+					case 'pattern' :
+						if ( $this.css( 'background-image' ) == backgroundUrl ) {
+							//Found a match.
+							$this.addClass( 'selected' );
+							type = selectionType;
+							matchFound = true;
+							self.activateFilter( type );
+							return false;
+						}
+						break;
+				}
+			} );
+			
+			if ( ! matchFound ) {
+				self.activateFilter();
+				
+				if ( hasGradient ) {
+					type = 'gradients';
+				} else if ( backgroundUrl != 'none' ) {
+					type = 'image';
+				}
+			}
+			
+			$currentSelection.attr( 'data-type', type );
 		},
 
 		openPanel : function () {
@@ -341,11 +424,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				images : BoldgridEditor.sample_backgrounds,
 			} ) );
 
-			self._renderGradients();
-			self._initSliders();
-
-			panel.$element.find( '.filter[data-default="1"]' ).click();
-
+			self.preselectBackground();
+			
 			// Open Panel.
 			panel.open( self );
 		}
