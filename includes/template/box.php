@@ -36,7 +36,7 @@
 					<span class='value'></span>
 				</div>
 				<div class='margin-top'>
-					<p>Vertical (em)</p>
+					<p>Vertical (px)</p>
 					<div class="slider"></div>
 					<span class='value'></span>
 				</div>

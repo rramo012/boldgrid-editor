@@ -129,15 +129,18 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			var scrollPos, 
 				$selected = self.$element.find( '.selected' );
 
-			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : 0 } );
+			self.scrollTo(0);
 
 			if ( ! $selected.length ) {
 				return;
 			}
 
 			scrollPos = $selected.position().top - ( self.$element.height() / 2 )
-			console.log( scrollPos );
-			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : scrollPos + 'px' } );
+			self.scrollTo( scrollPos + 'px' );
+		},
+		
+		scrollTo : function ( to ) {
+			this.$element.find( '.panel-body' ).slimScroll( { scrollTo : to } );
 		},
 
 		clear : function () {

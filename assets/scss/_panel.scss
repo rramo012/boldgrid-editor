@@ -228,8 +228,8 @@
 		
 		.ui-slider-horizontal {
 	        float: none;
-	        margin-left: 4px;
-	        width: 75%;
+	        margin-left: 0;
+	        width: 70%;
 	        margin-bottom: 8px;
 	    }
 	    
@@ -238,6 +238,9 @@
 		    position: relative;
 		    top: -14px;
 		    left: 5px;
+		    padding: 5px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
 	    }
 	    
 	    label {

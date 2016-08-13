@@ -81,7 +81,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.$element.find('.presets').show();
 				panel.$element.find('.box-design > .title').show();
 				panel.$element.find('.box-design .customize').hide();
-				panel.showFooter();
+				self.toggleFooter();
+				panel.scrollToSelected();
 			} );
 		},
 
@@ -156,11 +157,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		openCustomizer : function () {
 			var panel = BG.Panel;
+			self._initSliders();
 			panel.$element.find('.customize').show();
 			panel.$element.find('.presets').hide();
 			panel.$element.find('.box-design > .title').hide();
 			BG.CONTROLS.Color.$colorPicker.iris( 'color',  self.targetColor );
 			panel.$element.find('.box-design [name="box-bg-color"]').val( self.targetColor ).change();
+			panel.scrollTo(0);
 			panel.hideFooter();
 		},
 
@@ -239,73 +242,85 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_initPaddingSlider : function () {
-			var defaultPos = 1;
+			var horPaddingEm, vertPaddingEm, convertPxToEm,
+				$target = BG.Menu.getTarget( self ),
+				defaultFontSize = 14,
+				$module = self.findModule( $target ),
+				fontSize = $module.css( 'font-size' ),
+				defaultPaddingVert = $module.css( 'padding-top' ),
+				defaultPaddingHor = $module.css( 'padding-left' );
+			
+			convertPxToEm = function ( px, fontSize ) {
+				var ems = 0;
+				if ( fontSize ) {
+					ems =  ( px / fontSize ).toFixed(1);
+				}
+				
+				return ems;
+			};
+
+			fontSize = fontSize ? parseInt( fontSize ) : defaultFontSize;
+			defaultPaddingVert = defaultPaddingVert ? parseInt( defaultPaddingVert ) : 0;
+			defaultPaddingHor = defaultPaddingHor ? parseInt( defaultPaddingHor ) : 0;
+			
+			horPaddingEm = convertPxToEm( defaultPaddingHor, fontSize );
+			vertPaddingEm = convertPxToEm( defaultPaddingVert, fontSize );
 
 			BG.Panel.$element.find( '.box-design .padding .slider' ).slider( {
 				min : 0,
 				max : 7,
-				value : defaultPos,
+				value : horPaddingEm,
 				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
-					var $this = $( this ),
-						$target = BG.Menu.getTarget( self ),
-						$module = self.findModule( $target );
-
 					$module.css( 'padding-left', ui.value + 'em' );
 					$module.css( 'padding-right', ui.value + 'em' );
 				},
-			} ).siblings( '.value' ).html( defaultPos );
+			} ).siblings( '.value' ).html( horPaddingEm );
 
 			BG.Panel.$element.find( '.box-design .padding-top .slider' ).slider( {
 				min : 0,
-				max : 200,
-				value : defaultPos,
-				step: 1,
+				max : 7,
+				value : vertPaddingEm,
+				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
-					var $this = $( this ),
-					$target = BG.Menu.getTarget( self ),
-					$module = self.findModule( $target );
-
-					$module.css( 'padding-top', ui.value + 'px' );
-					$module.css( 'padding-bottom', ui.value + 'px' );
+					$module.css( 'padding-top', ui.value + 'em' );
+					$module.css( 'padding-bottom', ui.value + 'em' );
 				},
-			} ).siblings( '.value' ).html( defaultPos );
+			} ).siblings( '.value' ).html( vertPaddingEm );
 		},
 
 		_initMarginSlider : function () {
-			var defaultPos = 0;
-
+			var $target = BG.Menu.getTarget( self ),
+				$module = self.findModule( $target ),
+				defaultMarginVert = $module.css( 'margin-top' ),
+				defaultMarginHor = $module.css( 'margin-left' );
+		
+			defaultMarginVert = defaultMarginVert  ? parseInt( defaultMarginVert ) : 0;
+			defaultMarginHor = defaultMarginHor ? parseInt( defaultMarginHor ) : 0;
+		
 			BG.Panel.$element.find( '.box-design .margin .slider' ).slider( {
 				min : -15,
 				max : 50,
-				value : defaultPos,
+				value : defaultMarginHor,
 				range : 'max',
 				slide : function( event, ui ) {
-					var $this = $( this ),
-						$target = BG.Menu.getTarget( self ),
-						$module = self.findModule( $target );
-
 					$module.css( 'margin-left', ui.value );
 					$module.css( 'margin-right', ui.value );
 				},
-			} ).siblings( '.value' ).html( defaultPos );
+			} ).siblings( '.value' ).html( defaultMarginHor );
 
 			BG.Panel.$element.find( '.box-design .margin-top .slider' ).slider( {
 				min : 0,
 				max : 200,
-				value : defaultPos,
+				value : defaultMarginVert,
 				range : 'max',
 				slide : function( event, ui ) {
-					var $this = $( this ),
-					$target = BG.Menu.getTarget( self ),
-					$module = self.findModule( $target );
-
 					$module.css( 'margin-top', ui.value );
 					$module.css( 'margin-bottom', ui.value );
 				},
-			} ).siblings( '.value' ).html( defaultPos );
+			} ).siblings( '.value' ).html( defaultMarginVert );
 		},
 
 		applyUiStyles : function( presets ) {
@@ -436,12 +451,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				itemSelector: '.' + self.namespace,
 			} );
 			
-			self._initSliders();
-
 			panel.initScroll( self );
 			panel.scrollToSelected();
+			self.toggleFooter();
 			
-			panel.hideFooter();
 		},
 
 	};
