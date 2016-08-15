@@ -30,6 +30,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			//Create all controls.
 			this.setupControls();
 		},
+		
+		addStyle : function ( element, property, value ) {
+			tinymce.activeEditor.dom.setStyle( element, property, value );
+		},
 
 		setupSliders : function () {
 			this.$panel.on( "slide", '.section .slider', function( event, ui ) {

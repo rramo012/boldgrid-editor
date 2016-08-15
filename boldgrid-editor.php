@@ -64,9 +64,15 @@ if ( true === defined( 'DOING_CRON' ) && DOING_CRON ){
 function boldgrid_editor_init() {
 	if ( is_admin() && current_user_can( 'edit_pages' ) ) {
 		$editor = new Boldgrid_Editor();
-	} else {
+	}
+}
+function boldgrid_editor_fe() {
+	if ( ! is_admin() ) {
 		Boldgrid_Editor::frontEndHooks();
 	}
 }
 
 add_action( 'init', 'boldgrid_editor_init' );
+add_action( 'setup_theme', 'boldgrid_editor_fe' );
+
+

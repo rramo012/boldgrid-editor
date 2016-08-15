@@ -163,22 +163,33 @@ class Boldgrid_Editor {
 	}
 
 	public static function frontEndHooks() {
-		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
-		wp_enqueue_script(
-				'boldgrid-parallax', plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
-				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+		add_action( 'wp_enqueue_scripts', function () {
+			$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
-		wp_enqueue_script(
-				'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
-				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+			wp_enqueue_script(
+					'boldgrid-parallax', plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
+					array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
+
+			wp_enqueue_script(
+					'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
+					array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
 
 
-		wp_enqueue_style( 'editor-css-imhwpb',
-			plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+			wp_enqueue_style( 'editor-css-imhwpb',
+				plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-		wp_enqueue_style( 'button-css-imhwpb',
-			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+			wp_enqueue_style( 'button-css-imhwpb',
+				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+		} );
+
+
+		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
+	}
+
+	public static function remove_theme_container( $configs ) {
+		$configs['template']['pages']['page_home.php']['entry-content'] = '';
+		return $configs;
 	}
 
 	/**

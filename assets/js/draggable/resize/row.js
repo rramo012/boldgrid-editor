@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 ( function ( $ ) {
 	"use strict";
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.RESIZE.Row = {
 
@@ -81,7 +82,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 						rowPos = self.$currentRow[0].getBoundingClientRect();
 						ui.position.top = rowPos[ relativePos ] - self.handleOffset;
 					} else {
-						self.$currentRow.css( setting, padding );
+						BG.Controls.addStyle( self.$currentRow, setting, padding );
 					}
 
 					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();

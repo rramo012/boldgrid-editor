@@ -98,7 +98,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$module = self.findModule( $target );
 				self.removeModuleClasses( $module );
 				$module.addClass( self.targetClasses );
-				$module.css( 'background-color', self.targetColor );
+				BG.Controls.addStyle( $module, 'background-color', self.targetColor );
 			} );
 		},
 		_setupPresetHover : function () {
@@ -199,7 +199,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			$module.addClass( value );
 			if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) ) ) {
-				$module.css( 'background-color', backgroundColor );
+				BG.Controls.addStyle( $module, 'background-color', backgroundColor );
 			}
 		},
 
@@ -209,7 +209,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 
 			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
-			$module.css( 'background-color', '' );
+			BG.Controls.addStyle( $module, 'background-color', '' );
 		},
 
 		_initSliders : function () {
@@ -228,12 +228,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value = $this.val(),
 					type = $this.data('type');
 
-				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
+				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
+				BG.Controls.addStyle( $module, 'background-color', '' );
 
 				if ( 'class' == type ) {
 					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
-					$module.css( 'background-color', value );
+					BG.Controls.addStyle( $module, 'background-color', value );
 				}
 
 				self._saveModuleClasses();
@@ -273,8 +274,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
-					$module.css( 'padding-left', ui.value + 'em' );
-					$module.css( 'padding-right', ui.value + 'em' );
+					BG.Controls.addStyle( $module, 'padding-left', ui.value + 'em' );
+					BG.Controls.addStyle( $module, 'padding-right', ui.value + 'em' );
 				},
 			} ).siblings( '.value' ).html( horPaddingEm );
 
@@ -285,8 +286,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
-					$module.css( 'padding-top', ui.value + 'em' );
-					$module.css( 'padding-bottom', ui.value + 'em' );
+					BG.Controls.addStyle( $module, 'padding-top', ui.value + 'em' );
+					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
 				},
 			} ).siblings( '.value' ).html( vertPaddingEm );
 		},
@@ -306,8 +307,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultMarginHor,
 				range : 'max',
 				slide : function( event, ui ) {
-					$module.css( 'margin-left', ui.value );
-					$module.css( 'margin-right', ui.value );
+					BG.Controls.addStyle( $module, 'margin-left', ui.value );
+					BG.Controls.addStyle( $module, 'margin-right', ui.value );
 				},
 			} ).siblings( '.value' ).html( defaultMarginHor );
 
@@ -317,8 +318,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultMarginVert,
 				range : 'max',
 				slide : function( event, ui ) {
-					$module.css( 'margin-top', ui.value );
-					$module.css( 'margin-bottom', ui.value );
+					BG.Controls.addStyle( $module, 'margin-top', ui.value );
+					BG.Controls.addStyle( $module, 'margin-bottom', ui.value );
 				},
 			} ).siblings( '.value' ).html( defaultMarginVert );
 		},
@@ -356,9 +357,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				if ( backgrounds[ colorCount ].colorClass ) {
 					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass )
-					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
+					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
 				} else {
-					$newElement.css( 'background-color', backgrounds[ colorCount ].color );
+					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
 				}
 
 				$newElement.attr( 'data-id', index );

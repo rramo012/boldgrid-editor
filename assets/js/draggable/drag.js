@@ -768,6 +768,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Clean Up the markup and add any needed classes/wrappers
 	 */
 	this.validate_markup = function() {
+		BOLDGRID.EDITOR.VALIDATION.Section.updateContent( self.$body );
 		self.wrap_hr_tags();
 		self.wrap_content_elements();
 		self.add_redundant_classes();

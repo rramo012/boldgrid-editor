@@ -64,12 +64,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value = $this.val(),
 					type = $this.data('type');
 					
-				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') ).css( 'color', '' );
+				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
+				BG.Controls.addStyle( $target, 'color', '' );
 
 				if ( 'class' == type ) {
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'color', value ) );
 				} else {
-					$target.css( 'color', value );
+					BG.Controls.addStyle( $target, 'color', value );
 				}
 			} );
 
@@ -110,7 +111,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				range : 'max',
 				slide : function( event, ui ) {
 					$container.find( '.section.size .value' ).html( ui.value );
-					$el.css( 'font-size', ui.value );
+					BG.Controls.addStyle( $el, 'font-size', ui.value );
 					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
 				},
 			} );
@@ -128,14 +129,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
-					$el.css( 'letter-spacing', ui.value );
+					BG.Controls.addStyle( $el, 'letter-spacing', ui.value );
 				},
 			} );
 		},
 
 		lineSpacingSlider : function ( $el ) {
 
-			var elementSize = $el.css( 'line-height' ),
+			var elementSize = $el.css( 'line-height' );
 			defaultSize = 1;
 
 			BG.Panel.$element.find( '.section.spacing .line .value' ).html( defaultSize);
@@ -146,7 +147,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
-					$el.css( 'line-height', ui.value );
+					BG.Controls.addStyle( $el, 'line-height', ui.value );
 				},
 			} );
 		},

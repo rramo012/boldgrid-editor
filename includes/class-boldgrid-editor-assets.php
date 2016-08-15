@@ -187,6 +187,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/menu.js', $plugin_file ), array(),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-validation-section',
+			plugins_url( '/assets/js/draggable/validation/section.js', $plugin_file ), array(),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls',
 			plugins_url( '/assets/js/draggable/controls.js', $plugin_file ), array (  ),
 			BOLDGRID_EDITOR_VERSION, true );

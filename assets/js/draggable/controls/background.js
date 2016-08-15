@@ -91,12 +91,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value = $this.val(),
 					type = $this.data('type');
 
-				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') ).css( 'background-color', '' );
+				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
+				BG.Controls.addStyle( $target, 'background-color', '' );
 
 				if ( 'class' == type ) {
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
-					$target.css( 'background-color', value );
+					BG.Controls.addStyle( $target, 'background-color', value );
 				}
 			} );
 
@@ -139,11 +140,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$target = BG.Menu.getTarget( self );
 
 				if ( 'tiled' == $this.val() ) {
-					$target.css( 'background-size', 'auto auto' );
-					$target.css( 'background-repeat', 'repeat' );
+					BG.Controls.addStyle( $target, 'background-size', 'auto auto' );
+					BG.Controls.addStyle( $target, 'background-repeat', 'repeat' );
 				} else if ( 'cover' == $this.val() ) {
-					$target.css( 'background-size', 'cover' );
-					$target.css( 'background-repeat', 'no-repeat' );
+					BG.Controls.addStyle( $target, 'background-size', 'cover' );
+					BG.Controls.addStyle( $target, 'background-repeat', 'no-repeat' );
 				}
 
 			} );
@@ -206,15 +207,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					self.setImageBackground( imageUrl );
 				} else if ( 'color' == $this.data('type') ) {
 					$target.addClass( $this.data('class') );
-					$target.css( 'background-image', '' );
+					BG.Controls.addStyle( $target, 'background-image', '' );
 				} else if ( 'pattern' == $this.data('type') ) {
-					$target.css( 'background-size', 'auto auto' );
-					$target.css( 'background-repeat', 'repeat' );
-					$target.css( 'background-image', imageSrc );
+					BG.Controls.addStyle( $target, 'background-size', 'auto auto' );
+					BG.Controls.addStyle( $target, 'background-repeat', 'repeat' );
+					BG.Controls.addStyle( $target, 'background-image', imageSrc );
 				} else {
-					$target.css( {
-						'background-image' : imageSrc,
-					} );
+					BG.Controls.addStyle( $target, 'background-image', imageSrc );
 				}
 			} );
 		},
@@ -241,6 +240,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		setImageSelection : function ( imageSrc, type, prop ) {
 			var $currentSelection = BG.Panel.$element.find( '.current-selection' );
+			
 			$currentSelection.css( 'background', '' );
 
 			if ( 'color' == type ) {
@@ -255,11 +255,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		setImageBackground : function ( url ) {
 			var $target = BG.Menu.getTarget( self );
 
-			$target.css( {
-				'background' : 'url(' + url + ')',
-				'background-size' : 'cover'
-			} );
-
+			BG.Controls.addStyle( $target, 'background',  'url(' + url + ')' );
+			BG.Controls.addStyle( $target, 'background-size', 'cover' );
+			
 			$target.data( 'image-url', url );
 		},
 
@@ -283,7 +281,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				range : 'max',
 				slide : function( event, ui ) {
 					if ( $target.css('background-image' ) ) {
-						$target.css( 'background-position', '0% ' + ui.value + '%' );
+						BG.Controls.addStyle( $target, 'background-position', '0% ' + ui.value + '%' );
 					}
 				},
 			} ).siblings( '.value' ).html( defaultPos );
@@ -327,7 +325,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					color2 = $this.data('color-2'),
 					direction = directions[Math.floor(Math.random()*directions.length)];
 
-				$this.css( 'background-image', 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' );
+				BG.Controls.addStyle( $this, 'background-image', 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' );
 			} );
 		},
 
