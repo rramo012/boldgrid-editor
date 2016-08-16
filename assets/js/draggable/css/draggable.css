@@ -602,7 +602,7 @@ li[data-action="toggle-container"] {
 }
 
 html {
-	padding:30px 45px 30px 45px;
+	padding:30px 45px 180px 45px; 
 }
 
 html .mceContentBody  {

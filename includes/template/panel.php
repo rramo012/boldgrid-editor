@@ -34,3 +34,10 @@
 </div>
 </div>
 </script>
+<script type="text/html" id="tmpl-boldgrid-editor-empty-section">
+<div class="boldgrid-section"  style='background-color: #ddd'>
+	<div class="container">
+		<div class="row" style='padding-top:20px;padding-bottom:20px'><div class="col-md-12"></div></div>
+	</div>
+</div>
+</script>

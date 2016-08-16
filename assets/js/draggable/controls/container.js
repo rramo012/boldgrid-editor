@@ -35,7 +35,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$container.removeClass( 'container-fluid' );
 			}
 		}
-
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Container.init();

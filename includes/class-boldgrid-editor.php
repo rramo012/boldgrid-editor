@@ -188,6 +188,7 @@ class Boldgrid_Editor {
 	}
 
 	public static function remove_theme_container( $configs ) {
+		$configs['template']['pages']['default']['entry-content'] = '';
 		$configs['template']['pages']['page_home.php']['entry-content'] = '';
 		return $configs;
 	}

@@ -42,6 +42,8 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$container.find( 'body' )
 				.after( self.$topHandle )
 				.after( self.$bottomHandle );
+			
+			self.hideHandles();
 		},
 		initDraggable : function () {
 			var startPadding, setting,
@@ -120,7 +122,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		hideHandles : function ( e ) {
 			var $this = $( this );
 
-			if ( e.relatedTarget && $( e.relatedTarget ).hasClass('draghandle') ) {
+			if ( e && e.relatedTarget && $( e.relatedTarget ).hasClass('draghandle') ) {
 				return;
 			}
 

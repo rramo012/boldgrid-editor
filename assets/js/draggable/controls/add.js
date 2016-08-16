@@ -38,7 +38,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					'class' : 'action add-gridblock'
 				},
 				{
-					'name' : 'Empty Row',
+					'name' : 'Section',
 					'class' : 'action add-row'
 				}
 			]
@@ -67,7 +67,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_setupMenuClick : function () {
 			BG.Menu.$element.find('.bg-editor-menu-dropdown')
 				.on( 'click', '.action.add-gridblock', self.addGridblock )
-				.on( 'click', '.action.add-row', self.addRow )
+				.on( 'click', '.action.add-row', self.addSection )
 				.on( 'click', '.action.add-button', self.addButton )
 				.on( 'click', '.action.add-icon', self.addIcon );
 		},
@@ -88,9 +88,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.CONTROLS.Button.insertNew();
 		},
 		
-		addRow : function () {
-			BOLDGRID.EDITOR.Controls.$container.menu_actions.add_row();
-			tinymce.activeEditor.undoManager.add();
+		addSection : function () {
+			var $container = BOLDGRID.EDITOR.Controls.$container,
+				$newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
+			$container.$body.append( $newSection );
+			
+			 $('html, body').animate({
+			       scrollTop: $newSection.offset().top
+		    }, 200);
+			 
+			IMHWPB.tinymce_undo_disabled = true;
+			$newSection.animate( {
+				    'background-color' : 'transparent'
+				  }, 1500, 'swing', function(){
+						BG.Controls.addStyle( $newSection, 'background-color', '' );
+						IMHWPB.tinymce_undo_disabled = false;
+						tinymce.activeEditor.undoManager.add();
+				  }
+			);
 		},
 		
 		addGridblock : function () {
