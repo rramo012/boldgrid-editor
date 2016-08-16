@@ -69,7 +69,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				.on( 'click', '.action.add-gridblock', self.addGridblock )
 				.on( 'click', '.action.add-row', self.addRow )
 				.on( 'click', '.action.add-button', self.addButton )
-				.on( 'click', '.action.add-icon', self.addIcon )
+				.on( 'click', '.action.add-icon', self.addIcon );
 		},
 
 		_setupDimiss : function () {
@@ -90,6 +90,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		addRow : function () {
 			BOLDGRID.EDITOR.Controls.$container.menu_actions.add_row();
+			tinymce.activeEditor.undoManager.add();
 		},
 		
 		addGridblock : function () {

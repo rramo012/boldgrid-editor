@@ -4,7 +4,9 @@ body {
 	
 }*/
 
-
+html, body {
+    height: auto;
+}
 
 html.boldgrid-editor-fullscreen {
 	overflow: auto !important;

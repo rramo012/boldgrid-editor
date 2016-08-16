@@ -66,9 +66,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		openPicker : function ( $input ) {
 			self.$colorPanel.show();
 			self.$currentInput = $input;
+			tinymce.activeEditor.undoManager.add();
 		},
 
 		closePicker : function () {
+			tinymce.activeEditor.undoManager.add();
 			self.$colorPanel.hide();
 			self.$currentInput = null;
 		},

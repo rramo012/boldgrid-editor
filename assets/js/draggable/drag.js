@@ -34,8 +34,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	//This may be just as unreliable
 	//tinymce.activeEditor.theme.panel._items[0]._id //32
 	//tinymce.activeEditor.theme.panel._items[2]._id //38
-	self.$mce_32 = $( '#mceu_34' );
-	self.$mce_38 = $( '#mceu_40' );
+	self.$mce_32 = $( '#mceu_32' );
+	self.$mce_38 = $( '#mceu_38' );
 	self.$post_status_info = $( '#post-status-info' );
 
 	/** Popover Menu Items to be added **/
@@ -3413,7 +3413,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 	
 	this.postAddRow = function ( $empty_row ) {
-		$empty_row.addClass( 'added-element' );
+		// The following line was leaving garbage in undo history.
+		//$empty_row.addClass( 'added-element' );
 		setTimeout( function() {
 			self.$master_container.find( '.added-element' ).removeClass( 'added-element' );
 		}, 1000 );

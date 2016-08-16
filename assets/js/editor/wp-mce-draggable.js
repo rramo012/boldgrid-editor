@@ -257,7 +257,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Maintain the height of the editor based on the body and not html as wordpress is doing
 	 */
 	this.refresh_iframe_height = function () {
-
+		// Experientially disabling this.
+		return;
 		var new_height = tinymce.activeEditor.getBody().getBoundingClientRect().height + 100;
 		if (new_height > 700) {
 			$(tinymce.activeEditor.iframeElement).css('height', new_height + 'px' );

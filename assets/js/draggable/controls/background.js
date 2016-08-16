@@ -196,12 +196,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					imageSrc = $this.css('background-image'),
 					background = $this.css('background');
 
+				// Remove all color classes.
+				$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
+
+				if ( $this.hasClass( 'selected') ) {
+					BG.Controls.addStyle( $target, 'background', '' );
+					$this.removeClass( 'selected' );
+					return;
+				}
+				
 				panel.$element.find( '.presets .selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
 				self.setImageSelection( imageSrc, $this.data('type'), background );
-
-				// Remove all color classes.
-				$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 
 				if ( 'image' == $this.data('type') ) {
 					self.setImageBackground( imageUrl );

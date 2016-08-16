@@ -136,8 +136,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		lineSpacingSlider : function ( $el ) {
 
-			var elementSize = $el.css( 'line-height' );
-			defaultSize = 1;
+			var elementSize = $el.css( 'line-height' ),
+				defaultSize = 1;
 
 			BG.Panel.$element.find( '.section.spacing .line .value' ).html( defaultSize);
 			BG.Panel.$element.find( '.section.spacing .line .slider' ).slider( {

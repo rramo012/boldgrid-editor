@@ -2,7 +2,7 @@
 	<div class='section family'>
 		<h4>Font</h4>
 		<select class='google-fonts'>
-  			<option value="pending">All Google Fonts</option>
+  			<option value="pending">Family (Not Working Yet)</option>
 		</select>
 		<label for="font-color" class='color-preview'></label>
 		<input type="text" data-type="" name='font-color' class='color-control' value=''>

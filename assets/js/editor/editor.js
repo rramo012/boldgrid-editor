@@ -257,6 +257,11 @@ IMHWPB.Editor = function( $ ) {
 			});
 			 //Before adding an undo level check to see if this is allowed
 			editor.on('BeforeAddUndo', function(e) {
+				
+				if ( IMHWPBGallery && IMHWPBGallery.init_gallery ) {
+					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
+				}
+				
 				if (IMHWPB.tinymce_undo_disabled == true) {
 					return false;
 				}
@@ -351,7 +356,6 @@ IMHWPB.Editor = function( $ ) {
 			//Every time the user clicks on a new node.
 			//re-map to a different section
 			editor.on( 'NodeChange', function( e ) {
-
 				var $element = $(e.element);
 
 				//If the element is an anchor
@@ -426,7 +430,6 @@ IMHWPB.Editor = function( $ ) {
 			 * On mouse down of the drag tools, prevent tinymce from blocking event.
 			 */
 			editor.on( 'mousedown', function( e ) {
-
 				if ( ! self.draggable ) {
 					return;
 				}
@@ -474,6 +477,7 @@ IMHWPB.Editor = function( $ ) {
 
 			//Once an object is resized, allow boldgrid popovers.
 			editor.on('ObjectResized', function(e) {
+				return;
 				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = false;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
@@ -486,6 +490,7 @@ IMHWPB.Editor = function( $ ) {
 			 * that we wrapped around anchors as well as any other cleanup
 			 */
 			editor.on('GetContent', function(e) {
+				return;
 				if (e.content) {
 					e.content = self.reset_anchor_spaces('<div>' + e.content + '</div>', false);
 					if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
@@ -511,9 +516,9 @@ IMHWPB.Editor = function( $ ) {
 			/**
 			 * When the user does an undo or redo make sure that the editor height is correct
 			 */
-			editor.on('Undo Redo', function(e) {
-				IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-			});
+		//	editor.on('Undo Redo', function(e) {
+			//	IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
+		//	});
 
 			/**
 			 * When the editor is initialized load the draggable ability
@@ -552,10 +557,14 @@ IMHWPB.Editor = function( $ ) {
 				}
 
 				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text
-				var $last_element = $tinymce_iframe.find('body > *:last');
-				if ( !$last_element.is('p') || $last_element.children().length != 1 ) {
-					$tinymce_iframe.find('body').append('<p> </p>');
-				}
+				
+				/*
+				 * Disabled this because it was breaking undo and redo
+				 * var $last_element = $tinymce_iframe.find('body > *:last');
+					if ( !$last_element.is('p') || $last_element.children().length != 1 ) {
+						$tinymce_iframe.find('body').append('<p> </p>');
+					}
+				 */
 
 				//Add button to floating tinymce toolbar
 				self.button_created = false;

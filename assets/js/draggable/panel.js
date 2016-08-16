@@ -121,6 +121,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		closePanel : function () {
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
+			tinymce.activeEditor.undoManager.add();
 		},
 
 		scrollToSelected : function () {
@@ -193,7 +194,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * Open a panel for a control
 		 */
 		open : function ( control ) {
-
+			tinymce.activeEditor.undoManager.add();
+			
 			BOLDGRID.EDITOR.Menu.activateControl( control );
 			
 			self.currentControl = control;
