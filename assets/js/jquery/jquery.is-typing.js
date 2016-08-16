@@ -1,6 +1,6 @@
 /**
  * BoldGrid Source Code
- * 
+ *
  * @copyright BoldGrid.com
  * @version $Id$
  * @author BoldGrid <wpb@boldgrid.com>
@@ -10,23 +10,23 @@
 	/**
 	 * This is a jQuery plugin that handles the user, typing text
 	 * Usage:
-	 * 
+	 *
 	 * $('textarea').is_typing_boldgrid();
-	 * 
+	 *
 	 * $('textarea').on('start_typing_boldgrid', function () {
 	 * 		console.log("Stop Cool Stuff");
 	 * });
-	 * 
+	 *
 	 * $('textarea').on('end_typing_boldgrid', function () {
 	 * 		console.log("Start Cool Stuff");
 	 * });
-	 * 
+	 *
 	 */
 	$.fn.is_typing_boldgrid = function() {
 		var self = this;
 		// Events to be triggered
 		var $this = $( this );
-		
+
 		//Register 2 new events
 		jQuery.Event( 'end_typing_boldgrid' );
 		jQuery.Event( 'start_typing_boldgrid' );
@@ -38,7 +38,7 @@
 
 		// Declare variables to be used across callbacks
 		var last_key_press;
-		
+
 		// Key Press handler
 		var keypress = function( e ) {
 			if ( self.is_typing == false ) {
@@ -59,7 +59,7 @@
 
 		// Bind relevant events
 		$( this ).on( 'keydown', keypress );
-		
+
 		return this;
 	};
 

@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.2.3 In progress =
+* Rework:		JIRA WPB-1825	Formatting.
+
 = 1.2.2 =
 * Bug fix:		JIRA WPB-2175	Issue causing parent row to be deleted when removing icon or anchor.
 

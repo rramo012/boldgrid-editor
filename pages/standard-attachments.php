@@ -1,4 +1,4 @@
-<?php 
+<?php
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -13,7 +13,7 @@ $configs = $this->get_configs();
 			<?php foreach ($tab['content'] as $count => $content): 	?>
 				<div class="thumbnail-container attachment" data-html-type='raw' data-id="<?php echo $count; ?>">
 					<div class='translate-container attachment-preview'>
-						<div class='centered-content-boldgrid container-fluid 
+						<div class='centered-content-boldgrid container-fluid
 							<?php echo get_theme_mod('boldgrid_palette_class', 'palette-primary')?> mce-content-body'>
 						<?php echo $content['preview-html']; ?></div>
 					</div>
@@ -34,7 +34,7 @@ $configs = $this->get_configs();
 							<img draggable="false" src="<?php echo $content['image']; ?>">
 						</div>
 					</div>
-					</div> 
+					</div>
 					<a title="Deselect" href="#" class="check">
 						<div class="media-modal-icon"></div>
 					</a>
