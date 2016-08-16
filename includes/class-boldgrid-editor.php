@@ -183,13 +183,28 @@ class Boldgrid_Editor {
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 		} );
 
-
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
+
 	}
 
 	public static function remove_theme_container( $configs ) {
-		$configs['template']['pages']['default']['entry-content'] = '';
-		$configs['template']['pages']['page_home.php']['entry-content'] = '';
+
+		// Get Page Id.
+	    $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	    $theID = url_to_postid( $actual_link );
+	    if( 0 === $theID ) {
+	    	$theID = get_option( 'page_on_front' );
+	    }
+
+	    $post_meta = get_post_meta( $theID );
+	    $in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'] ) ?
+	    	$post_meta['boldgrid_in_page_containers'] : null;
+
+	    if ( $in_page_containers ) {
+			$configs['template']['pages'][ 'page_home.php' ]['entry-content'] = '';
+			$configs['template']['pages'][ 'default' ]['entry-content'] = '';
+		}
+
 		return $configs;
 	}
 
@@ -217,6 +232,9 @@ class Boldgrid_Editor {
 			// Provide a way to access gridblock files in this plugin.
 			add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
 		}
+
+		add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
+		add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'container_input_markup' ) );
 
 		add_action( 'enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_front_end' ) );
 
