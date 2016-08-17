@@ -63,10 +63,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = BG.Menu.$element.targetData[ self.name ],
 					value = $this.val(),
 					type = $this.data('type');
-					
+				
 				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
 				BG.Controls.addStyle( $target, 'color', '' );
-
+				
 				if ( 'class' == type ) {
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'color', value ) );
 				} else {

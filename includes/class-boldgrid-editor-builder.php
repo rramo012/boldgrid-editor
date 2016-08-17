@@ -38,7 +38,7 @@ class Boldgrid_Editor_Builder {
 	 * @return array Configs for the styler.
 	 */
 	public static function get_builder_config() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ) );
+		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
 	}
 
 	/**
@@ -127,12 +127,32 @@ class Boldgrid_Editor_Builder {
 		return $image_lookups;
 	}
 
-	public function container_input_markup () {
+	/**
+	 * Print inputs that will be stored when the page is saved.
+	 *
+	 * @since 1.3
+	 */
+	public function post_inputs () {
+		$custom_colors = self::get_editor_option( 'custom_colors', array() );
+		$custom_colors_encoded = json_encode( $custom_colors );
+
 		echo <<<HTML
 		<input style='display:none' type='checkbox' value='1' checked='checked' name='boldgrid-in-page-containers'>
+		<input style='display:none' type='checkbox' value='$custom_colors_encoded' checked='checked' name='boldgrid-custom-colors'>
 HTML;
 	}
 
+	/**
+	 * Save page meta info.
+	 *
+	 * Once a page has been converted to use in page containers, set the post meta data so that
+	 * containers can be removed from the theme.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $post_id integer.
+	 * @param mixed $post WP_Post.
+	 */
 	public function save_container_meta( $post_id, $post ) {
 		$post_id = ! empty( $post_id ) ? $post_id : null;
 
@@ -149,5 +169,58 @@ HTML;
 				update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
 			}
 		}
+	}
+
+	/**
+	 * Retreive an option from the stored list of editor options.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $key Index of value.
+	 * @param mixed $default Default value if not found.
+	 */
+	public static function get_editor_option( $key, $default = null ) {
+		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
+		return ! empty( $boldgrid_editor[ $key ] ) ? $boldgrid_editor[ $key ] : $default;
+	}
+
+	/**
+	 * Store an option for the plugin in a single option.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $key Name of value of value.
+	 * @param mixed $value Value to store.
+	 */
+	public static function update_editor_option( $key, $value ) {
+		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
+		$boldgrid_editor[ $key ] = $value;
+		update_option( 'boldgrid_editor', $boldgrid_editor );
+	}
+
+	/**
+	 * Sanatize colors field passed back from page and post.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $colors.
+	 *
+	 * @return string json string.
+	 */
+	public function sanitize_custom_colors( $colors ) {
+		return strip_tags( $colors );
+	}
+
+	/**
+	 * Save user colors created during edit process.
+	 *
+	 * @since 1.3
+	 */
+	public function save_colors() {
+		$custom_colors = ! empty ( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
+		$custom_colors = $this->sanitize_custom_colors( $custom_colors );
+		$custom_colors = json_decode( stripcslashes( $custom_colors ), true );
+		$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
+		self::update_editor_option( 'custom_colors', $custom_colors );
 	}
 }

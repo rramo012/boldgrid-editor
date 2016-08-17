@@ -81,10 +81,9 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 
 // Build.
 gulp.task( 'default', 
-	//[ /*'scssCompile',*/ 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
-	[ 'scssCompile' ]
+	[ 'scssCompile', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
 );
 
 gulp.task('watch', function() {
-	gulp.watch( config.src + 'assets/**/*', [ 'default' ] );
+	gulp.watch( config.src + 'assets/**/*', [ 'scssCompile' ] );
 } );

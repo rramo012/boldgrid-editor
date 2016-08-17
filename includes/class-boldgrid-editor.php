@@ -233,8 +233,9 @@ class Boldgrid_Editor {
 			add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
 		}
 
+		add_action( 'save_post', array( $boldgrid_editor_builder, 'save_colors' ), 10, 2  );
 		add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
-		add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'container_input_markup' ) );
+		add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'post_inputs' ) );
 
 		add_action( 'enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_front_end' ) );
 

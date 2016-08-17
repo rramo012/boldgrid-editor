@@ -31,7 +31,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'color5-background-color',
 		],
 
-		customColors : [],
+		customColors : BoldgridEditor.saved_colors,
 
 		init : function () {
 			self._create();
@@ -70,10 +70,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		closePicker : function () {
-			tinymce.activeEditor.undoManager.add();
-			self.$colorPanel.hide();
-			self.$currentInput = null;
+			if ( self.$colorPanel.is(':visible') ) {
+				tinymce.activeEditor.undoManager.add();
+				self.$colorPanel.hide();
+				self.$currentInput = null;
+				self.saveCustomColors();
+			}
 		},
+		
+		saveCustomColors : function () {
+			$('#post input[name="boldgrid-custom-colors"]').val( JSON.stringify( self.customColors ) );
+		}, 
 
 		_setupColorPreview : function () {
 			BG.Panel.$element.on( 'click', '.color-preview', function ( e ) {
@@ -156,6 +163,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 					if ( $selection.length && $selection.is('[data-type="default"]') ) {
 						self._copyColor();
+						return;
 					}
 
 					$selection = self.$colorPanel.find('.colors .panel-selection.selected[data-preset]');
@@ -163,8 +171,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					self.customColors[ $selection.data('index') ] = ui.color.toCSS();
 
 					if ( self.$currentInput ) {
-						self.$currentInput.val( ui.color.toCSS() );
 						self.$currentInput.data( 'type', type );
+						self.$currentInput.val( ui.color.toCSS() );
 						self.$currentInput.change();
 
 					}
@@ -262,22 +270,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		_setupCallback : function () {
 			self.$colorPanel.on( 'click', '.colors .panel-selection', function ( e ) {
-
-				var colorClasses,
+				var colorClasses, type,
 					$this = $( this );
 
 				// Clicks on add a new color.
 				if ( $this.hasClass('custom-color') ) {
 					return;
 				}
+				
+				type = 'default' == $this.data('type') ? 'class' : 'color';  
 
 				self.$colorPanel.find('ul.colors .panel-selection').removeClass( 'selected' );
 				self.$colorPicker.iris( 'color', $this.css( 'background-color' ) );
 				self.selectColor( $this );
 
 				self.$currentInput.val( $this.data('preset') );
-				self.$currentInput.data( 'type', 'class' );
+				self.$currentInput.data( 'type', type );
 				self.$currentInput.change();
+				
 			} );
 		}
 	};
