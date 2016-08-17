@@ -448,8 +448,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 			self.tinymce_body_container = self.$mce_iframe.contents().find('body');
 
 			if ( self.bootstrap_container ) {
-				self.tinymce_body_container.addClass(self.bootstrap_container);
-				self.$resizing_iframe.remove();
+				//self.tinymce_body_container.addClass(self.bootstrap_container);
+				self.$resizing_iframe.remove(); 
 				$window.trigger('resize');
 				return;
 			} else {
