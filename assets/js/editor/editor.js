@@ -300,8 +300,13 @@ IMHWPB.Editor = function( $ ) {
 				if ( !self.draggable ) {
 					return true;
 				}
-
+				
 				var $current_node = $(tinymce.activeEditor.selection.getNode());
+				
+				if ( self.dragging_is_active() ) {
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
+						.$master_container.trigger('is-typing-keydown');
+				}
 
 				var is_column = $current_node.is( self.draggable.column_selectors_string ) ;
 				var is_row = $current_node.is( self.draggable.row_selectors_string );

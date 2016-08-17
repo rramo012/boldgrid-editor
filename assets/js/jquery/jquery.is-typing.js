@@ -41,6 +41,7 @@
 		
 		// Key Press handler
 		var keypress = function( e ) {
+
 			if ( self.is_typing == false ) {
 				self.is_typing = true;
 				$this.trigger( 'start_typing_boldgrid' );
@@ -58,7 +59,7 @@
 		};
 
 		// Bind relevant events
-		$( this ).on( 'keydown', keypress );
+		$( this ).on( 'keydown is-typing-keydown', keypress );
 		
 		return this;
 	};

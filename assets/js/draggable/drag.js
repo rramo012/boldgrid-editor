@@ -3786,6 +3786,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.typing_events = {
 		'start' : function () {
 			//Remove Popovers
+			self.$master_container.find('.draggable-tools-imhwpb').attr( 'contenteditable', true );
 			self.delete_popovers();
 		},
 		'end' : function () {
