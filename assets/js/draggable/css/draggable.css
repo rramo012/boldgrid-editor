@@ -383,6 +383,46 @@ html.boldgrid-editor-fullscreen {
 	padding-left: 20px;
 }
 
+.popover-menu-imhwpb ul .side-menu {
+	display: none;
+}
+
+.popover-menu-imhwpb ul .side-menu li:hover {
+	cursor: pointer !important;
+	color: white !important;
+    background-color: #23282d !important;
+}
+
+.popover-menu-imhwpb .side-menu:hover,
+.popover-menu-imhwpb li:hover + .side-menu {
+	display: block;
+}
+
+.popover-menu-imhwpb .side-menu {
+	display: block;
+	position:relative
+}
+.draggable-tools-imhwpb .popover-menu-imhwpb .side-menu ul {
+	position: absolute;
+    right: -100px;
+    left: auto;
+    top: -25px;
+    width: 100px;
+}
+.draggable-tools-imhwpb .popover-menu-imhwpb .side-menu ul li {
+    padding-left: 15px;
+	background-color: white;
+    color: #23282d;
+    text-align: left;
+}
+.draggable-tools-imhwpb .popover-menu-imhwpb .side-menu ul li:before {
+	display: none;
+}
+
+.draggable-tools-imhwpb .popover-menu-imhwpb .side-menu-parent:hover {
+	cursor: default;
+}
+
 .popover-menu-imhwpb li:before {
 	content: '';
 }
@@ -406,14 +446,28 @@ html.boldgrid-editor-fullscreen {
 .popover-menu-imhwpb li[data-action="clear"]::before {
 	background-image: url("../../../image/icons/clear-contents.png");
 }
+.popover-menu-imhwpb li[data-action="vertical-alignment"]:after,
+.popover-menu-imhwpb li[data-action="vertical-alignment"]::before,
 .popover-menu-imhwpb li[data-action="add-media"]::before {
 	font: 400 18px/1 dashicons;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     content: "\f104";
     color: #737373;
-	padding-left: 2px;
-    padding-top: 2px;
+	padding-left: 5px;
+    padding-top: 3px;
+}
+.popover-menu-imhwpb li[data-action="vertical-alignment"]::before {
+	content: "\f207";
+}
+.popover-menu-imhwpb li[data-action="vertical-alignment"]:after {
+	content: "\f139";
+    position: absolute;
+    padding: 0;
+    top: 5px;
+}
+.popover-menu-imhwpb li[data-action="Insert Form"]::before {
+	background-image: url("../../../image/icons/insert-form.png");
 }
 .popover-menu-imhwpb li[data-action="Insert Form"]::before {
 	background-image: url("../../../image/icons/insert-form.png");
@@ -440,6 +494,8 @@ html.boldgrid-editor-fullscreen {
 .popover-menu-imhwpb li[data-action="clear"]:hover::before {
 	background-image: url("../../../image/icons/clear-contents-hover.png");
 }
+
+.popover-menu-imhwpb li[data-action="vertical-alignment"]:hover::before,
 .popover-menu-imhwpb li[data-action="add-media"]:hover::before {
     color: white;
 }
@@ -544,7 +600,7 @@ html.boldgrid-editor-fullscreen {
 }
 
 .popover-menu-imhwpb ul {
-    width: 160px;
+    width: 165px;
     background: #FFFFFF;
     border: 2px solid #23282d;
     border-radius: 5px;

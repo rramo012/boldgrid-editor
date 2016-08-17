@@ -572,7 +572,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * A list of the menu items that are added by default
 	 */
 	var native_menu_options = [
-		'duplicate', 'add-row', 'add-column', 'nest-row', 'clear', 'delete', 'clone-as-row',
+		'duplicate',
+		'add-row',
+		'add-column',
+		'nest-row',
+		'clear',
+		'delete',
+		'clone-as-row',
+		'vertical-alignment',
 	];
 
 	/**
@@ -586,6 +593,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'delete' : "Delete",
 			'clear' : "Clear Contents",
 			'add-media' : "Insert Media",
+			'vertical-alignment' : {
+				'title' : 'Vertical Alignment',
+				'options' : {
+					'align-default' : 'Default',
+				    'align-top' : 'Top',
+				    'align-center' : 'Center',
+				    'align-bottom' : 'Bottom'
+				}
+			},
 		},
 		'row' : {
 			'' : "Edit Row",
@@ -641,8 +657,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				if ( key == 'nest-row' ) {
 					draggable = 'draggable="true"';
 				}
-
-				popover += "<li class='no-select-imhwpb action-list' " + draggable + " data-action='" + key + "'>" + value + "</li>";
+				if ( typeof value === 'object' ) {
+					popover += "<li class='no-select-imhwpb action-list side-menu-parent' data-action='" + key + "'>" + value.title + "</li>";
+					popover += "<div class='side-menu'>";
+					popover += "<ul>";
+					$.each( value.options, function( key, value ) {
+						popover += "<li class='no-select-imhwpb action-list' data-action='" + key + "'>" + value + "</li>";
+					} );
+					popover += "</ul>";
+					popover += "</div>";
+				} else {
+					popover += "<li class='no-select-imhwpb action-list' " + draggable + " data-action='" + key + "'>" + value + "</li>";
+				}
 			} );
 
 			popover += '</ul></div>';
@@ -1013,15 +1039,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.$master_container
 			.on( 'click.draggable', 'li[data-action="delete"]', self.menu_actions.delete_element )
-			.on( 'click.draggable','li[data-action="add-column"]', self.menu_actions.add_column )
-			.on( 'click.draggable','li[data-action="duplicate"]', self.menu_actions.duplicate )
-			.on( 'click.draggable','li[data-action="clear"]', self.menu_actions.clear )
-			.on( 'click.draggable','li[data-action="insert-layout"]', self.menu_actions.insert_layout )
+			.on( 'click.draggable', 'li[data-action="add-column"]', self.menu_actions.add_column )
+			.on( 'click.draggable', 'li[data-action="duplicate"]', self.menu_actions.duplicate )
+			.on( 'click.draggable', 'li[data-action="clear"]', self.menu_actions.clear )
+			.on( 'click.draggable', 'li[data-action="insert-layout"]', self.menu_actions.insert_layout )
 			.on( 'click.draggable', 'li[data-action="nest-row"]', self.menu_actions.nest_row )
 			.on( 'click.draggable', 'li[data-action="add-row"]', self.menu_actions.add_row )
 			.on( 'click.draggable', 'li[data-action="clone-as-row"]', self.menu_actions.unnest_row )
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
+			.on( 'click.draggable', 'li[data-action="align-top"]', self.menu_actions.alignTop )
+			.on( 'click.draggable', 'li[data-action="align-default"]', self.menu_actions.alignDefault )
+			.on( 'click.draggable', 'li[data-action="align-bottom"]', self.menu_actions.alignBottom )
+			.on( 'click.draggable', 'li[data-action="align-center"]', self.menu_actions.alignCenter )
 		;
 	};
 
@@ -3451,6 +3481,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 	};
+	
+	var alignColumn = function ( $popover, alignment ) {
+		var $column = $popover.closest( '.draggable-tools-imhwpb' ).next();
+	
+		$column.removeClass( 'align-column-top align-column-bottom align-column-center' );
+
+		if ( alignment ) {
+			$column.addClass( 'align-column-' + alignment );
+		}
+	};
 
 	/**
 	 * An object with the actions that occur when a user clicks on the options
@@ -3458,6 +3498,22 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.menu_actions = {
 
+		alignTop : function () {
+			alignColumn( $( this ), 'top' );
+		},
+		
+		alignBottom : function () {
+			alignColumn( $( this ), 'bottom' );
+		},
+		
+		alignCenter : function () {
+			alignColumn( $( this ), 'center' );
+		},
+		
+		alignDefault : function () {
+			alignColumn( $( this ) );
+		},
+			
 		/**
 		 * The delete event for all element types
 		 */
@@ -3668,12 +3724,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			if ( type == 'column') {
 				$element.html('<p><br> </p>');
+				alignColumn( $current_click );
 			} else {
 				$element.find(
 					':not(' + self.column_selectors_string + '):not( ' + self.row_selectors_string
 						+ ')' ).remove();
 			}
-
+			
+			self.refresh_handle_location();
 			$current_click.closest( '.popover-menu-imhwpb' ).addClass('hidden');
 			self.$master_container.trigger( self.clear_event, $element );
 		},

@@ -1409,3 +1409,15 @@ body.boldgrid-editor-fullscreen {
 .bg-box.bg-box-border-double-thick {
   border: 2px solid;
   box-shadow: 0px 0px 0px 5px white inset, 0px 0px 0px 7px black inset; }
+
+/*--------------------------------------------------------------
+# Color Controls
+--------------------------------------------------------------*/
+.align-column-top {
+  align-self: flex-start; }
+
+.align-column-center {
+  align-self: center; }
+
+.align-column-bottom {
+  align-self: flex-end; }

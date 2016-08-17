@@ -274,6 +274,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
+					$target = BG.Menu.getTarget( self );
+					$module = self.findModule( $target );
+					
 					BG.Controls.addStyle( $module, 'padding-left', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-right', ui.value + 'em' );
 				},
@@ -286,6 +289,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				step: 0.1,
 				range : 'max',
 				slide : function( event, ui ) {
+					$target = BG.Menu.getTarget( self );
+					$module = self.findModule( $target );
+					
 					BG.Controls.addStyle( $module, 'padding-top', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
 				},
@@ -307,6 +313,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultMarginHor,
 				range : 'max',
 				slide : function( event, ui ) {
+					$target = BG.Menu.getTarget( self );
+					$module = self.findModule( $target );
+					
 					BG.Controls.addStyle( $module, 'margin-left', ui.value );
 					BG.Controls.addStyle( $module, 'margin-right', ui.value );
 				},
@@ -318,10 +327,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultMarginVert,
 				range : 'max',
 				slide : function( event, ui ) {
+					$target = BG.Menu.getTarget( self );
+					$module = self.findModule( $target );
+					
 					BG.Controls.addStyle( $module, 'margin-top', ui.value );
 					BG.Controls.addStyle( $module, 'margin-bottom', ui.value );
 				},
 			} ).siblings( '.value' ).html( defaultMarginVert );
+		},
+		
+		elementClick : function() {
+			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
+				self.openPanel();
+			}
 		},
 
 		applyUiStyles : function( presets ) {
