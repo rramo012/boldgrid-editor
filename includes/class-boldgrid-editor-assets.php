@@ -165,7 +165,7 @@ class Boldgrid_Editor_Assets {
 			array( 'jquery', 'wp-color-picker' ), null, true );
 
 		// Dependencies:
-		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable' );
+		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable', 'jquery-ui-selectmenu' );
 
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
 			wp_enqueue_script( 'boldgrid-editor-drag',
@@ -275,6 +275,9 @@ class Boldgrid_Editor_Assets {
 
 		wp_enqueue_style( 'button-css-imhwpb',
 			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+		wp_enqueue_style( 'font-family-styles',
+			plugins_url( '/assets/css/font-family-controls.min.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
 		wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );

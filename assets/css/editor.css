@@ -1421,3 +1421,54 @@ body.boldgrid-editor-fullscreen {
 
 .align-column-bottom {
   align-self: flex-end; }
+
+/*--------------------------------------------------------------
+# Color Controls
+--------------------------------------------------------------*/
+/***
+* In Page styles while in the editor
+***/
+#tinymce .bg-control-element {
+  outline: 2px dashed #f95b26 !important; }
+
+.ui-widget-content .ui-state-default.ui-selectmenu-button {
+  padding: 8px 11px;
+  position: absolute;
+  left: 38px;
+  width: 158px !important;
+  border-radius: 0;
+  background-image: url(../image/web-fonts.png);
+  background-color: white;
+  color: transparent; }
+
+.ui-widget-content .ui-state-default.ui-selectmenu-button .ui-icon {
+  position: absolute;
+  right: 10px; }
+
+.wp-admin .ui-selectmenu-menu {
+  display: none; }
+
+.wp-admin .ui-selectmenu-menu ul {
+  z-index: 100000;
+  position: relative;
+  max-height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 290px; }
+
+.wp-admin .ui-selectmenu-menu li,
+.wp-admin .ui-selectmenu-menu li:hover {
+  color: transparent;
+  background-image: url(../image/web-fonts.png);
+  height: 25px;
+  margin: 4px 0px;
+  border: none;
+  padding: 3px;
+  background-color: transparent; }
+
+.wp-admin .ui-selectmenu-menu li:hover {
+  background-color: #d2d2d2;
+  padding: 3px; }
+
+.wp-admin .ui-selectmenu-open {
+  display: block; }

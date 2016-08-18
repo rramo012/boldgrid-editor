@@ -71,6 +71,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
+		
+		/**
+		 * When the user clicks on an image, if the panel is open, set panel content.
+		 */
+		elementClick : function() {
+			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
+				self.openPanel();
+			}
+		},
 
 		setup : function () {
 			self._setupBackgroundClick();

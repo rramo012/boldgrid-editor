@@ -38,8 +38,11 @@ class Boldgrid_Editor_Builder {
 	 * @return array Configs for the styler.
 	 */
 	public static function get_builder_config() {
-		return json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs['fonts'] = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+		return $builder_configs;
 	}
+
 
 	/**
 	 * Print templates used in page and post editor.

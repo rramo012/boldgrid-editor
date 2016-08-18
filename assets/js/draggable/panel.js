@@ -4,7 +4,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 ( function ( $ ) {
 	"use strict";
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.Panel = {
 
@@ -117,10 +118,15 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.closePanel();
 			} );
 		},
+		
+		removeClasses : function () {
+			BG.Controls.$container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
+		},
 
 		closePanel : function () {
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
+			self.removeClasses();
 			tinymce.activeEditor.undoManager.add();
 		},
 
@@ -210,6 +216,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.show();
 			this.initScroll( control );
 			this.scrollToSelected();
+			
+			self.removeClasses();
+			$target = BG.Menu.$element.targetData[ control.name ];
+			$target.addClass( 'bg-control-element' );
 		}
 
 	};

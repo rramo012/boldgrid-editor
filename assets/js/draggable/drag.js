@@ -798,6 +798,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.wrap_hr_tags();
 		self.wrap_content_elements();
 		self.add_redundant_classes();
+		self.removeClasses();
+	};
+	
+	this.removeClasses = function () {
+		self.$master_container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
 	};
 
 	/**

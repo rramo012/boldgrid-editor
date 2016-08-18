@@ -178,8 +178,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.find('.panel-body').html( template( {
 				'textEffectClasses' : self.textEffectClasses,
+				'fonts' : BoldgridEditor.builder_config.fonts,
 			} ) );
-
+			
+		    var $test = $( '#_font_family .selectize-dropdown-content' ).selectmenu( {
+		        change: function( event, data ) {
+		        	console.log('fff');
+		        }
+		    } ).data( "ui-selectmenu" )._renderItem = function( ul, item ) {
+		    	
+		    	ul.addClass( 'selectize-dropdown-content' );
+		    	
+		    	return $( "<li>" )
+		    	    .data( "ui-autocomplete-item", item )
+		    	    .attr( "data-value", item.label )
+		    	    .append( item.label )
+		    	    .appendTo( ul );
+		    	};
+		    	
+		    	
 			self.initSizeSlider( panel.$element, $target );
 			self.charSpacingSlider( $target );
 			self.lineSpacingSlider( $target );

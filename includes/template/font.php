@@ -4,6 +4,15 @@
 		<select class='google-fonts'>
   			<option value="pending">Family (Not Working Yet)</option>
 		</select>
+		<div id="customize-control-editor">
+			<div id="_font_family">
+				<select class='selectize-dropdown-content'>
+					<# _.each( data.fonts.items, function ( font, index ) { #>
+  					<option class='option' data-index="{{index}}" data-value="{{font.family}}">{{font.family}}</option>
+					<# }); #>
+				</select>
+			</div>
+		</div>
 		<label for="font-color" class='color-preview'></label>
 		<input type="text" data-type="" name='font-color' class='color-control' value=''>
 	</div>
