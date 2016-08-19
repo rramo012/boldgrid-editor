@@ -255,6 +255,10 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_script( 'boldgrid-fourpan',
 			plugins_url( '/assets/js/jquery/jquery.fourpan.js', $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-render-fonts',
+			plugins_url( '/assets/js/render-fonts.js', $plugin_file ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**

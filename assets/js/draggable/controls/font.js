@@ -20,6 +20,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section' ],
 
+		templateMarkup : null,
+
 		textEffectClasses : [
 			{ name : 'mod-text-effect inset-text' },
 			{ name : 'mod-text-effect shadows' },
@@ -53,6 +55,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		setup : function () {
 			self._setupEffectClick();
 			self._setupFamilyColor();
+			
+			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
+				'textEffectClasses' : self.textEffectClasses,
+				'fonts' : BoldgridEditor.builder_config.fonts,
+			} ) 
 		},
 
 		_setupFamilyColor : function () {
@@ -97,7 +104,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.openPanel();
 		},
 
-		initSizeSlider : function ( $container, $el ) {
+		_initSizeSlider : function ( $container, $el ) {
 
 			var elementSize = $el.css( 'font-size' ),
 				defaultSize = elementSize ?  parseInt( elementSize ) : 14,
@@ -167,40 +174,50 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			 	.data('type', 'color')
 			 	.val( textColor );
 		},
+		
+		_initFamilyDropdown : function () {
+			var renderItem,
+				panel = BG.Panel,
+				$select;
+		
+			renderItem = function( ul, item ) {
+		    	ul.addClass( 'selectize-dropdown-content' );
+	    	
+		    	return $( '<li>' )
+		    	    .data( 'ui-autocomplete-item', item )
+		    	    .attr( 'data-value', item.label )
+		    	    .append( item.label )
+		    	    .appendTo( ul );
+		    };
+			
+			panel.$element.find( '.selectize-dropdown-content select' ).selectmenu( {
+		    	select: function( event, data ) {
+		    		$select.attr( 'data-value', data.item.label );
+		    		var $target = BG.Menu.getTarget( self );
+		    		$target.attr( 'data-font-family', data.item.label );
+					BG.Controls.addStyle( $target, 'font-family', data.item.label );
+					BG.FontRender.updateFontLink( BG.Controls.$container );
+		        },
+		    } ).data( 'ui-selectmenu' )._renderItem = renderItem;
+		    	
+			$select = panel.$element.find('.section.family .ui-selectmenu-button' );
+	    	$select.attr( 'data-value', 'Abel' );
+		},
 
 		openPanel : function () {
 			var panel = BG.Panel,
-				template = wp.template( 'boldgrid-editor-font' ),
 				$target = BG.Menu.getTarget( self );
 
 			// Remove all content from the panel.
 			panel.clear();
 
-			panel.$element.find('.panel-body').html( template( {
-				'textEffectClasses' : self.textEffectClasses,
-				'fonts' : BoldgridEditor.builder_config.fonts,
-			} ) );
+			panel.$element.find('.panel-body').html( self.templateMarkup );
 			
-		    var $test = $( '#_font_family .selectize-dropdown-content' ).selectmenu( {
-		        change: function( event, data ) {
-		        	console.log('fff');
-		        }
-		    } ).data( "ui-selectmenu" )._renderItem = function( ul, item ) {
-		    	
-		    	ul.addClass( 'selectize-dropdown-content' );
-		    	
-		    	return $( "<li>" )
-		    	    .data( "ui-autocomplete-item", item )
-		    	    .attr( "data-value", item.label )
-		    	    .append( item.label )
-		    	    .appendTo( ul );
-		    	};
-		    	
-		    	
-			self.initSizeSlider( panel.$element, $target );
+			self._initSizeSlider( panel.$element, $target );
 			self.charSpacingSlider( $target );
 			self.lineSpacingSlider( $target );
 			self._initTextColor( $target );
+			self._initFamilyDropdown();
 
 			// Open Panel.
 			panel.open( self );

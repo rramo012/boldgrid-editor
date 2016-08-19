@@ -532,7 +532,7 @@
 .editor-panel[data-type="font"] .color-preview {
   position: absolute;
   top: 23px;
-  margin-left: 5px; }
+  right: 20px; }
 
 .editor-panel[data-type="font"] .section.effects .panel-selection {
   height: 35px;
@@ -1431,19 +1431,33 @@ body.boldgrid-editor-fullscreen {
 #tinymce .bg-control-element {
   outline: 2px dashed #f95b26 !important; }
 
+.section .selectize-dropdown-content {
+  height: 30px; }
+
 .ui-widget-content .ui-state-default.ui-selectmenu-button {
-  padding: 8px 11px;
+  padding: 6px 11px 8px;
   position: absolute;
   left: 38px;
-  width: 158px !important;
-  border-radius: 0;
+  width: 150px !important;
+  height: 20px;
+  border-radius: 7px;
   background-image: url(../image/web-fonts.png);
   background-color: white;
-  color: transparent; }
+  color: transparent;
+  margin-left: -24px;
+  cursor: pointer;
+  border: none; }
 
 .ui-widget-content .ui-state-default.ui-selectmenu-button .ui-icon {
   position: absolute;
-  right: 10px; }
+  right: -20px;
+  top: 8px; }
+
+.ui-widget-content .ui-state-default.ui-selectmenu-button .ui-selectmenu-text {
+  display: none; }
+
+.ui-widget-content .ui-state-default.ui-selectmenu-button:hover {
+  background-color: #eaeaea; }
 
 .wp-admin .ui-selectmenu-menu {
   display: none; }
@@ -1467,8 +1481,7 @@ body.boldgrid-editor-fullscreen {
   background-color: transparent; }
 
 .wp-admin .ui-selectmenu-menu li:hover {
-  background-color: #d2d2d2;
-  padding: 3px; }
+  background-color: #eaeaea; }
 
 .wp-admin .ui-selectmenu-open {
   display: block; }

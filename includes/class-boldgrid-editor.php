@@ -171,16 +171,19 @@ class Boldgrid_Editor {
 					'boldgrid-parallax', plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
 					array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
 
-			wp_enqueue_script(
-					'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
-					array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
-
-
 			wp_enqueue_style( 'editor-css-imhwpb',
 				plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 			wp_enqueue_style( 'button-css-imhwpb',
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+			wp_enqueue_script( 'boldgrid-render-fonts',
+					plugins_url( '/assets/js/render-fonts.js', $plugin_file ),
+					array (), BOLDGRID_EDITOR_VERSION, true );
+
+			wp_enqueue_script(
+					'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
+					array( 'jquery', 'boldgrid-render-fonts' ),BOLDGRID_EDITOR_VERSION, true );
 		} );
 
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );

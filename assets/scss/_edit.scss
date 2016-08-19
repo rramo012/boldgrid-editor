@@ -8,22 +8,38 @@
 	} 
 }
 
+.section .selectize-dropdown-content {
+    height: 30px;
+}
+
 .ui-widget-content .ui-state-default.ui-selectmenu-button {
-    padding: 8px 11px;
+    padding: 6px 11px 8px;
     position: absolute;
     left: 38px;
-    width: 158px !important;
-    border-radius: 0;
+    width: 150px !important;
+    height: 20px;
+    border-radius: 7px;
     background-image: url(../image/web-fonts.png);
     background-color: white;
     color: transparent;
+    margin-left: -24px;
+    cursor: pointer;
+    border: none;
     
     .ui-icon {
-    	position: absolute;
-    	right: 10px;
+	    position: absolute;
+	    right: -20px;
+	    top: 8px;
+    }
+    
+    .ui-selectmenu-text {
+    	display: none;
+    }
+    
+    &:hover {
+	    background-color: #eaeaea;	
     }
 }
-
 
 .wp-admin .ui-selectmenu-menu {
 	display: none;
@@ -49,8 +65,7 @@
 	}
 	
 	li:hover {
-		background-color: #d2d2d2;
-		padding: 3px;
+		background-color: #eaeaea;
 	}
 }
 
