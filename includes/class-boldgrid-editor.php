@@ -306,7 +306,7 @@ class Boldgrid_Editor {
 			$boldgrid_editor_crop->add_hooks();
 		} else {
 			$this->frontEndHooks();
-			add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
+			//add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
 		}
 	}
 
