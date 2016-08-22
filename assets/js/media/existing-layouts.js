@@ -3,25 +3,25 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 	// General Variables
 	IMHWPB.ExistingLayouts = {};
 	var self = IMHWPB.ExistingLayouts;
-	
+
 	/**
 	 * The initialize process
 	 */
 	self.init = function() {
 		//On Load Events
 		$( function () {
-			self.bind_onload_events(); 
+			self.bind_onload_events();
 		});
-		
+
 		return self;
 	};
-	
+
 	/**
 	 * Call all functions that occur onload
 	 */
 	self.bind_onload_events = function () {
 		self.filter_out_nested_hr();
-		
+
 		$.each( IMHWPB.Globals.tabs['basic-gridblocks']['content'], function ( key ) {
 			var $html = $( this.html );
 			$html.find('img').removeAttr('src class');
@@ -30,7 +30,7 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 			this.generalized_markup = this.generalized_markup.replace(/ /g,'');
 		} );
 	};
-	
+
 	/**
 	 * Remove images missing attributes.
 	 */
@@ -43,9 +43,9 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 			}
 		});
 	}
-	
+
 	/**
-	 * Remove HR's 
+	 * Remove HR's
 	 * <row>
 	 * 		<col>
  	 *			<hr>
@@ -53,16 +53,16 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 	 * <row>
 	 */
 	self.filter_out_nested_hr = function () {
-		
+
 		self.remove_gridblocks_missing_dynamic_attr();
-		
+
 		$('.centered-content-boldgrid .row:not(.row .row) > [class^="col-"] > hr').each( function () {
 			var $this = $(this);
 			if ( !$this.siblings().length ) {
 				$this.closest('.attachment').remove();
 			}
 		});
-		
+
 		var valid_num_of_descendents = 3;
 		$('.centered-content-boldgrid .row:not(.row .row)').each( function () {
 			var $this = $(this);
@@ -73,11 +73,11 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 				}
 			}
 		});
-		
-		
+
+
 		/**
 		 * filters out
-		 * 
+		 *
 		 * <row>
 		 * 		<col>
 		 * 			<row>
@@ -97,16 +97,15 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 				}
 			}
 		});
-		
+
 		//Hide empty rows
 		$('.centered-content-boldgrid > .row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type').each( function () {
 			var $this = $(this);
 			$this.closest('.attachment').remove()
 		});
 	};
-	
+
 	return self;
 
-	
-})(jQuery, window.IMHWPB || {}).init();
 
+})(jQuery, window.IMHWPB || {}).init();

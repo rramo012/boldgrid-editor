@@ -8,7 +8,7 @@ return array (
 		'insert-layout' => array (
 			'tab-details' => array (
 				'type' => 'html',
-				'selection-type' => 'single-item' 
+				'selection-type' => 'single-item'
 			), // multi-select
 			'title' => 'Insert GridBlock',
 			'content-class' => 'Boldgrid_Layout',
@@ -18,35 +18,35 @@ return array (
 			'route-tabs' => array (
 				'basic-gridblocks' => array (
 					'name' => 'GridBlock Library',
-					'content' => array () 
+					'content' => array ()
 				),
 				'static-gridblocks' => array (
 					'name' => 'Inspiration GridBlocks',
-					'content' => array () 
+					'content' => array ()
 				),
 				'page-layout' => array (
 					'name' => 'Current GridBlocks',
-					'content' => array () 
+					'content' => array ()
 				),
 				'basic-image-gridblocks' => array (
 					'name' => 'Basic Image GridBlocks',
 					'content' => array (
-					) 
+					)
 				),
 				'basic-text-gridblocks' => array (
 					'name' => 'Basic Text GridBlocks',
 					'content' => array (
-					) 
+					)
 				),
 				'button-layout' => array (
 					'name' => 'Basic Button GridBlocks',
-					'content' => array () 
+					'content' => array ()
 				),
 				'icon-layout' => array (
 					'name' => 'Basic Icon GridBlocks',
-					'content' => array () 
+					'content' => array ()
 				),
-			) 
+			)
 		),
 		'google-map' => array (
 			'tab-details' => array (
@@ -54,8 +54,8 @@ return array (
 				'selection-type' => 'single-item',
 				'base-url' => 'https://maps.googleapis.com/maps/api/staticmap',
 				'default-location-setting' => array (
-					'center' => 'New York, NY' 
-				) 
+					'center' => 'New York, NY'
+				)
 			),
 			'title' => 'Google Map',
 			'zoom' => '14',
@@ -67,40 +67,40 @@ return array (
 					'name' => 'Map View',
 					'content' => array (
 						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-roadmap.png', 
+							'image' => plugins_url( '/assets/image/maps/google/gm-roadmap.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
 								'maptype' => 'roadmap',
-								'zoom' => '16' 
-							) 
+								'zoom' => '16'
+							)
 						),
 						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-terrain.png', 
+							'image' => plugins_url( '/assets/image/maps/google/gm-terrain.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
 								'maptype' => 'terrain',
-								'zoom' => '16' 
-							) 
+								'zoom' => '16'
+							)
 						),
 						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-satellite.png', 
+							'image' => plugins_url( '/assets/image/maps/google/gm-satellite.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
 								'maptype' => 'satellite',
-								'zoom' => '16' 
-							) 
+								'zoom' => '16'
+							)
 						),
 						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-hybrid.png', 
+							'image' => plugins_url( '/assets/image/maps/google/gm-hybrid.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
 								'maptype' => 'hybrid',
-								'zoom' => '16' 
-							) 
-						) 
-					) 
-				) 
-			) 
-		) 
-	) 
+								'zoom' => '16'
+							)
+						)
+					)
+				)
+			)
+		)
+	)
 );

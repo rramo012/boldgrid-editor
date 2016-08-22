@@ -1,27 +1,27 @@
 (function ($) {
 	"use strict";
-	
+
 	/**
-	 * 
+	 *
 	 * Basic Usage
-	 * 
+	 *
 	 * Inititalize fourpan $init = $().fourpan();
-	 * 
+	 *
 	 * Highlight a selector $init.highlight('.selection-1');
-	 * 
+	 *
 	 */
-	
+
 	if ( $.fourpan ) {
 		return;
 	}
-	
+
 	$.fourpan = function ( el, options ) {
 		var self = this;
-		
+
 		if ( $.fourpan.initiated ) {
 			return;
 		}
-		
+
 		// Find the html element used to place objects
 		var $html;
 		if ( el ) {
@@ -32,13 +32,13 @@
 		} else {
 			$html = $('html');
 		}
-		
+
 		var default_class = 'fourpan-overlays'
 		var overlays_active = false;
 		var panels = {};
 		var settings = $.extend( {}, $.fourpan.defaultOptions, options );
 		var overlay_class_strings = default_class + ' ' + settings.overlay_classes;
-		
+
 		var $close_button = $('<div class="forpan-close-button">Close</div>');
 		$close_button.css({
 			'position' : 'absolute',
@@ -75,14 +75,14 @@
 
 			// Set initiated flag
 			$.fourpan.initiated = true;
-			
+
 			// Create panels
 			create_panels();
-			
+
 			// Bind dismissal action
 			bind_overlay_dismiss();
 		};
-		
+
 		/**
 		 * Find and Create Overlays
 		 */
@@ -99,10 +99,10 @@
 				}
 			});
 		};
-		
+
 		/**
 		 * Creates a single panel
-		 * 
+		 *
 		 * @return $panel
 		 */
 		var create_panel = function ( panel_id ) {
@@ -110,7 +110,7 @@
 			$html.append( $panel );
 			return $panel;
 		};
-		
+
 		/**
 		 * On click over the overlay, dismiss it
 		 */
@@ -123,14 +123,14 @@
 			    }
 			});
 		};
-		
+
 		var dismiss = function () {
 			$html.find( '.' + default_class  ).add($close_button).fadeOut();
 			overlays_active = false;
 			settings.deactivate();
 			unbind_subtree_listener();
 		};
-		
+
 		/**
 		 * Set the intial css for the panels
 		 */
@@ -145,36 +145,36 @@
 				'z-index' : '9999',
 				'background-color' : settings.color
 			});
-			
+
 			// Reset Positions
 			overlays_active = true;
 		};
-		
+
 		$.fourpan.dismiss = function () {
 			dismiss();
 		};
-		
+
 		var bind_subtree_mod = function () {
 			$html.find('body')
 				.on( 'DOMSubtreeModified.fourpan', function ( event ) {
-				
+
 					self.time = event.timeStamp;
 					setTimeout( function () {
 						var now = new Date().getTime();
 						//console.log(now, self.last_event < (now - 250))
 						if ( !self.last_event || self.last_event < (now - 250)) {
-							self.last_event = now; 
-						
+							self.last_event = now;
+
 							$.fourpan.refresh();
 						}
 				}, 250 );
 			} 	);
 		};
-		
+
 		var unbind_subtree_listener = function () {
 			$html.find('body').off('.fourpan');
 		};
-		
+
 		var transition_highlight = function ( $this, speed, padding, show_button ) {
 			if ( speed > 0 ) {
 				$close_button.hide();
@@ -184,12 +184,12 @@
 			panels[settings.id_prefix + '-top'].stop().animate({
 				'height' :Math.max(bounding_rect.top - padding,0)
 			}, speed );
-			
+
 			panels[settings.id_prefix + '-right'].stop().animate({
 				'top' :Math.max(bounding_rect.top - padding,0),
 				'left' : bounding_rect.left + $this.outerWidth() + padding,
 			},  speed );
-			
+
 			panels[settings.id_prefix + '-bottom'].stop().animate({
 				'top' : bounding_rect.top + $this.outerHeight() + padding,
 				'width' : bounding_rect.left + $this.outerWidth() + padding
@@ -206,15 +206,15 @@
 					if ( show_button ) {
 						$close_button.css({
 							'left' : (bounding_rect.left + (($this.outerWidth() + padding) / 2)) - 35,
-							'top' : (bounding_rect.top + $this.outerHeight() + padding) + 20, 
+							'top' : (bounding_rect.top + $this.outerHeight() + padding) + 20,
 						}).fadeIn();
 					}
 					$html.find( '.' + default_class  ).fadeIn();
 				}
 			});
-			
+
 		};
-		
+
 		/**
 		 * Highlight an element
 		 */
@@ -223,7 +223,7 @@
 				if ( selection_string.length > 1 || !selection_string.length ) {
 					return false;
 				}
-					
+
 				var $this = selection_string;
 			} else {
 				var $this = $(selection_string);
@@ -234,20 +234,20 @@
 				return false;
 			}
 			$.fourpan.$recent_highlight = $this;
-			
+
 			if ( overlays_active == false ) {
 				reset_panels();
 				settings.activate( );
 				bind_subtree_mod();
 			//	transition_highlight( $this, 0, 150, false );
 				$html.find( '.' + default_class  ).hide();
-			} 
+			}
 
 			transition_highlight( $this, settings.transition_speed, settings.element_padding, true );
-			
+
 			return true;
 		};
-		
+
 		/**
 		 * Refresh the highlighted element
 		 */
@@ -261,12 +261,12 @@
 				}
 			}
 		};
-		
+
 		init();
 
 		return $html;
 	};
-	
+
 	$.fourpan.defaultOptions = {
 			// Default Options
 			id_prefix: "fourpan-overlay",
@@ -277,11 +277,11 @@
 			activate: function () {},
 			deactivate: function () {},
 	  };
-	
+
 	$.fn.fourpan = function(options){
 		return this.each(function(){
 			(new $.fourpan(this, options));
 		});
 	};
-	
+
 })(jQuery);
