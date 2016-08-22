@@ -61,18 +61,14 @@ if ( true === defined( 'DOING_CRON' ) && DOING_CRON ){
 /**
  * Initialize the editor plugin for Editors and Administrators in the admin section.
  */
-function boldgrid_editor_init() {
-	if ( is_admin() && current_user_can( 'edit_pages' ) ) {
-		$editor = new Boldgrid_Editor();
-	}
-}
-function boldgrid_editor_fe() {
-	if ( ! is_admin() ) {
-		Boldgrid_Editor::frontEndHooks();
-	}
+function boldgrid_editor_init () {
+	$boldgrid_editor = new Boldgrid_Editor();
 }
 
-add_action( 'init', 'boldgrid_editor_init' );
-add_action( 'setup_theme', 'boldgrid_editor_fe' );
+if ( is_admin() ) {
+	add_action( 'init', 'boldgrid_editor_init' );
+} else {
+	add_action( 'setup_theme', 'boldgrid_editor_init' );
+}
 
 
