@@ -10,6 +10,4 @@
 		BOLDGRID.EDITOR.FontRender.updateFontLink( $('html') );
 	};
 	
-	
-	
 } )( jQuery );

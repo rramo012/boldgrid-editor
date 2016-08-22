@@ -22,6 +22,15 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.2.3 In progress =
 * Misc:			JIRA WPB-2256	Updated readme.txt for Tested up to: 4.6.
+* New feature:	JIRA WPB-2065	Added customiztion of Icons.
+* New feature:	JIRA WPB-2065	Added customiztion of Backgrounds.
+* New feature:	JIRA WPB-2065	Added customiztion for widths of rows.
+* New feature:	JIRA WPB-2065	Added customiztion for padding on rows.
+* New feature:	JIRA WPB-2065	Added customiztion of Buttons.
+* New feature:	JIRA WPB-2065	Added customiztion of Fonts.
+* New feature:	JIRA WPB-2065	Introduced customization and new component "Text Backgrounds".
+* New feature:	JIRA WPB-2065	Users can now add border to images.
+* New feature:	JIRA WPB-2065	Users can now apply filters to images.
 * Rework:		JIRA WPB-1825	Formatting.
 
 = 1.2.2 =
