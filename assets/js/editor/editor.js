@@ -257,7 +257,6 @@ IMHWPB.Editor = function( $ ) {
 			});
 			 //Before adding an undo level check to see if this is allowed
 			editor.on('BeforeAddUndo', function(e) {
-				
 				if ( IMHWPBGallery && IMHWPBGallery.init_gallery ) {
 					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
 				}

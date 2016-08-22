@@ -797,7 +797,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * @since 1.1.1.3
 	 */
 	this.failSafeCleanup = function () {
-		self.$master_container.find( '.dragging-started-imhwpb' ).remove();
+		self.$master_container.find( 'body .dragging-started-imhwpb' ).remove();
 		self.$master_container.find( '.cloned-div-imhwpb' ).removeClass( 'cloned-div-imhwpb' );
 	};
 
@@ -1429,7 +1429,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Delete popovers.
 	 */
 	this.delete_popovers = function () {
-		self.$master_container.find( '.draggable-tools-imhwpb' ).each( function() {
+		self.$master_container.find( 'body .draggable-tools-imhwpb' ).each( function() {
 			var $element = $( this );
 			var $element_next = $element.next();
 			if ( $element_next.length ) {
@@ -1449,7 +1449,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		event.preventDefault();
 		event.stopPropagation();
 		self.hide_menus( event );
-		$( this ).closest( '.draggable-tools-imhwpb' ).find( '.popover-menu-imhwpb' ).toggleClass('hidden');
+		$( this ).closest( '.draggable-tools-imhwpb, .bg-drag-popover' ).find( '.popover-menu-imhwpb' ).toggleClass('hidden');
 	};
 
 	/**
@@ -1708,31 +1708,28 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 
 			// Apply hover_elements.
-			$.each( self.hover_elements,
-				function( type, properties ) {
-					if ( this.add_element
-						&& false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
+			$.each( self.hover_elements, function( type, properties ) {
+				if ( this.add_element
+					&& false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
 
-						self.insert_popover( this.add_element );
+					self.insert_popover( this.add_element );
 
-					} else if ( this.remove_element ) {
+				} else if ( this.remove_element ) {
+					self.remove_drag_handle( this.remove_element.element, this.remove_element.tools );
+				}
 
-						self.remove_drag_handle( this.remove_element.element, this.remove_element.tools );
+				// Failsafe due to poor design.
+				// @todo Remove failsafe.
+				if ( !this.add_element ) {
+					var $extra_popovers = self.$master_container.find(
+						"." + type + '-popover-imhwpb' ).closest( '.draggable-tools-imhwpb' );
 
-					}
-
-					// Failsafe due to poor design.
-					// @todo Remove failsafe.
-					if ( !this.add_element ) {
-						var $extra_popovers = self.$master_container.find(
-							"." + type + '-popover-imhwpb' ).closest( '.draggable-tools-imhwpb' );
-
-						$extra_popovers.each( function() {
-							var $this = $( this );
-							self.remove_drag_handle( $this.next(), $this );
-						} );
-					}
-				} );
+					$extra_popovers.each( function() {
+						var $this = $( this );
+						self.remove_drag_handle( $this.next(), $this );
+					} );
+				}
+			} );
 		}
 	};
 

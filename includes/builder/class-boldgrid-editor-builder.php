@@ -60,6 +60,7 @@ class Boldgrid_Editor_Builder {
 		print include $template_path . '/background.php';
 		print include $template_path . '/box.php';
 		print include $template_path . '/panel.php';
+		print include $template_path . '/drag-handles.php';
 	}
 
 	/**

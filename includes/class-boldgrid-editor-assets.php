@@ -208,6 +208,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/draggable/controls/add.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-section',
+			plugins_url( '/assets/js/draggable/controls/section.js', $plugin_file ), array (),
+			BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-icon',
 			plugins_url( '/assets/js/draggable/controls/icon.js', $plugin_file ), array (),
 			BOLDGRID_EDITOR_VERSION, true );

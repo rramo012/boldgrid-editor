@@ -29,6 +29,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			//Create all controls.
 			this.setupControls();
+			
 		},
 		
 		addStyle : function ( element, property, value ) {
@@ -124,6 +125,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$.each( this.controls, function () {
 				self.setupControl( this );
 			} );
+			
+			BOLDGRID.EDITOR.CONTROLS.Section.init( self.$container );
 		},
 
 		setupControl : function ( control ) {

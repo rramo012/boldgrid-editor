@@ -1485,3 +1485,6 @@ body.boldgrid-editor-fullscreen {
 
 .wp-admin .ui-selectmenu-open {
   display: block; }
+
+.bg-drag-popover:hover {
+  display: block !important; }
