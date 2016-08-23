@@ -898,6 +898,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.create_selector_strings();
 
 			self.$master_container.off( '.draggable' );
+			self.$body.off( '.draggable' );
 			self.bind_events();
 
 
@@ -921,6 +922,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.create_selector_strings();
 
 		self.$master_container.off( '.draggable' );
+		self.$body.off( '.draggable' );
 		self.bind_events();
 
 		self.$master_container.find('.current-edit-as-row').removeClass('current-edit-as-row');
@@ -955,6 +957,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.unbind_all_events = function() {
 		self.$master_container.off( '.draggable' );
+		self.$body.off( '.draggable' );
 		self.$master_container.off( '.draggable_mce' );
 		self.$body.attr('style', '');
 	};
@@ -1011,7 +1014,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		//Manage drag handles show/hide
-		self.$master_container
+		self.$body
 			.on( 'mouseenter.draggable', self.draggable_selectors_string + ', .draggable-tools-imhwpb', self.insert_drag_handles )
 			.on( 'mouseleave.draggable', self.draggable_selectors_string + ', .draggable-tools-imhwpb', self.remove_drag_handles );
 
@@ -1030,7 +1033,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.bind_menu_items = function() {
 
-		self.$master_container
+		self.$body
 			.on( 'click.draggable', 'li[data-action="delete"]', self.menu_actions.delete_element )
 			.on( 'click.draggable', 'li[data-action="add-column"]', self.menu_actions.add_column )
 			.on( 'click.draggable', 'li[data-action="duplicate"]', self.menu_actions.duplicate )

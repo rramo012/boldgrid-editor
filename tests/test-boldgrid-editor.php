@@ -41,20 +41,9 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 */
 	public function test_allow_empty_tags() {
 
-		$allow_empty_tags = $this->testClass->allow_empty_tags( array() );
+		$testClass = new Boldgrid_Editor_MCE();
+		$allow_empty_tags = $testClass->allow_empty_tags( array() );
 		$this->assertEquals( 'div[*],i[*]', $allow_empty_tags['extended_valid_elements'] );
-
-	}
-
-	/**
-	 *  Testing getting merge of configs
-	 *  @since 1.0.3
-	 */
-	public function test_get_api_configs() {
-
- 		$api_configs = $this->testClass->get_api_configs();
- 		$this->assertEquals( false, $api_configs['api_configs']['connection_successful'] );
- 		$this->assertEquals( '/api/asset/get', $api_configs['api_configs']['ajax_calls']['get_api_asset'] );
 
 	}
 
@@ -64,7 +53,7 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 */
 	public function test_is_boldgrid_theme_non_bg() {
 
-		$is_boldgrid_theme = Boldgrid_Editor::is_editing_boldgrid_theme();
+		$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
  		$this->assertEquals( false, $is_boldgrid_theme );
 
 	}
@@ -75,7 +64,7 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 */
 	public function test_get_boldgrid_theme_name_non_bg ( ) {
 
-		$get_boldgrid_theme = Boldgrid_Editor::get_boldgrid_theme_name( wp_get_theme() );
+		$get_boldgrid_theme = Boldgrid_Editor_Theme::get_boldgrid_theme_name( wp_get_theme() );
 		$this->assertEquals( '', $get_boldgrid_theme );
 
 	}
@@ -86,7 +75,8 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 */
 	public function test_get_post_url_post_not_found() {
 
-		$get_post_url = $this->testClass->get_post_url();
+		$testClass = new Boldgrid_Editor_Assets();
+		$get_post_url = $testClass->get_post_url();
 		$this->assertEquals( get_site_url(), $get_post_url );
 
 	}
@@ -96,8 +86,7 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 *  @since 1.0.3
 	 */
 	public function test_theme_body_class_default(){
-
-		$theme_body_class = $this->testClass->theme_body_class();
+		$theme_body_class = Boldgrid_Editor_Theme::theme_body_class();
 		$this->assertEquals( 'palette-primary', $theme_body_class );
 
 	}

@@ -106,6 +106,7 @@ html.boldgrid-editor-fullscreen {
     box-shadow: 0 0 15px 5px rgba(33, 117, 155, 1);
 }
 
+.boldgrid-section:hover,
 .changing-padding,
 .added-element,
 .content-border-imhwpb,
@@ -114,6 +115,10 @@ html.boldgrid-editor-fullscreen {
 .draggable-tools-imhwpb + *:not(button),
 .draggable-tools-imhwpb + .row:not(button) > [class*="col-md"] {
     outline: 1px dashed gray !important;
+}
+
+.drag-progress .boldgrid-section:hover {
+	outline-color: transparent !important;
 }
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,
@@ -235,10 +240,10 @@ html.boldgrid-editor-fullscreen {
     bottom: -20px;
 }
 .bottom-popover-imhwpb:after {
-    left: -6px;
-    right: -6px;
+    left: -30px;
+    right: -30px;
     top: -20px;
-    bottom: -20px;
+    bottom: -20px
 }
 
 .popover-imhwpb:before {
@@ -263,6 +268,11 @@ html.boldgrid-editor-fullscreen {
     -ms-transform: rotate(270deg); /* IE 9 */
     -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
     transform: rotate(270deg);
+}
+.bottom-popover-imhwpb:before{
+    -ms-transform: rotate(180deg) translateX(50%);
+    -webkit-transform: rotate(180deg) translateX(50%);
+    transform: rotate(180deg) translateX(50%);
 }
 
 .left-popover-imhwpb, .right-popover-imhwpb {
@@ -291,13 +301,25 @@ html.boldgrid-editor-fullscreen {
     bottom: -6px;
     right: 39%;
 }
-.bottom-popover-imhwpb{
-	transform: rotateZ(180deg);
-}
 .bottom-popover-imhwpb:before{
-    bottom: -6px;
+    top: -6px;
     left: 50%;
-    transform: translate(-50%);
+}
+.bottom-popover-imhwpb .popover-menu-imhwpb ul {
+    left: 40px;
+    top: 0px;
+}
+.bottom-popover-imhwpb .popover-menu-imhwpb ul:before {
+    content: ' ';
+    width: 150%;
+    height: 150%;
+    position: absolute;
+    left: -34px;
+    top: -28px;
+}
+.bottom-popover-imhwpb .context-menu-imhwpb {
+    position: relative;
+    z-index: 9999;
 }
 
 .top-popover-imhwpb {
@@ -411,39 +433,39 @@ html.boldgrid-editor-fullscreen {
 	padding-left: 20px;
 }
 
-.popover-menu-imhwpb ul .side-menu {
+.popover-imhwpb .popover-menu-imhwpb ul .side-menu {
 	display: none;
 }
 
-.popover-menu-imhwpb ul .side-menu li:hover {
+.popover-imhwpb .popover-menu-imhwpb ul .side-menu li:hover {
 	cursor: pointer !important;
 	color: white !important;
     background-color: #23282d !important;
 }
 
-.popover-menu-imhwpb .side-menu:hover,
+.popover-imhwpb .popover-menu-imhwpb .side-menu:hover,
 .popover-menu-imhwpb li:hover + .side-menu {
 	display: block;
 }
 
-.popover-menu-imhwpb .side-menu {
+.popover-imhwpb  .popover-menu-imhwpb .side-menu {
 	display: block;
 	position:relative
 }
-.popover-menu-imhwpb .side-menu ul {
+.popover-imhwpb .popover-menu-imhwpb .side-menu ul {
 	position: absolute;
     right: -100px;
     left: auto;
     top: -25px;
     width: 100px;
 }
-.popover-menu-imhwpb .side-menu ul li {
+.popover-imhwpb .popover-menu-imhwpb .side-menu ul li {
     padding-left: 15px;
 	background-color: white;
     color: #23282d;
     text-align: left;
 }
-.popover-menu-imhwpb .side-menu ul li:before {
+.popover-imhwpb .popover-menu-imhwpb .side-menu ul li:before {
 	display: none;
 }
 
@@ -474,6 +496,8 @@ html.boldgrid-editor-fullscreen {
 .popover-menu-imhwpb li[data-action="clear"]::before {
 	background-image: url("../../../image/icons/clear-contents.png");
 }
+.popover-menu-imhwpb li[data-action="move-down"]:before,
+.popover-menu-imhwpb li[data-action="move-up"]:before,
 .popover-menu-imhwpb li[data-action="vertical-alignment"]:after,
 .popover-menu-imhwpb li[data-action="vertical-alignment"]::before,
 .popover-menu-imhwpb li[data-action="add-media"]::before {
@@ -484,6 +508,12 @@ html.boldgrid-editor-fullscreen {
     color: #737373;
 	padding-left: 5px;
     padding-top: 3px;
+}
+.popover-menu-imhwpb li[data-action="move-down"]::before {
+    content: "\f347";
+}
+.popover-menu-imhwpb li[data-action="move-up"]::before {
+    content: "\f343";
 }
 .popover-menu-imhwpb li[data-action="vertical-alignment"]::before {
 	content: "\f207";
@@ -523,6 +553,8 @@ html.boldgrid-editor-fullscreen {
 	background-image: url("../../../image/icons/clear-contents-hover.png");
 }
 
+.popover-menu-imhwpb li[data-action="move-up"]:hover::before,
+.popover-menu-imhwpb li[data-action="move-down"]:hover::before,
 .popover-menu-imhwpb li[data-action="vertical-alignment"]:hover::before,
 .popover-menu-imhwpb li[data-action="add-media"]:hover::before {
     color: white;

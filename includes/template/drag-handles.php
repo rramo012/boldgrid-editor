@@ -8,9 +8,9 @@
 				<ul>
 					<li class="no-select-imhwpb action-list" data-action="">Edit Section</li>
 					<li class="no-select-imhwpb action-list" data-action="delete">Delete</li>
-					<li class="no-select-imhwpb action-list" data-action="clear">Clear Contents</li>
-					<li class="no-select-imhwpb action-list" data-action="clear">Move Section Up</li>
-					<li class="no-select-imhwpb action-list" data-action="clear">Move Section Down</li>
+					<li class="no-select-imhwpb action-list" data-action="duplicate">Clone</li>
+					<li class="no-select-imhwpb action-list" data-action="move-up">Move Up</li>
+					<li class="no-select-imhwpb action-list" data-action="move-down">Move Down</li>
 				</ul>
 			</div>
 			<div title="Modify" class="context-menu-imhwpb draggable-button">
