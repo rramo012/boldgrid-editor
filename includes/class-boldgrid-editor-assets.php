@@ -110,6 +110,7 @@ class Boldgrid_Editor_Assets {
 				'saved_colors' => Boldgrid_Editor_Builder::get_editor_option( 'custom_colors', array() ),
 				'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
 				'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
+				'default_container' => Boldgrid_Editor_Builder::get_page_container()
 			) );
 
 		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );

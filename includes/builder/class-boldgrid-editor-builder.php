@@ -227,4 +227,24 @@ HTML;
 		$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
 		self::update_editor_option( 'custom_colors', $custom_colors );
 	}
+
+	public static function get_page_container() {
+		global $boldgrid_theme_framework;
+		global $post;
+
+		$container = 'container-fluid';
+
+		if ( $boldgrid_theme_framework && ! empty( $post->ID ) ) {
+
+			$slug = get_page_template_slug( $post->ID );
+
+			$configs = $boldgrid_theme_framework->get_configs();
+
+			if ( !empty( $configs['template']['pages'][ $slug ]['entry-content'] ) ) {
+				$container = $configs['template']['pages'][ $slug ]['entry-content'];
+			}
+		}
+
+		return $container;
+	}
 }

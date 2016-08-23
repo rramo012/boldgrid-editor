@@ -45,9 +45,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			familyParam = familyParam.join('|');
 			
 			// Create params string
-			params = jQuery.param( { family: familyParam } );
+			if ( familyParam ) {
+				params = jQuery.param( { family: familyParam } );
+				$link.attr( 'href' , baseUrl + params );
+			}
 			
-			$link.attr( 'href' , baseUrl + params );
 		}
 	};
 	

@@ -19,11 +19,13 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
         return $closest;
     };
     
-	var defaultContainerClass = 'container',
+	var defaultContainerClass = 'container-fluid',
 		section = '<div class="boldgrid-section"></div>',
 		container = '<div class="' + defaultContainerClass + '"></div>';
 
 	self.updateContent = function ( $context ) {
+		
+		defaultContainerClass = BoldgridEditor.default_container || 'container-fluid';
 		
 		self.$context = $context;
 		
@@ -40,7 +42,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
     	self.$context.find( '> .boldgrid-section' ).each( function () {
 			var $this = $( this );
 			
-            // If the is doesnt have a container as its only immediate child wrap it up. 
+            // If this doesnt have a container as its only immediate child wrap it up. 
             if ( $this.children().length !== 1 || ! $this.find('> div').is( '.container, .container-fluid') )  {
                 var $container =  $( container ).html( $this.html() );
                 $this.html( $container );
