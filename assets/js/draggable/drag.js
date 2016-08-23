@@ -124,11 +124,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.boldgrid_edit_row = $.Event( 'boldgrid_edit_row' );
 
 	/**
-	 * An Event that indicates that dragging has finished.
-	 */
-	this.drag_end_event = $.Event( 'drag_end_dwpb' );
-
-	/**
 	 * A Boolean indicating whether or not we have disbabled popovers.
 	 */
 	this.popovers_disabled = false;
@@ -148,16 +143,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Has the user recently clicked on nesting a row.
 	 */
 	this.nest_row = false;
-
-	/**
-	 * Boolean: are popovers disabled.
-	 */
-	this.popovers_disabled = false;
-
-	/**
-	 * How many pixels away from the drag border.
-	 */
-	this.right_resize_buffer = 10;
 
 	/**
 	 * A booleaan that helps us force drag drop event on safarii and ie.
@@ -1594,7 +1579,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Adds a popover before a row, content or column element.
 	 */
 	this.insert_popover = function( $current ) {
-		if ( !self.$master_container.find( $current ) ) {
+		if ( ! self.$master_container.find( $current ).length ) {
 			return;
 		}
 
@@ -1856,8 +1841,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				larger_position = offset_added - current_column_size + offset.right;
 				smaller_override = self.pageX < smaller_position;
 				larger_override = self.pageX > larger_position ||
-				// If the users cursor is anywhere outside of the row + 10, make larger.
-				$row[0].getBoundingClientRect().right + self.right_resize_buffer < self.pageX;
+					// If the users cursor is anywhere outside of the row + 10, make larger.
+					$row[0].getBoundingClientRect().right + self.right_resize_buffer < self.pageX;
 			}
 
 			var resize_buffer = row_width * self.resize_buffer;
@@ -1968,10 +1953,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.remove_border_classes = function ( $container ) {
 		// Remove Border Classes.
 		$container
-			.find(
-				'.resize-border-left-imhwpb, .resizing-imhwpb, .resize-border-right-imhwpb, .content-border-imhwpb' )
-			.removeClass(
-				'resize-border-right-imhwpb resizing-imhwpb resize-border-left-imhwpb content-border-imhwpb' );
+			.find( '.resize-border-left-imhwpb, .resizing-imhwpb, .resize-border-right-imhwpb, .content-border-imhwpb' )
+			.removeClass( 'resize-border-right-imhwpb resizing-imhwpb resize-border-left-imhwpb content-border-imhwpb' );
 	};
 
 	/**

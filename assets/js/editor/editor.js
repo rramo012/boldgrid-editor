@@ -481,7 +481,6 @@ IMHWPB.Editor = function( $ ) {
 
 			//Once an object is resized, allow boldgrid popovers.
 			editor.on('ObjectResized', function(e) {
-				return;
 				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = false;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
@@ -494,7 +493,6 @@ IMHWPB.Editor = function( $ ) {
 			 * that we wrapped around anchors as well as any other cleanup
 			 */
 			editor.on('GetContent', function(e) {
-				return;
 				if (e.content) {
 					e.content = self.reset_anchor_spaces('<div>' + e.content + '</div>', false);
 					if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
