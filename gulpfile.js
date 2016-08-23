@@ -35,6 +35,7 @@ gulp.task( 'scssCompile', function(  ) {
 gulp.task( 'jsmin-drag', function ( cb ) {
 	pump( [
 		gulp.src( [ 
+		    config.src + 'assets/js/render-fonts.js',
 			config.src + 'assets/js/draggable/**/*.js',
 			config.src + 'assets/js/jquery/**/*.js',
 		] ),

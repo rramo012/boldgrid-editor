@@ -200,6 +200,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * Open a panel for a control
 		 */
 		open : function ( control ) {
+			var $target;
+			
 			tinymce.activeEditor.undoManager.add();
 			
 			BOLDGRID.EDITOR.Menu.activateControl( control );
