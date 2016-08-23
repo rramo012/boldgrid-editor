@@ -21,7 +21,7 @@ h6,
 .wpview-wrap,
 .wpview {
   transition: outline .5s;
-  outline: 1px dashed rgba(0,0,0,0) !important;
+  outline: 1px dashed rgba(0,0,0,0);
 }
 
 hr {
