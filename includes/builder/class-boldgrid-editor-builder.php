@@ -237,6 +237,7 @@ HTML;
 		if ( $boldgrid_theme_framework && ! empty( $post->ID ) ) {
 
 			$slug = get_page_template_slug( $post->ID );
+			$slug = $slug ? $slug : 'default';
 
 			$configs = $boldgrid_theme_framework->get_configs();
 

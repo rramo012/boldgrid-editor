@@ -24,11 +24,12 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		container = '<div class="' + defaultContainerClass + '"></div>';
 
 	self.updateContent = function ( $context ) {
-		
+
 		defaultContainerClass = BoldgridEditor.default_container || 'container-fluid';
-		
+		container = '<div class="' + defaultContainerClass + '"></div>';
+
 		self.$context = $context;
-		
+
 		removeDoubleContainers();
 		addSections();
 		addContainers();
