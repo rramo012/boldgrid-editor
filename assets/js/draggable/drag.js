@@ -549,7 +549,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'clear',
 		'delete',
 		'clone-as-row',
-		'vertical-alignment',
+		'align-top',
+		'align-bottom',
+		'align-default',
+		'align-center',
 	];
 
 	/**
@@ -3441,12 +3444,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	
 	var alignColumn = function ( $popover, alignment ) {
 		var $column = $popover.closest( '.draggable-tools-imhwpb' ).next();
-	
+
 		$column.removeClass( 'align-column-top align-column-bottom align-column-center' );
 
 		if ( alignment ) {
 			$column.addClass( 'align-column-' + alignment );
 		}
+
+		$popover.closest( '.popover-menu-imhwpb' ).addClass('hidden');
+
 	};
 
 	/**
