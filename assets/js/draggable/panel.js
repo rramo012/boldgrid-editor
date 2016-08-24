@@ -160,7 +160,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				scrollOffset = self.currentControl.panel.scrollOffset;
 			}
 
-			scrollPos = $selected.position().top - ( self.$element.height() / 2 ) + scrollOffset;
+			scrollPos = $selected.position().top + scrollOffset;
 			self.scrollTo( scrollPos + 'px' );
 		},
 		

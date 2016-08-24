@@ -31,7 +31,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			height : '500px',
 			width : '300px',
 			scrollTarget : '.presets',
-			scrollOffset : 130,
 			sizeOffset : -170,
 			includeFooter : true,
 			customizeCallback : function () {
