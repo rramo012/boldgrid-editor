@@ -298,4 +298,9 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'editor-css-imhwpb' );
 		wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 	}
+
+	public function add_editor_styles() {
+		//@Todo: make sure this doesnt conflict with framework.
+		add_editor_style( '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+	}
 }
