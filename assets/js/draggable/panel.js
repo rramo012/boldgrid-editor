@@ -71,8 +71,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$(".panel-body").slimScroll({destroy: true}).attr('style', '');
 			this.$element.find( target ).slimScroll( {
 			    color: '#32373c',
-			    size: '7px',
+			    size: '8px',
 			    height: parseInt( control.panel.height ) + sizeOffset,
+			    alwaysVisible: true,
+			    disableFadeOut: true,
 			    wheelStep: 5,
 			} );
 		},
@@ -174,7 +176,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 		
 		scrollTo : function ( to ) {
-			this.$element.find( self.getScrollTarget() ).slimScroll( { scrollTo : to } );
+			this.$element.find( self.getScrollTarget() ).slimScroll( { 
+			    scrollTo : to,
+			    alwaysVisible: true,
+			    disableFadeOut: true
+			} );
 		},
 
 		clear : function () {
