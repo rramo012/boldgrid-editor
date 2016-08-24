@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.2.5 InProgress =
+* New feature:	JIRA WPB-2065	Row resizing now works in nested rows.
+
 = 1.2.4 =
 * Bug fix:		JIRA WPB-2272	Fixing issue with default container class.
 * Bug fix:		JIRA WPB-2271	Fixing JS error when gallery plugin is missing.

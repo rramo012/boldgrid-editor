@@ -895,6 +895,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			self.$body.removeClass('editing-as-row');
 			self.window_mouse_leave();
+			self.$master_container.trigger( 'edit-as-row-leave' );
 		}
 	};
 
@@ -918,6 +919,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.editting_as_row = $.fourpan.$recent_highlight;
 		self.$body.addClass('editing-as-row');
+		self.$master_container.trigger( 'edit-as-row-enter' );
 		self.window_mouse_leave();
 	};
 

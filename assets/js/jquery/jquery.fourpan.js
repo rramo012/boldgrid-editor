@@ -43,16 +43,15 @@
 		$close_button.css({
 			'position' : 'absolute',
 			'z-index' : '10000',
-			'font-size' : '20px',
+			'font-size' : '16px',
 			'background' : 'rgb(213, 78, 33)',
-			'border-radius' : '6px',
-			'padding': '6px 13px',
-			'text-shadow' : '1px 1px 0 #222',
+			'border-radius' : '25px',
+			'padding': '8px 15px',
 			'color' : 'white',
 			'display' : 'none',
 		}).on('mouseenter', function() {
 			  $(this).css({
-				  "background-color":"#f95b26",
+				  "background-color" : "#f95b26",
 				  "cursor" : "pointer"
 			  })
 		}).on('mouseleave', function() {

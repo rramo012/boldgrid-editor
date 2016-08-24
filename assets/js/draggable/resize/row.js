@@ -10,7 +10,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 
 	BOLDGRID.EDITOR.RESIZE.Row = {
 
-		$body : $( 'body' ),
+		$body : null,
 		handleSize : 20,
 		$container : null,
 		$topHandle : null,
@@ -87,14 +87,20 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 						BG.Controls.addStyle( self.$currentRow, setting, padding );
 					}
 
-					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
+					if ( $body.hasClass( 'editing-as-row' ) && $.fourpan ) {
+						$.fourpan.refresh();
+					}
 				}
 			} );
 		},
 
 		bindHandlers : function () {
-			self.$container.on( 'mouseenter', '.row:not(.row .row)', self.positionHandles );
-			self.$container.on( 'mouseleave', '.row:not(.row .row)', self.hideHandles );
+			self.$container.on( 'mouseenter', '.row:not(.row .row):not(.editing-as-row .row)', self.positionHandles );
+			self.$container.on( 'mouseleave', '.row:not(.row .row):not(.editing-as-row .row)', self.hideHandles );
+			self.$container.on( 'mouseenter', '.editing-as-row .row .row:not(.row .row .row)', self.positionHandles );
+			self.$container.on( 'mouseleave', '.editing-as-row .row .row:not(.row .row .row)', self.hideHandles );
+			self.$container.on( 'edit-as-row-enter', self.hideHandles );
+			self.$container.on( 'edit-as-row-leave', self.hideHandles );
 		},
 		positionHandles : function() {
 			var pos = this.getBoundingClientRect(),
