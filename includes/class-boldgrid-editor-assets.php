@@ -166,7 +166,14 @@ class Boldgrid_Editor_Assets {
 			array( 'jquery', 'wp-color-picker' ), null, true );
 
 		// Dependencies:
-		$deps = array( 'jquery-ui-draggable', 'jquery-ui-resizable', 'jquery-ui-slider', 'jquery-ui-droppable', 'jquery-ui-selectmenu' );
+		$deps = array(
+			'jquery-ui-draggable',
+			'jquery-ui-resizable',
+			'jquery-ui-slider',
+			'jquery-ui-droppable',
+			'jquery-ui-selectmenu',
+			'jquery-masonry'
+		);
 
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
 			wp_enqueue_script( 'boldgrid-editor-drag',
