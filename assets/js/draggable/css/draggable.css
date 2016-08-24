@@ -117,6 +117,7 @@ html.boldgrid-editor-fullscreen {
     outline: 1px dashed gray !important;
 }
 
+.draggable-tools-imhwpb + .row .row > [class*="col-md"],
 .drag-progress .boldgrid-section:hover {
 	outline-color: transparent !important;
 }
