@@ -1073,6 +1073,9 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Drag n Drop Resize
 --------------------------------------------------------------*/
+.drag-progress .draghandle {
+  display: none !important; }
+
 .draghandle {
   width: 20px;
   height: 20px;
