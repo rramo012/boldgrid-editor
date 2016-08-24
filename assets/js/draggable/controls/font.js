@@ -59,6 +59,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses' : self.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
+				'themeFonts' : [
+					'Aclonica',
+					'Acme',
+					'Italianno'
+				],
+				'myFonts' : [
+					'Aclonica',
+					'Acme',
+					'Italianno'
+				]
 			} ) 
 		},
 
@@ -178,19 +188,34 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_initFamilyDropdown : function () {
 			var renderItem,
 				panel = BG.Panel,
-				$select;
-		
-			renderItem = function( ul, item ) {
-		    	ul.addClass( 'selectize-dropdown-content' );
-	    	
-		    	return $( '<li>' )
-		    	    .data( 'ui-autocomplete-item', item )
-		    	    .attr( 'data-value', item.label )
-		    	    .append( item.label )
-		    	    .appendTo( ul );
-		    };
+				$select, $ul;
 			
-			panel.$element.find( '.selectize-dropdown-content select' ).selectmenu( {
+		    $.widget( "custom.fontfamilyselect", $.ui.selectmenu, {
+		        _renderItem: function( ul, item ) {
+			    	ul.addClass( 'selectize-dropdown-content' );
+			    	
+			    	console.log( item );
+			    	return $( '<li>' )
+			    	    .data( 'ui-autocomplete-item', item )
+			    	    .attr( 'data-value', item.label )
+			    	    .attr( 'data-type', item.element.data('type') )
+			    	    .append( item.label )
+			    	    .appendTo( ul );
+		        },
+			    _renderMenu : function ( ul, items ) {
+			    	var self = this;
+			    	$.each( items, function( index, item ) {
+			    		self._renderItemData( ul, item );
+			    	} );
+			    	
+			    	ul.find('[data-type="theme"]:first').before( '<h3 class="seperator">Theme Fonts</h3>' );
+			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">Page Fonts</h3>' );
+			    	ul.find('[data-type="all"]:first').before( '<h3 class="seperator">All Fonts</h3>' );
+				}
+		        
+		    } );
+		
+			panel.$element.find( '.selectize-dropdown-content select' ).fontfamilyselect( {
 		    	select: function( event, data ) {
 		    		$select.attr( 'data-value', data.item.label );
 		    		var $target = BG.Menu.getTarget( self );
@@ -198,10 +223,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					BG.Controls.addStyle( $target, 'font-family', data.item.label );
 					BG.FontRender.updateFontLink( BG.Controls.$container );
 		        },
-		    } ).data( 'ui-selectmenu' )._renderItem = renderItem;
+		    } )
+			/*
+			panel.$element.find( '.selectize-dropdown-content select' )
+				.selectmenu().data( 'ui-selectmenu' )*/
+			
+			console.log( $ul );
 		    	
-			$select = panel.$element.find('.section.family .ui-selectmenu-button' );
-	    	$select.attr( 'data-value', 'Abel' );
+			$select = self.getFamilySelection();
+			
+			self.preselectFamily();
+		},
+		
+		getFamilySelection : function () {
+			return BG.Panel.$element.find('.section.family .ui-selectmenu-button' );
+		},
+		
+		preselectFamily : function () {
+			var defaultFamily = 'Abel',
+				$select = self.getFamilySelection(),
+				$target = BG.Menu.getTarget( self );
+			
+			if ( $target.attr('data-font-family') ) {
+				defaultFamily = $target.attr('data-font-family');
+			}
+
+	    	$select.attr( 'data-value', defaultFamily );
 		},
 
 		openPanel : function () {

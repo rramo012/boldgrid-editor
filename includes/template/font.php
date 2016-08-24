@@ -3,8 +3,14 @@
 		<h4>Font</h4>
 		<div class="selectize-dropdown-content">
 			<select>
+				<# _.each( data.themeFonts, function ( family, index ) { #>
+  				<option class='option' data-type="theme" data-index="{{index}}" data-value="{{family}}">{{family}}</option>
+				<# }); #>
+				<# _.each( data.myFonts, function ( family, index ) { #>
+  				<option class='option' data-type="custom" data-index="{{index}}" data-value="{{family}}">{{family}}</option>
+				<# }); #>
 				<# _.each( data.fonts.items, function ( font, index ) { #>
-  				<option class='option' data-index="{{index}}" data-value="{{font.family}}">{{font.family}}</option>
+  				<option class='option' data-type="all"  data-index="{{index}}" data-value="{{font.family}}">{{font.family}}</option>
 				<# }); #>
 			</select>
 		</div>

@@ -113,7 +113,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		clearSelected : function () {
-			BOLDGRID.EDITOR.Panel.$element.find( '.selected' ).removeClass( 'selected' );
+			this.$element.find( '.selected' ).removeClass( 'selected' );
 		},
 
 		/**
@@ -144,6 +144,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
 			self.removeClasses();
+			this.$element.find('.panel-body').empty();
 			tinymce.activeEditor.undoManager.add();
 		},
 
