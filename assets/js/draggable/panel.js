@@ -40,6 +40,21 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$( 'body' ).append( this.$element );
 		},
 
+		centerPanel : function () {
+			var $window = $(window),
+			    width = parseInt( this.$element.css('width') ),
+			    height = parseInt( this.$element.css('height') ),
+			    windowWidth = $window.width(),
+			    windowHeight = $window.height(),
+			    centerWidth = ( windowWidth / 2 ) - ( width / 2 ),
+			    centerHeight = ( windowHeight / 2 ) - ( height / 2 );
+
+			this.$element.css( {
+				'top' : centerHeight,
+				'left' : centerWidth
+			} );
+		},
+
 		/**
 		 * Setup Scrolling within the panel.
 		 *

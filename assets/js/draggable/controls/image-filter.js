@@ -332,6 +332,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			// Open Panel.
 			panel.open( self );
+			panel.centerPanel();
 		},
 		
 		/**
