@@ -426,7 +426,9 @@
 .editor-panel[data-type="background"] .preset-wrapper[data-type="color"] ~ .customize .background-color {
   display: block; }
 
-.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .background-color {
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .direction,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-2,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-1 {
   display: block; }
 
 .editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .scroll-effects,
@@ -1477,6 +1479,7 @@ body.boldgrid-editor-fullscreen {
 .wp-admin .ui-selectmenu-menu li:hover {
   color: transparent;
   background-image: url(../image/web-fonts.png);
+  background-color: white;
   height: 25px;
   margin: 4px 0px;
   border: none;
@@ -1493,11 +1496,19 @@ body.boldgrid-editor-fullscreen {
   padding: 7px 11px;
   background-color: #32373c;
   color: white;
-  margin-top: -2px;
   margin-left: -2px;
+  margin-top: 8px;
   margin-bottom: 5px;
   font-size: 15px;
+  zoom: 1;
+  float: left;
+  clear: left;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; }
+
+.wp-admin .ui-selectmenu-menu .seperator:first-of-type,
+.wp-admin .ui-selectmenu-menu .seperator:hover:first-of-type {
+  margin-top: -2px; }
 
 .wp-admin .ui-selectmenu-open {
   display: block; }

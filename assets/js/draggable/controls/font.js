@@ -59,16 +59,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses' : self.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
-				'themeFonts' : [
-					'Aclonica',
-					'Acme',
-					'Italianno'
-				],
-				'myFonts' : [
-					'Aclonica',
-					'Acme',
-					'Italianno'
-				]
+				'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
+				'myFonts' : [ ]
 			} ) 
 		},
 
@@ -194,7 +186,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		        _renderItem: function( ul, item ) {
 			    	ul.addClass( 'selectize-dropdown-content' );
 			    	
-			    	console.log( item );
 			    	return $( '<li>' )
 			    	    .data( 'ui-autocomplete-item', item )
 			    	    .attr( 'data-value', item.label )
@@ -209,10 +200,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			    	} );
 			    	
 			    	ul.find('[data-type="theme"]:first').before( '<h3 class="seperator">Theme Fonts</h3>' );
-			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">Page Fonts</h3>' );
+			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">Custom Fonts</h3>' );
 			    	ul.find('[data-type="all"]:first').before( '<h3 class="seperator">All Fonts</h3>' );
+			    	
+			    	setTimeout( function () {
+			    		ul.find('.seperator').removeClass('ui-menu-item');
+			    	} );
 				}
-		        
 		    } );
 		
 			panel.$element.find( '.selectize-dropdown-content select' ).fontfamilyselect( {
@@ -222,13 +216,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		    		$target.attr( 'data-font-family', data.item.label );
 					BG.Controls.addStyle( $target, 'font-family', data.item.label );
 					BG.FontRender.updateFontLink( BG.Controls.$container );
-		        },
-		    } )
-			/*
-			panel.$element.find( '.selectize-dropdown-content select' )
-				.selectmenu().data( 'ui-selectmenu' )*/
-			
-			console.log( $ul );
+		        }
+		    } );
 		    	
 			$select = self.getFamilySelection();
 			

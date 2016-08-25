@@ -38,8 +38,11 @@ class Boldgrid_Editor_Builder {
 	 * @return array Configs for the styler.
 	 */
 	public static function get_builder_config() {
+		$fonts = new Boldgrid_Editor_Builder_Fonts();
+
 		$builder_configs = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
 		$builder_configs['fonts'] = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		return $builder_configs;
 	}
 
@@ -92,6 +95,7 @@ class Boldgrid_Editor_Builder {
 			'color' => array(),
 			'image' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
 			'pattern' => self::get_patterns(),
+			//'default_gradients' =>  json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
 			'gradients' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) )
 		);
 	}
@@ -248,4 +252,5 @@ HTML;
 
 		return $container;
 	}
+
 }

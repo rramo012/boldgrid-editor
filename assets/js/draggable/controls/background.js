@@ -86,7 +86,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupCustomizeLeave();
 			self._setupBackgroundSize();
 			self._setupBackgroundColor();
+			self._setupGradientColor();
 			self._setupScrollEffects();
+			self._setupGradientDirection();
 			self._setupCustomization();
 		},
 
@@ -109,6 +111,29 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 
+		},
+		_setupGradientColor : function () {
+			var panel = BG.Panel;
+			
+			panel.$element.on( 'change', '.background-design [name^="gradient-color"]', function () {
+				var $this = $( this ),
+					$target = BG.Menu.$element.targetData[ self.name ],
+					value = $this.val(),
+					name = $this.attr('name'),
+					type = $this.data('type');
+				
+				if ( 'class' == type ) {
+					value = BoldgridEditor.colors[ value - 1 ];
+				}
+				
+				if ( 'gradient-color-1' === name ) {
+					$target.attr( 'data-bg-color-1', value );
+				} else {
+					$target.attr( 'data-bg-color-2', value );
+				}
+				
+				BG.Controls.addStyle( $target, 'background-image', self.createGradientCss( $target ) );
+			} );
 		},
 
 		_setupCustomization : function() {
@@ -140,6 +165,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
+		_setupGradientDirection : function () {
+			var panel = BG.Panel;
+			
+			panel.$element.on( 'change', '.background-design input[name="bg-direction"]', function ( e ) {
+				var $this = $( this ),
+				$target = BG.Menu.getTarget( self );
+				
+				$target.attr('data-bg-direction', $this.val() );
+				BG.Controls.addStyle( $target, 'background-image', self.createGradientCss( $target ) );
+			} );
+		},
+		
+		
+		createGradientCss : function ( $element ) {
+			return 'linear-gradient(' + $element.attr('data-bg-direction') + ',' +
+				$element.attr('data-bg-color-1') + ',' + $element.attr('data-bg-color-2') + ')';
+		},
+		
 		_setupBackgroundSize : function () {
 			var panel = BG.Panel;
 
@@ -166,6 +209,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				panel.$element.find('.preset-wrapper').show();
 				panel.$element.find('.background-design .customize').hide();
+				self.preselectBackground();
 				panel.scrollToSelected();
 				panel.showFooter();
 			} );
@@ -216,6 +260,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.$element.find( '.presets .selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
 				self.setImageSelection( imageSrc, $this.data('type'), background );
+				
+				// Reset Gradient attributes.
+				$target.removeAttr('data-bg-color-1')
+					.removeAttr('data-bg-color-2')
+					.removeAttr('data-bg-direction');
 
 				if ( 'image' == $this.data('type') ) {
 					self.setImageBackground( imageUrl );
@@ -226,6 +275,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					BG.Controls.addStyle( $target, 'background-size', 'auto auto' );
 					BG.Controls.addStyle( $target, 'background-repeat', 'repeat' );
 					BG.Controls.addStyle( $target, 'background-image', imageSrc );
+				} else if ( 'gradients' == $this.data('type') ) {
+					BG.Controls.addStyle( $target, 'background-image', imageSrc );
+					$target.attr('data-bg-color-1', $this.data('color1') )
+						.attr('data-bg-color-2', $this.data('color2') )
+						.attr('data-bg-direction', $this.data('direction') );
 				} else {
 					BG.Controls.addStyle( $target, 'background-image', imageSrc );
 				}
@@ -320,38 +374,59 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find('.background-design .customize').show();
 			BG.Panel.$element.find('.preset-wrapper').attr('data-type', BG.Panel.$element.find('.current-selection').attr('data-type') );
 			self._initSliders();
+			self.selectDefaults();
 			BG.Panel.hideFooter();
 		},
+		
+		selectDefaults : function () {
+		},
 
+		randomGradientDirection : function () {
+			var directions = [
+				'to left',
+				'to bottom',
+			];
+			
+			return directions [Math.floor( Math.random() * directions.length ) ];
+		},
+		
 		// Randomize gradients.
 		// Deprecated
 		_renderGradients : function () {
-			var directions = [
-				'to left',
-				'to right',
-				'to bottom',
-				'to top',
-			];
-			
-			BG.Panel.$element.find( '.selection[data-type="gradients"]' ).each( function () {
-				var $this = $( this ),
-					color1 = $this.data('color-1'),
-					color2 = $this.data('color-2'),
-					direction = directions[Math.floor(Math.random()*directions.length)];
 
-				BG.Controls.addStyle( $this, 'background-image', 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' );
+
+			var gradientData = []; 
+			$.each( BoldgridEditor.sample_backgrounds.default_gradients, function () {
+				var	color1 = this.colors[0],
+					color2 = this.colors[1],
+					direction = self.randomGradientDirection();
+				
+				gradientData.push( {
+					color1 : color1,
+					color2 : color2,
+					direction : direction,
+					css : 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')'
+				} );
 			} );
+			
+			console.log( JSON.stringify( gradientData ) );
 		},
 
 		setPaletteGradients : function () {
 			var combos = [];
 			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
 				$.each( [0,1], function () {
-					var color1, color2;
+					var color1, color2, direction;
 					color1 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
 					color2 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
 					if ( color1 != color2 ) {
-						combos.push( 'linear-gradient(to right,' + color1 + ',' + color2 + ')' );
+						direction = self.randomGradientDirection();
+						combos.push( {
+							color1 : color1, 
+							color2 : color2, 
+							direction : direction, 
+							css : 'linear-gradient(' + direction + ',' + color1 + ',' + color2 + ')' 
+						} );
 					}
 				} );
 			}

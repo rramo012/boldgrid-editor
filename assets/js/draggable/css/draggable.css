@@ -355,6 +355,10 @@ html.boldgrid-editor-fullscreen {
 	width: 40px;
 }
 
+.editing-as-row ~ .section-drag-handle {
+	display: none !important;
+}
+
 .section-popover-imhwpb {
     background-color: #32373c;
 }

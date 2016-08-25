@@ -444,7 +444,9 @@
 	.preset-wrapper[data-type="color"] ~ .customize .background-color {
 	   display: block;
 	}
-	.preset-wrapper[data-type="gradients"] ~ .customize .background-color {
+	.preset-wrapper[data-type="gradients"] ~ .customize .direction,
+	.preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-2,
+	.preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-1 {
 	   display: block;
 	}
 	

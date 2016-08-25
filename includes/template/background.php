@@ -21,7 +21,8 @@
 				<# if( 'color' == type ) { #>
 					<li data-type="{{type}}" data-class='{{index}}' class='selection' style="background: {{image}}"></li>
 				<# } else if( 'gradients' == type ) { #>
-					<li data-type="{{type}}" class='selection' style="background-image: {{image}}"></li>
+					<li data-type="{{type}}" data-color1="{{image.color1}}" data-color2="{{image.color2}}"
+						data-direction="{{image.direction}}" class='selection' style="background-image: {{image.css}}"></li>
 				<# } else { #>
 					<li data-type="{{type}}" data-image-url="{{image}}" class='selection' style="background-image: url({{image}})"></li>
 				<# } #>
@@ -44,10 +45,25 @@
 				<label for="section-background-color" class='color-preview'></label>
 				<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
 			</div>
+			<div class='gradient-color-1 section color-controls'>
+				<h4>Gradient Color 1</h4>
+				<label for="gradient-color-1" class='color-preview'></label>
+				<input type="text" data-type="" name='gradient-color-1' class='color-control' value=''>
+			</div>
+			<div class='gradient-color-2 section color-controls'>
+				<h4>Gradient Color 2</h4>
+				<label for="gradient-color-2" class='color-preview'></label>
+				<input type="text" data-type="" name='gradient-color-2' class='color-control' value=''>
+			</div>
 			<div class='vertical-position section'>
 				<h4>Verticle Position (%)</h4>
 				<div class="slider"></div>
 				<span class='value'></span>
+			</div>
+			<div class='direction section'>
+				<h4>Gradient Direction</h4>
+    			<label> <input type="radio" checked="checked" name="bg-direction" value="to left">Horizontal </label>
+    			<label> <input type="radio" name="bg-direction" value="to bottom">Vertical </label>
 			</div>
 			<div class='size section' data-tooltip-id='background-size'>
 				<h4>Size</h4>

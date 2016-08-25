@@ -69,5 +69,25 @@ class Boldgrid_Editor_Builder_Fonts {
 		}
 	}
 
+	public function get_theme_fonts() {
+		global $boldgrid_theme_framework;
 
+		$theme_fonts = array();
+		if ( $boldgrid_theme_framework ) {
+
+			$configs = $boldgrid_theme_framework->get_configs();
+			$defaults = ! empty( $configs['customizer-options']['typography']['defaults'] ) ?
+				$configs['customizer-options']['typography']['defaults'] : null;
+
+			foreach ( $defaults as $key => $default ) {
+				if ( false !== strpos( $key, 'font_family' ) ) {
+					$theme_fonts[ $key ] = $default;
+				}
+			}
+		}
+
+		$theme_fonts = array_unique ( $theme_fonts );
+
+		return $theme_fonts;
+	}
 }
