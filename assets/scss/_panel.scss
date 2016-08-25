@@ -309,6 +309,10 @@
 }
 /*************** Background Panel ********************/
 .editor-panel[data-type="box"] {
+	&.editor-panel,
+	.panel-body {
+		background-color: #ececec;
+	}
     .bg-box {
 	    width: 45px;
 	    height: 45px;

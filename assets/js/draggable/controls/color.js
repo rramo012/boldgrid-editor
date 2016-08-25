@@ -8,13 +8,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	var self,
 		BG = BOLDGRID.EDITOR;
 
-	BOLDGRID.EDITOR.CONTROLS.Color = {
+	BG.CONTROLS.Color = {
 
 		$currentInput : null,
 
 		$colorPanel : null,
 
 		$colorPicker : null,
+		
+		transparentColors : [
+		    'rgba(0, 0, 0, 0)',
+		    'transparent'
+		],
 
 		colorClasses : [
 			'color1-color',
@@ -45,8 +50,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupRemove();
 			self._setupAutoHide();
 
+			self._setupOpenCustomization();
 
 			return self;
+		},
+		
+		_setupOpenCustomization : function () {
+			
+			BG.Panel.$element.on( 'bg-open-customization', function () {
+				self.initColorControls();
+			} )
 		},
 
 		_setupAutoHide : function () {
@@ -90,7 +103,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$preview = $( this ),
 					$input = BG.Panel.$element.find('input[name="' + $preview.attr('for') + '"]');
 
-				if ( 'color' == $input.data('type') ) {
+				if ( 'color' == $input.attr('data-type') || ! $input.attr('data-type') ) {
 					// Select Color From My Colors.
 					self.$colorPanel.find('[data-type="custom"].panel-selection').each( function () {
 						var $this = $( this );
@@ -100,16 +113,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						}
 					} );
 
-				} else if ( 'class' == $input.data('type') ) {
+				} else if ( 'class' == $input.attr('data-type') ) {
 					$currentSelection = self.$colorPanel.find('.panel-selection[data-preset="' + $input.val() + '"]');
 				}
 
-				if ( $currentSelection ) {
+				self.$colorPanel.find('.panel-selection.selected').removeClass('selected');
+				self.$colorPicker.iris( 'color', $preview.css( 'background-color' ) );
+				self.openPicker( $input );
+
+				if ( $currentSelection && $currentSelection.length ) {
 					self.selectColor( $currentSelection );
 				}
 
-				self.$colorPicker.iris( 'color', $preview.css( 'background-color' ) );
-				self.openPicker( $input );
 			} );
 			BG.Panel.$element.on( 'change', 'input.color-control', function () {
 				var $this = $( this ),
@@ -133,6 +148,28 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		findAncestorColor : function ( $element, property ) {
+			var color, elements = [];
+
+			elements.push( $element );
+			
+			$element.parents().each( function () {
+				elements.push( this );
+			} );
+			
+			$.each( elements, function () {
+				var $this = $( this ),
+					thisColor = $this.css( property );
+
+				if ( false === self.isColorTransparent( thisColor ) ) {
+					color = thisColor;
+					return false;
+				}
+			} );
+			
+			return color;
+		},
+		
 		getPaletteBackgroundColors : function () {
 			var backgroundColors = {};
 
@@ -141,6 +178,37 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 
 			return backgroundColors;
+		},
+		
+		isColorTransparent : function ( color ) {
+			return BG.CONTROLS.Color.transparentColors.indexOf( color ) !== -1 || ! color;
+		},
+		
+		initColorControls : function () {
+			var $target = BG.Menu.getTarget( BOLDGRID.EDITOR.Panel.currentControl );
+			
+			BG.Panel.$element.find( 'input.color-control').each( function () {
+				var $this = $( this ),
+					type = 'color',
+					inputValue = $this.val(),
+					$label = $this.prev('label');
+				
+				// If input is not transparent, set the color.
+				if ( false === self.isColorTransparent( inputValue ) ) {
+					$label.css( 'background-color', inputValue );
+				}
+				/*
+				if ( $target.is( self.colorClasses.join(',') + ',' + self.backgroundColorClasses.join(',') ) ) {
+					 * @TODO This has been commented out because we can not set the type to class. 
+					 * In order for this to work correctly. The control would have to set the value 
+					 * of the input to an interger value. The implecation of this "bug" is that 
+					 * color classes do not preselect when reentering the control.
+					//type = 'class';
+				}
+				 */
+				
+				$this.attr( 'data-type', type )
+			} );
 		},
 
 		_setupColorPicker : function () {
@@ -158,6 +226,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				defaultColor: defaultPickerColor,
 				change: function( event, ui ){
 					var $this = $(this),
+						cssColor = ui.color.toCSS(),
 						$selection = $this.closest('.color-control')
 							.find('.colors .panel-selection.selected[data-preset]');
 
@@ -167,12 +236,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					}
 
 					$selection = self.$colorPanel.find('.colors .panel-selection.selected[data-preset]');
-					$selection.css( 'background-color', ui.color.toCSS() );
-					self.customColors[ $selection.data('index') ] = ui.color.toCSS();
+					$selection.css( 'background-color', cssColor );
+					$selection.attr( 'data-preset', cssColor );
+					self.customColors[ $selection.data('index') ] = cssColor;
 
 					if ( self.$currentInput ) {
-						self.$currentInput.data( 'type', type );
-						self.$currentInput.val( ui.color.toCSS() );
+						self.$currentInput.attr( 'data-type', type );
+						self.$currentInput.attr( 'value', cssColor );
 						self.$currentInput.change();
 
 					}
@@ -284,8 +354,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.$colorPicker.iris( 'color', $this.css( 'background-color' ) );
 				self.selectColor( $this );
 
-				self.$currentInput.val( $this.data('preset') );
-				self.$currentInput.data( 'type', type );
+				self.$currentInput.val( $this.attr('data-preset') );
+				self.$currentInput.attr( 'data-type', type );
 				self.$currentInput.change();
 				
 			} );

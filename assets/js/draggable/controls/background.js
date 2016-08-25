@@ -254,6 +254,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( $this.hasClass( 'selected') ) {
 					BG.Controls.addStyle( $target, 'background', '' );
 					$this.removeClass( 'selected' );
+					self.preselectBackground( true );
+
 					return;
 				}
 				
@@ -376,9 +378,36 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._initSliders();
 			self.selectDefaults();
 			BG.Panel.hideFooter();
+			BG.Panel.$element.trigger( 'bg-open-customization' );
 		},
 		
 		selectDefaults : function () {
+			self.setDefaultDirection();
+			self.setDefaultBackgroundColors();
+		},
+		
+		setDefaultDirection : function () {
+			var $target = BG.Menu.getTarget( self ),
+				direction = $target.attr('data-bg-direction');
+
+			if ( self.backgroundIsGradient( $target.css( 'background-image' ) ) && direction ) {
+				BG.Panel.$element
+					.find('input[name="bg-direction"][value="' + direction + '"]')
+					.prop( 'checked', true );
+			} 
+		},
+		
+		setDefaultBackgroundColors : function () {
+			var bgColor,
+				$target = BG.Menu.getTarget( self );
+
+			if ( self.backgroundIsGradient( $target.css( 'background-image' ) ) ) {
+				BG.Panel.$element.find('input[name="gradient-color-1"]').attr( 'value', $target.attr('data-bg-color-1') );
+				BG.Panel.$element.find('input[name="gradient-color-2"]').attr( 'value', $target.attr('data-bg-color-2') );
+			} else {
+				bgColor = BG.CONTROLS.Color.findAncestorColor( $target, 'background-color' );
+				BG.Panel.$element.find('input[name="section-background-color"]').attr( 'value', bgColor );
+			}
 		},
 
 		randomGradientDirection : function () {
@@ -436,14 +465,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
-		preselectBackground : function () {
+		backgroundIsGradient : function ( backgroundUrl ) {
+			return backgroundUrl.indexOf( 'linear-gradient' ) != '-1';
+		},
+		
+		preselectBackground : function ( keepFilter ) {
 			var type = 'color',
 				$target = BG.Menu.getTarget( self ),
 				classes = $target.attr( 'class' ), 
 				backgroundColor = $target.css( 'background-color' ), 
 				backgroundUrl = $target.css( 'background-image' ),
 				$currentSelection = BG.Panel.$element.find( '.current-selection' ),
-				hasGradient = backgroundUrl.indexOf( 'linear-gradient' ) != '-1',
+				hasGradient = self.backgroundIsGradient( backgroundUrl ),
 				matchFound = false;
 			
 			//@TODO: update the preview screen when pressing back from the customize section. 
@@ -485,7 +518,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 			
 			if ( ! matchFound ) {
-				self.activateFilter();
+				if ( ! keepFilter ) {
+					self.activateFilter();
+				}
 				
 				if ( hasGradient ) {
 					type = 'gradients';

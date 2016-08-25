@@ -3753,9 +3753,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			//Remove Popovers
 			self.$master_container.find('.draggable-tools-imhwpb').attr( 'contenteditable', true );
 			self.delete_popovers();
+			self.$master_container.find('html').addClass('boldgrid-is-typing');
 		},
 		'end' : function () {
 			//Add Popovers
+			self.$master_container.find('html').removeClass('boldgrid-is-typing');
 			self.update_handles(self.last_hover);
 		}
 	};

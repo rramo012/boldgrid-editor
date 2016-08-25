@@ -24,6 +24,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * New feature:	JIRA WPB-2065	Row resizing now works in nested rows.
 * New feature:	JIRA WPB-2065	Add theme section fonts to font selection.
 * New feature:	JIRA WPB-2065	Added customization options for gradients.
+* Bug fix:		JIRA WPB-2065	Bug fixes for towards undo and redo actions.
+* Bug fix:		JIRA WPB-2065	Fixed issues with tripple click to delete.
+* Bug fix:		JIRA WPB-2065	Fixed issues with editor height.
+* Bug fix:		JIRA WPB-2065	Fixed issues with color control preselecting.
 
 = 1.2.4 =
 * Bug fix:		JIRA WPB-2272	Fixing issue with default container class.

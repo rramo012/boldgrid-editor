@@ -285,6 +285,10 @@
   color: white; }
 
 /*************** Background Panel ********************/
+.editor-panel[data-type="box"].editor-panel,
+.editor-panel[data-type="box"] .panel-body {
+  background-color: #ececec; }
+
 .editor-panel[data-type="box"] .bg-box {
   width: 45px;
   height: 45px;
@@ -1393,26 +1397,26 @@ body.boldgrid-editor-fullscreen {
   box-shadow: -3px 3px 0px 0 grey; }
 
 .bg-box.bg-box-border-thin {
-  border: 1px solid; }
+  border: 1px solid black; }
 
 .bg-box.bg-box-border-normal {
-  border: 2px solid; }
+  border: 2px solid black; }
 
 .bg-box.bg-box-border-thick {
-  border: 3px solid; }
+  border: 3px solid black; }
 
 .bg-box.bg-box-border-dashed {
-  border: 2px dashed; }
+  border: 2px dashed black; }
 
 .bg-box.bg-box-border-dashed-thick {
-  border: 3px dashed; }
+  border: 3px dashed black; }
 
 .bg-box.bg-box-border-double {
-  border: 2px solid;
+  border: 2px solid black;
   box-shadow: 0px 0px 0px 2px white inset, 0px 0px 0px 3px black inset; }
 
 .bg-box.bg-box-border-double-thick {
-  border: 2px solid;
+  border: 2px solid black;
   box-shadow: 0px 0px 0px 5px white inset, 0px 0px 0px 7px black inset; }
 
 /*--------------------------------------------------------------

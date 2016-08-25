@@ -355,6 +355,8 @@ html.boldgrid-editor-fullscreen {
 	width: 40px;
 }
 
+.boldgrid-is-typing .draghandle,
+.boldgrid-is-typing .section-drag-handle,
 .editing-as-row ~ .section-drag-handle {
 	display: none !important;
 }

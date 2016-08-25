@@ -236,7 +236,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.attr( 'data-type', control.name );
 			this._enableFooter( control.panel );
 			this._setupCustomize( control );
-			BOLDGRID.EDITOR.Tooltip.renderTooltips();
+			BG.Tooltip.renderTooltips();
 			this.$element.show();
 			this.initScroll( control );
 			this.scrollToSelected();
@@ -244,6 +244,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.removeClasses();
 			$target = BG.Menu.$element.targetData[ control.name ];
 			$target.addClass( 'bg-control-element' );
+
+			BG.CONTROLS.Color.initColorControls();
 		}
 
 	};

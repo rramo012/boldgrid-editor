@@ -15,6 +15,11 @@
 				<label for="box-bg-color" class='color-preview'></label>
 				<input type="text" data-type="" name='box-bg-color' class='color-control' value=''>
 			</div>
+			<div class='color-controls section border-color-controls'>
+				<h4>Border Color</h4>
+				<label for="box-border-color" class='color-preview'></label>
+				<input type="text" data-type="" name='box-border-color' class='color-control' value=''>
+			</div>
 			<div class='section' data-tooltip-id='box-padding'>
 				<h4>Padding</h4>
 				<div class='padding'>

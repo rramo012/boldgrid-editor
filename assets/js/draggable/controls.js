@@ -152,11 +152,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 						return;
 					}
 
-					var transparentColors = [
-					    'rgba(0, 0, 0, 0)',
-					    'transparent'
-					];
-
 					if ( $this.closest('.editing-as-row').length ) {
 						e.boxFound = true;
 					}
@@ -164,8 +159,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					if ( ! e.boxFound && $this.parent().closest('[class*="col-md"]').length ) {
 						var $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this );
 						var backgroundColor = $module.css('background-color');
-						if ( transparentColors.indexOf( backgroundColor ) == -1 ) {
-							console.log('box found')
+						if ( ! BOLDGRID.EDITOR.CONTROLS.Color.isColorTransparent( backgroundColor ) ) {
 							e.boxFound = true;
 						} else {
 							return;

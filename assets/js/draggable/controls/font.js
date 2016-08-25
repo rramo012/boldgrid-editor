@@ -70,8 +70,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'change', '.section.family [name="font-color"]', function () {
 				var $this = $( this ),
 					$target = BG.Menu.$element.targetData[ self.name ],
-					value = $this.val(),
-					type = $this.data('type');
+					value = $this.attr( 'value' ),
+					type = $this.attr('data-type');
 				
 				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
 				BG.Controls.addStyle( $target, 'color', '' );
@@ -239,6 +239,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	    	$select.attr( 'data-value', defaultFamily );
 		},
+		
+		setTextColorInput : function () {
+			var color, 
+				$target = BG.Menu.getTarget( self );
+		
+			color = BG.CONTROLS.Color.findAncestorColor( $target, 'color' );
+
+			BG.Panel.$element
+				.find('input[name="font-color"]')
+				.attr( 'value', color );
+		},
+		
+		selectPresets : function () {
+			self.setTextColorInput();
+		},
 
 		openPanel : function () {
 			var panel = BG.Panel,
@@ -254,7 +269,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.lineSpacingSlider( $target );
 			self._initTextColor( $target );
 			self._initFamilyDropdown();
-
+			self.selectPresets();
+			
 			// Open Panel.
 			panel.open( self );
 		}

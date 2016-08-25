@@ -67,6 +67,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupPresetHover();
 			self._setupPanelLeave();
 			self._setupBackgroundColor();
+			self._setupBorderColor();
 			self._setupCustomizeLeave();
 			var presets = self.getBoxMarkup();
 			self.$presets = self.applyUiStyles( presets );
@@ -161,10 +162,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find('.customize').show();
 			panel.$element.find('.presets').hide();
 			panel.$element.find('.box-design > .title').hide();
-			BG.CONTROLS.Color.$colorPicker.iris( 'color',  self.targetColor );
 			panel.$element.find('.box-design [name="box-bg-color"]').val( self.targetColor ).change();
+			self.setupBorderColor();
+			BG.Panel.$element.trigger( 'bg-open-customization' );
 			panel.scrollTo(0);
 			panel.hideFooter();
+		},
+		
+		setupBorderColor : function () {
+			var $target = BG.Menu.getTarget( self ),
+				$control = BG.Panel.$element.find('.border-color-controls'),
+				$module = self.findModule( $target );
+			
+			if ( $module.is('[class*="border"]') ) {
+				$control.find( '[name="box-border-color"]' ).val( $module.css('border-color') );
+				$control.show();
+			} else {
+				$control.hide();
+			}
 		},
 
 		findModule : function ( $target ) {
@@ -226,7 +241,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = BG.Menu.$element.targetData[ self.name ],
 					$module = self.findModule( $target ),
 					value = $this.val(),
-					type = $this.data('type');
+					type = $this.attr('data-type');
 
 				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
 				BG.Controls.addStyle( $module, 'background-color', '' );
@@ -239,7 +254,29 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				self._saveModuleClasses();
 			} );
-
+		},
+		
+		_setupBorderColor : function () {
+			var panel = BG.Panel;
+			
+			panel.$element.on( 'change', '.box-design [name="box-border-color"]', function () {
+				var $this = $( this ),
+				$target = BG.Menu.$element.targetData[ self.name ],
+				$module = self.findModule( $target ),
+				value = $this.val(),
+				type = $this.attr('data-type');
+				
+				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
+				BG.Controls.addStyle( $module, 'background-color', '' );
+				
+				if ( 'class' == type ) {
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
+				} else {
+					BG.Controls.addStyle( $module, 'background-color', value );
+				}
+				
+				self._saveModuleClasses();
+			} );
 		},
 
 		_initPaddingSlider : function () {
@@ -348,21 +385,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				colorCount = 0,
 				backgrounds = [],
 				backgroundColors = BG.CONTROLS.Color.getPaletteBackgroundColors(),
-				colors = [
-				    '#ffffff',
+				nonBgThemeColors = [
 				    '#2980b9',
 				    '#bdc3c7',
 				    '#e74c3c',
-				    '#34495e',
-				    '#f39c12'
+				    'rgb(224, 224, 224)',
+				    '#f39c12',
+				    '#ffffff',
+				],
+				colors = [
+				    '#fff',
+				    '#000',
+				    'rgb(236, 236, 236)'
 				];
 
-			$.each( backgroundColors, function ( colorClass ) {
-				backgrounds.push( {
-					'color' : this,
-					'colorClass' : colorClass,
+			
+			
+			if ( ! BoldgridEditor.is_boldgrid_theme ) {
+				colors = nonBgThemeColors;
+			} else {
+				$.each( backgroundColors, function ( colorClass ) {
+					backgrounds.push( {
+						'color' : this,
+						'colorClass' : colorClass,
+					} );
 				} );
-			} );
+			}
 
 			$.each( colors, function () {
 				backgrounds.push( {
