@@ -1309,7 +1309,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			return true;
 		}
 
-		if ( a === null || b === null ) {
+		if ( a == null || b == null ) {
 			return false;
 		}
 

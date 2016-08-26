@@ -389,11 +389,11 @@ IMHWPB.Media = function( $ ) {
 			var $this = $(this);
 			var asset_id = $this.data('boldgrid-asset-id');
 
-			if ( IMHWPB.Globals['api_configs']['api_key'] && IMHWPB.Globals['api_configs']['connection_successful']) {
+			if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
 				//If the user has an API key place the asset images
-				var image_url = IMHWPB.Globals['api_configs']['asset_server']
-					+ IMHWPB.Globals['api_configs']['ajax_calls']['get_api_asset'] + '?key='
-					+ IMHWPB.Globals['api_configs']['api_key'] + '&id=' + asset_id;
+				var image_url = IMHWPB.configs.asset_server
+					+ IMHWPB.configs.ajax_calls.get_asset + '?key='
+					+ IMHWPB.configs.api_key + '&id=' + asset_id;
 
 				$this.attr( 'src', image_url );
 				$this.attr( 'data-pending-boldgrid-attribution', 1 );

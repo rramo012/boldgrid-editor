@@ -38,7 +38,6 @@ class Boldgrid_Editor_Media {
 			}
 
 			$tab['is-boldgrid-theme'] = $is_bg_theme;
-			$tab['api_configs'] = array();
 
 			$media_tab = new $media_tab_class( $tab, $configs, '/' );
 
