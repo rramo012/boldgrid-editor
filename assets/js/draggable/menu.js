@@ -51,7 +51,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			if ( control.menuDropDown ) {
 				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
-				$dropdownUl.html('<li class="title">' + control.menuDropDown.title + '</li>')
+				$dropdownUl.html('<li class="title">' + control.menuDropDown.title + '</li>');
 				$.each( control.menuDropDown.options, function () {
 					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
 				} );

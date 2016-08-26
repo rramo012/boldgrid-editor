@@ -3,8 +3,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var most_recent_enter = [];
 	var most_recent_row_enter = [];
 
-	self.ie_version;
-	self.isSafari;
+	self.ie_version = null;
+	self.isSafari = null;
 
 	/**
 	 * The jQuery object that the user indicated was draggable.
@@ -42,10 +42,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * The interaction container refers to the wrapper that holds all the draggable items.
 	 */
-	this.$interaction_container;
+	this.$interaction_container = null;
 
 	// BoldGrid menu item clicked.
-	this.$boldgrid_menu_action_clicked;
+	this.$boldgrid_menu_action_clicked = null;
 
 	// Last occurrence of an auto scroll.
 	this.last_auto_scroll_event = null;
@@ -157,23 +157,23 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * A string that represents all draggable selectors.
 	 */
-	this.draggable_selectors_string;
+	this.draggable_selectors_string = null;
 
 	/**
 	 * A string that represents all row selectors.
 	 */
-	this.row_selectors_string;
+	this.row_selectors_string  = null;
 
 	/**
 	 * A string of the formated content selectors.
 	 */
-	this.content_selectors_string;
+	this.content_selectors_string = null;
 
 	/**
 	 * The selectors that represent draggable columns Essentially all columns
 	 * that are not within a nested row.
 	 */
-	this.column_selectors_string;
+	this.column_selectors_string = null;
 
 	/**
 	 * The class name used for dragging selectors.
@@ -200,7 +200,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * Boolean Has the user clicked on an item that is draggable.
 	 */
-	this.valid_drag;
+	this.valid_drag = null;
 
 	/**
 	 * The buffer in pixels of how close the user needs to be to a border in
@@ -212,7 +212,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * How far the user can be from the resize position before it automatically
 	 * snaps to that location.
 	 */
-	this.resize_buffer = .0213;
+	this.resize_buffer = 0.0213;
 
 	/**
 	 * The maximum number of columns that can be in a row.
@@ -227,18 +227,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * Current Window Width.
 	 */
-	this.window_width;
+	this.window_width = null;
 
 	/**
 	 * Current window height.
 	 */
-	this.window_height;
+	this.window_height = null;
 
 	/**
 	 * The current column class being used by bootstrap in relation to the
 	 * current size of the screen.
 	 */
-	this.active_resize_class;
+	this.active_resize_class = null;
 
 	/**
 	 * Temporarily transformed row that must be changed back.
@@ -344,8 +344,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 ******************************************************************/
 		'img:not(' + self.master_container_id + ' .row .row img):not(p img):not(a img)',
 		'p:not(' + self.master_container_id + ' .row .row p)',
-		'button:not(' + self.master_container_id
-			+ ' .row .row button):not(p button):not(a button)',
+		'button:not(' + self.master_container_id +
+			' .row .row button):not(p button):not(a button)',
 
 		// Lists.
 		'ul:not(' + self.master_container_id + ' .row .row ul)',
@@ -360,8 +360,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'.row .row:not(:not(' + self.master_container_id + ' .row .row))',
 
 		// Custom definitions.
-		'[data-imhwpb-draggable="true"]:not(' + self.master_container_id
-			+ ' .row .row [data-imhwpb-draggable="true"])',
+		'[data-imhwpb-draggable="true"]:not(' + self.master_container_id +
+			' .row .row [data-imhwpb-draggable="true"])',
 
 		// WP specific wrapper.
 		'.wpview-wrap:not(' + self.master_container_id + ' .row .row .wpview-wrap)',
@@ -458,17 +458,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.column_sizes = {
 		'0' : 0,
-		'1' : .083,
-		'2' : .167,
-		'3' : .25,
-		'4' : .333,
-		'5' : .416,
-		'6' : .5,
-		'7' : .583,
-		'8' : .667,
-		'9' : .75,
-		'10' : .833,
-		'11' : .917,
+		'1' : 0.083,
+		'2' : 0.167,
+		'3' : 0.25,
+		'4' : 0.333,
+		'5' : 0.416,
+		'6' : 0.5,
+		'7' : 0.583,
+		'8' : 0.667,
+		'9' : 0.75,
+		'10' : 0.833,
+		'11' : 0.917,
 		'12' : 1,
 		'13' : 0,
 	};
@@ -614,14 +614,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.toolkit_markup = function( type ) {
 
-		var popover = '<div spellcheck="false" data-mce-bogus="all" contenteditable="false"'
-			+ 'unselectable="on" class="draggable-tools-imhwpb">'
-			+ '<span class="popover-imhwpb '
-			+ self.type_popover_classes[ type ]
-			+ '">'
-			+ '<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '
-			+ '<span  class="genericon genericon-move" aria-hidden="true"> </span>'
-			+ '</div>';
+		var popover = '<div spellcheck="false" data-mce-bogus="all" contenteditable="false"' +
+			'unselectable="on" class="draggable-tools-imhwpb">'+
+			'<span class="popover-imhwpb ' +
+			self.type_popover_classes[ type ] + '">' +
+			'<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '+
+			'<span  class="genericon genericon-move" aria-hidden="true"> </span>' +
+			'</div>';
 
 			popover +=  "<div class='popover-menu-imhwpb hidden'><ul>";
 			$.each( menu_options[ type ], function( key, value ) {
@@ -645,13 +644,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			popover += '</ul></div>';
 
-			popover += '<div title="Modify" class="context-menu-imhwpb draggable-button"> '
-				+ '<span  class="genericon genericon-menu" aria-hidden="true"></span>'
-				+ '</div>';
+			popover += '<div title="Modify" class="context-menu-imhwpb draggable-button"> ' +
+				'<span  class="genericon genericon-menu" aria-hidden="true"></span>' +
+				'</div>';
 
 			if ( type == 'nested-row' ) {
-				popover += '<div title="Edit As Row" class="edit-as-row draggable-button">'
-				+ '<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
+				popover += '<div title="Edit As Row" class="edit-as-row draggable-button">' +
+					'<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
 			}
 
 		return popover + '</span></div>';
@@ -819,8 +818,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var $this = $( this );
 
 			if ( !$this.closest_context( self.original_selector_strings.content_selectors_string, self.$master_container ).length ) {
-				var $closest_receptor = $this.closest_context(self.original_selector_strings.row_selectors_string
-					+ ', '+ self.original_selector_strings.general_column_selectors_string, self.$master_container );
+				var $closest_receptor = $this.closest_context(self.original_selector_strings.row_selectors_string +
+						', ' + self.original_selector_strings.general_column_selectors_string, self.$master_container );
 				if ( $closest_receptor.is( self.original_selector_strings.row_selectors_string ) ) {
 					$this.wrap( "<div class='col-md-12'><div class='row'><div class='col-md-12'></div></div></div>" );
 				} else {
@@ -836,9 +835,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.merge_additional_menu_options = function() {
 		$.each( additional_menu_items, function( key, menu_item ) {
-			var current_element_selection = menu_options[ menu_item['element_type'] ];
+			var current_element_selection = menu_options[ menu_item.element_type ];
 			var addition_item = {};
-			addition_item[ menu_item['title'] ] = menu_item['title'];
+			addition_item[ menu_item.title ] = menu_item.title;
 			$.extend( current_element_selection, addition_item );
 		} );
 	};
@@ -956,9 +955,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Hide all popover menus.
 	 */
 	this.hide_menus = function( e ) {
-		var menu_clicked = false;
+		var $this,
+			menu_clicked = false;
+		
 		if ( e && e.target ) {
-			var $this = $( e.target );
+			$this = $( e.target );
 			if ( $this.closest( '.popover-menu-imhwpb' ).length ) {
 				menu_clicked = true;
 			} else if ( $this.closest( '.context-menu-imhwpb' ).siblings('.popover-menu-imhwpb:visible').length ) {
@@ -966,7 +967,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 		}
 
-		if ( menu_clicked == false ) {
+		if ( ! menu_clicked ) {
 			var $popovers = self.$master_container.find( '.popover-menu-imhwpb' );
 
 			if ( $this ) {
@@ -1308,7 +1309,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			return true;
 		}
 
-		if ( a == null || b == null ) {
+		if ( a === null || b === null ) {
 			return false;
 		}
 
@@ -1471,7 +1472,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.remove_drag_handles = function( event ) {
 
 		var $current_element = $( this ); // Element you've left.
-
+		var type;
 		var $draggable;
 		var $tools;
 		if ( !event.relatedTarget ) {
@@ -1490,8 +1491,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( $current_element.hasClass( 'draggable-tools-imhwpb' ) ) {
 
 			// If you've entered into your child dont remove.
-			if ( $current_element.next().find( $related_target ).length
-				|| $current_element.next()[0] == $related_target[0] ) {
+			if ( $current_element.next().find( $related_target ).length ||
+					$current_element.next()[0] == $related_target[0] ) {
 				return false;
 			}
 
@@ -1503,7 +1504,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If you've entered into your parent, and your parent needs a popover
 			// Only applies to content.
-			var type = self.get_element_type( $current_element );
+			type = self.get_element_type( $current_element );
 			var nested_content = $current_element.parent().closest_context(
 				self.content_selectors_string, self.$master_container ).length;
 
@@ -1521,20 +1522,20 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}//endif
 
 		if ( $draggable && $draggable.length ) {
-			var type = self.get_element_type( $draggable );
+			type = self.get_element_type( $draggable );
 			// Prevent a pending addition from occurring.
-			if ( type && self.hover_elements[ type ]
-				&& typeof self.hover_elements[ type ].add_element != "undefined"
-				&& self.hover_elements[ type ].add_element != null ) {
+			if ( type && self.hover_elements[ type ] &&
+					typeof self.hover_elements[ type ].add_element != "undefined" &&
+					self.hover_elements[ type ].add_element != null ) {
 
 				// In the case that the lowest child event leave does not trigger,
 				// Remove invalid elements.
 				self.hover_elements[ type ].add_element = null;
 				if ( type == 'row' ) {
-					self.hover_elements['column'] = { 'add_element': null };
-					self.hover_elements['content'] = { 'add_element': null };
+					self.hover_elements.column = { 'add_element': null };
+					self.hover_elements.content = { 'add_element': null };
 				} else if ( type == 'column' ) {
-					self.hover_elements['content'] = { 'add_element': null };
+					self.hover_elements.content = { 'add_element': null };
 				}
 			}
 		}
@@ -1578,7 +1579,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		return type;
-	}
+	};
 
 	/**
 	 * Adds a popover before a row, content or column element.
@@ -2310,7 +2311,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		} else if ( self.$current_drag.IMHWPB.type == 'content' ) {
 			add_max_height_styles( self.$temp_insertion, self.$current_drag.IMHWPB.height );
 		}
-	}
+	};
 
 	/**
 	 * Remove the list of styles that we add for max heights.
@@ -2320,7 +2321,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'max-height': '',
 			'overflow': ''
 		});
-	}
+	};
 
 	/**
 	 * We've added max heights to rows and content elements while dragging.
@@ -2332,7 +2333,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		} else if ( self.$current_drag.IMHWPB.type == 'content' ) {
 			remove_max_height_styles(self.$temp_insertion);
 		}
-	}
+	};
 
 	this.get_other_top_level_elements = function () {
 		return self.$body.find(self.immediate_row_siblings_string).not(self.$current_drag);
@@ -2353,7 +2354,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			min_max = {
 				'offset_top' : $first[0].getBoundingClientRect().top,
 				'offset_bottom' : $last[0].getBoundingClientRect().top + $last.outerHeight(true)
-			}
+			};
 		}
 
 		return min_max;
@@ -2374,7 +2375,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				'offset_right' : client_rect.left + $row.outerWidth(true),
 				'offset_top' : Math.max(0, client_rect.top - 150),
 				'offset_bottom' : client_rect.top + $row.outerHeight(true),
-			}
+			};
 		}
 
 		return min_max;
@@ -2708,18 +2709,17 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			};
 
 			// Save the column size at drag start so that it wont be recalculated
-			if ( self.$current_drag.IMHWPB['is_row'] && $this.hasClass( 'action-list' ) ) {
+			if ( self.$current_drag.IMHWPB.is_row && $this.hasClass( 'action-list' ) ) {
 				self.$current_drag.IMHWPB.is_row = false;
 				self.$current_drag.IMHWPB.is_content = true;
 			}
 
-			if ( self.$current_drag.IMHWPB['is_column'] ) {
-				self.$current_drag.IMHWPB['column_size'] = self
-					.find_column_size( self.$current_drag );
-				var $current_row = self.$current_drag.closest_context( self.row_selectors_string,
-					self.$master_container );
+			if ( self.$current_drag.IMHWPB.is_column ) {
+				self.$current_drag.IMHWPB.column_size = self.find_column_size( self.$current_drag );
+				
+				var $current_row = self.$current_drag.closest_context( self.row_selectors_string, self.$master_container );
 				if ( $current_row.length ) {
-					self.$current_drag.IMHWPB['original_row'] = $current_row[0];
+					self.$current_drag.IMHWPB.original_row = $current_row[0];
 				}
 			}
 
@@ -2739,8 +2739,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				// Add the inline-style so that its not modified by content changed.
 				self.$current_drag.css( {
-					'height' : self.$current_drag.IMHWPB['height'],
-					'width' : self.$current_drag.IMHWPB['width'],
+					'height' : self.$current_drag.IMHWPB.height,
+					'width' : self.$current_drag.IMHWPB.width,
 				} ).addClass( 'hidden dragging-started-imhwpb' );
 
 				self.$current_drag.attr( 'data-mce-bogus', "all" );
@@ -2862,9 +2862,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// Handles Auto Scrolling
 			// Only trigger every 10 microseconds
-			if ( !self.last_auto_scroll_event || self.last_auto_scroll_event + 10 <= (new Date).getTime() ) {
+			if ( !self.last_auto_scroll_event || self.last_auto_scroll_event + 10 <= ( new Date() ).getTime() ) {
 
-				self.last_auto_scroll_event = (new Date).getTime();
+				self.last_auto_scroll_event = ( new Date() ).getTime();
 
 				/**
 				 * HANDLE ROW DRAGGING.

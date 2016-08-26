@@ -316,7 +316,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			if ( 'color' == type ) {
 				$currentSelection.css( 'background', prop );
 			} else {
-				$currentSelection.css( 'background-image', imageSrc )
+				$currentSelection.css( 'background-image', imageSrc );
 			}
 
 			$currentSelection.attr( 'data-type', type );

@@ -117,7 +117,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				}
 
 				return 0;
-			}
+			};
 
 			this.controls.sort( compare );
 
@@ -184,4 +184,4 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 	};
 
-} )( jQuery )
+} )( jQuery );
