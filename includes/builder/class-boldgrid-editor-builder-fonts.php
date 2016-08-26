@@ -69,8 +69,36 @@ class Boldgrid_Editor_Builder_Fonts {
 		}
 	}
 
+	public function thememod_class_name( $theme_mod ) {
+		$class_name = false;
+
+		switch( $theme_mod ) {
+			case 'alternate_headings_font_family':
+				$class_name = 'bg-font-family-alt';
+				break;
+			case 'body_font_family':
+				$class_name = 'bg-font-family-body';
+				break;
+			case 'headings_font_family':
+				$class_name = 'bg-font-family-heading';
+				break;
+			case 'menu_font_family':
+				$class_name = 'bg-font-family-menu';
+				break;
+		}
+
+		return $class_name;
+	}
+
 	public function get_theme_fonts() {
 		global $boldgrid_theme_framework;
+
+		$theme_mods = array(
+			'body_font_family',
+			'alternate_headings_font_family',
+			'headings_font_family',
+			//'menu_font_family'
+		);
 
 		$theme_fonts = array();
 		if ( $boldgrid_theme_framework ) {
@@ -80,8 +108,11 @@ class Boldgrid_Editor_Builder_Fonts {
 				$configs['customizer-options']['typography']['defaults'] : null;
 
 			foreach ( $defaults as $key => $default ) {
-				if ( false !== strpos( $key, 'font_family' ) ) {
-					$theme_fonts[ $key ] = $default;
+				if ( false !== array_search( $key, $theme_mods, true ) ) {
+					$class_name = $this->thememod_class_name( $key );
+					if ( $class_name ) {
+						$theme_fonts[ $class_name ] = $default;
+					}
 				}
 			}
 		}

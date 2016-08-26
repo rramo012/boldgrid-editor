@@ -7,7 +7,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	var self,
 		BG = BOLDGRID.EDITOR;
-
+	
 	BOLDGRID.EDITOR.CONTROLS.Font = {
 
 		name : 'font',
@@ -21,6 +21,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section' ],
 
 		templateMarkup : null,
+		
+		fontClasses : [
+		    'bg-font-family-alt',
+		    'bg-font-family-body',
+		    'bg-font-family-heading',
+		    'bg-font-family-menu',
+	    ],
 
 		textEffectClasses : [
 			{ name : 'mod-text-effect inset-text' },
@@ -61,7 +68,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'fonts' : BoldgridEditor.builder_config.fonts,
 				'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
 				'myFonts' : [ ]
-			} ) 
+			} );
+			
+			BG.FontRender.updateFontLink( BG.Controls.$container );
 		},
 
 		_setupFamilyColor : function () {
@@ -190,6 +199,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			    	    .data( 'ui-autocomplete-item', item )
 			    	    .attr( 'data-value', item.label )
 			    	    .attr( 'data-type', item.element.data('type') )
+			    	    .attr( 'data-index', item.element.data('index') )
 			    	    .append( item.label )
 			    	    .appendTo( ul );
 		        },
@@ -211,10 +221,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 			panel.$element.find( '.selectize-dropdown-content select' ).fontfamilyselect( {
 		    	select: function( event, data ) {
-		    		$select.attr( 'data-value', data.item.label );
 		    		var $target = BG.Menu.getTarget( self );
-		    		$target.attr( 'data-font-family', data.item.label );
-					BG.Controls.addStyle( $target, 'font-family', data.item.label );
+
+		    		$select.attr( 'data-value', data.item.label );
+
+		    		// Reset.
+		    		$target.removeAttr( 'data-font-family' )
+		    			.removeAttr( 'data-font-class' );
+
+		    		$target.removeClass( self.fontClasses.join(' ') );
+		    		if ( 'theme' == data.item.element.data( 'type' ) ) {
+		    			$target.addClass( data.item.element.data( 'index' ) );
+		    			$target.attr( 'data-font-class', data.item.element.data( 'index' ) );
+		    			BG.Controls.addStyle( $target, 'font-family', '' );
+		    		} else {
+		    			$target.attr( 'data-font-family', data.item.label );
+		    			BG.Controls.addStyle( $target, 'font-family', data.item.label );
+		    		}
+		    		
 					BG.FontRender.updateFontLink( BG.Controls.$container );
 		        }
 		    } );
@@ -229,11 +253,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		preselectFamily : function () {
-			var defaultFamily = 'Abel',
+			var fontClass,
+				defaultFamily = 'Abel',
 				$select = self.getFamilySelection(),
 				$target = BG.Menu.getTarget( self );
 			
-			if ( $target.attr('data-font-family') ) {
+			if ( $target.is( '.' + self.fontClasses.join(',.') ) ) {
+				fontClass = $target.attr('data-font-class');
+				defaultFamily = BG.Panel.$element
+					.find('.section.family [data-index="' + fontClass + '"]')
+					.data('value');
+				
+			} else if ( $target.attr('data-font-family') ) {
 				defaultFamily = $target.attr('data-font-family');
 			}
 
