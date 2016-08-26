@@ -126,8 +126,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $module,
 					$this = $( this );
 
+				
 				if ( $this.hasClass( 'selected' ) ) {
 					$module = self.findModule( BG.Menu.getTarget( self ) );
+					self.selfResetBorderClasses( $module );
 					panel.clearSelected();
 					self.removeModuleClasses( $module );
 					panel.hideFooter();
@@ -188,7 +190,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$immediateChildren = $target.find('> *'),
 				childIsModule = $childDiv.length == 1 && $childDiv.not('.row').length &&
 						$childDiv.not('[class*="col-md"]').length &&
-						$immediateChildren.length == 1
+						$immediateChildren.length == 1;
 
 			if ( childIsModule ) {
 				$module = $childDiv;
@@ -210,6 +212,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				backgroundColor = $this.css('background-color'),
 				$module = self.findModule( $target );
 
+			self.selfResetBorderClasses( $module );
 			self.removeModuleClasses( $module );
 
 			$module.addClass( value );
@@ -256,23 +259,27 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		selfResetBorderClasses : function ( $module ) {
+			$module.removeClass( BG.CONTROLS.Color.borderColorClasses.join(' ') );
+			BG.Controls.addStyle( $module, 'border-color', '' );
+		},
+		
 		_setupBorderColor : function () {
 			var panel = BG.Panel;
 			
 			panel.$element.on( 'change', '.box-design [name="box-border-color"]', function () {
 				var $this = $( this ),
-				$target = BG.Menu.$element.targetData[ self.name ],
-				$module = self.findModule( $target ),
-				value = $this.val(),
-				type = $this.attr('data-type');
+					$target = BG.Menu.$element.targetData[ self.name ],
+					$module = self.findModule( $target ),
+					value = $this.val(),
+					type = $this.attr('data-type');
 				
-				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
-				BG.Controls.addStyle( $module, 'background-color', '' );
+				self.selfResetBorderClasses( $module );
 				
 				if ( 'class' == type ) {
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'border-color', value ) );
 				} else {
-					BG.Controls.addStyle( $module, 'background-color', value );
+					BG.Controls.addStyle( $module, 'border-color', value );
 				}
 				
 				self._saveModuleClasses();
@@ -398,8 +405,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				    '#000',
 				    'rgb(236, 236, 236)'
 				];
-
-			
 			
 			if ( ! BoldgridEditor.is_boldgrid_theme ) {
 				colors = nonBgThemeColors;
@@ -422,7 +427,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$newElement = $( this );
 
 				if ( backgrounds[ colorCount ].colorClass ) {
-					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass )
+					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass );
 					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
 				} else {
 					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
@@ -430,7 +435,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				$newElement.attr( 'data-id', index );
 
-				if ( index % 4 == 0 && index != 0 ) {
+				if ( index % 4 === 0 && index !== 0 ) {
 					colorCount++;
 				}
 
@@ -462,8 +467,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var $target = BG.Menu.getTarget( self ),
 				$module = self.findModule( $target ),
 				moduleClasses = $module.attr('class'),
-				moduleClasses = moduleClasses ? moduleClasses.split( ' ' ) : [],
 				moduleBoxClasses = [];
+
+			moduleClasses = moduleClasses ? moduleClasses.split( ' ' ) : [];
 
 			$.each( moduleClasses, function () {
 				if ( this.indexOf('bg-box') === 0 ) {

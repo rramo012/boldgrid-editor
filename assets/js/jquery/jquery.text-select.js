@@ -47,7 +47,7 @@
 		};
 
 		//Mousedown Handler
-		var mousedown = function ( e ) {
+		mousedown = function ( e ) {
 			var target = e.originalEvent.originalTarget || e.originalEvent.srcElement;
 			if ( target ) {
 				var $target = jQuery( target );

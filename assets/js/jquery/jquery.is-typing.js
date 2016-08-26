@@ -42,7 +42,7 @@
 		// Key Press handler
 		var keypress = function( e ) {
 
-			if ( self.is_typing == false ) {
+			if ( ! self.is_typing ) {
 				self.is_typing = true;
 				$this.trigger( 'start_typing_boldgrid' );
 			}

@@ -5,6 +5,9 @@ var gulp    = require( 'gulp' ),
     sass    = require( 'gulp-sass' ),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
+    jshint   = require( 'gulp-jshint' ),
+    stylish = require('jshint-stylish'),
+    autoprefixer = require('gulp-autoprefixer'),
 	pump = require('pump');
 
 // Configs.
@@ -28,6 +31,10 @@ gulp.task( 'scssCompile', function(  ) {
 	        discardComments: { removeAll: true },
 	        zindex: false
 	      } ) )
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+         }))
 	    .pipe( rename( { suffix: '.min' } ) )
 	    .pipe( gulp.dest( config.dist + '/assets/css' ) );
 } );
@@ -39,6 +46,9 @@ gulp.task( 'jsmin-drag', function ( cb ) {
 			config.src + 'assets/js/draggable/**/*.js',
 			config.src + 'assets/js/jquery/**/*.js',
 		] ),
+		 jshint(),
+		jshint.reporter( stylish ),
+		//jshint.reporter( 'fail' ),
 		concat( 'editor.js' ),
 		uglify(),
 		rename( {

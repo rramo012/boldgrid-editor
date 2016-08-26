@@ -191,7 +191,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		
 		_enableFooter : function ( config ) {
 			if ( config && config.includeFooter ) {
-				self.showFooter()
+				self.showFooter();
 			} else {
 				self.hideFooter();
 			}

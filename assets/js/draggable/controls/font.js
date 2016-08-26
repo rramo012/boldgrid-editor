@@ -61,7 +61,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'fonts' : BoldgridEditor.builder_config.fonts,
 				'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
 				'myFonts' : [ ]
-			} ) 
+			} );
 		},
 
 		_setupFamilyColor : function () {
@@ -109,8 +109,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_initSizeSlider : function ( $container, $el ) {
 
 			var elementSize = $el.css( 'font-size' ),
-				defaultSize = elementSize ?  parseInt( elementSize ) : 14,
-				defaultSize = ( defaultSize >= 5 ) ? defaultSize : 14;
+				defaultSize = elementSize ?  parseInt( elementSize ) : 14;
+			
+			defaultSize = ( defaultSize >= 5 ) ? defaultSize : 14;
 
 			$container.find( '.section.size .value' ).html( defaultSize );
 			$container.find( '.section.size .slider' ).slider( {

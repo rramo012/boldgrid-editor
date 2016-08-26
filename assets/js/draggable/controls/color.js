@@ -35,6 +35,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'color4-background-color',
 			'color5-background-color',
 		],
+		
+		borderColorClasses : [
+          'color1-border-color',
+          'color2-border-color',
+          'color3-border-color',
+          'color4-border-color',
+          'color5-border-color',
+        ],
 
 		customColors : BoldgridEditor.saved_colors,
 
@@ -59,7 +67,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			BG.Panel.$element.on( 'bg-open-customization', function () {
 				self.initColorControls();
-			} )
+			} );
 		},
 
 		_setupAutoHide : function () {
@@ -207,7 +215,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 				 */
 				
-				$this.attr( 'data-type', type )
+				$this.attr( 'data-type', type );
 			} );
 		},
 

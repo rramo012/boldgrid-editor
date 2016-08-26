@@ -33,7 +33,7 @@
 			$html = $('html');
 		}
 
-		var default_class = 'fourpan-overlays'
+		var default_class = 'fourpan-overlays';
 		var overlays_active = false;
 		var panels = {};
 		var settings = $.extend( {}, $.fourpan.defaultOptions, options );
@@ -49,17 +49,17 @@
 			'padding': '8px 15px',
 			'color' : 'white',
 			'display' : 'none',
-		}).on('mouseenter', function() {
-			  $(this).css({
-				  "background-color" : "#f95b26",
-				  "cursor" : "pointer"
-			  })
-		}).on('mouseleave', function() {
-			  $(this).css({
-				  "background-color":"rgb(213, 78, 33)",
-				  "cursor": 'default'
-			  });
-		});
+		} ).on('mouseenter', function() {
+			  $( this ).css( {
+				  'background-color' : '#f95b26',
+				  'cursor' : 'pointer'
+			  } );
+		} ).on('mouseleave', function() {
+			  $( this ).css( {
+				  'background-color' : 'rgb(213, 78, 33)',
+				  'cursor': 'default'
+			  } );
+		} );
 		$html.append( $close_button );
 
 		/**
@@ -218,23 +218,25 @@
 		 * Highlight an element
 		 */
 		$.fourpan.highlight = function ( selection_string ) {
+			var $this;
+			
 			if ( selection_string instanceof jQuery ) {
 				if ( selection_string.length > 1 || !selection_string.length ) {
 					return false;
 				}
 
-				var $this = selection_string;
+				$this = selection_string;
 			} else {
-				var $this = $(selection_string);
+				$this = $( selection_string );
 			}
 			// If the user tried to highlight more than 1 object, return false
-			if ( $this.length !== 1 || !$this.is(':visible') ) {
+			if ( $this.length !== 1 || ! $this.is(':visible') ) {
 				dismiss();
 				return false;
 			}
 			$.fourpan.$recent_highlight = $this;
 
-			if ( overlays_active == false ) {
+			if ( ! overlays_active ) {
 				reset_panels();
 				settings.activate( );
 				bind_subtree_mod();
