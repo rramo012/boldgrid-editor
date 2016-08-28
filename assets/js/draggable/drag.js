@@ -470,7 +470,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'10' : 0.833,
 		'11' : 0.917,
 		'12' : 1,
-		'13' : 0,
+		'13' : 1.083,
 	};
 
 	/**
@@ -1663,7 +1663,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If the user only has a paragraph on the page, don't show a popover.
 			var $top_level_elements = self.get_top_level_elements();
-			if ( $top_level_elements.length === 1 && $top_level_elements[0].tagName == 'P') {
+			if ( $top_level_elements.length === 1 && $top_level_elements[0].tagName == 'P' ) {
 				return;
 			}
 
@@ -1762,7 +1762,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	/**
 	 * Finds a layout stack A layout stack is a section of 12 columns, in a row.
-	 * Example: A row has 3 columns of widths 12, 8 and 4 This row has 2 stacks.
+	 * Example: If a row has 3 columns of widths: 12, 8 and 4. This row has 2 stacks.
 	 * The first stack has 1 column and a width of 12. The second stack has 2
 	 * columns a width of 8 and a width of 4.
 	 */
@@ -1797,7 +1797,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.check_adjacent_column = function( stack, sibling_column ) {
 		var sibling_in_stack = false;
 
-		if ( sibling_column.length ) {
+		if ( sibling_column && sibling_column.length ) {
 			$.each( stack, function( key, current_column ) {
 				if ( sibling_column[0] == current_column.object ) {
 					sibling_in_stack = true;
@@ -1807,6 +1807,37 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		return sibling_in_stack;
+	};
+	
+	this.elementIsEmpty = function ( $element ) {
+		var isEmpty = $element.is( ':empty' ),
+			minContentLength = 4;
+		
+		/*
+		 * If not Empty
+		 * 		and no images, icons, hr, or anchors found
+		 * 		and content length less than limit, 
+		 * 		THIS IS EMPTYISH
+		 */
+		if ( ! isEmpty && ! $element.find('img, i, hr, a').length && $element.text().length < minContentLength ) {
+			isEmpty = true;
+		}
+		
+		return isEmpty;
+	};
+	
+	this.getNewColumnString = function () {
+		var string = 'col-md-1 col-sm-12 col-xs-12';
+		switch ( self.active_resize_class ) {
+			case 'col-sm' :
+				string = 'col-md-12 col-sm-1 col-xs-12';
+				break;
+			case 'col-xs' :
+				string = 'col-md-12 col-sm-12 col-xs-1';
+				break;
+		}
+		
+		return string;
 	};
 
 	/**
@@ -1819,22 +1850,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// If we are currently resizing run this process.
 		if ( self.resize ) {
+			var smaller_position, larger_position, smaller_override, larger_override;
 
-			var $row = self.resize.element.closest_context( self.row_selectors_string,
-				self.$master_container );
+			var $row = self.resize.element.closest_context( self.row_selectors_string, self.$master_container );
 			var row_width = $row[0].getBoundingClientRect().width;
 			var column_size = self.find_column_size( self.resize.element );
+			var siblingColumnSize = self.find_column_size( self.resize.sibling );
 			var offset = self.resize.element[0].getBoundingClientRect();
 			var row_size = self.find_row_size( $row );
+			
 			// Determine how much drag until next location.
 			var current_column_size = self.column_sizes[ column_size ] * row_width;
 			var offset_added = self.column_sizes[ column_size + 1 ] * row_width;
 			var offset_removed = self.column_sizes[ column_size - 1 ] * row_width;
-
-			var smaller_position;
-			var larger_position;
-			var smaller_override;
-			var larger_override;
 
 			// Figure out the position of the next smallest column size.
 			if ( self.resize.left ) {
@@ -1846,8 +1874,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				smaller_position = offset_removed - current_column_size + offset.right;
 				larger_position = offset_added - current_column_size + offset.right;
 				smaller_override = self.pageX < smaller_position;
+				// If the users cursor is anywhere outside of the row + 10, make larger.
 				larger_override = self.pageX > larger_position ||
-					// If the users cursor is anywhere outside of the row + 10, make larger.
 					$row[0].getBoundingClientRect().right + self.right_resize_buffer < self.pageX;
 			}
 
@@ -1860,22 +1888,88 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// Has the dragging made the current element larger?
 			var made_larger = larger_override
-				|| self.between( larger_position, self.pageX - resize_buffer, self.pageX
-					+ resize_buffer );
+				|| self.between( larger_position, self.pageX - resize_buffer, self.pageX + resize_buffer );
 
-			var valid_smaller = made_smaller && column_size > 1;
-			var valid_larger = made_larger && column_size < self.max_row_size;
+			var valid_smaller = made_smaller && column_size > 1,
+				valid_larger = made_larger && column_size < self.max_row_size;
 
+			// If Im Resizing from the left
+			// and im making the item larger
+			// and the row size is more than the max row size.
+			// and this is the first element in the stack.
+			// exit.
+			if ( self.resize.left && valid_larger ) {
+				var column_stack = self.find_column_stack( $row, self.resize.element[0] );
+				if ( self.resize.element[0] == column_stack.stack[0].object ) {
+					return false;
+				}
+			}
+			
+			/*
+			 * If my column size is 1.
+			 * - and your making me smaller.
+			 * - delete me, switch to resize my sibling
+			 */
+			if ( column_size === 1 && made_smaller ) {
+				if ( self.elementIsEmpty( self.resize.element ) ) {
+					var resizeElement = self.resize.element;
+					self.resize.element.remove();
+					self.change_column_size( self.resize.sibling );
+					
+					self.resize.element = self.resize.sibling;
+	
+					if ( self.resize.right ) {
+						self.resize.left = self.resize.right;
+						self.resize.element.addClass( 'resize-border-left-imhwpb' );
+						self.resize.right = null;
+						$newSibiling = self.resize.sibling.prev();
+					} else {
+						self.resize.right = self.resize.left;
+						self.resize.element.addClass( 'resize-border-right-imhwpb' );
+						self.resize.left = null;
+						$newSibiling = self.resize.sibling.next();
+					}
+	
+					self.resize.sibling = $newSibiling;
+				}
+				
+				return false;
+			}
+			
 			if ( valid_smaller || valid_larger ) {
 
 				var column_stack = self.find_column_stack( $row, self.resize.element[0] );
-
+				
 				// If your resizing from the left and this is the first item in
-				// a stack ignore the movemeny.
-				if ( self.resize.left && self.resize.element[0] == column_stack.stack[0].object ) {
-					self.$master_container.addClass( 'cursor-not-allowed-imhwpb' );
+				if ( self.resize.left && self.resize.element[0] == column_stack.stack[0].object && made_smaller ) {
+					self.change_column_size( self.resize.element, false );
+					self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
+					$row.prepend( self.resize.sibling );
 					return false;
 				}
+				
+				/*
+				 * If my column size is 1.
+				 * - and your making me smaller.
+				 * - delete me.
+				 */
+				if ( made_larger && siblingColumnSize == 1 ) {
+					if ( self.elementIsEmpty( self.resize.sibling ) ) {
+
+						var method = 'next';
+						if ( self.resize.left ) {
+							method = 'prev';
+						} 
+						
+						var $next = self.resize.sibling[ method ]();
+						self.resize.sibling.remove();
+						self.resize.sibling = $next;
+						self.change_column_size( self.resize.element );
+					}
+					
+					return false;
+				}
+				
 				// If your resizing from the right
 				//	and the row has 12
 				//  and your making it larger
@@ -1885,18 +1979,27 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				if ( self.resize.right && row_size == 12 && valid_larger && self.active_resize_class == 'col-md' && last_col_in_row ) {
 					return false;
 				}
+				
+				// If my resizing from the right
+				// And im making myself smaller.
+				// And Im the last item in the stack.
+				// Add a column.
+				if ( self.resize.right && last_col_in_row && made_smaller ) {
+					self.change_column_size( self.resize.element, false );
+					self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
+					$row.append( self.resize.sibling );
+					return false;
+				}
 
-				var sibling_in_stack = self.check_adjacent_column( column_stack.stack,
-					self.resize.sibling );
+				var sibling_in_stack = self.check_adjacent_column( column_stack.stack, self.resize.sibling );
 			}
-
+			
 			if ( valid_smaller ) {
 
 				self.change_column_size( self.resize.element, false );
-				if ( self.resize.sibling.length ) {
-
-					if ( self.find_column_size( self.resize.sibling ) < self.max_row_size
-						&& sibling_in_stack ) {
+				
+				if ( self.resize.sibling && self.resize.sibling.length ) {
+					if ( siblingColumnSize < self.max_row_size && sibling_in_stack ) {
 						self.change_column_size( self.resize.sibling );
 					}
 				}
@@ -1908,8 +2011,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				}
 
 			} else if ( valid_larger ) {
-				if ( self.resize.sibling.length
-					&& self.find_column_size( self.resize.sibling ) == 1 ) {
+				if ( ! self.resize.sibling || ( self.resize.sibling.length && siblingColumnSize == 1 ) ) {
 					return;
 				}
 
@@ -2088,19 +2190,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Find the location of the border on an column.
 	 */
 	this.get_border_mouse_location = function( $element, x_position ) {
-		var bounding_rectangle = $element[0].getBoundingClientRect();
-		var left_position = Math.floor( bounding_rectangle.left );
-		var right_position = Math.floor( bounding_rectangle.right );
+		var right_of_column, left_of_column,
+			bounding_rectangle = $element[0].getBoundingClientRect(),
+			left_position = Math.floor( bounding_rectangle.left ),
+			right_position = Math.floor( bounding_rectangle.right );
 
-		var right_of_column = self.between( x_position, right_position - self.border_hover_buffer,
-			right_position );
-
-		var left_of_column = self.between( x_position, left_position, left_position
-			+ self.border_hover_buffer );
-
-		if ( left_of_column && false == $element.prevAll( self.column_selectors_string ).length ) {
-			left_of_column = false;
-		}
+		right_of_column = self.between( x_position, right_position - self.border_hover_buffer, right_position );
+		left_of_column = self.between( x_position, left_position, left_position + self.border_hover_buffer );
 
 		return {
 			'left' : left_of_column,
@@ -2198,9 +2294,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Return the column size of a column.
 	 */
 	this.find_column_size = function( $column_element ) {
-		var column_size = 0;
-		var regex = new RegExp( self.active_resize_class + "-([\\d]+)", 'i' );
-		var matches = $column_element.attr( 'class' ).match( regex );
+		var regex, matches,
+			column_size = 0;
+		
+		if ( ! $column_element || ! $column_element.length ) {
+			return column_size;
+		}
+		
+		regex = new RegExp( self.active_resize_class + "-([\\d]+)", 'i' );
+		matches = $column_element.attr( 'class' ).match( regex );
 
 		if ( matches ) {
 			column_size = matches[1];
@@ -2609,6 +2711,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		}
 	};
+	
+	this.fill_row = function ( row_size, $row ) {
+		var $new_column;
+		
+		if ( row_size < self.max_row_size ) {
+			$new_column = $( '<div class="col-md-' + ( self.max_row_size - row_size ) +
+				' col-sm-12 col-xs-12"></div>' );
+			$row.append( $new_column );
+		}
+		
+		return $new_column;
+	};
 
 	/**
 	 * This object contains all the event handlers used for DND (Drag and Drop).
@@ -2674,6 +2788,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * drag image, and set some initial drag properties.
 		 */
 		start : function( event ) {
+			
+			var $new_column, $row, row_size;
 
 			self.valid_drag = true;
 			self.drag_drop_triggered = false;
@@ -2797,9 +2913,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( self.$current_drag.IMHWPB.is_column ) {
 				self.$current_drag.IMHWPB.type = 'column';
 				self.recalc_col_pos();
+				
+				$row = self.$current_drag.closest('.row'),
+				row_size = self.find_row_size( $row );
+					
+				if ( row_size < self.max_row_size ) {
+					self.fill_row( row_size, $row );
+				}
 
 				// If the row has not stacked with columns, allow the rail dragging && desktop view.
-				if ( self.find_row_size( self.$current_drag.closest('.row') ) <= 12
+				if ( row_size <= 12
 					&& self.active_resize_class == 'col-md'
 					&& self.$current_drag.siblings( self.unformatted_column_selectors_string ).not( self.$temp_insertion ).length
 				//	&& !self.editting_as_row
@@ -2824,14 +2947,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( self.ie_version ) {
 				timeout_length = 150;
 			}
-
+			
 			setTimeout( function() {
 				self.$current_drag.removeClass( 'hidden' );
 				self.$master_container.trigger( self.drag_start_event );
 				self.$master_container
 					.find( '.resizing-imhwpb' )
 					.removeClass( 'resizing-imhwpb' );
-
+				
 			}, timeout_length );
 
 		},
@@ -3550,11 +3673,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 */
 		add_column : function( event ) {
 			event.preventDefault();
-			var min_row_size = 0;
-			var $current_click = $( this );
-			var $row = $current_click.closest( '.draggable-tools-imhwpb' ).next();
-			var row_size = self.find_row_size( $row );
-			var $new_column;
+			
+			var min_row_size = 0,
+				$current_click = $( this ),
+				$row = $current_click.closest( '.draggable-tools-imhwpb' ).next(),
+				row_size = self.find_row_size( $row ),
+				$new_column;
 
 			//If this row is empty( only has a br tag ) make sure its blank before adding a column
 			var $children = $row.find('> *');
@@ -3563,9 +3687,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 
 			if ( row_size < self.max_row_size && row_size >= min_row_size ) {
-				$new_column = $( '<div class="col-md-' + (self.max_row_size - row_size)
-					+ ' col-sm-12 col-xs-12"></div>' );
-				$row.append( $new_column );
+				$new_column = self.fill_row( row_size, $row );
 			} else if ( row_size >= self.max_row_size ) {
 
 				var layout_format = self.get_layout_format( $row );
@@ -3772,8 +3894,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 */
 		'mousemove.draggable' : function( event, $element ) {
 			if ( ! self.resize ) {
-				var position_x = self.pageX;
-				var border_hover = false;
+				var position_x = self.pageX,
+					border_hover = false;
 				if ( typeof event != 'undefined' && event != null ) {
 					position_x = event.originalEvent.clientX;
 					$element = $( this );

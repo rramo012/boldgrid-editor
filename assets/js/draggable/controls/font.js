@@ -66,7 +66,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses' : self.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
-				'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
+				//'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
 				'myFonts' : [ ]
 			} );
 
