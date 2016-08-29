@@ -11,7 +11,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'image-filter',
 		
-		priority : 5,
+		priority : 90,
 		
 		iconClasses : 'genericon genericon-image',
 		

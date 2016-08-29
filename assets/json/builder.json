@@ -3,7 +3,7 @@
 		"bg-box bg-box-square",
 		"bg-box bg-box-edged",
 		"bg-box bg-box-rounded",
-		"bg-box bg-box-circle",
+		"bg-box bg-box-pill",
 
 		"bg-box bg-box-rounded-bottom-left bg-box-rounded-top-left",
 		"bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right",
@@ -16,35 +16,86 @@
 		
 		"bg-box bg-box-square bg-box-shadow-bottom-left",
 		"bg-box bg-box-edged bg-box-shadow-bottom-right",
-		"bg-box bg-box-circle bg-box-shadow-bottom-right",
+		"bg-box bg-box-pill bg-box-shadow-bottom-right",
 
 		"bg-box bg-box-square bg-box-border-thin",
 		"bg-box bg-box-rounded bg-box-border-thin",
-		"bg-box bg-box-circle bg-box-border-thin",
+		"bg-box bg-box-pill bg-box-border-thin",
 
-		"bg-box bg-box-circle bg-box-border-normal",
+		"bg-box bg-box-pill bg-box-border-normal",
 		"bg-box bg-box-rounded bg-box-border-normal",
 		"bg-box bg-box-square bg-box-border-normal",
 
 		"bg-box bg-box-rounded bg-box-border-thick",
 		"bg-box bg-box-square bg-box-border-thick",
-		"bg-box bg-box-circle bg-box-border-thick",
+		"bg-box bg-box-pill bg-box-border-thick",
 
 		"bg-box bg-box-rounded bg-box-border-dashed",
 		"bg-box bg-box-square bg-box-border-dashed",
-		"bg-box bg-box-circle bg-box-border-dashed",
+		"bg-box bg-box-pill bg-box-border-dashed",
 
 		"bg-box bg-box-rounded bg-box-border-dashed-thick",
 		"bg-box bg-box-square bg-box-border-dashed-thick",
-		"bg-box bg-box-circle bg-box-border-dashed-thick",
+		"bg-box bg-box-pill bg-box-border-dashed-thick",
 
 		"bg-box bg-box-rounded bg-box-border-double",
 		"bg-box bg-box-square bg-box-border-double",
-		"bg-box bg-box-circle bg-box-border-double",
+		"bg-box bg-box-pill bg-box-border-double",
 
 		"bg-box bg-box-rounded bg-box-border-double-thick",
-		"bg-box bg-box-circle bg-box-border-double-thick",
+		"bg-box bg-box-pill bg-box-border-double-thick",
 		"bg-box bg-box-square bg-box-border-double-thick"
+	],
+	"image" : [
+	
+		"bg-img bg-img-1",
+		"bg-img bg-img-9",
+	
+		"bg-img bg-img-square",
+		"bg-img bg-img-edged",
+		"bg-img bg-img-rounded",
+		"bg-img bg-img-circle",
+
+		"bg-img bg-img-rounded-bottom-left bg-img-rounded-top-left",
+		"bg-img bg-img-rounded-bottom-left bg-img-rounded-bottom-right",
+		"bg-img bg-img-rounded-top-left bg-img-rounded-top-right",
+		"bg-img bg-img-rounded-bottom-right bg-img-rounded-top-right",
+		
+		"bg-img bg-img-rounded-bottom-right bg-img-rounded-top-left",
+		"bg-img bg-img-rounded-bottom-left bg-img-rounded-top-right",
+
+		
+		"bg-img bg-img-square bg-img-shadow-bottom-left",
+		"bg-img bg-img-edged bg-img-shadow-bottom-right",
+		"bg-img bg-img-circle bg-img-shadow-bottom-right",
+
+		"bg-img bg-img-square bg-img-border-thin",
+		"bg-img bg-img-rounded bg-img-border-thin",
+		"bg-img bg-img-pill bg-img-border-thin",
+
+		"bg-img bg-img-circle bg-img-border-normal",
+		"bg-img bg-img-rounded bg-img-border-normal",
+		"bg-img bg-img-square bg-img-border-normal",
+
+		"bg-img bg-img-rounded bg-img-border-thick",
+		"bg-img bg-img-square bg-img-border-thick",
+		"bg-img bg-img-circle bg-img-border-thick",
+
+		"bg-img bg-img-rounded bg-img-border-dashed",
+		"bg-img bg-img-square bg-img-border-dashed",
+		"bg-img bg-img-circle bg-img-border-dashed",
+
+		"bg-img bg-img-rounded bg-img-border-dashed-thick",
+		"bg-img bg-img-square bg-img-border-dashed-thick",
+		"bg-img bg-img-circle bg-img-border-dashed-thick",
+
+		"bg-img bg-img-rounded bg-img-border-double bg-img-pad-sm",
+		"bg-img bg-img-square bg-img-border-double bg-img-pad-sm",
+		"bg-img bg-img-circle bg-img-border-double bg-img-pad-sm",
+
+		"bg-img bg-img-rounded bg-img-border-double-thick bg-img-pad-lg",
+		"bg-img bg-img-circle bg-img-border-double-thick bg-img-pad-lg",
+		"bg-img bg-img-square bg-img-border-double-thick bg-img-pad-lg"
 	],
 	"pointers" : [
 		"bg-box-pointer bg-box-pointer-left",

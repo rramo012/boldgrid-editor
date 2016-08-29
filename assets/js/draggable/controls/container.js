@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict"; 
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Container = {
 
@@ -13,19 +14,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		tooltip : 'Section Width',
 
-		priority : 90,
+		priority : 15,
 
 		iconClasses : 'fa fa-arrows-h',
 
 		selectors : [ '.boldgrid-section .container', '.boldgrid-section .container-fluid' ],
 
 		init : function () {
-			BOLDGRID.EDITOR.Controls.registerControl( this );
+			//BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
-		onMenuClick : function ( e ) {
-			var $container = BOLDGRID.EDITOR.Controls.
-				$menu.targetData[ self.name ].closest( '.container, .container-fluid' );
+		onMenuClick : function () {
+			self.toggleSectionWidth();
+		},
+		
+		toggleSectionWidth : function ( $container ) {
+			
+			if ( ! $container ) {
+				$container = BG.Controls.$menu
+					.targetData[ self.name ].closest( '.container, .container-fluid' );
+			}
 
 			if ( $container.hasClass( 'container' ) ) {
 				$container.addClass( 'container-fluid' );

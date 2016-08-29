@@ -45,9 +45,10 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			
 			self.hideHandles();
 		},
+		
 		initDraggable : function () {
 			var startPadding, setting,
-			$body = self.$container.find( 'body' );
+				$body = self.$container.find( 'body' );
 
 			self.$container.find( '.draghandle' ).draggable( {
 				scroll: false,
@@ -101,11 +102,19 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$container.on( 'mouseleave', '.editing-as-row .row .row:not(.row .row .row)', self.hideHandles );
 			self.$container.on( 'edit-as-row-enter', self.hideHandles );
 			self.$container.on( 'edit-as-row-leave', self.hideHandles );
+			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 		},
 		positionHandles : function() {
-			var pos = this.getBoundingClientRect(),
-				$this = $( this ),
-				rightOffset = pos.right - 100;
+			var pos, $this, rightOffset;
+			
+			if ( this.getBoundingClientRect ) {
+				$this = $( this );
+			} else {
+				$this = self.$currentRow;
+			}
+			
+			pos = $this[0].getBoundingClientRect();
+			rightOffset = pos.right - 100;
 
 			if ( self.currentlyDragging ) {
 				return false;
@@ -117,13 +126,17 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$topHandle.css( {
 				'top' : pos.top - self.handleOffset,
 				'left' : rightOffset
-			} ).show();
+			} );
 
 			self.$bottomHandle.css( {
 				'top' : pos.bottom - self.handleOffset,
 				'left' : rightOffset
-			} ).show();
-
+			} );
+			
+			if ( this.getBoundingClientRect ) {
+				self.$topHandle.show();
+				self.$bottomHandle.show();
+			}
 		},
 		hideHandles : function ( e ) {
 			var $this = $( this );

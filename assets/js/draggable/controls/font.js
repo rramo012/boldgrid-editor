@@ -14,11 +14,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		tooltip : 'Font',
 
-		priority : 10,
+		priority : 30,
 
 		iconClasses : 'fa fa-text-width',
 
-		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section' ],
+		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section, ul, ol, dl' ],
+
+		// Ignore images clicked in paragraphs.
+		exceptionSelector : 'img',
 
 		templateMarkup : null,
 		
@@ -66,11 +69,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses' : self.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
-				//'themeFonts' : BoldgridEditor.builder_config.theme_fonts,
+				'themeFonts' : self.getThemeFonts(),
 				'myFonts' : [ ]
 			} );
 
 			BG.FontRender.updateFontLink( BG.Controls.$container );
+		},
+		
+		getThemeFonts : function () {
+			var themeFonts = [];
+			
+			if ( -1 !== BoldgridEditor.builder_config.theme_features.indexOf('theme-fonts-classes')  ) {
+				themeFonts = BoldgridEditor.builder_config.theme_fonts;
+			}
+			
+			return themeFonts;
 		},
 
 		_setupFamilyColor : function () {

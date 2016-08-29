@@ -20,7 +20,6 @@ h6,
 [data-imhwpb-draggable="true"],
 .wpview-wrap,
 .wpview {
-  transition: outline .5s;
   outline: 1px dashed rgba(0,0,0,0);
 }
 

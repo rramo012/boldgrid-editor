@@ -2,6 +2,8 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function ( $ ) {
+	
+	var BG = BOLDGRID.EDITOR; 
 
 	BOLDGRID.EDITOR.Controls = {
 		$panel : null,
@@ -30,6 +32,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			//Create all controls.
 			this.setupControls();
 			
+		},
+		
+		hasThemeFeature : function ( feature ) {
+			return -1 !== BoldgridEditor.builder_config.theme_features.indexOf( feature );
 		},
 		
 		addStyle : function ( element, property, value ) {
@@ -66,12 +72,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		onEditibleClick : function () {
 			var self = this;
-			//TODO this could go into another file.
-			this.$container.on( 'click', function ( e ) {
-				if ( ! e.boldgrid || ! e.boldgrid.menuItem ) {
-					//self.$menu.hide();
-				}
-			} );
 
 			this.$container.on( 'mouseup', function ( e ) {
 				self.$menu.items = [];
@@ -95,8 +95,18 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					BOLDGRID.EDITOR.Menu.reactivateMenu();
 				} );
 
+				self._closeOpenControl();
 				BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
 			} );
+		},
+		
+		/**
+		 * If a control is open and the coresponding menu item is not present
+		 */
+		_closeOpenControl : function () {
+			if ( BG.Panel.currentControl && -1 === this.$menu.items.indexOf( BG.Panel.currentControl.name ) ) {
+				BG.Panel.closePanel();
+			}
 		},
 
 		/**
@@ -166,6 +176,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 						}
 					}
 
+				}
+				
+				// If the user clicks one of the controls exceptions, skip.
+				if ( control.exceptionSelector && $( e.toElement ).is( control.exceptionSelector ) ) {
+					return;
 				}
 
 				self.$menu.targetData = self.$menu.targetData || {};

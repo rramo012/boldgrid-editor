@@ -43,9 +43,39 @@ class Boldgrid_Editor_Builder {
 		$builder_configs = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
 		$builder_configs['fonts'] = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
+		$builder_configs['theme_features'] = self::get_theme_features();
 		return $builder_configs;
 	}
 
+	/**
+	 * Get a list of supported theme features.
+	 *
+	 * @global array $boldgrid_theme_framework.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @return array $supported_features.
+	 */
+	public static function get_theme_features() {
+		global $boldgrid_theme_framework;
+
+		$configs = $boldgrid_theme_framework->get_configs();
+		$supported_features = ! empty( $configs['supported-features'] ) ?
+			$configs['supported-features'] : array();
+
+		/*
+		 * supported-features was added after support for variable containers.
+		 * for the period between 1.2 and 1.3 this conditional should trigger, overriding
+		 * supported features to add 1 more entry.
+		 */
+		if ( empty( $configs['supported-features']['variable-containers'] ) ) {
+			if ( isset( $configs['template']['pages'] ) || ! empty( $configs['supported-features'] ) ) {
+				$supported_features[] = 'variable-containers';
+			}
+		}
+
+		return $supported_features;
+	}
 
 	/**
 	 * Print templates used in page and post editor.

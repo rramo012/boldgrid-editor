@@ -21,23 +21,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'bg-box bg-box-square bg-box-border-dashed' : 'box-wide',
 			'bg-box bg-box-rounded bg-box-border-dashed' : 'box-long',
 			'bg-box bg-box-square bg-box-border-dashed-thick' : 'box-long',
-			'bg-box bg-box-circle bg-box-border-double-thick' : 'box-wide',
+			'bg-box bg-box-square bg-box-border-double-thick' : 'box-wide',
 		},
 
 		namespace : 'bg-box',
 
 		name : 'box',
 
-		priority : 10,
+		priority : 20,
 
 		iconClasses : 'genericon genericon-gallery',
 
-		tooltip : 'Text Background',
+		tooltip : 'Column Background',
 
 		selectors : [ '.row [class*="col-md"]' ],
 
 		panel : {
-			title : 'Text Background',
+			title : 'Column Background',
 			height : '530px',
 			width : '290px',
 			includeFooter : true,
@@ -276,10 +276,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				self.selfResetBorderClasses( $module );
 				
-				if ( 'class' == type ) {
+				if ( 'class' == type && BG.Controls.hasThemeFeature( 'border-color-classes' ) ) {
 					$module.addClass( BG.CONTROLS.Color.getColorClass( 'border-color', value ) );
 				} else {
-					BG.Controls.addStyle( $module, 'border-color', value );
+					// Using backgrond color for themes without background colors.
+					BG.Controls.addStyle( $module, 'border-color', $this.prev('label').css( 'background-color' ) );
 				}
 				
 				self._saveModuleClasses();

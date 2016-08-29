@@ -98,6 +98,57 @@ IMHWPB.Media = function( $ ) {
 
 		$( '.media-router .media-menu-item:first' ).click();
 	};
+	
+	this.sendGridblock = function ( $inserting ) {
+		var draggable, editor, $selection, selectorString,
+			sendGridblock = false;
+		
+		if ( ! $inserting || ! IMHWPB.WP_MCE_Draggable.draggable_instance ) {
+			return sendGridblock;
+		}
+		
+		draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
+		editor = tinymce.activeEditor;
+		$selection = $( editor.selection.getNode() );
+		
+		if ( $inserting.is( draggable.row_selectors_string ) ) {
+			selectorString = draggable.row_selectors_string;
+		} else {
+			selectorString = draggable.sectionSelectorString;
+		}
+
+		if ( $inserting.is( selectorString ) ) {
+
+			var $element = $selection.closest( selectorString );
+
+			/*
+			* If current selection is inside of a row, insert above that row. Otherwise
+			* insert at top of row.
+			*/
+			
+			
+			if ( $element.length ) {
+				$element.before( $inserting );
+			// If this is a row and foxus is not inside a row, Prepend the first section it finds.
+			} else if ( selectorString == draggable.row_selectors_string && $( editor.getBody() ).find('.boldgrid-section').length ) {
+				$( editor.getBody() )
+					.find('.boldgrid-section:first > .container, .boldgrid-section:first > .container-fluid')
+					.prepend( $inserting );
+			} else {
+				$( editor.getBody() ).prepend( $inserting );
+			}
+
+			draggable.validate_markup();
+			editor.fire('setContent');
+			editor.focus();
+			sendGridblock = true;
+			setTimeout( function () {
+				BOLDGRID.EDITOR.CONTROLS.Add.scrollToElement( $inserting, 0 );
+			} );
+		}
+		
+		return sendGridblock;
+	};
 
 	/**
 	 * Grab the selected layouts and insert them into the editor @ cursor
@@ -109,7 +160,7 @@ IMHWPB.Media = function( $ ) {
 				'click',
 				function(e) {
 					e.preventDefault();
-					if ($(this).hasClass('button-primary-disabled') == false) {
+					if ( $( this ).hasClass('button-primary-disabled') == false ) {
 						var child_window = $( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance;
 
 						var insert_process = function ( html_to_insert ) {
@@ -121,26 +172,8 @@ IMHWPB.Media = function( $ ) {
 							if ( false == is_shortcode || null == is_shortcode ) {
 								$inserting = $(html_to_insert);
 							}
-
-							if ( $inserting && IMHWPB.WP_MCE_Draggable.draggable_instance &&
-								$inserting.is( IMHWPB.WP_MCE_Draggable.draggable_instance.row_selectors_string )) {
-
-								var current_node = tinymce.activeEditor.selection.getNode();
-								var $row = $(current_node)
-									.closest_context( IMHWPB.WP_MCE_Draggable.draggable_instance.row_selectors_string,
-										IMHWPB.WP_MCE_Draggable.draggable_instance.$master_container);
-
-								 if ( $row.length ) {
-									$row.before ( $inserting );
-								//Else insert at top
-								} else {
-									$(tinyMCE.activeEditor.getBody()).prepend( $inserting );
-								}
-
-								IMHWPB.WP_MCE_Draggable.draggable_instance.validate_markup();
-								tinymce.activeEditor.fire('setContent');
-								tinymce.activeEditor.focus();
-							} else {
+							
+							if( ! self.sendGridblock( $inserting ) ) { 
 								// Insert into TinyMCE
 								send_to_editor( html_to_insert );
 								//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
@@ -148,6 +181,7 @@ IMHWPB.Media = function( $ ) {
 							}
 
 							$( window ).trigger( 'resize' );
+							
 						};
 
 						//Insert into page aciton

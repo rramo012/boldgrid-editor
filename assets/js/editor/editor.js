@@ -475,7 +475,7 @@ IMHWPB.Editor = function( $ ) {
 				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = true;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
-						.$master_container.find( '.draggable-tools-imhwpb' ).addClass( "hidden" );
+						.$master_container.find('html').addClass( 'bg-disabled-handles' );
 				}
 			});
 
@@ -484,7 +484,7 @@ IMHWPB.Editor = function( $ ) {
 				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = false;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
-						.$master_container.find( '.draggable-tools-imhwpb' ).removeClass( "hidden" );
+						.$master_container.find('html').removeClass( 'bg-disabled-handles' );
 				}
 			});
 

@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict"; 
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Section = {
 		
@@ -19,6 +20,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container = $container;
 			self.createHandles();
 			self.bindHandlers();
+			
+			// Disables section width on old/non bg themes. 
+			// Update: If container exists in content, the user should be able to modify it.
+			// self.enableFeatures();
+		},
+		
+		enableFeatures : function () {
+			if ( false === BG.Controls.hasThemeFeature( 'variable-containers' ) ) {
+				self.$container.find('html').addClass('disabled-section-width');
+			}
 		},
 		
 		hideHandles : function ( e ) {
@@ -50,13 +61,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action]', self.hideHandles );
 			self.$popover.on( 'click', '[data-action="delete"]', self.deleteSection );
 			self.$popover.on( 'click', '[data-action="duplicate"]', self.clone );
+			self.$popover.on( 'click', '[data-action="section-width"]', self.sectionWidth );
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
+			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 		},
 		
 		positionHandles : function() {
-			var pos = this.getBoundingClientRect(),
+			var pos, $this;
+			
+			if ( this.getBoundingClientRect ) {
 				$this = $( this );
+			} else {
+				$this = self.$currentSection;
+			}
+			
+			pos = $this[0].getBoundingClientRect();
 
 			if ( self.currentlyDragging ) {
 				return false;
@@ -69,7 +89,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'top' :  pos.bottom + 35,
 				'left' : '50%',
 				'transform' :  'translateX(-50%)'
-			} ).show();
+			} );
+			
+			if ( this.getBoundingClientRect ) {
+				self.$popover.show();
+			}
 		},
 		
 		deleteSection : function () {
@@ -90,6 +114,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 			self.$container.trigger( self.$container.delete_event );
 		},
+		
 		moveDown : function () {
 			var $next = self.$currentSection.next();
 			
@@ -97,6 +122,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$next.after( self.$currentSection );
 			}
 			
+			self.$container.trigger( self.$container.delete_event );
+		},
+		
+		sectionWidth : function () {
+			BG.CONTROLS.Container.toggleSectionWidth( self.$currentSection.find('.container, .container-fluid') );
 			self.$container.trigger( self.$container.delete_event );
 		}
 		

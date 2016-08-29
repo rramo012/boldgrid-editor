@@ -1,22 +1,39 @@
-$namespace: bg-box;
-$rounded : 15px;
-$circle-radius : 1000px;
+$namespaces: bg-box bg-img;
+$rounded : 2em;
+$pill-radius : 1000px;
 
-.#{$namespace} {
+.bg-box {
 	padding: 1em;
 	
+	&.bg-box-circle,
+	&.bg-box-pill {
+       padding: 4em;
+	}
+}
+
+@each $namespace in $namespaces {
+
 	&.#{$namespace}-square {
 	   border-radius: 0;
 	}
+	&.#{$namespace}-pill {
+	   border-radius: $pill-radius;
+	}
 	&.#{$namespace}-circle {
-	   border-radius: $circle-radius;
-       padding: 4em;
+	   border-radius: 50%;
 	}
 	&.#{$namespace}-rounded {
 	   border-radius: $rounded;
 	}
 	&.#{$namespace}-edged {
 	   border-radius: 5px;
+	}
+	
+	&.#{$namespace}-pad-sm {
+		padding: 3px;
+	}
+	&.#{$namespace}-pad-lg {
+		padding: 7px;
 	}
 	
 	&.#{$namespace}-rounded-top-left {

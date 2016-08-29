@@ -12,7 +12,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'button',
 
-		priority : 2,
+		priority : 80,
 
 		tooltip : 'Button Design',
 

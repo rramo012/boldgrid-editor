@@ -288,6 +288,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.nested_row_selector_string = '.row .row:not(.row .row .row)';
 
 	/**
+	 * Nested row selector.
+	 */
+	this.sectionSelectorString = '.boldgrid-section';
+
+	/**
 	 * These are the selectors that are defined as content elements.
 	 * @todo Use this array to create content_selectors & nested_mode_content_selectors.
 	 */
@@ -609,16 +614,21 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'column' : 'top-popover-imhwpb column-popover-imhwpb'
 	};
 
+	this.capitalizeFirstLetter = function ( string ) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+	
 	/**
 	 * Markup needed to display a popover.
 	 */
 	this.toolkit_markup = function( type ) {
+		var tooltipTitle = self.capitalizeFirstLetter( type );
 
 		var popover = '<div spellcheck="false" data-mce-bogus="all" contenteditable="false"' +
 			'unselectable="on" class="draggable-tools-imhwpb">'+
 			'<span class="popover-imhwpb ' +
 			self.type_popover_classes[ type ] + '">' +
-			'<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '+
+			'<div title="Move ' + tooltipTitle + '" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '+
 			'<span  class="genericon genericon-move" aria-hidden="true"> </span>' +
 			'</div>';
 

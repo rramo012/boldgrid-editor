@@ -12,7 +12,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'icon',
 
-		priority : 5,
+		priority : 80,
 		
 		tooltip : 'Icon Design',
 
@@ -42,14 +42,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Controls.$container.find( '.bg-inserted-icon' ).removeClass('bg-inserted-icon');
 			BG.Controls.$menu.targetData[ self.name ] = $insertedIcon;
 			$insertedIcon.click();
-			self.openPanel();
 		},
 
 		setupPanelClick : function() {
 			var controls = BOLDGRID.EDITOR.Controls,
 				panel = BOLDGRID.EDITOR.Panel;
 
-			panel.$element.on( 'click', '.panel-selection', function () {
+			panel.$element.on( 'click', '.icon-controls .panel-selection', function () {
 				var $menu = controls.$menu,
 					$target = $menu.targetData[ self.name ],
 					$this = $( this );
@@ -78,7 +77,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setupPanelClick();
 
 			// Create Markup.
-			var $ul = $( '<ul></ul>' );
+			var $ul = $( '<ul></ul>' ).addClass('icon-controls');
 			$.each( BoldgridEditor.icons, function () {
 				var $li = $('<li class="panel-selection"><i class="' + this['class'] + '">' +
 						'</i><span class="name">' + this.name + '</span></li>');

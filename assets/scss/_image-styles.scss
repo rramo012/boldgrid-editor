@@ -1,63 +1,18 @@
-.editor-panel .boldgrid-image,
-#tinymce .boldgrid-image,
-.page .boldgrid-image {
-    border: none;
-    box-shadow: none;
-}
-
 .page .background-fixed  {
     background-attachment: fixed !important;
 }
 
-.editor-panel,
-#tinymce,
-.page {
+.bg-img {
 				
-    .img-mod-1 {
+    &.bg-img-1 {
         border: 3px solid #fff; 
         padding: 0;
-        box-shadow: 0px 5px 5px 0px rgba(85,85,85,1); 
+        box-shadow: 0px 0px 1px 0px rgba(85,85,85,1), 0px 5px 5px 0px rgba(85,85,85,1); 
     } 
     
-    .img-mod-2 {
-        border-radius: 50%;
-    }
-    
-    .img-mod-3 {
-        border-radius: 50%;
-        border: 0.25em solid #c3c3c3;
-    }
-    
-    .img-mod-4 {
-        border-radius: 10px;
-    }
-    .img-mod-5 {
-        border-radius: 35px;
-    }
-    
-    .img-mod-6 {
-        border-radius: 50%;
-        border: 8px solid white;
-        box-shadow: 0px 0px 3px 0px rgba(85,85,85,1);
-    }
-    
-    .img-mod-7 {
-        box-shadow: .3em .3em 0 0 #8e8e8e;
-    }
-    
-    .img-mod-8 {
-        border: 8px solid white;
-        box-shadow: 0px 0px 0px .3em #8e8e8e;
-    }
-    
-    .img-mod-9 {
+    &.bg-img-9 {
         border: .5em solid white;
         border-bottom-width: 2em;
-        box-shadow: 0px 0.2em .2em 0px #555555;
-    }
-    .img-mod-10 {
-	    border: 6px solid white;
-	    box-shadow: 0px 0px 0px .2em #8e8e8e;
-	    border-radius: 15px;
+        box-shadow: 0px 0px 1px 0px #555555, 0px 4px 4px 0px #555555;
     }
 }

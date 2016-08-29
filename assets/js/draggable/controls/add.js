@@ -14,7 +14,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name : 'add',
 		
-		tooltip : 'Add New',
+		tooltip : 'Add New Item',
 
 		priority : 1,
 
@@ -88,14 +88,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.CONTROLS.Button.insertNew();
 		},
 		
+		scrollToElement : function ( $newSection, duration ) {
+			
+			$('html, body').animate({
+					scrollTop: $newSection.offset().top
+			}, duration );
+		},
+		
 		addSection : function () {
 			var $container = BOLDGRID.EDITOR.Controls.$container,
 				$newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
 			$container.$body.append( $newSection );
 			
-			 $('html, body').animate({
-			       scrollTop: $newSection.offset().top
-		    }, 200);
+			self.scrollToElement( $newSection, 200 );
 			 
 			IMHWPB.tinymce_undo_disabled = true;
 			$newSection.animate( {

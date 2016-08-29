@@ -35,9 +35,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		setupMenuDrag : function() {
 			this.$element.find( 'ul' ).draggable( {
 				containment: '#wp-content-editor-container',
-				//handle: '.boldgrid-instance-menu ul',
 				scroll : false,
-				axis: "x"
+				axis: "x",
+				cancel: "li"
 			} );
 		},
 

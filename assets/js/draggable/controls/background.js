@@ -16,7 +16,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		uploadFrame : null,
 
-		priority : 80,
+		priority : 10,
 
 		iconClasses : 'genericon genericon-picture',
 
@@ -27,7 +27,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		panel : {
-			title : 'Background',
+			title : 'Section Background',
 			height : '500px',
 			width : '300px',
 			scrollTarget : '.presets',

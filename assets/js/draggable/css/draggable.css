@@ -243,7 +243,7 @@ html.boldgrid-editor-fullscreen {
 .bottom-popover-imhwpb:after {
     left: -30px;
     right: -30px;
-    top: -20px;
+    top: -6px;
     bottom: -20px
 }
 
@@ -355,6 +355,11 @@ html.boldgrid-editor-fullscreen {
 	width: 40px;
 }
 
+.disabled-section-width .popover-menu-imhwpb [data-action="section-width"],
+.drag-progress .section-drag-handle,
+.bg-disabled-handles .draggable-tools-imhwpb,
+.bg-disabled-handles .draghandle,
+.bg-disabled-handles .section-drag-handle,
 .boldgrid-is-typing .draghandle,
 .boldgrid-is-typing .section-drag-handle,
 .editing-as-row ~ .section-drag-handle {
@@ -516,6 +521,17 @@ html.boldgrid-editor-fullscreen {
 	padding-left: 5px;
     padding-top: 3px;
 }
+.popover-menu-imhwpb li[data-action="section-width"]::before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    color: #737373;
+    content: "\f07e";
+    font-size: 18px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
 .popover-menu-imhwpb li[data-action="move-down"]::before {
     content: "\f347";
 }
@@ -559,11 +575,7 @@ html.boldgrid-editor-fullscreen {
 .popover-menu-imhwpb li[data-action="clear"]:hover::before {
 	background-image: url("../../../image/icons/clear-contents-hover.png");
 }
-
-.popover-menu-imhwpb li[data-action="move-up"]:hover::before,
-.popover-menu-imhwpb li[data-action="move-down"]:hover::before,
-.popover-menu-imhwpb li[data-action="vertical-alignment"]:hover::before,
-.popover-menu-imhwpb li[data-action="add-media"]:hover::before {
+.popover-menu-imhwpb li[data-action]:hover::before {
     color: white;
 }
 .popover-menu-imhwpb li[data-action="Insert Form"]:hover::before {

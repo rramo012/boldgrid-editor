@@ -5,28 +5,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict";
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Image = {
-
-		classes : [
-			{ name : 'boldgrid-image img-mod-1' },
-			{ name : 'boldgrid-image img-mod-9' },
-			{ name : 'boldgrid-image img-mod-2' },
-			{ name : 'boldgrid-image img-mod-3' },
-			{ name : 'boldgrid-image img-mod-6' },
-			{ name : 'boldgrid-image img-mod-5' },
-			{ name : 'boldgrid-image img-mod-4' },
-			{ name : 'boldgrid-image img-mod-7' },
-			{ name : 'boldgrid-image img-mod-8' },
-			{ name : 'boldgrid-image img-mod-10' },
-		],
+			
+		classes : BoldgridEditor.builder_config.image,
 
 		name : 'image',
 
 		tooltip : 'Image Design',
 
-		priority : 2,
+		priority : 80,
 
 		iconClasses : 'fa fa-cog',
 
@@ -70,16 +60,43 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					preset = $this.data( 'preset' ),
 					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
 
-				panel.clearSelected();
-				$this.addClass( 'selected' );
-
-				// Apply changes to editor.
+				
+				// Remove Classes.
 				$target.removeClass ( function ( index, css ) {
-				    return (css.match (/(^|\s)img-mod-\S+/g) || []).join(' ');
-				} ).addClass( preset );
-
-				tinyMCE.activeEditor.selection.collapse(false);
+				    return (css.match (/(^|\s)bg-img-\S+/g) || []).join(' ');
+				} );
+				
+				tinyMCE.activeEditor.selection.collapse( false );
+				
+				if ( $this.hasClass( 'selected' ) ) {
+					panel.clearSelected();
+				} else {
+					panel.clearSelected();
+					$target.addClass( preset );
+					$this.addClass( 'selected' );
+				}
 			} );
+		},
+
+		preselectImage : function () {
+			var $target = BG.Menu.getTarget( self ),
+				imageClasses = $target.attr('class'),
+				bgImageClasses = [];
+
+			imageClasses = imageClasses ? imageClasses.split( ' ' ) : [];
+
+			$.each( imageClasses, function () {
+				if ( this.indexOf('bg-img') === 0 ) {
+					bgImageClasses.push( this );
+				}
+			} );
+			
+			bgImageClasses = bgImageClasses.join(' ');
+			
+			if ( bgImageClasses ) {
+				BG.Panel.$element.find( '[data-preset="' + bgImageClasses + '"]' ).addClass( 'selected' );
+				return false;
+			}
 		},
 
 		openPanel : function () {
@@ -96,12 +113,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'presets' : self.classes,
 			} ) );
 
-
-			$.each( self.classes, function () {
-				if ( $target.hasClass( this.name ) ) {
-					panel.$element.find( '[data-preset="' + this.name + '"]' ).addClass( 'selected' );
-				}
-			} );
+			self.preselectImage();
 
 			// Open Panel.
 			panel.open( self );

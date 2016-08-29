@@ -51,6 +51,12 @@
     background-color: white;
     border-radius: 10px;
 	box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
+
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	
 	.panel-title {
 	    cursor: move;
@@ -341,6 +347,7 @@
     .presets {
 	    margin: 0 10px;
 	    padding-bottom: 40px;
+	    font-size: 7px;
     }
     
     .presets .selected {
@@ -535,9 +542,24 @@
 	    margin: 0;
     }
     
+    .presets {
+    	font-size: 7px;
+    }
+    
     img {
         max-width: 100px;
         max-height: 100px;
+    }
+    
+    .presets .selected {
+    	position:relative;
+    	
+       @include selected-preset();
+       
+       &:after {
+       		top: 5px;
+    		right: 5px;
+       }
     }
 }
 
