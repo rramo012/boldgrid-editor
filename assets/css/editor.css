@@ -445,6 +445,7 @@
 .editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .background-color {
   display: block; }
 
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .overlay-color,
 .editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .scroll-effects,
 .editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .vertical-position,
 .editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .size {

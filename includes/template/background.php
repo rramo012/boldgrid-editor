@@ -55,6 +55,14 @@
 				<label for="gradient-color-2" class='color-preview'></label>
 				<input type="text" data-type="" name='gradient-color-2' class='color-control' value=''>
 			</div>
+			<div class='overlay-color section color-controls'>
+				<h4>Overlay Color</h4>
+				<label for="overlay-color" class='color-preview'></label>
+				<input type="text" data-type="" name='overlay-color' class='color-control' value='rgba(255,255,255,.5)'>
+				<div>
+					<a class="default-color" href="#">Reset to Default</a>
+				</div>
+			</div>
 			<div class='vertical-position section'>
 				<h4>Verticle Position (%)</h4>
 				<div class="slider"></div>
