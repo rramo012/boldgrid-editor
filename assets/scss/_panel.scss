@@ -15,6 +15,7 @@
 	    font-size: 20px;
     }
 }
+
 @mixin panel-button( ) {
 	background-color: white;
 	text-decoration: none;
@@ -45,7 +46,7 @@
 	position: fixed;
     top: 200px;
     right: 200px;
-    z-index: 99999;
+    z-index: 100101;
 	width: 310px;
     border: none;
     background-color: white;
@@ -144,6 +145,14 @@
 	    .add-media {
 	       display: none;
 	    }
+	}
+	
+	.supports-customization {
+		padding-bottom: 40px;
+	}
+	
+	.panel-body .customize {
+		display: none;
 	}
 	
 	.back {
@@ -290,6 +299,14 @@
 /*************** Icon Panel ********************/
 .editor-panel[data-type="icon"] {
 	width: 335px;
+	
+	&.customize-open {
+		width: 275px !important;
+	}
+	
+	.back {
+		margin-bottom: 0;
+	}
 
 	.panel-selection {
 	    width: 123px;
@@ -297,7 +314,7 @@
 	    text-align: left;
     }
     
-    .panel-body .fa {
+    .panel-body .presets .fa {
 		font-size: 26px;
 	    position: relative;
 	    top: 50%;
@@ -312,6 +329,7 @@
 	.panel-selection.selected .fa {
 	    color: white;
 	}
+	
 }
 /*************** Background Panel ********************/
 .editor-panel[data-type="box"] {

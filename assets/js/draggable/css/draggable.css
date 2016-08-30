@@ -308,7 +308,7 @@ html.boldgrid-editor-fullscreen {
 }
 .bottom-popover-imhwpb .popover-menu-imhwpb ul {
     left: 40px;
-    top: 0px;
+    bottom: 0px;
 }
 .bottom-popover-imhwpb .popover-menu-imhwpb ul:before {
     content: ' ';
@@ -737,7 +737,7 @@ li[data-action="toggle-container"] {
 }
 
 html {
-	padding:30px 45px 180px 45px; 
+	padding:30px 45px 200px 45px; 
 }
 
 html .mceContentBody  {

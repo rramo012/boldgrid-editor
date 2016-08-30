@@ -26,6 +26,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this._setupPanelClose();
 			this._setupDrag();
 			//this._setupPanelResize();
+			this._setupCustomizeLeave();
+			this._setupCustomizeDefault();
 
 			return this.$element;
 		},
@@ -144,7 +146,15 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
 			self.removeClasses();
+			
+			if ( self.$element.hasClass( 'customize-open' ) ) {
+				this.$element.trigger('bg-customize-exit');
+				self.$element.removeClass('customize-open');
+			}
+			
 			this.$element.find('.panel-body').empty();
+			
+			this.$element.trigger('bg-panel-close');
 			tinymce.activeEditor.undoManager.add();
 		},
 
@@ -212,10 +222,54 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			self.$element.find('.panel-footer .customize .panel-button').on( 'click', function ( e ) {
 				e.preventDefault();
-				if ( self.$element.attr('data-type') == control.name ) {
+				self.$element.trigger('bg-customize-open');
+				self.$element.addClass('customize-open');
+				if ( self.$element.attr('data-type') == control.name && self.currentControl.panel.customizeCallback !== true ) {
 					control.panel.customizeCallback();
 				}
 			} );
+		},
+		
+		_setupCustomizeDefault : function () {
+			var panel = BG.Panel;
+
+			self.$element.find('.panel-footer .customize .panel-button').on( 'click', function ( e ) {
+				e.preventDefault();
+
+				if ( self.currentControl && self.currentControl.panel && self.currentControl.panel.customizeCallback === true ) {
+					self.$element.find('.panel-body .customize').show();
+					self.$element.find('.presets').hide();
+					self.$element.find('.title').hide();
+					self.scrollTo(0);
+					self.hideFooter();
+				}
+			} );
+		},
+		
+		_setupCustomizeLeave : function () {
+			var panel = BG.Panel;
+
+			self.$element.on( 'click', '.back .panel-button', function ( e ) {
+				e.preventDefault();
+				self.$element.removeClass('customize-open');
+
+				if ( self.currentControl && self.currentControl.panel && self.currentControl.panel.customizeLeaveCallback === true ) {
+					self.$element.find('.presets').show();
+					self.$element.find('.title').show();
+					self.$element.find('.panel-body .customize').hide();
+					self.toggleFooter();
+					self.scrollToSelected();
+					self.$element.trigger('bg-customize-exit');
+				}
+			} );
+		},
+		
+		toggleFooter : function () {
+			if ( self.$element.find('.selected').length ) {
+				self.showFooter();
+			} else {
+				self.hideFooter();
+			}
 		},
 
 		/**
@@ -240,6 +294,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.show();
 			this.initScroll( control );
 			this.scrollToSelected();
+			
+			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
 			
 			self.removeClasses();
 			$target = BG.Menu.$element.targetData[ control.name ];

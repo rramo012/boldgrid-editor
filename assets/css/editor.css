@@ -7,7 +7,7 @@
   position: fixed;
   top: 200px;
   right: 200px;
-  z-index: 99999;
+  z-index: 100101;
   width: 310px;
   border: none;
   background-color: white;
@@ -127,6 +127,14 @@
 
 .color-panel .panel-footer .add-media,
 .editor-panel .panel-footer .add-media {
+  display: none; }
+
+.color-panel .supports-customization,
+.editor-panel .supports-customization {
+  padding-bottom: 40px; }
+
+.color-panel .panel-body .customize,
+.editor-panel .panel-body .customize {
   display: none; }
 
 .color-panel .back,
@@ -270,12 +278,18 @@
 .editor-panel[data-type="icon"] {
   width: 335px; }
 
+.editor-panel[data-type="icon"].customize-open {
+  width: 275px !important; }
+
+.editor-panel[data-type="icon"] .back {
+  margin-bottom: 0; }
+
 .editor-panel[data-type="icon"] .panel-selection {
   width: 123px;
   height: 42px;
   text-align: left; }
 
-.editor-panel[data-type="icon"] .panel-body .fa {
+.editor-panel[data-type="icon"] .panel-body .presets .fa {
   font-size: 26px;
   position: relative;
   top: 50%;

@@ -4,7 +4,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 ( function ( $ ) {
 	"use strict";
 
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.Menu = {
 
@@ -24,6 +25,22 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		getTarget : function ( control ) {
 			return this.$element.targetData[ control.name ];
+		},
+		
+		getCurrentTarget : function () {
+			
+			var $target;
+			
+			if ( BG.Panel.currentControl ) {
+				if( BG.Panel.currentControl.getTarget ) {
+					// Allow control to override the way a target is aquired.
+					$target = BG.Panel.currentControl.getTarget();
+				} else {
+					$target = self.getTarget( BG.Panel.currentControl );
+				}
+			}
+			
+			return $target;
 		},
 
 		create : function () {

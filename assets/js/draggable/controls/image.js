@@ -30,6 +30,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title : 'Image Design',
 			height : '500px',
 			width : '280px',
+			includeFooter : true,
+			customizeCallback : true,
+			customizeLeaveCallback : true,
+			customizeSupport : [ 'margin' ],
 		},
 
 		onMenuClick : function ( e ) {

@@ -271,6 +271,10 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_script( 'boldgrid-render-fonts',
 			plugins_url( '/assets/js/render-fonts.js', $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-generic',
+			plugins_url( '/assets/js/draggable/controls/generic.js', $plugin_file ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**

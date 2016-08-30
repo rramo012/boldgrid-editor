@@ -233,7 +233,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_initSliders : function () {
 
 			self._initPaddingSlider();
-			self._initMarginSlider();
+			//self._initMarginSlider();
+			BG.CONTROLS.Generic.margin.bind();
 		},
 
 		_setupBackgroundColor : function () {
@@ -341,6 +342,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
 				},
 			} ).siblings( '.value' ).html( vertPaddingEm );
+		},
+		
+		getTarget : function () {
+			var $target = BG.Menu.getTarget( self );
+			return self.findModule( $target );
 		},
 
 		_initMarginSlider : function () {

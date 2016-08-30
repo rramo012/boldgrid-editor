@@ -24,14 +24,63 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title : 'Change Icon',
 			height : '400px',
 			width : '335px',
+			includeFooter : true,
+			customizeLeaveCallback : true,
+			customizeCallback : function () {
+				self.openCustomizer();
+			},
+			customizeSupport : [ 'fontColor', 'fontSize', 'margin', 'rotate' ],
+			customizeSupportOptions : {
+				margin : {
+					horMin : -30
+				}
+			}
 		},
+		
+		template : wp.template( 'boldgrid-editor-icon' ),
 
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
+		
+		setup : function () {
+			self._setupClosePanel();
+			self._setupCustomizeLeave();
+		},
 
 		elementClick : function() {
 			self.openPanel();
+		},
+		
+		_setupCustomizeLeave : function () {
+			BG.Panel.$element.on( 'bg-customize-exit', function () {
+				if ( self.name === BG.Panel.currentControl.name ) {
+					self.highlightElement();
+				}
+			} );
+		},
+		
+		_setupClosePanel : function () {
+			BG.Panel.$element.on( 'bg-panel-close', function () {
+				if ( self.name === BG.Panel.currentControl.name ) {
+					self.collapseSelection();
+				}
+			} );
+		},
+		
+		collapseSelection : function () {
+			tinyMCE.activeEditor.selection.collapse( false );
+			tinymce.activeEditor.execCommand( 'wp_link_cancel' );
+		},
+		
+		openCustomizer : function () {
+			var panel = BG.Panel;
+			self.collapseSelection();
+			panel.$element.find('.panel-body .customize').show();
+			panel.$element.find('.presets').hide();
+			panel.$element.trigger( 'bg-open-customization' );
+			panel.scrollTo(0);
+			panel.hideFooter();
 		},
 		
 		insertNew : function () {
@@ -62,6 +111,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$this.addClass( 'selected' );
 			} );
 		},
+		
+		highlightElement : function () {
+			var $el = BG.Menu.getTarget( self );
+			tinymce.activeEditor.selection.select( $el[0] );
+			tinymce.activeEditor.execCommand( 'WP_Link' );
+		},
 
 		onMenuClick : function () {
 			self.openPanel();
@@ -72,19 +127,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$menu = BG.Controls.$menu,
 				$target = $menu.targetData[ self.name ],
 				$selected;
+			
+			self.highlightElement();
 
 			// Bind Panel Click.
 			self.setupPanelClick();
 
 			// Create Markup.
-			var $ul = $( '<ul></ul>' ).addClass('icon-controls');
-			$.each( BoldgridEditor.icons, function () {
-				var $li = $('<li class="panel-selection"><i class="' + this['class'] + '">' +
-						'</i><span class="name">' + this.name + '</span></li>');
-				$ul.append( $li );
-			} );
-
-			$panel.find( '.panel-body' ).html( $ul );
+			$panel.find( '.panel-body' ).html( self.template( {
+				presets : BoldgridEditor.icons
+			} ) );
 
 			// Remove Selections.
 			$panel.find( '.selected' ).removeClass( 'selected' );

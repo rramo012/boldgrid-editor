@@ -28,7 +28,7 @@
 			<li class='panel-selection'><i class="fa fa-ban" aria-hidden="true"></i></li>
 			<# _.each( data.textEffectClasses, function ( preset ) { #>
 				<li data-preset="{{preset.name}}" class="panel-selection">
-					<span class="{{preset.name}}">A</span>
+					<span class="{{preset.name}}">B</span>
 				</li>
 			<# }); #>
 		</ul>

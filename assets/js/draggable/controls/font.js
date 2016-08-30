@@ -64,7 +64,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		setup : function () {
 			self._setupEffectClick();
-			self._setupFamilyColor();
+			BG.CONTROLS.Generic.fontColor.bind();
 			
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses' : self.textEffectClasses,
@@ -84,27 +84,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 			
 			return themeFonts;
-		},
-
-		_setupFamilyColor : function () {
-			var panel = BG.Panel;
-
-			panel.$element.on( 'change', '.section.family [name="font-color"]', function () {
-				var $this = $( this ),
-					$target = BG.Menu.$element.targetData[ self.name ],
-					value = $this.attr( 'value' ),
-					type = $this.attr('data-type');
-				
-				$target.removeClass( BG.CONTROLS.Color.colorClasses.join(' ') );
-				BG.Controls.addStyle( $target, 'color', '' );
-				
-				if ( 'class' == type ) {
-					$target.addClass( BG.CONTROLS.Color.getColorClass( 'color', value ) );
-				} else {
-					BG.Controls.addStyle( $target, 'color', value );
-				}
-			} );
-
 		},
 
 		_setupEffectClick : function() {
@@ -128,26 +107,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.openPanel();
 		},
 
-		_initSizeSlider : function ( $container, $el ) {
-
-			var elementSize = $el.css( 'font-size' ),
-				defaultSize = elementSize ?  parseInt( elementSize ) : 14;
-			
-			defaultSize = ( defaultSize >= 5 ) ? defaultSize : 14;
-
-			$container.find( '.section.size .value' ).html( defaultSize );
-			$container.find( '.section.size .slider' ).slider( {
-				min : 5,
-				max : 115,
-				value : defaultSize,
-				range : 'max',
-				slide : function( event, ui ) {
-					$container.find( '.section.size .value' ).html( ui.value );
-					BG.Controls.addStyle( $el, 'font-size', ui.value );
-					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-				},
-			} );
-		},
 		charSpacingSlider : function ( $el ) {
 
 			var elementSize = $el.css( 'letter-spacing' ),
@@ -309,7 +268,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.find('.panel-body').html( self.templateMarkup );
 			
-			self._initSizeSlider( panel.$element, $target );
 			self.charSpacingSlider( $target );
 			self.lineSpacingSlider( $target );
 			self._initTextColor( $target );
@@ -318,6 +276,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			// Open Panel.
 			panel.open( self );
+			
+			BG.CONTROLS.Generic.fontSize.bind();
 		}
 	};
 
