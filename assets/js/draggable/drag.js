@@ -1860,6 +1860,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		// If we are currently resizing run this process.
 		if ( self.resize ) {
+			
+			if ( ! self.resize.triggered ) {
+				self.$master_container.trigger( self.resize_start_event );
+				self.resize.triggered = true;
+			}
+
 			var smaller_position, larger_position, smaller_override, larger_override;
 
 			var $row = self.resize.element.closest_context( self.row_selectors_string, self.$master_container );
@@ -3972,7 +3978,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					$container = self.$master_container;
 				}
 
-				self.$master_container.trigger( self.resize_start_event );
 				$container.addClass( 'no-select-imhwpb' );
 
 				self.resize = {
