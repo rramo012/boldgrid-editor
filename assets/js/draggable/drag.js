@@ -1363,7 +1363,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$current_drag.remove();
 		self.finish_dragging();
 		self.$master_container.trigger( self.drag_end_event, self.$temp_insertion );
-		self.refresh_handle_location();
 		self.$current_drag = null;
 		self.$master_container.removeClass( 'drag-progress' );
 	};
@@ -1713,9 +1712,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// Apply hover_elements.
 			$.each( self.hover_elements, function( type, properties ) {
-				if ( this.add_element
-					&& false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
-
+				if ( this.add_element && false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
 					self.insert_popover( this.add_element );
 
 				} else if ( this.remove_element ) {
@@ -2811,12 +2808,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.drag_drop_triggered = false;
 			var $this = $(this);
 			var $tooltip = $this.closest( '.draggable-tools-imhwpb' );
-
-			setTimeout( function() {
-				self.$master_container
-					.find( '.draggable-tools-imhwpb' )
-					.addClass( "hidden" );
-			}, 100 );
 
 			self.$current_drag = $tooltip.next().addClass( 'dragging-imhwpb' );
 			self.$master_container.addClass( 'drag-progress' );

@@ -21,6 +21,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 == Changelog ==
 
 = 1.2.5 InProgress =
+* Bug Fix:		JIRA WPB-2065	Issue where popovers didnt comeback after drag drop.
 * New feature:	JIRA WPB-2065	Overlays color for background images.
 * New feature:	JIRA WPB-2065	Added column dragging to empty areas within row.
 * New feature:	JIRA WPB-2065	Added column resizing from first column on the left boundary.
