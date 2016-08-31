@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-boldgrid-editor-font">
-	<div class='section family'>
+	<div class='section family' >
 		<h4>Font</h4>
 		<div class="selectize-dropdown-content">
 			<select>
@@ -25,7 +25,7 @@
 	<div class='section effects' data-tooltip-id='text-effect'>
 		<h4>Effects</h4>
 		<ul>
-			<li class='panel-selection'><i class="fa fa-ban" aria-hidden="true"></i></li>
+			<li class='panel-selection none-selected'><i class="fa fa-ban" aria-hidden="true"></i></li>
 			<# _.each( data.textEffectClasses, function ( preset ) { #>
 				<li data-preset="{{preset.name}}" class="panel-selection">
 					<span class="{{preset.name}}">B</span>
@@ -36,12 +36,12 @@
 	<div class='section spacing' data-tooltip-id='spacing'>
 		<h4>Spacing</h4>
 		<div class='character'>
-			<p>Letter Spacing</p>
+			<p>Letter Spacing (px)</p>
 			<div class="slider"></div>
 			<span class='value'></span>
 		</div>
 		<div class='line'>
-			<p>Line Spacing</p>
+			<p>Line Spacing (em)</p>
 			<div class="slider"></div>
 			<span class='value'></span>
 		</div>

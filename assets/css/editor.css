@@ -1198,7 +1198,12 @@ body.boldgrid-editor-fullscreen {
   color: white; }
 
 .color-panel .color-picker-wrap {
-  position: relative; }
+  position: relative;
+  text-align: center; }
+
+.color-panel .color-picker-wrap .default-reset {
+  position: relative;
+  top: 10px; }
 
 .color-panel .color-picker-wrap .iris-picker {
   margin: 15px auto 0; }
@@ -1232,27 +1237,27 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Color Controls
 --------------------------------------------------------------*/
-.mod-text-effect.inset-text {
+.bg-text-fx.bg-text-fx-inset-text {
   text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.6), -1px -1px 1px rgba(0, 0, 0, 0.67); }
 
-.mod-text-effect.anaglyph {
+.bg-text-fx.bg-text-fx-anaglyph {
   letter-spacing: 3px;
   text-shadow: -3px 0 1px #1ef2f1, 3px 0 1px #f6050a; }
 
-.mod-text-effect.neon {
+.bg-text-fx.bg-text-fx-neon {
   color: white;
   text-decoration: normal;
   text-align: center;
   text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de;
   transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1); }
 
-.mod-text-effect.neon:hover {
+.bg-text-fx.bg-text-fx-neon:hover {
   text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px #00ffff, 0 0 70px #00ffff, 0 0 80px #00ffff, 0 0 100px #00ffff; }
 
-.mod-text-effect.simple-shadow {
+.bg-text-fx.bg-text-fx-simple-shadow {
   text-shadow: #969696 1px 3px 0, #aba8a8 1px 8px 5px; }
 
-.mod-text-effect.neon-text {
+.bg-text-fx.bg-text-fx-neon-text {
   box-sizing: content-box;
   border: none;
   color: #407ec4;
@@ -1261,54 +1266,54 @@ body.boldgrid-editor-fullscreen {
   text-shadow: 1px 1px 0 #4da2fc, -1px -1px 0 #4da2fc, 1px -1px 0 #4da2fc, -1px 1px 0 #4da2fc, 4px 4px 8px #2c5889, -4px 4px 8px #2c5889, 4px -4px 8px #2c5889, -4px -4px 8px #2c5889;
   transition: all 500ms cubic-bezier(0.42, 0, 0.58, 1); }
 
-.mod-text-effect.neon-text:hover {
+.bg-text-fx.bg-text-fx-neon-text:hover {
   text-shadow: 1px 1px 0 #4da2fc, -1px -1px 0 #4da2fc, 1px -1px 0 #4da2fc, -1px 1px 0 #4da2fc;
   transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1); }
 
-.mod-text-effect.enjoy-css {
+.bg-text-fx.bg-text-fx-enjoy-css {
   text-shadow: 0 1px 0 #808d93, -1px 0 0 #cdd2d5, -1px 2px 0 #808d93, -2px 1px 0 #cdd2d5, -2px 3px 0 #808d93, -3px 2px 0 #cdd2d5, -3px 4px 0 #808d93, -4px 3px 0 #cdd2d5, -4px 5px 0 #808d93; }
 
-.mod-text-effect.long-shadow {
+.bg-text-fx.bg-text-fx-long-shadow {
   text-shadow: 3px 3px 0 #0199d9, 4px 4px 0 #0199d9, 5px 5px 0 #0199d9, 6px 6px 0 #0199d9, 7px 7px 0 #0199d9, 8px 8px 0 #0199d9, 9px 9px 0 #0199d9, 10px 10px 0 #0199d9, 11px 11px 0 #0199d9, 12px 12px 0 #0199d9, 13px 13px 0 #0199d9, 14px 14px 0 #0199d9, 15px 15px 0 #0199d9, 16px 16px 0 #0199d9, 17px 17px 0 #0199d9, 18px 18px 0 #0199d9, 19px 19px 0 #0199d9, 20px 20px 0 #0199d9; }
 
-.mod-text-effect.rainbow {
+.bg-text-fx.bg-text-fx-rainbow {
   color: transparent;
   text-shadow: 3px 0 0 #d91f26, 6px 0 0 #e25b0e, 9px 0 0 #f5dd08, 12px 0 0 #059444, 15px 0 0 #0287ce, 18px 0 0 #044d91, 21px 0 0 #2a1571;
   transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 
-.mod-text-effect.rainbow:hover {
+.bg-text-fx.bg-text-fx-rainbow:hover {
   text-shadow: -3px 0 0 #d91f26, -6px 0 0 #e25b0e, -9px 0 0 #f5dd08, -12px 0 0 #059444, -15px 0 0 #0287ce, -18px 0 0 #044d91, -21px 0 0 #2a1571;
   transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 
-.mod-text-effect.board-game {
+.bg-text-fx.bg-text-fx-board-game {
   text-shadow: 5px 5px 0 #ffd217, 10px 10px 0 #5ac7ff, 15px 14px 0 #ffd217, 20px 20px 0 #5ac7ff; }
 
-.mod-text-effect.retro {
+.bg-text-fx.bg-text-fx-retro {
   text-shadow: 2px 2px 0 #eeeeee, 3px 3px 0 #707070; }
 
-.mod-text-effect.elegantshadow {
+.bg-text-fx.bg-text-fx-elegantshadow {
   color: #131313;
   letter-spacing: .15em;
   text-shadow: 1px -1px 0 #767676, -1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, -4px 8px 1px #7b7a7a, -5px 10px 1px #7f7d7d, -6px 12px 1px #828181, -7px 14px 1px #868585, -8px 16px 1px #8b8a89, -9px 18px 1px #8f8e8d, -10px 20px 1px #949392; }
 
-.mod-text-effect.deepshadow {
+.bg-text-fx.bg-text-fx-deepshadow {
   text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9); }
 
-.mod-text-effect.gradient {
+.bg-text-fx.bg-text-fx-gradient {
   background: -webkit-linear-gradient(#eee, #333);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; }
 
-.mod-text-effect.shadows {
+.bg-text-fx.bg-text-fx-shadows {
   text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
-.mod-text-effect.closeheavy {
+.bg-text-fx.bg-text-fx-closeheavy {
   text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1), 0px 18px 23px rgba(0, 0, 0, 0.1); }
 
-.mod-text-effect.glow {
+.bg-text-fx.bg-text-fx-glow {
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.72); }
 
-.mod-text-effect.stroke {
+.bg-text-fx.bg-text-fx-stroke {
   text-shadow: -1px -1px 0 #bdbdbd, 1px -1px 0 #bdbdbd, -1px 1px 0 #bdbdbd, 1px 1px 0 #bdbdbd; }
 
 /*--------------------------------------------------------------
@@ -1573,7 +1578,7 @@ body.boldgrid-editor-fullscreen {
   display: none; }
 
 .wp-admin .ui-selectmenu-menu ul {
-  z-index: 100000;
+  z-index: 100102;
   position: relative;
   max-height: 500px;
   overflow-y: scroll;

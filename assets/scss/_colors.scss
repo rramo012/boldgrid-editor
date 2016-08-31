@@ -108,6 +108,12 @@
 	
 	.color-picker-wrap {
 		position: relative;
+		text-align: center;
+		
+		.default-reset {
+		    position: relative;
+            top: 10px;
+		}
 	
 		.iris-picker {
 			margin: 15px auto 0;

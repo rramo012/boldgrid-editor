@@ -22,6 +22,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors : [ '.boldgrid-section' ],
 
+		availableEffects : [
+			'background-parallax',
+			'background-fixed'
+		],
+		
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
@@ -199,21 +204,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_setupScrollEffects : function () {
-			var panel = BG.Panel,
-				availableEffects = [
-				    'background-zoom',
-				    'background-parallax',
-				    'background-fixed',
-				];
+			var panel = BG.Panel;
 
 			panel.$element.on( 'change', '.background-design input[name="scroll-effects"]', function ( e ) {
 				var $this = $( this ),
 					$target = BG.Menu.getTarget( self );
 
 				if ( 'none' == $this.val() ) {
-					$target.removeClass( availableEffects.join(' ') );
+					$target.removeClass( self.availableEffects.join(' ') );
 				} else {
-					$target.removeClass( availableEffects.join(' ') );
+					$target.removeClass( self.availableEffects.join(' ') );
 					$target.addClass( $this.val() );
 				}
 			} );
@@ -441,8 +441,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		selectDefaults : function () {
+			self.setScrollEffect();
+			self.setSize();
 			self.setDefaultDirection();
 			self.setDefaultBackgroundColors();
+		},
+		
+		setSize : function () {
+			var $input = BG.Panel.$element.find( 'input[name="background-size"]' ),
+				$target = BG.Menu.getTarget( self );
+			
+			if ( -1 === $target.css('background-size').indexOf('cover') ) {
+				$input.filter('[value="tiled"]').prop( 'checked', true );
+			}
+		},
+		
+		setScrollEffect : function () {
+			var $target = BG.Menu.getTarget( self );
+
+			$.each( self.availableEffects, function () {
+				if ( $target.hasClass( this ) ) {
+					BG.Panel.$element.find( 'input[name="scroll-effects"][value="' + this + '"]' )
+						.prop( 'checked', true );
+					return false;
+				} 
+			} );
 		},
 		
 		setDefaultDirection : function () {

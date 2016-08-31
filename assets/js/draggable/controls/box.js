@@ -281,7 +281,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$module.addClass( BG.CONTROLS.Color.getColorClass( 'border-color', value ) );
 				} else {
 					// Using backgrond color for themes without background colors.
-					BG.Controls.addStyle( $module, 'border-color', $this.prev('label').css( 'background-color' ) );
+					
+					if ( '' !== value ) {
+						value = $this.prev('label').css( 'background-color' );
+					}
+					
+					BG.Controls.addStyle( $module, 'border-color', value );
 				}
 				
 				self._saveModuleClasses();
@@ -289,29 +294,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_initPaddingSlider : function () {
-			var horPaddingEm, vertPaddingEm, convertPxToEm,
+			var horPaddingEm, vertPaddingEm,
 				$target = BG.Menu.getTarget( self ),
 				defaultFontSize = 14,
 				$module = self.findModule( $target ),
 				fontSize = $module.css( 'font-size' ),
 				defaultPaddingVert = $module.css( 'padding-top' ),
 				defaultPaddingHor = $module.css( 'padding-left' );
-			
-			convertPxToEm = function ( px, fontSize ) {
-				var ems = 0;
-				if ( fontSize ) {
-					ems =  ( px / fontSize ).toFixed(1);
-				}
-				
-				return ems;
-			};
 
-			fontSize = fontSize ? parseInt( fontSize ) : defaultFontSize;
 			defaultPaddingVert = defaultPaddingVert ? parseInt( defaultPaddingVert ) : 0;
 			defaultPaddingHor = defaultPaddingHor ? parseInt( defaultPaddingHor ) : 0;
 			
-			horPaddingEm = convertPxToEm( defaultPaddingHor, fontSize );
-			vertPaddingEm = convertPxToEm( defaultPaddingVert, fontSize );
+			horPaddingEm = BG.Util.convertPxToEm( defaultPaddingHor, fontSize );
+			vertPaddingEm = BG.Util.convertPxToEm( defaultPaddingVert, fontSize );
 
 			BG.Panel.$element.find( '.box-design .padding .slider' ).slider( {
 				min : 0,

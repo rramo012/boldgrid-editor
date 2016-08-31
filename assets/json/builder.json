@@ -97,6 +97,15 @@
 		"bg-img bg-img-circle bg-img-border-double-thick bg-img-pad-lg",
 		"bg-img bg-img-square bg-img-border-double-thick bg-img-pad-lg"
 	],
+	"textEffectClasses" : [
+        { "name" : "bg-text-fx bg-text-fx-inset-text" },
+        { "name" : "bg-text-fx bg-text-fx-shadows" },
+        { "name" : "bg-text-fx bg-text-fx-glow" },
+        { "name" : "bg-text-fx bg-text-fx-closeheavy" },
+        { "name" : "bg-text-fx bg-text-fx-enjoy-css" },
+        { "name" : "bg-text-fx bg-text-fx-retro" },
+        { "name" : "bg-text-fx bg-text-fx-bgstroke" }
+    ],
 	"pointers" : [
 		"bg-box-pointer bg-box-pointer-left",
 		"bg-box-pointer bg-box-pointer-right",

@@ -57,10 +57,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupColorPreview();
 			self._setupRemove();
 			self._setupAutoHide();
+			self._setupResetDefault();
 
 			self._setupOpenCustomization();
 
 			return self;
+		},
+		
+		_setupResetDefault : function () {
+			self.$colorPanel.on( 'click', '.default-reset', function ( e ) {
+				e.preventDefault();
+				self.$currentInput.attr('data-type', 'color');
+				self.$currentInput.val('').change();
+				self.$colorPanel.find('.selected').removeClass( 'selected' );
+				self.$currentInput.parent().find('label').css( 'background-color', '#333' );
+			} );
 		},
 		
 		_setupOpenCustomization : function () {

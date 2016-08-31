@@ -32,26 +32,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		    'bg-font-family-menu',
 	    ],
 
-		textEffectClasses : [
-			{ name : 'mod-text-effect inset-text' },
-			{ name : 'mod-text-effect shadows' },
-		//	{ name : 'mod-text-effect simple-shadow' },
-		//	{ name : 'mod-text-effect gradient' },
-			{ name : 'mod-text-effect glow' },
-			{ name : 'mod-text-effect closeheavy' },
-			{ name : 'mod-text-effect enjoy-css' },
-			{ name : 'mod-text-effect retro' },
-			{ name : 'mod-text-effect stroke' },
-		//	{ name : 'mod-text-effect elegantshadow' },
-		//	{ name : 'mod-text-effect deepshadow' },
-		//	{ name : 'mod-text-effect neon-text' },
-		//	{ name : 'mod-text-effect anaglyph' },
-		//	{ name : 'mod-text-effect board-game' },
-		//	{ name : 'mod-text-effect long-shadow' },
-		///	{ name : 'mod-text-effect rainbow' },
-		//	{ name : 'mod-text-effect neon' },
-		],
-
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
@@ -67,7 +47,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.CONTROLS.Generic.fontColor.bind();
 			
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
-				'textEffectClasses' : self.textEffectClasses,
+				'textEffectClasses' : BoldgridEditor.builder_config.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
 				'themeFonts' : self.getThemeFonts(),
 				'myFonts' : [ ]
@@ -93,7 +73,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					$target = BG.Menu.$element.targetData[ self.name ];
 
-				$.each( self.textEffectClasses, function () {
+				$.each( BoldgridEditor.builder_config.textEffectClasses, function () {
 					$target.removeClass( this.name );
 				} );
 
@@ -110,13 +90,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		charSpacingSlider : function ( $el ) {
 
 			var elementSize = $el.css( 'letter-spacing' ),
-				defaultSize = 0.2;
+				defaultSize = elementSize ? parseInt( elementSize ) : 0;
 
 			BG.Panel.$element.find( '.section.spacing .character .value' ).html( defaultSize );
 			BG.Panel.$element.find( '.section.spacing .character .slider' ).slider( {
 				step: 0.1,
-				min : -0.1,
-				max : 2,
+				min : -0.3,
+				max : 5,
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
@@ -128,7 +108,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		lineSpacingSlider : function ( $el ) {
 
 			var elementSize = $el.css( 'line-height' ),
-				defaultSize = 1;
+				defaultSize = BG.Util.convertPxToEm( elementSize, $el.css( 'line-height' ) );
 
 			BG.Panel.$element.find( '.section.spacing .line .value' ).html( defaultSize);
 			BG.Panel.$element.find( '.section.spacing .line .slider' ).slider( {
@@ -138,7 +118,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				value : defaultSize,
 				range : 'max',
 				slide : function( event, ui ) {
-					BG.Controls.addStyle( $el, 'line-height', ui.value );
+					BG.Controls.addStyle( $el, 'line-height', ui.value + 'em'  );
 				},
 			} );
 		},
@@ -255,8 +235,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				.attr( 'value', color );
 		},
 		
+		setTextEffect : function () {
+			var $target = BG.Menu.getTarget( self ),
+				$section = BG.Panel.$element.find('.panel-body .section.effects'),
+				classes = BG.Util.getClassesLike( $target, 'bg-text-fx' );
+			
+			$section.find('.panel-selection.selected').removeClass('selected');
+			
+			if ( classes.length ) {
+				$section.find('.panel-selection')
+				.find( '.'  + classes.join('.') )
+				.closest( '.panel-selection' )
+				.addClass('selected');
+			} else {
+				$section.find('.none-selected').addClass('selected');
+			}
+		},
+		
 		selectPresets : function () {
 			self.setTextColorInput();
+			self.setTextEffect();
 		},
 
 		openPanel : function () {
