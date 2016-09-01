@@ -268,59 +268,51 @@ IMHWPB.Editor = function( $ ) {
 
 			//When content is added to editor
 			editor.on( 'SetContent', function( e ) {
-				self.reset_anchor_spaces(tinymce.activeEditor.getBody(), true);
+				self.reset_anchor_spaces( tinymce.activeEditor.getBody(), true );
 
 				if ( $.fourpan && $.fourpan.refresh ) {
 					$.fourpan.refresh();
 				}
 
-				if ( e.format == "html" && self.dragging_is_active() ) {
-					//Wrap hr tags
-					if ( !e.set ) {
-						IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
-					}
-
-					//When content is set, refresh the iframe height
-					if ( IMHWPB.WP_MCE_Draggable ) {
-						if ( IMHWPB.WP_MCE_Draggable.instance ) {
-							if ( IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height ) {
-								setTimeout( function () {
-									IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-								}, 500 );
-							}
-						}
-					}
+				if ( e.format == "html" && self.dragging_is_active() && ! e.set ) {
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
 				}
 			} );
 
 			editor.on( 'KeyDown', function( e ) {
-				var $structure, $newParagraph;
-
-				if ( !self.draggable ) {
+				if ( ! self.draggable ) {
 					return true;
 				}
 				
-				var $current_node = $(tinymce.activeEditor.selection.getNode());
+				var $structure, $newParagraph;
+					node = tinymce.activeEditor.selection.getNode(),
+					$current_node = $( node );
 				
 				if ( self.dragging_is_active() ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
 						.$master_container.trigger('is-typing-keydown');
 				}
 
-				var is_column = $current_node.is( self.draggable.column_selectors_string ) ;
-				var is_row = $current_node.is( self.draggable.row_selectors_string );
-				var is_anchor = $current_node.is('A');
+				var is_column = $current_node.is( self.draggable.column_selectors_string ),
+					is_module = $current_node.hasClass( 'bg-box' ),
+					is_row = $current_node.is( self.draggable.row_selectors_string ),
+					is_anchor = $current_node.is('A'),
+					isEmpty = tinymce.DOM.isEmpty( node );
 				
+				if ( is_module && 13 == e.which && isEmpty ) {
+					$structure = $( '<p><br></p>' );
+					$current_node.append( $structure );
+					editor.selection.setCursorLocation( $structure[0], 0 );
+					return false;
+				}
+
 				if ( is_column || is_row ) {
 					//Any Character
 					if ( (e.which >= 48 && e.which <= 90) || (e.which >= 96 && e.which <= 105) || 13 == e.which ) {
 
 						//Do not delete an element with content
-						//TODO: I believe this is triggering sometimes on nested content incorrectly
-						if ( $current_node.is(':empty') == false ) {
-							if ( $current_node.find('> br').siblings().length !== 0 ) {
-								return;
-							}
+						if ( ! isEmpty ) {
+							return;
 						}
 
 						// When a user presses enter in an empty column. Create a new empty row with a new column inside.
@@ -351,6 +343,12 @@ IMHWPB.Editor = function( $ ) {
 							$current_node.remove();
 							return false;
 						}
+					}
+				} else if ( 'P' == node.tagName ) {
+					// When clicking enter on an empty P, Just add another P.
+					if ( 13 == e.which && isEmpty ) {
+						$current_node.before( $current_node.clone() );
+						return false;
 					}
 				}
 
@@ -415,6 +413,7 @@ IMHWPB.Editor = function( $ ) {
 						});
 					}
 				}
+
 			} );
 
 			/**
@@ -498,29 +497,8 @@ IMHWPB.Editor = function( $ ) {
 					if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
 						e.content = IMHWPB.WP_MCE_Draggable.instance.draggable_instance.frame_cleanup( e.content );
 					}
-
-					//On save remove empty trailing paragraph if it exists
-					if (e.save) {
-						var $markup = jQuery("<div>" + e.content + "</div>");
-						var $last_element = $markup.find('> *:last');
-						if ( $last_element.is('p') ) {
-							var text = $last_element.text();
-							var html = $last_element.html();
-							if ( text == " " || ( html == '<br>' && !text) || html == '&nbsp;') {
-								$last_element.remove();
-								e.content = $markup.html();
-							}
-						}
-					}
 				}
 			});
-
-			/**
-			 * When the user does an undo or redo make sure that the editor height is correct
-			 */
-		//	editor.on('Undo Redo', function(e) {
-			//	IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-		//	});
 
 			/**
 			 * When the editor is initialized load the draggable ability

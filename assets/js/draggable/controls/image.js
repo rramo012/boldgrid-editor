@@ -70,6 +70,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				    return (css.match (/(^|\s)bg-img-\S+/g) || []).join(' ');
 				} );
 				
+				self.removeModClasses( $target );
+				
 				tinyMCE.activeEditor.selection.collapse( false );
 				
 				if ( $this.hasClass( 'selected' ) ) {
@@ -79,6 +81,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target.addClass( preset );
 					$this.addClass( 'selected' );
 				}
+			} );
+		},
+		
+		removeModClasses : function ( $target ) {
+			$target.parent( '[class^="mod-img"]' ).removeClass ( function ( index, css ) {
+			    return (css.match (/(^|\s)mod-img-\S+/g) || []).join(' ');
 			} );
 		},
 

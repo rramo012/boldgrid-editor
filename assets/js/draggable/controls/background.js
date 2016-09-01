@@ -178,7 +178,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = BG.Menu.$element.targetData[ self.name ],
 					value = $this.val(),
 					name = $this.attr('name'),
-					type = $this.data('type');
+					type = $this.attr('data-type');
 				
 				if ( 'class' == type ) {
 					value = BoldgridEditor.colors[ value - 1 ];

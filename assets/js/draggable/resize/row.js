@@ -103,6 +103,8 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$container.on( 'edit-as-row-enter', self.hideHandles );
 			self.$container.on( 'edit-as-row-leave', self.hideHandles );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
+			self.$container.on( 'mouseleave', self.hideHandles );
+			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
 		},
 		positionHandles : function() {
 			var pos, $this, rightOffset;
@@ -111,6 +113,12 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 				$this = $( this );
 			} else {
 				$this = self.$currentRow;
+			}
+			
+			if ( ! $this || ! $this.length || false === $this.is(':visible') ) {
+				self.$topHandle.hide();
+				self.$bottomHandle.hide();
+				return;
 			}
 			
 			pos = $this[0].getBoundingClientRect();

@@ -19,11 +19,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.original_selector_strings = {};
 
 	//Tinymce elements used for auto scrolling
-	//This may be just as unreliable
+	//This may be as unreliable.
 	//tinymce.activeEditor.theme.panel._items[0]._id //32
 	//tinymce.activeEditor.theme.panel._items[2]._id //38
-	self.$mce_32 = $( '#mceu_32' );
-	self.$mce_38 = $( '#mceu_38' );
+	self.$mce_32 = $( '#' + tinymce.activeEditor.theme.panel._items[0]._id );
+	self.$mce_38 = $( '#' + tinymce.activeEditor.theme.panel._items[2]._id );
 
 	self.$post_status_info = $( '#post-status-info' );
 
@@ -3886,6 +3886,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		},
 		'end' : function () {
 			//Add Popovers
+			self.validate_markup();
 			self.$master_container.find('html').removeClass('boldgrid-is-typing');
 			self.update_handles(self.last_hover);
 		}

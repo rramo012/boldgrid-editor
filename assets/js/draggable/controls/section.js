@@ -65,6 +65,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
+			self.$container.on( 'mouseleave', self.hideHandles );
+			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
 		},
 		
 		positionHandles : function() {
@@ -74,6 +76,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$this = $( this );
 			} else {
 				$this = self.$currentSection;
+			}
+			
+			if ( ! $this || ! $this.length || false === $this.is(':visible')  ) {
+				self.$popover.hide();
+				return;
 			}
 			
 			pos = $this[0].getBoundingClientRect();

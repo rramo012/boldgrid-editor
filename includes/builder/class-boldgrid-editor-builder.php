@@ -68,8 +68,8 @@ class Boldgrid_Editor_Builder {
 		 * for the period between 1.2 and 1.3 this conditional should trigger, overriding
 		 * supported features to add 1 more entry.
 		 */
-		if ( empty( $configs['supported-features']['variable-containers'] ) ) {
-			if ( isset( $configs['template']['pages'] ) || ! empty( $configs['supported-features'] ) ) {
+		if ( false === array_search( 'variable-containers', $supported_features ) ) {
+			if ( isset( $configs['template']['pages'] ) ) {
 				$supported_features[] = 'variable-containers';
 			}
 		}

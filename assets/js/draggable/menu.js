@@ -45,8 +45,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		create : function () {
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
-			// @TODO: remove this and select actual element.
-			$( '#mceu_32' ).append( this.$element );
+			$( '#' + tinymce.activeEditor.theme.panel._items[0]._id ).append( this.$element );
 		},
 
 		setupMenuDrag : function() {

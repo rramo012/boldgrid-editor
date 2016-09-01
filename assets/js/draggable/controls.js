@@ -69,14 +69,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		bindEvents : function () {
 			this.onEditibleClick();
 		},
+		
+		clearMenuItems : function () {
+			this.$menu.items = [];
+
+		},
 
 		onEditibleClick : function () {
 			var self = this;
 
 			this.$container.on( 'mouseup', function ( e ) {
-				self.$menu.items = [];
+				self.clearMenuItems();
 			} );
-
+			
 			this.$container.on( 'click', function ( e ) {
 
 				self.$menu.find( 'li[data-action]' ).hide();
