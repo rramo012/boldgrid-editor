@@ -284,13 +284,13 @@ IMHWPB.Editor = function( $ ) {
 					return true;
 				}
 				
-				var $structure, $newParagraph;
+				var $structure, $newParagraph, $prev,
 					node = tinymce.activeEditor.selection.getNode(),
-					$current_node = $( node );
+					$current_node = $( node ),
+					enterKey = 13;
 				
 				if ( self.dragging_is_active() ) {
-					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
-						.$master_container.trigger('is-typing-keydown');
+					self.draggable.$master_container.trigger('is-typing-keydown');
 				}
 
 				var is_column = $current_node.is( self.draggable.column_selectors_string ),
@@ -316,16 +316,26 @@ IMHWPB.Editor = function( $ ) {
 						}
 
 						// When a user presses enter in an empty column. Create a new empty row with a new column inside.
-						if ( 13 == e.which ) {
-							$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
-							$current_node.closest('.row').after( $structure );
-							editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
-							return false;
+						if ( enterKey == e.which ) {
+							// If is row or col-12.
+							if ( is_row || self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) ) {
+								$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
+								$current_node.closest('.row').after( $structure );
+								editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
+								return false;
+							}
+							
+							if ( is_column ) {
+								$newParagraph = $( '<p><br data-mce-bogus="1"></p><p><br data-mce-bogus="1"></p>' );
+								$current_node.append( $newParagraph );
+								editor.selection.setCursorLocation( $newParagraph.last()[0], 0 );
+								return false;
+							}
 						}
-
+						
 						//the key pressed was alphanumeric
 						if ( is_column ) {
-							$newParagraph  = $( '<p><br></p>' );
+							$newParagraph  = $( '<p><br data-mce-bogus="1"></p>' );
 							$structure = $newParagraph;
 						} else {
 							$structure = $( '<div class="col-md-12"><p><br></p></div>' );
@@ -346,9 +356,27 @@ IMHWPB.Editor = function( $ ) {
 					}
 				} else if ( 'P' == node.tagName ) {
 					// When clicking enter on an empty P, Just add another P.
-					if ( 13 == e.which && isEmpty ) {
+					if ( enterKey == e.which && isEmpty ) {
 						$current_node.before( $current_node.clone() );
 						return false;
+					}
+					
+					if ( e.which == '8' && isEmpty ) {
+						$prev = $current_node.prev();
+						if ( $prev.length && $prev.hasClass('draggable-tools-imhwpb') ) {
+							$prev = $prev.prev();
+						}
+
+						if ( $prev.length ) {
+							$current_node.remove();
+							if ( tinymce.DOM.isEmpty( $prev[0] ) ) {
+								editor.selection.setCursorLocation( $prev[0], 0 );
+							} else {
+								editor.selection.select( $prev[0] );
+								editor.selection.collapse(0);
+					        }
+							return false;
+						}
 					}
 				}
 
