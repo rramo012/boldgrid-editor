@@ -18,19 +18,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		iconClasses : 'fa fa-cog',
 
-		selectors : [ '.boldgrid-button', 'a.button', 'a.button-secondary', 'a.button-primary' ],
+		selectors : [ '.btn', 'a.button', 'a.button-secondary', 'a.button-primary' ],
 
 		classes : [
-			{ name : 'boldgrid-button boldgrid-button-rounded boldgrid-button-flat' },
-			{ name : 'boldgrid-button boldgrid-button-pill boldgrid-button-flat' },
-			{ name : 'boldgrid-button boldgrid-button-flat' },
-			{ name : 'boldgrid-button glow' },
-			{ name : 'boldgrid-button boldgrid-button-rounded' },
-			{ name : 'boldgrid-button boldgrid-button-3d' },
-			{ name : 'boldgrid-button boldgrid-button-border' },
-			{ name : 'boldgrid-button boldgrid-button-pill' },
-			{ name : 'boldgrid-button boldgrid-button-circle' },
-			{ name : 'boldgrid-button boldgrid-button-circle boldgrid-button-flat' },
+			{ name : 'btn btn-rounded btn-flat btn-color-1' },
+			{ name : 'btn btn-pill btn-flat btn-color-1' },
+			{ name : 'btn btn-flat btn-color-1' },
+			
+			{ name : 'btn btn-3d btn-rounded btn-color-1' },
+			{ name : 'btn btn-3d btn-pill btn-color-1' },
+			{ name : 'btn btn-3d btn-color-1' },
+			
+			{ name : 'btn btn-raised btn-rounded btn-color-1' },
+			{ name : 'btn btn-raised btn-pill btn-color-1' },
+			{ name : 'btn btn-raised btn-color-1' },
+			
+			{ name : 'btn btn-longshadow btn-rounded btn-color-1' },
+			{ name : 'btn btn-longshadow btn-pill btn-color-1' },
+			{ name : 'btn btn-longshadow btn-color-1' },
+			
+			{ name : 'btn btn-glow btn-rounded btn-color-1' },
+			{ name : 'btn btn-glow btn-pill btn-color-1' },
+			{ name : 'btn btn-glow btn-color-1' },
+			
+			{ name : 'btn btn-block btn-rounded btn-color-2' },
+			{ name : 'btn btn-block btn-pill btn-color-2' },
+			{ name : 'btn btn-block btn-color-2' },
 		],
 
 		init : function () {
@@ -88,6 +101,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		applyColors : function() {
+			//panel.$element.find( '.panel-body' ).find( '.btn' )
+		},
+		
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-button' );
@@ -100,7 +117,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'text' : 'for sale',
 				'presets' : self.classes,
 			} ) );
-
+			
+			self.applyColors();
+			
 			// Open Panel.
 			panel.open( self );
 		}

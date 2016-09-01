@@ -297,7 +297,7 @@ class Boldgrid_Editor_Assets {
 		wp_register_style( 'editor-css-imhwpb',
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-		wp_enqueue_style( 'button-css-imhwpb',
+		wp_enqueue_style( 'boldgrid-theme-framework',
 			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'font-family-styles',

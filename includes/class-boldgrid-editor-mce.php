@@ -240,8 +240,10 @@ class Boldgrid_Editor_MCE {
 		$styles[] = plugins_url( '/assets/css/editor.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
-		$styles[] = plugins_url( '/assets/buttons/css/buttons.css',
-			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+		if ( ! Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
+			$styles[] = plugins_url( '/assets/buttons/css/buttons.css',
+				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+		}
 
 		// Add Query Args
 		$mce_css = array ();

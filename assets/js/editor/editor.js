@@ -318,7 +318,7 @@ IMHWPB.Editor = function( $ ) {
 						// When a user presses enter in an empty column. Create a new empty row with a new column inside.
 						if ( enterKey == e.which ) {
 							// If is row or col-12.
-							if ( is_row || self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) ) {
+							if ( is_row || ( is_column && self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) ) ) {
 								$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
 								$current_node.closest('.row').after( $structure );
 								editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );

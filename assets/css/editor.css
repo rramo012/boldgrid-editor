@@ -742,7 +742,7 @@
 #boldgrid-instance-menu ul {
   text-align: center;
   display: inline-block;
-  padding: 6px 15px 8px;
+  padding: 4px 15px 5px;
   background-color: #32373c;
   border-radius: 0px 0px 8px 8px;
   box-shadow: 0px 5px 16px -4px;
@@ -751,9 +751,9 @@
 
 #boldgrid-instance-menu li {
   display: inline-block;
-  padding: 3px;
+  padding: 2px;
   border-radius: 50%;
-  margin: 0 8px;
+  margin: 0 6px;
   cursor: pointer;
   background-color: white;
   transition: box-shadow .3s;
@@ -1074,19 +1074,19 @@ body.boldgrid-editor-fullscreen {
   display: none !important; }
 
 .draghandle {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   z-index: 99999;
   position: fixed;
   cursor: ns-resize;
   background-color: #32373c;
-  border-radius: 6px;
+  border-radius: 3px;
   color: white;
   box-shadow: 0px 0px 9px -1px #32373c;
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 20px;
+  font-size: 15px;
   text-align: center;
-  line-height: 21px; }
+  line-height: 16px; }
 
 .draghandle:hover {
   color: #f95b26; }

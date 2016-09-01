@@ -176,7 +176,7 @@ class Boldgrid_Editor {
 			wp_enqueue_style( 'editor-css-imhwpb',
 				plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-			wp_enqueue_style( 'button-css-imhwpb',
+			wp_enqueue_style( 'boldgrid-theme-framework',
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 			wp_enqueue_script( 'boldgrid-render-fonts',
@@ -189,7 +189,7 @@ class Boldgrid_Editor {
 
 			// TODO: update this to local. This is temporary.
 			wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
-		} );
+		}, 99 );
 
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
 
