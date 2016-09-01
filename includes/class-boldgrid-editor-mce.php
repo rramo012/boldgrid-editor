@@ -210,11 +210,8 @@ class Boldgrid_Editor_MCE {
 
 		// Always show wordpress 2 toolbar
 		$init['wordpress_adv_hidden'] = false;
-		$init['force_p_newlines'] = true;
 		$init['fontsize_formats'] = '8px 10px 12px 13px 14px 15px 16px 18px 20px 22px 24px 26px 28px 30px 32px 34px 36px 38px 40px';
 
-
-		//print_r( $init );die;
 		return $init;
 	}
 
