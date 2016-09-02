@@ -282,8 +282,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			BOLDGRID.EDITOR.Menu.activateControl( control );
 			
-			self.currentControl = control;
-
+			this.currentControl = control;
+			this.$element.addClass('ui-widget-content');
 			this.$element.height( control.panel.height );
 			this.$element.width( control.panel.width );
 			this.$element.find( '.panel-title .name' ).html( control.panel.title );

@@ -20,7 +20,7 @@
     height: 20px;
     border-radius: 7px;
     background-image: url(../image/web-fonts.png);
-    background-color: white;
+    background-color: #f3f3f3;
     color: transparent;
     margin-left: -24px;
     cursor: pointer;
@@ -28,8 +28,9 @@
     
     .ui-icon {
 	    position: absolute;
-	    right: -20px;
+	    right: -23px;
 	    top: 8px;
+	    width: 17px;
     }
     
     .ui-selectmenu-text {

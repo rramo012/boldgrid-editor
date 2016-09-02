@@ -96,5 +96,5 @@ gulp.task( 'default',
 );
 
 gulp.task('watch', function() {
-	gulp.watch( config.src + 'assets/**/*', [ 'scssCompile' ] );
+	gulp.watch( config.src + 'assets/scss/**/*', [ 'scssCompile' ] );
 } );

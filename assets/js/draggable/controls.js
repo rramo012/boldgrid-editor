@@ -32,6 +32,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			//Create all controls.
 			this.setupControls();
 			
+			BG.CONTROLS.Generic.setupInputCustomization();
+			BG.CONTROLS.Generic.setupInputInitialization();
+			
 		},
 		
 		hasThemeFeature : function ( feature ) {

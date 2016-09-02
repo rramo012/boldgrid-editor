@@ -39,6 +39,39 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		setupInputCustomization : function () {
+			BG.Panel.$element.on( 'change', '.class-control input', function () {
+				var $this = $( this ),
+					name = $this.attr('name'),
+					$el = BG.Menu.getCurrentTarget(),
+					controlClassnames = [],
+					$siblingInputs = $this.closest('.class-control').find('input[name="' + name + '"]');
+				
+				// Find other values.
+				$siblingInputs.each( function () {
+					controlClassnames.push( $( this ).attr('value') );
+				} );
+				
+				$el.removeClass( controlClassnames.join(' ') );
+				$el.addClass( $this.val() );
+			} );
+		},
+		
+		setupInputInitialization : function () {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			panel.$element.on( 'bg-customize-open', function () {
+				var $el = BG.Menu.getCurrentTarget();
+
+				panel.$element.find( '.class-control input' ).each( function () {
+					var $this = $( this );
+					if ( $el.hasClass( $this.attr('value') ) ) {
+						$this.prop( 'checked', true );
+					}
+				} );
+			} );
+		},
+		
 		margin : {
 			template : wp.template('boldgrid-editor-margin'),
 			render : function () {

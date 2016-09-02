@@ -80,7 +80,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupPanelClick();
 			self._setupCustomizeOpen();
 		},
-		
+
 		_setupCustomizeOpen : function () {
 			var panel = BOLDGRID.EDITOR.Panel;
 
@@ -88,21 +88,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( panel.currentControl == self ) {
 					self.sizeSlider.init();
 				}
-				
 			} );
 		},
 
 		_setupPanelClick : function() {
-			var panel = BOLDGRID.EDITOR.Panel;
+			var panel = BG.Panel;
 
 			panel.$element.on( 'click', '.button-design .panel-selection', function () {
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
-					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
+					$target = BG.Menu.getTarget( self ),
+					$parent = $target.parent('p');
 
 				panel.clearSelected();
 				$this.addClass( 'selected' );
-
+				
+				// Remove old p button classes.
+				$parent.removeClass ( function ( index, css ) {
+				    return (css.match (/(^|\s)p-button-\S+/g) || []).join(' ');
+				} );
+				
 				// Aply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
@@ -135,7 +140,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		applyColors : function() {
 			var maxIndex = 5,
-				currentIndex = 1;
+				currentIndex = 0;
 			
 			// BG Themes.
 			if ( BoldgridEditor.colors ) {
@@ -144,9 +149,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			$.each( self.classes, function ( count ) {
 				if ( maxIndex < currentIndex ) {
-					currentIndex = 1;
+					currentIndex = 0;
 				}
-				this.name += ' btn-color-' + ( currentIndex );
+				
+				// Adds Default color, which has no class.
+				if ( 0 !== currentIndex ) {
+					this.name += ' btn-color-' + ( currentIndex );
+				}
+				
 				if ( (count + 1) % 4 === 0 ) {
 					currentIndex++;
 				}
@@ -196,15 +206,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			// Set markup for panel.
-			panel.$element.removeClass('ui-widget-content');
 			panel.$element.find( '.panel-body' ).html( template( {
 				'text' : 'Button',
 				'presets' : self.classes,
 			} ) );
 			
-			
 			// Open Panel.
 			panel.open( self );
+			
+			panel.$element.removeClass('ui-widget-content');
 		}
 
 	};

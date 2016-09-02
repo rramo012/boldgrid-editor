@@ -274,6 +274,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			// Open Panel.
 			panel.open( self );
+			panel.scrollTo(0);
 			
 			BG.CONTROLS.Generic.fontSize.bind();
 		}

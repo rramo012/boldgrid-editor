@@ -237,10 +237,14 @@
     		font-weight: lighter;
     	}
     
-		.section.family h4 {
-			margin: 0;
+		&.family .ui-icon {
+			border-radius: 50%;
+	    	border: 1px solid #8c8a8c;
+	    	
+	    	&:before {
+	    		content: ' ';
+	    	}
 		}
-		
 		.ui-slider-horizontal {
 	        float: none;
 	        margin-left: 0;
@@ -620,6 +624,12 @@
     .presets {
         padding-left: 15px;
         padding-right: 15px;
+    }
+    
+    	    
+    .section.class-control {
+		padding-top: 0;
+		padding-bottom: 8px;
     }
     
     [data-preset*="btn-block"] {
