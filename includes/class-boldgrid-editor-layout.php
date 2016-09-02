@@ -138,7 +138,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 
 		$dom = new DOMDocument();
 
-		@$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
+		@$dom->loadHTML( self::utf8_to_html( $content ) );
 
 		$div = $dom->getElementsByTagName( 'div' );
 
@@ -443,5 +443,25 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			$this,
 			'print_content'
 		) );
+	}
+
+	/**
+	 * Convert content encoding from "UTF-8" to "HTML-ENTITIES".
+	 *
+	 * If mbstring is not loaded in PHP then the input will be returned unconverted.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @static
+	 *
+	 * @param string $input Content to be converted.
+	 * @return string Content that may have been converted.
+	 */
+	public static function utf8_to_html( $input ) {
+		if( function_exists( 'mb_convert_encoding' ) ){
+			return mb_convert_encoding( $input, 'HTML-ENTITIES', 'UTF-8' );
+		} else {
+			return $input;
+		}
 	}
 }
