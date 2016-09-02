@@ -8,10 +8,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	var self,
 		BG = BOLDGRID.EDITOR;
 
-	BOLDGRID.EDITOR.CONTROLS.Generic = {
+	BG.CONTROLS.Generic = {
 			
 		defaultCustomize : wp.template( 'boldgrid-editor-default-customize' ),
 			
+		
+		createCustomizeSection : function () {
+			BG.Panel.$element.find( '.choices' ).append( self.defaultCustomize() );
+		},
+		
 		initControls : function () {
 			
 			var customizeOptions = BG.Panel.currentControl.panel.customizeSupport || [],
@@ -19,7 +24,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			// Add customize section if it does not exist.
 			if ( customizeOptions.length && ! BG.Panel.$element.find( '.panel-body .customize' ).length ) {
-				BG.Panel.$element.find( '.choices' ).append( self.defaultCustomize() );
+				self.createCustomizeSection();
 			}
 			
 			$.each( customizeOptions, function () {

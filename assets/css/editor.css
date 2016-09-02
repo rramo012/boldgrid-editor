@@ -11,7 +11,7 @@
   width: 310px;
   border: none;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -43,13 +43,13 @@
 
 .color-panel .panel-title .close-icon:hover,
 .editor-panel .panel-title .close-icon:hover {
-  box-shadow: 0px 0px 5px 1px #969696 inset;
+  box-shadow: 0px 0px 3px 1px #969696 inset;
   color: #f95b26; }
 
 .color-panel .panel-title,
 .editor-panel .panel-title {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   margin-bottom: 10px; }
 
 .color-panel .panel-selection,
@@ -123,7 +123,7 @@
   height: 20px;
   padding: 20px;
   text-align: center;
-  border-radius: 0 0 10px 10px; }
+  border-radius: 0 0 5px 5px; }
 
 .color-panel .panel-footer .add-media,
 .editor-panel .panel-footer .add-media {
@@ -367,7 +367,7 @@
 .editor-panel[data-type="background"] .panel-body {
   padding: 0;
   overflow: hidden;
-  border-radius: 0 0 10px 10px; }
+  border-radius: 0 0 5px 5px; }
 
 .editor-panel[data-type="background"] .panel-body ul {
   padding-bottom: 40px; }
@@ -418,7 +418,8 @@
   padding: 7px 15px;
   border-radius: 30px;
   margin: 0 4px;
-  transition: background-color .25s, color .25s; }
+  transition: background-color .25s, color .25s;
+  color: #222; }
 
 .editor-panel[data-type="background"] .filter:focus {
   box-shadow: none; }
@@ -568,8 +569,40 @@
 .editor-panel[data-type="button"] .panel-body {
   padding: 0; }
 
+.editor-panel[data-type="button"] .presets .selected {
+  position: relative; }
+
+.editor-panel[data-type="button"] .presets .selected:after {
+  content: "\f058";
+  font: normal normal normal 14px/1 FontAwesome;
+  width: 22px;
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  color: #f95b26;
+  background-color: white;
+  border-radius: 50%;
+  background-size: 22px 27px;
+  height: 21px;
+  text-align: center;
+  font-size: 20px; }
+
+.editor-panel[data-type="button"] .presets .selected:after {
+  top: 2px;
+  right: 0px; }
+
+.editor-panel[data-type="button"] .back {
+  padding: 10px 10px 0; }
+
 .editor-panel[data-type="button"] .boldgrid-button {
   text-transform: uppercase; }
+
+.editor-panel[data-type="button"] .presets {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.editor-panel[data-type="button"] [data-preset*="btn-block"] {
+  width: 100%; }
 
 /*************** Text Settings Panel ********************/
 .editor-panel[data-type="font"] .panel-title {
@@ -698,7 +731,7 @@
   width: calc( 50% - 20px); }
 
 .editor-panel[data-type="image-filter"] .panel-body .choices {
-  border-radius: 12px;
+  border-radius: 5px;
   padding-bottom: 11px;
   background-color: #f1f1f1;
   box-shadow: 0px 0px 4px 0px #b5b5b5;
@@ -744,7 +777,7 @@
   display: inline-block;
   padding: 4px 15px 5px;
   background-color: #32373c;
-  border-radius: 0px 0px 8px 8px;
+  border-radius: 0px 0px 5px 5px;
   box-shadow: 0px 5px 16px -4px;
   cursor: move;
   width: auto !important; }
@@ -770,7 +803,7 @@
 
 #boldgrid-instance-menu li.active,
 #boldgrid-instance-menu li:hover {
-  box-shadow: 0px 0px 5px 1px #969696 inset; }
+  box-shadow: 0px 0px 3px 1px #969696 inset; }
 
 #boldgrid-instance-menu li.active span,
 #boldgrid-instance-menu li:hover span {

@@ -50,7 +50,7 @@
 	width: 310px;
     border: none;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
 	box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
 
 	-moz-user-select: none;
@@ -82,13 +82,13 @@
 	}
 	
 	.panel-title .close-icon:hover {
-        box-shadow: 0px 0px 5px 1px #969696 inset;
+        box-shadow: 0px 0px 3px 1px #969696 inset;
 		color: $hover-color;
 	}
 	
 	.panel-title {
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		margin-bottom: 10px;
 	}
 	
@@ -139,7 +139,7 @@
 	    height: 20px;
 	    padding: 20px;
 	    text-align: center;
-	    border-radius: 0 0 10px 10px;
+	    border-radius: 0 0 5px 5px;
 	    
 	    
 	    .add-media {
@@ -395,7 +395,7 @@
 	.panel-body {
 		padding: 0;
 		overflow: hidden;
-		border-radius: 0 0 10px 10px;
+		border-radius: 0 0 5px 5px;
 		
 		ul {
 			padding-bottom: 40px;
@@ -452,6 +452,7 @@
 	
 	.filter {
 		@include panel-button();
+		color: #222;
 		
 		&:hover {
 			background-color: lighten( $panel-color, 10% );
@@ -459,6 +460,7 @@
 		&.selected {
 			background-color: $panel-color;
 		}
+		
 	}
 	
 	.current-selection img,
@@ -596,8 +598,32 @@
     	padding: 0;
     }
     
+    .presets .selected {
+       position:relative;
+
+       @include selected-preset();
+        
+       &:after {
+            top: 2px;
+            right: 0px;
+       }
+    }
+    
+    .back {
+        padding: 10px 10px 0;
+    }
+     
     .boldgrid-button {
         text-transform: uppercase;
+    }
+    
+    .presets {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    [data-preset*="btn-block"] {
+        width: 100%;
     }
 }
 
@@ -749,7 +775,7 @@
 		width: calc( 50% - 20px );
 	}
     .panel-body .choices {
-		border-radius: 12px;
+		border-radius: 5px;
     	padding-bottom: 11px;
 	    background-color: #f1f1f1;
 	    box-shadow: 0px 0px 4px 0px #b5b5b5;

@@ -14,7 +14,7 @@
 	    display: inline-block;
 	    padding: 4px 15px 5px; 
 	    background-color: $menu-color;
-	    border-radius: 0px 0px 8px 8px;
+	    border-radius: 0px 0px 5px 5px;
 	    box-shadow: 0px 5px 16px -4px;
 	    cursor: move;
 	    width: auto !important;
@@ -42,7 +42,7 @@
 	}
 	li.active,
 	li:hover {
-	    box-shadow: 0px 0px 5px 1px #969696 inset;
+	    box-shadow: 0px 0px 3px 1px #969696 inset;
         span {
             color: #f95b26;
 	   }

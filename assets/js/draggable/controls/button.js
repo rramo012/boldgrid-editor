@@ -21,31 +21,41 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		selectors : [ '.btn', 'a.button', 'a.button-secondary', 'a.button-primary' ],
 
 		classes : [
-			{ name : 'btn btn-rounded btn-flat btn-color-1' },
-			{ name : 'btn btn-pill btn-flat btn-color-1' },
-			{ name : 'btn btn-flat btn-color-1' },
+			{ name : 'btn btn-rounded btn-flat btn-small-caps' },
+			{ name : 'btn btn-pill btn-flat' },
+			{ name : 'btn btn-flat' },
 			
-			{ name : 'btn btn-3d btn-rounded btn-color-1' },
-			{ name : 'btn btn-3d btn-pill btn-color-1' },
-			{ name : 'btn btn-3d btn-color-1' },
+			{ name : 'btn btn-3d btn-rounded' },
+			{ name : 'btn btn-3d btn-pill' },
+			{ name : 'btn btn-3d' },
 			
-			{ name : 'btn btn-raised btn-rounded btn-color-1' },
-			{ name : 'btn btn-raised btn-pill btn-color-1' },
-			{ name : 'btn btn-raised btn-color-1' },
+			{ name : 'btn btn-raised btn-rounded' },
+			{ name : 'btn btn-raised btn-pill' },
+			{ name : 'btn btn-raised btn-small-caps' },
 			
 			{ name : 'btn btn-longshadow btn-rounded btn-color-1' },
-			{ name : 'btn btn-longshadow btn-pill btn-color-1' },
-			{ name : 'btn btn-longshadow btn-color-1' },
+			{ name : 'btn btn-longshadow btn-small-caps btn-pill btn-color-1' },
+			{ name : 'btn btn-longshadow btn-uppercase btn-color-1' },
 			
-			{ name : 'btn btn-glow btn-rounded btn-color-1' },
-			{ name : 'btn btn-glow btn-pill btn-color-1' },
-			{ name : 'btn btn-glow btn-color-1' },
+			{ name : 'btn btn-glow btn-rounded' },
+			{ name : 'btn btn-glow btn-pill btn-uppercase' },
+			{ name : 'btn btn-glow' },
 			
-			{ name : 'btn btn-block btn-rounded btn-color-2' },
-			{ name : 'btn btn-block btn-pill btn-color-2' },
-			{ name : 'btn btn-block btn-color-2' },
+			{ name : 'btn btn-block btn-rounded' },
+			{ name : 'btn btn-block btn-pill' },
+			{ name : 'btn btn-block btn-small-caps' },
 		],
-
+		
+		sizeClasses : [
+			'btn-tiny',
+			'btn-small',
+			// Normal.
+			'', 
+			'btn-large',
+			'btn-jumbo',
+			'btn-giant',
+		],
+		
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
@@ -54,10 +64,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title : 'Button Design',
 			height : '500px',
 			width : '315px',
+			includeFooter : true,
+			customizeLeaveCallback : true,
+			customizeCallback : true,
+			customizeSupport : [ 'margin' ],
+			customizeSupportOptions : {
+				margin : {
+					horMin : -30
+				}
+			}
 		},
 
 		setup : function () {
+			self.applyColors();
 			self._setupPanelClick();
+			self._setupCustomizeOpen();
+		},
+		
+		_setupCustomizeOpen : function () {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			panel.$element.on( 'bg-customize-open', function () {
+				if ( panel.currentControl == self ) {
+					self.sizeSlider.init();
+				}
+				
+			} );
 		},
 
 		_setupPanelClick : function() {
@@ -102,7 +134,58 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		applyColors : function() {
-			//panel.$element.find( '.panel-body' ).find( '.btn' )
+			var maxIndex = 5,
+				currentIndex = 1;
+			
+			// BG Themes.
+			if ( BoldgridEditor.colors ) {
+				maxIndex = BoldgridEditor.colors.length;
+			}
+			
+			$.each( self.classes, function ( count ) {
+				if ( maxIndex < currentIndex ) {
+					currentIndex = 1;
+				}
+				this.name += ' btn-color-' + ( currentIndex );
+				if ( (count + 1) % 4 === 0 ) {
+					currentIndex++;
+				}
+			} );
+		},
+		
+		sizeSlider : {
+			getDefault : function () {
+				var defaultIndex = 2,
+					$el = BG.Menu.getCurrentTarget();
+				
+				$.each( self.sizeClasses, function ( index ) {
+					if ( $el.hasClass( this ) ) {
+						defaultIndex = index;
+						return false;
+					}
+				} );
+				
+				return defaultIndex;
+			},
+			init : function () {
+				var defaultSize = this.getDefault() + 1,
+					$el = BG.Menu.getCurrentTarget();
+			
+				BG.Panel.$element.find( '.section.button-size-control .value' ).html( defaultSize );
+				BG.Panel.$element.find( '.section.button-size-control .slider' ).slider( {
+					min : 1,
+					max : 6,
+					value : defaultSize,
+					range : 'max',
+					slide : function( event, ui ) {
+						//Remove Classes
+						$el.removeClass( self.sizeClasses.join(' ') );
+						if ( ui.value ) {
+							$el.addClass( self.sizeClasses[ ui.value - 1 ] );
+						}
+					},
+				} );
+			}
 		},
 		
 		openPanel : function () {
@@ -113,12 +196,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			// Set markup for panel.
+			panel.$element.removeClass('ui-widget-content');
 			panel.$element.find( '.panel-body' ).html( template( {
-				'text' : 'for sale',
+				'text' : 'Button',
 				'presets' : self.classes,
 			} ) );
 			
-			self.applyColors();
 			
 			// Open Panel.
 			panel.open( self );

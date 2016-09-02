@@ -21,7 +21,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 
 		init : function ( $container ) {
 			self.$container = $container;
-			self.handleOffset = self.handleSize / 2;
+			self.handleOffset = self.handleSize;
 			self.createHandles();
 			self.bindHandlers();
 			self.initDraggable();
@@ -83,7 +83,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					// If padding is less than 0, prevent movement of handle.
 					if ( padding < 0 ) {
 						rowPos = self.$currentRow[0].getBoundingClientRect();
-						ui.position.top = rowPos[ relativePos ] - self.handleOffset;
+						ui.position.top = rowPos[ relativePos ] - (  ui.helper.hasClass('top') ? 0 : self.handleOffset );
 					} else {
 						BG.Controls.addStyle( self.$currentRow, setting, padding );
 					}
@@ -132,7 +132,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$currentRow = $this;
 
 			self.$topHandle.css( {
-				'top' : pos.top - self.handleOffset,
+				'top' : pos.top /*+ self.handleOffset*/,
 				'left' : rightOffset
 			} );
 
