@@ -16,10 +16,11 @@
 			<div class='back'>
 				<a class='panel-button' href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Preset Designs</a>
 			</div>
-		<div class='color-controls section button-color-controls'>
+		<div class='section button-color-controls'>
 			<h4>Color</h4>
-			<label for="button-color" class='color-preview'></label>
-			<input type="text" data-type="" name='button-color' class='color-control' value=''>
+			<div class='inline-color-controls'>
+				{{{data.colors}}}
+			</div>
 		</div>
 		<div class="section button-size-control">
 			<h4>Size</h4>

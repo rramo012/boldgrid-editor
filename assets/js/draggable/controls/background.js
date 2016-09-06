@@ -583,7 +583,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						}
 						break;
 					case 'image' :
-						if ( $this.css( 'background-image' ) == 'url("' + $target.attr('data-image-url') + '")' ) {
+						if ( $this.attr('data-image-url') == $target.attr('data-image-url') ) {
 							//Found a match.
 							$this.addClass( 'selected' );
 							type = selectionType;
@@ -633,6 +633,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setPaletteGradients();
 			panel.$element.find('.panel-body').html( template( {
 				images : BoldgridEditor.sample_backgrounds,
+				imageData : BoldgridEditor.builder_config.background_images,
 			} ) );
 
 			self.preselectBackground();

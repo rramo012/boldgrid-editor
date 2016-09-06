@@ -184,6 +184,14 @@
   cursor: pointer;
   border-radius: 50%; }
 
+.color-panel .inline-color-controls h4,
+.color-panel .inline-color-controls .theme-colors-wrap .boldgrid-tooltip-wrap,
+.color-panel .inline-color-controls [data-tooltip-id="color-saved"],
+.editor-panel .inline-color-controls h4,
+.editor-panel .inline-color-controls .theme-colors-wrap .boldgrid-tooltip-wrap,
+.editor-panel .inline-color-controls [data-tooltip-id="color-saved"] {
+  display: none; }
+
 .color-panel .section,
 .editor-panel .section {
   border-bottom: 2px solid rgba(218, 218, 218, 0.4);
@@ -564,15 +572,15 @@
   right: 5px; }
 
 /*************** Button Panel ********************/
-.editor-panel[data-type="button"] .panel-selection {
+.editor-panel[data-type="button"] .panel-body {
+  padding: 0; }
+
+.editor-panel[data-type="button"] .presets .panel-selection {
   width: 48%;
   height: auto;
   background-color: white;
   padding: 10px 0;
   margin: 0; }
-
-.editor-panel[data-type="button"] .panel-body {
-  padding: 0; }
 
 .editor-panel[data-type="button"] .presets .selected {
   position: relative; }
@@ -1174,6 +1182,54 @@ body.boldgrid-editor-fullscreen {
   font-size: 16px;
   left: 8px; }
 
+.editor-panel .colors,
+.color-panel .colors {
+  margin-bottom: 0px;
+  margin: 0 auto; }
+
+.editor-panel .colors li,
+.color-panel .colors li {
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  border: 2px solid #E1E1E1;
+  border-radius: 50%;
+  margin: 3px;
+  cursor: pointer;
+  padding: 0px; }
+
+.editor-panel .colors li:hover,
+.color-panel .colors li:hover {
+  border-color: #f95b26; }
+
+.editor-panel .colors li.selected,
+.color-panel .colors li.selected {
+  border-color: #f95b26; }
+
+.editor-panel .colors .custom-color,
+.color-panel .colors .custom-color {
+  background-color: white;
+  text-align: center;
+  border-color: #f95b26; }
+
+.editor-panel .colors .custom-color i,
+.color-panel .colors .custom-color i {
+  color: #f95b26;
+  font-size: 15px;
+  line-height: 25px;
+  padding-left: 1px; }
+
+.editor-panel .colors .custom-color.selected, .editor-panel .colors .custom-color:hover,
+.color-panel .colors .custom-color.selected,
+.color-panel .colors .custom-color:hover {
+  background-color: #f95b26;
+  border-color: #f95b26; }
+
+.editor-panel .colors .custom-color.selected i, .editor-panel .colors .custom-color:hover i,
+.color-panel .colors .custom-color.selected i,
+.color-panel .colors .custom-color:hover i {
+  color: white; }
+
 .color-panel {
   display: none;
   width: 275px;
@@ -1201,44 +1257,6 @@ body.boldgrid-editor-fullscreen {
 
 .color-panel .color-control {
   padding: 0 7px 15px; }
-
-.color-panel .colors {
-  margin-bottom: 0px;
-  margin: 0 auto; }
-
-.color-panel .colors li {
-  height: 25px;
-  width: 25px;
-  display: inline-block;
-  border: 2px solid #E1E1E1;
-  border-radius: 50%;
-  margin: 3px;
-  cursor: pointer;
-  padding: 0px; }
-
-.color-panel .colors li:hover {
-  border-color: #f95b26; }
-
-.color-panel .colors li.selected {
-  border-color: #f95b26; }
-
-.color-panel .colors .custom-color {
-  background-color: white;
-  text-align: center;
-  border-color: #f95b26; }
-
-.color-panel .colors .custom-color i {
-  color: #f95b26;
-  font-size: 15px;
-  line-height: 25px;
-  padding-left: 1px; }
-
-.color-panel .colors .custom-color.selected, .color-panel .colors .custom-color:hover {
-  background-color: #f95b26;
-  border-color: #f95b26; }
-
-.color-panel .colors .custom-color.selected i, .color-panel .colors .custom-color:hover i {
-  color: white; }
 
 .color-panel .color-picker-wrap {
   position: relative;

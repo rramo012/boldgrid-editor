@@ -16,6 +16,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		$colorPicker : null,
 		
+		colorTemplate : wp.template( 'boldgrid-editor-color' ),
+		
 		transparentColors : [
 		    'rgba(0, 0, 0, 0)',
 		    'transparent'
@@ -298,8 +300,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		_renderColorOptions : function () {
-			var template = wp.template( 'boldgrid-editor-color' );
+			self.$colorPanel.find('.colors-wrap').html( self.colorTemplate( {
+				'colors' : self.getColorsFormatted(),
+				'customColors' : self.customColors
+			} ) );
 
+			BOLDGRID.EDITOR.Tooltip.renderTooltips();
+		},
+		
+		getColorsFormatted : function () {
 			var colors = [];
 			$.each( BoldgridEditor.colors, function ( key ) {
 
@@ -310,12 +319,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 			} );
 
-			self.$colorPanel.find('.colors-wrap').html( template( {
-				'colors' : colors,
-				'customColors' : self.customColors
-			} ) );
-
-			BOLDGRID.EDITOR.Tooltip.renderTooltips();
+			return colors;
 		},
 
 		_create : function () {

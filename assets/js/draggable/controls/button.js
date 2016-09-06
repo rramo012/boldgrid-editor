@@ -19,6 +19,33 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		iconClasses : 'fa fa-cog',
 
 		selectors : [ '.btn', 'a.button', 'a.button-secondary', 'a.button-primary' ],
+		
+		defaultColorClasses : [
+			{
+				color : '#eeeeee',
+				number : 0
+			},
+			{
+				color : '#229ffd',
+				number : 1
+			},
+			{
+				color : '#ff414f',
+				number : 2
+			},
+			{
+				color : '#a5de37',
+				number : 3
+			},
+			{
+				color : '#feae1b',
+				number : 4
+			},
+			{
+				color : '#7b72e9',
+				number : 5
+			}
+		],
 
 		classes : [
 			{ name : 'btn btn-rounded btn-flat btn-small-caps' },
@@ -33,9 +60,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			{ name : 'btn btn-raised btn-pill' },
 			{ name : 'btn btn-raised btn-small-caps' },
 			
-			{ name : 'btn btn-longshadow btn-rounded btn-color-1' },
-			{ name : 'btn btn-longshadow btn-small-caps btn-pill btn-color-1' },
-			{ name : 'btn btn-longshadow btn-uppercase btn-color-1' },
+			{ name : 'btn btn-longshadow btn-rounded' },
+			{ name : 'btn btn-longshadow btn-small-caps btn-pill' },
+			{ name : 'btn btn-longshadow btn-uppercase' },
 			
 			{ name : 'btn btn-glow btn-rounded' },
 			{ name : 'btn btn-glow btn-pill btn-uppercase' },
@@ -77,7 +104,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		setup : function () {
 			self.applyColors();
-			self._setupPanelClick();
+			self._setupPresetClick();
+			self._setupColorClick();
 			self._setupCustomizeOpen();
 		},
 
@@ -90,11 +118,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
+		
+		removeColorClasses : function () {
+			var $el = BG.Menu.getTarget( self );
+			
+			$el.removeClass ( 'btn-neutral-color' );
+			
+			// Remove all classes that begin with btn-color.
+			$el.removeClass ( function ( index, css ) {
+			    return (css.match (/(^|\s)btn-color\S+/g) || []).join(' ');
+			} );
+		},
+		
+		_setupColorClick : function () {
+			BG.Panel.$element.on( 'click', '.customize .button-color-controls .panel-selection', function () {
+				var $this = $( this ),
+					$target = BG.Menu.getTarget( self );
 
-		_setupPanelClick : function() {
+				self.removeColorClasses();
+				$target.addClass( 'btn-color-' + $this.attr('data-preset') );
+			} );
+		},
+
+		_setupPresetClick : function() {
 			var panel = BG.Panel;
 
-			panel.$element.on( 'click', '.button-design .panel-selection', function () {
+			panel.$element.on( 'click', '.button-design .presets .panel-selection', function () {
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
 					$target = BG.Menu.getTarget( self ),
@@ -143,7 +192,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				currentIndex = 0;
 			
 			// BG Themes.
-			if ( BoldgridEditor.colors ) {
+			if ( BoldgridEditor.colors.length ) {
 				maxIndex = BoldgridEditor.colors.length;
 			}
 			
@@ -161,6 +210,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					currentIndex++;
 				}
 			} );
+			
+			console.log( self.classes );
 		},
 		
 		sizeSlider : {
@@ -198,6 +249,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		getColorsMarkup : function () {
+			var colors = self.defaultColorClasses;
+			//@todo Make sure theme supoprts button colors.
+			if ( BoldgridEditor.is_boldgrid_theme && BG.Controls.hasThemeFeature('button-lib') ) {
+				colors = BG.CONTROLS.Color.getColorsFormatted();
+				colors.push( self.defaultColorClasses[0] );
+			} 
+			
+			return BG.CONTROLS.Color.colorTemplate( {
+				'colors' : colors,
+				'customColors' : []
+			} );
+		},
+		
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-button' );
@@ -207,8 +272,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			// Set markup for panel.
 			panel.$element.find( '.panel-body' ).html( template( {
-				'text' : 'Button',
-				'presets' : self.classes,
+				text : 'Button',
+				presets : self.classes,
+				colors : self.getColorsMarkup()
 			} ) );
 			
 			// Open Panel.

@@ -59,6 +59,10 @@ class Boldgrid_Editor_Builder {
 	public static function get_theme_features() {
 		global $boldgrid_theme_framework;
 
+		if ( empty ( $boldgrid_theme_framework ) ) {
+			return array();
+		}
+
 		$configs = $boldgrid_theme_framework->get_configs();
 		$supported_features = ! empty( $configs['supported-features'] ) ?
 			$configs['supported-features'] : array();

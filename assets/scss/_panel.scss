@@ -201,6 +201,14 @@
 		    border-radius: 50%;
 		}
 	}
+	
+	.inline-color-controls {
+	   h4,
+	   .theme-colors-wrap .boldgrid-tooltip-wrap,
+	   [data-tooltip-id="color-saved"] {
+	       display: none;
+	   }
+	}
 
 	.section {
 		border-bottom: 2px solid $title-border-color;
@@ -590,16 +598,16 @@
 
 /*************** Button Panel ********************/
 .editor-panel[data-type="button"] {
-    .panel-selection {
+    .panel-body {
+    	padding: 0;
+    }
+
+    .presets .panel-selection {
 	    width: 48%;
 	    height: auto;
 	    background-color: white;
 	    padding: 10px 0;
 	    margin: 0;
-    }
-    
-    .panel-body {
-    	padding: 0;
     }
     
     .presets .selected {
