@@ -355,6 +355,7 @@ html.boldgrid-editor-fullscreen {
 	width: 40px;
 }
 
+.non-bg-theme .popover-menu-imhwpb [data-action="section-width"],
 .disabled-section-width .popover-menu-imhwpb [data-action="section-width"],
 .drag-progress .section-drag-handle,
 .bg-disabled-handles .draggable-tools-imhwpb,

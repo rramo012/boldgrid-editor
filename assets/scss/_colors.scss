@@ -81,6 +81,10 @@
 	top: 200px;
     right: 300px;
     
+	&.non-bg-theme .theme-colors-wrap {
+		display: none; 
+	}
+	
 	.wp-color-result {
 	   display: none;
 	}

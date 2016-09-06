@@ -105,16 +105,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					$target = BG.Menu.$element.targetData[ self.name ],
 					value = $this.val(),
-					type = $this.data('type');
+					type = $this.attr('data-type'),
+					$currentSelection = BG.Panel.$element.find('.current-selection'),
+					selectionType = $currentSelection.attr('data-type');
 
 				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
 				BG.Controls.addStyle( $target, 'background-color', '' );
+				
+				// If currently selected is a gradient
+				if ( selectionType != 'pattern' ) {
+					BG.Controls.addStyle( $target, 'background-image', '' );
+					$target.removeAttr('data-bg-color-1');
+					$target.removeAttr('data-bg-color-2');
+					$target.removeAttr('data-bg-direction');
+				}
+				if ( selectionType != 'pattern' ) {
+					BG.Panel.$element.find('.presets .selected').removeClass('selected');
+				}
 
 				if ( 'class' == type ) {
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
 					BG.Controls.addStyle( $target, 'background-color', value );
 				}
+				
+				self.setImageSelection( selectionType, $target.css('background') );
 			} );
 
 		},
@@ -140,7 +155,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			panel.$element.on( 'change', '.background-design [name="overlay-color"]', function () {
 				var $this = $( this ),
-					type = $this.data('type'),
+					type = $this.attr('data-type'),
 					value = $this.val(),
 					$target = BG.Menu.$element.targetData[ self.name ];
 				
@@ -276,8 +291,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				var $this = $( this ),
 					type = $this.data('type'),
-					label = $this.data('label');
-
+					label = $this.data('label'),
+					$presetsBackgroundColor = panel.$element.find('.presets .background-color.section');
 
 				panel.$element.find('.filter').removeClass('selected');
 				$this.addClass( 'selected' );
@@ -288,6 +303,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 
 				panel.$element.find( '.presets .title > *' ).text( label );
+				
+				if ( type.length && -1 !== type.indexOf('image') ) {
+					$presetsBackgroundColor.hide();
+				} else {
+					$presetsBackgroundColor.show();
+				}
+				
+				panel.scrollToSelected();
 			} );
 		},
 
@@ -327,6 +350,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} else if ( 'color' == $this.data('type') ) {
 					$target.addClass( $this.data('class') );
 					BG.Controls.addStyle( $target, 'background-image', '' );
+					self.setDefaultBackgroundColors();
 				} else if ( 'pattern' == $this.data('type') ) {
 					BG.Controls.addStyle( $target, 'background-size', 'auto auto' );
 					BG.Controls.addStyle( $target, 'background-repeat', 'repeat' );
@@ -480,7 +504,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		setDefaultBackgroundColors : function () {
-			var bgColor,
+			var bgColor, $bgControlColor,
 				$target = BG.Menu.getTarget( self );
 
 			if ( self.backgroundIsGradient( $target.css( 'background-image' ) ) ) {
@@ -488,7 +512,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				BG.Panel.$element.find('input[name="gradient-color-2"]').attr( 'value', $target.attr('data-bg-color-2') );
 			} else {
 				bgColor = BG.CONTROLS.Color.findAncestorColor( $target, 'background-color' );
-				BG.Panel.$element.find('input[name="section-background-color"]').attr( 'value', bgColor );
+				$bgControlColor = BG.Panel.$element.find('input[name="section-background-color"]');
+				$bgControlColor.prev('label').css('background-color', bgColor);
+				$bgControlColor.attr( 'value', bgColor );
 			}
 		},
 
@@ -637,7 +663,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} ) );
 
 			self.preselectBackground();
-			
+			self.setDefaultBackgroundColors();
+
 			// Open Panel.
 			panel.open( self );
 		}

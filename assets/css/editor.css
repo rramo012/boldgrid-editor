@@ -504,6 +504,25 @@
   font-weight: normal;
   margin: 13px 0 6px; }
 
+.editor-panel[data-type="background"] .presets .background-color {
+  text-align: left;
+  padding: 0;
+  padding-bottom: 7px; }
+
+.editor-panel[data-type="background"] .presets .background-color label {
+  position: absolute;
+  top: -6px;
+  right: 0;
+  margin-top: 0; }
+
+.editor-panel[data-type="background"] .presets .background-color label:before {
+  top: 5px;
+  left: -25px; }
+
+.editor-panel[data-type="background"] .presets .background-color h4 {
+  font-size: 18px;
+  margin-top: 20px; }
+
 .editor-panel[data-type="background"] .selection {
   position: relative; }
 
@@ -1240,6 +1259,9 @@ body.boldgrid-editor-fullscreen {
   height: auto !important;
   top: 200px;
   right: 300px; }
+
+.color-panel.non-bg-theme .theme-colors-wrap {
+  display: none; }
 
 .color-panel .wp-color-result {
   display: none; }

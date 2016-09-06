@@ -160,7 +160,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		scrollToSelected : function () {
 			var scrollPos, scrollOffset,
-				$selected = self.$element.find( '.selected:not(.filters .selected)' );
+				$selected = self.$element.find( '.selected:not(.filters .selected):visible' );
 
 			self.scrollTo(0);
 

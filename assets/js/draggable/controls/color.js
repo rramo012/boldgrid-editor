@@ -60,10 +60,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupRemove();
 			self._setupAutoHide();
 			self._setupResetDefault();
+			self._addPanelClasses();
 
 			self._setupOpenCustomization();
 
 			return self;
+		},
+		
+		_addPanelClasses : function () {
+			if ( ! BoldgridEditor.is_boldgrid_theme ) {
+				self.$colorPanel.addClass('non-bg-theme');
+			}
 		},
 		
 		_setupResetDefault : function () {

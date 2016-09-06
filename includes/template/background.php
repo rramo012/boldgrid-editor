@@ -3,8 +3,8 @@
 		<div class='preset-wrapper'>
 		<div class='current-selection'>
 			<div class='filters'>
-				<a href="#" data-type='["color","gradients"]' data-label="Flat Colors & Gradients" class='filter'><i class="fa fa-paint-brush" aria-hidden="true"></i> Color</a>
-				<a href="#" data-type='["image"]' data-default="1" data-label="Images" class='filter'><i class="fa fa-picture-o" aria-hidden="true"></i> Image</a>
+				<a href="#" data-type='["image"]'  data-label="Images" class='filter'><i class="fa fa-picture-o" aria-hidden="true"></i> Image</a>
+				<a href="#" data-type='["color","gradients"]' data-default="1" data-label="Flat Colors & Gradients" class='filter'><i class="fa fa-paint-brush" aria-hidden="true"></i> Color</a>
 				<a href="#" data-type='["pattern"]' data-label="Patterns" class='filter'><i class="fa fa-wpforms" aria-hidden="true"></i> Pattern</a>
 			</div>
 			<div class='settings'>
@@ -12,6 +12,11 @@
 			</div>
 		</div>
 		<div class='presets'>
+			<div class='background-color section color-controls'>
+				<h4>Custom Color</h4>
+				<label for="section-background-color" class='color-preview'></label>
+				<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
+			</div>
 			<div class='title'>
 				<h4>Sample Backgrounds</h4>
 			</div>
