@@ -777,7 +777,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Clean Up the markup and add any needed classes/wrappers.
 	 */
 	this.validate_markup = function() {
-		BOLDGRID.EDITOR.VALIDATION.Section.updateContent( self.$body );
+		// If the theme is a BG theme w/ variable containers feature, or the theme is not BG theme.
+		if ( ! BoldgridEditor.is_boldgrid_theme || BOLDGRID.EDITOR.Controls.hasThemeFeature('variable-containers') ) {
+			BOLDGRID.EDITOR.VALIDATION.Section.updateContent( self.$body );
+		}
+		
 		self.wrap_hr_tags();
 		self.wrap_content_elements();
 		self.add_redundant_classes();

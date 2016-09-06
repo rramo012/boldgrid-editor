@@ -307,7 +307,6 @@ class Boldgrid_Editor_Assets {
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 		}
 
-
 		wp_enqueue_style( 'font-family-styles',
 			plugins_url( '/assets/css/font-family-controls.min.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 

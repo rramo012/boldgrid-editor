@@ -160,7 +160,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					return (css.match (/(^|\s)p-button-\S+/g) || []).join(' ');
 				} );
 				
-				// Aply changes to editor.
+				// Apply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
 				panel.toggleFooter();

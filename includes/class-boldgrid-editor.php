@@ -192,7 +192,6 @@ class Boldgrid_Editor {
 		}, 99 );
 
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
-
 	}
 
 	public static function remove_theme_container( $configs ) {
