@@ -297,8 +297,16 @@ class Boldgrid_Editor_Assets {
 		wp_register_style( 'editor-css-imhwpb',
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-		wp_enqueue_style( 'boldgrid-theme-framework',
-			plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+		$button_file = get_stylesheet_directory() . '/css/buttons.css';
+		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() && file_exists( $button_file ) ) {
+			wp_enqueue_style( 'boldgrid-buttons',
+				get_stylesheet_directory_uri() . '/css/buttons.css', array(), BOLDGRID_EDITOR_VERSION );
+		} else {
+			wp_enqueue_style( 'boldgrid-buttons',
+				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+		}
+
 
 		wp_enqueue_style( 'font-family-styles',
 			plugins_url( '/assets/css/font-family-controls.min.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );

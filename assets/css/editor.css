@@ -572,13 +572,17 @@
   right: 5px; }
 
 /*************** Button Panel ********************/
+.editor-panel[data-type="button"] {
+  background-color: #eee; }
+
 .editor-panel[data-type="button"] .panel-body {
+  background-color: #eee;
   padding: 0; }
 
 .editor-panel[data-type="button"] .presets .panel-selection {
   width: 48%;
   height: auto;
-  background-color: white;
+  background-color: #eee;
   padding: 10px 0;
   margin: 0; }
 
@@ -619,7 +623,7 @@
   padding-bottom: 8px; }
 
 .editor-panel[data-type="button"] [data-preset*="btn-block"] {
-  width: 100%; }
+  width: 100% !important; }
 
 /*************** Text Settings Panel ********************/
 .editor-panel[data-type="font"] .panel-title {

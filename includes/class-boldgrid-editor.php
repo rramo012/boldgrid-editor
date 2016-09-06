@@ -176,7 +176,7 @@ class Boldgrid_Editor {
 			wp_enqueue_style( 'editor-css-imhwpb',
 				plugins_url( '/assets/css/editor.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-			wp_enqueue_style( 'boldgrid-theme-framework',
+			wp_enqueue_style( 'boldgrid-buttons',
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 			wp_enqueue_script( 'boldgrid-render-fonts',

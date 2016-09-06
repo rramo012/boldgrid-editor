@@ -21,10 +21,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		selectors : [ '.btn', 'a.button', 'a.button-secondary', 'a.button-primary' ],
 		
 		defaultColorClasses : [
-			{
-				color : '#eeeeee',
-				number : 0
-			},
+		    {
+		    	color : '#eee',
+		    	number : 0
+		    },
 			{
 				color : '#229ffd',
 				number : 1
@@ -48,17 +48,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		classes : [
+		   { name : 'btn btn-3d btn-rounded' },
+		   { name : 'btn btn-3d btn-pill' },
+		   { name : 'btn btn-3d' },
+		   
+		   { name : 'btn btn-raised btn-rounded' },
+		   { name : 'btn btn-raised btn-pill' },
+		   { name : 'btn btn-raised btn-small-caps' },
+
 			{ name : 'btn btn-rounded btn-flat btn-small-caps' },
 			{ name : 'btn btn-pill btn-flat' },
 			{ name : 'btn btn-flat' },
 			
-			{ name : 'btn btn-3d btn-rounded' },
-			{ name : 'btn btn-3d btn-pill' },
-			{ name : 'btn btn-3d' },
-			
-			{ name : 'btn btn-raised btn-rounded' },
-			{ name : 'btn btn-raised btn-pill' },
-			{ name : 'btn btn-raised btn-small-caps' },
 			
 			{ name : 'btn btn-longshadow btn-rounded' },
 			{ name : 'btn btn-longshadow btn-small-caps btn-pill' },
@@ -126,7 +127,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			// Remove all classes that begin with btn-color.
 			$el.removeClass ( function ( index, css ) {
-			    return (css.match (/(^|\s)btn-color\S+/g) || []).join(' ');
+				return (css.match (/(^|\s)btn-color\S+/g) || []).join(' ');
 			} );
 		},
 		
@@ -136,6 +137,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = BG.Menu.getTarget( self );
 
 				self.removeColorClasses();
+				$this.siblings().removeClass('selected');
+				$this.addClass('selected');
 				$target.addClass( 'btn-color-' + $this.attr('data-preset') );
 			} );
 		},
@@ -154,12 +157,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				// Remove old p button classes.
 				$parent.removeClass ( function ( index, css ) {
-				    return (css.match (/(^|\s)p-button-\S+/g) || []).join(' ');
+					return (css.match (/(^|\s)p-button-\S+/g) || []).join(' ');
 				} );
 				
 				// Aply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
+				panel.toggleFooter();
 			} );
 		},
 
@@ -188,17 +192,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		applyColors : function() {
-			var maxIndex = 5,
-				currentIndex = 0;
+			var currentIndex,
+				maxIndex = 5,
+				minIndex = 0;
 			
 			// BG Themes.
 			if ( BoldgridEditor.colors.length ) {
 				maxIndex = BoldgridEditor.colors.length;
+				minIndex = 1;
 			}
+			
+			currentIndex = minIndex;
 			
 			$.each( self.classes, function ( count ) {
 				if ( maxIndex < currentIndex ) {
-					currentIndex = 0;
+					currentIndex = minIndex;
 				}
 				
 				// Adds Default color, which has no class.
@@ -211,7 +219,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 			
-			console.log( self.classes );
 		},
 		
 		sizeSlider : {
@@ -254,7 +261,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			//@todo Make sure theme supoprts button colors.
 			if ( BoldgridEditor.is_boldgrid_theme && BG.Controls.hasThemeFeature('button-lib') ) {
 				colors = BG.CONTROLS.Color.getColorsFormatted();
-				colors.push( self.defaultColorClasses[0] );
 			} 
 			
 			return BG.CONTROLS.Color.colorTemplate( {
@@ -279,7 +285,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			// Open Panel.
 			panel.open( self );
-			
 			panel.$element.removeClass('ui-widget-content');
 		}
 

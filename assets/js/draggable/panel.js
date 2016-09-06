@@ -265,7 +265,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 		
 		toggleFooter : function () {
-			if ( self.$element.find('.selected').length ) {
+			if ( self.$element.find('.panel-body .selected').length ) {
 				self.showFooter();
 			} else {
 				self.hideFooter();
