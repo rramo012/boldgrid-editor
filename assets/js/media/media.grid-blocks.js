@@ -170,6 +170,27 @@ IMHWPB.Media = IMHWPB.Media || {};
 
 			$this.attr( 'src', '//placehold.it/' + width + "x" + height + "/cccccc/" );
 		},
+		
+		/**
+		 * Find all images and add a placeholder for each url empty tag.
+		 * 
+		 * @since 1.2.4
+		 * 
+		 * @retrin string html.
+		 */
+		validateImageTags : function ( html ) {
+			var self = this,
+				$div = $( '<div>' ).html( html );
+			
+			$div.find( 'img' ).each( function () {
+				var $this = $( this );
+				if ( ! $this.attr( 'src' ) ) {
+					self.swap_image_with_placeholder( $this );
+				}
+			} );
+			
+			return $div.html();
+		},
 
 		/**
 		 * Grab the markup for the selected Gridblock
@@ -188,13 +209,13 @@ IMHWPB.Media = IMHWPB.Media || {};
 					gridblock_data = IMHWPB.Globals.tabs['basic-gridblocks']['content'][ gridblock_id ];
 				}
 
-				//Find images that need to be exchanged for assets
+				// Find images that need to be exchanged for assets.
 				var image_replacements = [];
 				$wrapper.find('[data-pending-boldgrid-attribution]').each ( function () {
-					image_replacements.push($(this).data('boldgrid-asset-id'));
+					image_replacements.push( $( this ).data('boldgrid-asset-id') );
 				});
 
-				//Get the api data needed for all dynamic images in the gridblock
+				// Get the api data needed for all dynamic images in the gridblock.
 				var dynamic_images = self.format_dynamic_image_data( gridblock_data );
 
 				if ( image_replacements.length || dynamic_images.length ) {
@@ -316,12 +337,15 @@ IMHWPB.Media = IMHWPB.Media || {};
 					if ( gridblock_data && gridblock_data['html-jquery'] ) {
 						//Use the jquery html elem first
 						html = gridblock_data['html-jquery'].wrapAll( '<div>' ).parent().html();
-					} else if ( !html ) {
+					} else if ( ! html ) {
+
 						//Use the object.html second
 						//if still not found use the html rendered on page
 						html = $this.find('.centered-content-boldgrid').html();
 					}
 
+					// Final Check, Make sure image tags are not broken.
+					html = self.validateImageTags( html );
 				}
 
 				//Only allow selecting due to image swapping

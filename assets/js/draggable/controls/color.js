@@ -257,10 +257,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					}
 
 					$selection = self.$colorPanel.find('.colors .panel-selection.selected[data-preset]');
-					$selection.css( 'background-color', cssColor );
-					$selection.attr( 'data-preset', cssColor );
-					self.customColors[ $selection.data('index') ] = cssColor;
-
+					if ( $selection.length ) {
+						$selection.css( 'background-color', cssColor );
+						$selection.attr( 'data-preset', cssColor );
+						self.customColors[ $selection.attr('data-index') ] = cssColor;
+					}
+					
 					if ( self.$currentInput ) {
 						self.$currentInput.attr( 'data-type', type );
 						self.$currentInput.attr( 'value', cssColor );
@@ -342,7 +344,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				$selection = $control.find( '.colors .selected[data-type="custom"]' );
 				if ( $selection.length ){
-					self.customColors.splice( $selection.data('index'), 1 );
+					self.customColors.splice( $selection.attr('data-index'), 1 );
 					$selection.remove();
 					$newSelection = self.$colorPanel.find('.panel-selection').first();
 					self.$colorPicker.iris( 'color', $newSelection.css('background-color') );
