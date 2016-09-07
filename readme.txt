@@ -20,7 +20,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.2.5 InProgress =
+= 1.2.5 =
 * Bug fix:		JIRA WPB-2325	Added wrapper to handle mb_convert_encoding() if mbstring is not loaded.
 * Bug fix:		JIRA WPB-2065	Issue where popovers did not comeback after drag drop.
 * New feature:	JIRA WPB-2065	Overlays color for background images.
