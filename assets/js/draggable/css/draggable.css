@@ -1,25 +1,3 @@
-
-.zoomout body {
-	transform: scale(.6) translateY(-30%);
-}
-
-.dragging-section {
-	cursor: default;
-}
-
-.dragging-section .boldgrid-section:hover {
-	opacity: .6;
-	cursor: move !important;
-}
-
-.dragging-section #boldgrid-draggable-resizing-overlay {
-	cursor: move !important;
-}
-
-.section-drag-element {
-	position: absolute;
-}
-
 html, body {
     height: auto;
 }
@@ -133,9 +111,94 @@ html.boldgrid-editor-fullscreen {
     outline: 1px dashed gray !important;
 }
 
+.dragging-section .draggable-tools-imhwpb + *:not(button),
+.dragging-section .draggable-tools-imhwpb + .row:not(button) > [class*="col-md"],
+.dragging-section .draggable-tools-imhwpb + *:not(button),
 .draggable-tools-imhwpb + .row .row > [class*="col-md"],
 .drag-progress .boldgrid-section:hover {
 	outline-color: transparent !important;
+}
+
+.zoomout body {
+    transform: scale(.6) translateY(-30%);
+}
+
+.dragging-section {
+    cursor: default;
+}
+.dragging-section *:hover {
+    cursor: move !important;
+}
+.dragging-section .boldgrid-section.section-drag-clone,
+.dragging-section .boldgrid-section:hover {
+	outline: 2px solid #f95b26 !important;
+    cursor: move !important;
+}
+
+#boldgrid-drag-pointer {
+	display: none;
+	position: fixed;
+	border-radius: 50%;
+	top: 10px;
+	left: 10px;
+	background-color: #f95b26;
+	height: 30px;
+    width: 30px;
+}
+.section-dragging-active #boldgrid-drag-pointer {
+	display: block;
+}
+
+.section-drag-element {
+	outline: 2px solid #f95b26;
+}
+
+.dragging-section .boldgrid-section {
+    position: relative;
+}
+
+.dragging-section .boldgrid-section:after {
+	background-color: transparent;
+	transition: background-color .25s;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: ' ';
+}
+
+.dragging-section .boldgrid-section:hover:after {
+    background-color: rgba(249, 91, 38, 0.9);
+}
+
+.dragging-section .boldgrid-section:hover:before {
+    content: 'Drag Section';
+    color: #fff;
+    font-size: 39px;
+    font-family: "Open Sans",sans-serif;
+    text-align: center;
+    line-height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 999;
+    right: 0;
+    transform: translateY(-50%);
+    font-variant: small-caps;
+}
+
+
+.dragging-section .boldgrid-section.section-drag-clone {
+	display: none;
+}
+
+.dragging-section #boldgrid-draggable-resizing-overlay {
+    cursor: move !important;
+}
+
+.section-drag-clone {
+    position: absolute;
 }
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,

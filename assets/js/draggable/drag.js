@@ -2765,7 +2765,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				}
 			} );
 		}
-console.log( timeout || 100 )
 		setTimeout( function () {
 			//If the background is still transparent, set to white
 			if ( self.color_is ( $element.css('background-color'), 'transparent') ) {
