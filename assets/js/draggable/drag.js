@@ -693,6 +693,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		BOLDGRID.EDITOR.RESIZE.Row.init( self.$master_container );
 		BOLDGRID.EDITOR.Controls.init( self.$master_container );
+		BOLDGRID.EDITOR.DRAG.Section.init( self.$master_container );
 
 		return self;
 	};
@@ -701,6 +702,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( ! BoldgridEditor.is_boldgrid_theme ) {
 			self.$master_container.find('html').addClass('non-bg-theme');
 		}
+		
+		self.$master_container.find('html').addClass('zoomout dragging-section');
+		self.$master_container.find('body').removeAttr( 'contenteditable' );
 	};
 
 	/**
@@ -1098,7 +1102,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'dragenter.draggable', self.drag_handlers.record_drag_enter )
 			;
 	};
-
+	
 	this.refresh_fourpan = function () {
 		// If editing as row update the overlay.
 		if ( self.editting_as_row ) {
@@ -2747,6 +2751,31 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		
 		return $new_column;
 	};
+	
+	this.setInheritedBg = function ( $element, timeout ) {
+		// Set the background color to its parents bg color.
+		if ( self.color_is( $element.css( 'background-color' ), 'transparent' ) ) {
+			$element.parents().each( function(){
+				var $this = $( this ),
+					bgColor = $this.css( 'background-color' );
+
+				if ( ! self.color_is( bgColor, 'transparent' ) ) {
+					$element.css( 'background-color', bgColor );
+					return false;
+				}
+			} );
+		}
+console.log( timeout || 100 )
+		setTimeout( function () {
+			//If the background is still transparent, set to white
+			if ( self.color_is ( $element.css('background-color'), 'transparent') ) {
+				$element.css( {
+					'background-color': 'white',
+					'color': '#333'
+				});
+		  	}
+		}, timeout || 100 );
+	};
 
 	/**
 	 * This object contains all the event handlers used for DND (Drag and Drop).
@@ -2879,29 +2908,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				self.$current_drag.attr( 'data-mce-bogus', "all" );
 
-				// Set the background color to its parents bg color.
-				if ( self.color_is( self.$current_drag.css( 'background-color' ), 'transparent' ) ) {
-					self.$current_drag.parents().each( function(){
-						var $this = $( this ),
-							bgColor = $this.css( 'background-color' );
-
-						if ( ! self.color_is( bgColor, 'transparent' ) ) {
-							self.$current_drag.css( 'background-color', bgColor );
-							return false;
-						}
-					} );
-				}
-
-				setTimeout( function () {
-					//If the background is still transparent, set to white
-					if ( self.color_is ( self.$current_drag.css('background-color'), 'transparent') ) {
-						self.$current_drag.css( {
-							'background-color': 'white',
-							'color': '#333'
-						});
-				  	}
-				}, 100);
-
+				self.setInheritedBg( self.$current_drag );
+				
 				// Setting Drag Image is not allowed in IE, and fails on safari.
 				if ( typeof event.originalEvent.dataTransfer.setDragImage != "undefined" && ! self.isSafari ) {
 

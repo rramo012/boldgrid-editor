@@ -1,8 +1,24 @@
-/*
-body {
+
+.zoomout body {
 	transform: scale(.6) translateY(-30%);
-	
-}*/
+}
+
+.dragging-section {
+	cursor: default;
+}
+
+.dragging-section .boldgrid-section:hover {
+	opacity: .6;
+	cursor: move !important;
+}
+
+.dragging-section #boldgrid-draggable-resizing-overlay {
+	cursor: move !important;
+}
+
+.section-drag-element {
+	position: absolute;
+}
 
 html, body {
     height: auto;
@@ -355,6 +371,9 @@ html.boldgrid-editor-fullscreen {
 	width: 40px;
 }
 
+.dragging-section .draggable-tools-imhwpb,
+.dragging-section .draghandle,
+.dragging-section .section-drag-handle,
 .non-bg-theme .popover-menu-imhwpb [data-action="section-width"],
 .disabled-section-width .popover-menu-imhwpb [data-action="section-width"],
 .drag-progress .section-drag-handle,
@@ -407,10 +426,10 @@ html.boldgrid-editor-fullscreen {
 	z-index:99999999;
 	cursor: ew-resize;
 	display: none;
+	background-color: none;
 }
 .no-select-imhwpb ~ #boldgrid-draggable-resizing-overlay {
 	display: block;
-	background-color: none;
 }
 
 .popover-menu-imhwpb [data-action="nest-row"]:hover {

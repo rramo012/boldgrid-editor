@@ -197,6 +197,7 @@ class Boldgrid_Editor {
 	public static function remove_theme_container( $configs ) {
 
 		// Get Page Id.
+	    $is_preview = ! empty ( $_REQUEST['preview'] ) ? $_REQUEST['preview'] : null;
 	    $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	    $theID = url_to_postid( $actual_link );
 	    if( 0 === $theID ) {
@@ -204,10 +205,12 @@ class Boldgrid_Editor {
 	    }
 
 	    $post_meta = get_post_meta( $theID );
-	    $in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'] ) ?
-	    	$post_meta['boldgrid_in_page_containers'] : null;
 
-	    if ( $in_page_containers ) {
+	    $in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'][0] ) ?
+	    	$post_meta['boldgrid_in_page_containers'][0] : null;
+
+	    // If this is a preview of a post, remove the container, no meta data found.
+	    if ( $in_page_containers || ( $is_preview && $theID ) ) {
 			$configs['template']['pages'][ 'page_home.php' ]['entry-content'] = '';
 			$configs['template']['pages'][ 'default' ]['entry-content'] = '';
 		}
@@ -279,8 +282,6 @@ class Boldgrid_Editor {
 
 				// This has a high priority to override duplicate files in other boldgrid plugins.
 				add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
-
-				$boldgrid_editor_mce->prepend_editor_styles();
 
 				// Add ?boldgrid-editor-version=$version_number to each added file.
 				add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );

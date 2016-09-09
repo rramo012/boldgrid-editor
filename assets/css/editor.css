@@ -1636,6 +1636,13 @@ body.boldgrid-editor-fullscreen {
 #tinymce .bg-control-element {
   outline: 2px dashed #f95b26 !important; }
 
+#tinymce .fa:hover {
+  color: #f95b26 !important; }
+
+#tinymce img,
+#tinymce .fa {
+  cursor: pointer; }
+
 .section .selectize-dropdown-content {
   height: 30px; }
 

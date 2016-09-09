@@ -279,6 +279,10 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_script( 'boldgrid-util',
 			plugins_url( '/assets/js/draggable/util.js', $plugin_file ),
 			array (), BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-drag-section',
+			plugins_url( '/assets/js/draggable/drag/section.js', $plugin_file ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**
