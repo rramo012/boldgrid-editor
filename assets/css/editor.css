@@ -812,6 +812,9 @@
   right: 0;
   text-align: center; }
 
+#boldgrid-instance-menu.section-dragging [data-action="menu-add"] {
+  display: none; }
+
 #boldgrid-instance-menu ul {
   text-align: center;
   display: inline-block;
@@ -875,6 +878,20 @@
 
 #boldgrid-instance-menu .boldgrid-help-icon {
   display: none; }
+
+#boldgrid-instance-menu .genericon-zoom:after {
+  content: 'Exit Section Dragging';
+  position: relative;
+  top: -4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 16px; }
+
+#boldgrid-instance-menu .genericon-zoom:before {
+  font-size: 21px; }
+
+#boldgrid-instance-menu [data-action="menu-exit-section-drag"] {
+  border-radius: 35px;
+  padding: 3px 10px; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown {
   display: none;

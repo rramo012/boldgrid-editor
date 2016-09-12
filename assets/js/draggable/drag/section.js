@@ -7,6 +7,27 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 
 	var self,
 		BG = BOLDGRID.EDITOR;
+	
+	
+	BG.CONTROLS.ExitSection = {
+		name : 'exit-section-drag',
+		tooltip : 'Exit Section Dragging',
+		iconClasses : 'genericon genericon-zoom',
+		selectors : [ '.dragging-section' ],
+		
+		init : function () {
+			BOLDGRID.EDITOR.Controls.registerControl( this );
+		},
+		
+		onMenuClick : function ( e ) {
+			var $this = $( this );
+			BG.Controls.$container.find('html').removeClass('zoomout dragging-section');
+			BG.Controls.$container.find('body').attr( 'contenteditable', 'true' );
+			BG.Controls.$menu.hide();
+		},
+	};
+		
+	BG.CONTROLS.ExitSection.init();
 
 	self = BG.DRAG.Section = {
 
@@ -22,6 +43,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.$container = $container;
 				self.$dragHelper = self.renderHelpers();
 				self.bind();
+				self.bindHelper();
 			},
 			
 			renderHelpers : function () {
@@ -32,10 +54,24 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			
 			bind : function () {
 				self.$container
-					.on( 'dragstart', self.prevent )
-					.on( 'mousedown', '.boldgrid-section', self.start )
-					.on( 'mousemove', self.over )
-					.on( 'mouseup dragend', self.end );
+					.on( 'dragstart', '.dragging-section', self.prevent )
+					.on( 'mousedown', '.dragging-section .boldgrid-section', self.start )
+					.on( 'mousemove', '.dragging-section', self.over )
+					.on( 'mouseup dragend', '.dragging-section', self.end );
+			},
+			
+			bindHelper : function () {
+				self.$container
+					.on( 'mousemove', '.dragging-section', self.overHelper );
+			},
+			
+			overHelper : function ( e ) {
+				if ( self.$container.$current_drag || self.currentDrag ) {
+					if ( ! self.lastPosEvent || self.lastPosEvent + 25 <= e.timeStamp ) {
+						self.lastPosEvent = e.timeStamp;
+						self.positionHelper( e.originalEvent );
+					}
+				}
 			},
 			
 			position : function ( pageY ) {
@@ -91,11 +127,6 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			
 			over : function (e) {
 				if ( self.currentDrag ) {
-					//self.position( e.originalEvent.pageY );
-					if ( ! self.lastPosEvent || self.lastPosEvent + 25 <= e.timeStamp ) {
-						self.lastPosEvent = e.timeStamp;
-						self.positionHelper( e.originalEvent );
-					}
 					if ( ! self.lastDragEvent || self.lastDragEvent + 100 <= e.timeStamp ) {
 						self.lastDragEvent = e.timeStamp;
 						self.drag( e );

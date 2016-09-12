@@ -703,8 +703,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.$master_container.find('html').addClass('non-bg-theme');
 		}
 		
-		self.$master_container.find('html').addClass('zoomout dragging-section');
-		self.$master_container.find('body').removeAttr( 'contenteditable' );
+		//self.$master_container.find('html').addClass('zoomout dragging-section');
+		//self.$master_container.find('body').removeAttr( 'contenteditable' );
 	};
 
 	/**
@@ -1361,7 +1361,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		$draged_element.animate( {
 			'top' : parseInt( $draged_element.css( 'top' ) ) + (newOffset.top - dragOffset.top),
 			'left' : parseInt( $draged_element.css( 'left' ) ) + (newOffset.left - dragOffset.left)
-		}, '600', self.drag_cleanup );
+		}, 0, self.drag_cleanup );
 	};
 
 	/**

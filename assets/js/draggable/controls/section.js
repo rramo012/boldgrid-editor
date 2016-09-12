@@ -64,9 +64,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="section-width"]', self.sectionWidth );
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
+			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
+		},
+		
+		enableSectionDrag : function () {
+			self.$container.find('html').addClass('zoomout dragging-section');
+			self.$container.find('body').removeAttr( 'contenteditable' );
+			BG.Controls.$menu.addClass('section-dragging');
 		},
 		
 		positionHandles : function() {
@@ -94,7 +101,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			self.$popover.css( {
 				'top' :  pos.bottom + 35,
-				'left' : '50%',
+				'left' : 'calc(50% - 38px)',
 				'transform' :  'translateX(-50%)'
 			} );
 			

@@ -9,6 +9,10 @@
     right: 0;
     text-align: center;
     
+    &.section-dragging [data-action="menu-add"]{
+    	display: none;
+    }
+    
 	ul {
 	    text-align: center;
 	    display: inline-block;
@@ -80,7 +84,23 @@
     .boldgrid-help-icon {
     	display: none;
     }
+    
+	.genericon-zoom:after {
+    	content: 'Exit Section Dragging';
+    	position: relative;
+    	top: -4px;
+    	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    	font-size: 16px;
+	}
+	.genericon-zoom:before {
+		font-size: 21px;
+	}
 	
+	[data-action="menu-exit-section-drag"] {
+		border-radius: 35px;
+		padding: 3px 10px;
+	}
+
 	.bg-editor-menu-dropdown {
 	   display: none;
 	    background-color: white;
