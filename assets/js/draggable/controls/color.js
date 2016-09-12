@@ -251,6 +251,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$colorPicker = self.$colorPanel.find('.boldgrid-color-picker');
 			self.$colorPicker.val( defaultPickerColor );
 			self.$colorPicker.wpColorPicker( {
+				mode: 'hsl',
 				defaultColor: defaultPickerColor,
 				change: function( event, ui ){
 					var $this = $(this),
