@@ -129,14 +129,33 @@ html.boldgrid-editor-fullscreen {
 }
 
 .zoomout body {
-    transform: scale(.6) translateY(-30%);
+    transform: scale(.5) translateY(-46%);
     margin-top: 0 !important;
     border: 2px solid #e5e5e5;
 }
 
+.zoomout body.zoom-scale-1 {
+	transform: scale(0.3) translateY(-110%);
+}
+.zoomout body.zoom-scale-2 {
+	transform: scale(.4) translateY(-70%);
+}
+.zoomout body.zoom-scale-3 {
+	transform: scale(.5) translateY(-46%);
+}
+.zoomout body.zoom-scale-4 {
+	transform: scale(0.6) translateY(-30%);
+}
+.zoomout body.zoom-scale-5 {
+	transform: scale(0.7) translateY(-18%);
+}
+.zoomout body.zoom-scale-6 {
+	transform: scale(0.8) translateY(-10%);
+}
+
 @media (max-width: 600px) {
   .zoomout body {
-        transform: scale(.8) translateY(-12%);
+        transform: scale(.8) translateY(-10%);
   }
 }
 
