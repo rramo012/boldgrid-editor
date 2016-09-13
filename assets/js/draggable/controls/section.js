@@ -17,6 +17,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		$currentSection : [],
 			
 		init : function ( $container ) {
+			self.renderZoomTools();
 			self.$container = $container;
 			self.createHandles();
 			self.bindHandlers();
@@ -24,6 +25,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			// Disables section width on old/non bg themes. 
 			// Update: If container exists in content, the user should be able to modify it.
 			// self.enableFeatures();
+		},
+		
+		renderZoomTools : function () {
+			var template = wp.template('boldgrid-editor-zoom-tools');
+			$('#wp-content-editor-tools').append( template() );
+		},
+		
+		exitSectionDrag : function () {
+			$('body').removeClass('focus-on boldgrid-zoomout');
+			$( window ).trigger('resize');
+			BG.Controls.$container.find('html').removeClass('zoomout dragging-section');
+			BG.Controls.$container.find('body').attr( 'contenteditable', 'true' );
+			BG.Controls.$menu.hide();
 		},
 		
 		enableFeatures : function () {
@@ -68,12 +82,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
+			$('.exit-row-dragging').on( 'click', self.exitSectionDrag );
 		},
 		
 		enableSectionDrag : function () {
 			self.$container.find('html').addClass('zoomout dragging-section');
 			self.$container.find('body').removeAttr( 'contenteditable' );
 			BG.Controls.$menu.addClass('section-dragging');
+			$('body').addClass('focus-on boldgrid-zoomout');
+			$( window ).trigger('resize');
 		},
 		
 		positionHandles : function() {

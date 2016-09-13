@@ -1095,7 +1095,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$interaction_container
 			.on( 'dragstart.draggable', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
 			.on( 'dragstart.draggable', 'img, a', self.drag_handlers.hide_tooltips )
-			.on( 'dragover.draggable', self.drag_handlers.iframe_over )
 			.on( 'drop.draggable', self.drag_handlers.drop )
 			.on( 'dragend.draggable', self.drag_handlers.end )
 			.on( 'dragleave.draggable', self.drag_handlers.leave_dragging )
@@ -1357,11 +1356,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.slide_in_place = function( $draged_element, $new_element ) {
 		var newOffset = $new_element.offset();
 		var dragOffset = $draged_element.offset();
-
-		$draged_element.animate( {
-			'top' : parseInt( $draged_element.css( 'top' ) ) + (newOffset.top - dragOffset.top),
-			'left' : parseInt( $draged_element.css( 'left' ) ) + (newOffset.left - dragOffset.left)
-		}, 0, self.drag_cleanup );
+		self.drag_cleanup();
 	};
 
 	/**
@@ -2354,32 +2349,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Moves the current drag to the correct cursor position.
-	 */
-	this.set_drag_to_cursor = function( event ) {
-
-		var offset_properties = {};
-
-		if ( self.$current_drag.IMHWPB.is_row ) {
-			offset_properties = {
-				'top' : event.originalEvent.pageY
-			};
-		} else if (  self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column == false ){
-			offset_properties = {
-				'left' : event.originalEvent.pageX
-			};
-		} else {
-			offset_properties = {
-				'top' : event.originalEvent.pageY,
-				'left' : event.originalEvent.pageX
-			};
-		}
-
-		self.$current_drag.offset( offset_properties );
-		self.$current_drag.show();
-	};
-
-	/**
 	 * Based on the window size, return the column type that is being used.
 	 */
 	this.determine_class_sizes = function() {
@@ -2982,21 +2951,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				
 			}, timeout_length );
 
-		},
-
-		/**
-		 * This event triggers as we drag over the selected elements In this
-		 * case its triggered on all dragging within the document (iframe if
-		 * used within tinyMCE).
-		 */
-		iframe_over : function( event ) {
-			// The following section is allows you to actually drag the element
-			// instead of using the drag image.
-			// self.valid_drag makes sure that the drag originated in from the current frame.
-			if ( self.dragImageSetting == 'actual' && self.$current_drag ) {
-				event.preventDefault();
-				self.set_drag_to_cursor( event );
-			}
 		},
 
 		over : function( event ) {

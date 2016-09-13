@@ -8,27 +8,6 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 	var self,
 		BG = BOLDGRID.EDITOR;
 	
-	
-	BG.CONTROLS.ExitSection = {
-		name : 'exit-section-drag',
-		tooltip : 'Exit Section Dragging',
-		iconClasses : 'genericon genericon-zoom',
-		selectors : [ '.dragging-section' ],
-		
-		init : function () {
-			BOLDGRID.EDITOR.Controls.registerControl( this );
-		},
-		
-		onMenuClick : function ( e ) {
-			var $this = $( this );
-			BG.Controls.$container.find('html').removeClass('zoomout dragging-section');
-			BG.Controls.$container.find('body').attr( 'contenteditable', 'true' );
-			BG.Controls.$menu.hide();
-		},
-	};
-		
-	BG.CONTROLS.ExitSection.init();
-
 	self = BG.DRAG.Section = {
 
 			currentDrag : false,
