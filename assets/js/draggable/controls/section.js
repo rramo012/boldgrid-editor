@@ -97,6 +97,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.$body.css( 'transform', '' );
 			$frameHtml.css( 'max-height', '' );
 			$('#content_ifr').css( 'max-height', '' );
+			
+			$('html, body').animate( {
+			     scrollTop: $("#postdivrich").offset().top
+			}, 0 );
 		},
 		
 		enableSectionDrag : function () {
