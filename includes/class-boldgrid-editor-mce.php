@@ -165,21 +165,6 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Styles that should be loaded before the theme styles
-	 */
-	public function prepend_editor_styles() {
-		add_editor_style(
-			plugins_url( '/assets/css/bootstrap.min.css',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
-
-		add_editor_style(
-			plugins_url( '/assets/js/draggable/css/before-theme.css',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
-
-		add_editor_style( '//fonts.googleapis.com/css?family=Open+Sans:600' );
-	}
-
-	/**
 	 * Add Extended valid elements
 	 *
 	 * @param array | string $init
@@ -216,6 +201,32 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
+	 * If a bootstrap css file does not already exists in the list of css files, enqueue it.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param array $styles
+	 *
+	 * @return string
+	 */
+	public function prepend_bootstrap_styles( $styles ) {
+
+		$boostrap_included = false;
+		foreach ( $styles as $style ) {
+			if ( -1 !== stripos( $style, 'bootstrap.min.css' ) ) {
+				$boostrap_included = true;
+			}
+		}
+
+		if ( ! $boostrap_included ) {
+			array_unshift( $styles, plugins_url( '/assets/css/bootstrap.min.css',
+				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+		}
+
+		return $styles;
+	}
+
+	/**
 	 * Add an additional query arg to each css file included in the tinymce iframe.
 	 * E.g. boldgrid-editor-version=1.0.0
 	 *
@@ -230,7 +241,12 @@ class Boldgrid_Editor_MCE {
 
 		$styles = explode( ',', $css );
 
-		// Add a couple of styles that need to append the iframe head
+		$styles = $this->prepend_bootstrap_styles( $styles );
+
+		array_unshift( $styles, plugins_url( '/assets/js/draggable/css/before-theme.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+		array_unshift( $styles, '//fonts.googleapis.com/css?family=Open+Sans:600' );
+
+		// Add a couple of styles that need to append the iframe head.
 		$styles[] = plugins_url( '/assets/css/genericons.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
@@ -245,7 +261,7 @@ class Boldgrid_Editor_MCE {
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		}
 
-		// Add Query Args
+		// Add Query Args.
 		$mce_css = array ();
 		foreach ( $styles as $editor_style ) {
 			$mce_css[] = add_query_arg( 'boldgrid-editor-version', BOLDGRID_EDITOR_VERSION,

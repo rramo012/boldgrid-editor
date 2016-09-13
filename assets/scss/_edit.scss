@@ -6,6 +6,15 @@
 	.bg-control-element {
 		outline: 2px dashed #f95b26 !important;
 	} 
+	
+	.fa:hover {
+        color: #f95b26 !important;
+	}
+	 
+	img,
+	.fa {
+	    cursor: pointer;
+	}
 }
 
 .section .selectize-dropdown-content {

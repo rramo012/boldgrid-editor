@@ -41,3 +41,13 @@
 	</div>
 </div>
 </script>
+<script type="text/html" id="tmpl-boldgrid-editor-zoom-tools">
+<div class='bg-zoom-controls'>
+<a class="exit-row-dragging"><span class="genericon genericon-unzoom unzoom-icon"></span> Exit Section Dragging</a>
+
+<div class='bg-zoom-slider'>
+	<p>Zoom</p>
+	<div class="slider"></div>
+</div>
+</div>
+</script>

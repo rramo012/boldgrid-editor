@@ -8,7 +8,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	var self,
 		BG = BOLDGRID.EDITOR; 
 
-	BOLDGRID.EDITOR.CONTROLS.Add = {
+	BG.CONTROLS.Add = {
 			
 		$element : null,
 

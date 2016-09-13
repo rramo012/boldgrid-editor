@@ -17,6 +17,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		$currentSection : [],
 			
 		init : function ( $container ) {
+			self.renderZoomTools();
 			self.$container = $container;
 			self.createHandles();
 			self.bindHandlers();
@@ -25,7 +26,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			// Update: If container exists in content, the user should be able to modify it.
 			// self.enableFeatures();
 		},
-		
 		enableFeatures : function () {
 			if ( false === BG.Controls.hasThemeFeature( 'variable-containers' ) ) {
 				self.$container.find('html').addClass('disabled-section-width');
@@ -64,9 +64,66 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="section-width"]', self.sectionWidth );
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
+			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
+			$('.exit-row-dragging').on( 'click', self.exitSectionDrag );
+			$( window ).on( 'resize', self.updateHtmlSize );
+		},
+		
+		updateHtmlSize : function () {
+			var rect = self.$container.$body[0].getBoundingClientRect(),
+				bodyHeight = rect.bottom - rect.top + 30;
+			self.$container.find('html').css( 'max-height', bodyHeight );
+			$('#content_ifr').css( 'max-height', bodyHeight );
+		},
+		
+		renderZoomTools : function () {
+			var template = wp.template('boldgrid-editor-zoom-tools');
+			$('#wp-content-editor-tools').append( template() );
+		},
+		
+		exitSectionDrag : function () {
+			var $body = $('body'), 
+				$window = $( window ),
+				$frameHtml = self.$container.find('html');
+			
+			$body.removeClass('focus-on boldgrid-zoomout');
+			$window.trigger('resize');
+			$frameHtml.removeClass('zoomout dragging-section');
+			self.$container.$body.attr( 'contenteditable', 'true' );
+			BG.Controls.$menu.hide();
+			self.$container.$body.css( 'transform', '' );
+			$frameHtml.css( 'max-height', '' );
+			$('#content_ifr').css( 'max-height', '' );
+		},
+		
+		enableSectionDrag : function () {
+			self.$container.find('html').addClass('zoomout dragging-section');
+			self.$container.$body.removeAttr( 'contenteditable' );
+			BG.Controls.$menu.addClass('section-dragging');
+			$('body').addClass('focus-on boldgrid-zoomout');
+			$( window ).trigger('resize').scrollTop(0);
+			self.updateHtmlSize();
+			
+			$( '.bg-zoom-controls .slider' ).slider( {
+				min : 1,
+				max : 6,
+				value : 3,
+				range : 'max',
+				slide : function( event, ui ) {
+					self.removeZoomClasses();
+					self.$container.$body.addClass( 'zoom-scale-' + ui.value );
+					self.updateHtmlSize();
+				},
+			} );
+		},
+		
+		removeZoomClasses : function () {
+			self.$container.$body.removeClass ( function ( index, css ) {
+				return (css.match (/(^|\s)zoom-scale-\S+/g) || []).join(' ');
+			} );
 		},
 		
 		positionHandles : function() {
@@ -94,7 +151,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			self.$popover.css( {
 				'top' :  pos.bottom + 35,
-				'left' : '50%',
+				'left' : 'calc(50% - 38px)',
 				'transform' :  'translateX(-50%)'
 			} );
 			

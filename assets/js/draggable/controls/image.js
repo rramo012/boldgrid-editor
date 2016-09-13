@@ -63,7 +63,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
 					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
-
 				
 				// Remove Classes.
 				$target.removeClass ( function ( index, css ) {

@@ -39,6 +39,30 @@
 		box-shadow: 0px 0px 49px -12px black inset;
 	}
 }
+@mixin slider( ) {
+    height: 3px;
+    border-radius: 0;
+    width: 75px;
+    border-color: #cecece;
+    margin: 16px;
+    margin-top: 10px;
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+    
+    .ui-slider-handle {
+	    left: 0%;
+	    margin-top: -5px;
+	    border: 3px;
+	    height: 1em;
+	    width: 1em;
+	    border-radius: 0px;
+	    background: $hover-color;
+	    top: -1px;
+	    cursor: pointer;
+	    border-radius: 50%;
+	}
+}
 
 .color-panel,
 .editor-panel {
@@ -178,28 +202,7 @@
 	}
 	
 	.ui-slider-horizontal {
-	    height: 3px;
-	    border-radius: 0;
-	    width: 75px;
-	    border-color: #cecece;
-	    margin: 16px;
-	    margin-top: 10px;
-	    display: inline-block;
-	    float: right;
-	    cursor: pointer;
-	    
-	    .ui-slider-handle {
-		    left: 0%;
-		    margin-top: -5px;
-		    border: 3px;
-		    height: 1em;
-		    width: 1em;
-		    border-radius: 0px;
-		    background: $hover-color;
-		    top: -1px;
-		    cursor: pointer;
-		    border-radius: 50%;
-		}
+		@include slider();
 	}
 	
 	.inline-color-controls {

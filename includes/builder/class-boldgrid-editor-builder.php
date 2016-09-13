@@ -200,18 +200,9 @@ HTML;
 	public function save_container_meta( $post_id, $post ) {
 		$post_id = ! empty( $post_id ) ? $post_id : null;
 
-		// If this is a revision, get real post ID.
-		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
-			$post_id = $parent_id;
-		}
-
 		$status = isset( $_POST['boldgrid-in-page-containers'] ) ? intval( $_POST['boldgrid-in-page-containers'] ) : null;
-		if ( $post_id && false === is_null( $status ) ) {
-			$post_meta = get_post_meta( $post_id );
-			if ( ! empty( $post_meta ) ) {
-				// Save post meta.
-				update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
-			}
+		if ( $post_id && false === is_null( $status ) && ! wp_is_post_revision( $post_id ) ) {
+			$update = update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
 		}
 	}
 
@@ -267,6 +258,7 @@ HTML;
 		$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
 		self::update_editor_option( 'custom_colors', $custom_colors );
 	}
+
 
 	public static function get_page_container() {
 		global $boldgrid_theme_framework;
