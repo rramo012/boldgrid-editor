@@ -127,12 +127,16 @@ class Boldgrid_Editor_Builder {
 	 * @return array Configurations.
 	 */
 	public static function get_background_data() {
+		// Grab the first 30 gradients.
+		$gradients = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
+		$gradients = array_slice( $gradients, 0, 20 );
+
 		return array(
 			'color' => array(),
 			'image' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
 			'pattern' => self::get_patterns(),
 			//'default_gradients' =>  json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
-			'gradients' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) )
+			'gradients' => $gradients
 		);
 	}
 

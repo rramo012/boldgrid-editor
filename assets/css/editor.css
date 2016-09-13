@@ -382,9 +382,6 @@
   overflow: hidden;
   border-radius: 0 0 5px 5px; }
 
-.editor-panel[data-type="background"] .panel-body ul {
-  padding-bottom: 40px; }
-
 .editor-panel[data-type="background"] .panel-footer {
   bottom: -59px; }
 
@@ -397,6 +394,9 @@
 .editor-panel[data-type="background"] .current-selection[data-type="pattern"] {
   background-size: initial;
   background-repeat: repeat; }
+
+.editor-panel[data-type="background"] .current-selection[data-type="color"] .settings {
+  display: none !important; }
 
 .editor-panel[data-type="background"] .current-selection[data-type] .settings {
   display: block; }
@@ -479,6 +479,21 @@
 .editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .size {
   display: block; }
 
+.editor-panel[data-type="background"] .add-image-controls {
+  padding: 0;
+  background-color: #32373c;
+  color: #fff; }
+
+.editor-panel[data-type="background"] .add-image-controls:hover {
+  background-color: #555d66; }
+
+.editor-panel[data-type="background"] .add-image-controls a {
+  text-decoration: none;
+  position: relative;
+  top: 17px;
+  color: #fff;
+  font-size: 15px; }
+
 .editor-panel[data-type="background"] .presets {
   padding: 0 20px; }
 
@@ -499,6 +514,12 @@
   margin-bottom: 17px;
   margin-left: 0;
   margin-right: 0; }
+
+.editor-panel[data-type="background"] .presets .add-image-controls {
+  display: none; }
+
+.editor-panel[data-type="background"] .presets[data-filter="image"] .add-image-controls {
+  display: block; }
 
 .editor-panel[data-type="background"] .presets h4 {
   font-weight: normal;
@@ -549,9 +570,6 @@
 
 .editor-panel[data-type="background"] .panel-footer .customize-design {
   display: none; }
-
-.editor-panel[data-type="background"] .panel-footer .add-media {
-  display: inline; }
 
 /*************** Change Image Border Panel ********************/
 .editor-panel[data-type="image"] .panel-selection {

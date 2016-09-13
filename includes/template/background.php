@@ -21,6 +21,9 @@
 				<h4>Sample Backgrounds</h4>
 			</div>
 			<ul>
+			<li data-type="image" class='section add-image-controls'>
+				<a class="add-media"><span class="dashicons dashicons-images-alt"></span> Add Media</a>
+			</li>
 			<# _.each( data.images, function ( typeSet, type ) { #>
 				<# _.each( typeSet, function ( image, index ) { #>
 				<# if( 'color' == type ) { #>
@@ -70,8 +73,8 @@
 					<a class="default-color" href="#">Reset to Default</a>
 				</div>
 			</div>
-			<div class='vertical-position section'>
-				<h4>Verticle Position (%)</h4>
+			<div data-tooltip-id='vertical-position' class='vertical-position section'>
+				<h4>Vertical Position (%)</h4>
 				<div class="slider"></div>
 				<span class='value'></span>
 			</div>

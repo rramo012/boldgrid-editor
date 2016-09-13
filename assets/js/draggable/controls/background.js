@@ -33,46 +33,49 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel : {
 			title : 'Section Background',
-			height : '500px',
+			height : '600px',
 			width : '300px',
 			scrollTarget : '.presets',
-			sizeOffset : -170,
-			includeFooter : true,
-			customizeCallback : function () {
-				event.preventDefault();
+			sizeOffset : -230,
+		},
+
+		onMenuClick : function ( e ) {
+			self.openPanel();
+		},
+		
+		_setupAddImage : function () {
+
+			BG.Panel.$element.on( 'click', '.background-design .add-image-controls', function () {
 				// If the media frame already exists, reopen it.
 				if ( self.uploadFrame ) {
 					self.uploadFrame.open();
 					return;
 				}
-
+	
 				// Create a new media frame.
 				self.uploadFrame = wp.media({
 					title: 'Select Background Image',
+					library : { type : 'image' },
 					button: {
 						text: 'Use this media'
 					},
 					 // Set to true to allow multiple files to be selected.
 					multiple: false
 				} );
-
+	
 				// When an image is selected in the media frame.
 				self.uploadFrame.on( 'select', function() {
 					// Get media attachment details from the frame state.
 					var attachment = self.uploadFrame.state().get('selection').first().toJSON();
-
+	
 					// Set As current selection and apply to background.
 					self.setImageBackground( attachment.url );
 					self.setImageSelection( 'image' );
 				} );
-
+	
 				// Finally, open the modal on click.
 				self.uploadFrame.open();
-			},
-		},
-
-		onMenuClick : function ( e ) {
-			self.openPanel();
+			} );
 		},
 		
 		/**
@@ -96,6 +99,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupScrollEffects();
 			self._setupGradientDirection();
 			self._setupCustomization();
+			self._setupAddImage();
 		},
 
 		_setupBackgroundColor : function () {
@@ -163,7 +167,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value = BoldgridEditor.colors[ value - 1 ];
 				}
 
-				$target.attr( 'data-bg-overlaycolor', self.getOverlayImage( value ) );
+				$target.attr( 'data-bg-overlaycolor', value );
 
 				self.updateBackgroundImage();
 			} );
@@ -175,7 +179,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				image = $target.attr( 'data-image-url' );
 			
 			if ( overlay && image ) {
-				BG.Controls.addStyle( $target, 'background-image' , overlay  + ', url("'+ image + '")' );
+				BG.Controls.addStyle( $target, 'background-image' , self.getOverlayImage( overlay ) + ', url("'+ image + '")' );
 			} else if ( image ) {
 				BG.Controls.addStyle( $target, 'background-image' , 'url("'+ image + '")' );
 			}
@@ -279,7 +283,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.$element.find('.background-design .customize').hide();
 				self.preselectBackground();
 				panel.scrollToSelected();
-				panel.showFooter();
 			} );
 		},
 
@@ -292,6 +295,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					type = $this.data('type'),
 					label = $this.data('label'),
+					$currentSelection = panel.$element.find('.current-selection'),
 					$presetsBackgroundColor = panel.$element.find('.presets .background-color.section');
 
 				panel.$element.find('.filter').removeClass('selected');
@@ -303,6 +307,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 
 				panel.$element.find( '.presets .title > *' ).text( label );
+				panel.$element.find('.presets').attr( 'data-filter', type );
+				$currentSelection.attr( 'data-filter', type );
 				
 				if ( type.length && -1 !== type.indexOf('image') ) {
 					$presetsBackgroundColor.hide();
@@ -460,7 +466,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find('.preset-wrapper').attr('data-type', BG.Panel.$element.find('.current-selection').attr('data-type') );
 			self._initSliders();
 			self.selectDefaults();
-			BG.Panel.hideFooter();
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 		},
 		
@@ -469,6 +474,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setSize();
 			self.setDefaultDirection();
 			self.setDefaultBackgroundColors();
+			self.setDefaultOverlayColor();
+		},
+		
+		setDefaultOverlayColor : function () {
+			var $target = BG.Menu.getTarget( self ),
+				overlayColor = $target.attr( 'data-bg-overlaycolor' );
+			
+			if ( overlayColor ) {
+				BG.Panel.$element.find('.overlay-color label')
+					.css( 'background-color', overlayColor );
+			}
+			
 		},
 		
 		setSize : function () {

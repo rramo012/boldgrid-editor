@@ -120,6 +120,7 @@
 		"[data-tooltip-id='text-effect']" : "Use Effects to add shadows and make text more pronounced.",
 		"[data-tooltip-id='box-padding']" : "Padding is used to create space around your content, inside your text background.",
 		"[data-tooltip-id='box-margin']" : "Margin is used to create space around your background, outside your text background.",
-		"[data-tooltip-id='spacing']" : "Letter Spacing will change the distance between characters. Line Spacing changes the distances between lines."
+		"[data-tooltip-id='spacing']" : "Letter Spacing will change the distance between characters. Line Spacing changes the distances between lines.",
+		"[data-tooltip-id='vertical-position']" : "Vertical Position will move your background images up and down. Note: If your image already spans the full height of a section, no changes will occur."
 	}
 }
