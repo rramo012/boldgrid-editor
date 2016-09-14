@@ -63,15 +63,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		initScroll : function ( control ) {
-			var target = self.getScrollTarget(),
-				sizeOffset = -66;
+			var sizeOffset = -66;
 			
 			if ( control.panel && control.panel.sizeOffset ) {
 				sizeOffset = control.panel.sizeOffset;
 			}
 
-			$(".panel-body").slimScroll({destroy: true}).attr('style', '');
-			this.$element.find( target ).slimScroll( {
+			$( '.panel-body' ).slimScroll( { destroy : true } ).attr( 'style', '' );
+			this.$element.find( self.getScrollTarget() ).slimScroll( {
 			    color: '#32373c',
 			    size: '8px',
 			    height: parseInt( control.panel.height ) + sizeOffset,
@@ -271,6 +270,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.hideFooter();
 			}
 		},
+		
+		collapseSelection : function () {
+			if ( self.currentControl.name != 'icon' ) {
+				tinyMCE.activeEditor.selection.collapse( false );
+			}
+		},
 
 		/**
 		 * Open a panel for a control
@@ -294,6 +299,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.show();
 			this.initScroll( control );
 			this.scrollToSelected();
+			this.collapseSelection();
 			
 			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
 			

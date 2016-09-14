@@ -4,7 +4,7 @@
 			<div title="Move" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button">
 	 			<span class="genericon genericon-move" aria-hidden="true"></span>
 			</div>
-			<div title="Move Sections" contenteditable="false" class="move-sections no-select-imhwpb draggable-button">
+			<div title="Drag Sections" contenteditable="false" class="move-sections no-select-imhwpb draggable-button">
 	 			<span class="genericon genericon-unzoom" aria-hidden="true"></span>
 			</div>
 			<div class="popover-menu-imhwpb hidden">
@@ -17,7 +17,7 @@
 					<li class="no-select-imhwpb action-list" data-action="move-down">Move Down</li>
 				</ul>
 			</div>
-			<div title="Modify" class="context-menu-imhwpb draggable-button">
+			<div title="Edit Section" class="context-menu-imhwpb draggable-button">
 				<span class="genericon genericon-menu" aria-hidden="true"></span>
 			</div>
 		</span>

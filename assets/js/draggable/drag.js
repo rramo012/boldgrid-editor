@@ -628,7 +628,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'unselectable="on" class="draggable-tools-imhwpb">'+
 			'<span class="popover-imhwpb ' +
 			self.type_popover_classes[ type ] + '">' +
-			'<div title="Move ' + tooltipTitle + '" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '+
+			'<div title="Drag ' + tooltipTitle + '" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> '+
 			'<span  class="genericon genericon-move" aria-hidden="true"> </span>' +
 			'</div>';
 
@@ -654,7 +654,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			popover += '</ul></div>';
 
-			popover += '<div title="Modify" class="context-menu-imhwpb draggable-button"> ' +
+			popover += '<div title="Edit ' + tooltipTitle + '" class="context-menu-imhwpb draggable-button"> ' +
 				'<span  class="genericon genericon-menu" aria-hidden="true"></span>' +
 				'</div>';
 

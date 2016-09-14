@@ -375,7 +375,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		activateFilter : function ( type ) {
-			var filterFound = false;
+			var backgroundImageProp,
+				filterFound = false,
+				$target = BG.Menu.getTarget( self );
 
 			BG.Panel.$element.find( '.current-selection .filter').each( function () {
 				var $this = $( this ),
@@ -388,7 +390,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 				
 			} );
-
+			
+			if ( ! filterFound && ! type ) {
+				backgroundImageProp = $target.css('background-image');
+				if ( backgroundImageProp ) {
+					// Image filter selection hack, trouble selecting array data type.
+					BG.Panel.$element.find( '.filter[data-type]:first-of-type' ).click();
+					filterFound = true;
+				}
+			}
+			
 			if ( false === filterFound ) {
 				BG.Panel.$element.find( '.filter[data-default="1"]' ).click();
 			}
@@ -479,11 +490,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		setDefaultOverlayColor : function () {
 			var $target = BG.Menu.getTarget( self ),
+				$overlayColorSection = BG.Panel.$element.find('.overlay-color'),
 				overlayColor = $target.attr( 'data-bg-overlaycolor' );
 			
 			if ( overlayColor ) {
-				BG.Panel.$element.find('.overlay-color label')
-					.css( 'background-color', overlayColor );
+				$overlayColorSection.find('input').attr( 'value', overlayColor );
 			}
 			
 		},

@@ -73,8 +73,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		updateHtmlSize : function () {
+			
+			if ( ! $('body').hasClass('boldgrid-zoomout') ) {
+				return;
+			}
+			
 			var rect = self.$container.$body[0].getBoundingClientRect(),
-				bodyHeight = rect.bottom - rect.top + 30;
+				bodyHeight = rect.bottom - rect.top + 50;
+			
 			self.$container.find('html').css( 'max-height', bodyHeight );
 			$('#content_ifr').css( 'max-height', bodyHeight );
 		},

@@ -28,8 +28,8 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		},
 		createHandles : function () {
 
-			self.$topHandle = $( '<span class="draghandle top" data-setting="padding-top"></span>' );
-			self.$bottomHandle = $( '<span class="draghandle bottom" data-setting="padding-bottom"></span>' );
+			self.$topHandle = $( '<span class="draghandle top" title="Drag Resize Row" data-setting="padding-top"></span>' );
+			self.$bottomHandle = $( '<span class="draghandle bottom" title="Drag Resize Row" data-setting="padding-bottom"></span>' );
 
 			$.each( [ self.$topHandle, self.$bottomHandle ], function () {
 				this.css( {

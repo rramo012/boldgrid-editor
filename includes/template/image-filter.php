@@ -26,6 +26,6 @@
 	<div class='preview'>
 		<img src="{{data.fullSrc}}">
 		<span class='loading'><span class="spinner is-active"></span></span>
-		<a class='button button-primary insert-image'>Insert Image</a>
+		<a class='panel-button insert-image'>Insert Modified Image</a>
 	</div>
 </script>

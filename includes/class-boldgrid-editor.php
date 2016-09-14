@@ -179,16 +179,13 @@ class Boldgrid_Editor {
 			wp_enqueue_style( 'boldgrid-buttons',
 				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-			wp_enqueue_script( 'boldgrid-render-fonts',
-					plugins_url( '/assets/js/render-fonts.js', $plugin_file ),
-					array (), BOLDGRID_EDITOR_VERSION, true );
-
 			wp_enqueue_script(
 					'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
-					array( 'jquery', 'boldgrid-render-fonts' ),BOLDGRID_EDITOR_VERSION, true );
+					array( 'jquery', 'boldgrid-render-fonts' ), BOLDGRID_EDITOR_VERSION, true );
 
-			// TODO: update this to local. This is temporary.
-			wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+			wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7'  );
+
+			wp_enqueue_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
 		}, 99 );
 
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
@@ -309,7 +306,7 @@ class Boldgrid_Editor {
 			$boldgrid_editor_crop->add_hooks();
 		} else {
 			$this->frontEndHooks();
-			//add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
+			add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
 		}
 	}
 

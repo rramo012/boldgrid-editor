@@ -22,7 +22,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel : {
 			title : 'Change Icon',
-			height : '400px',
+			height : '500px',
 			width : '335px',
 			includeFooter : true,
 			customizeLeaveCallback : true,
@@ -69,8 +69,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		collapseSelection : function () {
+			return;
+			/*
 			tinyMCE.activeEditor.selection.collapse( false );
-			tinymce.activeEditor.execCommand( 'wp_link_cancel' );
+			tinymce.activeEditor.execCommand( 'wp_link_cancel' );*/
 		},
 		
 		openCustomizer : function () {
@@ -113,9 +115,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		highlightElement : function () {
+			return;/*
 			var $el = BG.Menu.getTarget( self );
 			tinymce.activeEditor.selection.select( $el[0] );
-			tinymce.activeEditor.execCommand( 'WP_Link' );
+			tinymce.activeEditor.execCommand( 'WP_Link' );*/
 		},
 
 		onMenuClick : function () {

@@ -36,37 +36,41 @@ class Boldgrid_Editor_Builder_Fonts {
 	public function parse_fonts( $html ) {
 		$fonts = array();
 
-
 		$dom = new DOMDocument();
 
-		$xml->loadXml( $html );
+		@$dom->loadHTML( $html );
 
-		@$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
-
-		$xpath = new DOMXPath( $xml );
-		$val = $xpath->query( '//row[@name="title"]' )->item(0)->nodeValue;
+		$xpath = new DOMXPath( $dom );
 
 		// traverse all results
-		foreach ($xpath->query('//row[@name="title"]') as $rowNode) {
-			echo $rowNode->nodeValue; // will be 'this item'
-		}
-
-
-		// traverse all results
-		foreach ($xpath->query('//row[@name="title"]') as $rowNode) {
-			echo $rowNode->nodeValue; // will be 'this item'
+		foreach ( $xpath->query( "//*[@data-font-family]" ) as $rowNode ) {
+			$fonts[] = $rowNode->getAttribute('data-font-family');
 		}
 
 		return $fonts;
 	}
 
+	public function create_font_url( $fonts ) {
+		$base_url = 'https://fonts.googleapis.com/css?';
+		$href = implode( '|', $fonts );
+		$href = $base_url . http_build_query( array( 'family' => $href ) );
+		return sprintf( '<link id="boldgrid-google-fonts" href="%s" rel="stylesheet">', $href );
+	}
+
 	public function render_page_fonts() {
 		global $post;
 
+		$head_link = '';
 		if ( ! empty( $post->post_content ) ) {
 			$fonts = $this->parse_fonts( $post->post_content );
-			var_dump( $fonts );die;
+			$head_link = $this->create_font_url( $fonts );
 		}
+
+		if ( $head_link ) {
+			echo $head_link;
+		}
+
+		return $head_link;
 	}
 
 	public function thememod_class_name( $theme_mod ) {

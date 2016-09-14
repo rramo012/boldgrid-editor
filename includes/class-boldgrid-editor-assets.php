@@ -301,7 +301,6 @@ class Boldgrid_Editor_Assets {
 		wp_register_style( 'editor-css-imhwpb',
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
-
 		$button_file = get_stylesheet_directory() . '/css/buttons.css';
 		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() && file_exists( $button_file ) ) {
 			wp_enqueue_style( 'boldgrid-buttons',
@@ -315,11 +314,12 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/css/font-family-controls.min.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
-		wp_register_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+
+		wp_register_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
 	}
 
 	public function add_editor_styles() {
 		//@Todo: make sure this doesnt conflict with framework.
-		add_editor_style( '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+		add_editor_style( plugins_url( '/assets/css/font-awesome.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
 	}
 }

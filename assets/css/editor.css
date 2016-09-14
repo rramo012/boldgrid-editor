@@ -316,6 +316,9 @@
 .editor-panel[data-type="icon"] .panel-selection.selected .fa {
   color: white; }
 
+.editor-panel[data-type="icon"] .ui-slider-horizontal {
+  width: 65%; }
+
 /*************** Background Panel ********************/
 .editor-panel[data-type="box"].editor-panel,
 .editor-panel[data-type="box"] .panel-body {
@@ -568,6 +571,10 @@
 .editor-panel[data-type="background"] .background-design .customize .back {
   margin-bottom: 0px; }
 
+.editor-panel[data-type="background"] .background-design .customize .overlay-color {
+  padding-top: 8px;
+  padding-bottom: 8px; }
+
 .editor-panel[data-type="background"] .panel-footer .customize-design {
   display: none; }
 
@@ -743,6 +750,7 @@
 .editor-panel[data-type="image-filter"] .panel-body .preview {
   text-align: center;
   margin-top: 4px;
+  height: 95%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%); }
@@ -750,12 +758,14 @@
 .editor-panel[data-type="image-filter"] .panel-body .preview img,
 .editor-panel[data-type="image-filter"] .panel-body .preview canvas {
   max-width: 85%;
+  max-height: 85%;
   text-align: center;
   border-radius: 5px; }
 
-.editor-panel[data-type="image-filter"] .panel-body .preview .button {
-  display: table;
-  margin: 15px auto; }
+.editor-panel[data-type="image-filter"] .panel-body .preview .panel-button {
+  display: inline-block;
+  margin: 15px auto;
+  cursor: pointer; }
 
 .editor-panel[data-type="image-filter"] .panel-body .preview .loading {
   display: none;
@@ -1084,6 +1094,7 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout #wp-content-media-buttons,
 .boldgrid-zoomout .wp-editor-tabs,
 .boldgrid-zoomout #postbox-container-2,
+.boldgrid-zoomout .update-nag,
 .boldgrid-zoomout #titlediv {
   display: none !important; }
 

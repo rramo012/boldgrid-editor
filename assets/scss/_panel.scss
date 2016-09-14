@@ -344,7 +344,9 @@
 	.panel-selection.selected .fa {
 	    color: white;
 	}
-	
+	.ui-slider-horizontal {
+	    width: 65%;
+	}
 }
 /*************** Background Panel ********************/
 .editor-panel[data-type="box"] {
@@ -605,6 +607,11 @@
 		.back {
 			margin-bottom: 0px;
 		}
+		
+		.overlay-color {
+		    padding-top: 8px;
+            padding-bottom: 8px;
+		}
 	}
 	
 	.panel-footer {
@@ -790,6 +797,7 @@
     	.preview {
 		    text-align: center;
 		    margin-top: 4px;
+		    height: 95%;
 		    position: absolute;
 		    top: 50%;
 		    transform: translateY(-50%);
@@ -797,14 +805,16 @@
 		    img,
 		    canvas {
 			    max-width: 85%;
+			    max-height: 85%;
 			    text-align: center;
 			    border-radius: 5px;
 		    }
 	    
-		    .button {
-			    display: table;
-			    margin: 15px auto;
-		    }
+            .panel-button {
+                display: inline-block;
+                margin: 15px auto;
+                cursor: pointer;
+            }
 		    
 		    .loading {
 		    	display: none;
