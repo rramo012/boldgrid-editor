@@ -17,7 +17,7 @@ var config = {
 };
 
 // Compile sass files.
-gulp.task( 'scssCompile', function(  ) {
+gulp.task( 'sass', function(  ) {
 	  gulp.src( [
 	    config.dist + '/assets/scss/**/*.scss'] )
 	    .pipe( sass( {
@@ -92,9 +92,9 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 
 // Build.
 gulp.task( 'default', 
-	[ 'scssCompile', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
+	[ 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
 );
 
 gulp.task('watch', function() {
-	gulp.watch( config.src + 'assets/scss/**/*', [ 'scssCompile' ] );
+	gulp.watch( config.src + 'assets/scss/**/*', [ 'sass' ] );
 } );
