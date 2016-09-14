@@ -18,7 +18,7 @@ if ( false === defined( 'WPINC' ) ) {
 
 // Define Editor version.
 if ( false === defined( 'BOLDGRID_EDITOR_VERSION' ) ) {
-	define( 'BOLDGRID_EDITOR_VERSION', '1.2.6' );
+	define( 'BOLDGRID_EDITOR_VERSION', implode( get_file_data( __FILE__, array( 'Version' ), 'plugin' ) ) );
 }
 
 // Define Editor path.
