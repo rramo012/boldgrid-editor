@@ -3,6 +3,8 @@
  * FontAwesome
  * jquery-stellar
  * components.css
+ * bootstrap.min.css
+ * font-family-controls.min.css
  */
 
 var gulp    = require( 'gulp' ),
@@ -15,12 +17,15 @@ var gulp    = require( 'gulp' ),
     concat = require('gulp-concat'),
     phpcbf = require('gulp-phpcbf'),
     jshint   = require( 'gulp-jshint' ),
+    inject = require('gulp-inject-string'),
     sequence = require('run-sequence'),
     stylish = require('jshint-stylish'),
+    fs = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
 	bower    = require( 'gulp-bower' ),
 	phpcs = require('gulp-phpcs'),
 	gutil = require('gutil'),
+	readme = require('gulp-readme-to-markdown'),
 	pump = require('pump');
 
 // Configs.
@@ -38,8 +43,29 @@ gulp.task('bower', function () {
 	  return bower().pipe( gulp.dest( config.bower ) );
 });
 
+gulp.task('readme', function() {
+	
+	var badges = [
+	   '[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=master)](https://travis-ci.org/BoldGrid/boldgrid-editor)', 
+	   '[![License](https://img.shields.io/badge/license-GPL--2.0%2B-orange.svg)](https://raw.githubusercontent.com/BoldGrid/boldgrid-editor/master/LICENSE)', 
+	   '[![PHP Version](https://img.shields.io/badge/PHP-5.3%2B-blue.svg)](https://php.net)', 
+    ];
+	
+	gulp.src( [ 'readme.txt' ] )
+		.pipe(readme())
+		.pipe( inject.prepend( badges.join('\n') + '\n\n' ) )
+		.pipe(gulp.dest('.'));
+});
+
+gulp.task( 'add-git-badges', function ( cb ) {
+	return gulp.src( './tets.md/README.md' )
+	    .pipe( debug({title: 'Font Controls:'}) )
+		.pipe( inject.append('lkdgskldfjgl;skdfhglk;sdfjgl;ksfjdglkj') )
+		.pipe( gulp.dest('./tets.md/README.md') );
+} );
+
 gulp.task('phpcbf', function () {
-	  return gulp.src(['includes/builder/**/*.php', '!*/index.php'])
+	  return gulp.src(['includes/builder/**/*.php', '!*/**/index.php'])
 	  .pipe(phpcbf({
 	    bin: 'phpcbf',
         standard: 'WordPress',
@@ -81,6 +107,18 @@ gulp.task('boldgrid-components', function () {
    ] )
    .pipe( debug({title: 'BoldGrid Components:'}) )
    .pipe( gulp.dest( config.cssDest ) );
+	
+	gulp.src( [
+	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/bootstrap/bootstrap.min.css'
+	] )
+	.pipe( debug({title: 'Bootstrap:'}) )
+	.pipe( gulp.dest( config.cssDest ) );
+	
+	gulp.src( [
+	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
+	] )
+    .pipe( debug({title: 'Font Controls:'}) )
+    .pipe( gulp.dest( config.cssDest ) );
 });
 
 gulp.task('copy-parallax-js', function () {
@@ -169,8 +207,8 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 // Build.
 gulp.task( 'default', function ( cb ) {
 	sequence (
-		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcs' ],
-		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
+		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcbf', 'readme' ],
+		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js', 'phpcs' ],
 		cb
 	);
 });
