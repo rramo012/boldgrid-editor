@@ -293,7 +293,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
-		 * 
+		 * Bind the default behavior that occurs when the user clicks the customize button.
 		 *
 		 * @since 1.3
 		 */
@@ -313,6 +313,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 		
+		/**
+		 * Hide a panels customization area upon clicking the back button.
+		 * 
+		 * @since 1.3
+		 */
 		_setupCustomizeLeave : function () {
 			var panel = BG.Panel;
 
@@ -331,6 +336,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 		
+		/**
+		 * Show the panel footer if something is selected.
+		 * 
+		 * @since 1.3
+		 */
 		toggleFooter : function () {
 			if ( self.$element.find('.panel-body .selected').length ) {
 				self.showFooter();
@@ -339,6 +349,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 		},
 		
+		/**
+		 * Unselect the current area.
+		 * 
+		 * @since 1.3
+		 */
 		collapseSelection : function () {
 			if ( self.currentControl.name != 'icon' ) {
 				tinyMCE.activeEditor.selection.collapse( false );
@@ -346,7 +361,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
-		 * Open a panel for a control
+		 * Open the panel for a control.
+		 * 
+		 * @since 1.3
 		 */
 		open : function ( control ) {
 			var $target;

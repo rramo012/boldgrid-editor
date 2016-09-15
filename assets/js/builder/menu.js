@@ -10,10 +10,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	BOLDGRID.EDITOR.Menu = {
 
 		$element : null,
+		
 		$activeElement : null,
 
 		/**
-		 * Initialize the panel.
+		 * Initialize the menu control.
+		 * 
+		 * @since 1.2.7
+		 * @return jQuery $element.
 		 */
 		init : function () {
 
@@ -23,10 +27,23 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return this.$element;
 		},
 
+		/**
+		 * Get the target clicked on that corresponds to the menu item highlighted.
+		 * 
+		 * @since 1.2.7
+		 * @param BG.Control control.
+		 * @return jQuery
+		 */
 		getTarget : function ( control ) {
 			return this.$element.targetData[ control.name ];
 		},
 		
+		/**
+		 * Get the current element being modified.
+		 * 
+		 * @since 1.2.7
+		 * @return jQuery Element being modified.
+		 */
 		getCurrentTarget : function () {
 			
 			var $target;
@@ -43,11 +60,21 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return $target;
 		},
 
+		/**
+		 * Create the menu element.
+		 * 
+		 * @since 1.2.7
+		 */
 		create : function () {
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			$( '#' + tinymce.activeEditor.theme.panel._items[0]._id ).append( this.$element );
 		},
 
+		/**
+		 * Setup the ability to drag the menu.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupMenuDrag : function() {
 			this.$element.find( 'ul' ).draggable( {
 				containment: '#wp-content-editor-container',
@@ -57,6 +84,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 
+		/**
+		 * Create the list item for the registered control.
+		 * 
+		 * @since 1.2.7
+		 * @param BG.Control control.
+		 */
 		createListItem : function ( control ) {
 
 			var $dropdownUl,
@@ -83,6 +116,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '> ul' ).append( $li );
 		},
 
+
+		/**
+		 * Activate the passed control.
+		 * 
+		 * @since 1.2.7
+		 * @param BG.Control control.
+		 */
 		activateControl : function ( control ) {
 			self.deactivateControl();
 			this.$activeElement = BOLDGRID.EDITOR.Menu.$element
@@ -91,6 +131,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		},
 
+		/**
+		 * Deactivate the active element.
+		 * 
+		 * @since 1.2.7
+		 */
 		deactivateControl : function () {
 			if ( this.$activeElement ) {
 				this.$activeElement.removeClass( 'active' );
@@ -98,6 +143,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 		},
 
+		/**
+		 * Reactivate Menu.
+		 * 
+		 * @since 1.2.7
+		 */
 		reactivateMenu : function () {
 			var $panel = BOLDGRID.EDITOR.Panel.$element;
 			if ( this.$activeElement && $panel.is( ':visible' ) ) {

@@ -6,11 +6,48 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	var BG = BOLDGRID.EDITOR; 
 
 	BOLDGRID.EDITOR.Controls = {
+			
+		/**
+		 * @var jQuery $panel Panel DOM Element.
+		 * 
+		 * @since 1.2.7
+		 */
 		$panel : null,
+
+		/**
+		 * @var jQuery $menu Menu DOM Element.
+		 * 
+		 * @since 1.2.7
+		 */
 		$menu : null,
+		
+		/**
+		 * @var jQuery $colorControl Color Panel Element.
+		 * 
+		 * @since 1.2.7
+		 */
 		$colorControl : null,
+		
+		/**
+		 * @var array controls All registered controls.
+		 * 
+		 * @since 1.2.7
+		 */
 		controls : [],
+		
+		/**
+		 * @var jQuery $container tinymce iFrame Element.
+		 * 
+		 * @since 1.2.7
+		 */
 		$container : null,
+		
+		/**
+		 * Initialize all controls for the builder.
+		 * This is the primary file and function for the builder directory.
+		 * 
+		 * @since 1.2.7
+		 */
 		init: function ( $container ) {
 			this.$container = $container;
 
@@ -25,7 +62,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// Init Color Control.
 			this.colorControl = BOLDGRID.EDITOR.CONTROLS.Color.init();
 
-			this.bindEvents();
+			this.onEditibleClick();
 
 			this.setupSliders();
 
@@ -37,15 +74,39 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 		},
 		
+		/**
+		 * Check if the theme has the passed feature.
+		 * 
+		 * @since 1.2.7
+		 * @param string feature.
+		 * @return bool.
+		 */
 		hasThemeFeature : function ( feature ) {
 			return -1 !== BoldgridEditor.builder_config.theme_features.indexOf( feature );
 		},
 		
+		/**
+		 * Add inline style to a element in the tinymce DOM. Needs to wrap dom.Style to work in tinymce.
+		 * 
+		 * @since 1.2.7
+		 * 
+		 * @param jQuery element.
+		 * @param string property.
+		 * @param string value.
+		 */
 		addStyle : function ( element, property, value ) {
 			element.css( property, value );
 			tinymce.activeEditor.dom.setStyle( element, property, value );
 		},
 
+		/**
+		 * Setup general slide behavior within the panel. Update the displayed value when sliding.
+		 * 
+		 * @since 1.2.7
+		 * 
+		 * @param event.
+		 * @param ui.
+		 */
 		setupSliders : function () {
 			this.$panel.on( "slide", '.section .slider', function( event, ui ) {
 				var $this = $( this );
@@ -55,11 +116,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Add a control to the list of controls to be created.
+		 * 
+		 * @since 1.2.7
 		 */
 		registerControl : function ( control ) {
 			this.controls.push( control );
 		},
 		
+		/**
+		 * Get the tinymce editor instance.
+		 * 
+		 * @since 1.2.7 
+		 * @return IMHWPB.WP_MCE_Draggable.
+		 */
 		editorMceInstance : function () {
 			var instance = false;
 			
@@ -70,15 +139,20 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return instance;
 		},
 
-		bindEvents : function () {
-			this.onEditibleClick();
-		},
-		
+		/**
+		 * Clear menu items storage array.
+		 * 
+		 * @since 1.2.7
+		 */
 		clearMenuItems : function () {
 			this.$menu.items = [];
-
 		},
 
+		/**
+		 * Bind event for clicking on the iFrame body.
+		 * 
+		 * @since 1.2.7
+		 */
 		onEditibleClick : function () {
 			var self = this;
 
@@ -110,7 +184,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 		
 		/**
-		 * If a control is open and the coresponding menu item is not present
+		 * If a control is open and the corresponding menu item is not present.
+		 * 
+		 * @since 1.2.7
 		 */
 		_closeOpenControl : function () {
 			if ( BG.Panel.currentControl && -1 === this.$menu.items.indexOf( BG.Panel.currentControl.name ) ) {
@@ -120,6 +196,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Setup Controls.
+		 * 
+		 * @since 1.2.7
 		 */
 		setupControls : function () {
 			var self = this;
@@ -148,6 +226,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			BOLDGRID.EDITOR.CONTROLS.Section.init( self.$container );
 		},
 
+		/**
+		 * Setup a single control.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupControl : function ( control ) {
 			this.bindControlHandler( control );
 			BOLDGRID.EDITOR.Menu.createListItem( control );
@@ -157,6 +240,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 		},
 
+		/**
+		 * Bind Event: Clicking on an elements selectors.
+		 * 
+		 * @since 1.2.7
+		 */
 		bindControlHandler : function ( control ) {
 			var self = this;
 
@@ -209,7 +297,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// When the user clicks on a menu item, perform the corresponding action.
 			this.$menu.on( 'click', '[data-action="menu-' + control.name + '"]', control.onMenuClick );
 		}
-
 	};
 
 } )( jQuery );
