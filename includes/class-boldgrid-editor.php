@@ -251,7 +251,6 @@ class Boldgrid_Editor {
 
 			// Add ?boldgrid-editor-version=$version_number to each added file.
 			add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );
-			add_action( 'admin_init', array ( $boldgrid_editor_assets, 'add_editor_styles' ) );
 		}
 
 		if ( $edit_post_page || isset( $wp_customize ) ) {

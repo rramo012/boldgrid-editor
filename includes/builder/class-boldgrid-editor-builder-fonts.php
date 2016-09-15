@@ -25,7 +25,7 @@ class Boldgrid_Editor_Builder_Fonts {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param string $html
+	 * @param string $html Page HTML.
 	 *
 	 * @return array Fonts being used.
 	 */
@@ -42,7 +42,7 @@ class Boldgrid_Editor_Builder_Fonts {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param array $fonts
+	 * @param array $fonts Page HTML.
 	 *
 	 * @return string Font Url.
 	 */
@@ -55,7 +55,7 @@ class Boldgrid_Editor_Builder_Fonts {
 		$base_url = 'https://fonts.googleapis.com/css?';
 		$href = implode( '|', $fonts );
 		$href = $base_url . http_build_query( array( 'family' => $href ) );
-		return sprintf( '<link id="boldgrid-google-fonts" href="%s" rel="stylesheet">', $href );
+		return $href;
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Boldgrid_Editor_Builder_Fonts {
 		}
 
 		if ( $head_link ) {
-			echo $head_link;
+			wp_enqueue_style( 'boldgrid-editor-fonts', $head_link );
 		}
 
 		return $head_link;
@@ -88,7 +88,7 @@ class Boldgrid_Editor_Builder_Fonts {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param string $theme_mod.
+	 * @param string $theme_mod Theme Mod.
 	 *
 	 * @return string $class_name.
 	 */

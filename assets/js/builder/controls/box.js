@@ -547,7 +547,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$testElement = $this.clone();
 				
 				$testElement.css( 'display', 'none' );
-				$testElement.attr( 'style', BoldgridEditor.builder_config.components_used.box[ id ].style  )
+				$testElement.attr( 'style', BoldgridEditor.builder_config.components_used.box[ id ].style );
 				$body.append( $testElement );
 				$this.css( 'background-color', $testElement.css('background-color') );
 				$this.css( 'border-color', $testElement.css('border-color') );

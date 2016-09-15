@@ -39,7 +39,7 @@ gulp.task('bower', function () {
 });
 
 gulp.task('phpcbf', function () {
-	  return gulp.src(['includes/builder/**/*.php'])
+	  return gulp.src(['includes/builder/**/*.php', '!*/index.php'])
 	  .pipe(phpcbf({
 	    bin: 'phpcbf',
         standard: 'WordPress',
@@ -50,7 +50,7 @@ gulp.task('phpcbf', function () {
 	});
 
 gulp.task('phpcs', function () {
-    return gulp.src( ['includes/builder/**/*.php'])
+    return gulp.src( ['includes/builder/**/*.php', '!*/**/index.php'])
         // Validate files using PHP Code Sniffer.
         .pipe(phpcs({
             bin: 'phpcs',
@@ -169,7 +169,7 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 // Build.
 gulp.task( 'default', function ( cb ) {
 	sequence (
-		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ],
+		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcs' ],
 		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
 		cb
 	);

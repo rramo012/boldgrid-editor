@@ -284,7 +284,7 @@ class Boldgrid_Editor_MCE {
 		$styles[] = plugins_url( '/assets/js/builder/css/draggable.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
-		$styles[] = plugins_url( self::get_minified_js('/assets/css/editor', '.css'),
+		$styles[] = plugins_url( Boldgrid_Editor_Assets::get_minified_js('/assets/css/editor', '.css'),
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		if ( ! Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {

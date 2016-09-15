@@ -93,18 +93,23 @@ class Boldgrid_Editor_Builder {
 	 */
 	public function print_scripts() {
 		$template_path = BOLDGRID_EDITOR_PATH . '/includes/template';
+		$paths = array();
 
-		print include $template_path . '/button.php';
-		print include $template_path . '/image.php';
-		print include $template_path . '/image-filter.php';
-		print include $template_path . '/color.php';
-		print include $template_path . '/font.php';
-		print include $template_path . '/background.php';
-		print include $template_path . '/box.php';
-		print include $template_path . '/panel.php';
-		print include $template_path . '/drag-handles.php';
-		print include $template_path . '/icon.php';
-		print include $template_path . '/generic-controls.php';
+		$paths[] = $template_path . '/button.php';
+		$paths[] = $template_path . '/image.php';
+		$paths[] = $template_path . '/image-filter.php';
+		$paths[] = $template_path . '/color.php';
+		$paths[] = $template_path . '/font.php';
+		$paths[] = $template_path . '/background.php';
+		$paths[] = $template_path . '/box.php';
+		$paths[] = $template_path . '/panel.php';
+		$paths[] = $template_path . '/drag-handles.php';
+		$paths[] = $template_path . '/icon.php';
+		$paths[] = $template_path . '/generic-controls.php';
+
+		foreach ( $paths as $path ) {
+			include $path;
+		}
 	}
 
 	/**
@@ -153,8 +158,9 @@ class Boldgrid_Editor_Builder {
 	 *
 	 * @since 1.2.3
 	 *
-	 * @param integer $post_id.
-	 * @return array $image_lookups
+	 * @param integer $post_id Post Id.
+	 *
+	 * @return array $image_lookups.
 	 */
 	public static function get_post_images( $post_id = null ) {
 		$request_post = ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : false;
@@ -191,12 +197,11 @@ class Boldgrid_Editor_Builder {
 	 */
 	public function post_inputs() {
 		$custom_colors = self::get_editor_option( 'custom_colors', array() );
-		$custom_colors_encoded = json_encode( $custom_colors );
-
-		echo <<<HTML
+		?>
 		<input style='display:none' type='checkbox' value='1' checked='checked' name='boldgrid-in-page-containers'>
-		<input style='display:none' type='checkbox' value='$custom_colors_encoded' checked='checked' name='boldgrid-custom-colors'>
-HTML;
+		<input style='display:none' type='checkbox' value='<?php echo json_encode( $custom_colors ); ?>'
+			checked='checked' name='boldgrid-custom-colors'>
+<?php
 	}
 
 	/**
@@ -212,8 +217,7 @@ HTML;
 	 */
 	public function save_container_meta( $post_id, $post ) {
 		$post_id = ! empty( $post_id ) ? $post_id : null;
-
-		$status = isset( $_POST['boldgrid-in-page-containers'] ) ? intval( $_POST['boldgrid-in-page-containers'] ) : null;
+		$status = isset( $_REQUEST['boldgrid-in-page-containers'] ) ? intval( $_REQUEST['boldgrid-in-page-containers'] ) : null;
 		if ( $post_id && false === is_null( $status ) && ! wp_is_post_revision( $post_id ) ) {
 			$update = update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
 		}
@@ -253,12 +257,12 @@ HTML;
 	 *
 	 * @since 1.3
 	 *
-	 * @param string $colors.
+	 * @param string $colors Colors.
 	 *
 	 * @return string json string.
 	 */
 	public function sanitize_custom_colors( $colors ) {
-		return strip_tags( $colors );
+		return sanitize_text_field( $colors );
 	}
 
 	/**
@@ -267,10 +271,12 @@ HTML;
 	 * @since 1.3
 	 */
 	public function save_colors() {
-		if ( isset( $_POST['boldgrid-custom-colors'] ) ) {
-			$custom_colors = ! empty( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
-			$custom_colors = $this->sanitize_custom_colors( $custom_colors );
-			$custom_colors = json_decode( stripcslashes( $custom_colors ), true );
+		if ( isset( $_REQUEST['boldgrid-custom-colors'] ) ) {
+
+			$custom_colors = ! empty( $_REQUEST['boldgrid-custom-colors'] ) ?
+				sanitize_text_field( wp_unslash( $_REQUEST['boldgrid-custom-colors'] ) ) : '';
+
+			$custom_colors = json_decode( $custom_colors, true );
 			$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
 			self::update_editor_option( 'custom_colors', $custom_colors );
 		}

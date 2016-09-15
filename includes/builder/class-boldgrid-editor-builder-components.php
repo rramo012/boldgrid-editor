@@ -39,7 +39,7 @@ class Boldgrid_Editor_Builder_Components {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param string $html.
+	 * @param string $html HTML on page.
 	 *
 	 * @var array $components.
 	 */
@@ -84,8 +84,8 @@ class Boldgrid_Editor_Builder_Components {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param SimpleXMLElement::xpath $xpath.
-	 * @param string                  $class.
+	 * @param SimpleXMLElement::xpath $xpath Queried Path.
+	 * @param string                  $class Name of search Class.
 	 *
 	 * @return array $styles.
 	 */
@@ -108,15 +108,15 @@ class Boldgrid_Editor_Builder_Components {
 	 *
 	 * @since 1.3.
 	 *
-	 * @param SimpleXMLElement::xpath $xpath.
+	 * @param SimpleXMLElement::xpath $xpath Queried Path.
 	 *
 	 * @return array $styles.
 	 */
 	public static function find_fonts( $xpath ) {
 		$fonts = array();
 
-		foreach ( $xpath->query( '//*[@data-font-family]' ) as $rowNode ) {
-			$fonts[] = $rowNode->getAttribute( 'data-font-family' );
+		foreach ( $xpath->query( '//*[@data-font-family]' ) as $node ) {
+			$fonts[] = $node->getAttribute( 'data-font-family' );
 		}
 
 		return $fonts;
