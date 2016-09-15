@@ -21,7 +21,7 @@
 class Boldgrid_Editor_Builder {
 
 	/**
-	 * Enqueue Styles.
+	 * Enqueue Styles in media buttons hook order. Ensures correct load order.
 	 *
 	 * @since 1.2.3
 	 */
@@ -41,11 +41,14 @@ class Boldgrid_Editor_Builder {
 		$fonts = new Boldgrid_Editor_Builder_Fonts();
 		$builder_components = new Boldgrid_Editor_Builder_Components();
 
-		$builder_configs = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
-		$builder_configs['fonts'] = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+		$builder_configs = json_decode( file_get_contents (
+				BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs['fonts'] = json_decode( file_get_contents (
+				BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
+
 		return $builder_configs;
 	}
 
@@ -105,7 +108,7 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
-	 * Get configuration to be used in the page styler.
+	 * Get all patterns to be used by tool.
 	 *
 	 * @since 1.2.3
 	 *
@@ -117,19 +120,22 @@ class Boldgrid_Editor_Builder {
 
 		$pattern_data = array();
 		foreach ( $patterns as $pattern ) {
-			$pattern_data[] = plugins_url( '/assets/image/patterns/' . $pattern, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php');
+			$pattern_data[] = plugins_url( '/assets/image/patterns/' .
+				$pattern, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php');
 		}
 
 		return $pattern_data;
 	}
 
 	/**
-	 * Get configurations of assets.
+	 * Get all prestes for background data.
+	 *
+	 * @since 1.2.3
 	 *
 	 * @return array Configurations.
 	 */
 	public static function get_background_data() {
-		// Grab the first 30 gradients.
+		// Grab the first 20 gradients.
 		$gradients = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
 		$gradients = array_slice( $gradients, 0, 20 );
 
@@ -182,7 +188,7 @@ class Boldgrid_Editor_Builder {
 	 *
 	 * @since 1.3
 	 */
-	public function post_inputs () {
+	public function post_inputs() {
 		$custom_colors = self::get_editor_option( 'custom_colors', array() );
 		$custom_colors_encoded = json_encode( $custom_colors );
 
@@ -219,6 +225,8 @@ HTML;
 	 *
 	 * @param string $key Index of value.
 	 * @param mixed $default Default value if not found.
+	 *
+	 * @return mixed editor option
 	 */
 	public static function get_editor_option( $key, $default = null ) {
 		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
@@ -258,14 +266,25 @@ HTML;
 	 * @since 1.3
 	 */
 	public function save_colors() {
-		$custom_colors = ! empty ( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
-		$custom_colors = $this->sanitize_custom_colors( $custom_colors );
-		$custom_colors = json_decode( stripcslashes( $custom_colors ), true );
-		$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
-		self::update_editor_option( 'custom_colors', $custom_colors );
+		if ( isset( $_POST['boldgrid-custom-colors'] ) ) {
+			$custom_colors = ! empty ( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
+			$custom_colors = $this->sanitize_custom_colors( $custom_colors );
+			$custom_colors = json_decode( stripcslashes( $custom_colors ), true );
+			$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
+			self::update_editor_option( 'custom_colors', $custom_colors );
+		}
 	}
 
-
+	/**
+	 * Get the type of container used by this page.
+	 *
+	 * @since 1.2.3
+	 *
+	 * @global Boldgrid_Theme_Framework $boldgrid_theme_framework.
+	 * @global WP_Post $post.
+	 *
+	 * @return string $container.
+	 */
 	public static function get_page_container() {
 		global $boldgrid_theme_framework;
 		global $post;
@@ -286,5 +305,4 @@ HTML;
 
 		return $container;
 	}
-
 }

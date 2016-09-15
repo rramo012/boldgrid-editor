@@ -556,8 +556,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		// Randomize gradients.
-		// Deprecated
-		_renderGradients : function () {
+		_createGradientGradients : function () {
 
 
 			var gradientData = []; 

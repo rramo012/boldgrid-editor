@@ -20,6 +20,13 @@
  */
 class Boldgrid_Editor_Builder_Components {
 
+	/**
+	 * Components to scan the page for and the class used to ID them.
+	 *
+	 * @since 1.3.
+	 *
+	 * @var array
+	 */
 	protected static $component_types = array (
 		'text' => 'bg-text-fx',
 		'box' => 'bg-box',
@@ -27,6 +34,15 @@ class Boldgrid_Editor_Builder_Components {
 		'image' => 'bg-img'
 	);
 
+	/**
+	 * Parse a post and find the components on it.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param string $html.
+	 *
+	 * @var array $components.
+	 */
 	public function parse_post( $html ) {
 		$components = array();
 
@@ -45,6 +61,13 @@ class Boldgrid_Editor_Builder_Components {
 		return $components;
 	}
 
+	/**
+	 * Get all pages and scan them for components used.
+	 *
+	 * @since 1.3.
+	 *
+	 * @var array $components.
+	 */
 	public function get_components() {
 		$components = array();
 
@@ -56,8 +79,19 @@ class Boldgrid_Editor_Builder_Components {
 		return $components;
 	}
 
+	/**
+	 * Given a path, query for class name and return the attributes class and style.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param SimpleXMLElement::xpath $xpath.
+	 * @param string $class.
+	 *
+	 * @return array $styles.
+	 */
 	public function find_component_classes( $xpath, $class ) {
 		$styles = array();
+
 		$query_string =  sprintf( "//*[contains(concat(' ', normalize-space(@class), ' '), ' %s ')]", $class );
 		foreach ( $xpath->query( $query_string ) as $node ) {
 			$styles[] = array (
@@ -65,9 +99,19 @@ class Boldgrid_Editor_Builder_Components {
 				'style' => $node->getAttribute('style')
 			);
 		}
+
 		return $styles;
 	}
 
+	/**
+	 * Given a path, query for attr data-font-family and return said attr.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param SimpleXMLElement::xpath $xpath.
+	 *
+	 * @return array $styles.
+	 */
 	public static function find_fonts( $xpath ) {
 		$fonts = array();
 

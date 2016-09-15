@@ -13,11 +13,14 @@ var gulp    = require( 'gulp' ),
 	debug    = require( 'gulp-debug' ),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
+    phpcbf = require('gulp-phpcbf'),
     jshint   = require( 'gulp-jshint' ),
     sequence = require('run-sequence'),
     stylish = require('jshint-stylish'),
     autoprefixer = require('gulp-autoprefixer'),
 	bower    = require( 'gulp-bower' ),
+	phpcs = require('gulp-phpcs'),
+	gutil = require('gutil'),
 	pump = require('pump');
 
 // Configs.
@@ -35,6 +38,29 @@ gulp.task('bower', function () {
 	  return bower().pipe( gulp.dest( config.bower ) );
 });
 
+gulp.task('phpcbf', function () {
+	  return gulp.src(['src/**/*.php', '!src/vendor/**/*.*'])
+	  .pipe(phpcbf({
+	    bin: 'phpcbf',
+        standard: 'WordPress',
+	    warningSeverity: 0
+	  }))
+	  .on('error', gutil.log)
+	  .pipe(gulp.dest('src'));
+	});
+
+gulp.task('phpcs', function () {
+    return gulp.src( ['includes/**/*.php', '!src/vendor/**/*.*'])
+        // Validate files using PHP Code Sniffer.
+        .pipe(phpcs({
+            bin: 'phpcs',
+            standard: 'WordPress',
+            warningSeverity: 0
+        }))
+        // Log all problems that was found
+        .pipe( phpcs.reporter('log') );
+});
+
 gulp.task('font-awesome', function () {
 	gulp.src( [
 			config.bower + '/font-awesome/fonts/**/*',
@@ -48,6 +74,7 @@ gulp.task('font-awesome', function () {
 	   	.pipe( debug({title: 'Font Awesome CSS:'}) )
 	   	.pipe( gulp.dest( config.cssDest ) );
 });
+
 gulp.task('boldgrid-components', function () {
 	gulp.src( [
 		config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/components.*'
@@ -55,6 +82,7 @@ gulp.task('boldgrid-components', function () {
    .pipe( debug({title: 'BoldGrid Components:'}) )
    .pipe( gulp.dest( config.cssDest ) );
 });
+
 gulp.task('copy-parallax-js', function () {
 	gulp.src( [
 		config.bower + '/jquery.stellar/jquery.stellar.js',
@@ -90,8 +118,7 @@ gulp.task( 'sass', function(  ) {
 gulp.task( 'jsmin-drag', function ( cb ) {
 	pump( [
 		gulp.src( [ 
-		    config.src + 'assets/js/render-fonts.js',
-			config.src + 'assets/js/draggable/**/*.js',
+			config.src + 'assets/js/builder/**/*.js',
 			config.src + 'assets/js/jquery/**/*.js',
 		] ),
 		 jshint(),
@@ -122,6 +149,7 @@ gulp.task( 'jsmin-media', function ( cb ) {
 	cb
 	);
 } );
+
 gulp.task( 'jsmin-editor', function ( cb ) {
 	pump( [
 	       gulp.src( [

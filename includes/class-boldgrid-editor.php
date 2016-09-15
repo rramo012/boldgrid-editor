@@ -59,13 +59,6 @@ class Boldgrid_Editor {
 	private $is_boldgrid_theme = false;
 
 	/**
-	 * The stylesheet being edited
-	 *
-	 * @var string
-	 */
-	//private $theme_stylesheet;
-
-	/**
 	 * Get $this->settings
 	 *
 	 * @return array
@@ -165,63 +158,41 @@ class Boldgrid_Editor {
 
 	}
 
-	public function frontEndHooks() {
-
-		add_action( 'wp_enqueue_scripts', function () {
-			$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
-
-			wp_enqueue_script( 'boldgrid-parallax',
-				plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
-				array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
-
-			wp_enqueue_style( 'boldgrid-components',
-				plugins_url( '/assets/css/components.min.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
-
-			wp_enqueue_style( 'boldgrid-buttons',
-				plugins_url( '/assets/buttons/css/buttons.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
-
-			wp_enqueue_script(
-					'front-end', plugins_url( '/assets/js/front-end.js', $plugin_file ),
-					array( 'jquery', 'boldgrid-render-fonts' ), BOLDGRID_EDITOR_VERSION, true );
-
-			wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7'  );
-
-			wp_enqueue_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
-		}, 99 );
-
-		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor', 'remove_theme_container' ) );
-	}
-
-	public static function remove_theme_container( $configs ) {
-
-		// Get Page Id.
-	    $is_preview = ! empty ( $_REQUEST['preview'] ) ? $_REQUEST['preview'] : null;
-	    $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	    $theID = url_to_postid( $actual_link );
-	    if( 0 === $theID ) {
-	    	$theID = get_option( 'page_on_front' );
-	    }
-
-	    $post_meta = get_post_meta( $theID );
-
-	    $in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'][0] ) ?
-	    	$post_meta['boldgrid_in_page_containers'][0] : null;
-
-	    // If this is a preview of a post, remove the container, no meta data found.
-	    if ( $in_page_containers || ( $is_preview && $theID ) ) {
-			$configs['template']['pages'][ 'page_home.php' ]['entry-content'] = '';
-			$configs['template']['pages'][ 'default' ]['entry-content'] = '';
+	/**
+	 * Bind hooks, admin or otherwise.
+	 *
+	 * @since 1.2.7
+	 */
+	public function add_hooks() {
+		if ( is_admin() && current_user_can( 'edit_pages' ) ) {
+			$this->add_admin_hooks();
+		} else {
+			$this->front_end_hooks();
 		}
-
-		return $configs;
 	}
 
 	/**
-	 * Create tabs on post, post-new, media-upload
+	 * Attach all front end hooks.
+	 *
+	 * @since 1.2.7
+	 */
+	public function front_end_hooks() {
+		$builder_fonts          = new Boldgrid_Editor_Builder_Fonts();
+		$boldgrid_editor_assets = new Boldgrid_Editor_Assets();
+
+		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 90 );
+		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor_Theme', 'remove_theme_container' ) );
+		add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
+	}
+
+	/**
+	 * Attach all admin hooks.
+	 *
+	 * @since 1.0
 	 *
 	 * @global $wp_customize.
 	 */
-	public function add_hooks() {
+	public function add_admin_hooks() {
 		global $wp_customize;
 
 		$boldgrid_editor_ajax     = new Boldgrid_Editor_Ajax();
@@ -231,84 +202,75 @@ class Boldgrid_Editor {
 		$boldgrid_editor_media    = new Boldgrid_Editor_Media();
 		$boldgrid_editor_theme    = new Boldgrid_Editor_Theme();
 		$boldgrid_editor_version  = new Boldgrid_Editor_Version();
-		$builder_fonts            = new Boldgrid_Editor_Builder_Fonts();
 
-		if ( is_admin() && current_user_can( 'edit_pages' ) ) {
+		// Check PHP and WordPress versions for compatibility.
+		add_action( 'admin_init', array ( $boldgrid_editor_version, 'check_php_wp_versions' ) );
 
-			// Check PHP and WordPress versions for compatibility.
-			add_action( 'admin_init', array ( $boldgrid_editor_version, 'check_php_wp_versions' ) );
+		// Provide a way to access gridblock files in this plugin.
+		add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
 
-			// Provide a way to access gridblock files in this plugin.
-			add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
+		$valid_pages = array (
+			'post.php',
+			'post-new.php',
+			'media-upload.php'
+		);
+
+		$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
+		if ( $edit_post_page ) {
+
+			// Do not run these hooks for an attachment or nav menu item post type.
+			$current_post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
+			$current_post = get_post( $current_post_id );
+			$current_post_type = ! empty( $current_post->post_type ) ? $current_post->post_type : null;
+			if ( $current_post_type == 'attachment' || $current_post_type == 'nav_menu_item' ) {
+				return false;
+			}
+
 			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_colors' ), 10, 2  );
-			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
 			add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'post_inputs' ) );
-			add_action( 'enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_front_end' ) );
+			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
 
-			$valid_pages = array (
-				'post.php',
-				'post-new.php',
-				'media-upload.php'
-			);
+			add_action( 'media_buttons', array( $boldgrid_editor_mce, 'load_editor_hooks' ) );
+			add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
 
-			$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
-			if ( $edit_post_page ) {
+			// Creates all tabs as specified by the configuration.
+			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
+			$this->set_is_boldgrid_theme( $is_boldgrid_theme );
 
-				// Do not run these hooks for an attachment or nav menu item post type.
-				$current_post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
-				$current_post = get_post( $current_post_id );
-				$current_post_type = ! empty( $current_post->post_type ) ? $current_post->post_type : null;
-				if ( $current_post_type == 'attachment' || $current_post_type == 'nav_menu_item' ) {
-					return false;
-				}
+			// Create media modal tabs.
+			$configs = array_merge( $this->get_path_configs(), $this->get_tab_configs() );
+			$boldgrid_editor_media->create_tabs( $configs, $is_boldgrid_theme );
 
-				add_action( 'media_buttons', array( $boldgrid_editor_mce, 'load_editor_hooks' ) );
-				add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
+			// Add screen display buttons.
+			$boldgrid_editor_mce->add_window_size_buttons();
 
-				// Creates all tabs as specified by the configuration.
-				$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
-				$this->set_is_boldgrid_theme( $is_boldgrid_theme );
+			add_action( 'media_buttons', array ( $boldgrid_editor_mce, 'help_pointers' ) );
 
-				// Create media modal tabs.
-				$configs = array_merge( $this->get_path_configs(), $this->get_tab_configs() );
-				$boldgrid_editor_media->create_tabs( $configs, $is_boldgrid_theme );
+			// This has a high priority to override duplicate files in other boldgrid plugins.
+			add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
 
-				// Add screen display buttons.
-				$boldgrid_editor_mce->add_window_size_buttons();
-
-				add_action( 'media_buttons', array ( $boldgrid_editor_mce, 'help_pointers' ) );
-
-				// This has a high priority to override duplicate files in other boldgrid plugins.
-				add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
-
-				// Add ?boldgrid-editor-version=$version_number to each added file.
-				add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );
-				add_action( 'admin_init', array ( $boldgrid_editor_assets, 'add_editor_styles' ) );
-			}
-
-			if ( $edit_post_page || isset( $wp_customize ) ) {
-				// Append Editor Styles.
-				add_filter( 'tiny_mce_before_init', array ( $boldgrid_editor_mce, 'allow_empty_tags' ), 29 );
-				add_filter( 'mce_buttons_2', array ( $boldgrid_editor_mce, 'mce_buttons' ) );
-			}
-
-			add_action( 'wp_ajax_boldgrid_gridblock_image', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_image_ajax' ) );
-			add_action( 'wp_ajax_boldgrid_canvas_image',array ( $boldgrid_editor_ajax, 'upload_canvas_image_ajax' ) );
-
-			// Save a users selection for enabling draggable.
-			add_action( 'wp_ajax_boldgrid_draggable_enabled', array ( $boldgrid_editor_ajax, 'ajax_draggable_enabled' ) );
-			add_action( 'wp_ajax_boldgrid_gridblock_html', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_html_ajax' ) );
-			add_action( 'admin_print_footer_scripts', array ( $boldgrid_editor_builder, 'print_scripts' ), 25 );
-
-			// Plugin updates.
-			$plugin_update = new Boldgrid_Editor_Update( $this );
-
-			$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
-			$boldgrid_editor_crop->add_hooks();
-		} else {
-			$this->frontEndHooks();
-			add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
+			// Add ?boldgrid-editor-version=$version_number to each added file.
+			add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );
+			add_action( 'admin_init', array ( $boldgrid_editor_assets, 'add_editor_styles' ) );
 		}
-	}
 
+		if ( $edit_post_page || isset( $wp_customize ) ) {
+			// Append Editor Styles.
+			add_filter( 'tiny_mce_before_init', array ( $boldgrid_editor_mce, 'allow_empty_tags' ), 29 );
+		}
+
+		add_action( 'wp_ajax_boldgrid_gridblock_image', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_image_ajax' ) );
+		add_action( 'wp_ajax_boldgrid_canvas_image',array ( $boldgrid_editor_ajax, 'upload_canvas_ajax' ) );
+
+		// Save a users selection for enabling draggable.
+		add_action( 'wp_ajax_boldgrid_draggable_enabled', array ( $boldgrid_editor_ajax, 'ajax_draggable_enabled' ) );
+		add_action( 'wp_ajax_boldgrid_gridblock_html', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_html_ajax' ) );
+		add_action( 'admin_print_footer_scripts', array ( $boldgrid_editor_builder, 'print_scripts' ), 25 );
+
+		// Plugin updates.
+		$plugin_update = new Boldgrid_Editor_Update( $this );
+
+		$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
+		$boldgrid_editor_crop->add_hooks();
+	}
 }

@@ -20,7 +20,6 @@
  */
 class Boldgrid_Editor_Media {
 
-
 	/**
 	 * Create Tabs based on configurations
 	 *

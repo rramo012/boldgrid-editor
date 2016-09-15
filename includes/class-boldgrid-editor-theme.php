@@ -1,12 +1,12 @@
 <?php
 /**
- * Class: Boldgrid_Editor
+ * Class: Boldgrid_Editor_Theme
  *
  * Gather more information about a theme so that we know how to display the editor tools.
  *
  * @since      1.2
  * @package    Boldgrid_Editor
- * @subpackage Boldgrid_Editor_Version
+ * @subpackage Boldgrid_Editor_Theme
  * @author     BoldGrid <support@boldgrid.com>
  * @link       https://boldgrid.com
  */
@@ -21,10 +21,13 @@
 class Boldgrid_Editor_Theme {
 
 	/**
-	 * Returns the name of a theme if and only if the theme is a boldgrid theme
+	 * Returns the name of a theme if and only if the theme is a boldgrid theme.
+	 *
+	 * @since 1.0
 	 *
 	 * @param WP_Theme $wp_theme
-	 * @return string
+	 *
+	 * @return string.
 	 */
 	public static function get_boldgrid_theme_name( $wp_theme ) {
 		$current_boldgrid_theme = '';
@@ -39,7 +42,47 @@ class Boldgrid_Editor_Theme {
 			return $current_boldgrid_theme;
 	}
 
+	/**
+	 * Remove theme name container if the page has been modified through the new editor.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param array $configs BGTFW Configs.
+	 *
+	 * @return array $configs BGTFW Configs.
+	 */
+	public static function remove_theme_container( $configs ) {
 
+		// Get Page Id.
+		$is_preview = ! empty ( $_REQUEST['preview'] ) ? $_REQUEST['preview'] : null;
+		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+		$the_id = url_to_postid( $actual_link );
+		if( 0 === $the_id ) {
+			$the_id = get_option( 'page_on_front' );
+		}
+
+		$post_meta = get_post_meta( $the_id );
+
+		$in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'][0] ) ?
+		$post_meta['boldgrid_in_page_containers'][0] : null;
+
+		// If this is a preview of a post, remove the container, no meta data found.
+		if ( $in_page_containers || ( $is_preview && $the_id ) ) {
+			$configs['template']['pages'][ 'page_home.php' ]['entry-content'] = '';
+			$configs['template']['pages'][ 'default' ]['entry-content'] = '';
+		}
+
+		return $configs;
+	}
+
+	/**
+	 * Get the themes color palette theme mod.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @return array $colors Array of colors.
+	 */
 	public static function get_color_palettes() {
 
 		$color_palettes = get_theme_mod( 'boldgrid_color_palette', array() );
@@ -50,9 +93,13 @@ class Boldgrid_Editor_Theme {
 		$colors = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] ) ?
 			$color_palettes_decoded['state']['palettes'][ $active_palette ]['colors'] : array();
 
-			$neutral = '';
-	//	$neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
-	//		$color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
+
+		$neutral = '';
+		/*
+		 * Disable Neutral colors. Wont work on client side w/o mods to JS.
+		 * $neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
+		 * $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
+		 */
 
 		if ( $neutral && ! empty( $colors ) ) {
 			$colors[] = $neutral;

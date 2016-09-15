@@ -26,7 +26,7 @@ class Boldgrid_Editor_MCE {
 	 * @since 1.0
 	 */
 	public function help_pointers() {
-		// Dont add the help pointer if this is a boldgrid theme
+		// Dont add the help pointer if this is a boldgrid theme.
 		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
 			return;
 		}
@@ -67,6 +67,8 @@ class Boldgrid_Editor_MCE {
 
 	/**
 	 * Actions that should be triggered on media_buttons_context action
+	 *
+	 * @since 1.1.
 	 */
 	public function load_editor_hooks() {
 		echo '<button type="button" id="insert-gridblocks-button" class="button gridblock-icon">' .
@@ -75,6 +77,8 @@ class Boldgrid_Editor_MCE {
 
 	/**
 	 * Adding tinyMCE buttons
+	 *
+	 * @since 1.0.
 	 */
 	public function add_window_size_buttons() {
 		add_action( 'admin_head', array (
@@ -84,7 +88,11 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Procedure for adding new buttons
+	 * Procedure for adding new buttons.
+	 *
+	 * @global $typenow.
+	 *
+	 * @since 1.0.
 	 */
 	public function add_mce_buttons() {
 		global $typenow;
@@ -112,10 +120,13 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Adding tinyMCE plugins
+	 * Adding tinyMCE plugins.
 	 *
-	 * @param array $plugin_array
-	 * @return array
+	 * @since 1.0.
+	 *
+	 * @param array $plugin_array.
+	 *
+	 * @return array.
 	 */
 	public function add_tinymce_plugin( $plugin_array ) {
 		$editor_js_file = plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/editor/editor' ),
@@ -130,10 +141,13 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Registering 3 new buttons
+	 * Registering new buttons.
 	 *
-	 * @param array $buttons
-	 * @return array
+	 * @since 1.0.
+	 *
+	 * @param array $buttons.
+	 *
+	 * @return array.
 	 */
 	public function register_mce_button( $buttons ) {
 		array_push( $buttons, 'monitor_view_imhwpb' );
@@ -145,30 +159,13 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Adding Dropdowns to the second row of the tinymce toolbar
+	 * Add Extended valid elements.
 	 *
-	 * @param array $buttons
-	 * @return array
-	 */
-	public function mce_buttons( $buttons ) {
-		//array_unshift( $buttons, 'fontselect' ); // Add Font Select
-		//array_unshift( $buttons, 'fontsizeselect' ); // Add Font Size Select
-
-		// Remove text color from tinymce.
-		/*
-		$key = array_search( 'forecolor', $buttons );
-		if ( false !== $key ) {
-			unset( $buttons[$key] );
-		}*/
-
-		return $buttons;
-	}
-
-	/**
-	 * Add Extended valid elements
+	 * @since 1.2.7.
 	 *
-	 * @param array | string $init
-	 * @return array
+	 * @param array | string $init.
+	 *
+	 * @return array.
 	 */
 	public function allow_empty_tags( $init ) {
 		$extra_tags = array (
@@ -189,13 +186,11 @@ class Boldgrid_Editor_MCE {
 			$init['extended_valid_elements'] = $init['extended_valid_elements'] . ',';
 		}
 
-		// Note: Using .= here can trigger a fatal error
-		$init['extended_valid_elements'] = $init['extended_valid_elements'] .
-		implode( ',', $extra_tags );
+		// Note: Using .= here can trigger a fatal error.
+		$init['extended_valid_elements'] = $init['extended_valid_elements'] . implode( ',', $extra_tags );
 
-		// Always show wordpress 2 toolbar
+		// Always show wordpress 2 toolbar.
 		$init['wordpress_adv_hidden'] = false;
-		$init['fontsize_formats'] = '8px 10px 12px 13px 14px 15px 16px 18px 20px 22px 24px 26px 28px 30px 32px 34px 36px 38px 40px';
 
 		return $init;
 	}
@@ -227,7 +222,7 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 *  If a components css file does not already exists in the list of css files, enqueue it.
+	 * If a css file does not already exists in the list of css files, enqueue it.
 	 *
 	 * @since 1.3
 	 *
@@ -235,16 +230,25 @@ class Boldgrid_Editor_MCE {
 	 *
 	 * @return array
 	 */
-	public function add_components( $styles ) {
-		$included = false;
-		foreach ( $styles as $style ) {
-			if ( -1 !== stripos( $style, '/components.' ) ) {
-				$included = true;
-			}
-		}
+	public function add_styles_conflict( $styles ) {
 
-		if ( ! $included ) {
-			$styles[] = plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+		$conditional_styles = array(
+			'/components.' => '/assets/css/components.min.css',
+			'/font-awesome.' => '/assets/css/font-awesome.min.css',
+		);
+
+		foreach( $conditional_styles as $check => $conditional_style ) {
+
+			$included = false;
+			foreach ( $styles as $style ) {
+				if ( -1 !== stripos( $style, $check ) ) {
+					$included = true;
+				}
+			}
+
+			if ( ! $included ) {
+				$styles[] = plugins_url( $conditional_style, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+			}
 		}
 
 		return $styles;
@@ -252,11 +256,13 @@ class Boldgrid_Editor_MCE {
 
 	/**
 	 * Add an additional query arg to each css file included in the tinymce iframe.
-	 * E.g. boldgrid-editor-version=1.0.0
+	 * E.g. boldgrid-editor-version=1.0.0.
 	 *
-	 * @param string $css
 	 * @since 1.0.2
-	 * @return string
+	 *
+	 * @param string $css.
+	 *
+	 * @return string.
 	 */
 	public function add_cache_busting( $css ) {
 		if ( empty( $css ) ) {
@@ -267,26 +273,27 @@ class Boldgrid_Editor_MCE {
 
 		$styles = $this->prepend_bootstrap_styles( $styles );
 
-		array_unshift( $styles, plugins_url( '/assets/js/draggable/css/before-theme.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+		array_unshift( $styles, plugins_url( '/assets/js/builder/css/before-theme.css',
+			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
 		array_unshift( $styles, '//fonts.googleapis.com/css?family=Open+Sans:600' );
 
 		// Add a couple of styles that need to append the iframe head.
-		$styles[] = plugins_url( '/assets/css/genericons.css',
+		$styles[] = plugins_url( '/assets/css/genericons.min.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
-		$styles[] = plugins_url( '/assets/js/draggable/css/draggable.css',
+		$styles[] = plugins_url( '/assets/js/builder/css/draggable.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
-		$styles[] = plugins_url( '/assets/css/editor.css',
+		$styles[] = plugins_url( self::get_minified_js('/assets/css/editor', '.css'),
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		if ( ! Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
-			$styles[] = plugins_url( '/assets/buttons/css/buttons.css',
+			$styles[] = plugins_url( '/assets/css/buttons.min.css',
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		}
 
-		// If a components file has not been added, add it.
-		$styles = $this->add_components( $styles );
+		// Add styles that could conflict.
+		$styles = $this->add_styles_conflict( $styles );
 
 		// Add Query Args.
 		$mce_css = array ();

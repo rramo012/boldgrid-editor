@@ -44,8 +44,7 @@ class Boldgrid_Editor_Ajax {
 	 * @param string $_POST['image_data'].
 	 * @param integer $_POST['attachement_id'].
 	 */
-	public function upload_canvas_image_ajax() {
-		//@TODO: Sanatize this data.
+	public function upload_canvas_ajax() {
 		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
 		$attachement_id = ! empty( $_POST['attachement_id'] ) ? (int) $_POST['attachement_id'] : null;
 

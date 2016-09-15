@@ -65,6 +65,7 @@ function boldgrid_editor_init () {
 	$boldgrid_editor = new Boldgrid_Editor();
 }
 
+// Load on an early hook so we can tie into framework configs.
 if ( is_admin() ) {
 	add_action( 'init', 'boldgrid_editor_init' );
 } else {

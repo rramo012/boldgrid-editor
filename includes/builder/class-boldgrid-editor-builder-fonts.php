@@ -2,7 +2,7 @@
 /**
  * Class: Boldgrid_Editor_Builder_Fonts
  *
- * Add functionality for fully customizable editor pages.
+ * Customization of fonts in the Page and Post Editor.
  *
  * @since      1.3
  * @package    Boldgrid_Editor
@@ -14,13 +14,21 @@
 /**
  * Class: Boldgrid_Editor_Builder_Fonts
  *
- * Add functionality for fully customizable editor pages.
+ * Customization of fonts in the Page and Post Editor.
  *
  * @since      1.3
  */
 class Boldgrid_Editor_Builder_Fonts {
 
-
+	/**
+	 * Scan the page for fonts used.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param string $html
+	 *
+	 * @return array Fonts being used.
+	 */
 	public function parse_fonts( $html ) {
 		$dom = new DOMDocument();
 		@$dom->loadHTML( $html );
@@ -29,6 +37,15 @@ class Boldgrid_Editor_Builder_Fonts {
 		return Boldgrid_Editor_Builder_Components::find_fonts( $xpath );
 	}
 
+	/**
+	 * Create a google fonts url.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param array $fonts
+	 *
+	 * @return string Font Url.
+	 */
 	public function create_font_url( $fonts ) {
 
 		if ( empty( $fonts ) ) {
@@ -41,6 +58,15 @@ class Boldgrid_Editor_Builder_Fonts {
 		return sprintf( '<link id="boldgrid-google-fonts" href="%s" rel="stylesheet">', $href );
 	}
 
+	/**
+	 * Parse page for fonts used and print google font url.
+	 *
+	 * @since 1.3.
+	 *
+	 * @global $post.
+	 *
+	 * @return string $head_link Font Url.
+	 */
 	public function render_page_fonts() {
 		global $post;
 
@@ -57,6 +83,15 @@ class Boldgrid_Editor_Builder_Fonts {
 		return $head_link;
 	}
 
+	/**
+	 * Convert theme mod to class name.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param string $theme_mod.
+	 *
+	 * @return string $class_name.
+	 */
 	public function thememod_class_name( $theme_mod ) {
 		$class_name = false;
 
@@ -78,6 +113,15 @@ class Boldgrid_Editor_Builder_Fonts {
 		return $class_name;
 	}
 
+	/**
+	 * Get the themes fonts.
+	 *
+	 * @since 1.3.
+	 *
+	 * @global $boldgrid_theme_framework Boldgrid_Theme_Framework.
+	 *
+	 * @return array $theme_fonts.
+	 */
 	public function get_theme_fonts() {
 		global $boldgrid_theme_framework;
 
