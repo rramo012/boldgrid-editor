@@ -39,18 +39,18 @@ gulp.task('bower', function () {
 });
 
 gulp.task('phpcbf', function () {
-	  return gulp.src(['src/**/*.php', '!src/vendor/**/*.*'])
+	  return gulp.src(['includes/builder/**/*.php'])
 	  .pipe(phpcbf({
 	    bin: 'phpcbf',
         standard: 'WordPress',
 	    warningSeverity: 0
 	  }))
 	  .on('error', gutil.log)
-	  .pipe(gulp.dest('src'));
+	  .pipe(gulp.dest('includes/builder/'));
 	});
 
 gulp.task('phpcs', function () {
-    return gulp.src( ['includes/**/*.php', '!src/vendor/**/*.*'])
+    return gulp.src( ['includes/builder/**/*.php'])
         // Validate files using PHP Code Sniffer.
         .pipe(phpcs({
             bin: 'phpcs',

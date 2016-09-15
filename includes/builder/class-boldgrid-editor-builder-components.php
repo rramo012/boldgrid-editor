@@ -27,11 +27,11 @@ class Boldgrid_Editor_Builder_Components {
 	 *
 	 * @var array
 	 */
-	protected static $component_types = array (
+	protected static $component_types = array(
 		'text' => 'bg-text-fx',
 		'box' => 'bg-box',
 		'button' => 'btn',
-		'image' => 'bg-img'
+		'image' => 'bg-img',
 	);
 
 	/**
@@ -52,7 +52,7 @@ class Boldgrid_Editor_Builder_Components {
 
 		$xpath = new DOMXPath( $dom );
 
-		foreach( self::$component_types as $label => $component_ns ) {
+		foreach ( self::$component_types as $label => $component_ns ) {
 			$components[ $label ] = $this->find_component_classes( $xpath, $component_ns );
 		}
 
@@ -72,7 +72,7 @@ class Boldgrid_Editor_Builder_Components {
 		$components = array();
 
 		$posts = Boldgrid_Layout::get_all_pages();
-		foreach( $posts as $post ) {
+		foreach ( $posts as $post ) {
 			$components = array_merge_recursive( $components, $this->parse_post( $post->post_content ) );
 		}
 
@@ -85,18 +85,18 @@ class Boldgrid_Editor_Builder_Components {
 	 * @since 1.3.
 	 *
 	 * @param SimpleXMLElement::xpath $xpath.
-	 * @param string $class.
+	 * @param string                  $class.
 	 *
 	 * @return array $styles.
 	 */
 	public function find_component_classes( $xpath, $class ) {
 		$styles = array();
 
-		$query_string =  sprintf( "//*[contains(concat(' ', normalize-space(@class), ' '), ' %s ')]", $class );
+		$query_string = sprintf( "//*[contains(concat(' ', normalize-space(@class), ' '), ' %s ')]", $class );
 		foreach ( $xpath->query( $query_string ) as $node ) {
-			$styles[] = array (
-				'classes' => $node->getAttribute('class'),
-				'style' => $node->getAttribute('style')
+			$styles[] = array(
+				'classes' => $node->getAttribute( 'class' ),
+				'style' => $node->getAttribute( 'style' ),
 			);
 		}
 
@@ -115,8 +115,8 @@ class Boldgrid_Editor_Builder_Components {
 	public static function find_fonts( $xpath ) {
 		$fonts = array();
 
-		foreach ( $xpath->query( "//*[@data-font-family]" ) as $rowNode ) {
-			$fonts[] = $rowNode->getAttribute('data-font-family');
+		foreach ( $xpath->query( '//*[@data-font-family]' ) as $rowNode ) {
+			$fonts[] = $rowNode->getAttribute( 'data-font-family' );
 		}
 
 		return $fonts;

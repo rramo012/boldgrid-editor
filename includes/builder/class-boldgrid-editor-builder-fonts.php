@@ -95,7 +95,7 @@ class Boldgrid_Editor_Builder_Fonts {
 	public function thememod_class_name( $theme_mod ) {
 		$class_name = false;
 
-		switch( $theme_mod ) {
+		switch ( $theme_mod ) {
 			case 'alternate_headings_font_family':
 				$class_name = 'bg-font-family-alt';
 				break;
@@ -129,7 +129,7 @@ class Boldgrid_Editor_Builder_Fonts {
 			'body_font_family',
 			'alternate_headings_font_family',
 			'headings_font_family',
-			//'menu_font_family'
+			// 'menu_font_family'
 		);
 
 		$theme_fonts = array();
@@ -149,7 +149,7 @@ class Boldgrid_Editor_Builder_Fonts {
 			}
 		}
 
-		$theme_fonts = array_unique ( $theme_fonts );
+		$theme_fonts = array_unique( $theme_fonts );
 
 		return $theme_fonts;
 	}

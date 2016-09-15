@@ -41,10 +41,10 @@ class Boldgrid_Editor_Builder {
 		$fonts = new Boldgrid_Editor_Builder_Fonts();
 		$builder_components = new Boldgrid_Editor_Builder_Components();
 
-		$builder_configs = json_decode( file_get_contents (
-				BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
-		$builder_configs['fonts'] = json_decode( file_get_contents (
-				BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+		$builder_configs = json_decode( file_get_contents(
+		BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs['fonts'] = json_decode( file_get_contents(
+		BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
@@ -64,7 +64,7 @@ class Boldgrid_Editor_Builder {
 	public static function get_theme_features() {
 		global $boldgrid_theme_framework;
 
-		if ( empty ( $boldgrid_theme_framework ) ) {
+		if ( empty( $boldgrid_theme_framework ) ) {
 			return array();
 		}
 
@@ -121,7 +121,7 @@ class Boldgrid_Editor_Builder {
 		$pattern_data = array();
 		foreach ( $patterns as $pattern ) {
 			$pattern_data[] = plugins_url( '/assets/image/patterns/' .
-				$pattern, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php');
+			$pattern, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php');
 		}
 
 		return $pattern_data;
@@ -136,15 +136,15 @@ class Boldgrid_Editor_Builder {
 	 */
 	public static function get_background_data() {
 		// Grab the first 20 gradients.
-		$gradients = json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
+		$gradients = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
 		$gradients = array_slice( $gradients, 0, 20 );
 
 		return array(
 			'color' => array(),
-			'image' => json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
+			'image' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
 			'pattern' => self::get_patterns(),
-			//'default_gradients' =>  json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
-			'gradients' => $gradients
+			// 'default_gradients' =>  json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
+			'gradients' => $gradients,
 		);
 	}
 
@@ -164,19 +164,20 @@ class Boldgrid_Editor_Builder {
 			return array();
 		}
 
-		$attachments = get_children( array( 'post_parent' => $current_post_id,
+		$attachments = get_children( array(
+			'post_parent' => $current_post_id,
 			'post_status' => 'inherit',
 			'post_type' => 'attachment',
 			'post_mime_type' => 'image',
 			'order' => 'ASC',
-			'orderby' => 'menu_order ID'
+			'orderby' => 'menu_order ID',
 		) );
 
 		$image_lookups = array();
-		foreach( $attachments as $attachment ) {
-			$full_img_url = wp_get_attachment_image_src ( $attachment->ID, 'thumbnail' );
-			$image[ 'attachment_id' ] = $attachment->ID;
-			$image[ 'thumbnail' ] = ! empty( $full_img_url[0] ) ? $full_img_url[0] : null;
+		foreach ( $attachments as $attachment ) {
+			$full_img_url = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+			$image['attachment_id'] = $attachment->ID;
+			$image['thumbnail'] = ! empty( $full_img_url[0] ) ? $full_img_url[0] : null;
 			$image_lookups[] = $image;
 		}
 
@@ -207,7 +208,7 @@ HTML;
 	 * @since 1.3
 	 *
 	 * @param string $post_id integer.
-	 * @param mixed $post WP_Post.
+	 * @param mixed  $post WP_Post.
 	 */
 	public function save_container_meta( $post_id, $post ) {
 		$post_id = ! empty( $post_id ) ? $post_id : null;
@@ -224,7 +225,7 @@ HTML;
 	 * @since 1.3
 	 *
 	 * @param string $key Index of value.
-	 * @param mixed $default Default value if not found.
+	 * @param mixed  $default Default value if not found.
 	 *
 	 * @return mixed editor option
 	 */
@@ -239,7 +240,7 @@ HTML;
 	 * @since 1.3
 	 *
 	 * @param string $key Name of value of value.
-	 * @param mixed $value Value to store.
+	 * @param mixed  $value Value to store.
 	 */
 	public static function update_editor_option( $key, $value ) {
 		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
@@ -267,7 +268,7 @@ HTML;
 	 */
 	public function save_colors() {
 		if ( isset( $_POST['boldgrid-custom-colors'] ) ) {
-			$custom_colors = ! empty ( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
+			$custom_colors = ! empty( $_POST['boldgrid-custom-colors'] ) ? $_POST['boldgrid-custom-colors'] : '';
 			$custom_colors = $this->sanitize_custom_colors( $custom_colors );
 			$custom_colors = json_decode( stripcslashes( $custom_colors ), true );
 			$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
@@ -298,7 +299,7 @@ HTML;
 
 			$configs = $boldgrid_theme_framework->get_configs();
 
-			if ( !empty( $configs['template']['pages'][ $slug ]['entry-content'] ) ) {
+			if ( ! empty( $configs['template']['pages'][ $slug ]['entry-content'] ) ) {
 				$container = $configs['template']['pages'][ $slug ]['entry-content'];
 			}
 		}
