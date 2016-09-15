@@ -112,7 +112,7 @@ html.boldgrid-editor-fullscreen {
 .resize-border-left-imhwpb,
 .draggable-tools-imhwpb + *:not(.dragging-imhwpb),
 .draggable-tools-imhwpb + .row:not(.receptor-containers-imhwpb) > [class*="col-md"] {
-    outline: 1px dashed gray !important;
+    outline: 1px solid gray !important;
 }
 
 .dragging-section .draggable-tools-imhwpb + *:not(button),
@@ -241,7 +241,7 @@ html.boldgrid-editor-fullscreen {
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,
 .receptor-containers-imhwpb {
-    outline:1px dashed gray;
+    outline:1px solid gray;
 }
 
 .drag-progress .dragging-imhwpb {
@@ -498,7 +498,7 @@ html.boldgrid-editor-fullscreen {
 	display: none !important;
 }
 .boldgrid-is-typing .boldgrid-section:hover {
-  outline: 1px dashed rgba(0,0,0,0) !important;
+  outline: 1px solid rgba(0,0,0,0) !important;
 }
 .section-popover-imhwpb {
     background-color: #32373c;
