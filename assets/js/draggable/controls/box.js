@@ -10,7 +10,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BOLDGRID.EDITOR.CONTROLS.Box = {
 
-
 		uiBoxDimensions : {
 			'bg-box bg-box-rounded' : 'box-wide',
 			'bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right' : 'box-long',
@@ -69,6 +68,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupBackgroundColor();
 			self._setupBorderColor();
 			self._setupCustomizeLeave();
+			
 			var presets = self.getBoxMarkup();
 			self.$presets = self.applyUiStyles( presets );
 		},
@@ -98,10 +98,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				$module = self.findModule( $target );
 				self.removeModuleClasses( $module );
+				
+				// On mouse leave apply styles.
 				$module.addClass( self.targetClasses );
 				BG.Controls.addStyle( $module, 'background-color', self.targetColor );
+				self._applyCloneStyles( $module );
 			} );
 		},
+		
+		_applyCloneStyles : function ( $module ) {
+			if ( self.$targetModuleClone ) {
+				$module.attr( 'style', self.$targetModuleClone.attr('style') );
+				$module.attr( 'data-mce-style', self.$targetModuleClone.attr('style') );
+			}
+		},
+		
 		_setupPresetHover : function () {
 			var panel = BG.Panel;
 
@@ -123,10 +134,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.on( 'click', '.box-design .presets .' + self.namespace, function ( e ) {
 				e.preventDefault();
-				var $module,
+				var $module, style,
 					$this = $( this );
 
-				
 				if ( $this.hasClass( 'selected' ) ) {
 					$module = self.findModule( BG.Menu.getTarget( self ) );
 					self.selfResetBorderClasses( $module );
@@ -134,7 +144,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					self.removeModuleClasses( $module );
 					panel.hideFooter();
 					self._clearModuleClasses();
+					self._clearInlineStyles( $module );
 				} else {
+					
 					self.addBox( $this );
 					panel.clearSelected();
 
@@ -146,16 +158,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			} );
 		},
+		
+		_clearInlineStyles : function ( $module ) {
+			$module.css('padding', '');
+			$module.css('margin', '');
+			$module.css('background-color', '');
+			$module.css('border-color', '');
+		},
 
 		_clearModuleClasses : function () {
 			self.targetClasses = '';
 			self.targetColor = '';
+			self.$targetModuleClone = false;
 		},
 
 		_saveModuleClasses : function () {
 			var $module = self.findModule( BG.Menu.getTarget( self ) );
 			self.targetClasses = $module.attr( 'class' );
 			self.targetColor = $module.css( 'background-color' );
+			self.$targetModuleClone = $module.clone();
 		},
 
 		openCustomizer : function () {
@@ -207,13 +228,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		addBox : function ( $this ) {
-			var $target = BG.Menu.getTarget( self ),
+			var style,
+				$target = BG.Menu.getTarget( self ),
 				value = $this.data('value'),
 				backgroundColor = $this.css('background-color'),
 				$module = self.findModule( $target );
 
+			self._clearInlineStyles( $module );
 			self.selfResetBorderClasses( $module );
 			self.removeModuleClasses( $module );
+			
+			if ( $this.parent('.my-designs').length ) {
+				style = BoldgridEditor.builder_config.components_used.box[ $this.data('id') ].style;
+				$module.attr( 'style', style );
+			}
 
 			$module.addClass( value );
 			if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) ) ) {
@@ -320,6 +348,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'padding-left', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-right', ui.value + 'em' );
+					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( horPaddingEm );
 
@@ -335,6 +364,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'padding-top', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
+					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( vertPaddingEm );
 		},
@@ -364,6 +394,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'margin-left', ui.value );
 					BG.Controls.addStyle( $module, 'margin-right', ui.value );
+					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( defaultMarginHor );
 
@@ -378,6 +409,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'margin-top', ui.value );
 					BG.Controls.addStyle( $module, 'margin-bottom', ui.value );
+					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( defaultMarginVert );
 		},
@@ -490,8 +522,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this );
 
 				if ( moduleBoxClasses && $this.hasClass( moduleBoxClasses ) ) {
-					$this.addClass( 'selected' );
-					return false;
+					if ( $this.css('background-color') == $module.css('background-color') ) {
+						$this.addClass( 'selected' );
+						return false;
+					}
 				}
 			} );
 		},
@@ -503,6 +537,62 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				BG.Panel.hideFooter();
 			}
 		},
+		
+		styleMyDesigns : function () {
+			var $body = BG.Controls.$container.$body;
+			
+			BG.Panel.$element.find('.my-designs > *').each( function (){
+				var $this = $( this ),
+					id = $this.data('id'),
+					$testElement = $this.clone();
+				
+				$testElement.css( 'display', 'none' );
+				$testElement.attr( 'style', BoldgridEditor.builder_config.components_used.box[ id ].style  )
+				$body.append( $testElement );
+				$this.css( 'background-color', $testElement.css('background-color') );
+				$this.css( 'border-color', $testElement.css('border-color') );
+				$testElement.remove();
+			} );
+		},
+		
+		hideDuplicates : function () {
+			var classes = [];
+			BG.Panel.$element.find('.my-designs > *').each( function () {
+				var $this = $( this ),
+					uniqueValue = $this.attr('data-value') + $this.css('background-color');
+				
+				if ( -1 === classes.indexOf( uniqueValue ) ) {
+					classes.push( uniqueValue );
+				} else {
+					$this.hide();
+				}
+			} );
+		},
+		
+		_updateMyDesigns : function () {
+			
+			BG.Controls.$container.$body.find('.bg-box').each( function () {
+				var styles, found,
+					$this = $( this );
+				
+				styles = {
+					classes : $this.attr('class'),
+					style : $this.attr('style')
+				};
+				
+				found = false;
+				$.each(  BoldgridEditor.builder_config.components_used.box, function () {
+					if ( this.style == styles.style && this.classes == styles.classes ) {
+						found = true;
+						return false;
+					}
+				} );
+				
+				if ( ! found ) {
+					BoldgridEditor.builder_config.components_used.box.push( styles );
+				}
+			} );
+		},
 
 		openPanel : function ( e ) {
 
@@ -510,14 +600,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				template = wp.template( 'boldgrid-editor-box' );
 
 			self._saveModuleClasses();
-
+			self._updateMyDesigns();
+			
 			// Remove all content from the panel.
 			panel.clear();
 
 			panel.$element.find('.panel-body').html( template( {
 				'presets' : self.$presets,
-				'colorControls' : self.colorControls,
+				'myPresets' : BoldgridEditor.builder_config.components_used.box,
+				'colorControls' : self.colorControls
 			} ) );
+			
+			self.styleMyDesigns();
+			self.hideDuplicates();
 
 			BOLDGRID.EDITOR.Panel.open( self );
 

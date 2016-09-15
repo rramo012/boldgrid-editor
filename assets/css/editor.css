@@ -348,8 +348,11 @@
 
 .editor-panel[data-type="box"] .presets {
   margin: 0 10px;
-  padding-bottom: 40px;
+  padding-bottom: 45px;
   font-size: 7px; }
+
+.editor-panel[data-type="box"] .presets.my-designs {
+  padding-bottom: 15px; }
 
 .editor-panel[data-type="box"] .presets .selected:after {
   content: "\f058";

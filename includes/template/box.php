@@ -1,5 +1,15 @@
 <script type="text/html" id="tmpl-boldgrid-editor-box">
 	<div class='box-design'>
+		<# if ( data.myPresets.length ) { #>
+		<div class='title'>
+			<h4>My Designs</h4>
+		</div>
+		<div class='my-designs presets grid'>
+			<# _.each( data.myPresets, function ( preset, index ) { #>
+				<div data-id='{{index}}' data-value='{{preset.classes}}' class='{{preset.classes}}'></div>
+			<# }); #>
+		</div>
+		<# } #>
 		<div class='title'>
 			<h4>Sample Designs</h4>
 		</div>

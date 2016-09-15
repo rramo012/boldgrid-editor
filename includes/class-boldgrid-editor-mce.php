@@ -207,7 +207,7 @@ class Boldgrid_Editor_MCE {
 	 *
 	 * @param array $styles
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function prepend_bootstrap_styles( $styles ) {
 
@@ -221,6 +221,30 @@ class Boldgrid_Editor_MCE {
 		if ( ! $boostrap_included ) {
 			array_unshift( $styles, plugins_url( '/assets/css/bootstrap.min.css',
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+		}
+
+		return $styles;
+	}
+
+	/**
+	 *  If a components css file does not already exists in the list of css files, enqueue it.
+	 *
+	 * @since 1.3
+	 *
+	 * @param array $styles
+	 *
+	 * @return array
+	 */
+	public function add_components( $styles ) {
+		$included = false;
+		foreach ( $styles as $style ) {
+			if ( -1 !== stripos( $style, '/components.' ) ) {
+				$included = true;
+			}
+		}
+
+		if ( ! $included ) {
+			$styles[] = plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		}
 
 		return $styles;
@@ -260,6 +284,9 @@ class Boldgrid_Editor_MCE {
 			$styles[] = plugins_url( '/assets/buttons/css/buttons.css',
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		}
+
+		// If a components file has not been added, add it.
+		$styles = $this->add_components( $styles );
 
 		// Add Query Args.
 		$mce_css = array ();

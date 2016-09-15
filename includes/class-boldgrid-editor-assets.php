@@ -286,7 +286,7 @@ class Boldgrid_Editor_Assets {
 	}
 
 	/**
-	 * Add All Styles needed for the editor.
+	 * Add All Styles needed for the editor in the the wordpress doc.
 	 *
 	 * @since 1.0
 	 */
@@ -300,6 +300,9 @@ class Boldgrid_Editor_Assets {
 
 		wp_register_style( 'editor-css-imhwpb',
 			plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
+
+		wp_enqueue_style( 'boldgrid-components',
+			plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
 
 		$button_file = get_stylesheet_directory() . '/css/buttons.css';
 		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() && file_exists( $button_file ) ) {

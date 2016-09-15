@@ -14,7 +14,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 *
 	 * @var array
 	 */
-	private $active_pages = array (
+	private static $active_pages = array (
 		'publish',
 		'draft'
 	);
@@ -24,16 +24,9 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 *
 	 * @var array
 	 */
-	private $staged_pages = array (
+	private static $staged_pages = array (
 		'staging'
 	);
-
-	/**
-	 * Post Status of parent page
-	 *
-	 * @var string
-	 */
-	private $current_post_status;
 
 	/**
 	 * Add styles from theme.
@@ -255,7 +248,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 
 	/**
 	 * Uses the static pages that are created during inspirations and adds the
-	 * gridblocks that are found to the configuration which creates the media modal
+	 * gridblocks that are found to the configuration which creates the media modal.
 	 *
 	 * @since 1.0.5
 	 */
@@ -279,29 +272,34 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Add Existing layouts
+	 * Get all active pages. If current page is staging, only use staging pages.
 	 *
-	 * @param int $_REQUEST['post_id']
+	 * @since 1.3
+	 *
+	 * @param $_REQUEST['post_id']
+	 *
+	 * @return array
 	 */
-	public function add_existing_layouts() {
+	public static function get_all_pages() {
+		// Set the current post status.
+		$post_id = ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null;
+		$post = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
+		$post_id = ! empty( $post_id ) ? $post_id : $post;
 
-		// Set the current post status
-		$this->current_post_status = get_post_status( intval( $_REQUEST['post_id'] ) );
+		$current_post_status = get_post_status( intval( $post_id ) );
 
-		// Set the Page Statuses to display
-		$page_statuses = $this->active_pages;
+		// Set the Page Statuses to display.
+		$page_statuses = self::$active_pages;
 
-		if ( 'staging' == $this->current_post_status ) {
-			$page_statuses = $this->staged_pages;
+		if ( 'staging' === $current_post_status ) {
+			$page_statuses = self::$staged_pages;
 		}
 
 		$attribution_id = get_option( 'boldgrid_attribution', null );
 
-		// Find Gridblocks
+		// Find Pages.
 		$args = array (
-			'post__not_in' => ! empty( $attribution_id['page']['id'] ) ? array (
-				$attribution_id['page']['id']
-			) : array (),
+			'post__not_in' => ! empty( $attribution_id['page']['id'] ) ? array( $attribution_id['page']['id'] ) : array(),
 			'post_type' => array (
 				'page',
 				'post'
@@ -309,15 +307,27 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			'post_status' => $page_statuses,
 			'posts_per_page' => - 1
 		);
-		$pages = new WP_Query( $args );
 
-		// Grab all rows from all pages
+		$results = new WP_Query( $args );
+
+		return ! empty( $results->posts ) ? $results->posts : array();
+	}
+
+	/**
+	 * Add Existing layouts.
+	 *
+	 * @since 1.0
+	 *
+	 * @return array
+	 */
+	public function add_existing_layouts() {
+
+		$pages = self::get_all_pages();
+
+		// Grab all rows from all pages.
 		$row_content = array ();
-		if ( ! empty( $pages->posts ) ) {
-			foreach ( $pages->posts as $page ) {
-				$row_content = array_merge( $row_content,
-					self::parse_gridblocks( $page->post_content ) );
-			}
+		foreach ( $pages as $page ) {
+			$row_content = array_merge( $row_content, self::parse_gridblocks( $page->post_content ) );
 		}
 
 		return $row_content;

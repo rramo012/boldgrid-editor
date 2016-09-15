@@ -50,7 +50,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'textEffectClasses' : BoldgridEditor.builder_config.textEffectClasses,
 				'fonts' : BoldgridEditor.builder_config.fonts,
 				'themeFonts' : self.getThemeFonts(),
-				'myFonts' : [ ]
+				'myFonts' : BoldgridEditor.builder_config.components_used.font
 			} );
 
 			BG.FontRender.updateFontLink( BG.Controls.$container );
@@ -163,7 +163,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			    	} );
 			    	
 			    	ul.find('[data-type="theme"]:first').before( '<h3 class="seperator">Theme Fonts</h3>' );
-			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">Custom Fonts</h3>' );
+			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">My Fonts</h3>' );
 			    	ul.find('[data-type="all"]:first').before( '<h3 class="seperator">All Fonts</h3>' );
 			    	
 			    	setTimeout( function () {

@@ -1,20 +1,68 @@
+/**
+ * Automatically Copies Deps from Framework:
+ * FontAwesome
+ * jquery-stellar
+ * components.css
+ */
+
 var gulp    = require( 'gulp' ),
     uglify  = require( 'gulp-uglify' ),
     cssnano = require( 'gulp-cssnano' ),
     rename  = require( 'gulp-rename' ),
     sass    = require( 'gulp-sass' ),
+	debug    = require( 'gulp-debug' ),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     jshint   = require( 'gulp-jshint' ),
+    sequence = require('run-sequence'),
     stylish = require('jshint-stylish'),
     autoprefixer = require('gulp-autoprefixer'),
+	bower    = require( 'gulp-bower' ),
 	pump = require('pump');
 
 // Configs.
 var config = {
     src:  './',
     dist: './',
+	bower : './bower_components',
+	fontDest : './assets/fonts',
+	cssDest : './assets/css',
+	jsDest : './assets/js',
 };
+
+//Download framework.
+gulp.task('bower', function () {
+	  return bower().pipe( gulp.dest( config.bower ) );
+});
+
+gulp.task('font-awesome', function () {
+	gulp.src( [
+			config.bower + '/font-awesome/fonts/**/*',
+		] )
+		.pipe( debug({title: 'Font Awesome Fonts:'}) )
+		.pipe( gulp.dest( config.fontDest ) );
+	
+	gulp.src( [
+	   		config.bower + '/font-awesome/css/font-awesome.min.css',
+	   	] )
+	   	.pipe( debug({title: 'Font Awesome CSS:'}) )
+	   	.pipe( gulp.dest( config.cssDest ) );
+});
+gulp.task('boldgrid-components', function () {
+	gulp.src( [
+		config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/components.*'
+   ] )
+   .pipe( debug({title: 'BoldGrid Components:'}) )
+   .pipe( gulp.dest( config.cssDest ) );
+});
+gulp.task('copy-parallax-js', function () {
+	gulp.src( [
+		config.bower + '/jquery.stellar/jquery.stellar.js',
+		config.bower + '/jquery.stellar/jquery.stellar.min.js'
+	] )
+	.pipe( debug( {title: 'jQuery Stellar:'} ) )
+	.pipe( gulp.dest( config.jsDest + '/jquery-stellar' ) );
+});
 
 // Compile sass files.
 gulp.task( 'sass', function(  ) {
@@ -91,9 +139,13 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 } );
 
 // Build.
-gulp.task( 'default', 
-	[ 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ]
-);
+gulp.task( 'default', function ( cb ) {
+	sequence (
+		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag' ],
+		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
+		cb
+	);
+});
 
 gulp.task('watch', function() {
 	gulp.watch( config.src + 'assets/scss/**/*', [ 'sass' ] );

@@ -21,36 +21,20 @@
 class Boldgrid_Editor_Builder_Fonts {
 
 
-	public function print_font_request() {
-
-	}
-
-	public function format_fonts() {
-
-	}
-
-	public function merge_fonts() {
-
-	}
-
 	public function parse_fonts( $html ) {
-		$fonts = array();
-
 		$dom = new DOMDocument();
-
 		@$dom->loadHTML( $html );
-
 		$xpath = new DOMXPath( $dom );
 
-		// traverse all results
-		foreach ( $xpath->query( "//*[@data-font-family]" ) as $rowNode ) {
-			$fonts[] = $rowNode->getAttribute('data-font-family');
-		}
-
-		return $fonts;
+		return Boldgrid_Editor_Builder_Components::find_fonts( $xpath );
 	}
 
 	public function create_font_url( $fonts ) {
+
+		if ( empty( $fonts ) ) {
+			return;
+		}
+
 		$base_url = 'https://fonts.googleapis.com/css?';
 		$href = implode( '|', $fonts );
 		$href = $base_url . http_build_query( array( 'family' => $href ) );

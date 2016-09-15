@@ -53,7 +53,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * Bind Handlers.
 		 */
 		setup : function () {
+			self.validateComponentsUsed();
 			self._setupPanelClick();
+		},
+		
+		validateComponentsUsed : function () {
+			$.each( BoldgridEditor.builder_config.components_used.image, function () {
+				var $temp = $('<div>').attr( 'class', this.classes ); 
+				$temp.removeClass (function ( index, css ) {
+				    return ( css.match( /(^|\s)wp-image-\S+/g) || [] ).join( ' ' );
+				} );
+				
+				this.classes = $temp.attr('class');
+			} );
 		},
 
 		_setupPanelClick : function() {
@@ -122,6 +134,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find( '.panel-body' ).html( template( {
 				'src' : $target.attr( 'src' ),
 				'presets' : self.classes,
+				'myPresets' : BoldgridEditor.builder_config.components_used.image
 			} ) );
 
 			self.preselectImage();
