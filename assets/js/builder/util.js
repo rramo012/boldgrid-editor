@@ -8,6 +8,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.Util = {
+			
+		/**
+		 * Convert Pixels to Ems.
+		 * 
+		 * @since 1.2.7
+		 * @return string ems;
+		 */
 		convertPxToEm : function ( px, fontSize ) {
 			var ems = 0;
 			
@@ -21,6 +28,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return ems;
 		},
 		
+		/**
+		 * Get classes from an element %like% keyword.
+		 * 
+		 * @since 1.2.7
+		 * @return string classes;
+		 */
 		getClassesLike : function ( $element, namespace ) {
 			var classString = $element.attr('class'),
 				allClasses = [],

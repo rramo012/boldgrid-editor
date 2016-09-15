@@ -42,6 +42,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$( 'body' ).append( this.$element );
 		},
 
+		/**
+		 * Center the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		centerPanel : function () {
 			var $window = $(window),
 			    width = parseInt( this.$element.css('width') ),
@@ -60,9 +65,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		/**
 		 * Setup Scrolling within the panel.
 		 *
+		 * @param control BG.Control.
 		 * @since 1.3
 		 */
 		initScroll : function ( control ) {
+			// Default height of scroll is the height of body minus this number.
 			var sizeOffset = -66;
 			
 			if ( control.panel && control.panel.sizeOffset ) {
@@ -84,6 +91,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * Check if a control is currently open.
 		 *
 		 * @since 1.3
+		 * @param control BG.Control.
+		 * @return bool isOpenControl.
 		 */
 		isOpenControl : function ( control ) {
 			var isOpenControl = false;
@@ -137,10 +146,20 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 		
+		/**
+		 * Strip temp classes.
+		 *
+		 * @since 1.3
+		 */
 		removeClasses : function () {
 			BG.Controls.$container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
 		},
 
+		/**
+		 * Close panel.
+		 *
+		 * @since 1.3
+		 */
 		closePanel : function () {
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
@@ -157,6 +176,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			tinymce.activeEditor.undoManager.add();
 		},
 
+		/**
+		 * Scroll to the element that has the selected class.
+		 *
+		 * @since 1.3
+		 */
 		scrollToSelected : function () {
 			var scrollPos, scrollOffset,
 				$selected = self.$element.find( '.selected:not(.filters .selected):visible' );
@@ -176,6 +200,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.scrollTo( scrollPos + 'px' );
 		},
 		
+		/**
+		 * Get the controls scrollable target.
+		 *
+		 * @since 1.3
+		 * @return string target.
+		 */
 		getScrollTarget : function () {
 			var target = '.panel-body'; 
 			if ( self.currentControl && self.currentControl.panel.scrollTarget ) {
@@ -185,6 +215,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return target;
 		},
 		
+		/**
+		 * Scroll to a pixel position.
+		 *
+		 * @since 1.3
+		 * @param integer to Position to scroll to.
+		 * @return string target.
+		 */
 		scrollTo : function ( to ) {
 			this.$element.find( self.getScrollTarget() ).slimScroll( { 
 			    scrollTo : to,
@@ -193,11 +230,21 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 
+		/**
+		 * Delete all content from a panel.
+		 *
+		 * @since 1.3
+		 */
 		clear : function () {
 			this.$element.find( '.panel-title .name' ).empty();
 			this.$element.find( '.panel-body' ).empty();
 		},
 		
+		/**
+		 * Show the footer of a panel if the control configures it.
+		 *
+		 * @since 1.3
+		 */
 		_enableFooter : function ( config ) {
 			if ( config && config.includeFooter ) {
 				self.showFooter();
@@ -205,14 +252,30 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.hideFooter();
 			}
 		},
-		
+
+		/**
+		 * Hide footer.
+		 *
+		 * @since 1.3
+		 */
 		hideFooter : function () {
 			this.$element.find('.panel-footer').hide();
 		},
+
+		/**
+		 * Show footer.
+		 *
+		 * @since 1.3
+		 */
 		showFooter : function () {
 			this.$element.find('.panel-footer').show();
 		},
-		
+
+		/**
+		 * Setup handlers for the user clicking on the customize button.
+		 *
+		 * @since 1.3
+		 */
 		_setupCustomize : function ( control ) {
 			
 			if ( ! control.panel.customizeCallback ) {
@@ -228,7 +291,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				}
 			} );
 		},
-		
+
+		/**
+		 * 
+		 *
+		 * @since 1.3
+		 */
 		_setupCustomizeDefault : function () {
 			var panel = BG.Panel;
 

@@ -7,6 +7,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	
 	self = BOLDGRID.EDITOR.FontRender = {
 	
+		/**
+		 * Get array of font families.
+		 * 
+		 * @since 1.2.7
+		 * @return array Families that need to be reuqested.
+		 */
 		createLinkList : function ( $scope ) {
 			var families = {};
 			
@@ -23,6 +29,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			return families;
 		},
 		
+		/**
+		 * Update font link that has been added to the head.
+		 * 
+		 * @since 1.2.7
+		 * @return array Families that need to be reuqested.
+		 */
 		updateFontLink : function ( $scope ) {
 			var families, familyParam, params,
 				baseUrl = 'https://fonts.googleapis.com/css?',
@@ -49,7 +61,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				params = jQuery.param( { family: familyParam } );
 				$link.attr( 'href' , baseUrl + params );
 			}
-			
 		}
 	};
 	
