@@ -64,19 +64,39 @@ gulp.task( 'add-git-badges', function ( cb ) {
 		.pipe( gulp.dest('./tets.md/README.md') );
 } );
 
-gulp.task('phpcbf', function () {
-	  return gulp.src(['includes/builder/**/*.php', '!*/**/index.php'])
+gulp.task('phpcbf-includes', function () {
+	return gulp.src( [
+		  'includes/class-boldgrid-editor-assets.php',
+		  ])
+		  .pipe(phpcbf({
+			  bin: 'phpcbf',
+			  standard: 'WordPress',
+			  warningSeverity: 0
+		  }))
+		  .on('error', gutil.log)
+		  .pipe(gulp.dest('includes'));
+	});
+
+gulp.task('phpcbf-builder', function () {
+	  return gulp.src( [
+			'includes/builder/**/*.php',
+			'!*/**/index.php'
+		])
 	  .pipe(phpcbf({
 	    bin: 'phpcbf',
         standard: 'WordPress',
 	    warningSeverity: 0
 	  }))
 	  .on('error', gutil.log)
-	  .pipe(gulp.dest('includes/builder/'));
-	});
+	  .pipe(gulp.dest('includes/builder'));
+});
 
 gulp.task('phpcs', function () {
-    return gulp.src( ['includes/builder/**/*.php', '!*/**/index.php'])
+    return gulp.src( [
+			'includes/class-boldgrid-editor-assets.php',
+			'includes/builder/**/*.php',
+			'!*/**/index.php'
+		])
         // Validate files using PHP Code Sniffer.
         .pipe(phpcs({
             bin: 'phpcs',
@@ -204,10 +224,9 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 	);
 } );
 
-// Build.
 gulp.task( 'default', function ( cb ) {
 	sequence (
-		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcbf', 'readme' ],
+		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcbf-includes', 'phpcbf-builder', 'readme' ],
 		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js', 'phpcs' ],
 		cb
 	);
