@@ -43,6 +43,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.openPanel();
 		},
 		
+		/**
+		 * When the user clicks Add Image open the media library.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupAddImage : function () {
 
 			BG.Panel.$element.on( 'click', '.background-design .add-image-controls', function () {
@@ -80,6 +85,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
+		 * 
+		 * @since 1.2.7
 		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
@@ -87,6 +94,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Setup Init.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self._setupBackgroundClick();
 			self._setupFilterClick();
@@ -102,6 +114,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupAddImage();
 		},
 
+		/**
+		 * Bind Event: Change background section color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupBackgroundColor : function () {
 			var panel = BG.Panel;
 
@@ -138,6 +155,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		},
 		
+		/**
+		 * Bind Event: Set the default color for overlay.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupOverlayReset : function () {
 			var panel = BG.Panel;
 			
@@ -154,6 +176,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: Change overlay color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupOverlayColor : function () {
 			var panel = BG.Panel;
 			
@@ -173,6 +200,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Update background image on page.
+		 * 
+		 * @since 1.2.7
+		 */
 		updateBackgroundImage : function () {
 			var $target = BG.Menu.$element.targetData[ self.name ],
 				overlay = $target.attr( 'data-bg-overlaycolor'),
@@ -185,10 +217,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Create gradient overlay string.
+		 * 
+		 * @since 1.2.7
+		 * @param string color.
+		 * @return string color.
+		 */
 		getOverlayImage : function ( color ) {
 			return 'linear-gradient(to left, ' + color + ', ' + color + ')';
 		},
 		
+		/**
+		 * Bind Event: Changing Gradient Color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupGradientColor : function () {
 			var panel = BG.Panel;
 			
@@ -213,6 +257,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: Clicking Settings.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCustomization : function() {
 			var panel = BG.Panel;
 
@@ -222,6 +271,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: Input scroll effect changing.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupScrollEffects : function () {
 			var panel = BG.Panel;
 
@@ -237,6 +291,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
+		
+		/**
+		 * Bind Event: Input gradient direction changing.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupGradientDirection : function () {
 			var panel = BG.Panel;
 			
@@ -249,12 +309,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
-		
+		/**
+		 * Create the css needed for a linear gradient.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $element.
+		 */
 		createGradientCss : function ( $element ) {
 			return 'linear-gradient(' + $element.attr('data-bg-direction') + ',' +
 				$element.attr('data-bg-color-1') + ',' + $element.attr('data-bg-color-2') + ')';
 		},
 		
+		/**
+		 * Setup background size control.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupBackgroundSize : function () {
 			var panel = BG.Panel;
 
@@ -273,6 +343,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: When the user leaves customization.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCustomizeLeave : function () {
 			var panel = BG.Panel;
 
@@ -286,6 +361,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: When the user clicks on a filter.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupFilterClick : function () {
 			var panel = BG.Panel;
 
@@ -320,6 +400,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: When the user clicks on a design.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupBackgroundClick : function() {
 			var panel = BG.Panel;
 
@@ -373,7 +458,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.setImageSelection( $this.data('type'), background );
 			} );
 		},
-		
+
+		/**
+		 * Activate a filter.
+		 * 
+		 * @since 1.2.7
+		 * @param string type.
+		 */
 		activateFilter : function ( type ) {
 			var backgroundImageProp,
 				filterFound = false,
@@ -405,6 +496,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Set Image selection.
+		 * 
+		 * @since 1.2.7
+		 * @param string type.
+		 * @param string prop.
+		 */
 		setImageSelection : function ( type, prop ) {
 			var $currentSelection = BG.Panel.$element.find( '.current-selection' ),
 				$target = BG.Menu.getTarget( self );
@@ -420,6 +518,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$currentSelection.attr( 'data-type', type );
 		},
 
+		/**
+		 * Set Image background.
+		 * 
+		 * @since 1.2.7
+		 * @param string url.
+		 */
 		setImageBackground : function ( url ) {
 			var $target = BG.Menu.getTarget( self );
 
@@ -428,16 +532,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Controls.addStyle( $target, 'background',  '' );
 			self.updateBackgroundImage();
 			BG.Controls.addStyle( $target, 'background-size', 'cover' );
-			
 		},
 
+		/**
+		 * Init all sliders.
+		 * 
+		 * @since 1.2.7
+		 */
 		_initSliders : function () {
-
 			self._initVerticleSlider();
-			//self._initOpacitySlider();
-
 		},
-
+		
+		/**
+		 * Init Vertical position slider.
+		 * 
+		 * @since 1.2.7
+		 */
 		_initVerticleSlider : function () {
 			var $target = BG.Menu.getTarget( self ),
 				defaultPos = $target.css( 'background-position-y' );
@@ -457,20 +567,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} ).siblings( '.value' ).html( defaultPos );
 		},
 
-		_initOpacitySlider : function () {
-			var defaultPos = 100;
-
-			BG.Panel.$element.find( '.background-design .image-opacity .slider' ).slider( {
-				min : 0,
-				max : 100,
-				value : defaultPos,
-				range : 'max',
-				slide : function( event, ui ) {
-
-				},
-			} ).siblings( '.value' ).html( defaultPos );
-		},
-
+		/**
+		 * Open the customization view.
+		 * 
+		 * @since 1.2.7
+		 */
 		openCustomization : function () {
 			BG.Panel.$element.find('.preset-wrapper').hide();
 			BG.Panel.$element.find('.background-design .customize').show();
@@ -480,6 +581,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 		},
 		
+		/**
+		 * Set all defaults.
+		 * 
+		 * @since 1.2.7
+		 */
 		selectDefaults : function () {
 			self.setScrollEffect();
 			self.setSize();
@@ -488,6 +594,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setDefaultOverlayColor();
 		},
 		
+		/**
+		 * Set default overlay color.
+		 * 
+		 * @since 1.2.7
+		 */
 		setDefaultOverlayColor : function () {
 			var $target = BG.Menu.getTarget( self ),
 				$overlayColorSection = BG.Panel.$element.find('.overlay-color'),
@@ -499,6 +610,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 		},
 		
+		/**
+		 * Set default background size.
+		 * 
+		 * @since 1.2.7
+		 */
 		setSize : function () {
 			var $input = BG.Panel.$element.find( 'input[name="background-size"]' ),
 				$target = BG.Menu.getTarget( self );
@@ -508,6 +624,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Set default scroll direction.
+		 * 
+		 * @since 1.2.7
+		 */
 		setScrollEffect : function () {
 			var $target = BG.Menu.getTarget( self );
 
@@ -520,6 +641,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Set graadient direction.
+		 * 
+		 * @since 1.2.7
+		 */
 		setDefaultDirection : function () {
 			var $target = BG.Menu.getTarget( self ),
 				direction = $target.attr('data-bg-direction');
@@ -531,6 +657,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} 
 		},
 		
+		/**
+		 * Set default background colors.
+		 * 
+		 * @since 1.2.7
+		 */
 		setDefaultBackgroundColors : function () {
 			var bgColor, $bgControlColor,
 				$target = BG.Menu.getTarget( self );
@@ -546,20 +677,29 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Get a random gradient direction.
+		 * 
+		 * @since 1.2.7
+		 * @return string.
+		 */
 		randomGradientDirection : function () {
 			var directions = [
 				'to left',
 				'to bottom',
 			];
 			
-			return directions [Math.floor( Math.random() * directions.length ) ];
+			return directions[ Math.floor( Math.random() * directions.length ) ];
 		},
-		
-		// Randomize gradients.
-		_createGradientGradients : function () {
 
-
+		/**
+		 * Create JSON of gradients. Not used at runtime.
+		 * 
+		 * @since 1.2.7
+		 */
+		_createGradients : function () {
 			var gradientData = []; 
+			
 			$.each( BoldgridEditor.sample_backgrounds.default_gradients, function () {
 				var	color1 = this.colors[0],
 					color2 = this.colors[1],
@@ -576,13 +716,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			console.log( JSON.stringify( gradientData ) );
 		},
 
+		/**
+		 * Create gradients based on the users palettes.
+		 * 
+		 * @since 1.2.7
+		 */
 		setPaletteGradients : function () {
 			var combos = [];
 			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
-				$.each( [0,1], function () {
+				$.each( [ 0, 1 ], function () {
 					var color1, color2, direction;
-					color1 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
-					color2 = BoldgridEditor.colors[Math.floor(Math.random()* BoldgridEditor.colors.length)];
+					color1 = BoldgridEditor.colors[ Math.floor( Math.random() * BoldgridEditor.colors.length ) ];
+					color2 = BoldgridEditor.colors[ Math.floor( Math.random() * BoldgridEditor.colors.length ) ];
 					if ( color1 != color2 ) {
 						direction = self.randomGradientDirection();
 						combos.push( {
@@ -599,11 +744,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				BoldgridEditor.sample_backgrounds.gradients.unshift( this );
 			} );
 		},
-		
+
+		/**
+		 * Is the given url a gradient.
+		 * 
+		 * @since 1.2.7
+		 * @param string backgroundUrl.
+		 * @return boolean.
+		 */
 		backgroundIsGradient : function ( backgroundUrl ) {
 			return backgroundUrl.indexOf( 'linear-gradient' ) !== -1 && -1 === backgroundUrl.indexOf('url');
 		},
 		
+		/**
+		 * Preselect the background being used when opening the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		preselectBackground : function ( keepFilter ) {
 			var type = 'color',
 				$target = BG.Menu.getTarget( self ),
@@ -674,6 +831,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$currentSelection.attr( 'data-type', type );
 		},
 
+		/**
+		 * Open Panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPanel : function () {
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-background' );

@@ -61,6 +61,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.openPanel();
 		},
 
+		/**
+		 * Setup listeners and Init.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self._setupPresetClick();
 			self._setupPresetHover();
@@ -73,6 +78,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$presets = self.applyUiStyles( presets );
 		},
 
+		/**
+		 * Bind Event: Leaving the customization view of a panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCustomizeLeave : function () {
 			var panel = BG.Panel;
 
@@ -87,6 +97,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: Mouse leave on the box panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupPanelLeave : function () {
 			var panel = BG.Panel;
 
@@ -106,13 +121,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Apply clones from a cloned element.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $module.
+		 */
 		_applyCloneStyles : function ( $module ) {
 			if ( self.$targetModuleClone ) {
 				$module.attr( 'style', self.$targetModuleClone.attr('style') );
 				$module.attr( 'data-mce-style', self.$targetModuleClone.attr('style') );
 			}
 		},
-		
+
+		/**
+		 * Bind Event: Hovering over a selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupPresetHover : function () {
 			var panel = BG.Panel;
 
@@ -129,6 +155,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: When clicking preset add classes.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $module.
+		 */
 		_setupPresetClick : function () {
 			var panel = BG.Panel;
 
@@ -158,7 +190,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			} );
 		},
-		
+
+		/**
+		 * Remove Inline styles from $module.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $module.
+		 */
 		_clearInlineStyles : function ( $module ) {
 			$module.css('padding', '');
 			$module.css('margin', '');
@@ -166,12 +204,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$module.css('border-color', '');
 		},
 
+		/**
+		 * Clear stored module classes.
+		 * 
+		 * @since 1.2.7
+		 */
 		_clearModuleClasses : function () {
 			self.targetClasses = '';
 			self.targetColor = '';
 			self.$targetModuleClone = false;
 		},
 
+		/**
+		 * Store selected module classes.
+		 * 
+		 * @since 1.2.7
+		 */
 		_saveModuleClasses : function () {
 			var $module = self.findModule( BG.Menu.getTarget( self ) );
 			self.targetClasses = $module.attr( 'class' );
@@ -179,6 +227,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$targetModuleClone = $module.clone();
 		},
 
+		/**
+		 * On customization open.
+		 * 
+		 * @since 1.2.7
+		 */
 		openCustomizer : function () {
 			var panel = BG.Panel;
 			self._initSliders();
@@ -192,6 +245,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.hideFooter();
 		},
 		
+		/**
+		 * Hide/Show border control if available on module.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupBorderColor : function () {
 			var $target = BG.Menu.getTarget( self ),
 				$control = BG.Panel.$element.find('.border-color-controls'),
@@ -205,6 +263,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Find the module on the column.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $target.
+		 * @return jQuery $module.
+		 */
 		findModule : function ( $target ) {
 			var $module,
 				$childDiv = $target.find( '> div' ),
@@ -227,6 +292,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return $module;
 		},
 
+		/**
+		 * Add box to a column.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $this
+		 */
 		addBox : function ( $this ) {
 			var style,
 				$target = BG.Menu.getTarget( self ),
@@ -249,6 +320,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Remove all module classes.
+		 * 
+		 * @since 1.2.7
+		 */
 		removeModuleClasses : function ( $module ) {
 			$.each( BoldgridEditor.builder_config.boxes, function () {
 				$module.removeClass( this );
@@ -258,13 +334,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Controls.addStyle( $module, 'background-color', '' );
 		},
 
+		/**
+		 * Initialize Sliders.
+		 * 
+		 * @since 1.2.7
+		 */
 		_initSliders : function () {
-
 			self._initPaddingSlider();
-			//self._initMarginSlider();
 			BG.CONTROLS.Generic.margin.bind();
 		},
 
+		/**
+		 * Init Background color control.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupBackgroundColor : function () {
 			var panel = BG.Panel;
 
@@ -288,11 +372,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Remove border styles.
+		 * 
+		 * @since 1.2.7
+		 */
 		selfResetBorderClasses : function ( $module ) {
 			$module.removeClass( BG.CONTROLS.Color.borderColorClasses.join(' ') );
 			BG.Controls.addStyle( $module, 'border-color', '' );
 		},
-		
+
+		/**
+		 * Init borderr color control.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupBorderColor : function () {
 			var panel = BG.Panel;
 			
@@ -321,6 +415,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Init padding slider.
+		 * 
+		 * @since 1.2.7
+		 */
 		_initPaddingSlider : function () {
 			var horPaddingEm, vertPaddingEm,
 				$target = BG.Menu.getTarget( self ),
@@ -368,58 +467,34 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				},
 			} ).siblings( '.value' ).html( vertPaddingEm );
 		},
-		
+
+		/**
+		 * Get the current target. An override method.
+		 * 
+		 * @since 1.2.7
+		 */
 		getTarget : function () {
 			var $target = BG.Menu.getTarget( self );
 			return self.findModule( $target );
 		},
 
-		_initMarginSlider : function () {
-			var $target = BG.Menu.getTarget( self ),
-				$module = self.findModule( $target ),
-				defaultMarginVert = $module.css( 'margin-top' ),
-				defaultMarginHor = $module.css( 'margin-left' );
-		
-			defaultMarginVert = defaultMarginVert  ? parseInt( defaultMarginVert ) : 0;
-			defaultMarginHor = defaultMarginHor ? parseInt( defaultMarginHor ) : 0;
-		
-			BG.Panel.$element.find( '.box-design .margin .slider' ).slider( {
-				min : -15,
-				max : 50,
-				value : defaultMarginHor,
-				range : 'max',
-				slide : function( event, ui ) {
-					$target = BG.Menu.getTarget( self );
-					$module = self.findModule( $target );
-					
-					BG.Controls.addStyle( $module, 'margin-left', ui.value );
-					BG.Controls.addStyle( $module, 'margin-right', ui.value );
-					self._saveModuleClasses();
-				},
-			} ).siblings( '.value' ).html( defaultMarginHor );
-
-			BG.Panel.$element.find( '.box-design .margin-top .slider' ).slider( {
-				min : 0,
-				max : 200,
-				value : defaultMarginVert,
-				range : 'max',
-				slide : function( event, ui ) {
-					$target = BG.Menu.getTarget( self );
-					$module = self.findModule( $target );
-					
-					BG.Controls.addStyle( $module, 'margin-top', ui.value );
-					BG.Controls.addStyle( $module, 'margin-bottom', ui.value );
-					self._saveModuleClasses();
-				},
-			} ).siblings( '.value' ).html( defaultMarginVert );
-		},
-		
+		/**
+		 * When the user clicks on an element if the panel is already open, refresh it.
+		 * 
+		 * @since 1.2.7
+		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
 				self.openPanel();
 			}
 		},
 
+		/**
+		 * Add colors to boxes.
+		 * 
+		 * @since 1.2.7
+		 * @return array presets.
+		 */
 		applyUiStyles : function( presets ) {
 			var $newElement,
 				presetsHtml = '',
@@ -483,6 +558,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return presetsHtml;
 		},
 
+		/**
+		 * Get the markup for all boxes to be rendered.
+		 * 
+		 * @since 1.2.7
+		 * @return array presets.
+		 */
 		getBoxMarkup : function () {
 			var boxDimensionsClass,
 				config = BoldgridEditor.builder_config.boxes,
@@ -497,6 +578,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return presets;
 		},
 
+		/**
+		 * Preselect current module.
+		 * 
+		 * @since 1.2.7
+		 */
 		preselectBox : function () {
 			var $target = BG.Menu.getTarget( self ),
 				$module = self.findModule( $target ),
@@ -530,6 +616,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Show the panel footer if something is selected.
+		 * 
+		 * @since 1.2.7
+		 */
 		toggleFooter : function () {
 			if ( BG.Panel.$element.find('.selected').length ) {
 				BG.Panel.showFooter();
@@ -538,6 +629,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Add styles to my designs.
+		 * 
+		 * @since 1.2.7
+		 */
 		styleMyDesigns : function () {
 			var $body = BG.Controls.$container.$body;
 			
@@ -555,6 +651,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Hide duplicates in my designs.
+		 * 
+		 * @since 1.2.7
+		 */
 		hideDuplicates : function () {
 			var classes = [];
 			BG.Panel.$element.find('.my-designs > *').each( function () {
@@ -569,6 +670,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Add all designs from the page into the my designs array.
+		 * 
+		 * @since 1.2.7
+		 */
 		_updateMyDesigns : function () {
 			
 			BG.Controls.$container.$body.find('.bg-box').each( function () {
@@ -594,6 +700,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Open Panel.
+		 * 
+		 * @since 1.2.7
+		 * @param Event e.
+		 */
 		openPanel : function ( e ) {
 
 			var panel =  BG.Panel,
