@@ -44,7 +44,6 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.$container = $container;
 				self.$dragHelper = self.renderHelpers();
 				self.bind();
-				self.bindHelper();
 			},
 			
 			/**
