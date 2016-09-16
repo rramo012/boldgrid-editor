@@ -42,6 +42,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			width : '268px',
 		},
 
+		/**
+		 * Constructor.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self._setupEffectClick();
 			BG.CONTROLS.Generic.fontColor.bind();
@@ -55,7 +60,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			BG.FontRender.updateFontLink( BG.Controls.$container );
 		},
-		
+
+		/**
+		 * Get the fonts used by the theme.
+		 * 
+		 * @since 1.2.7
+		 */
 		getThemeFonts : function () {
 			var themeFonts = [];
 			
@@ -66,6 +76,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return themeFonts;
 		},
 
+		/**
+		 * Add font effect when clicking on a panel selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupEffectClick : function() {
 			var panel = BG.Panel;
 
@@ -83,10 +98,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
-		onMenuClick : function ( e ) {
+
+		/**
+		 * Open panel when clicking on menu item.
+		 * 
+		 * @since 1.2.7
+		 */
+		onMenuClick : function () {
 			self.openPanel();
 		},
 
+		/**
+		 * Setup Character spacing slider.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $el
+		 */
 		charSpacingSlider : function ( $el ) {
 
 			var elementSize = $el.css( 'letter-spacing' ),
@@ -105,6 +132,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Setup line spacing slider.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $el
+		 */
 		lineSpacingSlider : function ( $el ) {
 
 			var elementSize = $el.css( 'line-height' ),
@@ -125,20 +158,34 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
+		 * 
+		 * @since 1.2.7
 		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
 				self.openPanel();
 			}
 		},
-		
+
+		/**
+		 * Set the value of the current font color.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $target
+		 */
 		_initTextColor : function ( $target ) {
 			var textColor = '#333';
 			 BG.Panel.$element.find('[name="font-color"]')
 			 	.data('type', 'color')
 			 	.val( textColor );
 		},
-		
+
+		/**
+		 * Set font family dropdown.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $target
+		 */
 		_initFamilyDropdown : function () {
 			var renderItem,
 				panel = BG.Panel,
@@ -201,10 +248,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.preselectFamily();
 		},
 		
+		/**
+		 * Get the current font family selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		getFamilySelection : function () {
 			return BG.Panel.$element.find('.section.family .ui-selectmenu-button' );
 		},
 		
+		/**
+		 * Preselect the font family.
+		 * 
+		 * @since 1.2.7
+		 */
 		preselectFamily : function () {
 			var fontClass,
 				defaultFamily = 'Abel',
@@ -223,7 +280,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	    	$select.attr( 'data-value', defaultFamily );
 		},
-		
+
+		/**
+		 * Preset the text color input.
+		 * 
+		 * @since 1.2.7
+		 */
 		setTextColorInput : function () {
 			var color, 
 				$target = BG.Menu.getTarget( self );
@@ -234,7 +296,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				.find('input[name="font-color"]')
 				.attr( 'value', color );
 		},
-		
+
+		/**
+		 * Preset the text effect control.
+		 * 
+		 * @since 1.2.7
+		 */
 		setTextEffect : function () {
 			var $target = BG.Menu.getTarget( self ),
 				$section = BG.Panel.$element.find('.panel-body .section.effects'),
@@ -251,12 +318,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$section.find('.none-selected').addClass('selected');
 			}
 		},
-		
+
+		/**
+		 * Preset controls.
+		 * 
+		 * @since 1.2.7
+		 */
 		selectPresets : function () {
 			self.setTextColorInput();
 			self.setTextEffect();
 		},
 
+		/**
+		 * Open all panels.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPanel : function () {
 			var panel = BG.Panel,
 				$target = BG.Menu.getTarget( self );

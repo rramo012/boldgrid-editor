@@ -17,6 +17,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find( '.choices' ).append( self.defaultCustomize() );
 		},
 		
+		/**
+		 * Init Controls.
+		 * 
+		 * @since 1.2.7
+		 */
 		initControls : function () {
 			
 			var customizeOptions = BG.Panel.currentControl.panel.customizeSupport || [],
@@ -39,6 +44,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Setup Customization.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupInputCustomization : function () {
 			BG.Panel.$element.on( 'change', '.class-control input', function () {
 				var $this = $( this ),
@@ -57,6 +67,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Setup Init.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupInputInitialization : function () {
 			var panel = BOLDGRID.EDITOR.Panel;
 
@@ -72,12 +87,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Generic Margin Control.
+		 * 
+		 * @since 1.2.7
+		 */
 		margin : {
 			template : wp.template('boldgrid-editor-margin'),
+			
 			render : function () {
 				BG.Panel.$element.find('.panel-body .customize').find( '.section.margin-control' ).remove();
 				BG.Panel.$element.find('.panel-body .customize').append( this.template() );
 			},
+			
 			bind : function ( options ) {
 				if ( ! options ) {
 					options = {};
@@ -119,7 +141,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} ).siblings( '.value' ).html( defaultMarginVert );
 			}
 		},
-		
+	
+		/**
+		 * Generic rotate control.
+		 * 
+		 * @since 1.2.7
+		 */
 		rotate  : {
 			classes : [
 			    'fa-rotate-90',
@@ -166,6 +193,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 			}
 		},
+		
+		/**
+		 * Insert Link Control.
+		 * 
+		 * @since 1.2.7
+		 */
 		insertLink  : {
 			template : wp.template('boldgrid-editor-insert-link'),
 			render : function () {
@@ -183,6 +216,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Generic Font Size control.
+		 * 
+		 * @since 1.2.7
+		 */
 		fontSize  : {
 			template : wp.template('boldgrid-editor-font-size'),
 			render : function () {
@@ -210,9 +248,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Generic Font Color control.
+		 * 
+		 * @since 1.2.7
+		 */
 		fontColor  : {
+			
 			bound : false,
+			
 			template : wp.template('boldgrid-editor-font-color'),
+			
 			render : function () {
 				var $target = BG.Menu.getTarget( BG.Panel.currentControl );
 				
@@ -224,6 +270,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 						.find( '.section.font-color label' ).css( 'background-color', $target.css('color') );
 				} );
 			},
+			
 			bind : function () {
 				var panel = BG.Panel;
 				

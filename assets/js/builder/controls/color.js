@@ -47,7 +47,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
         ],
 
 		customColors : BoldgridEditor.saved_colors,
-
+		
+		/**
+		 * Init the color panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		init : function () {
 			self._create();
 			self._setupClosePicker();
@@ -67,12 +72,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return self;
 		},
 		
+		/**
+		 * Add any extra classes to the panel on load.
+		 * 
+		 * @since 1.2.7
+		 */
 		_addPanelClasses : function () {
 			if ( ! BoldgridEditor.is_boldgrid_theme ) {
 				self.$colorPanel.addClass('non-bg-theme');
 			}
 		},
-		
+
+		/**
+		 * Bind Event: When the user clicks rest to default.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupResetDefault : function () {
 			self.$colorPanel.on( 'click', '.default-reset', function ( e ) {
 				e.preventDefault();
@@ -83,13 +98,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Bind Event: When the user opens customization, reset the color controls.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupOpenCustomization : function () {
-			
 			BG.Panel.$element.on( 'bg-open-customization', function () {
 				self.initColorControls();
 			} );
 		},
 
+		/**
+		 * When loosing focus of the color picker, close the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupAutoHide : function () {
 			$( 'body' ).on( 'click', function () {
 				self.closePicker();
@@ -100,16 +124,33 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Get the class for a color index.
+		 * 
+		 * @since 1.2.7
+		 * @param string type property
+		 * @param string index color num
+		 */
 		getColorClass : function ( type, index ) {
 			return 'color' + index + '-' + type;
 		},
 
+		/**
+		 * Close color panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPicker : function ( $input ) {
 			self.$colorPanel.show();
 			self.$currentInput = $input;
 			tinymce.activeEditor.undoManager.add();
 		},
 
+		/**
+		 * Close color panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		closePicker : function () {
 			if ( self.$colorPanel.is(':visible') ) {
 				tinymce.activeEditor.undoManager.add();
@@ -119,10 +160,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Store saved colors in an input on the post page.
+		 * 
+		 * @since 1.2.7
+		 */
 		saveCustomColors : function () {
 			$('#post input[name="boldgrid-custom-colors"]').val( JSON.stringify( self.customColors ) );
 		}, 
 
+		/**
+		 * Bind Event: User clicks label showing color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupColorPreview : function () {
 			BG.Panel.$element.on( 'click', '.color-preview', function ( e ) {
 				e.stopPropagation();
@@ -162,12 +213,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: user clicks close on color picker.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupClosePicker : function () {
 			self.$colorPanel.find('.panel-title .close-icon').on( 'click', function () {
 				self.closePicker();
 			} );
 		},
 
+		/**
+		 * Setup ability to drag panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupPanelDrag : function () {
 			this.$colorPanel.draggable( {
 				containment: '#wpwrap',
@@ -176,6 +237,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Find the appearence color of an element. Sometimes an element Bg color will be transparent.
+		 * traverse the dom up until we get a color.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $element.
+		 * @param string property. e.g. background-color.
+		 * @return string color.
+		 */
 		findAncestorColor : function ( $element, property ) {
 			var color, elements = [];
 
@@ -198,6 +268,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return color;
 		},
 		
+		/**
+		 * Get all theme palette background colors.
+		 * 
+		 * @since 1.2.7
+		 * @return array backgroundColors.
+		 */
 		getPaletteBackgroundColors : function () {
 			var backgroundColors = {};
 
@@ -208,10 +284,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return backgroundColors;
 		},
 		
+		/**
+		 * Check if a color is transparent.
+		 * 
+		 * @since 1.2.7
+		 * @param bool.
+		 */
 		isColorTransparent : function ( color ) {
 			return BG.CONTROLS.Color.transparentColors.indexOf( color ) !== -1 || ! color;
 		},
 		
+		/**
+		 * For each color control found in the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		initColorControls : function () {
 			var $target = BG.Menu.getTarget( BOLDGRID.EDITOR.Panel.currentControl );
 			
@@ -239,6 +326,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Initialize the color picker and bind the color change event.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupColorPicker : function () {
 			var type = 'color',
 				defaultPickerColor = '#e3e',
@@ -281,9 +373,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				hide: false,
 				palettes: true
 			} );
-
 		},
 
+		/**
+		 * Copy an existing color.
+		 * 
+		 * @since 1.2.7
+		 * @param defaultPickerColor.
+		 */
 		_copyColor : function ( defaultPickerColor ) {
 			var $controls, selectedBackground;
 
@@ -303,12 +400,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.selectColor( $controls.find('.my-colors li:last-of-type') );
 		},
 
+		/**
+		 * Bind Event: A user clicks on new color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupAddNew : function () {
 			self.$colorPanel.on( 'click', '.colors .panel-selection.custom-color', function () {
 				self._copyColor();
 			} );
 		},
 
+		/**
+		 * Render all colors that a user can choose from.
+		 * 
+		 * @since 1.2.7
+		 */
 		_renderColorOptions : function () {
 			self.$colorPanel.find('.colors-wrap').html( self.colorTemplate( {
 				'colors' : self.getColorsFormatted(),
@@ -317,7 +424,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			BOLDGRID.EDITOR.Tooltip.renderTooltips();
 		},
-		
+
+		/**
+		 * Format the theme colors and return them.
+		 * 
+		 * @since 1.2.7
+		 * @return array colors.
+		 */
 		getColorsFormatted : function () {
 			var colors = [];
 			$.each( BoldgridEditor.colors, function ( key ) {
@@ -332,6 +445,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			return colors;
 		},
 
+		/**
+		 * Render the color picker panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_create : function () {
 			var html,
 				template = wp.template( 'boldgrid-editor-color-panel' );
@@ -340,6 +458,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( 'body' ).append( self.$colorPanel );
 		},
 
+		/**
+		 * Bind Event: A user clicks on the remove link.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupRemove : function () {
 			self.$colorPanel.on( 'click', '.color-picker-wrap .cancel', function ( e ) {
 				var colorClasses, $selection, $control, $newSelection,
@@ -361,6 +484,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Select a color.
+		 * 
+		 * @param jQuery $element.
+		 */
 		selectColor : function ( $element ) {
 			self.$colorPanel.find( '.selected' ).removeClass( 'selected' );
 			$element.addClass( 'selected' );
@@ -371,6 +499,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Bind Event: Click on a panel selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCallback : function () {
 			self.$colorPanel.on( 'click', '.colors .panel-selection', function ( e ) {
 				var colorClasses, type,

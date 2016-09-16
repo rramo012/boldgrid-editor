@@ -21,10 +21,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		selectors : [ '.btn', 'a.button', 'a.button-secondary', 'a.button-primary' ],
 		
 		defaultColorClasses : [
-		    {
-		    	color : '#eee',
-		    	number : 0
-		    },
+			{
+				color : '#eee',
+				number : 0
+			},
 			{
 				color : '#229ffd',
 				number : 1
@@ -48,18 +48,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		classes : [
-		   { name : 'btn btn-3d btn-rounded' },
-		   { name : 'btn btn-3d btn-pill' },
-		   { name : 'btn btn-3d' },
-		   
-		   { name : 'btn btn-raised btn-rounded' },
-		   { name : 'btn btn-raised btn-pill' },
-		   { name : 'btn btn-raised btn-small-caps' },
+			{ name : 'btn btn-3d btn-rounded' },
+			{ name : 'btn btn-3d btn-pill' },
+			{ name : 'btn btn-3d' },
+
+			{ name : 'btn btn-raised btn-rounded' },
+			{ name : 'btn btn-raised btn-pill' },
+			{ name : 'btn btn-raised btn-small-caps' },
 
 			{ name : 'btn btn-rounded btn-flat btn-small-caps' },
 			{ name : 'btn btn-pill btn-flat' },
 			{ name : 'btn btn-flat' },
-			
 			
 			{ name : 'btn btn-longshadow btn-rounded' },
 			{ name : 'btn btn-longshadow btn-small-caps btn-pill' },
@@ -88,6 +87,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
+		/**
+		 * Panel Settings.
+		 * 
+		 * @since 1.2.7
+		 */
 		panel : {
 			title : 'Button Design',
 			height : '500px',
@@ -103,6 +107,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Setup Init.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self.applyColors();
 			self._setupPresetClick();
@@ -110,6 +119,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupCustomizeOpen();
 		},
 
+		/**
+		 * Bind Event: When customization opens.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCustomizeOpen : function () {
 			var panel = BOLDGRID.EDITOR.Panel;
 
@@ -119,7 +133,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
-		
+
+		/**
+		 * Remove all color classes from a button.
+		 * 
+		 * @since 1.2.7
+		 */
 		removeColorClasses : function () {
 			var $el = BG.Menu.getTarget( self );
 			
@@ -130,7 +149,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return (css.match (/(^|\s)btn-color\S+/g) || []).join(' ');
 			} );
 		},
-		
+
+		/**
+		 * Bind Event: When a user clicks on button color.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupColorClick : function () {
 			BG.Panel.$element.on( 'click', '.customize .button-color-controls .panel-selection', function () {
 				var $this = $( this ),
@@ -143,6 +167,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind Event: When a user clicks on a preset panel selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupPresetClick : function() {
 			var panel = BG.Panel;
 
@@ -167,6 +196,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Insert a new button.
+		 * 
+		 * @since 1.2.7
+		 */
 		insertNew : function () {
 			var $insertedButton;
 
@@ -178,12 +212,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.openPanel();
 		},
 
+		/**
+		 * When the user clicks on menu, open panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 		
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
+		 * 
+		 * @since 1.2.7
 		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
@@ -191,6 +232,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Apply coilor to the buttons.
+		 * 
+		 * @since 1.2.7
+		 */
 		applyColors : function() {
 			var currentIndex,
 				maxIndex = 5,
@@ -221,6 +267,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 		},
 		
+		/**
+		 * Init size slider.
+		 * 
+		 * @since 1.2.7
+		 */
 		sizeSlider : {
 			getDefault : function () {
 				var defaultIndex = 2,
@@ -256,9 +307,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Get colors for buttons.
+		 * 
+		 * @since 1.2.7
+		 */
 		getColorsMarkup : function () {
 			var colors = self.defaultColorClasses;
-			//@todo Make sure theme supoprts button colors.
+
 			if ( BoldgridEditor.is_boldgrid_theme && BG.Controls.hasThemeFeature('button-lib') ) {
 				colors = BG.CONTROLS.Color.getColorsFormatted();
 			} 
@@ -269,6 +325,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Open the panel for this control.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				template = wp.template( 'boldgrid-editor-button' );

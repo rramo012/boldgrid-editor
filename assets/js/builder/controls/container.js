@@ -20,14 +20,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors : [ '.boldgrid-section .container', '.boldgrid-section .container-fluid' ],
 
-		init : function () {
-			//BOLDGRID.EDITOR.Controls.registerControl( this );
-		},
+		init : function () {},
 
 		onMenuClick : function () {
 			self.toggleSectionWidth();
 		},
 		
+		/**
+		 * Switch between a container and a container fluid.
+		 */
 		toggleSectionWidth : function ( $container ) {
 			
 			if ( ! $container ) {

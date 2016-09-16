@@ -48,11 +48,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 		
+		/**
+		 * When clicking on the menu item "Add", drop down menu form more options.
+		 * 
+		 * @since 1.2.7
+		 */
 		onMenuClick : function ( e ) {
 			var $this = $( this ); 
 			$this.toggleClass('active');
 		},
 		
+		/**
+		 * Setup.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self.$element = $( '[data-action="menu-add"]' );
 
@@ -60,18 +70,33 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupMenuClick();
 		},
 		
+		/**
+		 * When clicking an element on the page, collapse menu.
+		 * 
+		 * @since 1.2.7
+		 */
 		elementClick : function () {
 			self.$element.removeClass('active');
 		},
-		
+
+		/**
+		 * Bind all events.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupMenuClick : function () {
 			BG.Menu.$element.find('.bg-editor-menu-dropdown')
 				.on( 'click', '.action.add-gridblock', self.addGridblock )
 				.on( 'click', '.action.add-row', self.addSection )
-				.on( 'click', '.action.add-button', self.addButton )
-				.on( 'click', '.action.add-icon', self.addIcon );
+				.on( 'click', '.action.add-button', BG.CONTROLS.Button.insertNew )
+				.on( 'click', '.action.add-icon', BG.CONTROLS.Icon.insertNew );
 		},
 
+		/**
+		 * Bind Event: On click of document, collapse menu.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupDimiss : function () {
 			$( document ).on( 'click', function ( e ) {
 				if ( false === $( e.target ).hasClass( 'add-element-trigger' ) ) {
@@ -79,15 +104,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
-		
-		addIcon : function () {
-			BG.CONTROLS.Icon.insertNew();
-		},
-		
-		addButton : function () {
-			BG.CONTROLS.Button.insertNew();
-		},
-		
+
+		/**
+		 * Scroll to an element on the iFrame.
+		 * 
+		 * @since 1.2.7
+		 */
 		scrollToElement : function ( $newSection, duration ) {
 			
 			$('html, body').animate({
@@ -95,6 +117,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}, duration );
 		},
 		
+		/**
+		 * Add a new Section.
+		 * 
+		 * @since 1.2.7
+		 */
 		addSection : function () {
 			var $container = BOLDGRID.EDITOR.Controls.$container,
 				$newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
@@ -113,6 +140,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			);
 		},
 		
+		/**
+		 * Add a new Gridblock.
+		 * 
+		 * @since 1.2.7
+		 */
 		addGridblock : function () {
 			var mce = BOLDGRID.EDITOR.Controls.editorMceInstance();
 			if ( mce ) {
