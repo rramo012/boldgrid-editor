@@ -28,6 +28,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			//this._setupPanelResize();
 			this._setupCustomizeLeave();
 			this._setupCustomizeDefault();
+			this._lockPanelScroll();
 
 			return this.$element;
 		},
@@ -359,7 +360,34 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				tinyMCE.activeEditor.selection.collapse( false );
 			}
 		},
+		
+		/**
+		 * Setup scroll locking.
+		 * 
+		 * @since 1.3
+		 */
+		_lockPanelScroll : function () {
+			if ( window.addEventListener ) {
+				this.$element[0].addEventListener( 'DOMMouseScroll', self._onWheel, false );
+				this.$element[0].addEventListener( 'mousewheel', self._onWheel, false );
+			}
+		},
+		
+		/**
+		 * Lock The scroll.
+		 * 
+		 * @since 1.3
+		 */
+		_onWheel : function ( e ) {
+			var e = e || window.event;
 
+			if ( e.preventDefault ) {
+				e.preventDefault();
+			}
+			
+			e.returnValue = false; 
+		},
+		
 		/**
 		 * Open the panel for a control.
 		 * 
@@ -393,6 +421,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$target.addClass( 'bg-control-element' );
 
 			BG.CONTROLS.Color.initColorControls();
+			
 		}
 
 	};

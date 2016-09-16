@@ -42,6 +42,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title : 'Image Filters',
 			height : '536px',
 			width : '800px',
+			scrollTarget : '.presets ul',
+			sizeOffset : -130,
 		},
 
 		/**

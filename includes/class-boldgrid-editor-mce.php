@@ -241,7 +241,7 @@ class Boldgrid_Editor_MCE {
 
 			$included = false;
 			foreach ( $styles as $style ) {
-				if ( -1 !== stripos( $style, $check ) ) {
+				if ( false !== stripos( $style, $check ) ) {
 					$included = true;
 				}
 			}
@@ -249,6 +249,7 @@ class Boldgrid_Editor_MCE {
 			if ( ! $included ) {
 				$styles[] = plugins_url( $conditional_style, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 			}
+
 		}
 
 		return $styles;
