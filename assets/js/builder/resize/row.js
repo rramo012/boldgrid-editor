@@ -11,14 +11,27 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 	BOLDGRID.EDITOR.RESIZE.Row = {
 
 		$body : null,
+		
 		handleSize : 16,
+		
 		$container : null,
+		
 		$topHandle : null,
+		
 		$bottomHandle : null,
+		
 		handleOffset: null,
+		
 		currentlyDragging: false,
+		
 		$currentRow : null,
 
+		/**
+		 * Initialize Row Resizing.
+		 * This control adds padding top and bottom to containers.
+		 * 
+		 * @since 1.2.7
+		 */
 		init : function ( $container ) {
 			self.$container = $container;
 			self.handleOffset = self.handleSize;
@@ -26,6 +39,30 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.bindHandlers();
 			self.initDraggable();
 		},
+		
+		/**
+		 * Bind all events.
+		 * 
+		 * @since 1.2.7
+		 */
+		bindHandlers : function () {
+			self.$container
+				.on( 'mouseenter', '.row:not(.row .row):not(.editing-as-row .row)', self.positionHandles )
+				.on( 'mouseleave', '.row:not(.row .row):not(.editing-as-row .row)', self.hideHandles )
+				.on( 'mouseenter', '.editing-as-row .row .row:not(.row .row .row)', self.positionHandles )
+				.on( 'mouseleave', '.editing-as-row .row .row:not(.row .row .row)', self.hideHandles )
+				.on( 'edit-as-row-enter', self.hideHandles )
+				.on( 'edit-as-row-leave', self.hideHandles )
+				.on( 'boldgrid_modify_content', self.positionHandles )
+				.on( 'mouseleave', self.hideHandles )
+				.on( 'end_typing_boldgrid.draggable', self.positionHandles );
+		},
+		
+		/**
+		 * Attach drag handle controls to the DOM.
+		 * 
+		 * @since 1.2.7
+		 */
 		createHandles : function () {
 
 			self.$topHandle = $( '<span class="draghandle top" title="Drag Resize Row" data-setting="padding-top"></span>' );
@@ -46,6 +83,11 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.hideHandles();
 		},
 		
+		/**
+		 * Handle the drag events.
+		 * 
+		 * @since 1.2.7
+		 */
 		initDraggable : function () {
 			var startPadding, setting,
 				$body = self.$container.find( 'body' );
@@ -95,17 +137,11 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			} );
 		},
 
-		bindHandlers : function () {
-			self.$container.on( 'mouseenter', '.row:not(.row .row):not(.editing-as-row .row)', self.positionHandles );
-			self.$container.on( 'mouseleave', '.row:not(.row .row):not(.editing-as-row .row)', self.hideHandles );
-			self.$container.on( 'mouseenter', '.editing-as-row .row .row:not(.row .row .row)', self.positionHandles );
-			self.$container.on( 'mouseleave', '.editing-as-row .row .row:not(.row .row .row)', self.hideHandles );
-			self.$container.on( 'edit-as-row-enter', self.hideHandles );
-			self.$container.on( 'edit-as-row-leave', self.hideHandles );
-			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
-			self.$container.on( 'mouseleave', self.hideHandles );
-			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
-		},
+		/**
+		 * Reposition the handles.
+		 * 
+		 * @since 1.2.7
+		 */
 		positionHandles : function() {
 			var pos, $this, rightOffset;
 			
@@ -146,6 +182,12 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 				self.$bottomHandle.show();
 			}
 		},
+
+		/**
+		 * Hide the drag handles.
+		 * 
+		 * @since 1.2.7
+		 */
 		hideHandles : function ( e ) {
 			var $this = $( this );
 

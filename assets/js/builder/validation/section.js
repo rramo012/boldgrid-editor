@@ -8,6 +8,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	BOLDGRID.EDITOR.VALIDATION.Section = {};
 	self = BOLDGRID.EDITOR.VALIDATION.Section;
 
+	/**
+	 * Get the closest element within context.
+	 * 
+	 * @since 1.2.7
+	 */
 	$.fn.closestContext = function( sel, context ) {
         var $closest;
         if ( this.is( sel ) ) {
@@ -24,6 +29,12 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		section = '<div class="' + sectionClass + '"></div>',
 		container = '<div class="' + defaultContainerClass + '"></div>';
 
+	/**
+	 * Update content within context.
+	 * 
+	 * @since 1.2.7
+	 * @param $context.
+	 */
 	self.updateContent = function ( $context ) {
 
 		defaultContainerClass = BoldgridEditor.default_container || 'container-fluid';
@@ -31,7 +42,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 
 		self.$context = $context;
 		
-		// Wrap all top level P tags in section, container, row, column, paragraph
+		// Wrap all top level P tags in section, container, row, column, paragraph.
 		wrapParagraphs();
 		
 		// Add Class boldgrid-section to all parent of containers.
@@ -45,6 +56,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
         copyClasses();
 	};
 	
+	/**
+	 * Wrap all P in > col > row > container.
+	 * 
+	 * @since 1.2.7
+	 */
 	var wrapParagraphs = function () {
         self.$context.find( '> p' ).each( function () {
 			var $this = $( this );
@@ -55,6 +71,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		} );
 	};
     
+	/**
+	 * Copy classes from container-fluid onto section.
+	 * 
+	 * @since 1.2.7
+	 */
     var copyClasses = function() {
          self.$context.find( '.boldgrid-section > .container-fluid' ).each( function () {
 			var $this = $( this ),
@@ -65,8 +86,13 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		} );
     };
     
+	/**
+	 * Add section class to container parents.
+	 * 
+	 * @since 1.2.7
+	 */
     var addSectionClass = function () {
-        self.$context.find( '.container, container-fluid' ).each( function () {
+        self.$context.find( '.container' ).each( function () {
 			var $this = $( this ),
                 $parent = $this.parent();
 			
@@ -76,6 +102,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		} );
     };
     
+	/**
+	 * Wrap top level rows in containers.
+	 * 
+	 * @since 1.2.7
+	 */
     var addContainers = function () {
     	self.$context.find( '.row:not(.row .row)' ).each( function () {
 			var $this = $( this ),
@@ -95,6 +126,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		} );
     };
     
+	/**
+	 * Wrap containers in sections.
+	 * 
+	 * @since 1.2.7
+	 */
     var wrapContainers = function () {
     	self.$context.find( '.container, .container-fluid' ).each( function () {
 			var $this = $( this );

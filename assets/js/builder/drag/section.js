@@ -10,14 +10,36 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 	
 	self = BG.DRAG.Section = {
 
+			/**
+			 * @var Object currentDrag Elements and data about the current drag. 
+			 * @since 1.2.7
+			 */
 			currentDrag : false,
 			
+			/**
+			 * @var jQuery $container iFrame.
+			 * @since 1.2.7
+			 */
 			$container : null,
 			
+			/**
+			 * @var jQuery $dragHelper cursor indicator.
+			 * @since 1.2.7
+			 */
 			$dragHelper : null,
 			
+			/**
+			 * @var array sectionLocations. Y locations.
+			 * @since 1.2.7
+			 */
 			sectionLocations : [],
 			
+			/**
+			 * Section dragging. 
+			 * 
+			 * @since 1.2.7
+			 * @param jQuery $container iFrame.
+			 */
 			init : function ( $container ){
 				self.$container = $container;
 				self.$dragHelper = self.renderHelpers();
@@ -25,27 +47,41 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.bindHelper();
 			},
 			
+			/**
+			 * Attach the mark-up to the DOM. 
+			 * 
+			 * @since 1.2.7
+			 * @return jQuery $dragHelper.
+			 */
 			renderHelpers : function () {
 				var $dragHelper = $( '<div id="boldgrid-drag-pointer"></div>' );
 				self.$container.find('html').append( $dragHelper );
 				return $dragHelper;
 			},
 			
+			/**
+			 * Bind all events used for dragging. 
+			 * 
+			 * @since 1.2.7
+			 */
 			bind : function () {
 				self.$container
-					.on( 'dragstart', '.dragging-section', self.prevent )
+					.on( 'dragstart', '.dragging-section', function () { return false; } )
 					.on( 'mousedown', '.dragging-section .boldgrid-section', self.start )
 					.on( 'mousemove', '.dragging-section', self.over )
-					.on( 'mouseup dragend', '.dragging-section', self.end );
-			},
-			
-			bindHelper : function () {
-				self.$container
+					.on( 'mouseup dragend', '.dragging-section', self.end )
 					.on( 'mousemove', '.dragging-section', self.overHelper );
 			},
 			
+			/**
+			 * Position the cursor helper on mouse move.
+			 * 
+			 * @since 1.2.7
+			 * @param Event e.
+			 */
 			overHelper : function ( e ) {
 				if ( self.$container.$current_drag || self.currentDrag ) {
+					// 25 is polling delay.
 					if ( ! self.lastPosEvent || self.lastPosEvent + 25 <= e.timeStamp ) {
 						self.lastPosEvent = e.timeStamp;
 						self.positionHelper( e.originalEvent );
@@ -53,17 +89,13 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				}
 			},
 			
-			position : function ( pageY ) {
-				self.currentDrag.$clone.offset( {
-					top : pageY - self.currentDrag.offsetFromTop
-				} );
-			},
-			
-			prevent : function ( e ) {
-				return false;
-			},
-			
-			end : function (e){
+			/**
+			 * End the drag progress.
+			 * 
+			 * @since 1.2.7
+			 * @param Event e.
+			 */
+			end : function ( e ){
 				if ( self.currentDrag ) {
 					self.currentDrag.$clone.remove();
 					self.currentDrag.$element.removeClass('section-drag-element');
@@ -74,6 +106,12 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				
 			},
 			
+			/**
+			 * Drag motion. The process of sections interacting with other sections.
+			 * 
+			 * @since 1.2.7
+			 * @param Event e.
+			 */
 			drag : function ( e ) {
     			var mousePosition = e.originalEvent.pageY,
     				insertAfter = null;
@@ -103,8 +141,14 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
     				self.calcSectionLocs();
     			}
 			},
-			
-			over : function (e) {
+
+			/**
+			 * While the user is moving the mouse and drag has been initiated.
+			 * 
+			 * @since 1.2.7
+			 * @param Event e.
+			 */
+			over : function ( e ) {
 				if ( self.currentDrag ) {
 					if ( ! self.lastDragEvent || self.lastDragEvent + 100 <= e.timeStamp ) {
 						self.lastDragEvent = e.timeStamp;
@@ -112,26 +156,26 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					}
 				}
 			},
-			
-			positionHelper : function ( event ) {
+
+			/**
+			 * Place the helper at the cursor location.
+			 * 
+			 * @since 1.2.7
+			 * @param Event e.
+			 */
+			positionHelper : function ( e ) {
+				// 15 is the offset from the cursor.
 				self.$dragHelper.css( {
-					'top' : event.pageY - 15,
-					'left' : event.pageX - 15
+					'top' : e.pageY - 15,
+					'left' : e.pageX - 15
 				} );
 			},
 			
-			initClonePos : function ( posY ) {
-				self.currentDrag.$clone.css( {
-					'position' : 'absolute',
-					'width' : self.currentDrag.$element.css('width'),
-				} );
-				
-				//@todo: fix this, dunno why this is needed.
-				for( var i=0; i < 10; i++ ) {
-					self.position( posY );
-				}
-			},
-			
+			/**
+			 * Calculate all section locations. Main calcs used for dragging.
+			 * 
+			 * @since 1.2.7
+			 */
 			calcSectionLocs : function (){
 				var locs = [];
 				
@@ -148,6 +192,11 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.sectionLocations = locs;
 			},
 			
+			/**
+			 * Drag Start. On Click.
+			 * 
+			 * @since 1.2.7
+			 */
 			start : function ( e ) {
 				
 				var $clone,
@@ -164,7 +213,6 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.currentDrag.$clone.addClass('section-drag-clone');
 				self.$container.setInheritedBg( self.currentDrag.$clone, 1 );
 				self.$container.$body.append( self.currentDrag.$clone );
-				self.initClonePos( e.originalEvent.pageY );
 				self.$container.find('html').addClass( 'section-dragging-active' );
 				self.$container.$body.addClass( 'no-select-imhwpb' );
 				self.$container.$body.removeAttr('contenteditable');

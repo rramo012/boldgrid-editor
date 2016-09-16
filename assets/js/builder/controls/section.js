@@ -16,22 +16,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		$currentSection : [],
 			
+		/**
+		 * Init section controls.
+		 * 
+		 * @since 1.2.7.
+		 */
 		init : function ( $container ) {
 			self.renderZoomTools();
 			self.$container = $container;
 			self.createHandles();
 			self.bindHandlers();
-			
-			// Disables section width on old/non bg themes. 
-			// Update: If container exists in content, the user should be able to modify it.
-			// self.enableFeatures();
-		},
-		enableFeatures : function () {
-			if ( false === BG.Controls.hasThemeFeature( 'variable-containers' ) ) {
-				self.$container.find('html').addClass('disabled-section-width');
-			}
 		},
 		
+		/**
+		 * Hide the section handles.
+		 * 
+		 * @since 1.2.7
+		 * @param Event e.
+		 */
 		hideHandles : function ( e ) {
 
 			if ( e && e.relatedTarget && $( e.relatedTarget ).closest('.section-popover').length ) {
@@ -42,6 +44,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.hide();
 		},
 		
+		/**
+		 * Render handles and attach them to the dom.
+		 * 
+		 * @since 1.2.7
+		 */
 		createHandles : function () {
 
 			self.$popover = $( wp.template('boldgrid-editor-drag-handle')() );
@@ -55,6 +62,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.hideHandles();
 		},
 
+		/**
+		 * Bind all events.
+		 * 
+		 * @since 1.2.7
+		 */
 		bindHandlers : function () {
 			self.$container.find('body').on( 'mouseenter', '> .boldgrid-section', self.positionHandles );
 			self.$container.find('body').on( 'mouseleave', '> .boldgrid-section', self.hideHandles );
@@ -72,6 +84,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( window ).on( 'resize', self.updateHtmlSize );
 		},
 		
+		/**
+		 * Match the height of the HTML area and the body area.
+		 * 
+		 * @since 1.2.7
+		 */
 		updateHtmlSize : function () {
 			
 			if ( ! $('body').hasClass('boldgrid-zoomout') ) {
@@ -85,11 +102,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$('#content_ifr').css( 'max-height', bodyHeight );
 		},
 		
+		/**
+		 * Render the controls for the zoomed view.
+		 * 
+		 * @since 1.2.7
+		 */
 		renderZoomTools : function () {
 			var template = wp.template('boldgrid-editor-zoom-tools');
 			$('#wp-content-editor-tools').append( template() );
 		},
 		
+		/**
+		 * Exit section dragging mode.
+		 * 
+		 * @since 1.2.7
+		 */
 		exitSectionDrag : function () {
 			var $body = $('body'), 
 				$window = $( window ),
@@ -109,6 +136,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}, 0 );
 		},
 		
+		/**
+		 * Enable section dragging mode.
+		 * 
+		 * @since 1.2.7
+		 */
 		enableSectionDrag : function () {
 			self.$container.find('html').addClass('zoomout dragging-section');
 			self.$container.$body.removeAttr( 'contenteditable' );
@@ -130,12 +162,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Remove zoom classes from the body.
+		 * 
+		 * @since 1.2.7
+		 */
 		removeZoomClasses : function () {
 			self.$container.$body.removeClass ( function ( index, css ) {
 				return (css.match (/(^|\s)zoom-scale-\S+/g) || []).join(' ');
 			} );
 		},
 		
+		/**
+		 * Position the section popovers.
+		 * 
+		 * @since 1.2.7
+		 */
 		positionHandles : function() {
 			var pos, $this;
 			
@@ -170,15 +212,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 		
+		/**
+		 * Delete a section.
+		 * 
+		 * @since 1.2.7
+		 */
 		deleteSection : function () {
 			self.$currentSection.remove();
 			self.$container.trigger( self.$container.delete_event );
 		},
 		
+		/**
+		 * Clone a section.
+		 * 
+		 * @since 1.2.7
+		 */
 		clone : function () {
 			self.$currentSection.after( self.$currentSection.clone() );
 			self.$container.trigger( self.$container.delete_event );
 		},
+		
+		/**
+		 * Move the section up one in the DOM.
+		 * 
+		 * @since 1.2.7
+		 */
 		moveUp : function () {
 			var $prev = self.$currentSection.prev();
 			
@@ -189,6 +247,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.trigger( self.$container.delete_event );
 		},
 		
+		/**
+		 * Move the section down one in the DOM.
+		 * 
+		 * @since 1.2.7
+		 */
 		moveDown : function () {
 			var $next = self.$currentSection.next();
 			
@@ -199,6 +262,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.trigger( self.$container.delete_event );
 		},
 		
+		/**
+		 * Control whether a container is fluid or not.
+		 * 
+		 * @since 1.2.7
+		 */
 		sectionWidth : function () {
 			BG.CONTROLS.Container.toggleSectionWidth( self.$currentSection.find('.container, .container-fluid') );
 			self.$container.trigger( self.$container.delete_event );

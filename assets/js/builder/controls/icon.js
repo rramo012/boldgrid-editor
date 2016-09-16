@@ -20,6 +20,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors : [ '.fa' ],
 
+		/**
+		 * Panel Settings.
+		 * 
+		 * @since 1.2.7
+		 */
 		panel : {
 			title : 'Change Icon',
 			height : '500px',
@@ -43,15 +48,30 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 		
+		/**
+		 * Load the control. This is only run once.
+		 * 
+		 * @since 1.2.7
+		 */
 		setup : function () {
 			self._setupClosePanel();
 			self._setupCustomizeLeave();
 		},
 
+		/**
+		 * When the user clicks on an icon automatically open the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		elementClick : function() {
 			self.openPanel();
 		},
 		
+		/**
+		 * When a user leaves the customize section highlight the element.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupCustomizeLeave : function () {
 			BG.Panel.$element.on( 'bg-customize-exit', function () {
 				if ( self.name === BG.Panel.currentControl.name ) {
@@ -60,6 +80,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * When the user closes the Panel, unselect the current icon.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupClosePanel : function () {
 			BG.Panel.$element.on( 'bg-panel-close', function () {
 				if ( self.name === BG.Panel.currentControl.name ) {
@@ -68,6 +93,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Unselect current mce selection.
+		 * 
+		 * @since 1.2.7
+		 */
 		collapseSelection : function () {
 			return;
 			/*
@@ -75,6 +105,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			tinymce.activeEditor.execCommand( 'wp_link_cancel' );*/
 		},
 		
+		/**
+		 * Open customization mode.
+		 * 
+		 * @since 1.2.7
+		 */
 		openCustomizer : function () {
 			var panel = BG.Panel;
 			self.collapseSelection();
@@ -85,6 +120,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.hideFooter();
 		},
 		
+		/**
+		 * Insert a new icon.
+		 * 
+		 * @since 1.2.7
+		 */
 		insertNew : function () {
 			var $insertedIcon;
 			
@@ -95,6 +135,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$insertedIcon.click();
 		},
 
+		/**
+		 * Setup clicking on a panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		setupPanelClick : function() {
 			var controls = BOLDGRID.EDITOR.Controls,
 				panel = BOLDGRID.EDITOR.Panel;
@@ -114,6 +159,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Highlight the icon and set the WordPress link option to popup.
+		 * 
+		 * @since 1.2.7
+		 */
 		highlightElement : function () {
 			return;/*
 			var $el = BG.Menu.getTarget( self );
@@ -121,10 +171,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			tinymce.activeEditor.execCommand( 'WP_Link' );*/
 		},
 
+		/**
+		 * When the user clicks on the menu item open the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		onMenuClick : function () {
 			self.openPanel();
 		},
-
+		
+		/**
+		 * Open the panel, setting the content.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPanel : function () {
 			var $panel = BG.Panel.$element,
 				$menu = BG.Controls.$menu,

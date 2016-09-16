@@ -19,11 +19,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * List of all Caman values.
+		 * 
+		 * @since 1.2.7
 		 */
 		sliderHistory : {},
 		
 		/**
 		 * Caman object use for previews.
+		 * 
+		 * @since 1.2.7
 		 */
 		preview : null,
 
@@ -31,6 +35,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * Properties for a panel.
+		 * 
+		 * @since 1.2.7
 		 */
 		panel : {
 			title : 'Image Filters',
@@ -40,11 +46,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * Selectors that are eligble for image filters.
+		 * 
+		 * @since 1.2.7
 		 */
 		selectors : [ 'img' ],
 		
 		/**
 		 * List of Presets.
+		 * 
+		 * @since 1.2.7
 		 */
 		presets : [
 			{ name : 'none', title : 'None' },
@@ -70,6 +80,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * List of custom controls and their ranges.
+		 * 
+		 * @since 1.2.7
 		 */
 		customizeSettings : {
 			'brightness' : { title : 'Brightness', range : { min : -50, max : 50 } },
@@ -88,14 +100,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * Register this class as a control.
+		 * 
+		 * @since 1.2.7
 		 */
 		init : function () {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 		
-		
 		/**
 		 * Bind Handlers.
+		 * 
+		 * @since 1.2.7
 		 */
 		setup : function () {
 			self._setupInsertClick();
@@ -105,6 +120,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * When the user toggles between the presets and custom options.
+		 * 
+		 * @since 1.2.7
 		 */
 		_setupToggleCustomize : function() {
 			var preset,
@@ -131,6 +148,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Apply a preset to the current caman object.
+		 * 
+		 * @since 1.2.7
+		 */
 		renderPreset : function ( preset ) {
 			var panel = BOLDGRID.EDITOR.Panel;
 			
@@ -143,6 +165,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * When the user clicks on a selection within the panel. Select the element.
+		 * 
+		 * @since 1.2.7
 		 */
 		_setupPanelClick : function() {
 			var panel = BOLDGRID.EDITOR.Panel,
@@ -166,6 +190,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * When the user clicks on the insert button, run insert image.
+		 * 
+		 * @since 1.2.7
 		 */
 		_setupInsertClick :function () {
 			BOLDGRID.EDITOR.Panel.$element.on( 'click', '.preview .insert-image', function () {
@@ -175,6 +201,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * Create jQuery UI Sliders.
+		 * 
+		 * @since 1.2.7
 		 */
 		_setupSliders : function() {
 			self.sliderHistory = {};
@@ -196,6 +224,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Add slider settings.
+		 * 
+		 * @since 1.2.7
+		 */
 		applySliderSettings : function () {
 			self.preview.revert( false );
 			$.each( self.sliderHistory, function ( control ) {
@@ -206,6 +239,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * Insert the image into the post.
+		 * 
+		 * @since 1.2.7
 		 */
 		insertImage : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
@@ -243,6 +278,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
+		 * 
+		 * @since 1.2.7
 		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
@@ -251,7 +288,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		/**
-		 * Process all thubmnails on the panel.
+		 * Process all thumbnails on the panel.
+		 * 
+		 * @since 1.2.7
 		 */
 		_renderPanelThumbnails : function () {
 			var process,
@@ -273,6 +312,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * Get the image src for the given target. Finding the thumbnail if available.
+		 * 
+		 * @since 1.2.7
 		 */
 		get_image_src : function () {
 			var src,
@@ -299,6 +340,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * Open the panel for the given target.
+		 * 
+		 * @since 1.2.7
 		 */
 		openPanel : function () {
 			var srcSet,
@@ -337,6 +380,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		
 		/**
 		 * When the user clicks on the menu.
+		 * 
+		 * @since 1.2.7
 		 */
 		onMenuClick : function () {
 			self.openPanel();

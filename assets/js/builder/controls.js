@@ -2,7 +2,8 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function ( $ ) {
-	
+	"use strict";
+
 	var BG = BOLDGRID.EDITOR; 
 
 	BOLDGRID.EDITOR.Controls = {

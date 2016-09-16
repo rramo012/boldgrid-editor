@@ -36,12 +36,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			customizeSupport : [ 'margin' ],
 		},
 
+		/**
+		 * When the user clicks on the menu item, open panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		onMenuClick : function ( e ) {
 			self.openPanel();
 		},
 
 		/**
 		 * When the user clicks on an image, if the panel is open, set panel content.
+		 * 
+		 * @since 1.2.7
 		 */
 		elementClick : function() {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
@@ -51,12 +58,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		/**
 		 * Bind Handlers.
+		 * 
+		 * @since 1.2.7
 		 */
 		setup : function () {
 			self.validateComponentsUsed();
 			self._setupPanelClick();
 		},
 		
+		/**
+		 * Remove duplicates from the list of image components used.
+		 * 
+		 * @since 1.2.7
+		 */
 		validateComponentsUsed : function () {
 			$.each( BoldgridEditor.builder_config.components_used.image, function () {
 				var $temp = $('<div>').attr( 'class', this.classes ); 
@@ -68,6 +82,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 
+		/**
+		 * Bind event: When a user clicks on selections in the panel.
+		 * 
+		 * @since 1.2.7
+		 */
 		_setupPanelClick : function() {
 			var panel = BOLDGRID.EDITOR.Panel;
 
@@ -94,13 +113,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 			} );
 		},
-		
+
+		/**
+		 * Remove image classes.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $target.
+		 */
 		removeModClasses : function ( $target ) {
 			$target.parent( '[class^="mod-img"]' ).removeClass ( function ( index, css ) {
 			    return (css.match (/(^|\s)mod-img-\S+/g) || []).join(' ');
 			} );
 		},
 
+		/**
+		 * Preselect image style that is currently being used.
+		 * 
+		 * @since 1.2.7
+		 */
 		preselectImage : function () {
 			var $target = BG.Menu.getTarget( self ),
 				imageClasses = $target.attr('class'),
@@ -122,6 +152,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 		},
 
+		/**
+		 * Open the panel for this control.
+		 * 
+		 * @since 1.2.7
+		 */
 		openPanel : function () {
 			var panel = BOLDGRID.EDITOR.Panel,
 				$target = BOLDGRID.EDITOR.Menu.getTarget( self ),

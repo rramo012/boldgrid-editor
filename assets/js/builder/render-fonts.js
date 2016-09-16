@@ -2,7 +2,8 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function ( $ ) {
-	
+	"use strict";
+
 	var self;
 	
 	self = BOLDGRID.EDITOR.FontRender = {
@@ -56,7 +57,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			familyParam = familyParam.join('|');
 			
-			// Create params string
+			// Create params string.
 			if ( familyParam ) {
 				params = jQuery.param( { family: familyParam } );
 				$link.attr( 'href' , baseUrl + params );
