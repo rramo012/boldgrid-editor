@@ -27,7 +27,6 @@
 	<div class='colors-wrap'>
 	</div>
 	<div class='color-picker-wrap'>
-		<a href="#" class='default-reset'>Reset To Default</a>
 		<input type="text" data-alpha="true" class='boldgrid-color-picker' value="#d41d1d" />
 		<div class="links">
 			<a href='#' class='cancel'>Remove</a>

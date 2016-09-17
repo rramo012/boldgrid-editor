@@ -17,6 +17,20 @@
 	}
 }
 
+.draggable-inactive {
+	.color-panel,
+	.editor-panel,
+	#boldgrid-instance-menu,
+	.bg-drag-popover,
+	.draghandle {
+	   display: none !important;
+	}
+	
+	.boldgrid-section:hover {
+	   outline: none !important;
+	}
+}
+
 .section .selectize-dropdown-content {
     height: 30px;
 }

@@ -1410,6 +1410,9 @@ body.boldgrid-editor-fullscreen {
 .color-panel .wp-color-result {
   display: none; }
 
+.color-panel .wp-picker-container {
+  margin-top: 10px; }
+
 .color-panel .panel-title {
   padding: 15px;
   background-color: white;
@@ -1436,11 +1439,15 @@ body.boldgrid-editor-fullscreen {
   position: relative;
   top: 10px; }
 
+.color-panel .color-picker-wrap .wp-picker-input-wrap .button {
+  margin: 2px; }
+
+.color-panel .color-picker-wrap .wp-picker-input-wrap .button,
+.color-panel .color-picker-wrap .boldgrid-color-picker {
+  display: inline-block !important; }
+
 .color-panel .color-picker-wrap .iris-picker {
   margin: 15px auto 0; }
-
-.color-panel .color-picker-wrap input {
-  display: none; }
 
 .color-panel .color-picker-wrap .links {
   width: 200px;
@@ -1480,6 +1487,16 @@ body.boldgrid-editor-fullscreen {
 #tinymce img,
 #tinymce .fa {
   cursor: pointer; }
+
+.draggable-inactive .color-panel,
+.draggable-inactive .editor-panel,
+.draggable-inactive #boldgrid-instance-menu,
+.draggable-inactive .bg-drag-popover,
+.draggable-inactive .draghandle {
+  display: none !important; }
+
+.draggable-inactive .boldgrid-section:hover {
+  outline: none !important; }
 
 .section .selectize-dropdown-content {
   height: 30px; }

@@ -155,45 +155,42 @@ IMHWPB.Media = function( $ ) {
 	 * location.
 	 */
 	this.insert_to_page_event = function() {
-		$( '.media-toolbar .media-button' )
-			.on(
-				'click',
-				function(e) {
-					e.preventDefault();
-					if ( $( this ).hasClass('button-primary-disabled') == false ) {
-						var child_window = $( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance;
+		$( '.media-toolbar .media-button' ) .on( 'click', function(e) {
+			e.preventDefault();
+			if ( $( this ).hasClass('button-primary-disabled') == false ) {
+				var child_window = $( '.media-iframe iframe' )[0].contentWindow.IMHWPB.Media.instance;
 
-						var insert_process = function ( html_to_insert ) {
-							child_window.uncheck_all();
-							$( '.media-modal-close' ).click();
+				var insert_process = function ( html_to_insert ) {
+					child_window.uncheck_all();
+					$( '.media-modal-close' ).click();
 
-							var is_shortcode = html_to_insert.match(/^\[.+\]$/);
-							var $inserting = null;
-							if ( false == is_shortcode || null == is_shortcode ) {
-								$inserting = $(html_to_insert);
-							}
-							
-							if( ! self.sendGridblock( $inserting ) ) { 
-								// Insert into TinyMCE
-								send_to_editor( html_to_insert );
-								//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
-								//wp.media.editor.insert( html_to_insert );
-							}
-
-							$( window ).trigger( 'resize' );
-							
-						};
-
-						//Insert into page aciton
-						var html_to_insert = child_window.find_selected_elements();
-						if ( typeof html_to_insert != 'string' ) {
-							html_to_insert.always(insert_process);
-						} else {
-							insert_process( html_to_insert );
-						}
-
+					var is_shortcode = html_to_insert.match(/^\[.+\]$/);
+					var $inserting = null;
+					if ( false == is_shortcode || null == is_shortcode ) {
+						$inserting = $(html_to_insert);
 					}
-				} );
+					
+					if( ! self.sendGridblock( $inserting ) ) { 
+						// Insert into TinyMCE
+						send_to_editor( html_to_insert );
+						//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
+						//wp.media.editor.insert( html_to_insert );
+					}
+
+					$( window ).trigger( 'resize' );
+					
+				};
+
+				//Insert into page aciton
+				var html_to_insert = child_window.find_selected_elements();
+				if ( typeof html_to_insert != 'string' ) {
+					html_to_insert.always(insert_process);
+				} else {
+					insert_process( html_to_insert );
+				}
+
+			}
+		} );
 	};
 
 	/**

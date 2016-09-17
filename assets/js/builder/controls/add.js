@@ -125,7 +125,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		addSection : function () {
 			var $container = BOLDGRID.EDITOR.Controls.$container,
 				$newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
-			$container.$body.append( $newSection );
+			$container.$body.prepend( $newSection );
 			
 			self.scrollToElement( $newSection, 200 );
 			 

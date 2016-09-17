@@ -314,13 +314,19 @@ IMHWPB.WP_MCE_Draggable = function() {
 		$( '.mce-wp-image-toolbar' ).hide();
 		self.draggable_instance.$master_container.find( self.resize_selector ).hide();
 	};
+	
+	this.addDeactivateClasses = function () {
+		$('html').addClass('draggable-inactive');
+		$( tinymce.activeEditor.iframeElement ).contents().find('html').addClass('draggable-inactive');
+	};
 
 	/**
 	 * Activates and deactivates the draggable plugin
 	 */
 	this.toggle_draggable_plugin = function( event ) {
 
-		var currentDocument = $( tinymce.activeEditor.iframeElement ).contents().get( 0 );
+		var $container = $( tinymce.activeEditor.iframeElement ),
+			currentDocument = $container.contents().get( 0 );
 
 		self.draggable_inactive = self.set_style_sheet_inactive( 'draggable',
 			!self.draggable_inactive, currentDocument );
@@ -342,7 +348,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 				IMHWPB.Editor.instance.remove_editor_styles();
 				$('[name="screen_columns"][value="' + IMHWPB.Editor.instance.original_column_val + '"]').click();
 			}
-
+			
+			self.addDeactivateClasses();
 		} else {
 			if ( $target ) {
 				$target.closest( 'div' ).addClass( 'mce-active' );
@@ -354,6 +361,9 @@ IMHWPB.WP_MCE_Draggable = function() {
 			} else {
 				self.load_draggable($(tinymce.activeEditor.iframeElement).contents());
 			}
+			
+			$('html').removeClass('draggable-inactive');
+			$container.contents().find('html').removeClass('draggable-inactive');
 		}
 
 		// Ajax save state.

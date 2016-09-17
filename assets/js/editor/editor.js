@@ -346,13 +346,11 @@ IMHWPB.Editor = function( $ ) {
 						editor.selection.setCursorLocation( $newParagraph[0], 0 );
 
 					}
-				} else if ( is_anchor ) {
+				} else if ( is_anchor && ( e.which == '8' || e.which == '46' ) ) {
 					//Backspace or Delete Key
-					if ( e.which == '8' || e.which == '46' ) {
-						if ( $current_node.html() == '&nbsp;&nbsp;' ||   $current_node.html() == '&nbsp; ' ) {
-							$current_node.remove();
-							return false;
-						}
+					if ( $current_node.html() == '&nbsp;&nbsp;' ||   $current_node.html() == '&nbsp; ' ) {
+						$current_node.remove();
+						return false;
 					}
 				} else if ( 'P' == node.tagName ) {
 					// When clicking enter on an empty P, Just add another P.
@@ -378,8 +376,22 @@ IMHWPB.Editor = function( $ ) {
 							return false;
 						}
 					}
-				}
+				} else if ( 'IMG' == node.tagName || $current_node.is('.button-primary, .button-secondary, .btn' ) ) {
+					if ( enterKey == e.which ) {
 
+						$newParagraph = $('<p><br data-mce-bogus="1"></p>');
+						var $parentP = $current_node.closest('p');
+						if ( $parentP.length ) {
+							$parentP.after( $newParagraph );
+						} else {
+							$current_node.after( $newParagraph );
+						}
+						
+						editor.selection.setCursorLocation( $newParagraph[0], 0 );
+						return false;
+					}
+				}
+				
 				return true;
 			} );
 
@@ -559,9 +571,11 @@ IMHWPB.Editor = function( $ ) {
 				} else {
 					//If this is not a boldgrid theme we will disable by default,
 					//and deactivate style sheets
-					IMHWPB.WP_MCE_Draggable.instance
-						.set_style_sheet_inactive( 'draggable', true, $(event.target.iframeElement).contents().get(0));
+					IMHWPB.WP_MCE_Draggable.instance.set_style_sheet_inactive(
+							'draggable', true, $(event.target.iframeElement).contents().get(0) );
 					IMHWPB.WP_MCE_Draggable.instance.draggable_inactive = true;
+					IMHWPB.WP_MCE_Draggable.instance.addDeactivateClasses();
+
 				}
 
 				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text

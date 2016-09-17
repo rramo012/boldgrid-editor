@@ -84,13 +84,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
-		 * Bind Event: When the user clicks rest to default.
+		 * Bind Event: When the user clicks reset to default.
 		 * 
 		 * @since 1.2.7
 		 */
 		_setupResetDefault : function () {
-			self.$colorPanel.on( 'click', '.default-reset', function ( e ) {
+			self.$colorPanel.find('.wp-picker-default').on( 'click', function ( e ) {
 				e.preventDefault();
+				e.stopPropagation();
 				self.$currentInput.attr('data-type', 'color');
 				self.$currentInput.val('').change();
 				self.$colorPanel.find('.selected').removeClass( 'selected' );
@@ -373,6 +374,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				hide: false,
 				palettes: true
 			} );
+			
 		},
 
 		/**

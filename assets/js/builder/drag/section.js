@@ -139,6 +139,8 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
     				insertAfter.$section.after( self.currentDrag.$element );
     				self.calcSectionLocs();
     			}
+    			
+    			BG.CONTROLS.Section.updateHtmlSize();
 			},
 
 			/**
@@ -152,6 +154,16 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					if ( ! self.lastDragEvent || self.lastDragEvent + 100 <= e.timeStamp ) {
 						self.lastDragEvent = e.timeStamp;
 						self.drag( e );
+					}
+					if ( ! self.lastScrollEvent || self.lastScrollEvent + 20 <= e.timeStamp ) {
+						self.lastScrollEvent = e.timeStamp;
+						// If within 50 px from the bottom scroll down.
+						if ( $( window ).height() - e.screenY < 50 ) {
+							window.scrollBy( 0, 10 );
+						// If within 20% from the top scroll up.
+						} else if ( ( e.screenY / $( window ).height() ) < 0.2 ) {
+							window.scrollBy( 0, -10 );
+						}
 					}
 				}
 			},

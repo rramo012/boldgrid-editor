@@ -838,11 +838,11 @@ html.boldgrid-editor-fullscreen {
     margin-top: -3px;
     left:30px;
 }
-
+/*
 .container,
 .container-fluid {
 	transition: width .5s;
-}
+}*/
 
 .container-fluid {
 	width: 100%;
