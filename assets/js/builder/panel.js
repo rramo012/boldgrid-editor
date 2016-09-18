@@ -379,7 +379,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		_onWheel : function ( e ) {
-			var e = e || window.event;
+			e = e || window.event;
 
 			if ( e.preventDefault ) {
 				e.preventDefault();

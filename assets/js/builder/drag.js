@@ -1909,13 +1909,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var resize_buffer = row_width * self.resize_buffer;
 
 			// Has the dragging made the current element smaller?
-			var made_smaller = smaller_override
-				|| self.between( smaller_position, self.pageX - resize_buffer, self.pageX
-					+ resize_buffer );
+			var made_smaller = smaller_override ||
+				self.between( smaller_position, self.pageX - resize_buffer, self.pageX + resize_buffer );
 
 			// Has the dragging made the current element larger?
-			var made_larger = larger_override
-				|| self.between( larger_position, self.pageX - resize_buffer, self.pageX + resize_buffer );
+			var made_larger = larger_override ||
+				self.between( larger_position, self.pageX - resize_buffer, self.pageX + resize_buffer );
 
 			var valid_smaller = made_smaller && column_size > 1,
 				valid_larger = made_larger && column_size < self.max_row_size;
@@ -2912,7 +2911,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$current_drag.IMHWPB.type = 'column';
 				self.recalc_col_pos();
 				
-				$row = self.$current_drag.closest('.row'),
+				$row = self.$current_drag.closest('.row');
 				row_size = self.find_row_size( $row );
 					
 				if ( row_size < self.max_row_size ) {
@@ -2920,9 +2919,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				}
 
 				// If the row has not stacked with columns, allow the rail dragging && desktop view.
-				if ( row_size <= 12
-					&& self.active_resize_class == 'col-md'
-					&& self.$current_drag.siblings( self.unformatted_column_selectors_string ).not( self.$temp_insertion ).length
+				if ( row_size <= 12 &&
+						self.active_resize_class == 'col-md' &&
+						self.$current_drag.siblings( self.unformatted_column_selectors_string ).not( self.$temp_insertion ).length
 				//	&& !self.editting_as_row
 				) {
 					self.$current_drag.IMHWPB.unlock_column = false;
@@ -2990,8 +2989,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
 				var toolbar_height = outerHeight - innerHeight;
 				var buffer_area = 50;
-				var distance_from_top = (event.originalEvent.screenY - toolbar_height)
-					- self.$mce_32[0].getBoundingClientRect().bottom;
+				var distance_from_top = (event.originalEvent.screenY - toolbar_height) -
+					self.$mce_32[0].getBoundingClientRect().bottom;
 				var scroll_from_top = self.$window.scrollTop();
 
 				if ( scroll_from_top >= 125 && distance_from_top <= buffer_area ) {
@@ -3006,8 +3005,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 						scrollBy( 0, scroll_speed );
 					}
 				} else {
-					var distance_from_bottom = innerHeight
-						- (event.originalEvent.screenY - toolbar_height);
+					var distance_from_bottom = innerHeight -
+						( event.originalEvent.screenY - toolbar_height );
 					if ( distance_from_bottom <= buffer_area ) {
 						scrollBy( 0, scroll_speed );
 					}
@@ -3048,8 +3047,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If you are dragging outside of the master container, skip this event.
 			// This check is done later for content.
-			if ( false == self.$master_container.has( $entered ).length
-				&& false == self.$current_drag.IMHWPB.is_content ) {
+			if ( false == self.$master_container.has( $entered ).length &&
+					false == self.$current_drag.IMHWPB.is_content ) {
 				return true;
 			}
 
@@ -3171,8 +3170,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 
 					var $current_placement = $entered.closest( '.cloned-div-imhwpb' );
-					var entered_current_drag = $current_placement.length
-						&& $current_placement[0] == self.$temp_insertion[0];
+					var entered_current_drag = $current_placement.length &&
+						$current_placement[0] == self.$temp_insertion[0];
 					if ( entered_current_drag ) {
 						self.$most_recent_row_enter_add = null;
 						return true;
@@ -3207,10 +3206,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 						$direct_descendents = $entered.find('> div');
 
 						// If the first child of the column is a div prepend it.
-						if ( $first_child.length
-								&& $direct_descendents.length === 1
-								&& false == $first_child.is( self.column_selectors_string + ", .draggable-tools-imhwpb" )
-								&& $first_child.is( 'div' ) ) {
+						if ( $first_child.length && $direct_descendents.length === 1 &&
+								false == $first_child.is( self.column_selectors_string + ", .draggable-tools-imhwpb" ) &&
+								$first_child.is( 'div' ) ) {
 
 							/**
 							 * If you are dragging a content element  
@@ -3239,8 +3237,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					}
 				}
 			} else if ( self.$current_drag.IMHWPB.is_column && self.$current_drag.IMHWPB.unlock_column ) {
-				if ( self.recent_event && self.recent_event.entered == $entered[0]
-					&& self.recent_event.left == $left[0] ) {
+				if ( self.recent_event && self.recent_event.entered == $entered[0] &&
+						self.recent_event.left == $left[0] ) {
 					return true;
 				}
 
