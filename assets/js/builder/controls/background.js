@@ -484,7 +484,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			if ( ! filterFound && ! type ) {
 				backgroundImageProp = $target.css('background-image');
-				if ( backgroundImageProp ) {
+				if ( backgroundImageProp && 'none' !== backgroundImageProp ) {
 					// Image filter selection hack, trouble selecting array data type.
 					BG.Panel.$element.find( '.filter[data-type]:first-of-type' ).click();
 					filterFound = true;
