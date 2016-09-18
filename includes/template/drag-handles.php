@@ -15,6 +15,8 @@
 					<li class="no-select-imhwpb action-list" data-action="section-width">Section Width</li>
 					<li class="no-select-imhwpb action-list" data-action="move-up">Move Up</li>
 					<li class="no-select-imhwpb action-list" data-action="move-down">Move Down</li>
+					<li class="no-select-imhwpb action-list" data-action="add-new">Add Empty Section</li>
+					<li class="no-select-imhwpb action-list" data-action="background">Change Background</li>
 				</ul>
 			</div>
 			<div title="Edit Section" class="context-menu-imhwpb draggable-button">

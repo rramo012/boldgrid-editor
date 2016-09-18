@@ -580,6 +580,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				    'align-bottom' : 'Bottom'
 				}
 			},
+			'Box' : "Background",
 		},
 		'row' : {
 			'' : "Edit Row",
@@ -595,6 +596,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'' : "Edit Content",
 			'duplicate' : "Clone",
 			'delete' : "Delete",
+			'Font' : "Font",
 		},
 		'nested-row' : {
 			'' : "Edit Content",
@@ -1061,12 +1063,14 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'click.draggable', 'li[data-action]',self.menu_actions.trigger_action_click )
 			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
 			.on( 'click.draggable', 'li[data-action="align-top"]', self.menu_actions.alignTop )
+			.on( 'click.draggable', 'li[data-action="Box"]', self.menu_actions.generalMacro )
+			.on( 'click.draggable', 'li[data-action="Font"]', self.menu_actions.generalMacro )
 			.on( 'click.draggable', 'li[data-action="align-default"]', self.menu_actions.alignDefault )
 			.on( 'click.draggable', 'li[data-action="align-bottom"]', self.menu_actions.alignBottom )
 			.on( 'click.draggable', 'li[data-action="align-center"]', self.menu_actions.alignCenter )
 		;
 	};
-
+	
 	/**
 	 * Initializes event binds for drop down menu clicks: for menu items passed
 	 * in at initialization.
@@ -3565,6 +3569,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.menu_actions = {
 
+		generalMacro : function () {
+			var $this = $( this ),
+				controlName = $this.data('action'),
+				$element = $this.closest( '.draggable-tools-imhwpb' ).next();
+			
+			$element.click();
+			BOLDGRID.EDITOR.CONTROLS[ controlName ].openPanel();
+		},
+			
 		alignTop : function () {
 			alignColumn( $( this ), 'top' );
 		},

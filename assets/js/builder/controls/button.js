@@ -132,6 +132,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					self.sizeSlider.init();
 				}
 			} );
+			panel.$element.on( 'bg-customize-exit', function () {
+				if ( panel.currentControl == self ) {
+					self.preselect();
+					BG.Panel.scrollToSelected();
+				}
+			} );
 		},
 
 		/**
@@ -192,7 +198,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				// Apply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
-				panel.toggleFooter();
+				self.toggleFooter();
 			} );
 		},
 
@@ -326,17 +332,46 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		/**
+		 * Select the currently focused button.
+		 * Must match all class names.
+		 * 
+		 * @since 1.2.7
+		 */
+		preselect : function () {
+			var $target = BG.Menu.getTarget( self ),
+				classes = BG.Util.getClassesLike( $target, 'btn' );
+			
+			BG.Panel.clearSelected();
+			BG.Panel.$element.find('[data-preset="' + classes.join(' ') + '"]').addClass('selected');
+		},
+		
+		/**
+		 * Control the display of the customize option in the panel footer.
+		 * 
+		 * @since 1.2.7
+		 */
+		toggleFooter : function () {
+			var $target = BG.Menu.getTarget( self );
+			
+			if ( $target.hasClass( 'btn' ) ) {
+				BG.Panel.showFooter();
+			} else {
+				BG.Panel.hideFooter();
+			}
+		},
+		
+		/**
 		 * Open the panel for this control.
 		 * 
 		 * @since 1.2.7
 		 */
 		openPanel : function () {
-			var panel = BOLDGRID.EDITOR.Panel,
+			var panel = BG.Panel,
 				template = wp.template( 'boldgrid-editor-button' );
 
 			// Remove all content from the panel.
 			panel.clear();
-
+			
 			// Set markup for panel.
 			panel.$element.find( '.panel-body' ).html( template( {
 				text : 'Button',
@@ -344,8 +379,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				colors : self.getColorsMarkup()
 			} ) );
 			
+			self.preselect();
+			
 			// Open Panel.
 			panel.open( self );
+			
+			self.toggleFooter();
+			
 			panel.$element.removeClass('ui-widget-content');
 		}
 

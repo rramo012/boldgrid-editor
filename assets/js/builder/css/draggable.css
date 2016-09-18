@@ -640,6 +640,27 @@ html.boldgrid-editor-fullscreen {
     background-color: #23282d;
     background-repeat: no-repeat;
     background-position: 6px 5px;
+	color: #737373;
+    text-align: center;
+}
+
+.popover-imhwpb .popover-menu-imhwpb li[data-action="Font"]::before {
+	font: normal normal normal 15px/1 FontAwesome;
+	content: "\f035";
+    padding-top: 5px;
+}
+
+.popover-imhwpb .popover-menu-imhwpb li[data-action="Box"]::before,
+.popover-imhwpb .popover-menu-imhwpb li[data-action="background"]::before {
+	font-family: Genericons;
+    content: "\f103";
+    padding-top: 5px;
+    font-size: 18px;
+}
+
+.popover-imhwpb .popover-menu-imhwpb li[data-action="background"]::before {
+    padding-top: 9px;
+    content: "\f473";
 }
 
 .popover-imhwpb .popover-menu-imhwpb li[data-action="delete"]::before {
@@ -702,6 +723,7 @@ html.boldgrid-editor-fullscreen {
 .popover-imhwpb .popover-menu-imhwpb li[data-action="add-column"]::before {
 	background-image: url("../../../image/icons/add-column.png");
 }
+.popover-imhwpb .popover-menu-imhwpb li[data-action="add-new"]::before,
 .popover-imhwpb .popover-menu-imhwpb li[data-action="add-row"]::before {
 	background-image: url("../../../image/icons/add-row.png");
 }

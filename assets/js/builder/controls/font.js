@@ -21,7 +21,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		selectors : [ 'p, h1, h2, h3, h4, h5, h6, table, section, ul, ol, dl' ],
 
 		// Ignore images clicked in paragraphs.
-		exceptionSelector : 'img',
+		exceptionSelector : 'img, .draggable-tools-imhwpb *',
 
 		templateMarkup : null,
 		

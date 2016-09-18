@@ -395,7 +395,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		open : function ( control ) {
 			var $target;
-			
+
 			tinymce.activeEditor.undoManager.add();
 			
 			BOLDGRID.EDITOR.Menu.activateControl( control );

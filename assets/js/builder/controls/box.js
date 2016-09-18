@@ -706,7 +706,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 * @param Event e.
 		 */
-		openPanel : function ( e ) {
+		openPanel : function () {
 
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-box' );

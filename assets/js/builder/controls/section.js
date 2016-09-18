@@ -76,6 +76,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="section-width"]', self.sectionWidth );
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
+			self.$popover.on( 'click', '[data-action="background"]', self.background );
+			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
@@ -213,6 +215,35 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		/**
+		 * Add New section under current section.
+		 * 
+		 * @since 1.2.7
+		 */
+		addNewSection : function () {
+			var $newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
+			self.$currentSection.after( $newSection );
+			self.transistionSection( $newSection );
+		},
+		
+		/**
+		 * Fade the color of a section from grey to transparent.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $newSection.
+		 */
+		transistionSection : function ( $newSection ) {
+			IMHWPB.tinymce_undo_disabled = true;
+			$newSection.animate( {
+				    'background-color' : 'transparent'
+				  }, 1500, 'swing', function(){
+						BG.Controls.addStyle( $newSection, 'background-color', '' );
+						IMHWPB.tinymce_undo_disabled = false;
+						tinymce.activeEditor.undoManager.add();
+				  }
+			);
+		},
+		
+		/**
 		 * Delete a section.
 		 * 
 		 * @since 1.2.7
@@ -260,6 +291,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 			
 			self.$container.trigger( self.$container.delete_event );
+		},
+		
+		background : function () {
+			self.$currentSection.click();
+			BOLDGRID.EDITOR.CONTROLS.Background.openPanel();
 		},
 		
 		/**

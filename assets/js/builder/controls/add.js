@@ -128,16 +128,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$container.$body.prepend( $newSection );
 			
 			self.scrollToElement( $newSection, 200 );
-			 
-			IMHWPB.tinymce_undo_disabled = true;
-			$newSection.animate( {
-				    'background-color' : 'transparent'
-				  }, 1500, 'swing', function(){
-						BG.Controls.addStyle( $newSection, 'background-color', '' );
-						IMHWPB.tinymce_undo_disabled = false;
-						tinymce.activeEditor.undoManager.add();
-				  }
-			);
+			self.transistionSection( $newSection );
+
 		},
 		
 		/**
