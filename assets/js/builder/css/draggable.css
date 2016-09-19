@@ -168,6 +168,11 @@ html.boldgrid-editor-fullscreen {
     left: 0;
     right: 0;
     content: ' ';
+    
+}
+.dragging-section .boldgrid-section:before,
+.dragging-section .boldgrid-section:after  {
+	display: block;
 }
 
 .dragging-section .boldgrid-section:hover:after {
