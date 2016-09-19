@@ -99,10 +99,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		collapseSelection : function () {
-			return;
-			/*
-			tinyMCE.activeEditor.selection.collapse( false );
-			tinymce.activeEditor.execCommand( 'wp_link_cancel' );*/
+			tinymce.activeEditor.execCommand( 'wp_link_cancel' );
 		},
 		
 		/**
@@ -165,10 +162,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		highlightElement : function () {
-			return;/*
 			var $el = BG.Menu.getTarget( self );
 			tinymce.activeEditor.selection.select( $el[0] );
-			tinymce.activeEditor.execCommand( 'WP_Link' );*/
+			tinymce.activeEditor.execCommand( 'WP_Link' );
 		},
 
 		/**
