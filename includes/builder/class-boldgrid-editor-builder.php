@@ -49,6 +49,26 @@ class Boldgrid_Editor_Builder {
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
 
+		$builder_configs = self::remove_duplicate_fonts( $builder_configs );
+
+		return $builder_configs;
+	}
+
+	/**
+	 * Remove theme fonts from the my fonts array.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param array $builder_configs Collective configs to pass to JS.
+	 *
+	 * @return array $builder_config.
+	 */
+	public static function remove_duplicate_fonts( $builder_configs ) {
+		$builder_configs['components_used']['font'] = array_diff(
+			$builder_configs['components_used']['font'],
+			$builder_configs['theme_fonts']
+		);
+
 		return $builder_configs;
 	}
 
