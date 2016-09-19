@@ -754,6 +754,21 @@
 .editor-panel[data-type="image-filter"] .panel-body .activate-customize {
   margin-top: 10px; }
 
+.editor-panel[data-type="image-filter"] .panel-body .remote-image-error {
+  display: none;
+  padding: 100px;
+  font-size: 18px; }
+
+.editor-panel[data-type="image-filter"] .panel-body .remote-image-error p {
+  font-size: 1.1em; }
+
+.editor-panel[data-type="image-filter"] .panel-body .remote-image-error.error-active {
+  display: block; }
+
+.editor-panel[data-type="image-filter"] .panel-body .remote-image-error.error-active ~ .choices,
+.editor-panel[data-type="image-filter"] .panel-body .remote-image-error.error-active ~ .preview {
+  display: none; }
+
 .editor-panel[data-type="image-filter"] .panel-body .presets {
   padding-right: 2px;
   padding-top: 2px; }

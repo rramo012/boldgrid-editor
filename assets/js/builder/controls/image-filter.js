@@ -365,9 +365,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			srcSet = this.get_image_src();
 	
-			//TODO: isRemote(img)
-	
 			// Set markup for panel.
+			panel.$element.removeClass('rendering');
 			panel.$element.find( '.panel-body' ).html( template( {
 				'fullSrc' : srcSet.fullSrc,
 				'src' : srcSet.src,
@@ -375,13 +374,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'customizeSettings' : self.customizeSettings
 			} ) );
 			
-			// Intialize Sliders.
-			self._setupSliders();
-			self._renderPanelThumbnails();
-	
-			// Initialize Preview Image.
-			panel.$element.find( '[data-preset="none"]' ).addClass( 'selected' );
-			self.preview = Caman( panel.$element.find( '.preview img' )[0] );
+			// If this is a remote URL, Fail.
+			if ( ! srcSet.fullSrc || Caman.IO.isURLRemote( srcSet.fullSrc ) ) {
+				BG.Panel.$element.find('.panel-body .remote-image-error').addClass('error-active');
+			} else {
+				// Intialize Sliders.
+				self._setupSliders();
+				self._renderPanelThumbnails();
+				
+				// Initialize Preview Image.
+				panel.$element.find( '[data-preset="none"]' ).addClass( 'selected' );
+				self.preview = Caman( panel.$element.find( '.preview img' )[0] );
+			}
 	
 			tinyMCE.activeEditor.selection.collapse(false);
 
