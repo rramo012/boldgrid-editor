@@ -1111,6 +1111,39 @@ body.boldgrid-editor-fullscreen {
 .bg-zoom-controls {
   display: none; }
 
+.zoomout {
+  padding: 0;
+  background-color: #f1f1f1; }
+
+.zoomout body {
+  transform-origin: top center;
+  transform: scale(0.5);
+  margin-top: 45px !important;
+  border: 2px solid #e5e5e5; }
+
+.zoomout body.zoom-scale-1 {
+  transform: scale(0.3); }
+
+.zoomout body.zoom-scale-2 {
+  transform: scale(0.4); }
+
+.zoomout body.zoom-scale-3 {
+  transform: scale(0.5); }
+
+.zoomout body.zoom-scale-4 {
+  transform: scale(0.6); }
+
+.zoomout body.zoom-scale-5 {
+  transform: scale(0.7); }
+
+.zoomout body.zoom-scale-6 {
+  transform: scale(0.8); }
+
+@media (max-width: 600px) {
+  .zoomout body {
+    transform: scale(0.8);
+    margin-top: 70px !important; } }
+
 .boldgrid-zoomout .mce-statusbar,
 .boldgrid-zoomout .wrap > *:not(#post),
 .boldgrid-zoomout #post-status-info,
@@ -1128,8 +1161,6 @@ body.boldgrid-editor-fullscreen {
   padding-bottom: 0; }
 
 .boldgrid-zoomout #wp-content-editor-tools {
-  position: fixed !important;
-  top: 32px !important;
   left: 0px;
   padding: 12px;
   padding-top: 4px;
@@ -1150,8 +1181,7 @@ body.boldgrid-editor-fullscreen {
   font-variant: small-caps; }
 
 .boldgrid-zoomout .bg-zoom-controls .unzoom-icon {
-  position: relative;
-  top: 10px; }
+  vertical-align: sub; }
 
 .boldgrid-zoomout .bg-zoom-controls .ui-slider-horizontal {
   height: 3px;
@@ -1181,6 +1211,10 @@ body.boldgrid-editor-fullscreen {
   top: -1px;
   cursor: pointer;
   border-radius: 50%; }
+
+@media (max-width: 550px) {
+  .boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider {
+    margin: 0 auto; } }
 
 .boldgrid-zoomout .exit-row-dragging {
   background-color: white;
@@ -1332,6 +1366,10 @@ body.boldgrid-editor-fullscreen {
 
 .changing-padding-bottom ~ .draghandle.top {
   display: none !important; }
+
+.changeing-padding-bottom ~ #boldgrid-draggable-resizing-overlay,
+.changeing-padding-top ~ #boldgrid-draggable-resizing-overlay {
+  cursor: ns-resize; }
 
 /*--------------------------------------------------------------
 # Color Controls
