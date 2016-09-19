@@ -1966,14 +1966,18 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				var column_stack = self.find_column_stack( $row, self.resize.element[0] );
 				
-				// If your resizing from the left and this is the first item in
+				// If your resizing from the left and this is the first item in the stack.
 				if ( self.resize.left && self.resize.element[0] == column_stack.stack[0].object && made_smaller ) {
-					self.change_column_size( self.resize.element, false );
-					self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
-					$row.prepend( self.resize.sibling );
-					return false;
+					
+					if ( row_size <= 12 ) {
+						self.change_column_size( self.resize.element, false );
+						self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
+						self.resize.element.before( self.resize.sibling );
+						return false;
+					} else {
+						return false
+					}
 				}
-				
 				/*
 				 * If my column size is 1.
 				 * - and your making me smaller.
@@ -2010,7 +2014,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				// And im making myself smaller.
 				// And Im the last item in the stack.
 				// Add a column.
-				if ( self.resize.right && last_col_in_row && made_smaller ) {
+				if ( row_size <= 12 && self.resize.right && last_col_in_row && made_smaller ) {
 					self.change_column_size( self.resize.element, false );
 					self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
 					$row.append( self.resize.sibling );
