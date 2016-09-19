@@ -6,7 +6,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	"use strict";
 
 	BOLDGRID.EDITOR.VALIDATION.Section = {};
-	self = BOLDGRID.EDITOR.VALIDATION.Section;
+	var self = BOLDGRID.EDITOR.VALIDATION.Section;
 
 	/**
 	 * Get the closest element within context.
