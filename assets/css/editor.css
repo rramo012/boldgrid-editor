@@ -6,7 +6,7 @@
   display: none;
   position: fixed;
   top: 200px;
-  right: 30px;
+  right: 45px;
   z-index: 100101;
   width: 310px;
   border: none;
@@ -1506,6 +1506,7 @@ body.boldgrid-editor-fullscreen {
   border-radius: 7px;
   background-image: url(../image/web-fonts.png);
   background-color: #f3f3f3;
+  background-repeat: no-repeat;
   color: transparent;
   margin-left: -24px;
   cursor: pointer;
@@ -1539,6 +1540,7 @@ body.boldgrid-editor-fullscreen {
   color: transparent;
   background-image: url(../image/web-fonts.png);
   background-color: white;
+  background-repeat: no-repeat;
   height: 25px;
   margin: 4px 0px;
   border: none;

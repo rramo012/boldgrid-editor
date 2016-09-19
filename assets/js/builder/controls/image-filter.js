@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 ( function ( $ ) {
 	"use strict"; 
 	
-	var self;
+	var self,
+		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.ImageFilter = {
 
@@ -141,7 +142,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.preview.revert();
 				
 				preset = panel.$element.find( '.selected' ).data( 'preset' );
-				if ( ! preset ) {
+				if ( ! preset || 'none' === preset ) {
 					panel.clearSelected();
 					panel.$element.find( '[data-preset="none"]' ).addClass( 'selected' );
 				} else {
@@ -178,6 +179,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var $this = $( this ),
 					$target = panel.$element.find( '.preview' ).find( 'img, canvas' ),
 					preset = $this.data( 'preset' );
+				
+				if ( panel.$element.hasClass('rendering') ) {
+					return false;
+				}
 
 				panel.clearSelected();
 				$this.addClass( 'selected' );
@@ -299,7 +304,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				count = 1;
 			
 			process = function () {
-				Caman( '[data-preset="' + self.presets[ count ].name + '"] img', function () {
+				var selectionString = '[data-preset="' + self.presets[ count ].name + '"] img';
+				if ( ! BG.Panel.$element.find( selectionString ).length ) {
+					return;
+				}
+				
+				Caman( selectionString, function () {
 					this[ self.presets[ count ].name ]( '50%' ).render( function () {
 						count++;
 						if ( self.presets[ count ] ) {

@@ -279,9 +279,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				if ( $this.closest('.wpview').length ) {
 					return;
 				}
-				
+
 				// If the user clicks one of the controls exceptions, skip.
-				if ( control.exceptionSelector && $( e.toElement ).is( control.exceptionSelector ) ) {
+				if ( control.exceptionSelector && $this.is( control.exceptionSelector ) ) {
 					return;
 				}
 

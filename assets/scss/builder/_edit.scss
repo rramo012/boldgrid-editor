@@ -44,6 +44,7 @@
     border-radius: 7px;
     background-image: url(../image/web-fonts.png);
     background-color: #f3f3f3;
+    background-repeat: no-repeat;
     color: transparent;
     margin-left: -24px;
     cursor: pointer;
@@ -82,8 +83,9 @@
 		color: transparent;
 		background-image: url(../image/web-fonts.png);
 		background-color: white;
+		background-repeat: no-repeat;
 		height: 25px;
-		margin: 4px 0px;
+		margin: 4px 0px; 
 		border: none;
 		padding: 3px;
 		background-color: transparent;
