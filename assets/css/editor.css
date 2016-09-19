@@ -1252,18 +1252,14 @@ body.boldgrid-editor-fullscreen {
   white-space: normal; }
 
 .wp-admin.wp-core-ui .boldgrid-tooltip-arrow {
-  top: 0;
+  position: absolute;
   left: 50%;
   margin-left: -5px;
-  border-bottom-style: solid;
-  border: 5px dashed #000;
-  border-top: none;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  position: absolute;
   width: 0;
   height: 0;
-  line-height: 0; }
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black; }
 
 .wp-admin.wp-core-ui .editor-panel .boldgrid-tooltip-wrap {
   position: absolute;
