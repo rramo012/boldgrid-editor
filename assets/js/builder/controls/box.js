@@ -73,9 +73,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupBackgroundColor();
 			self._setupBorderColor();
 			self._setupCustomizeLeave();
+			self._setupSliderChange();
 			
 			var presets = self.getBoxMarkup();
 			self.$presets = self.applyUiStyles( presets );
+		},
+		
+		/**
+		 * After slider changes, save state of modified element.
+		 * 
+		 * @since 1.2.7
+		 */
+		_setupSliderChange : function () {
+			BG.Panel.$element.on( 'slidechange', '.box-design .slider', function() {
+				self._saveModuleClasses();
+			} );
 		},
 
 		/**
@@ -447,7 +459,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'padding-left', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-right', ui.value + 'em' );
-					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( horPaddingEm );
 
@@ -463,7 +474,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					
 					BG.Controls.addStyle( $module, 'padding-top', ui.value + 'em' );
 					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
-					self._saveModuleClasses();
 				},
 			} ).siblings( '.value' ).html( vertPaddingEm );
 		},

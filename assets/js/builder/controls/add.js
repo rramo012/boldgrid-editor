@@ -128,7 +128,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$container.$body.prepend( $newSection );
 			
 			self.scrollToElement( $newSection, 200 );
-			self.transistionSection( $newSection );
+			BG.CONTROLS.Section.transistionSection( $newSection );
 
 		},
 		
