@@ -12,7 +12,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 
 		$body : null,
 		
-		handleSize : 16,
+		handleSize : 14,
 		
 		$container : null,
 		

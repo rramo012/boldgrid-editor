@@ -508,11 +508,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$target = BG.Menu.getTarget( self );
 			
 			$currentSelection.css( 'background', '' );
-
+			
 			if ( 'color' == type ) {
 				$currentSelection.css( 'background', prop );
 			} else {
-				$currentSelection.css( 'background-image', $target.css( 'background-image' ) );
+				// $target[0].style['background-image'] used instead of jQuery.css because of comaptbility issue with FF. 
+				$currentSelection.css( 'background-image', $target[0].style['background-image'] );
 			}
 
 			$currentSelection.attr( 'data-type', type );
