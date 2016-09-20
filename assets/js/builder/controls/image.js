@@ -101,6 +101,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 				
 				self.removeModClasses( $target );
+				$target.removeClass ( function ( index, css ) {
+				    return (css.match (/(^|\s)img-\S+/g) || []).join(' ');
+				} );
 				
 				tinyMCE.activeEditor.selection.collapse( false );
 				

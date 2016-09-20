@@ -24,6 +24,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Misc:			JIRA WPB-2344	Updated readme.txt for Tested up to 4.6.1.
 * Bug fix:		JIRA WPB-2336	Load BoldGrid settings from the correct WP option (site/blog).
 * Update:		JIRA WPB-2368	Setting version constant from plugin file.
+* New feature:  JIRA WPB-2065   Buttons, Fonts and text backgrounds will now track usage on other pages.
+* Update:       JIRA WPB-2065   Appearance of drag element has been modified.
+* New feature:  JIRA WPB-2065   Added Section dragging & zoomed out view.
 
 = 1.2.6 =
 * Bug fix:		JIRA WPB-2065	Rebuilding JS assets.

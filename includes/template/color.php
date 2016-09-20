@@ -1,4 +1,5 @@
 <script type="text/html" id="tmpl-boldgrid-editor-color">
+	<# if ( data.colors.length ) { #>
 	<div class='theme-colors-wrap' data-tooltip-id='color-theme'>
 		<h4>Theme Colors</h4>
 		<ul class='colors theme-colors'>
@@ -7,6 +8,7 @@
 			<# }); #>
 		</ul>
 	</div>
+	<# } #>
 	<div data-tooltip-id='color-saved'>
 		<h4>My Colors</h4>
 		<ul class='colors my-colors'>
