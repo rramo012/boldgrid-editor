@@ -1535,6 +1535,9 @@ body.boldgrid-editor-fullscreen {
 #tinymce .fa {
   cursor: pointer; }
 
+#tinymce .background-fixed {
+  background-attachment: scroll !important; }
+
 .draggable-inactive .color-panel,
 .draggable-inactive .editor-panel,
 .draggable-inactive #boldgrid-instance-menu,

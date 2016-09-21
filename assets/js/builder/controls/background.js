@@ -337,7 +337,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					BG.Controls.addStyle( $target, 'background-repeat', 'repeat' );
 				} else if ( 'cover' == $this.val() ) {
 					BG.Controls.addStyle( $target, 'background-size', 'cover' );
-					BG.Controls.addStyle( $target, 'background-repeat', 'no-repeat' );
+					BG.Controls.addStyle( $target, 'background-repeat', '' );
 				}
 
 			} );
@@ -399,6 +399,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.scrollToSelected();
 			} );
 		},
+		
+		/**
+		 * Remove all color classes.
+		 * 
+		 * @since 1.2.7
+		 * @param jQuery $target.
+		 */
+		removeColorClasses : function ( $target ) {
+			$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
+		},
 
 		/**
 		 * Bind Event: When the user clicks on a design.
@@ -415,10 +425,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					imageSrc = $this.css('background-image'),
 					background = $this.css('background');
 
-				// Remove all color classes.
-				$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
-
 				if ( $this.hasClass( 'selected') ) {
+					self.removeColorClasses( $target );
 					BG.Controls.addStyle( $target, 'background', '' );
 					$target.removeAttr('data-image-url');
 					$this.removeClass( 'selected' );
@@ -439,6 +447,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( 'image' == $this.data('type') ) {
 					self.setImageBackground( imageUrl );
 				} else if ( 'color' == $this.data('type') ) {
+					self.removeColorClasses( $target );
 					$target.addClass( $this.data('class') );
 					BG.Controls.addStyle( $target, 'background-image', '' );
 					self.setDefaultBackgroundColors();
@@ -508,10 +517,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$target = BG.Menu.getTarget( self );
 			
 			$currentSelection.css( 'background', '' );
-			
+
 			if ( 'color' == type ) {
-				$currentSelection.css( 'background', prop );
+				$currentSelection.css( 'background-color', prop );
 			} else {
+				$currentSelection.css( 'background-color', $target.css('background-color') );
 				// $target[0].style['background-image'] used instead of jQuery.css because of comaptbility issue with FF. 
 				$currentSelection.css( 'background-image', $target[0].style['background-image'] );
 			}
@@ -785,7 +795,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				switch ( selectionType ) {
 					case 'color' :
-						if ( dataClass && $target.hasClass( dataClass ) ) {
+						if ( dataClass && $target.hasClass( dataClass ) && 'none' === $target.css( 'background-image' ) ) {
 							$this.addClass( 'selected' );
 							type = selectionType;
 							matchFound = true;
