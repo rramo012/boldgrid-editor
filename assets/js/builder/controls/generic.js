@@ -78,6 +78,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'bg-customize-open', function () {
 				var $el = BG.Menu.getCurrentTarget();
 
+				panel.$element.find( '.class-control input[default]' ).prop( 'checked', true );
+
 				panel.$element.find( '.class-control input' ).each( function () {
 					var $this = $( this );
 					if ( $el.hasClass( $this.attr('value') ) ) {
