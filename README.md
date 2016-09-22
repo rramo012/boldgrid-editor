@@ -26,6 +26,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ### 1.2.8 In Progress ###
 * Bug Fix:		JIRA WPB-2405	Fixed issue causing button customization to disappear.
+* New feature:	JIRA WPB-2406	Add my button designs to button panel.
 
 ### 1.2.7 ###
 * Misc:			JIRA WPB-2344	Updated readme.txt for Tested up to 4.6.1.

@@ -130,6 +130,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'bg-customize-open', function () {
 				if ( panel.currentControl == self ) {
 					self.sizeSlider.init();
+					BG.Menu.getTarget( self ).removeClass( 'bg-control-element' );
 				}
 			} );
 			panel.$element.on( 'bg-customize-exit', function () {
@@ -342,8 +343,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var $target = BG.Menu.getTarget( self ),
 				classes = BG.Util.getClassesLike( $target, 'btn' );
 			
+			// Exclude Size Classes.
+			classes = $( '<div>' ).addClass( classes.join(' ') )
+				.removeClass( 'bg-control-element ' + self.sizeClasses.join(' ') )
+				.attr('class');
+			
 			BG.Panel.clearSelected();
-			BG.Panel.$element.find('[data-preset="' + classes.join(' ') + '"]').addClass('selected');
+			BG.Panel.$element.find('[data-preset="' + classes + '"]:first').addClass('selected');
 		},
 		
 		/**
@@ -362,6 +368,32 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		/**
+		 * Add buttons that exist on the page to list of used components. This will populate "My Designs".
+		 * 
+		 * @since 1.2.7
+		 */
+		_updateMyDesigns : function () {
+			
+			self.usedComponents = BoldgridEditor.builder_config.components_used.button.slice(0);
+			
+			BG.Controls.$container.$body.find('.btn').each( function () {
+				var $this = $( this ),
+					$clone = $this.clone().removeClass( 'bg-control-element ' + self.sizeClasses.join(' ') ), 
+					classes = $clone.attr('class'),
+					savedComponents = self.usedComponents,
+					savedIndex = _.findIndex( savedComponents, function ( item ) { return item.classes == classes; } );
+				
+				if ( -1 === savedIndex ) {
+					savedComponents.push({
+						style : $clone.attr('style'),
+						classes : classes
+					} );
+				}
+			} );
+			
+		},
+		
+		/**
 		 * Open the panel for this control.
 		 * 
 		 * @since 1.2.7
@@ -370,6 +402,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var panel = BG.Panel,
 				template = wp.template( 'boldgrid-editor-button' );
 
+			self._updateMyDesigns();
+			
 			// Remove all content from the panel.
 			panel.clear();
 			
@@ -377,6 +411,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find( '.panel-body' ).html( template( {
 				text : 'Button',
 				presets : self.classes,
+				myPresets : self.usedComponents,
 				colors : self.getColorsMarkup()
 			} ) );
 			

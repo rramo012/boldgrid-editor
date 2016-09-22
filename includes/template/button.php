@@ -1,5 +1,19 @@
 <script type="text/html" id="tmpl-boldgrid-editor-button">
 	<div class='choices button-design'>
+		<# if ( data.myPresets.length ) { #>
+			<div class='title'>
+				<h4>My Designs</h4>
+			</div>
+			<div class='presets my-designs'>
+			<ul>
+			<# _.each( data.myPresets, function ( preset ) { #>
+				<li data-preset="{{preset.classes}}" class="panel-selection">
+					<a class='{{preset.classes}}'>Button</a>
+				</li>
+			<# }); #>
+			</ul>
+			</div>
+		<# } #>
 		<div class='title'>
 			<h4>Sample Designs</h4>
 		</div>

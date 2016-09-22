@@ -795,11 +795,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.wrap_hr_tags();
 		self.wrap_content_elements();
 		self.add_redundant_classes();
-		self.removeClasses();
+		self.removeClasses( self.$master_container );
 	};
 	
-	this.removeClasses = function () {
-		self.$master_container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
+	this.removeClasses = function ( $container ) {
+		$container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
 	};
 
 	/**
@@ -2071,6 +2071,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		var $markup = $('<div>' + markup + '</div>');
 		self.remove_resizing_classes( $markup );
 		self.remove_border_classes( $markup );
+		self.removeClasses( $markup );
 		$markup.find('.draggable-tools-imhwpb').remove();
 		return $markup.html();
 	};
