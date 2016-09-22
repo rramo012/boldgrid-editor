@@ -87,7 +87,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_setupClosePanel : function () {
 			BG.Panel.$element.on( 'bg-panel-close', function () {
-				if ( self.name === BG.Panel.currentControl.name ) {
+				if ( BG.Panel.currentControl && self.name === BG.Panel.currentControl.name ) {
 					self.collapseSelection();
 				}
 			} );

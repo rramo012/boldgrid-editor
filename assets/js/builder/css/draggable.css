@@ -161,7 +161,6 @@ html.boldgrid-editor-fullscreen {
 
 .dragging-section .boldgrid-section:after {
 	background-color: transparent;
-	transition: background-color .25s;
     position: absolute;
     top: 0;
     bottom: 0;

@@ -1,9 +1,7 @@
 var IMHWPB = IMHWPB || {};
 
 /**
- * IMHWPB.WP_MCE_Draggable Responsible for interfacing with tinymce and the
- * draggable class
- * DO NOT AUTOFORMAT
+ * IMHWPB.WP_MCE_Draggable Responsible for interfacing with tinymce and the draggable class.
  */
 IMHWPB.WP_MCE_Draggable = function() {
 	var self = this;
@@ -213,7 +211,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.prevent_edit = function () {
 		tinyMCE.activeEditor.selection.collapse(false);
-		if ( !self.draggable_instance.ie_version ) {
+		if ( ! self.draggable_instance.ie_version ) {
 			tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
 		}
 	};
@@ -246,10 +244,20 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Procedure that occurs when resizing a column is done
 	 */
 	this.column_resize_done = function() {
+		var $temp;
+		
 		if ( !self.draggable_instance.ie_version ) {
 			//This action use to add an undo level, but it appears as if contenteditable, is doing that for us.
 			tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
+
+			// Stops tinymce from scorlling to top.
+			var $temp = $('<a>temp</a>');
+			$( tinyMCE.activeEditor.getBody() ).append( $temp );
+			tinymce.activeEditor.selection.setCursorLocation( $temp[0], 0 );
+			$temp.focus();
+			$temp.remove();
 		}
+		
 		$window.trigger( 'resize' );
 	};
 

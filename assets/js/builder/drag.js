@@ -704,9 +704,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( ! BoldgridEditor.is_boldgrid_theme ) {
 			self.$master_container.find('html').addClass('non-bg-theme');
 		}
-		
-		//self.$master_container.find('html').addClass('zoomout dragging-section');
-		//self.$master_container.find('body').removeAttr( 'contenteditable' );
 	};
 
 	/**
