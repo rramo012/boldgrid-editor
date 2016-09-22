@@ -133,9 +133,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					BG.Controls.addStyle( $module, 'background-color', self.targetColor );
 				}
 				
-				console.log(  self.targetColor );
-				
-				//self._applyCloneStyles( $module );
+				self._applyCloneStyles( $module );
 			} );
 		},
 		
@@ -147,7 +145,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_applyCloneStyles : function ( $module ) {
 			if ( self.$targetModuleClone ) {
-				
 				$module.attr( 'style', self.$targetModuleClone.attr('style') );
 				$module.attr( 'data-mce-style', self.$targetModuleClone.attr('style') );
 			}
@@ -257,7 +254,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find('.customize').show();
 			panel.$element.find('.presets').hide();
 			panel.$element.find('.box-design > .title').hide();
-			panel.$element.find('.box-design [name="box-bg-color"]').val( self.targetColor ).change();
+			panel.$element.find('.box-design [name="box-bg-color"]').val( self.getTarget().css('background-color') );
 			self.setupBorderColor();
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 			panel.scrollTo(0);
@@ -334,10 +331,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			$module.addClass( value );
-			if ( $module.attr('class') && -1 !== $module.attr('class').indexOf('-background-color') ) {
-			//if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ',' ) ) ) {
-				console.log('ddd');
-				//BG.Controls.addStyle( $module, 'background-color', backgroundColor );
+			if ( $module.attr('class') && -1 === $module.attr('class').indexOf('-background-color') ) {
+				 BG.Controls.addStyle( $module, 'background-color', backgroundColor );
 			}
 		},
 
