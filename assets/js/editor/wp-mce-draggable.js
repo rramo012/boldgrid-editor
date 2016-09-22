@@ -247,6 +247,10 @@ IMHWPB.WP_MCE_Draggable = function() {
 		var $temp;
 		
 		if ( !self.draggable_instance.ie_version ) {
+			
+			// Blur the editor, allows FF to focus on click and add caret back in.
+			tinymce.activeEditor.getBody().blur();
+			
 			//This action use to add an undo level, but it appears as if contenteditable, is doing that for us.
 			tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
 
