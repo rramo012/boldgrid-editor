@@ -136,6 +136,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( panel.currentControl == self ) {
 					self.preselect();
 					BG.Panel.scrollToSelected();
+					self.toggleFooter();
 				}
 			} );
 		},
