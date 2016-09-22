@@ -128,8 +128,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				// On mouse leave apply styles.
 				$module.addClass( self.targetClasses );
-				BG.Controls.addStyle( $module, 'background-color', self.targetColor );
-				self._applyCloneStyles( $module );
+				
+				if ( ! self.targetClasses || -1 === self.targetClasses.indexOf( '-background-color' ) ) {
+					BG.Controls.addStyle( $module, 'background-color', self.targetColor );
+				}
+				
+				console.log(  self.targetColor );
+				
+				//self._applyCloneStyles( $module );
 			} );
 		},
 		
@@ -141,6 +147,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_applyCloneStyles : function ( $module ) {
 			if ( self.$targetModuleClone ) {
+				
 				$module.attr( 'style', self.$targetModuleClone.attr('style') );
 				$module.attr( 'data-mce-style', self.$targetModuleClone.attr('style') );
 			}
@@ -235,7 +242,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_saveModuleClasses : function () {
 			var $module = self.findModule( BG.Menu.getTarget( self ) );
 			self.targetClasses = $module.attr( 'class' );
-			self.targetColor = $module.css( 'background-color' );
+			self.targetColor = $module[0].style['background-color'];
 			self.$targetModuleClone = $module.clone();
 		},
 
@@ -327,8 +334,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			$module.addClass( value );
-			if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) ) ) {
-				BG.Controls.addStyle( $module, 'background-color', backgroundColor );
+			if ( $module.attr('class') && -1 !== $module.attr('class').indexOf('-background-color') ) {
+			//if ( ! $module.hasClass( BG.CONTROLS.Color.backgroundColorClasses.join( ',' ) ) ) {
+				console.log('ddd');
+				//BG.Controls.addStyle( $module, 'background-color', backgroundColor );
 			}
 		},
 
