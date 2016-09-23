@@ -74,12 +74,16 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		validateComponentsUsed : function () {
 			$.each( BoldgridEditor.builder_config.components_used.image, function () {
 				var $temp = $('<div>').attr( 'class', this.classes ); 
-				$temp.removeClass (function ( index, css ) {
-				    return ( css.match( /(^|\s)wp-image-\S+/g) || [] ).join( ' ' );
-				} );
-				
+				self.removeImageClass( $temp );
 				this.classes = $temp.attr('class');
 			} );
+		},
+		
+		removeImageClass : function ( $el ) {
+			$el.removeClass( function ( index, css ) {
+			    return ( css.match( /(^|\s)wp-image-\S+/g) || [] ).join( ' ' );
+			} );
+			return $el;
 		},
 
 		/**
@@ -150,9 +154,39 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			bgImageClasses = bgImageClasses.join(' ');
 			
 			if ( bgImageClasses ) {
-				BG.Panel.$element.find( '[data-preset="' + bgImageClasses + '"]' ).addClass( 'selected' );
+				BG.Panel.$element.find( '[data-preset="' + bgImageClasses + '"]:first' ).addClass( 'selected' );
 				return false;
 			}
+		},
+
+		/**
+		 * Add buttons that exist on the page to list of used components. This will populate "My Designs".
+		 * 
+		 * @since 1.2.7
+		 */
+		_updateMyDesigns : function () {
+			
+			self.usedComponents = BoldgridEditor.builder_config.components_used.image.slice(0);
+
+			BG.Controls.$container.$body.find('.bg-img').each( function () {
+				var classes, savedComponents, savedIndex,
+					$this = $( this ), 
+					$clone = $this.clone().removeClass( 'bg-control-element' );
+				
+				$clone = self.removeImageClass( $clone );
+				
+				classes = $clone.attr('class'),
+				savedComponents = self.usedComponents,
+				savedIndex = _.findIndex( savedComponents, function ( item ) { return item.classes == classes; } );
+				
+				if ( -1 === savedIndex ) {
+					savedComponents.push( {
+						style : $clone.attr('style'),
+						classes : classes
+					} );
+				}
+			} );
+			
 		},
 
 		/**
@@ -164,6 +198,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var panel = BOLDGRID.EDITOR.Panel,
 				$target = BOLDGRID.EDITOR.Menu.getTarget( self ),
 				template = wp.template( 'boldgrid-editor-image' );
+			
+			self._updateMyDesigns();
 
 			// Remove all content from the panel.
 			panel.clear();
@@ -172,7 +208,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.find( '.panel-body' ).html( template( {
 				'src' : $target.attr( 'src' ),
 				'presets' : self.classes,
-				'myPresets' : BoldgridEditor.builder_config.components_used.image
+				'myPresets' : self.usedComponents,
 			} ) );
 
 			self.preselectImage();
