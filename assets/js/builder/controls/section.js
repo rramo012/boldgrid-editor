@@ -61,6 +61,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 			self.hideHandles();
 		},
+		
+		/**
+		 * When the section menu is too close to the top, point it down.
+		 * 
+		 * @since 1.2.8
+		 * @param Event e.
+		 */
+		menuDirection : function ( e ) {
+			var pos = e.screenY,
+				menuHeight = 340,
+				staticMenuPos = BG.Menu.$mceContainer[0].getBoundingClientRect();
+			
+			if ( pos - staticMenuPos.bottom < menuHeight ) {
+				self.$popover.find('.popover-menu-imhwpb').addClass('menu-down');
+			} else {
+				self.$popover.find('.popover-menu-imhwpb').removeClass('menu-down');
+			}
+			
+		},
 
 		/**
 		 * Bind all events.
@@ -79,6 +98,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="background"]', self.background );
 			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
+			self.$popover.on( 'click', '.context-menu-imhwpb', self.menuDirection );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
@@ -200,6 +220,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return false;
 			}
 
+			self.$popover.find('.popover-menu-imhwpb').addClass('hidden');
+			
 			// Save the current row.
 			self.$currentSection = $this;
 

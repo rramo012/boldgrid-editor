@@ -450,6 +450,10 @@ html.boldgrid-editor-fullscreen {
 .section-popover-imhwpb {
 	width: 75px;
 }
+.bottom-popover-imhwpb .popover-menu-imhwpb.menu-down ul{
+	bottom: auto;
+	top: -30px;
+}
 
 .dragging-section .draggable-tools-imhwpb,
 .dragging-section .draghandle,

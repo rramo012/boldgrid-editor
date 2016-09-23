@@ -12,6 +12,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		$element : null,
 		
 		$activeElement : null,
+		
+		$mceContainer : null,
 
 		/**
 		 * Initialize the menu control.
@@ -66,8 +68,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.2.7
 		 */
 		create : function () {
+			
+			this.$mceContainer = $( '#' + tinymce.activeEditor.theme.panel._items[0]._id );
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
-			$( '#' + tinymce.activeEditor.theme.panel._items[0]._id ).append( this.$element );
+			this.$mceContainer.append( this.$element );
 		},
 
 		/**
