@@ -115,6 +115,8 @@ html.boldgrid-editor-fullscreen {
     outline: 1px solid gray !important;
 }
 
+.no-select-imhwpb .boldgrid-section.content-border-imhwpb,
+.no-select-imhwpb .boldgrid-section.content-border-imhwpb:hover,
 .dragging-section .draggable-tools-imhwpb + *:not(button),
 .dragging-section .draggable-tools-imhwpb + .row:not(button) > [class*="col-md"],
 .dragging-section .draggable-tools-imhwpb + *:not(button),
@@ -270,7 +272,6 @@ html.boldgrid-editor-fullscreen {
 }
 
 .bg-drag-popover,
-.content-border-imhwpb,
 .resize-border-right-imhwpb,
 .resize-border-left-imhwpb,
 .draggable-tools-imhwpb,

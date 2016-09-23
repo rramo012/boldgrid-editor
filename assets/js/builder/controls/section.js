@@ -35,13 +35,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param Event e.
 		 */
 		hideHandles : function ( e ) {
-
-			if ( e && e.relatedTarget && $( e.relatedTarget ).closest('.section-popover').length ) {
+			
+			if ( e && e.relatedTarget && $( e.relatedTarget ).closest('.section-popover-imhwpb').length ) {
 				return;
 			}
 			
+			self.removeBorder();
+			
 			self.$popover.find('.popover-menu-imhwpb').addClass('hidden');
 			self.$popover.hide();
+		},
+		
+		/**
+		 * Remove section poppover target border.
+		 * 
+		 * @since 1.2.8
+		 */
+		removeBorder : function () {
+			if ( self.$currentSection && self.$currentSection.length ) {
+				self.$currentSection.removeClass('content-border-imhwpb');
+			}
 		},
 		
 		/**
@@ -214,6 +227,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return;
 			}
 			
+			self.removeBorder();
+
 			pos = $this[0].getBoundingClientRect();
 
 			if ( self.currentlyDragging ) {
@@ -230,6 +245,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'left' : 'calc(50% - 38px)',
 				'transform' :  'translateX(-50%)'
 			} );
+			
+			self.$currentSection.addClass('content-border-imhwpb');
 			
 			if ( this.getBoundingClientRect ) {
 				self.$popover.show();

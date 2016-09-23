@@ -27,6 +27,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 		
 		/**
+		 * Add a transition to the container changing size.
+		 * 
+		 * @since 1.2.8
+		 */
+		transitionSize : function ( $container ) {
+			BG.Controls.$container.find('html').addClass('bg-disabled-handles');
+			$container.css('transition', 'width .5s');
+			setTimeout( function () {
+				$container.css('transition', '');
+				BOLDGRID.EDITOR.CONTROLS.Section.positionHandles();
+				BOLDGRID.EDITOR.RESIZE.Row.positionHandles();
+				BG.Controls.$container.find('html').removeClass('bg-disabled-handles');
+			}, 600 );
+		},
+		
+		/**
 		 * Switch between a container and a container fluid.
 		 */
 		toggleSectionWidth : function ( $container ) {
@@ -37,9 +53,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			if ( $container.hasClass( 'container' ) ) {
+				self.transitionSize( $container );
 				$container.addClass( 'container-fluid' );
 				$container.removeClass( 'container' );
+
 			} else {
+				self.transitionSize( $container );
 				$container.addClass( 'container' );
 				$container.removeClass( 'container-fluid' );
 			}
