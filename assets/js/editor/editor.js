@@ -619,6 +619,8 @@ IMHWPB.Editor = function( $ ) {
 								return item.settings.title == 'Change';
 							} );
 
+						toolbar.show();
+
 						// If button doesnt exist, add it.
 						if ( -1 === buttonIndex ) {
 							// Toolbar/ButtonGroup.insert().
