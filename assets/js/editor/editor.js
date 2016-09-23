@@ -588,35 +588,44 @@ IMHWPB.Editor = function( $ ) {
 					}
 				 */
 
-				//Add button to floating tinymce toolbar
-				self.button_created = false;
+				var buttons = [];
+				buttons.push( tinymce.ui.Factory.create( {
+					type: 'button',
+					title: 'Change',
+					tooltip: 'Change',
+					icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
+					onclick: function () {
+						// Mimic the click of the "Edit" button.
+						tinymce.activeEditor.buttons.wp_img_edit.onclick();
+						
+						// Change the media modal to "Replace Image".
+						wp.media.frame.setState( 'replace-image' );
+						
+						// When the image is replaced, run crop.onReplace().
+						wp.media.frame.state( 'replace-image' ).on( 'replace', function( imageData ) {
+							self.crop.onReplace( imageData );
+						});
+					}
+				} ) );
+				
+				
+				// Add button to floating tinymce toolbar.
 				tinymce.activeEditor.on( 'wptoolbar', function( event ) {
-				  if ( self.button_created == false  && event.toolbar) {
-						var buttons = [];
-						buttons.push(tinymce.ui.Factory.create({
-							type: 'button',
-							  title: 'Change',
-							  tooltip: 'Change',
-							  icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
-							  onclick: function () {
-								  // Mimic the click of the "Edit" button.
-								  tinymce.activeEditor.buttons.wp_img_edit.onclick();
+					if ( event.toolbar ) {
+						var toolbar = event.toolbar,
+							buttonPos = 3,
+							buttonGroup = toolbar.items()[0].items()[0],
+							buttonIndex = _.findIndex( buttonGroup.items(), function ( item ) { 
+								return item.settings.title == 'Change';
+							} );
 
-								  // Change the media modal to "Replace Image".
-								  wp.media.frame.setState( 'replace-image' );
-
-								  // When the image is replaced, run crop.onReplace().
-								  wp.media.frame.state( 'replace-image' ).on( 'replace', function( imageData ) {
-									  self.crop.onReplace( imageData );
-								  });
-							  }
-						 }));
-
-						//Toolbar/ButtonGroup.insert()
-						event.toolbar._items[0]._items[0].insert(buttons,3,false);
-						event.toolbar.reposition();
-						self.button_created = true;
-				  }
+						// If button doesnt exist, add it.
+						if ( -1 === buttonIndex ) {
+							// Toolbar/ButtonGroup.insert().
+							buttonGroup.insert( buttons, buttonPos, false );
+							toolbar.reposition();
+						}
+					}
 				} );
 			});
 
