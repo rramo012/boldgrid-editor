@@ -202,8 +202,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				
 				$clone = self.removeImageClass( $clone );
 				
-				classes = $clone.attr('class'),
-				savedComponents = self.usedComponents,
+				classes = $clone.attr('class');
+				savedComponents = self.usedComponents;
 				savedIndex = _.findIndex( savedComponents, function ( item ) { return item.classes == classes; } );
 				
 				if ( -1 === savedIndex ) {
