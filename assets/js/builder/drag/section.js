@@ -99,8 +99,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					self.currentDrag.$clone.remove();
 					self.currentDrag.$element.removeClass('section-drag-element');
 					self.currentDrag = false;
-					self.$container.$body.removeClass('no-select-imhwpb');
-					self.$container.find('html').removeClass( 'section-dragging-active' );
+					self.$container.$html.removeClass('no-select-imhwpb section-dragging-active');
 				}
 				
 			},
@@ -225,7 +224,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.$container.setInheritedBg( self.currentDrag.$clone, 1 );
 				self.$container.$body.append( self.currentDrag.$clone );
 				self.$container.find('html').addClass( 'section-dragging-active' );
-				self.$container.$body.addClass( 'no-select-imhwpb' );
+				self.$container.$html.addClass( 'no-select-imhwpb' );
 				self.$container.$body.removeAttr('contenteditable');
 				self.positionHelper( e.originalEvent );
 				self.calcSectionLocs();

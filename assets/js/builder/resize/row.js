@@ -90,7 +90,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		 */
 		initDraggable : function () {
 			var startPadding, setting,
-				$body = self.$container.find( 'body' );
+				$body = self.$container.$body;
 
 			self.$container.find( '.draghandle' ).draggable( {
 				scroll: false,
@@ -100,12 +100,14 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					setting = $( this ).data( 'setting' );
 					startPadding = parseInt( self.$currentRow.css( setting ) );
 					self.$currentRow.addClass( 'changing-padding' );
-					$body.addClass( 'no-select-imhwpb' ).addClass( 'changing-' + setting );
+					self.$container.$html.addClass( 'no-select-imhwpb' );
+					$body.addClass( 'changing-' + setting );
 				},
 				stop : function ( e, ui ) {
 					self.currentlyDragging = false;
 					self.$currentRow.removeClass( 'changing-padding' );
-					$body.removeClass( 'no-select-imhwpb' ).removeClass( 'changing-' + setting );
+					self.$container.$html.removeClass( 'no-select-imhwpb' );
+					$body.removeClass( 'changing-' + setting );
 				},
 				drag : function ( e, ui ) {
 					var padding, rowPos, relativePos,
@@ -130,7 +132,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 						BG.Controls.addStyle( self.$currentRow, setting, padding );
 					}
 
-					if ( $body.hasClass( 'editing-as-row' ) && $.fourpan ) {
+					if ( self.$container.$html.hasClass( 'editing-as-row' ) && $.fourpan ) {
 						$.fourpan.refresh();
 					}
 				}

@@ -14,6 +14,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	// Some Jquery Selectors to be reused.
 	self.$window = $( window );
 	self.$body = self.$master_container.find('body');
+	self.$html = self.$master_container.find('html');
 	self.$resize_overlay = $('<div id="boldgrid-draggable-resizing-overlay"></div>');
 	self.$master_container.find('html').append(self.$resize_overlay);
 	self.original_selector_strings = {};
@@ -916,7 +917,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			$.fourpan.$recent_highlight.removeClass('current-edit-as-row');
 			self.editting_as_row = false;
 
-			self.$body.removeClass('editing-as-row');
+			self.$html.removeClass('editing-as-row');
 			self.window_mouse_leave();
 			self.$master_container.trigger( 'edit-as-row-leave' );
 		}
@@ -941,7 +942,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		$.fourpan.$recent_highlight.addClass('current-edit-as-row');
 
 		self.editting_as_row = $.fourpan.$recent_highlight;
-		self.$body.addClass('editing-as-row');
+		self.$html.addClass('editing-as-row');
 		self.$master_container.trigger( 'edit-as-row-enter' );
 		self.window_mouse_leave();
 	};
@@ -2100,13 +2101,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.resize = false;
 		self.remove_border_classes( self.$master_container );
 
-		var $container = self.$master_container.find( 'body' );
-
-		if ( !$container.length ) {
-			$container = self.$master_container;
-		}
-
-		$container.removeClass( 'no-select-imhwpb' );
+		self.$html.removeClass( 'no-select-imhwpb' );
 		self.remove_resizing_classes( self.$master_container );
 		self.$master_container.removeClass( 'resizing-imhwpb cursor-not-allowed-imhwpb' );
 
@@ -2984,7 +2979,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				}
 
 				// Don't auto scroll when modifying a nested row.
-				if ( self.$body.hasClass( 'editing-as-row' ) ) {
+				if ( self.$html.hasClass( 'editing-as-row' ) ) {
 					return;
 				}
 
@@ -3949,13 +3944,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				self.$master_container.addClass( 'resizing-imhwpb' );
 				self.$master_container.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
 				self.remove_all_popovers();
-				var $container = self.$master_container.find( 'body' );
 
-				if ( !$container.length ) {
-					$container = self.$master_container;
-				}
-
-				$container.addClass( 'no-select-imhwpb' );
+				self.$html.addClass( 'no-select-imhwpb' );
 
 				self.resize = {
 					'element' : $element,

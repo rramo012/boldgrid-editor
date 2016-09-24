@@ -467,7 +467,7 @@ html.boldgrid-editor-fullscreen {
 .bg-disabled-handles .section-drag-handle,
 .boldgrid-is-typing .draghandle,
 .boldgrid-is-typing .section-drag-handle,
-.editing-as-row ~ .section-drag-handle {
+.editing-as-row .section-drag-handle {
 	display: none !important;
 }
 .boldgrid-is-typing .boldgrid-section:hover {
@@ -513,7 +513,7 @@ html.boldgrid-editor-fullscreen {
 	display: none;
 	background-color: none;
 }
-.no-select-imhwpb ~ #boldgrid-draggable-resizing-overlay {
+.no-select-imhwpb #boldgrid-draggable-resizing-overlay {
 	display: block;
 }
 
