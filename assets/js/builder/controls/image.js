@@ -64,8 +64,25 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		setup : function () {
 			self.validateComponentsUsed();
 			self._setupPanelClick();
+			self._setupCustomizeHandlers();
 		},
 		
+
+		/**
+		 * Bind Event: When customization exits.
+		 * 
+		 * @since 1.2.8
+		 */
+		_setupCustomizeHandlers : function () {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			panel.$element.on( 'bg-customize-exit', function () {
+				if ( panel.currentControl == self ) {
+					BG.Panel.showFooter();
+				}
+			} );
+		},
+
 		/**
 		 * Remove duplicates from the list of image components used.
 		 * 
@@ -79,10 +96,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 		},
 		
+		/**
+		 * Remove the wp-image class added to the image by WordPress.
+		 * 
+		 * This is only done to temporary objects.
+		 * 
+		 * @since 1.2.8
+		 * @param jQuery $el Element to manipulate.
+		 * @retrurn jQuery $el.
+		 */
 		removeImageClass : function ( $el ) {
 			$el.removeClass( function ( index, css ) {
 			    return ( css.match( /(^|\s)wp-image-\S+/g) || [] ).join( ' ' );
 			} );
+			
 			return $el;
 		},
 
@@ -160,7 +187,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
-		 * Add buttons that exist on the page to list of used components. This will populate "My Designs".
+		 * Add images that exist on the page to list of used components. This will populate "My Designs".
 		 * 
 		 * @since 1.2.7
 		 */
