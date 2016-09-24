@@ -423,6 +423,11 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Create a hidden iframe that will allows us to view the front end site
 	 */
 	this.create_front_page_iframe = function () {
+		
+		if ( BoldgridEditor.is_boldgrid_theme ) {
+			return;
+		}
+		
 		var $temp_loaded_container = $('<div class="hidden temp-container">');
 		$.get( BoldgridEditor.site_url, function( data ){
 
@@ -466,9 +471,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 				self.bootstrap_container = 'container-fluid';
 			}
 
-			self.$mce_iframe = $(tinymce.activeEditor.iframeElement);
-			self.tinymce_body_container = self.$mce_iframe.contents().find('body');
-
 			if ( self.bootstrap_container ) {
 				//self.tinymce_body_container.addClass(self.bootstrap_container);
 				self.$resizing_iframe.remove(); 
@@ -494,7 +496,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 		if ( self.last_resize == current_resize || force_update) {
 			var $iframe_html = self.tinymce_body_container.closest('html');
 			var $iframe_body = self.tinymce_body_container;
-			if ( !self.bootstrap_container ) {
+			if ( ! self.bootstrap_container && self.$resizing_iframe ) {
 				//Something went wrong
 				if ( ! self.$post_container || ! self.$post_container.width() ) {
 					return;
@@ -702,6 +704,9 @@ IMHWPB.WP_MCE_Draggable = function() {
 		self.$overlay_preview = $('#boldgrid-overlay-preview');
 		self.$resize_div = $( "#resizable" );
 
+		self.$mce_iframe = $(tinymce.activeEditor.iframeElement);
+		self.tinymce_body_container = self.$mce_iframe.contents().find('body');
+		
 		self.bind_column_switch();
 		self.create_front_page_iframe();
 		self.bind_window_resize();
