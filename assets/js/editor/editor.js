@@ -254,17 +254,20 @@ IMHWPB.Editor = function( $ ) {
 				icon: 'icon genericon genericon-move',
 				classes: 'widget btn',
 				onclick: self.toggle_draggable_plugin
-			});
+			} );
 			 //Before adding an undo level check to see if this is allowed
 			editor.on('BeforeAddUndo', function(e) {
-				if ( typeof IMHWPBGallery != "undefined" && IMHWPBGallery.init_gallery ) {
-					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
-				}
-				
 				if (IMHWPB.tinymce_undo_disabled == true) {
 					return false;
 				}
 			});
+
+			// On Undo and redo make sure galleries are intialized.
+			editor.on( 'undo redo', function(e) {
+				if ( typeof IMHWPBGallery != "undefined" && IMHWPBGallery.init_gallery ) {
+					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
+				}
+			} );
 
 			//When content is added to editor
 			editor.on( 'SetContent', function( e ) {
