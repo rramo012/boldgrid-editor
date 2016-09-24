@@ -31,6 +31,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug Fix:		JIRA WPB-2409	Fixed issue causing missing image toolbar.
 * Bug Fix:		JIRA WPB-2405	Fixed issue causing button customization to disappear.
 * Bug Fix:		JIRA WPB-2405	Reset class controls when opening customizer.
+* New feature:	JIRA WPB-2414	Change image added to BG menu bar.
 * New feature:	JIRA WPB-2406	Add my button designs to button panel.
 * New feature:	JIRA WPB-2406	Track my designs for images as the user makes changes.
 
