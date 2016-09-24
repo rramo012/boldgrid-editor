@@ -1,6 +1,7 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
+BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 
 ( function ( $ ) {
 	"use strict"; 
@@ -8,13 +9,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 	var self,
 		BG = BOLDGRID.EDITOR;
 
-	BOLDGRID.EDITOR.CONTROLS.ImageFilter = {
+	BOLDGRID.EDITOR.CONTROLS.IMAGE.Filter = {
 
 		name : 'image-filter',
 		
 		priority : 90,
 		
-		iconClasses : 'genericon genericon-image',
+		iconClasses : 'fa fa-magic',
 		
 		tooltip : 'Image Filter',
 		
@@ -405,7 +406,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	};
 
-	BOLDGRID.EDITOR.CONTROLS.ImageFilter.init();
-	self = BOLDGRID.EDITOR.CONTROLS.ImageFilter;
+	BOLDGRID.EDITOR.CONTROLS.IMAGE.Filter.init();
+	self = BOLDGRID.EDITOR.CONTROLS.IMAGE.Filter;
 
 } )( jQuery );

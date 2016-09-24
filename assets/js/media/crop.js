@@ -8,7 +8,8 @@
  * @requires	jquery.imgareaselect.js
  */
 
-var BoldgridEditor = BoldgridEditor || {};
+var BOLDGRID = BOLDGRID || {};
+BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 /**
  * BoldGrid Editor Crop.
@@ -19,7 +20,7 @@ var BoldgridEditor = BoldgridEditor || {};
  *
  * @since 1.0.8
  */
-BoldgridEditor.crop = function( $ ) {
+BOLDGRID.EDITOR.Crop = function( $ ) {
 	var self = this;
 
 	/**
@@ -703,4 +704,4 @@ BoldgridEditor.crop = function( $ ) {
 	}
 };
 
-new BoldgridEditor.crop( jQuery );
+BOLDGRID.EDITOR.CropInstance = new BOLDGRID.EDITOR.Crop( jQuery );

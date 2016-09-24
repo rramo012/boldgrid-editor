@@ -908,6 +908,9 @@
   transition: color .3s;
   padding: 2px; }
 
+#boldgrid-instance-menu li .fa-magic {
+  padding: 2px 3px; }
+
 #boldgrid-instance-menu li .fa-info {
   padding: 2px 9.5px; }
 

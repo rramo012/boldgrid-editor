@@ -162,6 +162,13 @@ class Boldgrid_Editor_Assets {
 			plugins_url( self::get_minified_js( '/assets/js/media/media' ), $plugin_file ),
 		array(), BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-suggest-crop',
+			plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media/crop' ), $plugin_file ),
+		array(), BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_style( 'boldgrid-editor-css-suggest-crop',
+		plugins_url( '/assets/css/crop.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+
 		// Drag n Drop Assets.
 		$this->enqueue_mce_interface();
 		$this->enqueue_drag_scripts();
@@ -240,6 +247,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/container.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-image-change',
+			plugins_url( '/assets/js/builder/controls/image/change.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-add',
 			plugins_url( '/assets/js/builder/controls/add.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
@@ -252,8 +263,8 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/icon.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-controls-image',
-			plugins_url( '/assets/js/builder/controls/image.js', $plugin_file ), array(),
+		wp_enqueue_script( 'boldgrid-editor-controls-image-design',
+			plugins_url( '/assets/js/builder/controls/image/design.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-button',
@@ -261,7 +272,7 @@ class Boldgrid_Editor_Assets {
 		BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-image-filter',
-			plugins_url( '/assets/js/builder/controls/image-filter.js', $plugin_file ), array(),
+			plugins_url( '/assets/js/builder/controls/image/filter.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-controls-font',

@@ -52,12 +52,6 @@ class Boldgrid_Editor_Crop {
 	 */
 	public function add_hooks() {
 		if ( is_admin() ) {
-			add_action( 'admin_enqueue_scripts',
-				array (
-					$this,
-					'admin_enqueue_scripts'
-				) );
-
 			add_action( 'admin_footer', array (
 				$this,
 				'admin_footer'
@@ -74,24 +68,6 @@ class Boldgrid_Editor_Crop {
 				$this,
 				'get_dimensions'
 			) );
-	}
-
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @since 1.0.8
-	 */
-	public function admin_enqueue_scripts() {
-		if ( $this->should_be_loaded ) {
-			$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
-
-			wp_enqueue_script( 'boldgrid-editor-suggest-crop',
-				plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media/crop' ), $plugin_file ),
-				array (), BOLDGRID_EDITOR_VERSION, true );
-
-			wp_enqueue_style( 'boldgrid-editor-css-suggest-crop',
-				plugins_url( '/assets/css/crop.css', $plugin_file ), array (), BOLDGRID_EDITOR_VERSION );
-		}
 	}
 
 	/**

@@ -21,8 +21,6 @@ IMHWPB.Editor = function( $ ) {
 	this.column_selector_string = '';
 	this.currently_selected_size = null;
 
-	this.crop = new BoldgridEditor.crop( $ );
-
 	/**
 	 * Select alignment from media modal
 	 */
@@ -598,16 +596,7 @@ IMHWPB.Editor = function( $ ) {
 					tooltip: 'Change',
 					icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
 					onclick: function () {
-						// Mimic the click of the "Edit" button.
-						tinymce.activeEditor.buttons.wp_img_edit.onclick();
-						
-						// Change the media modal to "Replace Image".
-						wp.media.frame.setState( 'replace-image' );
-						
-						// When the image is replaced, run crop.onReplace().
-						wp.media.frame.state( 'replace-image' ).on( 'replace', function( imageData ) {
-							self.crop.onReplace( imageData );
-						});
+						BOLDGRID.EDITOR.CONTROLS.IMAGE.Change.openModal();
 					}
 				} ) );
 				
