@@ -30,6 +30,58 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		container = '<div class="' + defaultContainerClass + '"></div>';
 
 	/**
+	 * Find all top level content elements that are siblings and not in rows and wrap them.
+	 * 
+	 * @since 1.2.7
+	 */
+	var wrapElementGroup = function () {
+		
+		var wrap,
+			group = [],
+			contentSelector = [
+			    'h1',
+			    'h2',
+			    'h3',
+			    'h4',
+			    'h5',
+			    'h6',
+			    'h7',
+			    'a',
+			    'img',
+			    'p',
+			    'button',
+			    'ul',
+			    'ol',
+			    'dl',
+			    'form',
+			    'table',
+			    '[data-imhwpb-draggable="true"]',
+			    '.wpview-wrap',
+			    '.wpview',
+			    'blockquote',
+			    'code',
+			    'abbr'
+			].join(',');
+		
+		wrap = function () {
+			$( group ).wrapAll( '<div class="' + defaultContainerClass + '"><div class="row"><div class="col-md-12">' );
+			group = [];
+		};
+		
+		self.$context.find('> *').each( function () {
+			var $this = $( this );
+			
+			if ( $this.is( contentSelector ) ) {
+				group.push( this );
+			} else {
+				wrap();
+			}
+		} );
+		
+		wrap();
+	};
+	
+	/**
 	 * Update content within context.
 	 * 
 	 * @since 1.2.7
@@ -42,8 +94,8 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 
 		self.$context = $context;
 		
-		// Wrap all top level P tags in section, container, row, column, paragraph.
-		wrapParagraphs();
+		// Wrap sibling content elements not in rows, into rows.
+		wrapElementGroup();
 		
 		// Add Class boldgrid-section to all parent of containers.
 		addSectionClass();
@@ -55,22 +107,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		addContainers();
         copyClasses();
 	};
-	
-	/**
-	 * Wrap all P in > col > row > container.
-	 * 
-	 * @since 1.2.7
-	 */
-	var wrapParagraphs = function () {
-        self.$context.find( '> p' ).each( function () {
-			var $this = $( this );
-			
-			$this.wrap( '<div class="container">' );
-            $this.wrap( '<div class="row">' );
-            $this.wrap( '<div class="col-md-12">' );
-		} );
-	};
-    
+
 	/**
 	 * Copy classes from container-fluid onto section.
 	 * 
