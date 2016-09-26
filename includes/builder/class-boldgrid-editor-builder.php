@@ -279,7 +279,7 @@ class Boldgrid_Editor_Builder {
 		$in_page_containers = $this->page_containers_val();
 		$custom_colors = self::get_editor_option( 'custom_colors', array() );
 		?>
-		<input style='display:none' type='checkbox' value='<?php echo $in_page_containers; ?>'
+		<input style='display:none' type='checkbox' value='<?php echo (int) $in_page_containers; ?>'
 			checked='checked' name='boldgrid-in-page-containers'>
 		<input style='display:none' type='checkbox' value='<?php echo json_encode( $custom_colors ); ?>'
 			checked='checked' name='boldgrid-custom-colors'>
