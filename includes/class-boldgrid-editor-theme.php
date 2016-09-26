@@ -43,7 +43,10 @@ class Boldgrid_Editor_Theme {
 	}
 
 	/**
-	 * Remove theme name container if the page has been modified through the new editor.
+	 * Remove theme container if previewing a post or page.
+	 *
+	 * We dont need to know if this is a page or post because the filter only applies to pages.
+	 * So even though this filter alters configs on posts, it has no effect.
 	 *
 	 * @since 1.2.7
 	 *
@@ -53,22 +56,10 @@ class Boldgrid_Editor_Theme {
 	 */
 	public static function remove_theme_container( $configs ) {
 
-		// Get Page Id.
 		$is_preview = ! empty ( $_REQUEST['preview'] ) ? $_REQUEST['preview'] : null;
-		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-		$the_id = url_to_postid( $actual_link );
-		if( 0 === $the_id ) {
-			$the_id = get_option( 'page_on_front' );
-		}
-
-		$post_meta = get_post_meta( $the_id );
-
-		$in_page_containers = ! empty( $post_meta['boldgrid_in_page_containers'][0] ) ?
-		$post_meta['boldgrid_in_page_containers'][0] : null;
-
-		// If this is a preview of a post, remove the container, no meta data found.
-		if ( $in_page_containers || ( $is_preview && $the_id ) ) {
+		// If this is a preview of a post, remove the container.
+		if ( $is_preview ) {
 			$configs['template']['pages'][ 'page_home.php' ]['entry-content'] = '';
 			$configs['template']['pages'][ 'default' ]['entry-content'] = '';
 		}
