@@ -279,6 +279,11 @@ IMHWPB.Editor = function( $ ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
 				}
 			} );
+			editor.on( 'show', function( e ) {
+				if ( self.dragging_is_active() ) {
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
+				}
+			} );
 
 			editor.on( 'KeyDown', function( e ) {
 				if ( ! self.draggable ) {
