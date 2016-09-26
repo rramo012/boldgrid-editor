@@ -30,6 +30,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * New feature:	JIRA WPB-2414	Change image added to BG menu bar.
 * New feature:	JIRA WPB-2406	Add my button designs to button panel.
 * New feature:	JIRA WPB-2406	Track my designs for images as the user makes changes.
+* New feature:	JIRA WPB-2415	Add Button Primary & Button Secondary to Button Panel.
 
 = 1.2.7 =
 * Misc:			JIRA WPB-2344	Updated readme.txt for Tested up to 4.6.1.

@@ -344,12 +344,23 @@ class Boldgrid_Editor_Assets {
 		plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		$button_file = get_stylesheet_directory() . '/css/buttons.css';
-		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() && file_exists( $button_file ) ) {
+		$colors_file = get_stylesheet_directory() . '/css/color-palettes.css';
+		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
+			if ( file_exists( $button_file ) ) {
+				wp_enqueue_style( 'boldgrid-buttons',
+				get_stylesheet_directory_uri() . '/css/buttons.css', array(), BOLDGRID_EDITOR_VERSION );
+			}
+
+			if ( file_exists( $colors_file ) ) {
+				wp_enqueue_style( 'boldgrid-color-palettes',
+				get_stylesheet_directory_uri() . '/css/color-palettes.css', array( 'editor-css-imhwpb' ), BOLDGRID_EDITOR_VERSION );
+			}
+		}
+
+		// If theme buttons does not exist, include editro version.
+		if ( ! file_exists( $button_file )  ) {
 			wp_enqueue_style( 'boldgrid-buttons',
-			get_stylesheet_directory_uri() . '/css/buttons.css', array(), BOLDGRID_EDITOR_VERSION );
-		} else {
-			wp_enqueue_style( 'boldgrid-buttons',
-			plugins_url( '/assets/css/buttons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+			plugins_url( '/assets/css/buttons' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 		}
 
 		wp_enqueue_style( 'font-family-styles',

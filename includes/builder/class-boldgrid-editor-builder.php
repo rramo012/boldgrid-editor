@@ -48,6 +48,7 @@ class Boldgrid_Editor_Builder {
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
+		$builder_configs['theme_buttons'] = self::get_theme_buttons();
 
 		$builder_configs = self::remove_duplicate_fonts( $builder_configs );
 
@@ -70,6 +71,42 @@ class Boldgrid_Editor_Builder {
 		);
 
 		return $builder_configs;
+	}
+
+	/**
+	 * Get a list of button classes used by the theme.
+	 *
+	 * @global array $boldgrid_theme_framework.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @return array $button classes.
+	 */
+	public static function get_theme_buttons() {
+		global $boldgrid_theme_framework;
+
+		if ( empty( $boldgrid_theme_framework ) ) {
+			return array();
+		}
+
+		$configs = $boldgrid_theme_framework->get_configs();
+
+		$button_vars = ! empty( $configs['components']['buttons']['variables'] ) ?
+			$configs['components']['buttons']['variables'] : array();
+
+		$button_primary_classes = ! empty( $button_vars['button-primary-classes'] ) ?
+			$button_vars['button-primary-classes'] : 'button-primary button-overrides';
+		$button_secondary_classes = ! empty( $button_vars['button-secondary-classes'] ) ?
+			$button_vars['button-secondary-classes'] : 'button-secondary button-overrides';
+
+		$regex_string = '(\.|,)';
+		$button_primary_classes = preg_replace( $regex_string, '', $button_primary_classes );
+		$button_secondary_classes = preg_replace( $regex_string, '', $button_secondary_classes );
+
+		return array(
+			'primary' => $button_primary_classes,
+			'secondary' => $button_secondary_classes,
+		);
 	}
 
 	/**

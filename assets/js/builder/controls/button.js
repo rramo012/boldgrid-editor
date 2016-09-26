@@ -186,17 +186,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'click', '.button-design .presets .panel-selection', function () {
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
-					$target = BG.Menu.getTarget( self ),
-					$parent = $target.parent('p');
+					$target = BG.Menu.getTarget( self );
 
 				panel.clearSelected();
 				$this.addClass( 'selected' );
-				
-				// Remove old p button classes.
-				$parent.removeClass ( function ( index, css ) {
-					return (css.match (/(^|\s)p-button-\S+/g) || []).join(' ');
-				} );
-				
+
 				// Apply changes to editor.
 				$target.attr( 'class', '' );
 				$target.addClass( preset );
@@ -347,6 +341,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			classes = $( '<div>' ).addClass( classes.join(' ') )
 				.removeClass( 'bg-control-element ' + self.sizeClasses.join(' ') )
 				.attr('class');
+			
+			if ( $target.hasClass('button-primary') ) {
+				classes = 'button-primary';
+			} else if ( $target.hasClass('button-secondary') ) {
+				classes = 'button-secondary';
+			}
 			
 			BG.Panel.clearSelected();
 			BG.Panel.$element.find('[data-preset="' + classes + '"]:first').addClass('selected');

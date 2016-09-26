@@ -627,6 +627,11 @@
   background-color: #eee;
   padding: 0; }
 
+.editor-panel[data-type="button"] .panel-body .theme-designs {
+  background-color: transparent !important;
+  padding-left: 2px;
+  padding-right: 12px; }
+
 .editor-panel[data-type="button"] .presets .panel-selection {
   width: 48%;
   height: auto;
@@ -839,6 +844,21 @@
 
 .editor-panel[data-type="image-filter"] .panel-body {
   overflow: hidden; }
+
+.theme-designs .button-overrides,
+.theme-designs .button-overrides {
+  background-color: transparent;
+  text-shadow: none;
+  border: none;
+  box-shadow: none; }
+
+.theme-designs .button-overrides:hover, .theme-designs .button-overrides:active, .theme-designs .button-overrides:focus,
+.theme-designs .button-overrides:hover,
+.theme-designs .button-overrides:active,
+.theme-designs .button-overrides:focus {
+  border: none;
+  background-color: transparent;
+  box-shadow: none; }
 
 .editor-panel .control {
   display: block;

@@ -1,5 +1,20 @@
 <script type="text/html" id="tmpl-boldgrid-editor-button">
 	<div class='choices button-design'>
+		<# if ( BoldgridEditor.is_boldgrid_theme ) { #>
+			<div class='title'>
+				<h4>Theme Designs</h4>
+			</div>
+			<div class='presets theme-designs {{BoldgridEditor.body_class}}'>
+				<ul>
+					<li data-preset="button-primary" class="panel-selection">
+						<a class='{{BoldgridEditor.builder_config.theme_buttons.primary}}'>Primary</a>
+					</li>
+					<li data-preset="button-secondary" class="panel-selection">
+						<a class='{{BoldgridEditor.builder_config.theme_buttons.secondary}}'>Secondary</a>
+					</li>
+				</ul>
+			</div>
+		<# } #>
 		<# if ( data.myPresets.length ) { #>
 			<div class='title'>
 				<h4>My Designs</h4>
