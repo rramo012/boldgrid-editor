@@ -15,6 +15,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.$window = $( window );
 	self.$body = self.$master_container.find('body');
 	self.$html = self.$master_container.find('html');
+	self.$validatedInput = $('input[name="boldgrid-in-page-containers"]');
 	self.$resize_overlay = $('<div id="boldgrid-draggable-resizing-overlay"></div>');
 	self.$master_container.find('html').append(self.$resize_overlay);
 	self.original_selector_strings = {};
@@ -791,6 +792,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		// If the theme is a BG theme w/ variable containers feature, or the theme is not BG theme.
 		if ( ! BoldgridEditor.is_boldgrid_theme || BOLDGRID.EDITOR.Controls.hasThemeFeature('variable-containers') ) {
 			BOLDGRID.EDITOR.VALIDATION.Section.updateContent( self.$body );
+			self.$validatedInput.attr( 'value', 1 );
 		}
 		
 		self.wrap_hr_tags();

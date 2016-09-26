@@ -248,14 +248,39 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
+	 * Get the current value for in page containers page meta value.
+	 *
+	 * @global $post WP Post Current post.
+	 *
+	 * @since 1.2.8
+	 *
+	 * @return integer $in_page_containers Whether or not containers have been added to content.
+	 */
+	public function page_containers_val() {
+		global $post;
+
+		$in_page_containers = 0;
+		if ( ! empty( $post ) ) {
+			$post_meta = get_post_meta( $post->ID );
+			if ( ! empty( $post_meta['boldgrid_in_page_containers'][0] ) ) {
+				$in_page_containers = $post_meta['boldgrid_in_page_containers'][0];
+			}
+		}
+
+		return $in_page_containers;
+	}
+
+	/**
 	 * Print inputs that will be stored when the page is saved.
 	 *
 	 * @since 1.3
 	 */
 	public function post_inputs() {
+		$in_page_containers = $this->page_containers_val();
 		$custom_colors = self::get_editor_option( 'custom_colors', array() );
 		?>
-		<input style='display:none' type='checkbox' value='1' checked='checked' name='boldgrid-in-page-containers'>
+		<input style='display:none' type='checkbox' value='<?php echo $in_page_containers; ?>'
+			checked='checked' name='boldgrid-in-page-containers'>
 		<input style='display:none' type='checkbox' value='<?php echo json_encode( $custom_colors ); ?>'
 			checked='checked' name='boldgrid-custom-colors'>
 <?php
