@@ -360,7 +360,7 @@ class Boldgrid_Editor_Assets {
 		// If theme buttons does not exist, include editro version.
 		if ( ! file_exists( $button_file )  ) {
 			wp_enqueue_style( 'boldgrid-buttons',
-			plugins_url( '/assets/css/buttons' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+			plugins_url( '/assets/css/buttons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 		}
 
 		wp_enqueue_style( 'font-family-styles',
