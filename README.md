@@ -24,6 +24,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
+### 1.2.9 In Progress ###
+* Bug Fix:		JIRA WPB-2428	Added cache busting for colors and button files.
+
 ### 1.2.8 ###
 * Misc:			JIRA WPB-2420	Added EOF line breaks.
 * Update:		JIRA WPB-2407	Fix issue with direction of section popover menu.

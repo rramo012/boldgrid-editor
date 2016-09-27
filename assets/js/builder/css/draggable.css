@@ -877,6 +877,11 @@ html .mceContentBody  {
 * {
     word-wrap: break-word;
 }
+.btn,
+.button-primary,
+.button-secondary {
+    word-wrap: nowrap;
+}
 
 body {
     padding: 0;
