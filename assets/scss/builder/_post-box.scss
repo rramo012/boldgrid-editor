@@ -83,6 +83,11 @@ body.boldgrid-editor-fullscreen {
     transform: scale(.5);
     margin-top: 45px !important;
     border: 2px solid #e5e5e5;
+    
+    .gallery-icon {
+        transform: none;
+        backface-visibility: visible;
+    }
 }
 
 .zoomout body.zoom-scale-1 {

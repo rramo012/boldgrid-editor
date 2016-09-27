@@ -157,10 +157,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					if ( ! self.lastScrollEvent || self.lastScrollEvent + 20 <= e.timeStamp ) {
 						self.lastScrollEvent = e.timeStamp;
 						// If within 50 px from the bottom scroll down.
-						if ( $( window ).height() - e.screenY < 50 ) {
+						if ( $( window ).height() - e.pageY < 50 ) {
 							window.scrollBy( 0, 10 );
 						// If within 20% from the top scroll up.
-						} else if ( ( e.screenY / $( window ).height() ) < 0.2 ) {
+						} else if ( ( e.pageY / $( window ).height() ) < 0.2 ) {
 							window.scrollBy( 0, -10 );
 						}
 					}

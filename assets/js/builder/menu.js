@@ -72,6 +72,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$mceContainer = $( '#' + tinymce.activeEditor.theme.panel._items[0]._id );
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			this.$mceContainer.append( this.$element );
+			this.$element.items = [];
 		},
 
 		/**
