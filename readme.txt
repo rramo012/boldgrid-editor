@@ -20,7 +20,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.2.8 In Progress =
+= 1.2.8 =
 * Misc:			JIRA WPB-2420	Added EOF line breaks.
 * Update:		JIRA WPB-2407	Fix issue with direction of section popover menu.
 * Bug Fix:		JIRA WPB-2405	Fixed issue where section border did not show.
