@@ -175,9 +175,34 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_initTextColor : function ( $target ) {
 			var textColor = '#333';
-			 BG.Panel.$element.find('[name="font-color"]')
-			 	.data('type', 'color')
-			 	.val( textColor );
+			BG.Panel.$element.find('[name="font-color"]')
+				.data('type', 'color')
+				.val( textColor );
+			
+			// Don't display font color for buttons.
+			self._hideButtonColor();
+		},
+		
+		/**
+		 * If the user is controlling the font of a button, don't display color.
+		 * 
+		 * @since 1.2.8
+		 */
+		_hideButtonColor : function () {
+			var $clone,
+				$colorPreview = BG.Panel.$element.find('.color-preview'),
+				$target = BG.Menu.getTarget( self );
+
+			if ( 1 === $target.find('> *').length ) {
+				if ( $target.find('> .btn, > .button-primary, > .button-secondary').length ) {
+					$clone = $target.clone();
+					$clone.find('> .btn, > .button-primary, > .button-secondary').remove();
+					if ( ! $clone.text() ) {
+						$colorPreview.hide();
+					}
+				}
+			}
+			
 		},
 
 		/**

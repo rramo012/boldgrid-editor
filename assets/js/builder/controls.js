@@ -281,7 +281,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				}
 
 				// If the user clicks one of the controls exceptions, skip.
-				if ( control.exceptionSelector && $this.is( control.exceptionSelector ) ) {
+				if ( control.exceptionSelector && e.target && $( e.target ).is( control.exceptionSelector ) ) {
 					return;
 				}
 
