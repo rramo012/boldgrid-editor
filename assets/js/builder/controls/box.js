@@ -347,6 +347,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 
 			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
+			$module.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 			BG.Controls.addStyle( $module, 'background-color', '' );
 		},
 
@@ -375,10 +376,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value = $this.val(),
 					type = $this.attr('data-type');
 
+				$module.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
 				BG.Controls.addStyle( $module, 'background-color', '' );
 
 				if ( 'class' == type ) {
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'text-default', value ) );
 					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
 					BG.Controls.addStyle( $module, 'background-color', value );
@@ -514,7 +517,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				presetsHtml = '',
 				colorCount = 0,
 				backgrounds = [],
-				backgroundColors = BG.CONTROLS.Color.getPaletteBackgroundColors(),
+				backgroundColors = BG.CONTROLS.Color.getBackgroundForegroundColors(),
 				nonBgThemeColors = [
 				    '#2980b9',
 				    '#bdc3c7',
@@ -532,10 +535,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			if ( ! BoldgridEditor.is_boldgrid_theme ) {
 				colors = nonBgThemeColors;
 			} else {
-				$.each( backgroundColors, function ( colorClass ) {
+				$.each( backgroundColors, function () {
 					backgrounds.push( {
-						'color' : this,
-						'colorClass' : colorClass,
+						'color' : this.color,
+						'colorClass' : this.background + ' ' + this.text
 					} );
 				} );
 			}
@@ -551,9 +554,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				if ( backgrounds[ colorCount ].colorClass ) {
 					$newElement.attr( 'data-value', $newElement.data( 'value' ) + ' ' + backgrounds[ colorCount ].colorClass );
-					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
+					$newElement.css('background-color', backgrounds[ colorCount ].color );
 				} else {
-					BG.Controls.addStyle( $newElement, 'background-color', backgrounds[ colorCount ].color );
+					$newElement.css('background-color', backgrounds[ colorCount ].color );
 				}
 
 				$newElement.attr( 'data-id', index );

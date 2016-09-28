@@ -30,6 +30,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'color4-color',
 			'color5-color'
 		],
+
+		textContrastClasses : [
+		    'color1-text-default',
+		    'color2-text-default',
+		    'color3-text-default',
+		    'color4-text-default',
+		    'color5-text-default'
+		],
+
 		backgroundColorClasses : [
 			'color1-background-color',
 			'color2-background-color',
@@ -282,6 +291,30 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				backgroundColors[ 'color' + ( index + 1 ) + '-' + 'background-color' ] = this;
 			} );
 
+			return backgroundColors;
+		},
+
+		/**
+		 * Get Background Color with Forground color.
+		 * 
+		 * @since 1.3
+		 * @return array backgroundColors.
+		 */
+		getBackgroundForegroundColors : function () {
+			var colorNum,
+				backgroundColors = [];
+			
+			$.each( BoldgridEditor.colors, function ( index ) {
+				colorNum = index + 1;
+				
+				backgroundColors.push( {
+					'color' : this,
+					'colorNum' : colorNum,
+					'text' : BG.CONTROLS.Color.getColorClass( 'text-default', colorNum ),
+					'background' : BG.CONTROLS.Color.getColorClass( 'background-color', colorNum )
+				} );
+			} );
+			
 			return backgroundColors;
 		},
 		

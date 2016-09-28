@@ -20,6 +20,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.3 In Progress =
+* Update:		JIRA WPB-2440	Setting default text color for column backgrounds.
+
 = 1.2.9 =
 * Bug Fix:		JIRA WPB-2428	Added cache busting for colors and button files.
 
