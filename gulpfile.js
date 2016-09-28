@@ -14,15 +14,18 @@ var gulp    = require( 'gulp' ),
     sass    = require( 'gulp-sass' ),
 	debug    = require( 'gulp-debug' ),
     uglify = require('gulp-uglify'),
+    notify = require('gulp-notify'),
     concat = require('gulp-concat'),
     phpcbf = require('gulp-phpcbf'),
     jshint   = require( 'gulp-jshint' ),
     inject = require('gulp-inject-string'),
     sequence = require('run-sequence'),
     stylish = require('jshint-stylish'),
+    jasmine = require('gulp-jasmine'),
     fs = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
 	bower    = require( 'gulp-bower' ),
+	server = require('karma').Server,
 	phpcs = require('gulp-phpcs'),
 	gutil = require('gutil'),
 	readme = require('gulp-readme-to-markdown'),
@@ -37,6 +40,13 @@ var config = {
 	cssDest : './assets/css',
 	jsDest : './assets/js',
 };
+
+gulp.task( 'js-unit-tests', function (done) {
+	return new server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done ).start();
+});
 
 //Download framework.
 gulp.task('bower', function () {
@@ -234,4 +244,11 @@ gulp.task( 'default', function ( cb ) {
 
 gulp.task('watch', function() {
 	gulp.watch( config.src + 'assets/scss/**/*', [ 'sass' ] );
+} );
+
+
+gulp.task('test-watch', function (done) {
+	new server({
+		configFile: __dirname + '/karma.conf.js',
+	}, done).start();
 } );
