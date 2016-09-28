@@ -131,6 +131,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					selectionType = $currentSelection.attr('data-type');
 
 				$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join(' ') );
+				$target.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 				BG.Controls.addStyle( $target, 'background-color', '' );
 				
 				// If currently selected is a gradient
@@ -146,6 +147,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				if ( 'class' == type ) {
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
+					$target.addClass( BG.CONTROLS.Color.getColorClass( 'text-default', value ) );
+
 				} else {
 					BG.Controls.addStyle( $target, 'background-color', value );
 				}
@@ -407,7 +410,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param jQuery $target.
 		 */
 		removeColorClasses : function ( $target ) {
-			$target.removeClass( BOLDGRID.EDITOR.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
+			$target.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
+			$target.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 		},
 
 		/**
@@ -449,6 +453,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} else if ( 'color' == $this.data('type') ) {
 					self.removeColorClasses( $target );
 					$target.addClass( $this.data('class') );
+					$target.addClass( BG.CONTROLS.Color.getColorClass( 'text-default', $this.data('class').replace(/\D/g,'') ) );
 					BG.Controls.addStyle( $target, 'background-image', '' );
 					self.setDefaultBackgroundColors();
 				} else if ( 'pattern' == $this.data('type') ) {
