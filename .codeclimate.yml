@@ -1,38 +1,38 @@
----
-engines:
-  csslint:
+--- 
+engines: 
+  csslint: 
     enabled: true
-  duplication:
+  duplication: 
+    config: 
+      languages: 
+        - javascript
+        - php
     enabled: false
-    config:
-      languages:
-      - javascript
-      - php
-  fixme:
+  fixme: 
     enabled: true
-  phpmd:
+  phpmd: 
+    checks: 
+      Controversial/CamelCaseClassName: 
+        enabled: false
+      Controversial/CamelCaseMethodName: 
+        enabled: false
+      Controversial/CamelCaseParameterName: 
+        enabled: false
+      Controversial/CamelCaseVariableName: 
+        enabled: false
+      Naming/ShortVariable: 
+        enabled: false
     enabled: true
-    checks:
-      Controversial/CamelCaseMethodName:
-        enabled: false
-      Controversial/CamelCaseClassName:
-        enabled: false
-      Controversial/CamelCaseVariableName:
-        enabled: false
-      Controversial/CamelCaseParameterName:
-        enabled: false
-      Naming/ShortVariable:
-        enabled: false
-ratings:
-  paths:
-  - "**.css"
-  - "**.js"
-  - "**.php"
-exclude_paths:
-- **.min.css
-- **.min.js
-- assets/js/camanjs/*
-- assets/js/jquery-stellar/*
-- assets/js/slimscroll/*
-- assets/js/wp-color-picker-alpha/*
-- tests/*
+exclude_paths: 
+  - "**/*.min.js"
+  - "**/*.min.css"
+  - assets/js/camanjs/*
+  - assets/js/jquery-stellar/*
+  - assets/js/slimscroll/*
+  - assets/js/wp-color-picker-alpha/*
+  - tests/*
+ratings: 
+  paths: 
+    - "**.css"
+    - "**.js"
+    - "**.php"
