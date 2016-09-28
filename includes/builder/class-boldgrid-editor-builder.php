@@ -65,10 +65,13 @@ class Boldgrid_Editor_Builder {
 	 * @return array $builder_config.
 	 */
 	public static function remove_duplicate_fonts( $builder_configs ) {
-		$builder_configs['components_used']['font'] = array_diff(
-			$builder_configs['components_used']['font'],
-			$builder_configs['theme_fonts']
-		);
+
+		if ( ! empty( $builder_configs['components_used'] ) ) {
+			$builder_configs['components_used']['font'] = array_diff(
+				$builder_configs['components_used']['font'],
+				$builder_configs['theme_fonts']
+			);
+		}
 
 		return $builder_configs;
 	}
