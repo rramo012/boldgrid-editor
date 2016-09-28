@@ -883,6 +883,10 @@ html .mceContentBody  {
     word-wrap: nowrap;
 }
 
+li {
+    word-wrap: normal;
+}
+
 body {
     padding: 0;
     margin: 0;
