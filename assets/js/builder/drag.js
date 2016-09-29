@@ -2985,32 +2985,29 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					return;
 				}
 
-				var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ];
-				var toolbar_height = outerHeight - innerHeight;
-				var buffer_area = 50;
-				var distance_from_top = (event.originalEvent.screenY - toolbar_height) -
-					self.$mce_32[0].getBoundingClientRect().bottom;
-				var scroll_from_top = self.$window.scrollTop();
-
-				if ( scroll_from_top >= 125 && distance_from_top <= buffer_area ) {
-					scrollBy( 0, -scroll_speed );
-				}
-
-				var pos_is_fixed = self.$post_status_info.css( 'position' ) == 'fixed';
-				if ( pos_is_fixed ) {
-					var distance_from_bottom = self.$mce_38[0].getBoundingClientRect().top
-						- (event.originalEvent.screenY - toolbar_height);
-					if ( distance_from_bottom <= buffer_area ) {
-						scrollBy( 0, scroll_speed );
-					}
-				} else {
-					var distance_from_bottom = innerHeight -
-						( event.originalEvent.screenY - toolbar_height );
-					if ( distance_from_bottom <= buffer_area ) {
-						scrollBy( 0, scroll_speed );
-					}
-				}
+				self.drag_handlers.autoScroll( event );
 			}
+		},
+		
+		/**
+		 * Automatically Scroll Down the screen as the user drags.
+		 * 
+		 * @since 1.3
+		 */
+		autoScroll : function ( event ) {
+			var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ],
+				isFixedTop = self.$mce_32.css('position') === 'fixed',
+				topOffset = self.$mce_32[0].getBoundingClientRect();
+				positionY = event.originalEvent.screenY - window.screenY;
+
+			// 150: Is the range within the mce bar you must reach before scrolling up starts.
+			if ( positionY < topOffset.bottom + 150 && isFixedTop ) {
+				scrollBy( 0, -scroll_speed );
+			// 100: Is the range within the bottom bar you must get to before scrolling down starts.
+			} else if ( positionY > innerHeight - 100 ) {
+				scrollBy( 0, scroll_speed );
+			} 
+
 		},
 
 		/**
