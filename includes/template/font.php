@@ -9,6 +9,7 @@
 				<# _.each( data.myFonts, function ( family, index ) { #>
   				<option class='option' data-type="custom" data-index="{{index}}" data-value="{{family}}">{{family}}</option>
 				<# }); #>
+  				<option class='option' data-type="all"  data-index="" data-value="default">Default</option>
 				<# _.each( data.fonts.items, function ( font, index ) { #>
   				<option class='option' data-type="all"  data-index="{{index}}" data-value="{{font.family}}">{{font.family}}</option>
 				<# }); #>

@@ -1605,6 +1605,15 @@ body.boldgrid-editor-fullscreen {
 .ui-widget-content .ui-state-default.ui-selectmenu-button:hover {
   background-color: #eaeaea; }
 
+.ui-widget-content .ui-state-default.ui-selectmenu-button[data-value="Default"] {
+  background-image: none; }
+
+.ui-widget-content .ui-state-default.ui-selectmenu-button[data-value="Default"]:after {
+  content: "Default";
+  display: block;
+  color: black;
+  font-size: 20px; }
+
 .wp-admin .ui-selectmenu-menu {
   display: none; }
 
@@ -1615,6 +1624,13 @@ body.boldgrid-editor-fullscreen {
   overflow-y: scroll;
   overflow-x: hidden;
   width: 290px; }
+
+.wp-admin .ui-selectmenu-menu li[data-value="Default"],
+.wp-admin .ui-selectmenu-menu li[data-value="Default"]:hover {
+  background-image: none;
+  color: black;
+  padding-left: 10px;
+  font-size: 20px; }
 
 .wp-admin .ui-selectmenu-menu li,
 .wp-admin .ui-selectmenu-menu li:hover {

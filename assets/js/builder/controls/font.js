@@ -253,8 +253,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		    		// Reset.
 		    		$target.removeAttr( 'data-font-family' )
 		    			.removeAttr( 'data-font-class' );
-
+		    		
 		    		$target.removeClass( self.fontClasses.join(' ') );
+
+		    		if ( "Default" === data.item.label ) {
+		    			BG.Controls.addStyle( $target, 'font-family', '' );
+		    			return;
+		    		}
+
 		    		if ( 'theme' == data.item.element.data( 'type' ) ) {
 		    			$target.addClass( data.item.element.data( 'index' ) );
 		    			$target.attr( 'data-font-class', data.item.element.data( 'index' ) );
@@ -289,7 +295,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		preselectFamily : function () {
 			var fontClass,
-				defaultFamily = 'Abel',
+				defaultFamily = 'Default',
 				$select = self.getFamilySelection(),
 				$target = BG.Menu.getTarget( self );
 			
