@@ -101,13 +101,13 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					startPadding = parseInt( self.$currentRow.css( setting ) );
 					self.$currentRow.addClass( 'changing-padding' );
 					self.$container.$html.addClass( 'no-select-imhwpb' );
-					$body.addClass( 'changing-' + setting );
+					self.$container.$html.addClass( 'changing-' + setting );
 				},
 				stop : function ( e, ui ) {
 					self.currentlyDragging = false;
 					self.$currentRow.removeClass( 'changing-padding' );
 					self.$container.$html.removeClass( 'no-select-imhwpb' );
-					$body.removeClass( 'changing-' + setting );
+					self.$container.$html.removeClass( 'changing-' + setting );
 				},
 				drag : function ( e, ui ) {
 					var padding, rowPos, relativePos,

@@ -27,19 +27,19 @@
 	}
 }
 
-.changing-padding-top ~ .draghandle.top,
-.changing-padding-bottom ~ .draghandle.bottom {
+.changing-padding-top .draghandle.top,
+.changing-padding-bottom .draghandle.bottom {
 	color: $hover-color;
 }
 
-.changing-padding-top ~ .draghandle.bottom {
+.changing-padding-top .draghandle.bottom {
 	display: none !important;
 }
-.changing-padding-bottom ~ .draghandle.top {
+.changing-padding-bottom .draghandle.top {
 	display: none !important;
 }
 
-.changeing-padding-bottom ~ #boldgrid-draggable-resizing-overlay,
-.changeing-padding-top ~ #boldgrid-draggable-resizing-overlay {
-	cursor: ns-resize;
+.changing-padding-bottom #boldgrid-draggable-resizing-overlay,
+.changing-padding-top #boldgrid-draggable-resizing-overlay {
+	cursor: ns-resize !important;
 }
