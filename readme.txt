@@ -1,10 +1,10 @@
 === BoldGrid Editor ===
-Contributors: imh_brad, joemoto, rramo012, timph
-Tags: inspiration,customization,build,create,design
-Requires at least: 4.3
-Tested up to: 4.6.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: imh_brad, joemoto, rramo012, timph  
+Tags: inspiration,customization,build,create,design  
+Requires at least: 4.3  
+Tested up to: 4.6.1  
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor.
 
