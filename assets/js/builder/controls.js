@@ -256,11 +256,20 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				
 				//@TODO: Move this.
 				if ( 'box' == control.name ) {
+					var isEditingNested, isNestedColumn;
+					
 					if ( e.boxFound ) {
 						return;
 					}
+					
+					isEditingNested = $this.closest('.editing-as-row').length;
+					isNestedColumn = $this.is('.row .row [class^="col-md"]');
+					
+					if ( isEditingNested && false === isNestedColumn ) {
+						return;
+					}
 
-					if ( $this.closest('.editing-as-row').length ) {
+					if ( isEditingNested ) {
 						e.boxFound = true;
 					}
 

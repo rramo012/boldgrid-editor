@@ -36,6 +36,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$container.css('transition', 'width .5s');
 			setTimeout( function () {
 				$container.css('transition', '');
+				$( window ).trigger('resize');
 				BOLDGRID.EDITOR.CONTROLS.Section.positionHandles();
 				BOLDGRID.EDITOR.RESIZE.Row.positionHandles();
 				BG.Controls.$container.find('html').removeClass('bg-disabled-handles');
