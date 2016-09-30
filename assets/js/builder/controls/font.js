@@ -190,19 +190,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_hideButtonColor : function () {
 			var $clone,
+				buttonQuery = '> .btn, > .button-primary, > .button-secondary',
 				$colorPreview = BG.Panel.$element.find('.color-preview'),
 				$target = BG.Menu.getTarget( self );
 
-			if ( 1 === $target.find('> *').length ) {
-				if ( $target.find('> .btn, > .button-primary, > .button-secondary').length ) {
-					$clone = $target.clone();
-					$clone.find('> .btn, > .button-primary, > .button-secondary').remove();
-					if ( ! $clone.text() ) {
-						$colorPreview.hide();
-					}
-				}
+			$clone = $target.clone();
+			$clone.find( buttonQuery ).remove();
+
+			// If removing all buttons, results in an empty string or white space.
+			if ( ! $clone.text().replace(/ /g,'').length ) {
+
+				// Hide color control.
+				$colorPreview.hide();
 			}
-			
 		},
 
 		/**
