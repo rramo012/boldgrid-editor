@@ -1463,10 +1463,60 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * The context menu action.
 	 */
 	this.setup_context_menu = function( event ) {
+		var $currentPopover;
+		
 		event.preventDefault();
 		event.stopPropagation();
 		self.hide_menus( event );
-		$( this ).closest( '.draggable-tools-imhwpb, .bg-drag-popover' ).find( '.popover-menu-imhwpb' ).toggleClass('hidden');
+		
+		$currentPopover = $( this ).closest( '.draggable-tools-imhwpb, .bg-drag-popover' )
+		$currentPopover.find( '.popover-menu-imhwpb' ).toggleClass('hidden');
+		self.setMenuPosition( $currentPopover );
+		self.setMenuState( $currentPopover );
+	};
+	
+	/**
+	 * Set a class defining if the popover menu is opened.
+	 * 
+	 * @since 1.2.10
+	 * @param jQuery $currentPopover.
+	 */
+	this.setMenuState = function ( $currentPopover ) {
+		$currentPopover.removeClass('menu-open');
+		if ( false === $currentPopover.find('.popover-menu-imhwpb').hasClass('hidden') ) {
+			$currentPopover.addClass('menu-open');
+		}
+	};
+	
+	/**
+	 * Set classes to help position the menu depeneding on parent proximity to edge of screen.
+	 * 
+	 * @since 1.2.10
+	 * @param jQuery $currentPopover.
+	 */
+	this.setMenuPosition = function ( $currentPopover ) {
+		var popoverWidth, totalWidth,
+			boundingClientRect = $currentPopover[0].getBoundingClientRect(),
+			$sideMenu = $currentPopover.find('.side-menu'),
+			htmlWidth = self.$html.width(),
+			buffer = 100;
+		
+		if ( $sideMenu.length ) {
+			$currentPopover.removeClass('side-menu-left menu-align-left');
+			
+			// If side menu cant fit, point to left.
+			popoverWidth = $currentPopover.find('.popover-menu-imhwpb ul').width();
+			totalWidth = boundingClientRect.right + $sideMenu.width();
+			totalWidth = totalWidth + buffer;
+			if ( totalWidth > self.$html.width() ) {
+				$currentPopover.addClass('side-menu-left');
+			}
+			
+			// Context Menu cant fit align left.
+			if ( popoverWidth + boundingClientRect.right > htmlWidth ) {
+				$currentPopover.addClass( 'menu-align-left' );
+			}
+		}
 	};
 
 	/**

@@ -25,7 +25,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.3 In Progress ###
+### 1.2.10 In Progress ###
+* Bug Fix:		JIRA WPB-2448	Fixing issue with column popover at the edge of the screen.
 * Bug Fix:		JIRA WPB-2457	Fixing z-index issue withe section popover.
 * Bug Fix:		JIRA WPB-2454	Image being cloned after pressing enter.
 * Bug Fix:		JIRA WPB-2442	Nested columns allowed for parent column backgrounds.
