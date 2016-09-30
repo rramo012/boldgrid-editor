@@ -1639,6 +1639,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( left < 25 ) {
 				left = 25;
 			}
+			
+			if ( $current.is('img, .row .row, .wpview-wrap, .wpview') ) {
+				$added_tooltip.find( '[data-action="Font"]' ).hide();
+			} 
 
 			$added_tooltip.css( {
 				'top' : current_bounding_rect.top - 25,
