@@ -1014,9 +1014,13 @@
   top: 0px;
   bottom: 0px;
   width: 28px;
+  color: grey;
   background-color: #32373c;
   background-repeat: no-repeat;
   background-position: 6px 5px; }
+
+#boldgrid-instance-menu .bg-editor-menu-dropdown li:hover:before {
+  color: white; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-gridblock::before {
   background-image: url("../image/icons/insert-gridblock.png"); }
@@ -1031,13 +1035,16 @@
   background-image: url("../image/icons/add-row-hover.png"); }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.font-awesome::before {
-  color: grey;
   font: normal normal normal 14px/1 FontAwesome;
   text-align: center;
   line-height: 28px; }
 
-#boldgrid-instance-menu .bg-editor-menu-dropdown li.font-awesome:hover::before {
-  color: white; }
+#boldgrid-instance-menu .bg-editor-menu-dropdown li.dashicons-admin-media:before {
+  content: "\f104";
+  font-family: dashicons;
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-button::before {
   content: "\f205"; }

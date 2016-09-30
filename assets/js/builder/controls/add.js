@@ -25,10 +25,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		menuDropDown : {
 			title: 'Add New',
 			options: [
-		        {
-		        	  'name' : 'Media',
-		        	  'class' : 'action add-media'
-		        },
+				{
+					'name' : 'Media',
+					'class' : 'action add-media dashicons dashicons-admin-media'
+				},
 				{
 					'name' : 'Button',
 					'class' : 'action font-awesome add-button'
@@ -93,8 +93,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				.on( 'click', '.action.add-gridblock', self.addGridblock )
 				.on( 'click', '.action.add-row', self.addSection )
 				.on( 'click', '.action.add-button', BG.CONTROLS.Button.insertNew )
-				.on( 'click', '.action.add-media', self.addMedia )
+				.on( 'click', '.action.add-media', self.openAddMedia )
 				.on( 'click', '.action.add-icon', BG.CONTROLS.Icon.insertNew );
+		},
+		
+		/**
+		 * Open Add Media.
+		 * 
+		 * @since 1.2.7
+		 */
+		openAddMedia : function () {
+			wp.media.editor.open();
+			wp.media.frame.setState( 'insert' );
 		},
 		
 		/**

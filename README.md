@@ -35,6 +35,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:		JIRA WPB-2453	Hide popover font control when not applicable.
 * Update:		JIRA WPB-2440	Setting default text color for column backgrounds.
 * Update:       JIRA WPB-2065   Added default to font selection.
+* Update:       JIRA WPB-2461   Add Media now in Drop Tab > Add new.
 
 ### 1.2.9 ###
 * Bug Fix:		JIRA WPB-2428	Added cache busting for colors and button files.
