@@ -291,6 +291,10 @@ html.boldgrid-editor-fullscreen {
     cursor: auto;
 }
 
+.bg-drag-popover.section-drag-handle {
+    z-index: 99998;
+}
+
 .mce-content-body .drag-handle-imhwpb[contentEditable=false],
 .drag-handle-imhwpb {
     cursor: move !important;
