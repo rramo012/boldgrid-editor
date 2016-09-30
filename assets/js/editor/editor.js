@@ -360,8 +360,10 @@ IMHWPB.Editor = function( $ ) {
 					}
 				} else if ( 'P' == node.tagName ) {
 					// When clicking enter on an empty P, Just add another P.
-					if ( enterKey == e.which && isEmpty ) {
-						$current_node.before( $current_node.clone() );
+					if ( enterKey == e.which && isEmpty && ! $current_node.find('img').length ) {
+						$newParagraph = $('<p><br data-mce-bogus="1"></p>');
+						$current_node.after( $newParagraph );
+						editor.selection.setCursorLocation( $newParagraph[0], 0 );
 						return false;
 					}
 					
@@ -382,7 +384,9 @@ IMHWPB.Editor = function( $ ) {
 							return false;
 						}
 					}
+
 				} else if ( 'IMG' == node.tagName || $current_node.is('.button-primary, .button-secondary, .btn' ) ) {
+					
 					if ( enterKey == e.which ) {
 
 						$newParagraph = $('<p><br data-mce-bogus="1"></p>');

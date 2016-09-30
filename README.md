@@ -26,6 +26,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 ## Changelog ##
 
 ### 1.3 In Progress ###
+* Bug Fix:		JIRA WPB-2454	Image being cloned after pressing enter.
 * Bug Fix:		JIRA WPB-2442	Nested columns allowed for parent column backgrounds.
 * Bug Fix:      JIRA WPB-2441   Fixing issue with row resize cursor.
 * Bug Fix:      JIRA WPB-2447   Hide button color if multiple buttons in a paragraph.
