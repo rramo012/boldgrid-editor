@@ -347,22 +347,8 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'boldgrid-components',
 		plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
-		$button_file = get_stylesheet_directory() . '/css/buttons.css';
-		$colors_file = get_stylesheet_directory() . '/css/color-palettes.css';
-		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
-			if ( file_exists( $button_file ) ) {
-				wp_enqueue_style( 'boldgrid-buttons',
-				get_stylesheet_directory_uri() . '/css/buttons.css', array(), filemtime( $button_file ) );
-			}
-
-			if ( file_exists( $colors_file ) ) {
-				wp_enqueue_style( 'boldgrid-color-palettes',
-				get_stylesheet_directory_uri() . '/css/color-palettes.css', array( 'editor-css-imhwpb' ), filemtime( $colors_file ) );
-			}
-		}
-
-		// If theme buttons does not exist, include editro version.
-		if ( ! file_exists( $button_file )  ) {
+		// If theme does not support BGTFW buttons, enqueue buttons.
+		if ( ! Boldgrid_Editor_Theme::has_feature( 'button-lib' ) ) {
 			wp_enqueue_style( 'boldgrid-buttons',
 			plugins_url( '/assets/css/buttons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 		}

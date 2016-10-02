@@ -21,6 +21,20 @@
 class Boldgrid_Editor_Theme {
 
 	/**
+	 * Check if theme supports a feature.
+	 *
+	 * @since 1.0
+	 *
+	 * @param WP_Theme $wp_theme
+	 *
+	 * @return string.
+	 */
+	public static function has_feature( $feature = null ) {
+		$features = Boldgrid_Editor_Builder::get_theme_features();
+		return in_array( $feature, $features );
+	}
+
+	/**
 	 * Returns the name of a theme if and only if the theme is a boldgrid theme.
 	 *
 	 * @since 1.0
