@@ -944,6 +944,10 @@
 #boldgrid-instance-menu li .fa-columns {
   padding: 2px 3px; }
 
+#boldgrid-instance-menu li .dashicons-edit {
+  padding: 3px 2px 0;
+  line-height: 23px; }
+
 #boldgrid-instance-menu .active .bg-editor-menu-dropdown {
   display: block; }
 
@@ -952,6 +956,9 @@
 
 #boldgrid-instance-menu .boldgrid-help-icon {
   display: none; }
+
+#boldgrid-instance-menu .dashicons:before {
+  font-family: dashicons; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown {
   display: none;

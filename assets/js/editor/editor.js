@@ -549,7 +549,7 @@ IMHWPB.Editor = function( $ ) {
 					}
 				}
 			});
-
+			
 			/**
 			 * When the editor is initialized load the draggable ability
 			 */

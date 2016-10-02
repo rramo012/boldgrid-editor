@@ -150,19 +150,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
-		 * Bind event for clicking on the iFrame body.
+		 * Bind event for updating Drop Tab.
 		 * 
 		 * @since 1.2.7
 		 */
-		onEditibleClick : function () {
+		_setupUpdateMenu : function () {
 			var self = this;
-
-			this.$container.on( 'mouseup', function ( e ) {
-				self.clearMenuItems();
-			} );
 			
 			this.$container.on( 'click', function ( e ) {
-
 				self.$menu.find( 'li[data-action]' ).hide();
 
 				if ( ! self.$menu.items.length ) {
@@ -181,7 +176,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 				self._closeOpenControl();
 				BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
+				self.clearMenuItems();
 			} );
+		},
+		
+		/**
+		 * Bind event for clicking on the iFrame body.
+		 * 
+		 * @since 1.2.7
+		 */
+		onEditibleClick : function () {
+			this._setupUpdateMenu();
 		},
 		
 		/**
@@ -248,12 +253,12 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		bindControlHandler : function ( control ) {
 			var self = this;
-
+			
 			// When the user clicks on an element that has an associated control.
 			// Add that control to the list of controls to be made visible.
 			this.$container.on( 'click', control.selectors.join(), function ( e ) {
 				var $this = $( this );
-				
+
 				//@TODO: Move this.
 				if ( 'box' == control.name ) {
 					var isEditingNested, isNestedColumn;
@@ -282,10 +287,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 							return;
 						}
 					}
-
 				}
 				
-				if ( $this.closest('.wpview').length ) {
+				if ( $this.closest('.wpview').length && control.name != 'edit-media' ) {
 					return;
 				}
 

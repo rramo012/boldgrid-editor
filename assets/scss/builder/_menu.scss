@@ -72,6 +72,10 @@
 	li .fa-columns {
 		padding: 2px 3px;
 	}
+	li .dashicons-edit {
+	    padding: 3px 2px 0;
+	    line-height: 23px;
+	}
 	
 	.active .bg-editor-menu-dropdown {
 	   display: block;
@@ -84,6 +88,11 @@
 	.boldgrid-help-icon {
 		display: none;
 	}
+	
+    .dashicons:before {
+        font-family: dashicons;
+    }
+	
 	.bg-editor-menu-dropdown {
 	   display: none;
 		background-color: white;

@@ -20,7 +20,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		iconClasses : 'genericon genericon-plus add-element-trigger',
 
-		selectors : [ '*' ],
+		selectors : [ 'html' ],
 		
 		menuDropDown : {
 			title: 'Add New',
