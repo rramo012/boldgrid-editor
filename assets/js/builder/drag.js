@@ -1,7 +1,8 @@
 jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
-	var self = this;
-	var most_recent_enter = [];
-	var most_recent_row_enter = [];
+	var self = this,
+		BG = BOLDGRID.EDITOR,
+		most_recent_enter = [],
+		most_recent_row_enter = [];
 
 	self.ie_version = null;
 	self.isSafari = null;
@@ -19,14 +20,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.$resize_overlay = $('<div id="boldgrid-draggable-resizing-overlay"></div>');
 	self.$master_container.find('html').append(self.$resize_overlay);
 	self.original_selector_strings = {};
+	
 	self.scrollInterval = false;
 
-	//Tinymce elements used for auto scrolling
-	//This may be as unreliable.
-	//tinymce.activeEditor.theme.panel._items[0]._id //32
-	//tinymce.activeEditor.theme.panel._items[2]._id //38
+	// Tinymce element used for auto scrolling.
 	self.$mce_32 = $( '#' + tinymce.activeEditor.theme.panel._items[0]._id );
-	self.$mce_38 = $( '#' + tinymce.activeEditor.theme.panel._items[2]._id );
 
 	self.$post_status_info = $( '#post-status-info' );
 
@@ -687,9 +685,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.merge_additional_menu_options();
 		addContainerData();
 
-		BOLDGRID.EDITOR.RESIZE.Row.init( self.$master_container );
-		BOLDGRID.EDITOR.Controls.init( self.$master_container );
-		BOLDGRID.EDITOR.DRAG.Section.init( self.$master_container );
+		BG.RESIZE.Row.init( self.$master_container );
+		BG.Controls.init( self.$master_container );
+		BG.DRAG.Section.init( self.$master_container );
 
 		return self;
 	};
@@ -782,8 +780,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.validate_markup = function() {
 		// If the theme is a BG theme w/ variable containers feature, or the theme is not BG theme.
-		if ( ! BoldgridEditor.is_boldgrid_theme || BOLDGRID.EDITOR.Controls.hasThemeFeature('variable-containers') ) {
-			BOLDGRID.EDITOR.VALIDATION.Section.updateContent( self.$body );
+		if ( ! BoldgridEditor.is_boldgrid_theme || BG.Controls.hasThemeFeature('variable-containers') ) {
+			BG.VALIDATION.Section.updateContent( self.$body );
 			self.$validatedInput.attr( 'value', 1 );
 		}
 		
@@ -874,7 +872,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		} else {
 			$interaction_container = self.$master_container.closest( 'html' );
 		}
-
+		
 		return $interaction_container;
 	};
 
@@ -1081,13 +1079,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		self.$window.on( 'dragover.draggable', self.drag_handlers.over );
 
-		self.$interaction_container.on( 'dragleave.draggable', function () {
-			if ( !self.$body.find(self.$current_drag).length && self.$current_drag ) {
-				self.$current_drag.hide();
-				self.$body.append(self.$current_drag);
-			}
-		} );
-
 		self.$interaction_container
 			.on( 'dragstart.draggable', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
 			.on( 'dragstart.draggable', 'img, a', self.drag_handlers.hide_tooltips )
@@ -1096,6 +1087,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'dragleave.draggable', self.drag_handlers.leave_dragging )
 			.on( 'dragenter.draggable', self.drag_handlers.record_drag_enter )
 			;
+	
 	};
 	
 	this.refresh_fourpan = function () {
@@ -2601,7 +2593,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * This function is used to drag columns.
+	 * This function is used to drag rows.
 	 */
 	this.reposition_row = function ( page_y ) {
 		if ( self.$current_drag.IMHWPB.is_row ) {
@@ -2647,13 +2639,16 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					// Insert Before if not already there.
 					if ($other_elements.index(this.element) < $other_elements.index(self.$temp_insertion)) {
 						this.element.before(self.$temp_insertion);
+
 						// If the element is before me but not immediately before me, insert immediately before me.
 					} else if ( $other_elements.index(this.element) > $other_elements.index(self.$temp_insertion) &&
 						$other_elements.index(this.element) - 1 != $other_elements.index(self.$temp_insertion)
 					) {
 						this.element.before( self.$temp_insertion );
+
 					} else {
 						this.element.after(self.$temp_insertion);
+
 					}
 
 					// We have just modified the DOM.
@@ -3084,7 +3079,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * a section for content, column, and row.
 		 */
 		leave_dragging : function( event ) {
-			if ( ! self.$current_drag || self.$current_drag.IMHWPB.is_row ) {
+			if ( ! self.$current_drag ) {
 				return;
 			}
 
@@ -3093,8 +3088,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				event.preventDefault();
 			}
 
-			var $left = $( event.target );
-			var $entered = self.entered_target;
+			var $left = $( event.target ),
+				$entered = self.entered_target;
 
 			// Prevent Multiple Events from being triggered at an X and Y location.
 			if ( self.prevent_duplicate_location_events( event ) || !self.$current_drag ) {
@@ -3115,7 +3110,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			}
 
 			// @todo Content dragging has some major inefficiencies.
-			if ( self.$current_drag.IMHWPB.is_content ) {
+			if ( self.$current_drag.IMHWPB.is_row ) {
+				BG.DRAG.Row.dragEnter( $entered );
+			} else if ( self.$current_drag.IMHWPB.is_content ) {
 				/**
 				 * Most of Content Dragging is handled when a user enters a container
 				 * This section allows for content to leave a row.
@@ -3377,12 +3374,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * the drag leave and the drag enter.
 		 */
 		record_drag_enter : function( event ) {
-			if ( !self.$current_drag || self.$current_drag.IMHWPB.is_row  ) {
+			if ( ! self.$current_drag ) {
 				return;
 			}
 
 			// Prevent Default here causes an issue on IE.
-			if ( !self.ie_version ) {
+			if ( ! self.ie_version ) {
 				event.preventDefault();
 			}
 
@@ -3635,7 +3632,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				$element = $this.closest( '.draggable-tools-imhwpb' ).next();
 			
 			$element.click();
-			BOLDGRID.EDITOR.CONTROLS[ controlName ].openPanel();
+			BG.CONTROLS[ controlName ].openPanel();
 		},
 			
 		alignTop : function () {

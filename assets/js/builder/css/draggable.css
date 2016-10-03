@@ -2,6 +2,10 @@ html, body {
     height: auto;
 }
 
+.boldgrid-section {
+	min-height: 80px;
+}
+
 html.boldgrid-editor-fullscreen {
 	overflow: auto !important;
 }
