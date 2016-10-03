@@ -26,6 +26,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 ## Changelog ##
 
 ### 1.2.10 In Progress ###
+* Update:		JIRA WPB-2456	Smoothing auto scroll during drag.
 * Update:		JIRA WPB-2453	Hide popover font control when not applicable.
 * Update:		JIRA WPB-2440	Setting default text color for column backgrounds.
 * Update:       JIRA WPB-2065   Added default to font selection.

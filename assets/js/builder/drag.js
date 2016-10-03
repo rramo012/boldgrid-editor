@@ -19,6 +19,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.$resize_overlay = $('<div id="boldgrid-draggable-resizing-overlay"></div>');
 	self.$master_container.find('html').append(self.$resize_overlay);
 	self.original_selector_strings = {};
+	self.scrollInterval = false;
 
 	//Tinymce elements used for auto scrolling
 	//This may be as unreliable.
@@ -80,15 +81,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			'rgba(0, 0, 0, 0)',
 			'transparent'
 		]
-	};
-
-	/**
-	 * A value indicating how fast the auto scroll will move per element.
-	 */
-	this.scroll_speeds = settings.scroll_speeds || {
-		'content' : 6,
-		'column' : 6,
-		'row' : 6,
 	};
 
 	// this.master_container_id = '#' + .uniqueId().attr('id');
@@ -1379,6 +1371,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$master_container.trigger( self.drag_end_event, self.$temp_insertion );
 		self.$current_drag = null;
 		self.$master_container.removeClass( 'drag-progress' );
+		clearInterval( self.scrollInterval );
 	};
 
 	/**
@@ -3006,7 +2999,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					.removeClass( 'resizing-imhwpb' );
 				
 			}, timeout_length );
-
+			
+			self.drag_handlers.initSmoothScroll();
 		},
 
 		over : function( event ) {
@@ -3041,6 +3035,23 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				self.drag_handlers.autoScroll( event );
 			}
+
+		},
+		
+		initSmoothScroll : function () {
+			// Delay in milliseconds.
+			var y = 1;
+			
+			// Init Y-axis pixel displacement.
+			self.autoScrollSpeed = false; 
+			
+			self.scrollInterval = setInterval( function() {
+				if ( ! self.autoScrollSpeed  ) {
+					return;
+				}
+				
+			    window.scrollBy( 0, self.autoScrollSpeed );
+			}, y );
 		},
 		
 		/**
@@ -3049,18 +3060,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * @since 1.3
 		 */
 		autoScroll : function ( event ) {
-			var scroll_speed = self.scroll_speeds[ self.$current_drag.IMHWPB.type ],
-				isFixedTop = self.$mce_32.css('position') === 'fixed',
+			var isFixedTop = self.$mce_32.css('position') === 'fixed',
 				topOffset = self.$mce_32[0].getBoundingClientRect();
 				positionY = event.originalEvent.screenY - window.screenY;
 
 			// 150: Is the range within the mce bar you must reach before scrolling up starts.
 			if ( positionY < topOffset.bottom + 150 && isFixedTop ) {
-				scrollBy( 0, -scroll_speed );
+				self.autoScrollSpeed = -1;
 			// 100: Is the range within the bottom bar you must get to before scrolling down starts.
 			} else if ( positionY > innerHeight - 100 ) {
-				scrollBy( 0, scroll_speed );
-			} 
+				self.autoScrollSpeed = 1;
+			} else {
+				self.autoScrollSpeed = false;
+			}
 
 		},
 
