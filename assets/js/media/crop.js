@@ -63,9 +63,6 @@ BOLDGRID.EDITOR.Crop = function( $ ) {
 		 */
 		self.$mediaModal.css( 'display', 'block' );
 
-		// Remove the tabs, "Upload Files / Media Library".
-		$( '.media-frame-router' ).remove();
-
 		// Empty the contents of the content frame.
 		self.$modalContent.empty();
 
