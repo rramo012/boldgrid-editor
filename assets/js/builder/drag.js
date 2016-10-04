@@ -3629,7 +3629,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.menu_actions = {
 
-		generalMacro : function () {
+		generalMacro : function ( e ) {
+			e.stopPropagation();
+
 			var $this = $( this ),
 				controlName = $this.data('action'),
 				$element = $this.closest( '.draggable-tools-imhwpb' ).next();

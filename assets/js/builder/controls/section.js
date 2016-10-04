@@ -110,6 +110,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
 			self.$popover.on( 'click', '[data-action="background"]', self.background );
 			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
+			self.$popover.on( 'click', '[data-action]', function ( e ) { e.stopPropagation(); } );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
 			self.$popover.on( 'click', '.context-menu-imhwpb', self.menuDirection );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
