@@ -4,12 +4,12 @@
 [![Code Climate](https://codeclimate.com/github/BoldGrid/boldgrid-editor/badges/gpa.svg)](https://codeclimate.com/github/BoldGrid/boldgrid-editor)
 
 # BoldGrid Editor #
-**Contributors:** imh_brad, joemoto, rramo012, timph  
-**Tags:** inspiration,customization,build,create,design  
-**Requires at least:** 4.3  
-**Tested up to:** 4.6.1  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** imh_brad, joemoto, rramo012, timph
+**Tags:** inspiration,customization,build,create,design
+**Requires at least:** 4.3
+**Tested up to:** 4.6.1
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor.
 
@@ -25,7 +25,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.2.10 In Progress ###
+### 1.2.11 ###
+* Bug Fix:		JIRA WPB-2470	Fixing issue with popover panel items.
+
+### 1.2.10 ###
 * Update:		JIRA WPB-2456	Smoothing auto scroll during drag.
 * Update:		JIRA WPB-2453	Hide popover font control when not applicable.
 * Update:		JIRA WPB-2440	Setting default text color for column backgrounds.
@@ -38,6 +41,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug Fix:      JIRA WPB-2441   Fixing issue with row resize cursor.
 * Bug Fix:      JIRA WPB-2447   Hide button color if multiple buttons in a paragraph.
 * Bug Fix:      JIRA WPB-2455   Staging colors and buttons will now be enqueued correctly.
+* Update:		JIRA WBP-2426	Adjust the way crop modal hides router tabs.
 
 ### 1.2.9 ###
 * Bug Fix:		JIRA WPB-2428	Added cache busting for colors and button files.
