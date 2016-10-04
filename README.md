@@ -38,6 +38,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug Fix:      JIRA WPB-2441   Fixing issue with row resize cursor.
 * Bug Fix:      JIRA WPB-2447   Hide button color if multiple buttons in a paragraph.
 * Bug Fix:      JIRA WPB-2455   Staging colors and buttons will now be enqueued correctly.
+* Update:		JIRA WBP-2426	Adjust the way crop modal hides router tabs.
 
 ### 1.2.9 ###
 * Bug Fix:		JIRA WPB-2428	Added cache busting for colors and button files.

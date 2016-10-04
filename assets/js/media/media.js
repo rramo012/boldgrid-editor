@@ -44,13 +44,11 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.handle_iframe_load = function( tabs ) {
 		// Unhide the selection panels
-		var $container 		 = $( '#__wp-uploader-id-0' );
 		var $media_router 	 = $( '.media-router' );
 		var $media_toolbar 	 = $( '.media-toolbar-primary' );
 		var $media_selection = $( '.media-selection' );
 
-		$container.removeClass( 'hide-toolbar' );
-		$container.removeClass( 'hide-router' );
+		$('.media-frame').removeClass( 'hide-toolbar hide-router' );
 
 		// Create Tabs
 		$media_router.html( self.build_tabs( tabs ) );
