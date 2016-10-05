@@ -17,7 +17,6 @@
     "tests"
   ],
   "dependencies": {
-        "jquery": "https://github.com/jquery/jquery/tree/1.12-stable",
         "boldgrid-theme-framework": "https://github.com/BoldGrid/boldgrid-theme-framework.git#dev"
   }
 }

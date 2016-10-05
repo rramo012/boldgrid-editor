@@ -4,7 +4,7 @@ module.exports = function(config) {
     reporters: ['spec'],
     browsers: ['PhantomJS'],
     files: [
-      'bower_components/jquery/dist/jquery.js',
+      'https://code.jquery.com/jquery-1.12.4.min.js',
       'assets/js/builder/controls.js',
       'assets/js/builder/util.js',
       'tests/**/*.js'

@@ -19,10 +19,9 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 		 * @since 1.3
 		 */
 		dragEnter : function ( $dragEntered ) {
-			var $dragEntered = self.remapDragEnter( $dragEntered ),
-				validDrag = self.validateDragEnter( $dragEntered );
+			$dragEntered = self.remapDragEnter( $dragEntered );
 
-			if ( validDrag ) {
+			if ( self.validateDragEnter( $dragEntered ) ) {
 				self.moveIntoSection( $dragEntered );
 				self.postRowInsert();
 			}
