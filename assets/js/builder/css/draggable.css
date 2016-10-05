@@ -3,7 +3,7 @@ html, body {
 }
 
 .boldgrid-section {
-	min-height: 80px;
+	min-height: 30px;
 }
 
 html.boldgrid-editor-fullscreen {

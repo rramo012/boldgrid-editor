@@ -3063,7 +3063,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			if ( positionY < topOffset.bottom + 150 && isFixedTop ) {
 				self.autoScrollSpeed = -1;
 			// 100: Is the range within the bottom bar you must get to before scrolling down starts.
-			} else if ( positionY > innerHeight - 100 ) {
+			} else if ( positionY > window.innerHeight + 100 ) {
 				self.autoScrollSpeed = 1;
 			} else {
 				self.autoScrollSpeed = false;

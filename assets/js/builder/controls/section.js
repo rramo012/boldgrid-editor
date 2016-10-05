@@ -82,7 +82,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param Event e.
 		 */
 		menuDirection : function ( e ) {
-			var pos = e.screenY,
+			var pos = e.screenY - window.screenY,
 				menuHeight = 340,
 				staticMenuPos = BG.Menu.$mceContainer[0].getBoundingClientRect();
 			

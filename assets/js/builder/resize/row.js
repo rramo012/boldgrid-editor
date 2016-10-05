@@ -116,7 +116,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					if ( 'padding-top' == setting ) {
 						padding = parseInt( self.$currentRow.css( setting ) ) - diff;
 						relativePos = 'top';
-						if ( padding > 0 ) {
+						if ( padding > 0 && diff ) {
 							window.scrollBy( 0, - diff );
 						}
 					} else {
@@ -128,9 +128,10 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					if ( padding < 0 ) {
 						rowPos = self.$currentRow[0].getBoundingClientRect();
 						ui.position.top = rowPos[ relativePos ] - (  ui.helper.hasClass('top') ? 0 : self.handleOffset );
-					} else {
-						BG.Controls.addStyle( self.$currentRow, setting, padding );
+						padding = 0;
 					}
+					
+					BG.Controls.addStyle( self.$currentRow, setting, padding );
 
 					if ( self.$container.$html.hasClass( 'editing-as-row' ) && $.fourpan ) {
 						$.fourpan.refresh();

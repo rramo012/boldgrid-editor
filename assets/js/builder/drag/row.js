@@ -40,16 +40,13 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			var validDrag;
 
 			validDrag = $dragEntered.hasClass( 'boldgrid-section' ) &&
-				0 === $dragEntered.find( '.row:not(.dragging-imhwpb)' ).not(BG.Controls.$container.$current_drag).length &&
+				0 === $dragEntered.find( '.row:not(.dragging-imhwpb,.row .row)' ).not(BG.Controls.$container.$current_drag).length &&
 				0 !== $dragEntered.find( '.container-fluid, .container' ).length;
-			
-			console.log( $dragEntered, $dragEntered.find( '.row:not(.dragging-imhwpb)' ).html() )
 			
 			return validDrag;
 		},
 		
 		moveIntoSection : function ( $dragEntered ) {
-			console.log("Move");
 			// Prepend Row into sections container.
 			$dragEntered.find( '.container-fluid, .container' )
 				.first()
