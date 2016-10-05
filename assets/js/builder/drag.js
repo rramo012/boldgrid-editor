@@ -1,8 +1,7 @@
 jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var self = this,
 		BG = BOLDGRID.EDITOR,
-		most_recent_enter = [],
-		most_recent_row_enter = [];
+		most_recent_enter = [];
 
 	self.ie_version = null;
 	self.isSafari = null;
@@ -2593,76 +2592,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * This function is used to drag rows.
-	 */
-	this.reposition_row = function ( page_y ) {
-		if ( self.$current_drag.IMHWPB.is_row ) {
-
-			if ( page_y < self.$current_drag.IMHWPB.row_min_max.offset_top ) {
-				var $first_elem = self.get_other_top_level_elements().first();
-
-				if ( $first_elem.get(0) != self.$temp_insertion[0] ) {
-					$first_elem.before( self.$temp_insertion );
-					self.recalc_row_pos();
-
-					// We have just modified the DOM.
-					self.$master_container.trigger( self.boldgrid_modify_event );
-				}
-				return;
-
-			} else if (  page_y > self.$current_drag.IMHWPB.row_min_max.offset_bottom ) {
-				var $last_elem = self.get_other_top_level_elements().last();
-
-				if ( $last_elem.get(0) != self.$temp_insertion[0] ) {
-					$last_elem.after( self.$temp_insertion );
-					self.recalc_row_pos();
-
-					// We have just modified the DOM.
-					self.$master_container.trigger( self.boldgrid_modify_event );
-				}
-
-				return;
-
-			}
-
-			// Check each column end point position.
-			$.each(self.$current_drag.IMHWPB.row_pos, function () {
-
-				if ( page_y < this.max ) {
-					var $other_elements = self.get_other_top_level_elements();
-
-					if ( most_recent_row_enter[0] == this.element[0] ) {
-						return false;
-					}
-					most_recent_row_enter = this.element;
-
-					// Insert Before if not already there.
-					if ($other_elements.index(this.element) < $other_elements.index(self.$temp_insertion)) {
-						this.element.before(self.$temp_insertion);
-
-						// If the element is before me but not immediately before me, insert immediately before me.
-					} else if ( $other_elements.index(this.element) > $other_elements.index(self.$temp_insertion) &&
-						$other_elements.index(this.element) - 1 != $other_elements.index(self.$temp_insertion)
-					) {
-						this.element.before( self.$temp_insertion );
-
-					} else {
-						this.element.after(self.$temp_insertion);
-
-					}
-
-					// We have just modified the DOM.
-					self.$master_container.trigger( self.boldgrid_modify_event );
-
-					self.recalc_row_pos();
-
-					return false;
-				}
-			});
-		}
-	};
-
-	/**
 	 * This function is used to drag colummns.
 	 */
 	this.reposition_column = function ( page_x, page_y  ) {
@@ -3019,7 +2948,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				 * This was moved to "over" on 10/14/15.
 				 */
 				if ( self.$current_drag.IMHWPB.dragStarted ) {
-					self.reposition_row( event.originalEvent.pageY );
+					if ( BG.Controls.$container.$current_drag.IMHWPB.is_row ) {
+						BG.DRAG.Row.dragCursorPosition( event.originalEvent.pageY );
+					}
 					self.reposition_column( event.originalEvent.pageX, event.originalEvent.pageY  );
 				}
 
