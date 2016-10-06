@@ -164,6 +164,7 @@ class Boldgrid_Editor_Builder {
 		$paths[] = $template_path . '/box.php';
 		$paths[] = $template_path . '/panel.php';
 		$paths[] = $template_path . '/drag-handles.php';
+		$paths[] = $template_path . '/upgrade-notice.php';
 		$paths[] = $template_path . '/icon.php';
 		$paths[] = $template_path . '/generic-controls.php';
 

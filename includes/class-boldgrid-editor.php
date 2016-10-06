@@ -215,6 +215,7 @@ class Boldgrid_Editor {
 			'media-upload.php'
 		);
 
+
 		$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
 		if ( $edit_post_page ) {
 
@@ -232,6 +233,8 @@ class Boldgrid_Editor {
 
 			add_action( 'media_buttons', array( $boldgrid_editor_mce, 'load_editor_hooks' ) );
 			add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
+
+			add_action( 'admin_init', array( $boldgrid_editor_version, 'display_update_notice' ) );
 
 			// Creates all tabs as specified by the configuration.
 			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();

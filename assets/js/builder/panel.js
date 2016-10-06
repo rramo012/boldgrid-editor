@@ -42,6 +42,34 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
 			$( 'body' ).append( this.$element );
 		},
+		
+		/**
+		 * Set the html for the panel body of the panel.
+		 *
+		 * @since 1.3
+		 */
+		setContent : function ( content ) {
+			this.$element.find( '.panel-body' ).html( content );
+		},
+
+		/**
+		 * Set title of the panel.
+		 *
+		 * @since 1.3
+		 */
+		setTitle : function ( title ) {
+			this.$element.find( '.panel-title .name' ).html( title );
+		},
+
+		/**
+		 * Set the dimensions of the panel.
+		 *
+		 * @since 1.3
+		 */
+		setDimensions : function ( width, height ) {
+			this.$element.width( width );
+			this.$element.height( height );
+		},
 
 		/**
 		 * Center the panel.
@@ -402,9 +430,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			this.currentControl = control;
 			this.$element.addClass('ui-widget-content');
-			this.$element.height( control.panel.height );
-			this.$element.width( control.panel.width );
-			this.$element.find( '.panel-title .name' ).html( control.panel.title );
+			this.setDimensions( control.panel.width, control.panel.height );
+			this.setTitle( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
 			this._enableFooter( control.panel );
 			this._setupCustomize( control );

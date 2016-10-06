@@ -72,6 +72,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			
 			BG.CONTROLS.Generic.setupInputCustomization();
 			BG.CONTROLS.Generic.setupInputInitialization();
+			BG.NOTICE.Update.init();
 			
 		},
 		

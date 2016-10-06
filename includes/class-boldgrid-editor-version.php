@@ -21,6 +21,40 @@
 class Boldgrid_Editor_Version {
 
 	/**
+	 * Check if we should display admin notice.
+	 *
+	 * @since 1.3
+	 *
+	 * @return boolean Should we display admin notice.
+	 */
+	public static function should_display_notice() {
+		return false;
+	}
+
+	/**
+	 * If we should display admin notice, add body classes to trigger css.
+	 *
+	 * @since 1.3
+	 */
+	public function display_update_notice() {
+		$display_update_notice = self::should_display_notice();
+
+		if ( $display_update_notice ) {
+			add_filter( 'admin_body_class', array( $this, 'add_version_classes' ) );
+		}
+	}
+
+	/**
+	 * Add admin body classes which will display admin upgrade notice.
+	 *
+	 * @since 1.3
+	 */
+	public function add_version_classes( $classes ) {
+		$classes .= 'bg-editor-intro-1-3';
+		return $classes;
+	}
+
+	/**
 	 * Check PHP and WordPress versions for compatibility
 	 */
 	public function check_php_wp_versions() {

@@ -334,13 +334,3 @@
 --------------------------------------------------------------*/
 .background-fixed {
   background-attachment: fixed !important; }
-
-/*--------------------------------------------------------------
-# Sections
---------------------------------------------------------------*/
-.boldgrid-section {
-  min-height: 30px; }
-
-.site-header .boldgrid-section,
-.site-footer .boldgrid-section {
-  min-height: 0; }
