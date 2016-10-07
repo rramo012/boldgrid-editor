@@ -1,6 +1,6 @@
 <?php
 /**
- * Class: Boldgrid_Editor_Maps
+ * Class: Boldgrid_Editor_Media_Map
  *
  * Parse pages to find component usage.
  *
@@ -11,7 +11,7 @@
  */
 
 /**
- * Class: Boldgrid_Editor_Maps
+ * Class: Boldgrid_Editor_Media_Map
  *
  * Parse pages to find component usage.
  *
@@ -29,7 +29,7 @@ class Boldgrid_Editor_Media_Map {
 	 * @since 1.3
 	 */
 	public function upgrade_maps() {
-		if ( 0 && $this->should_update_maps() ) {
+		if ( $this->should_update_maps() ) {
 			// Save state first to make sure it doesnt happen more than once.
 			$this->save_validated_state();
 			$pages = Boldgrid_Layout::get_pages_all_status();
@@ -60,7 +60,7 @@ class Boldgrid_Editor_Media_Map {
 	 * @since 1.3
 	 */
 	public function save_validated_state() {
-		//Boldgrid_Editor_Option::update( 'updated_maps', 1 );
+		Boldgrid_Editor_Option::update( 'updated_maps', 1 );
 	}
 
 	/**
@@ -89,11 +89,39 @@ class Boldgrid_Editor_Media_Map {
 		@$dom->loadHTML( Boldgrid_Layout::utf8_to_html( $content ) );
 		$xpath = new DOMXPath( $dom );
 
-		if ( $this->replaceElements( $xpath, $dom ) ) {
-			echo $dom->saveXml($dom->documentElement);
-			die;
-			//Save Changes
+		if ( $this->replaceElements( $xpath, $dom ) && ! empty( $page->ID ) ) {
+			// Save the body from DOMDoc.
+			$body = $dom->getElementsByTagName('body');
+			if ( $body && 0 < $body->length && $body->item(0) ) {
+				$mock = new DOMDocument;
+				foreach ( $body->item(0)->childNodes as $child ){
+				    $mock->appendChild( $mock->importNode( $child, true ) );
+				}
+
+				$new_html = $mock->saveHTML();
+				if ( ! empty( $new_html ) ) {
+					$this->save_post( $page->ID, $new_html );
+				}
+			}
 		}
+	}
+
+	/**
+	 * Update the post with the new map.
+	 *
+	 * @since 1.3
+	 *
+	 * @param page_id $page_id Page id to update.
+	 * @param string $html html to save.
+	 */
+	public function save_post( $page_id, $html ) {
+		$new_post = array (
+			'ID' => $page_id,
+			'post_content' => $html,
+		);
+
+		// Save Changes.
+		wp_update_post( $new_post );
 	}
 
 	/**
@@ -105,18 +133,23 @@ class Boldgrid_Editor_Media_Map {
 
 		$query_string = '//a[starts-with(@href, "http://maps.google.com/?q")]';
 		$updated_content = false;
+
+		$replacement_nodes = array();
 		foreach ( $xpath->query( $query_string ) as $node ) {
 			if ( $node->hasChildNodes() && 1 === sizeof( $node->childNodes ) && 'img' == $node->firstChild->tagName ) {
-				$img = $node->firstChild;
-				$iframe_html = $this->create_map_iframe( $img );
-				if ( $iframe_html ) {
-					$updated_content = true;
+				$replacement_nodes[] = $node;
+			}
+		}
 
-					$iframe_node = $dom->createDocumentFragment();
-					$iframe_node->appendXML( $iframe_html );
+		foreach( $replacement_nodes as $node ) {
+			$img = $node->firstChild;
+			$iframe_html = $this->create_map_iframe( $img );
+			if ( $iframe_html ) {
+				$updated_content = true;
 
-					$node->parentNode->replaceChild( $iframe_node, $node );
-				}
+				$iframe_node = $dom->createDocumentFragment();
+				$iframe_node->appendXML( $iframe_html );
+				$node->parentNode->replaceChild( $iframe_node, $node );
 			}
 		}
 
@@ -132,30 +165,35 @@ class Boldgrid_Editor_Media_Map {
 	 */
 	public function create_map_iframe( $img ) {
 		$src = $img->getAttribute('src');
-		$src = "https://maps.googleapis.com/maps/api/staticmap?center=36.8399281%2C-76.082315&maptype=hybrid&zoom=16&size=600x450";
+		$attr_width = $img->getAttribute('width');
+		$attr_height = $img->getAttribute('height');
+
 		$parsed_url = parse_url( $src );
 		$query_string = ! empty( $parsed_url['query'] ) ? $parsed_url['query'] : '';
-		parse_str( $query_string, $query_vars );
+		$valid_host = ! empty( $parsed_url['host'] ) ? $parsed_url['host'] === 'maps.googleapis.com' : false;
 
+		parse_str( $query_string, $query_vars );
 		$query_vars = $this->format_required_vars( $query_vars );
+
 		// If all required vars are presnt and the user hasnt added a key.
 		$html = false;
-		if ( ! empty( $query_vars ) && empty( $query_vars['key'] ) ) {
+		if ( ! empty( $query_vars ) && empty( $query_vars['key'] ) && $valid_host ) {
 			$translated_params = $this->translate_vars( $query_vars );
-			$width = $translated_params['width'];
-			$height = $translated_params['height'];
+			$width = empty( $attr_width ) ? $translated_params['width'] : $attr_width;
+			$height = empty( $attr_height ) ? $translated_params['height'] : $attr_height;
 			$translated_params['output'] = 'embed';
 
 			unset( $translated_params['width'] );
 			unset( $translated_params['height'] );
 
 			$src_string = http_build_query( $translated_params );
-			$src_string = urlencode( $src_string );
+			// Do not url encode.
+			$src_string = str_replace( '&', '&amp;', $src_string );
 
 			$html = sprintf(
-					'<iframe class="boldgrid-google-maps" src="https://maps.google.com/maps?%s"' .
-					' style="border:0" width="%s" height="%s" frameborder="0"></iframe>',
-					$src_string, $width, $height );
+				'<iframe class="boldgrid-google-maps" src="https://maps.google.com/maps?%s"' .
+				' style="border:0" width="%s" height="%s" frameborder="0"></iframe>',
+				$src_string, $width, $height );
 		}
 
 		return $html;
@@ -172,11 +210,10 @@ class Boldgrid_Editor_Media_Map {
 	 */
 	public function format_required_vars( $query_vars ) {
 		$expected = array( 'zoom' => null, 'center' => null, 'size' => null, 'maptype' => null );
-
 		$formatted_params = array();
 		foreach ( $expected as $param => $val ) {
 			if ( ! empty( $query_vars[ $param ] ) ) {
-				$formatted[ $param ] = $query_vars[ $param ];
+				$formatted_params[ $param ] = $query_vars[ $param ];
 			} else {
 				return array();
 			}
@@ -275,7 +312,15 @@ class Boldgrid_Editor_Media_Map {
 	 * @return array $translated_params Query parameters in the emebed format.
 	 */
 	public function translateLocation( $query_vars, $translated_params ) {
-		$translated_params['q'] = $query_vars['center'];
+		$param_type = 'q';
+
+		// If query has more than 15 numbers treat it coords, ll.
+		$query = preg_replace( '/[^0-9]/', '', $query_vars['center'] );
+		if ( strlen( $query ) > 15 ) {
+			$param_type = 'll';
+		}
+
+		$translated_params[ $param_type ] = $query_vars['center'];
 		return $translated_params;
 	}
 

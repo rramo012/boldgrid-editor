@@ -10,6 +10,11 @@ html.boldgrid-editor-fullscreen {
     display: none !important;
 }
 
+[data-mce-p-class="boldgrid-google-maps"] iframe,
+iframe[src^="https://maps.google.com"] {
+	max-width: 100%;
+}
+
 .dragging-imhwpb {
     -webkit-box-shadow: 0 0 0px 2px #f95b26;
      -moz-box-shadow: 0 0 0px 2px #f95b26;

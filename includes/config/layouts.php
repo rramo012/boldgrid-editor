@@ -73,7 +73,7 @@ return array (
 								// Type: Standard.
 								't' => 'm',
 								// Zoom.
-								'z' => '14'
+								'z' => '16'
 							)
 						),
 						array (
@@ -82,7 +82,7 @@ return array (
 							'map-params' => array (
 								// Terrain.
 								't' => 'p',
-								'z' => '14'
+								'z' => '16'
 							)
 						),
 						array (
@@ -91,7 +91,7 @@ return array (
 							'map-params' => array (
 								// Satellite.
 								't' => 'k',
-								'z' => '14'
+								'z' => '16'
 							)
 						),
 						array (
@@ -100,7 +100,7 @@ return array (
 							'map-params' => array (
 								// Hybrid.
 								't' => 'h',
-								'z' => '14'
+								'z' => '16'
 							)
 						)
 					)

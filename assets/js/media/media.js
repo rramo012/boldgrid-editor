@@ -485,7 +485,6 @@ IMHWPB.Media = function( $ ) {
 				break;
 			case 'api':
 				html = self.get_map_html();
-				console.log(html)
 				break;
 			case 'shortcode-form':
 				var form_id = $( '.attachment[aria-checked="true"]' ).data('form-id-boldgrid');
