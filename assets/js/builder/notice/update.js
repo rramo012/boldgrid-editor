@@ -17,7 +17,52 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		init : function() {
 			if ( BoldgridEditor.display_update_notice ) {
 				self.displayPanel();
+
+				// Delay event, make sure user sees modal.
+				setTimeout( function () {
+					self.bindEvents();
+				}, 1000 );
 			}
+		},
+		
+		bindEvents : function () {
+			self.bindDismissButton();
+			self.panelClick();
+			BG.Panel.$element.on( 'click', function ( e ) { e.stopPropagation(); } );
+		},
+		
+		panelClick : function () {
+			$('body').on( 'click', function () {
+				self.dismissPanel();
+			} );
+		},
+		
+		bindDismissButton : function () {
+			BG.Panel.$element.find('.bg-upgrade-notice .dismiss').one( 'click', function () {
+				self.dismissPanel();
+			} );
+		},
+		
+		dismissPanel : function () {
+			var $body = $('body'); 
+			
+			$body.addClass( 'fadeout-background' );
+			BG.Panel.$element
+				.addClass('bounceOutDown')
+				.one( 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function (e) {
+					self.removeEffects();
+				} );
+			
+			setTimeout( function () {
+				self.removeEffects();
+			}, 1000 )
+		},
+		
+		removeEffects : function () {
+			$('body').removeClass( 'bg-editor-intro-1-3 fadeout-background' );
+			BG.Panel.resetPosition();
+			BG.Panel.$element.hide();
+			BG.Panel.$element.removeClass('animated bounceOutDown bounceInDown');
 		},
 			
 		/**
@@ -36,7 +81,10 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		animatePanel : function () {
-			BG.Panel.$element.addClass('animated bounceInDown');
+			BG.Panel.$element.addClass('animated bounceInDown')
+				.one( 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function (e) {
+					$('.bg-editor-loading').hide();
+				} );;
 		},
 		
 		/**

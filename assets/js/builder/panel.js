@@ -60,6 +60,18 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		setTitle : function ( title ) {
 			this.$element.find( '.panel-title .name' ).html( title );
 		},
+		
+		/**
+		 * Reset Panel Position
+		 * 
+		 * @since 1.3
+		 */
+		resetPosition : function () {
+			this.$element.css( {
+				'top' : '',
+				'left' : ''
+			} );
+		},
 
 		/**
 		 * Set the dimensions of the panel.

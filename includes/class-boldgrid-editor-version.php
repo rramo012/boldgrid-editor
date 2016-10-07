@@ -48,7 +48,7 @@ class Boldgrid_Editor_Version {
 	 * @return boolean Should we display admin notice.
 	 */
 	public static function should_display_notice() {
-		return false;
+		return 1;
 	}
 
 	/**

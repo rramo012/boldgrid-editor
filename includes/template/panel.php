@@ -51,3 +51,4 @@
 </div>
 </div>
 </script>
+<div class='bg-editor-loading'></div>
