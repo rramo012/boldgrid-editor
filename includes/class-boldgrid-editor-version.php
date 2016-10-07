@@ -20,24 +20,24 @@
  */
 class Boldgrid_Editor_Version {
 
-
+	/**
+	 * Check if activated version if older than given version.
+	 *
+	 * @since 1.3
+	 *
+	 * @param string $older_than_version Version number to check against.
+	 *
+	 * @return boolean $is_old_version.
+	 */
 	public static function is_version_older( $older_than_version ) {
-		$old_version = true;
+		$is_old_version = true;
 
 		$check_version = Boldgrid_Editor_Option::get( 'activated_version' );
 		if ( $check_version ) {
-			$old_version = version_compare( $check_version, $older_than_version, '<' );
+			$is_old_version = version_compare( $check_version, $older_than_version, '<' );
 		}
 
-		return $old_version;
-	}
-
-	/**
-	 *
-	 */
-	public function version_older_than( $version ) {
-		$check_version = Boldgrid_Editor_Option::get( 'activated_version', 0.1 );
-		return version_compare( BOLDGRID_EDITOR_VERSION, $version, '<' );
+		return $is_old_version;
 	}
 
 	/**
