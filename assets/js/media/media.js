@@ -402,6 +402,11 @@ IMHWPB.Media = function( $ ) {
 		});
 	};
 	
+	/**
+	 * Update the data attributes on the preview iframe.
+	 * 
+	 * @since 1.3.
+	 */
 	this.update_map_size = function () {
 		var $mediaIframe = $( '.media-sidebar .boldgrid-google-map' ),
 			size = self.find_selected_map_size();
@@ -445,6 +450,12 @@ IMHWPB.Media = function( $ ) {
 		});
 	};
 	
+	/**
+	 * Create a maps iframe.
+	 * 
+	 * @since 1.3
+	 * @return HTML to be inserted.
+	 */
 	this.get_map_html = function () {
 		var $mediaIframe = $('.media-sidebar iframe'),
 			$iframe = $('<iframe>'),
