@@ -272,6 +272,46 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
+	 * Get all pages with the BG statuses.
+	 *
+	 * @since 1.3
+	 *
+	 * @return array Pages and Posts.
+	 */
+	public static function get_pages_all_status() {
+		$status = array_merge( self::$active_pages, self::$staged_pages );
+		return self::get_pages( $status );
+	}
+
+	/**
+	 * Get all pages and post.
+	 *
+	 * @since 1.3.
+	 *
+	 * @param array $status Acceptable page statuses.
+	 *
+	 * @return array pages.
+	 */
+	public static function get_pages( $status ) {
+		$attribution_id = get_option( 'boldgrid_attribution', null );
+
+		// Find Pages.
+		$args = array (
+			'post__not_in' => ! empty( $attribution_id['page']['id'] ) ? array( $attribution_id['page']['id'] ) : array(),
+			'post_type' => array (
+				'page',
+				'post'
+			),
+			'post_status' => $status,
+			'posts_per_page' => - 1
+		);
+
+		$results = new WP_Query( $args );
+
+		return ! empty( $results->posts ) ? $results->posts : array();
+	}
+
+	/**
 	 * Get all active pages. If current page is staging, only use staging pages.
 	 *
 	 * @since 1.3
@@ -295,22 +335,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			$page_statuses = self::$staged_pages;
 		}
 
-		$attribution_id = get_option( 'boldgrid_attribution', null );
-
-		// Find Pages.
-		$args = array (
-			'post__not_in' => ! empty( $attribution_id['page']['id'] ) ? array( $attribution_id['page']['id'] ) : array(),
-			'post_type' => array (
-				'page',
-				'post'
-			),
-			'post_status' => $page_statuses,
-			'posts_per_page' => - 1
-		);
-
-		$results = new WP_Query( $args );
-
-		return ! empty( $results->posts ) ? $results->posts : array();
+		return self::get_pages( $page_statuses );
 	}
 
 	/**

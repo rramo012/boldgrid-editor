@@ -20,6 +20,26 @@
  */
 class Boldgrid_Editor_Version {
 
+
+	public static function is_version_older( $older_than_version ) {
+		$old_version = true;
+
+		$check_version = Boldgrid_Editor_Option::get( 'activated_version' );
+		if ( $check_version ) {
+			$old_version = version_compare( $check_version, $older_than_version, '<' );
+		}
+
+		return $old_version;
+	}
+
+	/**
+	 *
+	 */
+	public function version_older_than( $version ) {
+		$check_version = Boldgrid_Editor_Option::get( 'activated_version', 0.1 );
+		return version_compare( BOLDGRID_EDITOR_VERSION, $version, '<' );
+	}
+
 	/**
 	 * Check if we should display admin notice.
 	 *

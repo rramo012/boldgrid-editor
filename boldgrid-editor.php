@@ -58,6 +58,8 @@ if ( true === defined( 'DOING_CRON' ) && DOING_CRON ){
 	$plugin_update->wp_update_this_plugin();
 }
 
+register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
+
 /**
  * Initialize the editor plugin for Editors and Administrators in the admin section.
  */

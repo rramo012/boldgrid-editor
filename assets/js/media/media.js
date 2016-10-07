@@ -215,7 +215,7 @@ IMHWPB.Media = function( $ ) {
 		if ( typeof (navigator) == 'object' && typeof (navigator.geolocation) == 'object' ) {
 			navigator.geolocation.getCurrentPosition( function( location ) {
 				self.location = {
-					'center' : [ location.coords.latitude, location.coords.longitude ].join( ',' )
+					'll' : [ location.coords.latitude, location.coords.longitude ].join( ',' )
 				}
 			} );
 		}
@@ -358,7 +358,7 @@ IMHWPB.Media = function( $ ) {
 	 * If so set the insert button accordingly
 	 */
 	this.disable_insert_button = function () {
-		$('.media-sidebar img').on('load', function () {
+		$('.media-sidebar img, .media-sidebar iframe').on('load', function () {
 			if ($(this).attr('src')) {
 			   parent.IMHWPB.Media.instance.toggle_insert_button(true);
 			} else {
@@ -372,7 +372,7 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.perform_search = function () {
 		self.search_params = {
-			'center' : $( 'input[name="map-search-imhwpb"]' ).val()
+			'q' : $( 'input[name="map-search-imhwpb"]' ).val()
 		};
 		self.find_api_content( $( '.attachment.selected' ) );
 	};
@@ -397,7 +397,18 @@ IMHWPB.Media = function( $ ) {
 			} else {
 				$('#map-dimensions-imhwpb').addClass('hidden');
 			}
+			
+			self.update_map_size();
 		});
+	};
+	
+	this.update_map_size = function () {
+		var $mediaIframe = $( '.media-sidebar .boldgrid-google-map' ),
+			size = self.find_selected_map_size();
+		
+		$mediaIframe
+			.attr( 'data-width', size.width )
+			.attr( 'data-height', size.height );
 	};
 
 	/**
@@ -433,6 +444,23 @@ IMHWPB.Media = function( $ ) {
 
 		});
 	};
+	
+	this.get_map_html = function () {
+		var $mediaIframe = $('.media-sidebar iframe'),
+			$iframe = $('<iframe>'),
+			$p = $('<p>').addClass('boldgrid-google-maps');
+		
+		$iframe
+			.attr( 'frameborder', 0 )
+			.attr( 'width', $mediaIframe.attr( 'data-width' ) )
+			.attr( 'height', $mediaIframe.attr( 'data-height' ) )
+			.attr( 'src', $mediaIframe.attr( 'src' ) )
+			.css( 'max-width', '100%' );
+		
+		$p.html( $iframe );
+		
+		return $p[0].outerHTML;
+	};
 
 	/**
 	 * Determine which items were selected.
@@ -445,9 +473,8 @@ IMHWPB.Media = function( $ ) {
 				html = IMHWPB.Media.GridBlocks.get_selected_html();
 				break;
 			case 'api':
-				var query_string = $.param(self.search_params.center);
-				html = '<a href="http://maps.google.com/?q=' + self.search_params.center +
-				'"><img src="' + $('.media-sidebar').find('img').attr('src') + '"></a>';
+				html = self.get_map_html();
+				console.log(html)
 				break;
 			case 'shortcode-form':
 				var form_id = $( '.attachment[aria-checked="true"]' ).data('form-id-boldgrid');
@@ -502,7 +529,8 @@ IMHWPB.Media = function( $ ) {
 		}
 
 		return {
-			'size' : preset_width + 'x' + preset_height
+			'width' : preset_width,
+			'height' : preset_height
 		};
 	}
 
@@ -511,10 +539,10 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.find_api_content = function( $attachment ) {
 		var tab_name = $attachment.closest( '.attachments' ).data( 'tabname' );
-		var map_params = IMHWPB.Globals.tabs[ tab_name ]['content'][ $attachment.data( 'id' ) ]['map-params'];
+		var map_params = IMHWPB.Globals.tabs[ tab_name ]['content'][ $attachment.data( 'id' ) ]['map-params'],
+			mapSize = self.find_selected_map_size();
 
-		if ( !self.search_params.center ||
-				IMHWPB.Globals['tab-details']['default-location-setting'] == self.search_params) {
+		if ( ! self.search_params.q || IMHWPB.Globals['tab-details']['default-location-setting'] == self.search_params ) {
 
 			if ( self.location ) {
 				self.search_params = self.location;
@@ -522,11 +550,11 @@ IMHWPB.Media = function( $ ) {
 				self.search_params = IMHWPB.Globals['tab-details']['default-location-setting'];
 			}
 		}
-
+		
 		var src = IMHWPB.Globals['tab-details']['base-url']
-			+ '?'
-			+ $.param( $.extend( self.search_params, map_params, self
-				.find_selected_map_size() ) );
+			+ '?' + $.param( $.extend( self.search_params, map_params, { 'output' : 'embed' } ) );
+		
+		self.update_map_size();
 		self.image_replacement( src );
 	};
 
@@ -586,7 +614,7 @@ IMHWPB.Media = function( $ ) {
 	this.image_replacement = function ( src ) {
 		var $media_sidebar = $( '.media-sidebar' );
 		$media_sidebar.find('.centered-content-boldgrid').empty();
-		$media_sidebar.find( 'img.fullwidth-imhwpb' ).attr( 'src', src ).removeClass('hidden');
+		$media_sidebar.find( 'img.fullwidth-imhwpb, iframe.fullwidth-imhwpb' ).attr( 'src', src ).removeClass('hidden');
 		$media_sidebar.find( '> div' ).removeClass( 'hidden' );
 	};
 

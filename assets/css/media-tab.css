@@ -68,6 +68,10 @@ Google Mpas
 .searchbutton {
 	height: 34px !important;
 }
+.bg-info {
+    font-style: italic;
+    margin-top: 0;
+}
 
 /**
  * Media queries for iframe media replica

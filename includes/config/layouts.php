@@ -52,9 +52,9 @@ return array (
 			'tab-details' => array (
 				'type' => 'api',
 				'selection-type' => 'single-item',
-				'base-url' => 'https://maps.googleapis.com/maps/api/staticmap',
+				'base-url' => 'https://maps.google.com/maps',
 				'default-location-setting' => array (
-					'center' => 'New York, NY'
+					'q' => 'New York, NY'
 				)
 			),
 			'title' => 'Google Map',
@@ -70,32 +70,37 @@ return array (
 							'image' => plugins_url( '/assets/image/maps/google/gm-roadmap.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
-								'maptype' => 'roadmap',
-								'zoom' => '16'
+								// Type: Standard.
+								't' => 'm',
+								// Zoom.
+								'z' => '11'
 							)
 						),
 						array (
 							'image' => plugins_url( '/assets/image/maps/google/gm-terrain.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
-								'maptype' => 'terrain',
-								'zoom' => '16'
+								// Terrain.
+								't' => 'p',
+								'z' => '11'
 							)
 						),
 						array (
 							'image' => plugins_url( '/assets/image/maps/google/gm-satellite.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
-								'maptype' => 'satellite',
-								'zoom' => '16'
+								// Satellite.
+								't' => 'k',
+								'z' => '11'
 							)
 						),
 						array (
 							'image' => plugins_url( '/assets/image/maps/google/gm-hybrid.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
-								'maptype' => 'hybrid',
-								'zoom' => '16'
+								// Hybrid.
+								't' => 'h',
+								'z' => '11'
 							)
 						)
 					)

@@ -8,10 +8,9 @@
  * @author BoldGrid.com <wpb@boldgrid.com>
  */
 if ( ! class_exists( 'Boldgrid_Editor_Media_Tab' ) ) {
-	require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-media-tab.php';
+	require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media-tab.php';
 }
 
-require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-layout.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-config.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-pointer.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-crop.php';
@@ -21,7 +20,13 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-assets.php'
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-mce.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-theme.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-version.php';
-require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-media.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
+
+require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media-tab.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-layout.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media-map.php';
 
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-fonts.php';
@@ -195,13 +200,14 @@ class Boldgrid_Editor {
 	public function add_admin_hooks() {
 		global $wp_customize;
 
-		$boldgrid_editor_ajax     = new Boldgrid_Editor_Ajax();
-		$boldgrid_editor_assets   = new Boldgrid_Editor_Assets();
-		$boldgrid_editor_builder  = new Boldgrid_Editor_Builder();
-		$boldgrid_editor_mce      = new Boldgrid_Editor_MCE();
-		$boldgrid_editor_media    = new Boldgrid_Editor_Media();
-		$boldgrid_editor_theme    = new Boldgrid_Editor_Theme();
-		$boldgrid_editor_version  = new Boldgrid_Editor_Version();
+		$boldgrid_editor_ajax      = new Boldgrid_Editor_Ajax();
+		$boldgrid_editor_assets    = new Boldgrid_Editor_Assets();
+		$boldgrid_editor_builder   = new Boldgrid_Editor_Builder();
+		$boldgrid_editor_mce       = new Boldgrid_Editor_MCE();
+		$boldgrid_editor_media     = new Boldgrid_Editor_Media();
+		$boldgrid_editor_theme     = new Boldgrid_Editor_Theme();
+		$boldgrid_editor_version   = new Boldgrid_Editor_Version();
+		$boldgrid_editor_media_map = new Boldgrid_Editor_Media_Map();
 
 		// Check PHP and WordPress versions for compatibility.
 		add_action( 'admin_init', array ( $boldgrid_editor_version, 'check_php_wp_versions' ) );
@@ -209,12 +215,14 @@ class Boldgrid_Editor {
 		// Provide a way to access gridblock files in this plugin.
 		add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
 
+		// Upgrade old versions of maps.
+		add_action( 'admin_init', array( $boldgrid_editor_media_map, 'upgrade_maps' ) );
+
 		$valid_pages = array (
 			'post.php',
 			'post-new.php',
 			'media-upload.php'
 		);
-
 
 		$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
 		if ( $edit_post_page ) {

@@ -2,6 +2,10 @@ html, body {
     height: auto;
 }
 
+.boldgrid-google-maps iframe {
+	max-width: 100%;
+}
+
 .boldgrid-section {
 	min-height: 30px;
 }

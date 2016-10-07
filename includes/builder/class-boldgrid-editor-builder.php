@@ -281,7 +281,7 @@ class Boldgrid_Editor_Builder {
 	 */
 	public function post_inputs() {
 		$in_page_containers = $this->page_containers_val();
-		$custom_colors = self::get_editor_option( 'custom_colors', array() );
+		$custom_colors = Boldgrid_Editor_Option::get( 'custom_colors', array() );
 		?>
 		<input style='display:none' type='checkbox' value='<?php echo (int) $in_page_containers; ?>'
 			checked='checked' name='boldgrid-in-page-containers'>
@@ -310,35 +310,6 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
-	 * Retreive an option from the stored list of editor options.
-	 *
-	 * @since 1.3
-	 *
-	 * @param string $key Index of value.
-	 * @param mixed  $default Default value if not found.
-	 *
-	 * @return mixed editor option
-	 */
-	public static function get_editor_option( $key, $default = null ) {
-		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
-		return ! empty( $boldgrid_editor[ $key ] ) ? $boldgrid_editor[ $key ] : $default;
-	}
-
-	/**
-	 * Store an option for the plugin in a single option.
-	 *
-	 * @since 1.3
-	 *
-	 * @param string $key Name of value of value.
-	 * @param mixed  $value Value to store.
-	 */
-	public static function update_editor_option( $key, $value ) {
-		$boldgrid_editor = get_option( 'boldgrid_editor', array() );
-		$boldgrid_editor[ $key ] = $value;
-		update_option( 'boldgrid_editor', $boldgrid_editor );
-	}
-
-	/**
 	 * Sanatize colors field passed back from page and post.
 	 *
 	 * @since 1.3
@@ -364,7 +335,7 @@ class Boldgrid_Editor_Builder {
 
 			$custom_colors = json_decode( $custom_colors, true );
 			$custom_colors = is_array( $custom_colors ) ? $custom_colors : array();
-			self::update_editor_option( 'custom_colors', $custom_colors );
+			Boldgrid_Editor_Option::update( 'custom_colors', $custom_colors );
 		}
 	}
 
