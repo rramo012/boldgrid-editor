@@ -371,6 +371,7 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'editor-css-imhwpb' );
 
 		wp_register_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
+
 	}
 
 }

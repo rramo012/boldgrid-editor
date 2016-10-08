@@ -9,6 +9,7 @@
         
         .panel-title {
             margin: 0;
+            cursor: default;
         }
         
         .close-icon {
@@ -29,7 +30,6 @@
         h2,
         .btn {
             font-family: 'Josefin Sans';
-            font-weight: 400;
             text-transform: uppercase;
             font-weight: 300;
         }
@@ -107,6 +107,33 @@
 	        }
         }
         
+        top: calc( 50% - 200px ) !important;
+        left: calc( 50% - 400px ) !important;
+        
+        @media screen and (max-width: 915px) {
+            left: 0 !important;
+            right: 0 !important; 
+            top: 0 !important;
+            position: absolute;
+            height: 800px !important;
+            width: auto !important;
+            
+            h2 {
+                line-height: 1.1em;
+            }
+            
+            .editor-preview {
+                display: none;
+            }
+            
+            .panel-actions {
+                position: static;
+            }
+            
+            p.intro {
+                width: 100%;
+            }
+		}
     }
 	@keyframes bg-fade-out {
 	    0%   { background-color: rgba(0 ,0, 0, .7); }

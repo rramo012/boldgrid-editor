@@ -1748,10 +1748,13 @@ body.boldgrid-editor-fullscreen {
 .bg-editor-intro-1-3 .editor-panel {
   z-index: 99999999;
   border: none;
-  box-shadow: 0 0 18px 0 rgba(255, 255, 255, 0.3); }
+  box-shadow: 0 0 18px 0 rgba(255, 255, 255, 0.3);
+  top: calc( 50% - 200px) !important;
+  left: calc( 50% - 400px) !important; }
 
 .bg-editor-intro-1-3 .editor-panel .panel-title {
-  margin: 0; }
+  margin: 0;
+  cursor: default; }
 
 .bg-editor-intro-1-3 .editor-panel .close-icon {
   display: none; }
@@ -1769,7 +1772,6 @@ body.boldgrid-editor-fullscreen {
 .bg-editor-intro-1-3 .editor-panel h2,
 .bg-editor-intro-1-3 .editor-panel .btn {
   font-family: 'Josefin Sans';
-  font-weight: 400;
   text-transform: uppercase;
   font-weight: 300; }
 
@@ -1833,6 +1835,23 @@ body.boldgrid-editor-fullscreen {
 
 .bg-editor-intro-1-3 .editor-panel .btn.bg-secondary-color:hover {
   background-color: #f9f9f9; }
+
+@media screen and (max-width: 915px) {
+  .bg-editor-intro-1-3 .editor-panel {
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    position: absolute;
+    height: 800px !important;
+    width: auto !important; }
+  .bg-editor-intro-1-3 .editor-panel h2 {
+    line-height: 1.1em; }
+  .bg-editor-intro-1-3 .editor-panel .editor-preview {
+    display: none; }
+  .bg-editor-intro-1-3 .editor-panel .panel-actions {
+    position: static; }
+  .bg-editor-intro-1-3 .editor-panel p.intro {
+    width: 100%; } }
 
 @keyframes bg-fade-out {
   0% {

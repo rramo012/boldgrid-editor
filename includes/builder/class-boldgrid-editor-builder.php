@@ -31,6 +31,20 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
+	 * Add Editor Help Tab.
+	 *
+	 * @since 1.2.3
+	 */
+	public function add_help_tab() {
+		$screen = get_current_screen();
+		$screen->add_help_tab( array(
+			'id'       => 'boldgrid-editor',
+			'title'    => __( 'Boldgrid Editor' ),
+			'content'  => file_get_contents( BOLDGRID_EDITOR_PATH . '/pages/help-tab.html' ),
+		) );
+	}
+
+	/**
 	 * Get configuration to be used in the page styler.
 	 *
 	 * @since 1.2.3

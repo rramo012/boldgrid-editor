@@ -48,7 +48,8 @@ class Boldgrid_Editor_Version {
 	 * @return boolean Should we display admin notice.
 	 */
 	public static function should_display_notice() {
-		return false;
+		// 1.3 is the version that we'll be displaying the notice for.
+		return self::is_version_older('1.3') && ! Boldgrid_Editor_Option::get( 'displayed_v1.3_notice' );
 	}
 
 	/**
@@ -57,10 +58,21 @@ class Boldgrid_Editor_Version {
 	 * @since 1.3
 	 */
 	public function display_update_notice() {
-		$display_update_notice = self::should_display_notice();
-
-		if ( $display_update_notice ) {
+		if ( self::should_display_notice() ) {
 			add_filter( 'admin_body_class', array( $this, 'add_version_classes' ) );
+			wp_enqueue_style( 'bg-notification-fonts',
+				'https://fonts.googleapis.com/css?family=Exo+2:300,600|Josefin+Sans:300,600' );
+		}
+	}
+
+	/**
+	 * Add option that will prevent admin notice from displaying again.
+	 *
+	 * @since 1.3
+	 */
+	public function save_notice_state() {
+		if ( self::should_display_notice() ) {
+			Boldgrid_Editor_Option::update( 'displayed_v1.3_notice', 1 );
 		}
 	}
 

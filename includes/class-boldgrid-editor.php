@@ -235,6 +235,9 @@ class Boldgrid_Editor {
 				return false;
 			}
 
+			add_action( 'load-post.php', array( $boldgrid_editor_builder, 'add_help_tab' ) );
+			add_action( 'load-post-new.php', array( $boldgrid_editor_builder, 'add_help_tab' ) );
+
 			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_colors' ), 10, 2  );
 			add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'post_inputs' ) );
 			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
@@ -242,7 +245,9 @@ class Boldgrid_Editor {
 			add_action( 'media_buttons', array( $boldgrid_editor_mce, 'load_editor_hooks' ) );
 			add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
 
+			// Display and save admin notice state.
 			add_action( 'admin_init', array( $boldgrid_editor_version, 'display_update_notice' ) );
+			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
 
 			// Creates all tabs as specified by the configuration.
 			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
