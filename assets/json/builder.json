@@ -104,7 +104,7 @@
         { "name" : "bg-text-fx bg-text-fx-closeheavy" },
         { "name" : "bg-text-fx bg-text-fx-enjoy-css" },
         { "name" : "bg-text-fx bg-text-fx-retro" },
-        { "name" : "bg-text-fx bg-text-fx-bgstroke" }
+        { "name" : "bg-text-fx bg-text-fx-stroke" }
     ],
 	"pointers" : [
 		"bg-box-pointer bg-box-pointer-left",

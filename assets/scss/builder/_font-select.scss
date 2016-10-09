@@ -1,0 +1,143 @@
+.section .selectize-dropdown-content {
+    height: 30px;
+}
+
+.editor-panel .font-family-select .ui-selectmenu-button {
+    padding: 6px 11px 8px;
+    position: absolute;
+    left: 38px;
+    width: 150px !important;
+    height: 20px;
+    border-radius: 7px;
+    background-image: url(../image/web-fonts.png);
+    background-color: #f3f3f3;
+    background-repeat: no-repeat;
+    color: transparent;
+    margin-left: -24px;
+    cursor: pointer;
+    border: none;
+    
+    .ui-icon {
+        position: absolute;
+        right: -23px;
+        top: 8px;
+        width: 17px;
+    }
+    
+    .ui-selectmenu-text {
+        display: none;
+    }
+    
+    &:hover {
+        background-color: #eaeaea;  
+    }
+    
+    &[data-value="serif"],
+    &[data-value="sans-serif"],
+    &[data-value="monospace"],
+    &[data-value="Default"] {
+        background-image: none;
+    }
+    
+    &[data-value="serif"]:after,
+    &[data-value="sans-serif"]:after,
+    &[data-value="monospace"]:after,
+    &[data-value="Default"]:after {
+        content: "Default";
+        display: block;
+        color: black;
+        font-size: 20px;
+    }
+    &[data-value="serif"]:after {
+        content: "serif";
+    }
+    &[data-value="sans-serif"]:after {
+        content: "sans-serif";
+    }
+    &[data-value="monospace"]:after {
+        content: "monospace";
+    }
+} 
+
+.ui-selectmenu-menu.font-family-dropdown {
+    display: none;
+    
+    ul {
+        z-index: 100102;
+        position: relative;
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width: 290px;
+    }
+    
+    li[data-value="serif"],
+    li[data-value="serif"]:hover,
+    li[data-value="sans-serif"],
+    li[data-value="sans-serif"]:hover,
+    li[data-value="monospace"],
+    li[data-value="monospace"]:hover,
+    li[data-value="Default"],
+    li[data-value="Default"]:hover {
+        background-image: none;
+        color: black;
+        padding-left: 10px;
+        font-size: 20px;
+    }
+    
+    li,
+    li:hover {
+        color: transparent;
+        background-image: url(../image/web-fonts.png);
+        background-color: white;
+        background-repeat: no-repeat;
+        height: 25px;
+        margin: 4px 0px; 
+        border: none;
+        padding: 3px;
+        background-color: transparent;
+        cursor: default !important;
+    }
+    
+    li:hover {
+        background-color: #eaeaea;
+    }
+    
+    .seperator,
+    .seperator:hover {
+        font-weight: lighter;
+        padding: 7px 11px;
+        background-color: #32373c;
+        color: white;
+        margin-left: -2px;
+        margin-top: 8px;
+        margin-bottom: 5px;
+        font-size: 15px;
+        zoom: 1;
+        float: left;
+        clear: left;
+        width: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        
+        &:first-of-type {
+            margin-top: -2px;
+        }
+    }
+}
+
+.panel-body .font-family-select,
+.ui-selectmenu-menu.font-family-dropdown {
+    [data-value="serif"] {
+        font-family: serif !important;
+    }
+    [data-value="monospace"] {
+        font-family: monospace !important;
+    }
+    [data-value="sans-serif"] {
+        font-family: sans-serif !important;
+    }
+}
+
+.ui-selectmenu-menu.font-family-dropdown.ui-selectmenu-open {
+    display: block;
+}

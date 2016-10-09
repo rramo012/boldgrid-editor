@@ -1,7 +1,7 @@
 <script type="text/html" id="tmpl-boldgrid-editor-font">
 	<div class='section family' >
 		<h4>Font</h4>
-		<div class="selectize-dropdown-content">
+		<div class="font-family-select selectize-dropdown-content">
 			<select>
 				<# _.each( data.themeFonts, function ( family, index ) { #>
   				<option class='option' data-type="theme" data-index="{{index}}" data-value="{{family}}">{{family}}</option>

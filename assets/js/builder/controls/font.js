@@ -218,8 +218,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			
 		    $.widget( "custom.fontfamilyselect", $.ui.selectmenu, {
 		        _renderItem: function( ul, item ) {
-			    	ul.addClass( 'selectize-dropdown-content' );
-			    	
 			    	return $( '<li>' )
 			    	    .data( 'ui-autocomplete-item', item )
 			    	    .attr( 'data-value', item.label )
@@ -233,7 +231,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			    	$.each( items, function( index, item ) {
 			    		self._renderItemData( ul, item );
 			    	} );
-			    	
+			    	ul.parent().addClass('font-family-dropdown');
+			    	ul.addClass( 'selectize-dropdown-content' );
 			    	ul.find('[data-type="theme"]:first').before( '<h3 class="seperator">Theme Fonts</h3>' );
 			    	ul.find('[data-type="custom"]:first').before( '<h3 class="seperator">My Fonts</h3>' );
 			    	ul.find('[data-type="all"]:first').before( '<h3 class="seperator">All Fonts</h3>' );
