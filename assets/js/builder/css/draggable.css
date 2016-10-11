@@ -307,6 +307,7 @@ iframe[src^="https://maps.google.com"] {
 
 .popover-imhwpb {
   top: -36px;
+  line-height: 1;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   color: #fff;
   font-size: 12px;

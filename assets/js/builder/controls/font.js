@@ -57,8 +57,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'themeFonts' : self.getThemeFonts(),
 				'myFonts' : BoldgridEditor.builder_config.components_used.font
 			} );
+			
+			self.bindFontCollpase();
 
 			BG.FontRender.updateFontLink( BG.Controls.$container );
+		},
+		
+		/**
+		 * When scrolling on window with font family open, collapse font family.
+		 * 
+		 * @since 1.3
+		 */
+		bindFontCollpase : function () {
+			var hideFamilySelect = _.debounce( function () {
+				var $fontFamily = $('.font-family-dropdown');
+				if ( $fontFamily.hasClass('ui-selectmenu-open') ) {
+					$fontFamily.removeClass('ui-selectmenu-open');
+				}
+			}, 50 );
+			
+			$( window ).on( 'scroll', hideFamilySelect );
 		},
 
 		/**
@@ -161,9 +179,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * 
 		 * @since 1.2.7
 		 */
-		elementClick : function() {
+		elementClick : function( e ) {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
 				self.openPanel();
+				e.boldgridRefreshPanel = true;
+				BG.CONTROLS.Color.$currentInput = BG.Panel.$element.find('input[name="font-color"]');
 			}
 		},
 

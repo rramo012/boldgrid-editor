@@ -60,7 +60,8 @@
 } 
 
 .ui-selectmenu-menu.font-family-dropdown {
-    display: none;
+    display: none; 
+    width: 0 !important;
     
     ul {
         z-index: 100102;

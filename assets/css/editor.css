@@ -1698,7 +1698,8 @@ body.boldgrid-editor-fullscreen {
   content: "monospace"; }
 
 .ui-selectmenu-menu.font-family-dropdown {
-  display: none; }
+  display: none;
+  width: 0 !important; }
 
 .ui-selectmenu-menu.font-family-dropdown ul {
   z-index: 100102;
