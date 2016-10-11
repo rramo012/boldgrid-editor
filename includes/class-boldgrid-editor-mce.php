@@ -129,8 +129,9 @@ class Boldgrid_Editor_MCE {
 	 * @return array.
 	 */
 	public function add_tinymce_plugin( $plugin_array ) {
-		$editor_js_file = plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/editor/editor' ),
-			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+		$file = Boldgrid_Editor_Assets::get_minified_js( '/assets/js/editor/editor' );
+		$file = $file . '?ver=' . BOLDGRID_EDITOR_VERSION;
+		$editor_js_file = plugins_url( $file, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		$plugin_array['monitor_view_imhwpb'] = $editor_js_file;
 		$plugin_array['tablet_view_imhwpb'] = $editor_js_file;
