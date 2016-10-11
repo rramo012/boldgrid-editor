@@ -182,8 +182,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		elementClick : function( e ) {
 			if ( BOLDGRID.EDITOR.Panel.isOpenControl( this ) ) {
 				self.openPanel();
-				e.boldgridRefreshPanel = true;
-				BG.CONTROLS.Color.$currentInput = BG.Panel.$element.find('input[name="font-color"]');
+				
+				if ( BG.Panel.$element.find('label[for="font-color"]').is(':visible') ) {
+					e.boldgridRefreshPanel = true;
+					BG.CONTROLS.Color.$currentInput = BG.Panel.$element.find('input[name="font-color"]');
+				}
 			}
 		},
 
