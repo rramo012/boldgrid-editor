@@ -49,7 +49,8 @@ class Boldgrid_Editor_Version {
 	 */
 	public static function should_display_notice() {
 		// 1.3 is the version that we'll be displaying the notice for.
-		return self::is_version_older('1.3') && ! Boldgrid_Editor_Option::get( 'displayed_v1.3_notice' );
+		return wp_default_editor() === 'tinymce' &&
+			self::is_version_older('1.3') && ! Boldgrid_Editor_Option::get( 'displayed_v1.3_notice' );
 	}
 
 	/**
