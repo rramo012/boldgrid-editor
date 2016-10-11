@@ -32,6 +32,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		textContrastClasses : [
+		    'color-neutral-text-default',
 		    'color1-text-default',
 		    'color2-text-default',
 		    'color3-text-default',
@@ -40,6 +41,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		backgroundColorClasses : [
+			'color-neutral-background-color',
 			'color1-background-color',
 			'color2-background-color',
 			'color3-background-color',
