@@ -20,7 +20,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.3 In Progress =
+= 1.2.12 =
 * Update:		JIRA WPB-2489	Added update notice for users updating to 1.3.
 * Update:		JIRA WPB-2479	Adding a conversion method from static maps to embed maps.
 * Bug Fix:		JIRA WPB-2456	Allow users to drag into empty sections.

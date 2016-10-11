@@ -176,7 +176,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				} );
 
 				self._closeOpenControl();
-				BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
+				
+				if ( ! e.boldgridRefreshPanel ) {
+					BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
+				}
+				
 				self.clearMenuItems();
 			} );
 		},
@@ -303,7 +307,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.$menu.targetData[ control.name ] = $this;
 
 				if ( control.elementClick ) {
-					control.elementClick();
+					control.elementClick( e );
 				}
 
 				self.$menu.items.push( control.name );
