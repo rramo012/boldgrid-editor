@@ -42,7 +42,7 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		panelClick : function () {
-			$('body').on( 'click', function () {
+			$('body').one( 'click', function () {
 				self.dismissPanel();
 			} );
 		},
