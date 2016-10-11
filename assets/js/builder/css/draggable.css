@@ -908,11 +908,6 @@ html .mceContentBody  {
 * {
     word-wrap: break-word;
 }
-.btn,
-.button-primary,
-.button-secondary {
-    word-wrap: nowrap;
-}
 
 li {
     word-wrap: normal;
