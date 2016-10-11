@@ -49,8 +49,7 @@ class Boldgrid_Editor_Version {
 	 */
 	public static function should_display_notice() {
 		// 1.3 is the version that we'll be displaying the notice for.
-		return wp_default_editor() === 'tinymce' &&
-			self::is_version_older('1.3') && ! Boldgrid_Editor_Option::get( 'displayed_v1.3_notice' );
+		return self::is_version_older('1.3') && ! Boldgrid_Editor_Option::get( 'displayed_v1.3_notice' );
 	}
 
 	/**
@@ -60,7 +59,6 @@ class Boldgrid_Editor_Version {
 	 */
 	public function display_update_notice() {
 		if ( self::should_display_notice() ) {
-			add_filter( 'admin_body_class', array( $this, 'add_version_classes' ) );
 			wp_enqueue_style( 'bg-notification-fonts',
 				'https://fonts.googleapis.com/css?family=Exo+2:300,600|Josefin+Sans:300,600' );
 		}
@@ -75,16 +73,6 @@ class Boldgrid_Editor_Version {
 		if ( self::should_display_notice() ) {
 			Boldgrid_Editor_Option::update( 'displayed_v1.3_notice', 1 );
 		}
-	}
-
-	/**
-	 * Add admin body classes which will display admin upgrade notice.
-	 *
-	 * @since 1.3
-	 */
-	public function add_version_classes( $classes ) {
-		$classes .= 'bg-editor-intro-1-3';
-		return $classes;
 	}
 
 	/**

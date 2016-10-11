@@ -96,6 +96,7 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		displayPanel : function () {
+			$('body').addClass('bg-editor-intro-1-3');
 			self.initPanel();
 			self.renderPanel();
 		},
