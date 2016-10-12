@@ -25,7 +25,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.3 In Progress ###
+### 1.3 ###
 * Update:		JIRA WPB-2541	Added neutral colors to section background colors.
 * Update:		JIRA WPB-2542	Removed duplicate maps types.
 * Update:		JIRA WPB-2543	Added Google maps edit link.
