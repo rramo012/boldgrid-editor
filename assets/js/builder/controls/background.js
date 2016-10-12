@@ -447,11 +447,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					.removeAttr('data-image-url')
 					.removeAttr('data-bg-color-2')
 					.removeAttr('data-bg-direction');
+				
+				if ( 'pattern' !== $this.data('type') ) {
+					self.removeColorClasses( $target );
+				}
 
 				if ( 'image' == $this.data('type') ) {
 					self.setImageBackground( imageUrl );
 				} else if ( 'color' == $this.data('type') ) {
-					self.removeColorClasses( $target );
 					$target.addClass( $this.data('class') );
 					$target.addClass( BG.CONTROLS.Color.getColorClass( 'text-default', $this.data('class').replace(/\D/g,'') ) );
 					BG.Controls.addStyle( $target, 'background-image', '' );
