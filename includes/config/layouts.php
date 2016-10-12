@@ -77,29 +77,11 @@ return array (
 							)
 						),
 						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-terrain.png',
-								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
-							'map-params' => array (
-								// Terrain.
-								't' => 'p',
-								'z' => '16'
-							)
-						),
-						array (
 							'image' => plugins_url( '/assets/image/maps/google/gm-satellite.png',
 								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 							'map-params' => array (
 								// Satellite.
 								't' => 'k',
-								'z' => '16'
-							)
-						),
-						array (
-							'image' => plugins_url( '/assets/image/maps/google/gm-hybrid.png',
-								BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
-							'map-params' => array (
-								// Hybrid.
-								't' => 'h',
 								'z' => '16'
 							)
 						)
