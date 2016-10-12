@@ -288,6 +288,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/media/edit.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-media-map',
+			plugins_url( '/assets/js/builder/controls/media/map.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-color',
 			plugins_url( '/assets/js/builder/controls/color.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
