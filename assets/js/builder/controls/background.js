@@ -789,7 +789,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$currentSelection = BG.Panel.$element.find( '.current-selection' ),
 				hasGradient = self.backgroundIsGradient( backgroundUrl ),
 				matchFound = false;
-			
+			console.log(hasGradient);
 			//@TODO: update the preview screen when pressing back from the customize section. 
 			
 			// Set the background color, and background image of the current section to the preview.
@@ -836,14 +836,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} );
 			
 			if ( ! matchFound ) {
-				if ( ! keepFilter ) {
-					self.activateFilter();
-				}
-				
 				if ( hasGradient ) {
 					type = 'gradients';
 				} else if ( backgroundUrl != 'none' ) {
 					type = 'image';
+				}
+				
+				if ( ! keepFilter ) {
+					self.activateFilter( type );
 				}
 			}
 			
