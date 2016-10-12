@@ -213,7 +213,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_hideButtonColor : function () {
 			var $clone,
-				buttonQuery = '> .btn, > .button-primary, > .button-secondary',
+				buttonQuery = '> .btn, > .button-primary, > .button-secondary, > a',
 				$colorPreview = BG.Panel.$element.find('.color-preview'),
 				$target = BG.Menu.getTarget( self );
 
@@ -221,7 +221,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$clone.find( buttonQuery ).remove();
 
 			// If removing all buttons, results in an empty string or white space.
-			if ( ! $clone.text().replace(/ /g,'').length ) {
+			if ( ! $clone.text().replace(/ /g,'').length && $target.find( buttonQuery ).length ) {
 
 				// Hide color control.
 				$colorPreview.hide();
