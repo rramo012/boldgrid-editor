@@ -1,5 +1,17 @@
 [  
    {  
+      "color1":"#FFFFFF",
+      "color2":"#FFFFFF",
+      "direction":"to left",
+      "css":"linear-gradient(to left,#FFFFFF,#FFFFFF)"
+   },
+   {  
+      "color1":"#000000",
+      "color2":"#000000",
+      "direction":"to left",
+      "css":"linear-gradient(to left,#000000,#000000)"
+   },
+   {  
       "color1":"#A1FFCE",
       "color2":"#FAFFD1",
       "direction":"to left",
