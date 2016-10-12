@@ -6,6 +6,12 @@
       "css":"linear-gradient(to left,#FFFFFF,#FFFFFF)"
    },
    {  
+      "color1":"#EEEEEE",
+      "color2":"#EEEEEE",
+      "direction":"to left",
+      "css":"linear-gradient(to left,#EEEEEE,#EEEEEE)"
+   },
+   {  
       "color1":"#000000",
       "color2":"#000000",
       "direction":"to left",
