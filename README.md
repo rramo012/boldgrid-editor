@@ -17,6 +17,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor used in the WordPress page and post editor.
 
+## Requirements ##
+
+* PHP 5.3 or higher.
+
 ## Installation ##
 
 1. Upload the entire boldgrid-editor folder to the /wp-content/plugins/ directory.
@@ -24,6 +28,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 2. Activate the plugin through the Plugins menu in WordPress.
 
 ## Changelog ##
+
+### 1.3.1 In progress ###
+* Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
 
 ### 1.3 ###
 * Update:		JIRA WPB-2541	Added neutral colors to section background colors.
