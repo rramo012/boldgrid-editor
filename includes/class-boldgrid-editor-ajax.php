@@ -53,7 +53,7 @@ class Boldgrid_Editor_Ajax {
 		$image_data = str_replace( 'data:image/png;base64,', '', $image_data );
 		$image_data = str_replace( ' ', '+', $image_data );
 		$data = base64_decode( $image_data );
-		$filename = mktime() . ".png";
+		$filename = time() . ".png";
 		$uploaded = wp_upload_bits( $filename, null, $data );
 
 		$success = false;
