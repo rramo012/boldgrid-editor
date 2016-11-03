@@ -104,6 +104,15 @@ class Boldgrid_Editor_Crop {
 			$original_orientation = $_POST['originalWidth'] / $_POST['originalHeight'];
 		}
 
+		/*
+		 * Allowed "source image" sizes, defined in wp-includes/media.php (before filters applied).
+		 *
+		 * These are "allowed" so as to limit the choices of "source image" the user has. Other
+		 * plugins may add to this list, cluttering the list the user chooses from, making the
+		 * decision more complicated.
+		 */
+		$allowed_image_sizes = array( 'thumbnail', 'medium', 'medium_large', 'large' );
+
 		$dimensions = wp_get_attachment_metadata( $attachment_id );
 
 		// Validate our dimensions.
@@ -112,6 +121,12 @@ class Boldgrid_Editor_Crop {
 		}
 
 		foreach ( $dimensions['sizes'] as $size => $size_array ) {
+			// If this image size is not allowed, remove the image and continue.
+			if( ! in_array( $size, $allowed_image_sizes ) ) {
+				unset( $dimensions['sizes'][$size] );
+				continue;
+			}
+
 			// Add the url to each size.
 			$image_src = wp_get_attachment_image_src( $attachment_id, $size );
 			$dimensions['sizes'][$size]['url'] = $image_src[0];
