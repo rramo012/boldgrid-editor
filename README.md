@@ -31,6 +31,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ### 1.3.1 In progress ###
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
+* Update:		JIRA WPB-2436	Crop Image Screen - update source image options.
+* Bug fix:      JIRA WPB-2435   Prevent duplicate 'Add GridBlock' buttons.
 
 ### 1.3 ###
 * Update:		JIRA WPB-2541	Added neutral colors to section background colors.
