@@ -226,12 +226,25 @@ class Boldgrid_Editor {
 
 		$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
 		if ( $edit_post_page ) {
-
-			// Do not run these hooks for an attachment or nav menu item post type.
 			$current_post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 			$current_post = get_post( $current_post_id );
-			$current_post_type = ! empty( $current_post->post_type ) ? $current_post->post_type : null;
-			if ( $current_post_type == 'attachment' || $current_post_type == 'nav_menu_item' ) {
+
+			/*
+			 * Determine the current post type.
+			 *
+			 * The post type is "post", unless specified by $current_post->post_type or
+			 * $_GET['post_type'].
+			 */
+			if( ! empty( $current_post->post_type ) ) {
+				$current_post_type = $current_post->post_type;
+			} elseif( isset( $_GET['post_type'] ) ) {
+				$current_post_type = $_GET['post_type'];
+			} else {
+				$current_post_type = 'post';
+			}
+
+			// Currently only pages and posts are supported. @since 1.3.1
+			if( ! in_array( $current_post_type, array( 'page', 'post' ) ) ) {
 				return false;
 			}
 
