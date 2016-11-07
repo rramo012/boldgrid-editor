@@ -8,6 +8,8 @@ IMHWPB.Media = function( $ ) {
 	$( function() {
 		self.on_page_load();
 
+		self.duplicateMediaButtons();
+
 		$( '#insert-gridblocks-button' ).on( 'click' , function () {
 			wp.media.editor.open();
 			wp.media.frame.setState( 'iframe:insert_layout' );
@@ -96,19 +98,19 @@ IMHWPB.Media = function( $ ) {
 
 		$( '.media-router .media-menu-item:first' ).click();
 	};
-	
+
 	this.sendGridblock = function ( $inserting ) {
 		var draggable, editor, $selection, selectorString,
 			sendGridblock = false;
-		
+
 		if ( ! $inserting || ! IMHWPB.WP_MCE_Draggable.draggable_instance ) {
 			return sendGridblock;
 		}
-		
+
 		draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
 		editor = tinymce.activeEditor;
 		$selection = $( editor.selection.getNode() );
-		
+
 		if ( $inserting.is( draggable.row_selectors_string ) ) {
 			selectorString = draggable.row_selectors_string;
 		} else {
@@ -123,8 +125,8 @@ IMHWPB.Media = function( $ ) {
 			* If current selection is inside of a row, insert above that row. Otherwise
 			* insert at top of row.
 			*/
-			
-			
+
+
 			if ( $element.length ) {
 				$element.before( $inserting );
 			// If this is a row and foxus is not inside a row, Prepend the first section it finds.
@@ -144,7 +146,7 @@ IMHWPB.Media = function( $ ) {
 				BOLDGRID.EDITOR.CONTROLS.Add.scrollToElement( $inserting, 0 );
 			} );
 		}
-		
+
 		return sendGridblock;
 	};
 
@@ -167,8 +169,8 @@ IMHWPB.Media = function( $ ) {
 					if ( false == is_shortcode || null == is_shortcode ) {
 						$inserting = $(html_to_insert);
 					}
-					
-					if( ! self.sendGridblock( $inserting ) ) { 
+
+					if( ! self.sendGridblock( $inserting ) ) {
 						// Insert into TinyMCE
 						send_to_editor( html_to_insert );
 						//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
@@ -176,7 +178,7 @@ IMHWPB.Media = function( $ ) {
 					}
 
 					$( window ).trigger( 'resize' );
-					
+
 				};
 
 				//Insert into page aciton
@@ -368,6 +370,40 @@ IMHWPB.Media = function( $ ) {
 	};
 
 	/**
+	 * @summary Remove duplicate "Add GridBlock" buttons.
+	 *
+	 * Sometimes other plugins will hook into the "media_buttons" action, causing duplicate
+	 * "Add GridBlock" buttons on the screen. For example, WooCommerce's "Short Description" input
+	 * adds an "Add GridBlock" button too.
+	 *
+	 * Currently, only one button is available within the editor screen. Remove duplicates.
+	 *
+	 * @since 1.3.1
+	 */
+	this.duplicateMediaButtons = function() {
+		var $buttons = $( '[id="insert-gridblocks-button"]' ), $button;
+
+		// If we only have one button, then we're good to go.
+		if( 1 === $buttons.length ) {
+			return;
+		}
+
+		/*
+		 * The only button we will allow is the one attached to the main editor, that button's
+		 * parent being the #wp-content-media-buttons div.
+		 *
+		 * Remove each button that does not belong that div.
+		 */
+		$buttons.each( function() {
+			$button = $( this );
+
+			if( ! $button.closest( 'div' ).is( '#wp-content-media-buttons' ) ) {
+				$button.remove();
+			}
+		});
+	}
+
+	/**
 	 * Updates the map
 	 */
 	this.perform_search = function () {
@@ -397,20 +433,20 @@ IMHWPB.Media = function( $ ) {
 			} else {
 				$('#map-dimensions-imhwpb').addClass('hidden');
 			}
-			
+
 			self.update_map_size();
 		});
 	};
-	
+
 	/**
 	 * Update the data attributes on the preview iframe.
-	 * 
+	 *
 	 * @since 1.3.
 	 */
 	this.update_map_size = function () {
 		var $mediaIframe = $( '.media-sidebar .boldgrid-google-map' ),
 			size = self.find_selected_map_size();
-		
+
 		$mediaIframe
 			.attr( 'data-width', size.width )
 			.attr( 'data-height', size.height );
@@ -449,10 +485,10 @@ IMHWPB.Media = function( $ ) {
 
 		});
 	};
-	
+
 	/**
 	 * Create a maps iframe.
-	 * 
+	 *
 	 * @since 1.3
 	 * @return HTML to be inserted.
 	 */
@@ -460,16 +496,16 @@ IMHWPB.Media = function( $ ) {
 		var $mediaIframe = $('.media-sidebar iframe'),
 			$iframe = $('<iframe>'),
 			$p = $('<p>').addClass('boldgrid-google-maps');
-		
+
 		$iframe
 			.attr( 'frameborder', 0 )
 			.attr( 'width', $mediaIframe.attr( 'data-width' ) )
 			.attr( 'height', $mediaIframe.attr( 'data-height' ) )
 			.attr( 'src', $mediaIframe.attr( 'src' ) )
 			.css( 'max-width', '100%' );
-		
+
 		$p.html( $iframe );
-		
+
 		return $p[0].outerHTML;
 	};
 
@@ -560,10 +596,10 @@ IMHWPB.Media = function( $ ) {
 				self.search_params = IMHWPB.Globals['tab-details']['default-location-setting'];
 			}
 		}
-		
+
 		var src = IMHWPB.Globals['tab-details']['base-url']
 			+ '?' + $.param( $.extend( self.search_params, map_params, { 'output' : 'embed' } ) );
-		
+
 		self.update_map_size();
 		self.image_replacement( src );
 	};
