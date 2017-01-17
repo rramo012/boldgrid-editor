@@ -173,6 +173,7 @@ class Boldgrid_Editor_Builder {
 		$paths[] = $template_path . '/image.php';
 		$paths[] = $template_path . '/image-filter.php';
 		$paths[] = $template_path . '/color.php';
+		$paths[] = $template_path . '/screen.php';
 		$paths[] = $template_path . '/font.php';
 		$paths[] = $template_path . '/background.php';
 		$paths[] = $template_path . '/box.php';

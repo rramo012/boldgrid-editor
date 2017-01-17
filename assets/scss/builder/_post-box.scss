@@ -57,7 +57,7 @@ body.boldgrid-editor-fullscreen {
     z-index: 99999;
 }
 
-.boldgrid-editor-fullscreen #content_ifr {	
+.boldgrid-editor-fullscreen #content_ifr {
 	width: 100%;
     position: fixed;
     z-index: 9999;
@@ -75,15 +75,14 @@ body.boldgrid-editor-fullscreen {
 
 .zoomout {
 	padding: 0;
-	background-color: #f1f1f1;
+	background-color: #3a3a3a;
 }
 
 .zoomout body {
     transform-origin: top center;
     transform: scale(.5);
     margin-top: 45px !important;
-    border: 2px solid #e5e5e5;
-    
+
     .gallery-icon {
         transform: none;
         backface-visibility: visible;
@@ -97,7 +96,7 @@ body.boldgrid-editor-fullscreen {
 	transform: scale(.4);
 }
 .zoomout body.zoom-scale-3 {
-	transform: scale(.5); 
+	transform: scale(.5);
 }
 .zoomout body.zoom-scale-4 {
 	transform: scale(0.6);
@@ -114,103 +113,4 @@ body.boldgrid-editor-fullscreen {
         transform: scale(.8);
         margin-top: 70px !important;
   }
-}
-
-.boldgrid-zoomout {
-	.mce-statusbar,
-	.wrap > *:not(#post),
-	#post-status-info,
-	.wp-editor-tabs,
-	#boldgrid-hide-post-title,
-	#local-storage-notice,
-	#wp-content-media-buttons,
-    .wp-editor-tabs,
-	#postbox-container-2,
-	.update-nag,
-	#titlediv {
-	   display: none !important;
-	}
-	
-	#wpbody-content {
-		padding-bottom: 0;
-	}
-	
-	#wp-content-editor-tools {
-	    left: 0px;
-	    padding: 12px;
-	    padding-top: 4px;
-	    right: 0px;
-	    text-align: center;
-	}
-    .bg-zoom-controls {
-        display: block;
-        
-        .bg-zoom-slider {
-            display: inline-block;
-    		width: 220px;
-    		margin-left: 50px;
-    		
-    		p {
-    			display: inline;
-    			margin-right: 5px;
-    			font-variant: small-caps;
-    		}
-        }
-        
-        .unzoom-icon {
-    		vertical-align: sub;
-        }
-        
-        .ui-slider-horizontal {
-			@include slider();
-			
-			float: none;
-	        margin-left: 0;
-	        width: 70%;
-	        margin-bottom: 8px;
-	        position: relative;
- 			top: 7px;
-		}
-		
-		@media (max-width: 550px) {
-		  .bg-zoom-slider {
-		    margin: 0 auto;
-		  }
-		}
-    }
-	
-	.exit-row-dragging {
-        @include panel-button();
-        cursor: pointer;
-        background-color: $hover-color;
-        color: white;
-        
-        &:hover {
-            color: #23282d;
-            background-color: white;
-        }
-        
-        &:active {
-            box-shadow: 0px 0px 29px -12px black inset;
-        }
-	}
-	
-	#wp-content-wrap, 
-	.mce-container {
-	   padding-top: 0 !important;
-	}
-	
-	#wp-content-editor-tools {
-	   width: auto !important;
-	}
-	
-	#wp-content-editor-container {
-	   max-width: 1250px;
-	   margin: 0 auto;
-	   border: none;
-	}
-	
-	div.mce-toolbar-grp {
-	   display: none;
-	}
 }

@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
 # Spinners
 --------------------------------------------------------------*/
-/*-------------------------------------------------------------- 
+/*--------------------------------------------------------------
 # Spinners
 --------------------------------------------------------------*/
 .bg-editor-loading {
@@ -1204,13 +1204,12 @@ body.boldgrid-editor-fullscreen {
 
 .zoomout {
   padding: 0;
-  background-color: #f1f1f1; }
+  background-color: #3a3a3a; }
 
 .zoomout body {
   transform-origin: top center;
   transform: scale(0.5);
-  margin-top: 45px !important;
-  border: 2px solid #e5e5e5; }
+  margin-top: 45px !important; }
 
 .zoomout body .gallery-icon {
   transform: none;
@@ -1238,125 +1237,6 @@ body.boldgrid-editor-fullscreen {
   .zoomout body {
     transform: scale(0.8);
     margin-top: 70px !important; } }
-
-.boldgrid-zoomout .mce-statusbar,
-.boldgrid-zoomout .wrap > *:not(#post),
-.boldgrid-zoomout #post-status-info,
-.boldgrid-zoomout .wp-editor-tabs,
-.boldgrid-zoomout #boldgrid-hide-post-title,
-.boldgrid-zoomout #local-storage-notice,
-.boldgrid-zoomout #wp-content-media-buttons,
-.boldgrid-zoomout .wp-editor-tabs,
-.boldgrid-zoomout #postbox-container-2,
-.boldgrid-zoomout .update-nag,
-.boldgrid-zoomout #titlediv {
-  display: none !important; }
-
-.boldgrid-zoomout #wpbody-content {
-  padding-bottom: 0; }
-
-.boldgrid-zoomout #wp-content-editor-tools {
-  left: 0px;
-  padding: 12px;
-  padding-top: 4px;
-  right: 0px;
-  text-align: center; }
-
-.boldgrid-zoomout .bg-zoom-controls {
-  display: block; }
-
-.boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider {
-  display: inline-block;
-  width: 220px;
-  margin-left: 50px; }
-
-.boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider p {
-  display: inline;
-  margin-right: 5px;
-  font-variant: small-caps; }
-
-.boldgrid-zoomout .bg-zoom-controls .unzoom-icon {
-  vertical-align: sub; }
-
-.boldgrid-zoomout .bg-zoom-controls .ui-slider-horizontal {
-  height: 3px;
-  border-radius: 0;
-  width: 75px;
-  border-color: #cecece;
-  margin: 16px;
-  margin-top: 10px;
-  display: inline-block;
-  float: right;
-  cursor: pointer;
-  float: none;
-  margin-left: 0;
-  width: 70%;
-  margin-bottom: 8px;
-  position: relative;
-  top: 7px; }
-
-.boldgrid-zoomout .bg-zoom-controls .ui-slider-horizontal .ui-slider-handle {
-  left: 0%;
-  margin-top: -5px;
-  border: 3px;
-  height: 1em;
-  width: 1em;
-  border-radius: 0px;
-  background: #f95b26;
-  top: -1px;
-  cursor: pointer;
-  border-radius: 50%; }
-
-@media (max-width: 550px) {
-  .boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider {
-    margin: 0 auto; } }
-
-.boldgrid-zoomout .exit-row-dragging {
-  background-color: white;
-  text-decoration: none;
-  padding: 7px 15px;
-  border-radius: 30px;
-  margin: 0 4px;
-  transition: background-color .25s, color .25s;
-  cursor: pointer;
-  background-color: #f95b26;
-  color: white; }
-
-.boldgrid-zoomout .exit-row-dragging:focus {
-  box-shadow: none; }
-
-.boldgrid-zoomout .exit-row-dragging:hover {
-  background-color: #fb9370;
-  color: white; }
-
-.boldgrid-zoomout .exit-row-dragging.selected {
-  background-color: #f95b26;
-  color: white; }
-
-.boldgrid-zoomout .exit-row-dragging:active {
-  box-shadow: 0px 0px 49px -12px black inset; }
-
-.boldgrid-zoomout .exit-row-dragging:hover {
-  color: #23282d;
-  background-color: white; }
-
-.boldgrid-zoomout .exit-row-dragging:active {
-  box-shadow: 0px 0px 29px -12px black inset; }
-
-.boldgrid-zoomout #wp-content-wrap,
-.boldgrid-zoomout .mce-container {
-  padding-top: 0 !important; }
-
-.boldgrid-zoomout #wp-content-editor-tools {
-  width: auto !important; }
-
-.boldgrid-zoomout #wp-content-editor-container {
-  max-width: 1250px;
-  margin: 0 auto;
-  border: none; }
-
-.boldgrid-zoomout div.mce-toolbar-grp {
-  display: none; }
 
 /*--------------------------------------------------------------
 # Tooltip
@@ -1772,6 +1652,276 @@ body.boldgrid-editor-fullscreen {
 
 .ui-selectmenu-menu.font-family-dropdown.ui-selectmenu-open {
   display: block; }
+
+/*--------------------------------------------------------------
+# Zoom Out Controls
+--------------------------------------------------------------*/
+.boldgrid-zoomout .zoom-navbar {
+  position: fixed;
+  top: 31px;
+  left: 0;
+  right: 0;
+  background: #f7f7f7;
+  z-index: 99999;
+  padding: 8px;
+  text-align: center; }
+
+.boldgrid-zoomout .mce-statusbar,
+.boldgrid-zoomout .wrap > *:not(#post),
+.boldgrid-zoomout #post-status-info,
+.boldgrid-zoomout .wp-editor-tabs,
+.boldgrid-zoomout #boldgrid-hide-post-title,
+.boldgrid-zoomout #local-storage-notice,
+.boldgrid-zoomout #wp-content-media-buttons,
+.boldgrid-zoomout .wp-editor-tabs,
+.boldgrid-zoomout #postbox-container-2,
+.boldgrid-zoomout .update-nag,
+.boldgrid-zoomout #titlediv {
+  display: none !important; }
+
+.boldgrid-zoomout #wpbody-content {
+  padding-bottom: 0; }
+
+.boldgrid-zoomout #wp-content-editor-tools {
+  position: fixed !important;
+  padding: 36px 20px 47px;
+  text-align: center;
+  top: 79px !important;
+  left: calc( 50% - 61px);
+  background: rgba(0, 0, 0, 0.8);
+  border: 0; }
+
+.boldgrid-zoomout .bg-zoom-controls {
+  display: block;
+  color: white; }
+
+.boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider .fa {
+  position: absolute;
+  left: 16px; }
+
+.boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider .fa.fa-search-minus {
+  bottom: 12px; }
+
+.boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider .fa.fa-search-plus {
+  top: 12px; }
+
+.boldgrid-zoomout .bg-zoom-controls .unzoom-icon {
+  vertical-align: sub; }
+
+.boldgrid-zoomout .bg-zoom-controls .ui-slider {
+  height: 3px;
+  border-radius: 0;
+  width: 75px;
+  border-color: #cecece;
+  margin: 16px;
+  margin-top: 10px;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  margin: 0;
+  height: 150px;
+  float: none;
+  position: relative;
+  top: 7px;
+  width: 2px; }
+
+.boldgrid-zoomout .bg-zoom-controls .ui-slider .ui-slider-handle {
+  left: 0%;
+  margin-top: -5px;
+  border: 3px;
+  height: 1em;
+  width: 1em;
+  border-radius: 0px;
+  background: #f95b26;
+  top: -1px;
+  cursor: pointer;
+  border-radius: 50%; }
+
+.boldgrid-zoomout .bg-zoom-controls .ui-slider .ui-slider-handle {
+  left: -6px;
+  top: auto; }
+
+@media (max-width: 550px) {
+  .boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider {
+    margin: 0 auto; } }
+
+.boldgrid-zoomout .exit-row-dragging {
+  background-color: white;
+  text-decoration: none;
+  padding: 7px 15px;
+  border-radius: 30px;
+  margin: 0 4px;
+  transition: background-color .25s, color .25s;
+  cursor: pointer;
+  background-color: #f95b26;
+  color: white;
+  display: inline-block; }
+
+.boldgrid-zoomout .exit-row-dragging:focus {
+  box-shadow: none; }
+
+.boldgrid-zoomout .exit-row-dragging:hover {
+  background-color: #fb9370;
+  color: white; }
+
+.boldgrid-zoomout .exit-row-dragging.selected {
+  background-color: #f95b26;
+  color: white; }
+
+.boldgrid-zoomout .exit-row-dragging:active {
+  box-shadow: 0px 0px 49px -12px black inset; }
+
+.boldgrid-zoomout .exit-row-dragging:hover {
+  color: #23282d;
+  background-color: white; }
+
+.boldgrid-zoomout .exit-row-dragging:active {
+  box-shadow: 0px 0px 29px -12px black inset; }
+
+.boldgrid-zoomout #wp-content-wrap,
+.boldgrid-zoomout .mce-container {
+  padding-top: 0 !important; }
+
+.boldgrid-zoomout #wp-content-editor-tools {
+  width: auto !important; }
+
+.boldgrid-zoomout #wp-content-editor-container {
+  margin: 0 auto;
+  border: none; }
+
+.boldgrid-zoomout div.mce-toolbar-grp {
+  display: none; }
+
+.boldgrid-zoomout {
+  position: fixed;
+  background: #3a3a3a;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.boldgrid-zoomout #adminmenumain {
+  display: none; }
+
+.boldgrid-zoomout #post-body-content {
+  min-width: 0; }
+
+.boldgrid-zoomout #wpwrap,
+.boldgrid-zoomout #wpbody,
+.boldgrid-zoomout #wrap,
+.boldgrid-zoomout #poststuff {
+  height: calc( 100% - 79px);
+  min-width: 0;
+  padding: 0;
+  min-height: 0; }
+
+.boldgrid-zoomout #screen-meta-links,
+.boldgrid-zoomout #wpfooter,
+.boldgrid-zoomout .postbox-container {
+  display: none; }
+
+.boldgrid-zoomout #wpcontent {
+  display: block;
+  width: 50%;
+  margin: 0;
+  margin-top: 79px;
+  padding: 0;
+  overflow-x: hidden;
+  float: left; }
+
+.boldgrid-zoomout .wrap {
+  margin: 0; }
+
+.boldgrid-zoomout #poststuff #post-body {
+  margin: 0; }
+
+.boldgrid-zoomout #content_ifr {
+  min-width: 1170px !important;
+  margin-bottom: 100px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.boldgrid-zoomout .zoomout-section-2 {
+  display: block;
+  width: 50%;
+  margin-top: 79px;
+  height: 100%;
+  background: #f1f1f1;
+  float: left;
+  overflow: scroll; }
+
+.boldgrid-zoomout .gridblocks {
+  margin: 30px 8% 0; }
+
+.boldgrid-zoomout .gridblock {
+  position: relative;
+  height: 410px;
+  background: white;
+  margin: 25px 40px;
+  border: 3px solid #cccccc;
+  border-radius: 1px;
+  transition: border-color .5s;
+  left: -38px;
+  cursor: move; }
+
+.boldgrid-zoomout .gridblock:hover {
+  border-color: #1e749a; }
+
+.boldgrid-zoomout .gridblock:hover:before {
+  background-color: #1e749a; }
+
+.boldgrid-zoomout .gridblock:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 60px;
+  transform: translateY(-50%) translateX(-100%);
+  background-color: #cccccc;
+  border-radius: 10px 0px 0px 10px;
+  transition: background-color .5s;
+  background-image: url("../image/grip.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: move; }
+
+.boldgrid-zoomout .gridblock:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background-color .5s; }
+
+.boldgrid-zoomout .gridblock:hover:after {
+  background: rgba(255, 255, 255, 0.8); }
+
+.boldgrid-zoomout .gridblock:hover .add-gridblock:before {
+  opacity: 1; }
+
+.boldgrid-zoomout .gridblock .add-gridblock:hover:before {
+  background: rgba(0, 0, 0, 0.8); }
+
+.boldgrid-zoomout .gridblock .add-gridblock:before {
+  content: '+ Add to Page';
+  z-index: 1;
+  opacity: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px 40px;
+  font-size: 1.6em;
+  color: white;
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transition: background-color .2s, opacity .5s;
+  transform: translateX(-50%) translateY(-50%); }
 
 /*--------------------------------------------------------------
 # General Edit Controls
