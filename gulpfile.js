@@ -54,26 +54,19 @@ gulp.task('bower', function () {
 });
 
 gulp.task('readme', function() {
-	
+
 	var badges = [
-	   '[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=master)](https://travis-ci.org/BoldGrid/boldgrid-editor)', 
-	   '[![License](https://img.shields.io/badge/license-GPL--2.0%2B-orange.svg)](https://raw.githubusercontent.com/BoldGrid/boldgrid-editor/master/LICENSE)', 
-	   '[![PHP Version](https://img.shields.io/badge/PHP-5.3%2B-blue.svg)](https://php.net)', 
-	   '[![Code Climate](https://codeclimate.com/github/BoldGrid/boldgrid-editor/badges/gpa.svg)](https://codeclimate.com/github/BoldGrid/boldgrid-editor)' 
+	   '[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=master)](https://travis-ci.org/BoldGrid/boldgrid-editor)',
+	   '[![License](https://img.shields.io/badge/license-GPL--2.0%2B-orange.svg)](https://raw.githubusercontent.com/BoldGrid/boldgrid-editor/master/LICENSE)',
+	   '[![PHP Version](https://img.shields.io/badge/PHP-5.3%2B-blue.svg)](https://php.net)',
+	   '[![Code Climate](https://codeclimate.com/github/BoldGrid/boldgrid-editor/badges/gpa.svg)](https://codeclimate.com/github/BoldGrid/boldgrid-editor)'
     ];
-	
+
 	gulp.src( [ 'readme.txt' ] )
 		.pipe(readme())
 		.pipe( inject.prepend( badges.join('\n') + '\n\n' ) )
 		.pipe(gulp.dest('.'));
 });
-
-gulp.task( 'add-git-badges', function ( cb ) {
-	return gulp.src( './tets.md/README.md' )
-	    .pipe( debug({title: 'Font Controls:'}) )
-		.pipe( inject.append('lkdgskldfjgl;skdfhglk;sdfjgl;ksfjdglkj') )
-		.pipe( gulp.dest('./tets.md/README.md') );
-} );
 
 gulp.task('phpcbf-includes', function () {
 	return gulp.src( [
@@ -124,7 +117,7 @@ gulp.task('font-awesome', function () {
 		] )
 		.pipe( debug({title: 'Font Awesome Fonts:'}) )
 		.pipe( gulp.dest( config.fontDest ) );
-	
+
 	gulp.src( [
 	   		config.bower + '/font-awesome/css/font-awesome.min.css',
 	   	] )
@@ -138,13 +131,13 @@ gulp.task('boldgrid-components', function () {
    ] )
    .pipe( debug({title: 'BoldGrid Components:'}) )
    .pipe( gulp.dest( config.cssDest ) );
-	
+
 	gulp.src( [
 	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/bootstrap/bootstrap.min.css'
 	] )
 	.pipe( debug({title: 'Bootstrap:'}) )
 	.pipe( gulp.dest( config.cssDest ) );
-	
+
 	gulp.src( [
 	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
 	] )
@@ -186,7 +179,7 @@ gulp.task( 'sass', function(  ) {
 
 gulp.task( 'jsmin-drag', function ( cb ) {
 	pump( [
-		gulp.src( [ 
+		gulp.src( [
 			config.src + 'assets/js/builder/**/*.js',
 			config.src + 'assets/js/jquery/**/*.js',
 		] ),
@@ -205,7 +198,7 @@ gulp.task( 'jsmin-drag', function ( cb ) {
 } );
 gulp.task( 'jsmin-media', function ( cb ) {
 	pump( [
-		gulp.src( [ 
+		gulp.src( [
 			'!' + config.src + 'assets/js/media/**/*.min.js',
 			config.src + 'assets/js/media/**/*.js'
 		] ),
