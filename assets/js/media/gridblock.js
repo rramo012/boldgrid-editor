@@ -10,17 +10,25 @@ BOLDGRID.EDITOR.MEDIA = BOLDGRID.EDITOR.MEDIA || {};
 
 	self = {
 
+		$gridblockSection : null,
+
 		init : function () {
-			this.registerListeners();
+			self.findElements();
+			self.positionGridblockContainer();
+			self.createGridblocks();
 		},
 
-		registerListeners : function () {
-			$( self.createGridblocks );
+		findElements : function () {
+			self.$gridblockSection = $('.boldgrid-zoomout-section');
+		},
+
+		positionGridblockContainer : function () {
+			$('#wpcontent').after( self.$gridblockSection );
 		},
 
 		createGridblocks : function () {
 			var markup = self.generateMarkup(),
-				$gridblockContainer = $('.boldgrid-zoomout-section .gridblocks');
+				$gridblockContainer = self.$gridblockSection.find('.gridblocks');
 
 			$gridblockContainer.html( markup );
 			self.createIframes( $gridblockContainer );
@@ -28,7 +36,7 @@ BOLDGRID.EDITOR.MEDIA = BOLDGRID.EDITOR.MEDIA || {};
 		},
 
 		addFrameStyles : function ( headMarkup ) {
-			$('.boldgrid-zoomout-section iframe').each( function () {
+			self.$gridblockSection.find('iframe').each( function () {
 				var $this = $( this ),
 					$iframe = $this.contents();
 
@@ -61,6 +69,7 @@ BOLDGRID.EDITOR.MEDIA = BOLDGRID.EDITOR.MEDIA || {};
 
 				$this.find('.gridblock-html').empty();
 				$iframe.find('body').css('overflow', 'hidden').html( html );
+				IMHWPB.Media.GridBlocks.translateImageUrls( $iframe.find('body') );
 			} );
 		},
 
@@ -84,6 +93,6 @@ BOLDGRID.EDITOR.MEDIA = BOLDGRID.EDITOR.MEDIA || {};
 	};
 
 	BOLDGRID.EDITOR.MEDIA.Gridblock = self;
-	BOLDGRID.EDITOR.MEDIA.Gridblock.init();
+	$( BOLDGRID.EDITOR.MEDIA.Gridblock.init );
 
 } )( jQuery );

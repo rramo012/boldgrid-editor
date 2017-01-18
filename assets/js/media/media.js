@@ -96,19 +96,19 @@ IMHWPB.Media = function( $ ) {
 
 		$( '.media-router .media-menu-item:first' ).click();
 	};
-	
+
 	this.sendGridblock = function ( $inserting ) {
 		var draggable, editor, $selection, selectorString,
 			sendGridblock = false;
-		
+
 		if ( ! $inserting || ! IMHWPB.WP_MCE_Draggable.draggable_instance ) {
 			return sendGridblock;
 		}
-		
+
 		draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
 		editor = tinymce.activeEditor;
 		$selection = $( editor.selection.getNode() );
-		
+
 		if ( $inserting.is( draggable.row_selectors_string ) ) {
 			selectorString = draggable.row_selectors_string;
 		} else {
@@ -123,8 +123,8 @@ IMHWPB.Media = function( $ ) {
 			* If current selection is inside of a row, insert above that row. Otherwise
 			* insert at top of row.
 			*/
-			
-			
+
+
 			if ( $element.length ) {
 				$element.before( $inserting );
 			// If this is a row and foxus is not inside a row, Prepend the first section it finds.
@@ -144,7 +144,7 @@ IMHWPB.Media = function( $ ) {
 				BOLDGRID.EDITOR.CONTROLS.Add.scrollToElement( $inserting, 0 );
 			} );
 		}
-		
+
 		return sendGridblock;
 	};
 
@@ -167,8 +167,8 @@ IMHWPB.Media = function( $ ) {
 					if ( false == is_shortcode || null == is_shortcode ) {
 						$inserting = $(html_to_insert);
 					}
-					
-					if( ! self.sendGridblock( $inserting ) ) { 
+
+					if( ! self.sendGridblock( $inserting ) ) {
 						// Insert into TinyMCE
 						send_to_editor( html_to_insert );
 						//tinymce.activeEditor.execCommand( 'mceInsertContent', false, html_to_insert );
@@ -176,7 +176,7 @@ IMHWPB.Media = function( $ ) {
 					}
 
 					$( window ).trigger( 'resize' );
-					
+
 				};
 
 				//Insert into page aciton
@@ -397,20 +397,20 @@ IMHWPB.Media = function( $ ) {
 			} else {
 				$('#map-dimensions-imhwpb').addClass('hidden');
 			}
-			
+
 			self.update_map_size();
 		});
 	};
-	
+
 	/**
 	 * Update the data attributes on the preview iframe.
-	 * 
+	 *
 	 * @since 1.3.
 	 */
 	this.update_map_size = function () {
 		var $mediaIframe = $( '.media-sidebar .boldgrid-google-map' ),
 			size = self.find_selected_map_size();
-		
+
 		$mediaIframe
 			.attr( 'data-width', size.width )
 			.attr( 'data-height', size.height );
@@ -425,34 +425,8 @@ IMHWPB.Media = function( $ ) {
 	};
 
 	/**
-	 * Add the src attributes for images that need them
-	 */
-	this.translate_image_urls = function () {
-		var $image_to_translate = $('[data-tabname="basic-gridblocks"] [data-boldgrid-asset-id]');
-
-		$image_to_translate.each( function () {
-			var $this = $(this);
-			var asset_id = $this.data('boldgrid-asset-id');
-
-			if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
-				//If the user has an API key place the asset images
-				var image_url = IMHWPB.configs.asset_server
-					+ IMHWPB.configs.ajax_calls.get_asset + '?key='
-					+ IMHWPB.configs.api_key + '&id=' + asset_id;
-
-				$this.attr( 'src', image_url );
-				$this.attr( 'data-pending-boldgrid-attribution', 1 );
-			} else {
-				//Otherwise insert place holders
-				IMHWPB.Media.GridBlocks.swap_image_with_placeholder( $this );
-			}
-
-		});
-	};
-	
-	/**
 	 * Create a maps iframe.
-	 * 
+	 *
 	 * @since 1.3
 	 * @return HTML to be inserted.
 	 */
@@ -460,16 +434,16 @@ IMHWPB.Media = function( $ ) {
 		var $mediaIframe = $('.media-sidebar iframe'),
 			$iframe = $('<iframe>'),
 			$p = $('<p>').addClass('boldgrid-google-maps');
-		
+
 		$iframe
 			.attr( 'frameborder', 0 )
 			.attr( 'width', $mediaIframe.attr( 'data-width' ) )
 			.attr( 'height', $mediaIframe.attr( 'data-height' ) )
 			.attr( 'src', $mediaIframe.attr( 'src' ) )
 			.css( 'max-width', '100%' );
-		
+
 		$p.html( $iframe );
-		
+
 		return $p[0].outerHTML;
 	};
 
@@ -560,10 +534,10 @@ IMHWPB.Media = function( $ ) {
 				self.search_params = IMHWPB.Globals['tab-details']['default-location-setting'];
 			}
 		}
-		
+
 		var src = IMHWPB.Globals['tab-details']['base-url']
 			+ '?' + $.param( $.extend( self.search_params, map_params, { 'output' : 'embed' } ) );
-		
+
 		self.update_map_size();
 		self.image_replacement( src );
 	};

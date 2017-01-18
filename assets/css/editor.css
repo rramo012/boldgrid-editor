@@ -1656,6 +1656,9 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Zoom Out Controls
 --------------------------------------------------------------*/
+.boldgrid-zoomout-section {
+  display: none; }
+
 .boldgrid-zoomout .zoom-navbar {
   position: fixed;
   top: 31px;
@@ -1824,7 +1827,6 @@ body.boldgrid-editor-fullscreen {
   display: block;
   width: 50%;
   margin: 0;
-  margin-top: 79px;
   padding: 0;
   overflow-x: hidden;
   float: left; }
@@ -1848,22 +1850,30 @@ body.boldgrid-editor-fullscreen {
   margin-top: 79px;
   height: 100%;
   background: #f1f1f1;
-  float: left;
   overflow: scroll; }
+
+.boldgrid-zoomout .zoomout-section-2:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
 
 .boldgrid-zoomout .gridblocks {
   margin: 30px 8% 0; }
 
 .boldgrid-zoomout .gridblock {
   position: relative;
-  height: 410px;
+  height: 300px;
   background: white;
-  margin: 25px 40px;
+  margin: 50px auto;
   border: 3px solid #cccccc;
   border-radius: 1px;
   transition: border-color .5s;
   left: -38px;
-  cursor: move; }
+  cursor: move;
+  width: 584px; }
 
 .boldgrid-zoomout .gridblock iframe {
   width: 1170px;
@@ -1871,13 +1881,13 @@ body.boldgrid-editor-fullscreen {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translateX(-50%) translateY(-50%) scale(0.6); }
+  transform: translateX(-50%) translateY(-50%) scale(0.5); }
 
 .boldgrid-zoomout .gridblock:hover {
-  border-color: #1e749a; }
+  border-color: #32373c; }
 
 .boldgrid-zoomout .gridblock:hover:before {
-  background-color: #1e749a; }
+  background-color: #32373c; }
 
 .boldgrid-zoomout .gridblock:before {
   content: '';
@@ -1888,7 +1898,7 @@ body.boldgrid-editor-fullscreen {
   height: 60px;
   transform: translateY(-50%) translateX(-100%);
   background-color: #cccccc;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 4px 0px 0px 4px;
   transition: background-color .5s;
   background-image: url("../image/grip.png");
   background-repeat: no-repeat;

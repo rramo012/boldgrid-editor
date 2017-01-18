@@ -1,17 +1,19 @@
 $fix-top-height: 79px;
-$wp-color: #1e749a;
+$wp-color: #32373c;
 
-.boldgrid-zoomout {
-	.zoom-navbar {
-		position: fixed;
-		top: 31px;
-		left: 0;
-		right: 0;
-		background: #f7f7f7;
-		z-index: 99999;
-		padding: 8px;
-		text-align: center;
-	}
+.boldgrid-zoomout-section {
+	display: none;
+}
+
+.boldgrid-zoomout .zoom-navbar {
+	position: fixed;
+	top: 31px;
+	left: 0;
+	right: 0;
+	background: #f7f7f7;
+	z-index: 99999;
+	padding: 8px;
+	text-align: center;
 }
 
 .boldgrid-zoomout {
@@ -22,7 +24,7 @@ $wp-color: #1e749a;
 	#boldgrid-hide-post-title,
 	#local-storage-notice,
 	#wp-content-media-buttons,
-    .wp-editor-tabs,
+	.wp-editor-tabs,
 	#postbox-container-2,
 	.update-nag,
 	#titlediv {
@@ -35,18 +37,18 @@ $wp-color: #1e749a;
 
 	#wp-content-editor-tools {
 		position: fixed !important;
-	    padding: 36px 20px 47px;
-	    text-align: center;
-	    top: 79px !important;
-	    left: calc( 50% - 61px );
+		padding: 36px 20px 47px;
+		text-align: center;
+		top: 79px !important;
+		left: calc( 50% - 61px );
 		background: rgba(0, 0, 0, 0.8);
 		border: 0;
 	}
-    .bg-zoom-controls {
-        display: block;
+	.bg-zoom-controls {
+		display: block;
 		color: white;
 
-        .bg-zoom-slider .fa {
+		.bg-zoom-slider .fa {
 			position: absolute;
 			left: 16px;
 
@@ -57,18 +59,18 @@ $wp-color: #1e749a;
 			&.fa-search-plus {
 				top: 12px;
 			}
-        }
+		}
 
-        .unzoom-icon {
-    		vertical-align: sub;
-        }
+		.unzoom-icon {
+			vertical-align: sub;
+		}
 
-        .ui-slider {
+		.ui-slider {
 			@include slider();
 			margin: 0;
 			height: 150px;
 			float: none;
-	        position: relative;
+			position: relative;
  			top: 7px;
 			width: 2px;
 
@@ -80,26 +82,26 @@ $wp-color: #1e749a;
 
 		@media (max-width: 550px) {
 		  .bg-zoom-slider {
-		    margin: 0 auto;
+			margin: 0 auto;
 		  }
 		}
-    }
+	}
 
 	.exit-row-dragging {
-        @include panel-button();
-        cursor: pointer;
-        background-color: $hover-color;
-        color: white;
+		@include panel-button();
+		cursor: pointer;
+		background-color: $hover-color;
+		color: white;
 		display: inline-block;
 
-        &:hover {
-            color: #23282d;
-            background-color: white;
-        }
+		&:hover {
+			color: #23282d;
+			background-color: white;
+		}
 
-        &:active {
-            box-shadow: 0px 0px 29px -12px black inset;
-        }
+		&:active {
+			box-shadow: 0px 0px 29px -12px black inset;
+		}
 	}
 
 	#wp-content-wrap,
@@ -158,7 +160,6 @@ $wp-color: #1e749a;
 		display: block;
 		width: 50%;
 		margin: 0;
-		margin-top: $fix-top-height;
 		padding: 0;
 		overflow-x: hidden;
 		float: left;
@@ -184,12 +185,20 @@ $wp-color: #1e749a;
 .boldgrid-zoomout {
 	.zoomout-section-2 {
 		display: block;
-	    width: 50%;
+		width: 50%;
 		margin-top: $fix-top-height;
-	    height: 100%;
-	    background: #f1f1f1;
-	    float: left;
+		height: 100%;
+		background: #f1f1f1;
 		overflow: scroll;
+
+		&:after {
+			visibility: hidden;
+	        display: block;
+	        font-size: 0;
+	        content: " ";
+	        clear: both;
+	        height: 0;
+		}
 	}
 
 	.gridblocks {
@@ -198,14 +207,15 @@ $wp-color: #1e749a;
 
 	.gridblock {
 		position: relative;
-		height: 410px;
+		height: 300px;
 		background: white;
-		margin: 25px 40px;
+		margin: 50px auto;
 		border: 3px solid #cccccc;
 		border-radius: 1px;
 		transition:  border-color .5s;
 		left: -38px;
 		cursor: move;
+		width: 584px;
 
 		iframe {
 			width: 1170px;
@@ -213,7 +223,7 @@ $wp-color: #1e749a;
 			position: absolute;
 			left: 50%;
 			top: 50%;
-			transform: translateX(-50%) translateY(-50%) scale(.6);
+			transform: translateX(-50%) translateY(-50%) scale(.5);
 		}
 
 		&:hover {
@@ -227,14 +237,14 @@ $wp-color: #1e749a;
 		// Handle.
 		&:before {
 			content: '';
-		    display: block;
+			display: block;
 			position: absolute;
 			top: 50%;
-		    width: 30px;
+			width: 30px;
 			height: 60px;
 			transform: translateY(-50%) translateX(-100%);
 			background-color: #cccccc;
-			border-radius: 10px 0px 0px 10px;
+			border-radius: 4px 0px 0px 4px;
 			transition: background-color .5s;
 			background-image: url('../image/grip.png');
 			background-repeat: no-repeat;
@@ -275,16 +285,16 @@ $wp-color: #1e749a;
 			z-index: 1;
 			opacity: 0;
 			cursor: pointer;
-		    background: rgba(0,0,0,.5);
-		    padding: 20px 40px;
-		    font-size: 1.6em;
-		    color: white;
-		    position: absolute;
-		    display: block;
-		    left: 50%;
-		    top: 50%;
+			background: rgba(0,0,0,.5);
+			padding: 20px 40px;
+			font-size: 1.6em;
+			color: white;
+			position: absolute;
+			display: block;
+			left: 50%;
+			top: 50%;
 			transition: background-color .2s, opacity .5s;
-		    transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
 
 		}
 

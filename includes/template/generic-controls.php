@@ -44,10 +44,9 @@
 </script>
 
 <script type="text/html" id="tmpl-boldgrid-editor-default-customize">
-		<div class='customize'>
-			<div class='back'>
-				<a class='panel-button' href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-			</div>
+	<div class='customize'>
+		<div class='back'>
+			<a class='panel-button' href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
 		</div>
+	</div>
 </script>
-

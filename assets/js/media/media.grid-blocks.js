@@ -8,7 +8,7 @@ IMHWPB.Media = IMHWPB.Media || {};
 	IMHWPB.Media.GridBlocks = {
 
 		init : function () {
-			this.fetch_api_gridblocks();
+			//this.fetch_api_gridblocks();
 		},
 
 		strip_uneeded_markup : function ( gridblock_data ) {
@@ -170,26 +170,51 @@ IMHWPB.Media = IMHWPB.Media || {};
 
 			$this.attr( 'src', '//placehold.it/' + width + "x" + height + "/cccccc/" );
 		},
-		
+
 		/**
 		 * Find all images and add a placeholder for each url empty tag.
-		 * 
+		 *
 		 * @since 1.2.4
-		 * 
+		 *
 		 * @retrin string html.
 		 */
 		validateImageTags : function ( html ) {
 			var self = this,
 				$div = $( '<div>' ).html( html );
-			
+
 			$div.find( 'img' ).each( function () {
 				var $this = $( this );
 				if ( ! $this.attr( 'src' ) ) {
 					self.swap_image_with_placeholder( $this );
 				}
 			} );
-			
+
 			return $div.html();
+		},
+
+		/**
+		 * Add the src attributes for images that need them
+		 */
+		translateImageUrls : function ( $context ) {
+			var $imagesToTranslate = $context.find('[data-boldgrid-asset-id]');
+
+			$imagesToTranslate.each( function () {
+				var $this = $( this ),
+					assetId = $this.data('boldgrid-asset-id');
+
+				if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
+					// If the user has an API key place the asset images.
+					var imageUrl = IMHWPB.configs.asset_server
+						+ IMHWPB.configs.ajax_calls.get_asset + '?key='
+						+ IMHWPB.configs.api_key + '&id=' + assetId;
+
+					$this.attr( 'src', imageUrl );
+					$this.attr( 'data-pending-boldgrid-attribution', 1 );
+				} else {
+					// Otherwise insert place holders.
+					self.swap_image_with_placeholder( $this );
+				}
+			} );
 		},
 
 		/**

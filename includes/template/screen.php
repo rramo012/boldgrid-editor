@@ -16,3 +16,13 @@
 	<div class="gridblocks">
 	</div>
 </div>
+<script type="text/html" id="tmpl-gridblock-iframe-styles">
+<style>
+.centered-section .boldgrid-section {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	transform: translateY(-50%);
+}
+</style>
+</script>

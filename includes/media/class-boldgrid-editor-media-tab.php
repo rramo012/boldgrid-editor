@@ -104,7 +104,7 @@ class Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Add actions to create tabs
+	 * Add actions to create tabs.
 	 */
 	public function create() {
 		$configs = $this->get_configs();
@@ -124,10 +124,10 @@ class Boldgrid_Editor_Media_Tab {
 	 * Return the markup for the tab iframe
 	 */
 	public function print_content() {
-		// Get path configs:
+		// Get path configs.
 		$path_configs = $this->get_path_configs();
 
-		// Get asset path prefix:
+		// Get asset path prefix.
 		$asset_path_prefix = $this->get_asset_path_prefix();
 
 		$configs = $this->get_configs();
@@ -136,13 +136,12 @@ class Boldgrid_Editor_Media_Tab {
 		$this->print_loading_graphic();
 		include $configs['sidebar-template'];
 
-
 		include $path_configs['plugin_dir'] . '/pages/template-gridblock.html';
 
 	}
 
 	/**
-	 * Create a vertical tab
+	 * Create a vertical tab.
 	 *
 	 * @param array $tabs
 	 */
@@ -156,11 +155,11 @@ class Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	* Display Loading Graphic
+	* Display Loading Graphic.
 	*/
 	public function print_loading_graphic() {
 
-		// Get path configs:
+		// Get path configs.
 		$path_configs = $this->get_path_configs();
 		?>
 		<div class="boldgrid-loading-graphic-wrapper">
@@ -200,13 +199,13 @@ class Boldgrid_Editor_Media_Tab {
 
 		wp_enqueue_script( 'custom-header' );
 
-		// Get path configs:
+		// Get path configs.
 		$path_configs = $this->get_path_configs();
 
-		// Get asset path prefix:
+		// Get asset path prefix.
 		$asset_path_prefix = $this->get_asset_path_prefix();
 
-		// Styles for MediaTab iFrame
+		// Styles for MediaTab iFrame.
 		wp_register_style( 'media-tab-css-imhwpb',
 			plugins_url( $asset_path_prefix . '/assets/css/media-tab.css',
 				$path_configs['plugin_filename'] ), array (
@@ -215,35 +214,24 @@ class Boldgrid_Editor_Media_Tab {
 
 		wp_enqueue_style( 'media-tab-css-imhwpb' );
 
-		// Media Tab Javascript
+		// Media Tab Javascript.
 		wp_register_script( 'media-imhwpb',
 			plugins_url( $asset_path_prefix . Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media/media' ),
 				$path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION );
 
-		// Media Tab Gridblocks Javascript
-		if( 'insert_layout' === $tab ) {
-			wp_register_script( 'boldgrid-media-gridblocks',
-				plugins_url( $asset_path_prefix . Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media/media.grid-blocks' ),
-				$path_configs['plugin_filename'] ),
-				array ( 'wp-util' ),
-				BOLDGRID_EDITOR_VERSION
-			);
-		}
-
 		$configs = $this->get_configs();
 
-		// Pass Variables into JS
+		// Pass Variables into JS.
 		wp_localize_script( 'media-imhwpb', 'IMHWPB = IMHWPB || {}; IMHWPB.Globals', array(
 			'isIframe' => true,
 			'tabs' => $configs['route-tabs'],
 			'tab-details' => $configs['tab-details'],
 			'admin-url' => get_admin_url(),
-			'post_id' => !empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
+			'post_id' => ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
 			'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
 			'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' )
 		) );
 
 		wp_enqueue_script( 'media-imhwpb' );
-		wp_enqueue_script( 'boldgrid-media-gridblocks' );
 	}
 }
