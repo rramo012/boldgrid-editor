@@ -224,7 +224,9 @@ class Boldgrid_Editor {
 			'media-upload.php'
 		);
 
-		$edit_post_page = in_array( basename( $_SERVER['SCRIPT_NAME'] ), $valid_pages );
+		$script_name = ! empty( $_SERVER['SCRIPT_NAME'] ) ? $_SERVER['SCRIPT_NAME'] : false;
+		$page_name = basename( $script_name );
+		$edit_post_page = in_array( $page_name, $valid_pages );
 		if ( $edit_post_page ) {
 			$current_post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 			$current_post = get_post( $current_post_id );
@@ -280,6 +282,10 @@ class Boldgrid_Editor {
 
 			// Add ?boldgrid-editor-version=$version_number to each added file.
 			add_filter( 'mce_css', array ( $boldgrid_editor_mce, 'add_cache_busting' ) );
+
+			if ( 'media-upload.php' !== $page_name ) {
+				add_action( 'admin_print_footer_scripts', array ( $boldgrid_editor_builder, 'print_scripts' ), 25 );
+			}
 		}
 
 		if ( $edit_post_page || isset( $wp_customize ) ) {
@@ -293,7 +299,6 @@ class Boldgrid_Editor {
 		// Save a users selection for enabling draggable.
 		add_action( 'wp_ajax_boldgrid_draggable_enabled', array ( $boldgrid_editor_ajax, 'ajax_draggable_enabled' ) );
 		add_action( 'wp_ajax_boldgrid_gridblock_html', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_html_ajax' ) );
-		add_action( 'admin_print_footer_scripts', array ( $boldgrid_editor_builder, 'print_scripts' ), 25 );
 
 		// Plugin updates.
 		$plugin_update = new Boldgrid_Editor_Update( $this );

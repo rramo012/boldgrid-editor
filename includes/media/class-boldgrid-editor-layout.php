@@ -345,7 +345,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 *
 	 * @return array
 	 */
-	public function add_existing_layouts() {
+	public static function get_existing_layouts() {
 
 		$pages = self::get_all_pages();
 
@@ -383,6 +383,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			'..'
 		) );
 
+		$gridblocks = [];
 		foreach ( $dir_files as $dir_file ) {
 			$layout = $dir . '/' . $dir_file;
 			$html = file_get_contents( $layout );
@@ -430,14 +431,28 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		return $row_content;
 	}
 
+	public static function get_all_gridblocks() {
+		$gridblocks = self::get_universal_gridblocks();
+		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
+
+		if ( $is_bg_theme ) {
+			$current_gridblock_content = self::get_existing_layouts();
+			$gridblocks = array_merge ( $gridblocks, $current_gridblock_content );
+		}
+
+		return self::cleanup_gridblock_collection( $gridblocks );
+	}
+
 	/**
 	 * Create a tabs content
 	 * Modified to add existing layouts from pages
 	 */
 	public function media_upload_tab_content() {
+		return;
 		$configs = $this->get_configs();
 
 		$this->add_universal_layouts();
+
 
 		if ( ! empty( $configs['is-boldgrid-theme'] ) ) {
 			$current_gridblock_content = $this->add_existing_layouts();

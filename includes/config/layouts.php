@@ -5,7 +5,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 return array (
 	'tabs' => array (
-		'insert-layout' => array (
+		/*'insert-layout' => array (
 			'tab-details' => array (
 				'type' => 'html',
 				'selection-type' => 'single-item'
@@ -15,39 +15,8 @@ return array (
 			'slug' => 'insert_layout',
 			'attachments-template' => BOLDGRID_EDITOR_PATH . '/pages/standard-attachments.php',
 			'sidebar-template' => BOLDGRID_EDITOR_PATH . '/pages/standard-sidebar.php',
-			'route-tabs' => array (
-				'basic-gridblocks' => array (
-					'name' => 'GridBlock Library',
-					'content' => array ()
-				),
-				'static-gridblocks' => array (
-					'name' => 'Inspiration GridBlocks',
-					'content' => array ()
-				),
-				'page-layout' => array (
-					'name' => 'Current GridBlocks',
-					'content' => array ()
-				),
-				'basic-image-gridblocks' => array (
-					'name' => 'Basic Image GridBlocks',
-					'content' => array (
-					)
-				),
-				'basic-text-gridblocks' => array (
-					'name' => 'Basic Text GridBlocks',
-					'content' => array (
-					)
-				),
-				'button-layout' => array (
-					'name' => 'Basic Button GridBlocks',
-					'content' => array ()
-				),
-				'icon-layout' => array (
-					'name' => 'Basic Icon GridBlocks',
-					'content' => array ()
-				),
-			)
-		),
+			'route-tabs' => array ()
+		),*/
 		'google-map' => array (
 			'tab-details' => array (
 				'type' => 'api',

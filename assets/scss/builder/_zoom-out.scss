@@ -207,6 +207,15 @@ $wp-color: #1e749a;
 		left: -38px;
 		cursor: move;
 
+		iframe {
+			width: 1170px;
+			height: 600px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%) scale(.6);
+		}
+
 		&:hover {
 			border-color: $wp-color;
 
