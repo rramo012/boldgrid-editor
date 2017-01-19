@@ -1,4 +1,8 @@
 <div class="zoom-navbar zoom-navbar-top">
+	<div class="history-controls">
+		<button class='undo-link' type="button"><i class="mce-ico mce-i-undo"></i></button>
+		<button class='redo-link' type="button"><i class="mce-ico mce-i-redo"></i></button>
+	</div>
 	<div class="bg-zoom-controls">
 		<a class="exit-row-dragging">Exit GridBlock Dragging</a>
 	</div>
@@ -18,7 +22,8 @@
 </div>
 <script type="text/html" id="tmpl-gridblock-iframe-styles">
 <style>
-.centered-section .boldgrid-section {
+.centered-section > .row:only-of-type,
+.centered-section > .boldgrid-section:only-of-type {
 	position: absolute;
 	top: 50%;
 	width: 100%;

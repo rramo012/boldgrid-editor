@@ -3,40 +3,40 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 
 ( function ( $ ) {
-	"use strict"; 
+	"use strict";
 
 	var self,
 		BG = BOLDGRID.EDITOR;
-	
+
 	self = BG.DRAG.Section = {
 
 			/**
-			 * @var Object currentDrag Elements and data about the current drag. 
+			 * @var Object currentDrag Elements and data about the current drag.
 			 * @since 1.2.7
 			 */
 			currentDrag : false,
-			
+
 			/**
 			 * @var jQuery $container iFrame.
 			 * @since 1.2.7
 			 */
 			$container : null,
-			
+
 			/**
 			 * @var jQuery $dragHelper cursor indicator.
 			 * @since 1.2.7
 			 */
 			$dragHelper : null,
-			
+
 			/**
 			 * @var array sectionLocations. Y locations.
 			 * @since 1.2.7
 			 */
 			sectionLocations : [],
-			
+
 			/**
-			 * Section dragging. 
-			 * 
+			 * Section dragging.
+			 *
 			 * @since 1.2.7
 			 * @param jQuery $container iFrame.
 			 */
@@ -45,10 +45,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.$dragHelper = self.renderHelpers();
 				self.bind();
 			},
-			
+
 			/**
-			 * Attach the mark-up to the DOM. 
-			 * 
+			 * Attach the mark-up to the DOM.
+			 *
 			 * @since 1.2.7
 			 * @return jQuery $dragHelper.
 			 */
@@ -57,10 +57,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 				self.$container.find('html').append( $dragHelper );
 				return $dragHelper;
 			},
-			
+
 			/**
-			 * Bind all events used for dragging. 
-			 * 
+			 * Bind all events used for dragging.
+			 *
 			 * @since 1.2.7
 			 */
 			bind : function () {
@@ -71,10 +71,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					.on( 'mouseup dragend', '.dragging-section', self.end )
 					.on( 'mousemove', '.dragging-section', self.overHelper );
 			},
-			
+
 			/**
 			 * Position the cursor helper on mouse move.
-			 * 
+			 *
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
@@ -87,10 +87,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					}
 				}
 			},
-			
+
 			/**
 			 * End the drag progress.
-			 * 
+			 *
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
@@ -100,51 +100,52 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					self.currentDrag.$element.removeClass('section-drag-element');
 					self.currentDrag = false;
 					self.$container.$html.removeClass('no-select-imhwpb section-dragging-active');
+					tinymce.activeEditor.undoManager.add();
 				}
-				
+
 			},
-			
+
 			/**
 			 * Drag motion. The process of sections interacting with other sections.
-			 * 
+			 *
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
 			drag : function ( e ) {
     			var mousePosition = e.originalEvent.pageY,
     				insertAfter = null;
-    			
+
     			if ( ! self.sectionLocations.length ) {
     				return;
     			}
-    			
+
     			$.each( self.sectionLocations, function () {
     				if ( this.midPoint < mousePosition ) {
     					insertAfter = this;
     				}
     			} );
-    			
+
     			if ( ! insertAfter && mousePosition > self.sectionLocations[ self.sectionLocations.length - 1 ].midPoint ) {
     				insertAfter = self.sectionLocations[ self.sectionLocations.length - 1 ];
     			}
-    			
-    			
+
+
     			if ( ! insertAfter && mousePosition < self.sectionLocations[0].midPoint ) {
     				self.sectionLocations[0].$section.before( self.currentDrag.$element );
     				self.calcSectionLocs();
     			}
-    			
+
     			if ( insertAfter ) {
     				insertAfter.$section.after( self.currentDrag.$element );
     				self.calcSectionLocs();
     			}
-    			
+
     			BG.CONTROLS.Section.updateHtmlSize();
 			},
 
 			/**
 			 * While the user is moving the mouse and drag has been initiated.
-			 * 
+			 *
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
@@ -169,7 +170,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 
 			/**
 			 * Place the helper at the cursor location.
-			 * 
+			 *
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
@@ -180,45 +181,45 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 					'left' : e.pageX - 15
 				} );
 			},
-			
+
 			/**
 			 * Calculate all section locations. Main calcs used for dragging.
-			 * 
+			 *
 			 * @since 1.2.7
 			 */
 			calcSectionLocs : function (){
 				var locs = [];
-				
+
 				self.$container.$body.find('> .boldgrid-section').not( self.currentDrag.$clone ).each( function () {
 					var pos = this.getBoundingClientRect(),
 						midPoint = ( pos.bottom - pos.top ) / 2 + pos.top;
-					
+
 					locs.push( {
 						$section : $( this ),
 						midPoint : midPoint
 					} );
 				} );
-				
+
 				self.sectionLocations = locs;
 			},
-			
+
 			/**
 			 * Drag Start. On Click.
-			 * 
+			 *
 			 * @since 1.2.7
 			 */
 			start : function ( e ) {
-				
+
 				var $clone,
 					$this = $( this );
-				
+
 				self.currentDrag = {
 					$element : $this,
 					$clone : $this.clone(),
 					startPos : { x : e.originalEvent.pageX, y : e.originalEvent.pageY },
 					offsetFromTop : e.originalEvent.pageY - $this.offset().top
 				};
-				
+
 				self.currentDrag.$element.addClass('section-drag-element');
 				self.currentDrag.$clone.addClass('section-drag-clone');
 				self.$container.setInheritedBg( self.currentDrag.$clone, 1 );

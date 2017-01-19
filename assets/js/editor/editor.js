@@ -289,12 +289,12 @@ IMHWPB.Editor = function( $ ) {
 				if ( ! self.draggable ) {
 					return true;
 				}
-				
+
 				var $structure, $newParagraph, $prev,
 					node = tinymce.activeEditor.selection.getNode(),
 					$current_node = $( node ),
 					enterKey = 13;
-				
+
 				if ( self.dragging_is_active() ) {
 					self.draggable.$master_container.trigger('is-typing-keydown');
 				}
@@ -304,7 +304,7 @@ IMHWPB.Editor = function( $ ) {
 					is_row = $current_node.is( self.draggable.row_selectors_string ),
 					is_anchor = $current_node.is('A'),
 					isEmpty = tinymce.DOM.isEmpty( node );
-				
+
 				if ( is_module && 13 == e.which && isEmpty ) {
 					$structure = $( '<p><br></p>' );
 					$current_node.append( $structure );
@@ -330,7 +330,7 @@ IMHWPB.Editor = function( $ ) {
 								editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
 								return false;
 							}
-							
+
 							if ( is_column ) {
 								$newParagraph = $( '<p><br data-mce-bogus="1"></p><p><br data-mce-bogus="1"></p>' );
 								$current_node.append( $newParagraph );
@@ -338,7 +338,7 @@ IMHWPB.Editor = function( $ ) {
 								return false;
 							}
 						}
-						
+
 						//the key pressed was alphanumeric
 						if ( is_column ) {
 							$newParagraph  = $( '<p><br data-mce-bogus="1"></p>' );
@@ -366,7 +366,7 @@ IMHWPB.Editor = function( $ ) {
 						editor.selection.setCursorLocation( $newParagraph[0], 0 );
 						return false;
 					}
-					
+
 					if ( e.which == '8' && isEmpty ) {
 						$prev = $current_node.prev();
 						if ( $prev.length && $prev.hasClass('draggable-tools-imhwpb') ) {
@@ -386,7 +386,7 @@ IMHWPB.Editor = function( $ ) {
 					}
 
 				} else if ( 'IMG' == node.tagName || $current_node.is('.button-primary, .button-secondary, .btn' ) ) {
-					
+
 					if ( enterKey == e.which ) {
 
 						$newParagraph = $('<p><br data-mce-bogus="1"></p>');
@@ -396,12 +396,12 @@ IMHWPB.Editor = function( $ ) {
 						} else {
 							$current_node.after( $newParagraph );
 						}
-						
+
 						editor.selection.setCursorLocation( $newParagraph[0], 0 );
 						return false;
 					}
 				}
-				
+
 				return true;
 			} );
 
@@ -549,7 +549,11 @@ IMHWPB.Editor = function( $ ) {
 					}
 				}
 			});
-			
+
+			editor.on('AddUndo', function(e) {
+				BOLDGRID.EDITOR.MEDIA.Gridblock.updateHistoryStates();
+			} );
+
 			/**
 			 * When the editor is initialized load the draggable ability
 			 */
@@ -589,7 +593,7 @@ IMHWPB.Editor = function( $ ) {
 				}
 
 				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text
-				
+
 				/*
 				 * Disabled this because it was breaking undo and redo
 				 * var $last_element = $tinymce_iframe.find('body > *:last');
@@ -608,15 +612,15 @@ IMHWPB.Editor = function( $ ) {
 						BOLDGRID.EDITOR.CONTROLS.IMAGE.Change.openModal();
 					}
 				} ) );
-				
-				
+
+
 				// Add button to floating tinymce toolbar.
 				tinymce.activeEditor.on( 'wptoolbar', function( event ) {
 					if ( event.toolbar ) {
 						var toolbar = event.toolbar,
 							buttonPos = 3,
 							buttonGroup = toolbar.items()[0].items()[0],
-							buttonIndex = _.findIndex( buttonGroup.items(), function ( item ) { 
+							buttonIndex = _.findIndex( buttonGroup.items(), function ( item ) {
 								return item.settings.title == 'Change';
 							} );
 

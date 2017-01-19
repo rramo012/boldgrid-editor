@@ -101,7 +101,7 @@ IMHWPB.ExistingLayouts = (function($, IMHWPB) {
 		//Hide empty rows
 		$('.centered-content-boldgrid > .row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type').each( function () {
 			var $this = $(this);
-			$this.closest('.attachment').remove()
+			$this.closest('.attachment').remove();
 		});
 	};
 

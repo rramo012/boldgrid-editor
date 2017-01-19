@@ -100,8 +100,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		bindHandlers : function () {
-			self.$container.find('body').on( 'mouseenter', '> .boldgrid-section', self.positionHandles );
-			self.$container.find('body').on( 'mouseleave', '> .boldgrid-section', self.hideHandles );
+			self.$container.on( 'mouseenter', 'html:not(.dragging-section) body > .boldgrid-section', self.positionHandles );
+			self.$container.on( 'mouseleave', 'html:not(.dragging-section) body > .boldgrid-section', self.hideHandles );
 			self.$popover.on( 'click', '[data-action]', self.hideHandles );
 			self.$popover.on( 'click', '[data-action="delete"]', self.deleteSection );
 			self.$popover.on( 'click', '[data-action="duplicate"]', self.clone );
@@ -184,6 +184,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$('body').addClass('focus-on boldgrid-zoomout');
 			$( window ).trigger('resize').scrollTop(0);
 			self.updateHtmlSize();
+			BOLDGRID.EDITOR.MEDIA.Gridblock.centerSections();
 
 			$( '.bg-zoom-controls .slider' ).slider( {
 				min : 1,

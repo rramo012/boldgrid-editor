@@ -226,10 +226,6 @@ class Boldgrid_Editor_Media_Tab {
 			'isIframe' => true,
 			'tabs' => $configs['route-tabs'],
 			'tab-details' => $configs['tab-details'],
-			'admin-url' => get_admin_url(),
-			'post_id' => ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
-			'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
-			'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' )
 		) );
 
 		wp_enqueue_script( 'media-imhwpb' );

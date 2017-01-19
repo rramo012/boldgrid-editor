@@ -1845,14 +1845,49 @@ body.boldgrid-editor-fullscreen {
   transform: translateX(-50%); }
 
 .boldgrid-zoomout .zoomout-section-2 {
-  display: block;
+  display: block; }
+
+.history-controls {
+  position: absolute;
+  left: 25%;
+  transform: translateX(-50%); }
+
+.history-controls button {
+  padding: 9px;
+  margin: -4px 10px;
+  cursor: pointer;
+  background: transparent;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  box-shadow: none; }
+
+.history-controls button i {
+  font-size: 26px; }
+
+.history-controls button:hover {
+  border-color: #adadad;
+  background: rgba(230, 230, 230, 0.3); }
+
+.history-controls button:active {
+  border-color: #adadad;
+  background: rgba(230, 230, 230, 0.9); }
+
+.history-controls button[disabled] {
+  border-color: transparent;
+  background: transparent;
+  cursor: default; }
+
+.history-controls button[disabled] i {
+  color: #ccc; }
+
+.zoomout-section-2 {
   width: 50%;
   margin-top: 79px;
   height: 100%;
   background: #f1f1f1;
   overflow: scroll; }
 
-.boldgrid-zoomout .zoomout-section-2:after {
+.zoomout-section-2:after {
   visibility: hidden;
   display: block;
   font-size: 0;
@@ -1860,14 +1895,17 @@ body.boldgrid-editor-fullscreen {
   clear: both;
   height: 0; }
 
-.boldgrid-zoomout .gridblocks {
-  margin: 30px 8% 0; }
+.zoomout-section-2 .gridblocks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center; }
 
-.boldgrid-zoomout .gridblock {
+.zoomout-section-2 .gridblock {
   position: relative;
   height: 300px;
   background: white;
-  margin: 50px auto;
+  margin: 50px 0 0 50px;
   border: 3px solid #cccccc;
   border-radius: 1px;
   transition: border-color .5s;
@@ -1875,7 +1913,7 @@ body.boldgrid-editor-fullscreen {
   cursor: move;
   width: 584px; }
 
-.boldgrid-zoomout .gridblock iframe {
+.zoomout-section-2 .gridblock iframe {
   width: 1170px;
   height: 600px;
   position: absolute;
@@ -1883,13 +1921,13 @@ body.boldgrid-editor-fullscreen {
   top: 50%;
   transform: translateX(-50%) translateY(-50%) scale(0.5); }
 
-.boldgrid-zoomout .gridblock:hover {
+.zoomout-section-2 .gridblock:hover {
   border-color: #32373c; }
 
-.boldgrid-zoomout .gridblock:hover:before {
+.zoomout-section-2 .gridblock:hover:before {
   background-color: #32373c; }
 
-.boldgrid-zoomout .gridblock:before {
+.zoomout-section-2 .gridblock:before {
   content: '';
   display: block;
   position: absolute;
@@ -1905,7 +1943,7 @@ body.boldgrid-editor-fullscreen {
   background-position: center;
   cursor: move; }
 
-.boldgrid-zoomout .gridblock:after {
+.zoomout-section-2 .gridblock:after {
   content: '';
   display: block;
   position: absolute;
@@ -1916,16 +1954,16 @@ body.boldgrid-editor-fullscreen {
   background: rgba(255, 255, 255, 0);
   transition: background-color .5s; }
 
-.boldgrid-zoomout .gridblock:hover:after {
+.zoomout-section-2 .gridblock:hover:after {
   background: rgba(255, 255, 255, 0.8); }
 
-.boldgrid-zoomout .gridblock:hover .add-gridblock:before {
+.zoomout-section-2 .gridblock:hover .add-gridblock:before {
   opacity: 1; }
 
-.boldgrid-zoomout .gridblock .add-gridblock:hover:before {
+.zoomout-section-2 .gridblock .add-gridblock:hover:before {
   background: rgba(0, 0, 0, 0.8); }
 
-.boldgrid-zoomout .gridblock .add-gridblock:before {
+.zoomout-section-2 .gridblock .add-gridblock:before {
   content: '+ Add to Page';
   z-index: 1;
   opacity: 0;

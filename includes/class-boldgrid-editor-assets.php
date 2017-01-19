@@ -146,6 +146,10 @@ class Boldgrid_Editor_Assets {
 				'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
+				'admin-url' => get_admin_url(),
+				'post_id' => ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
+				'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
+				'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' ),
 			) );
 
 				wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
@@ -286,7 +290,7 @@ class Boldgrid_Editor_Assets {
 		BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-media-gridblocks',
-			plugins_url( '/assets/js/media/media.grid-blocks', $plugin_file ), array( 'wp-util' ),
+			plugins_url( '/assets/js/media/media.grid-blocks.js', $plugin_file ), array( 'wp-util' ),
 		BOLDGRID_EDITOR_VERSION, true);
 
 		wp_enqueue_script( 'boldgrid-editor-controls-media-edit',

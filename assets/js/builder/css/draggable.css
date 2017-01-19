@@ -122,6 +122,7 @@ iframe[src^="https://maps.google.com"] {
 
 .no-select-imhwpb .boldgrid-section.content-border-imhwpb,
 .no-select-imhwpb .boldgrid-section.content-border-imhwpb:hover,
+.dragging-section .content-border-imhwpb,
 .dragging-section .draggable-tools-imhwpb + *:not(button),
 .dragging-section .draggable-tools-imhwpb + .row:not(button) > [class*="col-md"],
 .dragging-section .draggable-tools-imhwpb + *:not(button),
@@ -176,6 +177,10 @@ iframe[src^="https://maps.google.com"] {
     content: ' ';
 }
 
+.bg-zoom-controls .history-controls  {
+	color: #23282d;
+}
+
 .dragging-section .boldgrid-section:before,
 .dragging-section .boldgrid-section:after  {
 	display: block;
@@ -184,7 +189,6 @@ iframe[src^="https://maps.google.com"] {
 .dragging-section .boldgrid-section:hover:after {
     background-color: rgba(249, 91, 38, 0.9);
 }
-
 .dragging-section .boldgrid-section:hover:before {
 	background-color: transparent;
     content: 'Drag Section';
