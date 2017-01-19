@@ -135,9 +135,6 @@ class Boldgrid_Editor_Media_Tab {
 		include $configs['attachments-template'];
 		$this->print_loading_graphic();
 		include $configs['sidebar-template'];
-
-		include $path_configs['plugin_dir'] . '/pages/template-gridblock.html';
-
 	}
 
 	/**

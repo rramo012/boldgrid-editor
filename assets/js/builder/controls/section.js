@@ -2,26 +2,26 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
-( function ( $ ) {
-	"use strict";
+( function( $ ) {
+	'use strict';
 
 	var self,
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Section = {
 
-		$container : null,
+		$container: null,
 
-		$popover : null,
+		$popover: null,
 
-		$currentSection : [],
+		$currentSection: [],
 
 		/**
 		 * Init section controls.
 		 *
 		 * @since 1.2.7.
 		 */
-		init : function ( $container ) {
+		init: function( $container ) {
 			self.renderZoomTools();
 			self.$container = $container;
 			self.createHandles();
@@ -34,15 +34,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 * @param Event e.
 		 */
-		hideHandles : function ( e ) {
+		hideHandles: function( e ) {
 
-			if ( e && e.relatedTarget && $( e.relatedTarget ).closest('.section-popover-imhwpb').length ) {
+			if ( e && e.relatedTarget && $( e.relatedTarget ).closest( '.section-popover-imhwpb' ).length ) {
 				return;
 			}
 
 			self.removeBorder();
 
-			self.$popover.find('.popover-menu-imhwpb').addClass('hidden');
+			self.$popover.find( '.popover-menu-imhwpb' ).addClass( 'hidden' );
 			self.$popover.hide();
 		},
 
@@ -51,9 +51,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.8
 		 */
-		removeBorder : function () {
+		removeBorder: function() {
 			if ( self.$currentSection && self.$currentSection.length ) {
-				self.$currentSection.removeClass('content-border-imhwpb');
+				self.$currentSection.removeClass( 'content-border-imhwpb' );
 			}
 		},
 
@@ -62,12 +62,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		createHandles : function () {
+		createHandles: function() {
 
-			self.$popover = $( wp.template('boldgrid-editor-drag-handle')() );
+			self.$popover = $( wp.template( 'boldgrid-editor-drag-handle' )() );
 
 			self.$popover.css( {
-				'position' : 'fixed',
+				'position': 'fixed'
 			} );
 
 			self.$container.find( 'body' ).after( self.$popover );
@@ -81,15 +81,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.8
 		 * @param Event e.
 		 */
-		menuDirection : function ( e ) {
+		menuDirection: function( e ) {
 			var pos = e.screenY - window.screenY,
 				menuHeight = 340,
 				staticMenuPos = BG.Menu.$mceContainer[0].getBoundingClientRect();
 
 			if ( pos - staticMenuPos.bottom < menuHeight ) {
-				self.$popover.find('.popover-menu-imhwpb').addClass('menu-down');
+				self.$popover.find( '.popover-menu-imhwpb' ).addClass( 'menu-down' );
 			} else {
-				self.$popover.find('.popover-menu-imhwpb').removeClass('menu-down');
+				self.$popover.find( '.popover-menu-imhwpb' ).removeClass( 'menu-down' );
 			}
 
 		},
@@ -99,7 +99,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		bindHandlers : function () {
+		bindHandlers: function() {
+
+			var stopPropagation = function( e ) {
+				e.stopPropagation();
+			};
+
 			self.$container.on( 'mouseenter', 'html:not(.dragging-section) body > .boldgrid-section', self.positionHandles );
 			self.$container.on( 'mouseleave', 'html:not(.dragging-section) body > .boldgrid-section', self.hideHandles );
 			self.$popover.on( 'click', '[data-action]', self.hideHandles );
@@ -110,13 +115,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
 			self.$popover.on( 'click', '[data-action="background"]', self.background );
 			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
-			self.$popover.on( 'click', '[data-action]', function ( e ) { e.stopPropagation(); } );
+			self.$popover.on( 'click', '[data-action]', stopPropagation );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
 			self.$popover.on( 'click', '.context-menu-imhwpb', self.menuDirection );
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
-			$('.exit-row-dragging').on( 'click', self.exitSectionDrag );
+			$( '.exit-row-dragging' ).on( 'click', self.exitSectionDrag );
 			$( window ).on( 'resize', self.updateHtmlSize );
 		},
 
@@ -125,17 +130,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		updateHtmlSize : function () {
+		updateHtmlSize: function() {
 
-			if ( ! $('body').hasClass('boldgrid-zoomout') ) {
+			if ( ! $( 'body' ).hasClass( 'boldgrid-zoomout' ) ) {
 				return;
 			}
 
 			var rect = self.$container.$body[0].getBoundingClientRect(),
 				bodyHeight = rect.bottom - rect.top + 50;
 
-			self.$container.find('html').css( 'max-height', bodyHeight );
-			$('#content_ifr').css( 'max-height', bodyHeight );
+			self.$container.find( 'html' ).css( 'max-height', bodyHeight );
+			$( '#content_ifr' ).css( 'max-height', bodyHeight );
 		},
 
 		/**
@@ -143,9 +148,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		renderZoomTools : function () {
-			var template = wp.template('boldgrid-editor-zoom-tools');
-			$('#wp-content-editor-tools').append( template() );
+		renderZoomTools: function() {
+			var template = wp.template( 'boldgrid-editor-zoom-tools' );
+			$( '#wp-content-editor-tools' ).append( template() );
 		},
 
 		/**
@@ -153,22 +158,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		exitSectionDrag : function () {
-			var $body = $('body'),
+		exitSectionDrag: function() {
+			var $body = $( 'body' ),
 				$window = $( window ),
-				$frameHtml = self.$container.find('html');
+				$frameHtml = self.$container.find( 'html' );
 
-			$body.removeClass('focus-on boldgrid-zoomout');
-			$window.trigger('resize');
-			$frameHtml.removeClass('zoomout dragging-section');
+			$body.removeClass( 'focus-on boldgrid-zoomout' );
+			$window.trigger( 'resize' );
+			$frameHtml.removeClass( 'zoomout dragging-section' );
 			self.$container.$body.attr( 'contenteditable', 'true' );
 			BG.Controls.$menu.hide();
 			self.$container.$body.css( 'transform', '' );
 			$frameHtml.css( 'max-height', '' );
-			$('#content_ifr').css( 'max-height', '' );
+			$( '#content_ifr' ).css( 'max-height', '' );
 
-			$('html, body').animate( {
-			     scrollTop: $("#postdivrich").offset().top
+			$( 'html, body' ).animate( {
+			     scrollTop: $( '#postdivrich' ).offset().top
 			}, 0 );
 		},
 
@@ -177,26 +182,26 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		enableSectionDrag : function () {
-			self.$container.find('html').addClass('zoomout dragging-section');
+		enableSectionDrag: function() {
+			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );
-			BG.Controls.$menu.addClass('section-dragging');
-			$('body').addClass('focus-on boldgrid-zoomout');
-			$( window ).trigger('resize').scrollTop(0);
+			BG.Controls.$menu.addClass( 'section-dragging' );
+			$( 'body' ).addClass( 'focus-on boldgrid-zoomout' );
+			$( window ).trigger( 'resize' ).scrollTop( 0 );
 			self.updateHtmlSize();
-			BOLDGRID.EDITOR.MEDIA.Gridblock.centerSections();
+			BOLDGRID.EDITOR.GRIDBLOCK.View.centerSections();
 
 			$( '.bg-zoom-controls .slider' ).slider( {
-				min : 1,
-				max : 6,
-				value : 3,
-				orientation : 'vertical',
-				range : 'max',
-				slide : function( event, ui ) {
+				min: 1,
+				max: 6,
+				value: 3,
+				orientation: 'vertical',
+				range: 'max',
+				slide: function( event, ui ) {
 					self.removeZoomClasses();
 					self.$container.$body.addClass( 'zoom-scale-' + ui.value );
 					self.updateHtmlSize();
-				},
+				}
 			} );
 		},
 
@@ -205,9 +210,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		removeZoomClasses : function () {
-			self.$container.$body.removeClass ( function ( index, css ) {
-				return (css.match (/(^|\s)zoom-scale-\S+/g) || []).join(' ');
+		removeZoomClasses: function() {
+			self.$container.$body.removeClass( function( index, css ) {
+				return ( css.match( /(^|\s)zoom-scale-\S+/g ) || []).join( ' ' );
 			} );
 		},
 
@@ -216,7 +221,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		positionHandles : function() {
+		positionHandles: function() {
 			var pos, $this;
 
 			if ( this.getBoundingClientRect ) {
@@ -225,7 +230,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$this = self.$currentSection;
 			}
 
-			if ( ! $this || ! $this.length || false === $this.is(':visible')  ) {
+			if ( ! $this || ! $this.length || false === $this.is( ':visible' )  ) {
 				self.$popover.hide();
 				return;
 			}
@@ -238,18 +243,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return false;
 			}
 
-			self.$popover.find('.popover-menu-imhwpb').addClass('hidden');
+			self.$popover.find( '.popover-menu-imhwpb' ).addClass( 'hidden' );
 
 			// Save the current row.
 			self.$currentSection = $this;
 
 			self.$popover.css( {
-				'top' :  pos.bottom + 35,
-				'left' : 'calc(50% - 38px)',
-				'transform' :  'translateX(-50%)'
+				'top':  pos.bottom + 35,
+				'left': 'calc(50% - 38px)',
+				'transform':  'translateX(-50%)'
 			} );
 
-			self.$currentSection.addClass('content-border-imhwpb');
+			self.$currentSection.addClass( 'content-border-imhwpb' );
 
 			if ( this.getBoundingClientRect ) {
 				self.$popover.show();
@@ -261,8 +266,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		addNewSection : function () {
-			var $newSection = $( wp.template('boldgrid-editor-empty-section')() ) ;
+		addNewSection: function() {
+			var $newSection = $( wp.template( 'boldgrid-editor-empty-section' )() ) ;
 			self.$currentSection.after( $newSection );
 			self.transistionSection( $newSection );
 		},
@@ -273,11 +278,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 * @param jQuery $newSection.
 		 */
-		transistionSection : function ( $newSection ) {
+		transistionSection: function( $newSection ) {
 			IMHWPB.tinymce_undo_disabled = true;
 			$newSection.animate( {
-				    'background-color' : 'transparent'
-				  }, 1500, 'swing', function(){
+				    'background-color': 'transparent'
+				  }, 1500, 'swing', function() {
 						BG.Controls.addStyle( $newSection, 'background-color', '' );
 						IMHWPB.tinymce_undo_disabled = false;
 						tinymce.activeEditor.undoManager.add();
@@ -290,7 +295,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		deleteSection : function () {
+		deleteSection: function() {
 			self.$currentSection.remove();
 			self.$container.trigger( self.$container.delete_event );
 		},
@@ -300,7 +305,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		clone : function () {
+		clone: function() {
 			self.$currentSection.after( self.$currentSection.clone() );
 			self.$container.trigger( self.$container.delete_event );
 		},
@@ -310,7 +315,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		moveUp : function () {
+		moveUp: function() {
 			var $prev = self.$currentSection.prev();
 
 			if ( $prev.length ) {
@@ -325,7 +330,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		moveDown : function () {
+		moveDown: function() {
 			var $next = self.$currentSection.next();
 
 			if ( $next.length ) {
@@ -335,7 +340,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.trigger( self.$container.delete_event );
 		},
 
-		background : function () {
+		background: function() {
 			self.$currentSection.click();
 			BOLDGRID.EDITOR.CONTROLS.Background.openPanel();
 		},
@@ -345,8 +350,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		sectionWidth : function () {
-			BG.CONTROLS.Container.toggleSectionWidth( self.$currentSection.find('.container, .container-fluid') );
+		sectionWidth: function() {
+			BG.CONTROLS.Container.toggleSectionWidth( self.$currentSection.find( '.container, .container-fluid' ) );
 			self.$container.trigger( self.$container.delete_event );
 		}
 

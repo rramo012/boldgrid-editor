@@ -273,6 +273,14 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/image/design.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-gridblock-remote',
+			plugins_url( '/assets/js/builder/gridblock/remote.js', $plugin_file ), array( 'wp-util' ),
+		BOLDGRID_EDITOR_VERSION, true);
+
+		wp_enqueue_script( 'boldgrid-gridblock-filter',
+			plugins_url( '/assets/js/builder/gridblock/filter.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-button',
 			plugins_url( '/assets/js/builder/controls/button.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
@@ -288,10 +296,6 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_script( 'boldgrid-editor-controls-background',
 			plugins_url( '/assets/js/builder/controls/background.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
-
-		wp_enqueue_script( 'boldgrid-media-gridblocks',
-			plugins_url( '/assets/js/media/media.grid-blocks.js', $plugin_file ), array( 'wp-util' ),
-		BOLDGRID_EDITOR_VERSION, true);
 
 		wp_enqueue_script( 'boldgrid-editor-controls-media-edit',
 			plugins_url( '/assets/js/builder/controls/media/edit.js', $plugin_file ), array(),
@@ -313,8 +317,16 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/resize/row.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-gridblocks',
-			plugins_url( '/assets/js/media/gridblock.js', $plugin_file ), array(),
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-view',
+			plugins_url( '/assets/js/builder/gridblock/view.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-add',
+			plugins_url( '/assets/js/builder/gridblock/add.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-create',
+			plugins_url( '/assets/js/builder/gridblock/create.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script( 'boldgrid-editor-text-select',

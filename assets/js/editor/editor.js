@@ -24,50 +24,50 @@ IMHWPB.Editor = function( $ ) {
 	/**
 	 * Select alignment from media modal
 	 */
-	this.select_alignment = function () {
-		var $current_selection = $(tinymce.activeEditor.selection.getNode());
-		var $alignment_sidebar = $('.attachments-browser select.alignment');
-		var $alignment_sidebar_linkto = $('.attachments-browser select.link-to');
+	this.select_alignment = function() {
+		var $current_selection = $( tinymce.activeEditor.selection.getNode() );
+		var $alignment_sidebar = $( '.attachments-browser select.alignment' );
+		var $alignment_sidebar_linkto = $( '.attachments-browser select.link-to' );
 
 		//Bind the media open event
-		if (false == self.media_default_bound) {
+		if ( false == self.media_default_bound ) {
 			self.media_default_bound = true;
-			wp.media.frame.on('open', self.select_alignment);
+			wp.media.frame.on( 'open', self.select_alignment );
 		}
 
-		if ( $current_selection.is('img') ) {
-			var classes = $current_selection.attr('class');
+		if ( $current_selection.is( 'img' ) ) {
+			var classes = $current_selection.attr( 'class' );
 			var current_classes = [];
 			if ( classes ) {
-				current_classes = $current_selection.attr('class').split(/\s+/);
+				current_classes = $current_selection.attr( 'class' ).split( /\s+/ );
 			}
 
 			var value_selection = 'none';
-			$.each(current_classes, function (index, class_item) {
-				if ( class_item == "aligncenter" ) {
-					value_selection = "center";
+			$.each( current_classes, function( index, class_item ) {
+				if ( class_item == 'aligncenter' ) {
+					value_selection = 'center';
 					return false;
-				} else if ( class_item == "alignnone" ) {
-					value_selection = "none";
+				} else if ( class_item == 'alignnone' ) {
+					value_selection = 'none';
 					return false;
-				} else if ( class_item == "alignright" ) {
-					value_selection = "right";
+				} else if ( class_item == 'alignright' ) {
+					value_selection = 'right';
 					return false;
-				} else if ( class_item == "alignleft" ) {
-					value_selection = "left";
+				} else if ( class_item == 'alignleft' ) {
+					value_selection = 'left';
 					return false;
 				}
 			});
 
 			//Choose default link
 			var default_link_setting = null;
-			var $wrapped_link = $current_selection.parent('a');
-			if ( !$wrapped_link.length ) {
+			var $wrapped_link = $current_selection.parent( 'a' );
+			if ( ! $wrapped_link.length ) {
 				default_link_setting = 'none';
 			}
 
 			if ( $alignment_sidebar_linkto.length && default_link_setting ) {
-				$alignment_sidebar_linkto.val(default_link_setting).change();
+				$alignment_sidebar_linkto.val( default_link_setting ).change();
 			}
 
 			if ( $alignment_sidebar.length ) {
@@ -80,7 +80,7 @@ IMHWPB.Editor = function( $ ) {
 	 * When the user clicks on attachments in the media modal, auto select the same alignment
 	 * that their current image has
 	 */
-	this.select_default_alignment = function () {
+	this.select_default_alignment = function() {
 		$( document ).on('click', '.attachments-browser .attachment', self.select_alignment);
 	};
 
@@ -551,7 +551,7 @@ IMHWPB.Editor = function( $ ) {
 			});
 
 			editor.on('AddUndo', function(e) {
-				BOLDGRID.EDITOR.MEDIA.Gridblock.updateHistoryStates();
+				 BOLDGRID.EDITOR.GRIDBLOCK.View.updateHistoryStates();
 			} );
 
 			/**

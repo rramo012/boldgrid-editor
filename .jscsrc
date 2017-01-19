@@ -1,0 +1,11 @@
+{
+	"preset": "wordpress",
+	"requireCamelCaseOrUpperCaseIdentifiers": false,
+	"excludeFiles": [
+		"node_modules/**",
+		"bower_components",
+		"gulpfile.js",
+		".git/",
+	],
+	"fileExtensions": [".js"],
+}

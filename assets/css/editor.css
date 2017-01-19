@@ -1656,6 +1656,13 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Zoom Out Controls
 --------------------------------------------------------------*/
+.boldgrid-section.loading-gridblock {
+  background: #0085ba;
+  color: white;
+  text-align: center;
+  padding: 100px 0;
+  font-size: 27px; }
+
 .boldgrid-zoomout-section {
   display: none; }
 
@@ -1911,7 +1918,8 @@ body.boldgrid-editor-fullscreen {
   transition: border-color .5s;
   left: -38px;
   cursor: move;
-  width: 584px; }
+  width: 584px;
+  user-select: none; }
 
 .zoomout-section-2 .gridblock iframe {
   width: 1170px;
@@ -1963,6 +1971,7 @@ body.boldgrid-editor-fullscreen {
 .zoomout-section-2 .gridblock .add-gridblock:hover:before {
   background: rgba(0, 0, 0, 0.8); }
 
+.zoomout-section-2 .gridblock .add-gridblock:active:before,
 .zoomout-section-2 .gridblock .add-gridblock:before {
   content: '+ Add to Page';
   z-index: 1;

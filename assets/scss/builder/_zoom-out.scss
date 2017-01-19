@@ -1,6 +1,15 @@
 $fix-top-height: 79px;
 $wp-color: #32373c;
 
+
+.boldgrid-section.loading-gridblock {
+	background: #0085ba;
+	color: white;
+	text-align: center;
+	padding: 100px 0;
+	font-size: 27px;
+}
+
 .boldgrid-zoomout-section {
 	display: none;
 }
@@ -259,6 +268,7 @@ $wp-color: #32373c;
 		left: -38px;
 		cursor: move;
 		width: 584px;
+		user-select: none;
 
 		iframe {
 			width: 1170px;
@@ -317,12 +327,14 @@ $wp-color: #32373c;
 			.add-gridblock:before  {
 				opacity: 1;
 			}
+
 		}
 
 		.add-gridblock:hover:before {
 			background: rgba(0,0,0,.8);
 		}
 
+		.add-gridblock:active:before,
 		.add-gridblock:before {
 			content: '+ Add to Page';
 			z-index: 1;
@@ -338,7 +350,6 @@ $wp-color: #32373c;
 			top: 50%;
 			transition: background-color .2s, opacity .5s;
 			transform: translateX(-50%) translateY(-50%);
-
 		}
 	}
 }
