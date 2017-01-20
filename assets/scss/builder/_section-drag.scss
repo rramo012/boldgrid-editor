@@ -1,0 +1,33 @@
+@mixin pointerOffset () {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#boldgrid-drag-pointer {
+	display: none;
+	position: fixed;
+	border-radius: 50%;
+	top: 10px;
+	left: 10px;
+	background-color: #f95b26;
+	height: 30px;
+    width: 30px;
+	z-index: 999999;
+}
+
+.section-dragging-active #boldgrid-drag-pointer {
+	display: block;
+}
+
+.wp-admin #boldgrid-drag-pointer {
+	@include pointerOffset();
+}
+
+.dragging-section.dragging-gridblock-iframe {
+	body {
+		box-shadow: 0 0 0 5px $boldgrid-color;
+	}
+	#boldgrid-drag-pointer {
+		@include pointerOffset();
+	}
+}
