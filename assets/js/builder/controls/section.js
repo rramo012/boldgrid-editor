@@ -121,7 +121,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
-			$( '.exit-row-dragging' ).on( 'click', self.exitSectionDrag );
+			$( '.exit-row-dragging, .bg-close-zoom-view' ).on( 'click', self.exitSectionDrag );
 			$( window ).on( 'resize', self.updateHtmlSize );
 		},
 
@@ -186,7 +186,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );
 			BG.Controls.$menu.addClass( 'section-dragging' );
-			$( 'body' ).addClass( 'focus-on boldgrid-zoomout' );
+
+			$( 'body' )
+				.addClass( 'focus-on boldgrid-zoomout' )
+				.find( '#wpadminbar' )
+				.addClass( 'focus-off' );
+
 			$( window ).trigger( 'resize' ).scrollTop( 0 );
 			self.updateHtmlSize();
 			BOLDGRID.EDITOR.GRIDBLOCK.View.centerSections();

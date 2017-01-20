@@ -36,6 +36,9 @@
   background-repeat: no-repeat;
   transform: translateY(-50%); }
 
+.bg-editor-loading.absolute:after, .bg-editor-loading.absolute:before {
+  position: absolute; }
+
 @-webkit-keyframes sk-scaleout {
   0% {
     -webkit-transform: scale(0); }
@@ -1140,6 +1143,34 @@
 /*--------------------------------------------------------------
 # Post.php Modifications
 --------------------------------------------------------------*/
+#boldgrid-drag-pointer {
+  display: none;
+  position: fixed;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  background-color: #f95b26;
+  height: 30px;
+  width: 30px;
+  z-index: 999999; }
+
+.section-dragging-active #boldgrid-drag-pointer {
+  display: block; }
+
+.wp-admin #boldgrid-drag-pointer {
+  margin-top: 20px;
+  margin-left: 20px; }
+
+.dragging-section.dragging-gridblock-iframe body {
+  box-shadow: 0 0 0 5px #f95b26; }
+
+.dragging-section.dragging-gridblock-iframe #boldgrid-drag-pointer {
+  margin-top: 20px;
+  margin-left: 20px; }
+
+/*--------------------------------------------------------------
+# Post.php Modifications
+--------------------------------------------------------------*/
 /**
 * Editor Page overwrites to prevent the bootstrap columns from collapsing early
 * Stretch the outsides of the editor and make the second column narrow
@@ -1656,25 +1687,48 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Zoom Out Controls
 --------------------------------------------------------------*/
-.boldgrid-section.loading-gridblock {
-  background: #0085ba;
+.dragging-section .loading-gridblock {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 133, 186, 0.8);
   color: white;
   text-align: center;
-  padding: 100px 0;
-  font-size: 27px; }
+  font-size: 32px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; }
+
+.dragging-section .loading-gridblock .bg-editor-loading:before,
+.dragging-section .loading-gridblock .bg-editor-loading:after {
+  margin-top: 55px;
+  margin-left: -22px; }
+
+.dragging-gridblock-placeholder .loading-gridblock {
+  display: none; }
+
+.dragging-section body {
+  position: relative;
+  left: -4px;
+  top: -2px;
+  transition: box-shadow .5s; }
 
 .boldgrid-zoomout-section {
   display: none; }
 
 .boldgrid-zoomout .zoom-navbar {
   position: fixed;
-  top: 31px;
+  top: 33px;
   left: 0;
   right: 0;
   background: #f7f7f7;
-  z-index: 99999;
-  padding: 8px;
-  text-align: center; }
+  z-index: 9999;
+  padding: 6.5px;
+  text-align: center;
+  user-select: none;
+  border-bottom: 1px solid #cccccc; }
 
 .boldgrid-zoomout .mce-statusbar,
 .boldgrid-zoomout .wrap > *:not(#post),
@@ -1765,7 +1819,8 @@ body.boldgrid-editor-fullscreen {
   cursor: pointer;
   background-color: #f95b26;
   color: white;
-  display: inline-block; }
+  display: inline-block;
+  visibility: hidden; }
 
 .boldgrid-zoomout .exit-row-dragging:focus {
   box-shadow: none; }
@@ -1787,6 +1842,31 @@ body.boldgrid-editor-fullscreen {
 
 .boldgrid-zoomout .exit-row-dragging:active {
   box-shadow: 0px 0px 29px -12px black inset; }
+
+.boldgrid-zoomout .bg-close-zoom-view {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  border-left: 1px solid #ddd;
+  width: 70px;
+  height: 100%;
+  background: #f1f1f1;
+  box-shadow: -7px 0px 0 0 #0073aa;
+  cursor: pointer;
+  transition: background-color .5s, color .5s; }
+
+.boldgrid-zoomout .bg-close-zoom-view:hover {
+  background: #FFF; }
+
+.boldgrid-zoomout .bg-close-zoom-view:hover:after {
+  color: #0073aa; }
+
+.boldgrid-zoomout .bg-close-zoom-view:after {
+  content: "\f335";
+  display: block;
+  font: normal 22px/45px dashicons;
+  color: black; }
 
 .boldgrid-zoomout #wp-content-wrap,
 .boldgrid-zoomout .mce-container {
@@ -1836,7 +1916,8 @@ body.boldgrid-editor-fullscreen {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  float: left; }
+  float: left;
+  user-select: none; }
 
 .boldgrid-zoomout .wrap {
   margin: 0; }
@@ -1866,10 +1947,17 @@ body.boldgrid-editor-fullscreen {
   background: transparent;
   border-radius: 2px;
   border: 1px solid transparent;
-  box-shadow: none; }
+  box-shadow: none;
+  position: relative;
+  top: 1px; }
 
 .history-controls button i {
   font-size: 26px; }
+
+.history-controls button i:before {
+  position: relative;
+  left: -2px;
+  top: -2px; }
 
 .history-controls button:hover {
   border-color: #adadad;
@@ -1892,7 +1980,8 @@ body.boldgrid-editor-fullscreen {
   margin-top: 79px;
   height: 100%;
   background: #f1f1f1;
-  overflow: scroll; }
+  overflow: scroll;
+  overflow-x: hidden; }
 
 .zoomout-section-2:after {
   visibility: hidden;
@@ -1929,12 +2018,6 @@ body.boldgrid-editor-fullscreen {
   top: 50%;
   transform: translateX(-50%) translateY(-50%) scale(0.5); }
 
-.zoomout-section-2 .gridblock:hover {
-  border-color: #32373c; }
-
-.zoomout-section-2 .gridblock:hover:before {
-  background-color: #32373c; }
-
 .zoomout-section-2 .gridblock:before {
   content: '';
   display: block;
@@ -1962,16 +2045,24 @@ body.boldgrid-editor-fullscreen {
   background: rgba(255, 255, 255, 0);
   transition: background-color .5s; }
 
-.zoomout-section-2 .gridblock:hover:after {
+.zoomout-section-2 .gridblock:hover {
+  border-color: #32373c; }
+
+.zoomout-section-2 .gridblock:hover:before {
+  background-color: #32373c; }
+
+.zoomout-section-2 .gridblock.dragging-gridblock:after, .zoomout-section-2 .gridblock:hover:after {
   background: rgba(255, 255, 255, 0.8); }
 
-.zoomout-section-2 .gridblock:hover .add-gridblock:before {
+.zoomout-section-2 .gridblock.dragging-gridblock .add-gridblock:before, .zoomout-section-2 .gridblock:hover .add-gridblock:before {
   opacity: 1; }
 
-.zoomout-section-2 .gridblock .add-gridblock:hover:before {
-  background: rgba(0, 0, 0, 0.8); }
+.zoomout-section-2 .gridblock.dragging-gridblock {
+  border-color: #f95b26; }
 
-.zoomout-section-2 .gridblock .add-gridblock:active:before,
+.zoomout-section-2 .gridblock.dragging-gridblock:before {
+  background-color: #f95b26; }
+
 .zoomout-section-2 .gridblock .add-gridblock:before {
   content: '+ Add to Page';
   z-index: 1;
@@ -1987,6 +2078,16 @@ body.boldgrid-editor-fullscreen {
   top: 50%;
   transition: background-color .2s, opacity .5s;
   transform: translateX(-50%) translateY(-50%); }
+
+.zoomout-section-2 .gridblock .add-gridblock:hover:before {
+  background: rgba(0, 0, 0, 0.8); }
+
+.zoomout-section-2 .gridblock .add-gridblock:active:before {
+  background: rgba(0, 0, 0, 0.4); }
+
+.zoomout-section-2 .gridblock.dragging-gridblock .add-gridblock:before {
+  content: 'Drag to Page';
+  background: rgba(0, 0, 0, 0.6); }
 
 /*--------------------------------------------------------------
 # General Edit Controls

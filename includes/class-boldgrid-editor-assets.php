@@ -329,6 +329,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/gridblock/create.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-drag',
+			plugins_url( '/assets/js/builder/gridblock/drag.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-text-select',
 			plugins_url( '/assets/js/jquery/jquery.text-select.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

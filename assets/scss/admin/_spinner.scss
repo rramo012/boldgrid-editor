@@ -1,6 +1,6 @@
 .bg-editor-loading {
   display: none;
-  
+
   &.enabled {
   	display: block !important;
   }
@@ -15,12 +15,12 @@
 	  left: 50%;
 	  top: calc( 50% - 25px );
 	  z-index: 99999999;
-	
-	  border-radius: 100%;  
+
+	  border-radius: 100%;
 	  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
 	  animation: sk-scaleout 1.0s infinite ease-in-out;
-  } 
-  
+  }
+
   &:before {
 	    content: ' ';
 	    background-image: url(../image/boldgrid-logo.svg);
@@ -33,6 +33,10 @@
 	    background-repeat: no-repeat;
 	    transform: translateY(-50%);
 	}
+	&.absolute:after,
+	&.absolute:before {
+		position: absolute;
+	}
 }
 
 @-webkit-keyframes sk-scaleout {
@@ -44,7 +48,7 @@
 }
 
 @keyframes sk-scaleout {
-  0% { 
+  0% {
     -webkit-transform: scale(0);
     transform: scale(0);
   } 100% {

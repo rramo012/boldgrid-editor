@@ -687,6 +687,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		BG.RESIZE.Row.init( self.$master_container );
 		BG.Controls.init( self.$master_container );
 		BG.DRAG.Section.init( self.$master_container );
+		BG.GRIDBLOCK.Drag.init();
 
 		return self;
 	};
@@ -1436,7 +1437,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				$element_next[0].popover = null;
 			}
 			// Wait for keypress events before removing element.
-			setTimeout( function () {
+			setTimeout( function() {
 				$element.remove();
 			} );
 		} );
@@ -1452,8 +1453,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		event.stopPropagation();
 		self.hide_menus( event );
 
-		$currentPopover = $( this ).closest( '.draggable-tools-imhwpb, .bg-drag-popover' )
-		$currentPopover.find( '.popover-menu-imhwpb' ).toggleClass('hidden');
+		$currentPopover = $( this ).closest( '.draggable-tools-imhwpb, .bg-drag-popover' );
+		$currentPopover.find( '.popover-menu-imhwpb' ).toggleClass( 'hidden' );
 		self.setMenuPosition( $currentPopover );
 		self.setMenuState( $currentPopover );
 	};
@@ -1464,10 +1465,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * @since 1.2.10
 	 * @param jQuery $currentPopover.
 	 */
-	this.setMenuState = function ( $currentPopover ) {
-		$currentPopover.removeClass('menu-open');
-		if ( false === $currentPopover.find('.popover-menu-imhwpb').hasClass('hidden') ) {
-			$currentPopover.addClass('menu-open');
+	this.setMenuState = function( $currentPopover ) {
+		$currentPopover.removeClass( 'menu-open' );
+		if ( false === $currentPopover.find( '.popover-menu-imhwpb' ).hasClass( 'hidden' ) ) {
+			$currentPopover.addClass( 'menu-open' );
 		}
 	};
 
@@ -1477,10 +1478,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * @since 1.2.10
 	 * @param jQuery $currentPopover.
 	 */
-	this.setMenuPosition = function ( $currentPopover ) {
+	this.setMenuPosition = function( $currentPopover ) {
 		var popoverWidth, totalWidth,
 			boundingClientRect = $currentPopover[0].getBoundingClientRect(),
-			$sideMenu = $currentPopover.find('.side-menu'),
+			$sideMenu = $currentPopover.find( '.side-menu'),
 			htmlWidth = self.$html.width(),
 			buffer = 100;
 

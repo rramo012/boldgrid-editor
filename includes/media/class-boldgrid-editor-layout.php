@@ -29,74 +29,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	);
 
 	/**
-	 * Add styles from theme.
-	 */
-	public function enqueue_addtional_scripts() {
-		$theme_styles = array (
-			'theme-style' => "/editor.css",
-			'theme-bootstrap' => "/css/bootstrap.min.css"
-		);
-
-		// If this is a staged page, use the staged theme
-		$directory = get_template_directory();
-
-		$directory_url = get_stylesheet_directory_uri();
-
-		foreach ( $theme_styles as $handle => $theme_style ) {
-			if ( file_exists( $directory . $theme_style ) ) {
-				wp_enqueue_style( $handle, $directory_url . $theme_style );
-			}
-		}
-	}
-
-	/**
-	 * Enqueue Admin Scripts
-	 */
-	public function enqueue_admin_scripts() {
-		add_action( 'admin_enqueue_scripts', array (
-			$this,
-			'enqueue_header_content'
-		) );
-	}
-
-	/**
-	 * Add theme scripts
-	 */
-	public function add_theme_scripts() {
-		add_action( 'admin_enqueue_scripts', array (
-			$this,
-			'enqueue_addtional_scripts'
-		) );
-	}
-
-	/**
-	 * Remove a stylesheet from the queue of stylesheets to be loaded and remove its references as
-	 * dependencies.
-	 * Used instead of wp_deregister_style() because deregister would remove some other needed styles
-	 *
-	 * @param string $handle
-	 */
-	public function force_remove_stylesheet( $handle ) {
-		global $wp_styles;
-
-		foreach ( $wp_styles->registered as $key => $style ) {
-
-			if ( false == is_object( $style ) ) {
-				continue;
-			}
-
-			if ( $style->handle == $handle ) {
-				$wp_styles->registered[$key] = null;
-			} else if ( is_array( $style->deps ) ) {
-				$dep_index = array_search( $handle, $style->deps );
-				if ( false !== $dep_index ) {
-					unset( $style->deps[$dep_index] );
-				}
-			}
-		}
-	}
-
-	/**
 	 * Sort by integer
 	 *
 	 * @return number
@@ -139,7 +71,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		foreach ( $div as $potential_row ) {
 			$classes_attr = $potential_row->getAttribute( 'class' );
 
-			if ( preg_match( '/row(\s|$)/', $classes_attr ) &&
+			if ( preg_match( '/boldgrid-section(\s|$)/', $classes_attr ) &&
 				 ! preg_match( '/hidden-md/', $classes_attr ) ) {
 
 				// Save Markup
@@ -247,31 +179,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Uses the static pages that are created during inspirations and adds the
-	 * gridblocks that are found to the configuration which creates the media modal.
-	 *
-	 * @since 1.0.5
-	 */
-	public function add_static_gridblocks() {
-		$boldgrid_static_pages = get_option( 'boldgrid_static_pages', array () );
-		$row_content = array ();
-
-		foreach ( array (
-			'pages_in_pageset',
-			'additional'
-		) as $key ) {
-			if ( ! empty( $boldgrid_static_pages['pages'][$key] ) ) {
-				foreach ( $boldgrid_static_pages['pages'][$key] as $page ) {
-					$row_content = array_merge( $row_content,
-						self::parse_gridblocks( $page->code ) );
-				}
-			}
-		}
-
-		return $row_content;
-	}
-
-	/**
 	 * Get all pages with the BG statuses.
 	 *
 	 * @since 1.3
@@ -359,18 +266,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Enqueue scripts and styles that will allow GridBlocks to inherit theme styles
-	 *
-	 * @since 1.0.5
-	 */
-	public function add_scripts_and_styles() {
-		// Add the admin scripts and styles
-		do_action( 'wp_enqueue_scripts' );
-		$this->force_remove_stylesheet( 'wp-admin' );
-		$this->add_theme_scripts();
-	}
-
-	/**
 	 * Returns All universal gridblocks
 	 *
 	 * @since 1.0.5
@@ -399,25 +294,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Add universal gridblocks to layout configuration
-	 *
-	 * @since 1.0.5
-	 */
-	public function add_universal_layouts() {
-		// Modify Configs
-		$configs = $this->get_configs();
-
-		$row_content = self::get_universal_gridblocks();
-
-		// Modify Configs
-		$configs = $this->get_configs();
-		$configs['route-tabs']['basic-gridblocks']['content'] = array_merge(
-			$configs['route-tabs']['basic-gridblocks']['content'], $row_content );
-
-		$this->set_configs( $configs );
-	}
-
-	/**
 	 * Sort, Remove Duplicates, and remove nested row
 	 *
 	 * @since 1.0.6
@@ -431,6 +307,13 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		return $row_content;
 	}
 
+	/**
+	 * Get page and universal Gridblocks
+	 *
+	 * @since 1.4
+	 *
+	 * @return array Gridblocks.
+	 */
 	public static function get_all_gridblocks() {
 		$gridblocks = self::get_universal_gridblocks();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
@@ -441,58 +324,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		}
 
 		return self::cleanup_gridblock_collection( $gridblocks );
-	}
-
-	/**
-	 * Create a tabs content
-	 * Modified to add existing layouts from pages
-	 */
-	public function media_upload_tab_content() {
-		return;
-		$configs = $this->get_configs();
-
-		$this->add_universal_layouts();
-
-
-		if ( ! empty( $configs['is-boldgrid-theme'] ) ) {
-			$current_gridblock_content = $this->add_existing_layouts();
-
-			// Temporarily Disabling Static Gridblocks
-			// $static_gridblock_content = $this->add_static_gridblocks();
-			$static_gridblock_content = array ();
-
-			$row_content = array_merge( $current_gridblock_content, $static_gridblock_content );
-			$row_content = self::cleanup_gridblock_collection( $row_content );
-
-			// Modify Configs
-			$configs = $this->get_configs();
-			$configs['route-tabs']['basic-gridblocks']['content'] = array_merge(
-				$configs['route-tabs']['basic-gridblocks']['content'], $row_content );
-
-			$this->set_configs( $configs );
-
-			// Script Styles
-			$this->add_scripts_and_styles();
-		}
-
-		wp_enqueue_script( 'boldgrid-existing-layouts',
-				plugins_url( Boldgrid_Editor_Assets::get_minified_js( '/assets/js/media/existing-layouts' ),
-						BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ), array (), BOLDGRID_EDITOR_VERSION );
-
-		$this->force_remove_stylesheet( 'buttons' );
-
-		$this->enqueue_admin_scripts();
-
-		wp_enqueue_style( 'boldgrid-existing-layouts',
-			plugins_url( '/assets/css/bootstrap.min.css',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ), array (
-				'media-tab-css-imhwpb'
-			), BOLDGRID_EDITOR_VERSION );
-
-		return wp_iframe( array (
-			$this,
-			'print_content'
-		) );
 	}
 
 	/**

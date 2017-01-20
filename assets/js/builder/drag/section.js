@@ -59,6 +59,15 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			},
 
 			/**
+			 * Check if the user is currenlty dragging.
+			 *
+			 * @since 1.4
+			 */
+			isDragging: function() {
+				return !! BG.DRAG.Section.currentDrag;
+			},
+
+			/**
 			 * Bind all events used for dragging.
 			 *
 			 * @since 1.2.7
@@ -83,11 +92,12 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			 * @param Event e.
 			 */
 			overHelper: function( e ) {
-				if ( self.$container.$current_drag || self.currentDrag ) {
+				if ( self.currentDrag || self.showDragHelper ) {
+
 					// 25 is polling delay.
 					if ( ! self.lastPosEvent || self.lastPosEvent + 25 <= e.timeStamp ) {
 						self.lastPosEvent = e.timeStamp;
-						self.positionHelper( e.originalEvent );
+						self.positionHelper( e.originalEvent, self.$dragHelper );
 					}
 				}
 			},
@@ -98,15 +108,13 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
-			end: function( e ) {
+			end: function() {
 				if ( self.currentDrag ) {
-					self.currentDrag.$clone.remove();
 					self.currentDrag.$element.removeClass( 'section-drag-element' );
 					self.currentDrag = false;
 					self.$container.$html.removeClass( 'no-select-imhwpb section-dragging-active' );
 					tinymce.activeEditor.undoManager.add();
 				}
-
 			},
 
 			/**
@@ -179,10 +187,10 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			 * @since 1.2.7
 			 * @param Event e.
 			 */
-			positionHelper: function( e ) {
+			positionHelper: function( e, $dragHelper ) {
 
 				// 15 is the offset from the cursor.
-				self.$dragHelper.css( {
+				$dragHelper.css( {
 					'top': e.pageY - 15,
 					'left': e.pageX - 15
 				} );
@@ -196,7 +204,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			calcSectionLocs: function() {
 				var locs = [];
 
-				self.$container.$body.find( '> .boldgrid-section' ).not( self.currentDrag.$clone ).each( function() {
+				self.$container.$body.find( '> .boldgrid-section' ).each( function() {
 					var pos = this.getBoundingClientRect(),
 						midPoint = ( pos.bottom - pos.top ) / 2 + pos.top;
 
@@ -215,23 +223,27 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 			 * @since 1.2.7
 			 */
 			start: function( e ) {
-				var $this = $( this );
+				self.positionHelper( e.originalEvent, self.$dragHelper );
+				self.startDrag( $( this ) );
+			},
 
-				self.currentDrag = {
-					$element: $this,
-					$clone: $this.clone(),
-					startPos: { x: e.originalEvent.pageX, y: e.originalEvent.pageY },
-					offsetFromTop: e.originalEvent.pageY - $this.offset().top
-				};
+			/**
+			 * Start the dragging process.
+			 *
+			 * @since 1.4
+			 *
+			 * @param {jQuery} $dragElement Element to be dragged.
+			 */
+			startDrag: function( $dragElement ) {
+				var $this = $dragElement;
+
+				self.currentDrag = { $element: $this };
 
 				self.currentDrag.$element.addClass( 'section-drag-element' );
-				self.currentDrag.$clone.addClass( 'section-drag-clone' );
-				self.$container.setInheritedBg( self.currentDrag.$clone, 1 );
-				self.$container.$body.append( self.currentDrag.$clone );
 				self.$container.find( 'html' ).addClass( 'section-dragging-active' );
 				self.$container.$html.addClass( 'no-select-imhwpb' );
 				self.$container.$body.removeAttr( 'contenteditable' );
-				self.positionHelper( e.originalEvent );
+				self.$dragHelper.css( 'display', '' );
 				self.calcSectionLocs();
 			}
 	};

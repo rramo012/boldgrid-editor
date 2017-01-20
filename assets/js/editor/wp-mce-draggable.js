@@ -35,8 +35,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	var menu_items = [];
 
-	this.bind_window_resize = function () {
-		$window.on('resize', function ( ) {
+	this.bind_window_resize = function() {
+		$window.on( 'resize', function( ) {
 			if ( self.draggable_inactive == false ) {
 				self.last_resize = new Date().getTime();
 				setTimeout( self.resize_done_event, 250, self.last_resize );
@@ -44,13 +44,13 @@ IMHWPB.WP_MCE_Draggable = function() {
 		});
 	};
 
-	this.highlight_screen_size = function ( type ) {
+	this.highlight_screen_size = function( type ) {
 		self.remove_icon_highlights();
-		$('.mce-boldgrid-' + type ).addClass('boldgrid-highlighted-mce-icon');
+		$( '.mce-boldgrid-' + type ).addClass( 'boldgrid-highlighted-mce-icon' );
 	};
 
-	this.remove_icon_highlights = function () {
-		$('.mce-displaysize-imhwpb').removeClass('boldgrid-highlighted-mce-icon');
+	this.remove_icon_highlights = function() {
+		$( '.mce-displaysize-imhwpb' ).removeClass( 'boldgrid-highlighted-mce-icon' );
 	};
 
 	/**
@@ -69,11 +69,11 @@ IMHWPB.WP_MCE_Draggable = function() {
 			$( document ).trigger( pre_init, this );
 
 			IMHWPB.WP_MCE_Draggable.draggable_instance = $container.IMHWPB_Draggable( {
-				'dragImage' : 'actual',
-				'add_media_event_handler' : self.add_media_action,
-				'insert_layout_event_handler' : self.insert_layout_action,
-				'menu_items' : menu_items,
-				'main_container' : true
+				'dragImage': 'actual',
+				'add_media_event_handler': self.add_media_action,
+				'insert_layout_event_handler': self.insert_layout_action,
+				'menu_items': menu_items,
+				'main_container': true
 			}, $ ).init();
 
 			self.draggable_instance = IMHWPB.WP_MCE_Draggable.draggable_instance;
@@ -101,7 +101,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 		wp.media.editor.open();
 		wp.media.frame.setState( tab_slug );
-	}
+	};
 
 	/**
 	 * The event that should happen when the user selects add layout from a
@@ -114,12 +114,12 @@ IMHWPB.WP_MCE_Draggable = function() {
 	/**
 	 * When the user clicks on a button, set the cursor location inside the button
 	 */
-	this.set_button_cursor = function ( e ) {
+	this.set_button_cursor = function( e ) {
 		if ( e.clientX ) {
-			var this_button = $(this);
-			var buttons = self.draggable_instance.$master_container.find('button:not([data-mce-bogus])').not(this_button);
+			var this_button = $( this );
+			var buttons = self.draggable_instance.$master_container.find( 'button:not([data-mce-bogus])' ).not( this_button );
 			self.replace_all_buttons( buttons );
-			tinymce.activeEditor.selection.setCursorLocation( this, 1);
+			tinymce.activeEditor.selection.setCursorLocation( this, 1 );
 		}
 	};
 
@@ -127,12 +127,12 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Refresh the buttons on the page, this is done so that they arent left with a
 	 */
 	this.replace_all_buttons = function( buttons ) {
-		buttons.each( function () {
+		buttons.each( function() {
 			var html = this.outerHTML;
-			$(this).replaceWith(html);
+			$( this ).replaceWith( html );
 		});
 
-	}
+	};
 
 	/**
 	 * Bind actions to the common events
@@ -140,8 +140,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	this.bind_events = function() {
 
 		self.draggable_instance.$master_container
-			.on( 'mousedown.draggable_mce', '.draggable-tools-imhwpb',self.boldgrid_tool_click )
-			.on( 'mouseup.draggable_mce', '.draggable-tools-imhwpb',self.boldgrid_tool_click )
+			.on( 'mousedown.draggable_mce', '.draggable-tools-imhwpb', self.boldgrid_tool_click )
+			.on( 'mouseup.draggable_mce', '.draggable-tools-imhwpb', self.boldgrid_tool_click )
 			.on( 'add_column_dwpb.draggable_mce', self.add_column_done )
 			.on( 'drag_start_dwpb.draggable_mce', self.drag_start )
 			.on( 'delete_dwpb.draggable_mce', self.delete_element )
@@ -149,7 +149,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 			.on( 'add_row_event_dwpb.draggable_mce', self.set_cursor )
 			.on( 'boldgrid_edit_row.draggable_mce', self.edit_row )
 			.on( 'click.draggable_mce', 'button:not([data-mce-bogus])',  self.set_button_cursor )
-			.on( 'click.draggable_mce', 'a',  function (e) {e.preventDefault();} )
+			.on( 'click.draggable_mce', 'a',  function(e) {e.preventDefault();} )
 			.on( 'resize_start_dwpb.draggable_mce', self.prevent_edit )
 			.on( 'resize_done_dwpb.draggable_mce', self.column_resize_done )
 			.on( 'boldgrid_modify_content.draggable_mce', self.boldgrid_modify_content )
@@ -245,12 +245,12 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.column_resize_done = function() {
 		var $temp;
-		
+
 		if ( !self.draggable_instance.ie_version ) {
-			
+
 			// Blur the editor, allows FF to focus on click and add caret back in.
 			tinymce.activeEditor.getBody().blur();
-			
+
 			//This action use to add an undo level, but it appears as if contenteditable, is doing that for us.
 			tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
 
@@ -261,7 +261,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 			$temp.focus();
 			$temp.remove();
 		}
-		
+
 		$window.trigger( 'resize' );
 	};
 
@@ -326,7 +326,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 		$( '.mce-wp-image-toolbar' ).hide();
 		self.draggable_instance.$master_container.find( self.resize_selector ).hide();
 	};
-	
+
 	this.addDeactivateClasses = function () {
 		$('html').addClass('draggable-inactive');
 		$( tinymce.activeEditor.iframeElement ).contents().find('html').addClass('draggable-inactive');
@@ -360,7 +360,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 				IMHWPB.Editor.instance.remove_editor_styles();
 				$('[name="screen_columns"][value="' + IMHWPB.Editor.instance.original_column_val + '"]').click();
 			}
-			
+
 			self.addDeactivateClasses();
 		} else {
 			if ( $target ) {
@@ -373,7 +373,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 			} else {
 				self.load_draggable($(tinymce.activeEditor.iframeElement).contents());
 			}
-			
+
 			$('html').removeClass('draggable-inactive');
 			$container.contents().find('html').removeClass('draggable-inactive');
 		}
@@ -423,11 +423,11 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Create a hidden iframe that will allows us to view the front end site
 	 */
 	this.create_front_page_iframe = function () {
-		
+
 		if ( BoldgridEditor.is_boldgrid_theme ) {
 			return;
 		}
-		
+
 		var $temp_loaded_container = $('<div class="hidden temp-container">');
 		$.get( BoldgridEditor.site_url, function( data ){
 
@@ -473,7 +473,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 			if ( self.bootstrap_container ) {
 				//self.tinymce_body_container.addClass(self.bootstrap_container);
-				self.$resizing_iframe.remove(); 
+				self.$resizing_iframe.remove();
 				$window.trigger('resize');
 				return;
 			} else {
@@ -706,7 +706,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 		self.$mce_iframe = $(tinymce.activeEditor.iframeElement);
 		self.tinymce_body_container = self.$mce_iframe.contents().find('body');
-		
+
 		self.bind_column_switch();
 		self.create_front_page_iframe();
 		self.bind_window_resize();

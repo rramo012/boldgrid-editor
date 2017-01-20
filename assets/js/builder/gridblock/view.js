@@ -30,10 +30,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			$historyControls.find( '.redo-link' ).on( 'click', function() {
 				tinymce.activeEditor.undoManager.redo();
+				$( window ).trigger( 'resize' );
 				self.updateHistoryStates();
 			} );
 			$historyControls.find( '.undo-link' ).on( 'click', function() {
 				tinymce.activeEditor.undoManager.undo();
+				$( window ).trigger( 'resize' );
 				self.updateHistoryStates();
 			} );
 		},

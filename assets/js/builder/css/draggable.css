@@ -143,20 +143,8 @@ iframe[src^="https://maps.google.com"] {
     cursor: move !important;
 }
 
-#boldgrid-drag-pointer {
-	display: none;
-	position: fixed;
-	border-radius: 50%;
-	top: 10px;
-	left: 10px;
-	background-color: #f95b26;
-	height: 30px;
-    width: 30px;
-}
-
-/*.drag-progress #boldgrid-drag-pointer,*/
-.section-dragging-active #boldgrid-drag-pointer {
-	display: block;
+.dragging-section body {
+	overflow: hidden !important;
 }
 
 .section-drag-element {
@@ -175,6 +163,7 @@ iframe[src^="https://maps.google.com"] {
     left: 0;
     right: 0;
     content: ' ';
+	z-index: 2;
 }
 
 .bg-zoom-controls .history-controls  {

@@ -1,13 +1,36 @@
 $fix-top-height: 79px;
-$wp-color: #32373c;
 
-
-.boldgrid-section.loading-gridblock {
-	background: #0085ba;
+// Loading Gridblocks.
+.dragging-section .loading-gridblock {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 133, 186, 0.8);
 	color: white;
 	text-align: center;
-	padding: 100px 0;
-	font-size: 27px;
+	font-size: 32px;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+
+	.bg-editor-loading:before,
+	.bg-editor-loading:after {
+		margin-top: 55px;
+		margin-left: -22px;
+	}
+}
+
+.dragging-gridblock-placeholder .loading-gridblock {
+	display: none;
+}
+
+.dragging-section body {
+	position: relative;
+	left: -4px;
+	top: -2px;
+	transition: box-shadow .5s;
 }
 
 .boldgrid-zoomout-section {
@@ -16,13 +39,15 @@ $wp-color: #32373c;
 
 .boldgrid-zoomout .zoom-navbar {
 	position: fixed;
-	top: 31px;
+	top: 33px;
 	left: 0;
 	right: 0;
 	background: #f7f7f7;
-	z-index: 99999;
-	padding: 8px;
+	z-index: 9999;
+	padding: 6.5px;
 	text-align: center;
+	user-select: none;
+	border-bottom: 1px solid #cccccc;
 }
 
 .boldgrid-zoomout {
@@ -96,12 +121,14 @@ $wp-color: #32373c;
 		}
 	}
 
+	// disabled 1-19-17
 	.exit-row-dragging {
 		@include panel-button();
 		cursor: pointer;
 		background-color: $hover-color;
 		color: white;
 		display: inline-block;
+		visibility: hidden;
 
 		&:hover {
 			color: #23282d;
@@ -110,6 +137,35 @@ $wp-color: #32373c;
 
 		&:active {
 			box-shadow: 0px 0px 29px -12px black inset;
+		}
+	}
+
+	.bg-close-zoom-view {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 10px;
+		border-left: 1px solid #ddd;
+		width: 70px;
+		height: 100%;
+		background: #f1f1f1;
+		box-shadow: -7px 0px 0 0 #0073aa;
+		cursor: pointer;
+		transition: background-color .5s, color .5s;
+
+		&:hover {
+			background: #FFF;
+
+			&:after {
+				color: #0073aa;
+			}
+		}
+
+		&:after {
+			content: "\f335";
+			display: block;
+			font: normal 22px/45px dashicons;
+			color: black;
 		}
 	}
 
@@ -172,6 +228,7 @@ $wp-color: #32373c;
 		padding: 0;
 		overflow-x: hidden;
 		float: left;
+		user-select: none;
 	}
 	.wrap {
 		margin: 0;
@@ -206,11 +263,19 @@ $wp-color: #32373c;
 		cursor: pointer;
 		background: transparent;
 		border-radius: 2px;
-	    border: 1px solid transparent;
+		border: 1px solid transparent;
 		box-shadow: none;
+		position: relative;
+		top: 1px;
 
 		i {
 			font-size: 26px;
+
+			&:before {
+				position: relative;
+				left: -2px;
+				top: -2px;
+			}
 		}
 	}
 
@@ -240,21 +305,22 @@ $wp-color: #32373c;
 	height: 100%;
 	background: #f1f1f1;
 	overflow: scroll;
+	overflow-x: hidden;
 
 	&:after {
 		visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
+		display: block;
+		font-size: 0;
+		content: " ";
+		clear: both;
+		height: 0;
 	}
 
 	.gridblocks {
 		display: flex;
-	    flex-wrap: wrap;
-	    align-items: center;
-	    justify-content: center;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.gridblock {
@@ -277,14 +343,6 @@ $wp-color: #32373c;
 			left: 50%;
 			top: 50%;
 			transform: translateX(-50%) translateY(-50%) scale(.5);
-		}
-
-		&:hover {
-			border-color: $wp-color;
-
-			&:before {
-				background-color: $wp-color;
-			}
 		}
 
 		// Handle.
@@ -319,6 +377,14 @@ $wp-color: #32373c;
 		}
 
 		&:hover {
+			border-color: $gridblock-color;
+
+			&:before {
+				background-color: $gridblock-color;
+			}
+		}
+		&.dragging-gridblock,
+		&:hover {
 
 			&:after {
 				background: rgba(255, 255, 255, 0.8);
@@ -330,11 +396,14 @@ $wp-color: #32373c;
 
 		}
 
-		.add-gridblock:hover:before {
-			background: rgba(0,0,0,.8);
+		&.dragging-gridblock {
+			border-color: $boldgrid-color;
+
+			&:before {
+				background-color: $boldgrid-color;
+			}
 		}
 
-		.add-gridblock:active:before,
 		.add-gridblock:before {
 			content: '+ Add to Page';
 			z-index: 1;
@@ -350,6 +419,19 @@ $wp-color: #32373c;
 			top: 50%;
 			transition: background-color .2s, opacity .5s;
 			transform: translateX(-50%) translateY(-50%);
+		}
+
+		.add-gridblock:hover:before {
+			background: rgba(0,0,0,.8);
+		}
+
+		.add-gridblock:active:before {
+			background: rgba(0,0,0,.4);
+		}
+
+		&.dragging-gridblock .add-gridblock:before {
+			content: 'Drag to Page';
+			background: rgba(0,0,0,.6);
 		}
 	}
 }

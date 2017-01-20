@@ -6,6 +6,7 @@
 	<div class="bg-zoom-controls">
 		<a class="exit-row-dragging">Exit GridBlock Dragging</a>
 	</div>
+	<div class="bg-close-zoom-view"></div>
 </div>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
@@ -16,12 +17,23 @@
 </div>
 </script>
 
+<script type="text/html" id="tmpl-boldgrid-editor-gridblock-loading">
+	<div class="loading-gridblock">
+		<div>Installing Gridblock</div>
+		<div class="enabled bg-editor-loading absolute"></div></div>
+</script>
+
 <div class="boldgrid-zoomout-section zoomout-section-2">
 	<div class="gridblocks">
 	</div>
 </div>
 <script type="text/html" id="tmpl-gridblock-iframe-styles">
 <style>
+body, html {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
 .centered-section > .row:only-of-type,
 .centered-section > .boldgrid-section:only-of-type {
 	position: absolute;
