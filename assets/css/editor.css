@@ -1718,7 +1718,33 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout-section {
   display: none; }
 
+.zoom-navbar {
+  display: none; }
+
+.zoom-navbar .loading-remote {
+  display: none;
+  position: absolute;
+  left: 75%;
+  transform: translateX(-50%);
+  font-size: 17px;
+  top: 14px; }
+
+.zoom-navbar .loading-remote .bg-editor-loading:before,
+.zoom-navbar .loading-remote .bg-editor-loading:after {
+  left: -40px;
+  height: 30px;
+  width: 30px;
+  background-size: 100%; }
+
+.zoom-navbar .loading-remote .bg-editor-loading:after {
+  background-color: #232121;
+  top: calc( 50% - 15px); }
+
+.loading-remote-body .loading-remote {
+  display: block; }
+
 .boldgrid-zoomout .zoom-navbar {
+  display: block;
   position: fixed;
   top: 33px;
   left: 0;

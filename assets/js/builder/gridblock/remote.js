@@ -108,10 +108,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		gridblockLoadingUI: {
 			start: function() {
-				$( 'body' ).addClass( 'loading-gridblocks' );
+				$( 'body' ).addClass( 'loading-remote-body' );
 			},
 			finish: function() {
-				$( 'body' ).removeClass( 'loading-gridblocks' );
+				$( 'body' ).removeClass( 'loading-remote-body' );
 			}
 		},
 

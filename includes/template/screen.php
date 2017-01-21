@@ -6,6 +6,10 @@
 	<div class="bg-zoom-controls">
 		<a class="exit-row-dragging">Exit GridBlock Dragging</a>
 	</div>
+	<div class="loading-remote">
+		<div class="enabled bg-editor-loading absolute"></div>
+		<span>Loading GridBlocks</span>
+	</div>
 	<div class="bg-close-zoom-view"></div>
 </div>
 
