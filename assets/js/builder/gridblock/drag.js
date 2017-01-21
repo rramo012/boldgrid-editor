@@ -127,8 +127,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		installGridblock: function() {
-			BG.GRIDBLOCK.Add.replaceGridblock( self.currentDrag.$element, self.currentDrag.gridblockId );
-			self.currentDrag.$element.removeClass( 'dragging-gridblock-placeholder' );
+			if ( self.$mceContainer.$body.find( self.currentDrag.$element ).length ) {
+				BG.GRIDBLOCK.Add.replaceGridblock( self.currentDrag.$element, self.currentDrag.gridblockId );
+				self.currentDrag.$element.removeClass( 'dragging-gridblock-placeholder' );
+			}
 		},
 
 		/**

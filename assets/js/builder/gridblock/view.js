@@ -12,12 +12,26 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		$tinymceBody: null,
 		headMarkup: '',
 		$gridblockSection: null,
+		openInit: false,
 
 		init: function() {
 			self.findElements();
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
 			self.createGridblocks();
+		},
+
+		/**
+		 * Run this function the first time the view is open.
+		 *
+		 * @since 1.4
+		 */
+		firstOpen: function() {
+			if ( false === self.openInit ) {
+				self.openInit = true;
+				BOLDGRID.EDITOR.GRIDBLOCK.View.centerSections();
+				BOLDGRID.EDITOR.GRIDBLOCK.Remote.loadRemoteGridblocks();
+			}
 		},
 
 		/**
@@ -101,7 +115,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			var markup = self.generateInitialMarkup(),
 				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
 
-			$gridblockContainer.html( markup );
+			$gridblockContainer.append( markup );
 			self.createIframes( $gridblockContainer );
 			self.applyStyles();
 		},
@@ -112,8 +126,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		addFrameStyles: function() {
-			self.$gridblockSection.find( 'iframe' ).each( function() {
-				$( this ).contents().find( 'head' ).html( self.headMarkup );
+			self.$gridblockSection.find( 'iframe[data-styles="0"]' ).each( function() {
+				$( this ).attr( 'data-styles', 1 ).contents().find( 'head' ).html( self.headMarkup );
 			} );
 		},
 
@@ -123,12 +137,16 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		applyStyles: function() {
-			self.headMarkup = '';
+			if ( self.addedStyles ) {
+				self.addFrameStyles();
+				return;
+			}
 
+			self.headMarkup = '';
 			$.get( BoldgridEditor.site_url, function( siteMarkup ) {
 				self.headMarkup = self.getHeadStyles( siteMarkup );
-
 				self.addFrameStyles();
+				self.addedStyles = true;
 			} );
 		},
 
@@ -169,12 +187,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  jQuery $gridblockContainer Container of Gridblocks.
 		 */
 		createIframes: function( $gridblockContainer ) {
-			$gridblockContainer.find( '.gridblock' ).each( function() {
+			$gridblockContainer.find( 'iframe[data-gridblock="0"]' ).each( function() {
 				var $this = $( this ),
-					$iframe = $this.find( 'iframe' ).contents(),
-					html = $this.find( '.gridblock-html' ).html();
+					$iframe = $this.contents(),
+					$gridblock = $this.closest( '.gridblock' ),
+					html = $gridblock.find( '.gridblock-html' ).html();
 
-				$this.find( '.gridblock-html' ).empty();
+				$this.attr( 'data-gridblock', 1 );
+				$gridblock.find( '.gridblock-html' ).empty();
 				$iframe.find( 'body' )
 					.addClass( BoldgridEditor.body_class )
 					.addClass( 'mce-content-body' )
@@ -184,7 +204,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Create the markup for each GridBlock taht we already have in our system.
+		 * Create the markup for each GridBlock that we already have in our system.
 		 *
 		 * @since 1.4
 		 *
@@ -192,14 +212,29 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		generateInitialMarkup: function() {
 			var markup = '';
-			$.each( BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks, function( id ) {
-				markup += wp.template( 'boldgrid-editor-gridblock' )( {
-					'id': id,
-					'html': this.getPreviewHtml()
-				} );
+			$.each( BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks, function() {
+				if ( ! this.rendered ) {
+					this.rendered = true;
+					markup += self.getGridblockHtml( this );
+				}
 			} );
 
 			return markup;
+		},
+
+		/**
+		 * Get the html for a GridBlock.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {Object} gridblockData Gridblock Info
+		 * @return {string}               Markup to add in gridblock iframe.
+		 */
+		getGridblockHtml: function( gridblockData ) {
+			return wp.template( 'boldgrid-editor-gridblock' )( {
+				'id': gridblockData.gridblockId,
+				'html': gridblockData.getPreviewHtml()
+			} );
 		}
 	};
 

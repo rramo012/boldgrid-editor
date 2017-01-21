@@ -37,7 +37,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				gridblockId = $this.closest( '.gridblock' ).attr( 'data-id' );
 
 			$placeHolder = self.insertPlaceHolder( gridblockId );
-
 			self.replaceGridblock( $placeHolder, gridblockId );
 		},
 

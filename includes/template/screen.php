@@ -11,7 +11,7 @@
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
 <div class="gridblock" data-id="{{data.id}}">
-	<iframe></iframe>
+	<iframe data-styles="0" data-gridblock="0" ></iframe>
 	<div class='gridblock-html'>{{{data.html}}}</div>
 	<div class="add-gridblock"></div>
 </div>

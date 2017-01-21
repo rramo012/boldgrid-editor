@@ -15,12 +15,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 		$window: $( window ),
 
-		init: function() {
-
-		},
-
 		/**
 		 * Grab the markup for the selected Gridblock
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {number} gridblockId Unique id for a gridblock.
+		 * @return {string}             Html requested.
 		 */
 		getHtml: function( gridblockId ) {
 			var dynamicImages,
@@ -32,12 +33,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			}
 
 			if ( hasDownloadImages( gridblockData ) ) {
+
 				// Need to assign this to config.
-				//dynamicImages = IMHWPB.Media.GridBlocks.profileImageData( gridblock_data );
-				//
-				//
-				gridblockData.dynamicImages = [];
 				html = self.getDownloadImageMarkup( gridblockData );
+
 			} else {
 				html = self.getStaticHtml( gridblockData );
 			}
@@ -45,6 +44,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			return html;
 		},
 
+		/**
+		 * If the gridblock doesn't have any images to replace, just return the html.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {object} gridblockData Get the static html.
+		 * @return {string}               Html of gridblock.
+		 */
 		getStaticHtml: function( gridblockData ) {
 			var html = gridblockData.html;
 
@@ -53,9 +60,37 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			}
 
 			// Final Check, Make sure image tags are not broken.
-			return IMHWPB.Media.GridBlocks.validateImageTags( html );
+			return self.validateImageTags( html );
 		},
 
+		/**
+		 * Find all images and add a placeholder for each url empty tag.
+		 *
+		 * @since 1.2.4
+		 *
+		 * @return {string}  Html of Gridblock.
+		 */
+		validateImageTags: function( html ) {
+			var $div = $( '<div>' ).html( html );
+
+			$div.find( 'img' ).each( function() {
+				var $this = $( this );
+				if ( ! $this.attr( 'src' ) ) {
+					BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
+				}
+			} );
+
+			return $div.html();
+		},
+
+		/**
+		 * Get the markup for pages that need images replaced.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {object} gridblockData Gridblock info.
+		 * @return {$.Deffered}           Deferred Object.
+		 */
 		getDownloadImageMarkup: function( gridblockData ) {
 			var $deferred = $.Deferred();
 
@@ -64,20 +99,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				'action': 'boldgrid_gridblock_image',
 				'boldgrid_asset_ids': JSON.stringify( gridblockData.imageReplacements ),
 				'boldgrid_gridblock_image_ajax_nonce': BoldgridEditor.grid_block_nonce,
-				'dynamic_images': gridblockData.dynamic_images
+				'dynamic_images': gridblockData.dynamicImages
 			};
 
 			var success = function( response ) {
 				if ( response.success ) {
 
-					//Use array to replace all urls
+					//Use array to replace all urls.
 					updateImages( response.asset_ids, response.dynamic_images, gridblockData );
 				}
 			};
 
 			var always = function() {
 
-				// On failure this will turn all images to placeholders
+				// On failure this will turn all images to placeholders.
 				updateImages( [], [], gridblockData );
 
 				$deferred.resolve( gridblockData.getHtml() );
@@ -88,7 +123,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				'dataType': 'json',
 				'data': data,
 				'method':'POST',
-				'timeout': 15000 // Sets timeout to 15 seconds
+
+				// Sets timeout to 15 seconds.
+				'timeout': 15000
 			}).success( success )
 				.always( always );
 
@@ -97,14 +134,21 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 	};
 
+	/**
+	 * Add placeholders to images that were not replaced correctly.
+	 *
+	 * @since 1.4
+	 *
+	 * @param {object} gridblockData Gridblock info.
+	 */
 	function addPlaceholders( gridblockData ) {
 
 		// If there are any more images that need to be replaced,
 		// Replace them with placeholders
 		gridblockData.$html.find( '[data-pending-boldgrid-attribution]' ).each( function() {
 			var $this = $( this );
-			IMHWPB.Media.GridBlocks.swap_image_with_placeholder( $this );
-			IMHWPB.Media.GridBlocks.remove_attribution_attributes( $this );
+			BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
+			BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
 		});
 
 		// Placeholders for dynamic Images that came from preview server.
@@ -114,12 +158,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			gridblockData.$html.find( 'img[data-imhwpb-built-photo-search]' ).each( function() {
 				var $this = $( this );
 				if ( ! this.boldgrid_updated_src ) {
-					IMHWPB.Media.GridBlocks.swap_image_with_placeholder( $this );
+					BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
 				}
 			});
 		}
 	}
 
+	/**
+	 * Add wp-image class to gridblock.
+	 *
+	 * @since 1.4
+	 *
+	 * @param {jQuery} $image Image to have attributes replaced.
+	 * @param {Object} data   Image return data.
+	 */
 	function addImageAttr( $image, data ) {
 		$image.attr( 'src', data.url );
 
@@ -130,7 +182,15 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		}
 	}
 
-	// Save the image markup on to the page.
+	/**
+	 * Insert user images to the static gridblock content.
+	 *
+	 * @since 1.4
+	 *
+	 * @param  {Object} asset_ids              Asset Ids and the usrl created on the wp.
+	 * @param  {Object} dynamic_image_response Image ids and the url created on the wp.
+	 * @param  {Object} gridblockData          Gridblock info.
+	 */
 	function updateImages( asset_ids, dynamic_image_response, gridblockData ) {
 		$.each( asset_ids, function() {
 			var $image;
@@ -141,7 +201,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$image = gridblockData.$html.find( '[data-boldgrid-asset-id="' + this.asset_id + '"]' );
 
 				addImageAttr( $image, this );
-				IMHWPB.Media.GridBlocks.remove_attribution_attributes( $image );
+				BG.GRIDBLOCK.Filter.removeAttributionAttributes( $image );
 			}
 		});
 
@@ -150,29 +210,43 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			//Foreach dynamic image.
 			$.each( dynamic_image_response, function( index, dynamic_image_data ) {
 				if ( this.rand_image_id && this.url ) {
-					gridblock_data.$html
-						.find( 'img[data-imhwpb-built-photo-search]' ).each( function() {
+					gridblockData.$html.find( 'img[data-imhwpb-built-photo-search]' ).each( function() {
 
-							// If the image id matches, update the src.
-							if ( dynamic_image_data.rand_image_id == this.boldgrid_rand_image_id ) {
-								this.boldgrid_updated_src = true;
-								addImageAttr( $( this ), dynamic_image_data );
-							}
+						// If the image id matches, update the src.
+						if ( String( dynamic_image_data.rand_image_id ) === String( this.boldgrid_rand_image_id ) ) {
+							this.boldgrid_updated_src = true;
+							addImageAttr( $( this ), dynamic_image_data );
+						}
 					});
 				}
 			});
 		}
 
+		/*
+		 *  At this point we've placed all images with user images.
+		 *  Update the gridblock config to reflect the updates.
+		 *  (gridblockData.dynamicImages && gridblockData.imageReplacements)
+		 */
+		 gridblockData.dynamicImages = BG.GRIDBLOCK.Remote.profileImageData( gridblockData );
+		 BG.GRIDBLOCK.Filter.storeImageReplacements( gridblockData.gridblockId );
+
 		// Add placeholders if still needed
 		addPlaceholders( gridblockData );
 	}
 
+	/**
+	 * Check if this gridblock has images that need replacing.
+	 *
+	 * @since 1.4
+	 *
+	 * @param  {object}  gridblockData Gridblock Info.
+	 * @return {Boolean}               Boolean.
+	 */
 	function hasDownloadImages ( gridblockData ) {
 		return ( gridblockData.imageReplacements && gridblockData.imageReplacements.length ) ||
 			( gridblockData.dynamicImages && gridblockData.dynamicImages.length );
 	}
 
-	BOLDGRID.EDITOR.GRIDBLOCK.Create = self;
-	$( BOLDGRID.EDITOR.GRIDBLOCK.Create.init );
+	BG.GRIDBLOCK.Create = self;
 
 } )( jQuery );

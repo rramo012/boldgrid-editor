@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 ( function( $ ) {
 	'use strict';
 
-	var self = {
+	var BG = BOLDGRID.EDITOR,
+		self = {
 
 		configs: BoldgridEditor.gridblocks,
 
@@ -17,23 +18,40 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		setupConfigs: function() {
-			BOLDGRID.EDITOR.GRIDBLOCK.configs = {};
-			BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks = {};
+			BG.GRIDBLOCK.configs = {};
+			BG.GRIDBLOCK.configs.gridblocks = {};
 
 			$.each( self.configs, function( gridblockId ) {
 				this.$html = $( this.html );
 				this.$previewHtml = $( this['preview-html'] );
 
-				self.removeFailedDynamic( gridblockId );
-				self.removeSimpleGridblocks( gridblockId );
+				self.removeInvalidGridblocks( this, gridblockId );
 				self.stripSampleData( gridblockId );
 
-				IMHWPB.Media.GridBlocks.translateImageUrls( this.$html );
-				IMHWPB.Media.GridBlocks.translateImageUrls( this.$previewHtml );
-				self.storeImageReplacements( gridblockId );
+				self.translateImageUrls( this.$html );
+				self.translateImageUrls( this.$previewHtml );
 			} );
 
 			self.setConfig();
+		},
+
+		/**
+		 * Schedule any invalid gridblocks for removal.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {Object} gridblock   Config for Gridblock.
+		 * @param  {integer} gridblockId Index of Gridblock
+		 */
+		removeInvalidGridblocks: function( gridblock, gridblockId ) {
+			var hasFailedDynamic, isSimpleGridblock;
+
+			hasFailedDynamic = self.hasFailedDynamic( gridblock.$html );
+			isSimpleGridblock = self.isSimpleGridblock( gridblock.$html );
+
+			if ( isSimpleGridblock || hasFailedDynamic ) {
+				self.removeGridblock( gridblockId );
+			}
 		},
 
 		/**
@@ -44,12 +62,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  {integer} gridblockId Index of Gridblock in config.
 		 */
 		storeImageReplacements: function( gridblockId ) {
-			var imageReplacements = [];
-			self.configs[ gridblockId ].$html.find( '[data-pending-boldgrid-attribution]' ).each( function() {
+			var imageReplacements = [],
+				config = BG.GRIDBLOCK.configs.gridblocks;
+
+			config[ gridblockId ].$html.find( '[data-pending-boldgrid-attribution]' ).each( function() {
 				imageReplacements.push( $( this ).data( 'boldgrid-asset-id' ) );
 			} );
 
-			self.configs[ gridblockId ].imageReplacements = imageReplacements;
+			config[ gridblockId ].imageReplacements = imageReplacements;
 		},
 
 		/**
@@ -113,10 +133,40 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( ! self.removedGridlocks[ gridblockId ] ) {
 					delete this.html;
 					delete this['preview-html'];
+					this.gridblockId = gridblockId;
+					this.uniqueMarkup = self.createUniqueMarkup( this.$html );
 					_.extend( this, self.configMethods );
-					BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks[ gridblockId ] = this;
+					BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] = this;
+					self.storeImageReplacements( gridblockId );
 				}
 			} );
+		},
+
+		/**
+		 * Add a single Gridblock Object to the config.
+		 *
+		 * @since 1.4
+		 *
+		 * @param {Object} gridblockData Gridblock Info.
+		 * @param {number} index         Index of gridblock in api return.
+		 */
+		addGridblockConfig: function( gridblockData, index ) {
+			var gridblockId = 'remote-' + index;
+
+			gridblockData.gridblockId = gridblockId;
+			gridblockData.$html = gridblockData['html-jquery'];
+			gridblockData.$previewHtml = gridblockData['preview-html-jquery'];
+
+			delete gridblockData.html;
+			delete gridblockData['preview-html'];
+			delete gridblockData['html-jquery'];
+			delete gridblockData['preview-html-jquery'];
+
+			_.extend( gridblockData, self.configMethods );
+			BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] = gridblockData;
+
+			gridblockData.dynamicImages = BG.GRIDBLOCK.Remote.profileImageData( gridblockData );
+			self.storeImageReplacements( gridblockId );
 		},
 
 		/**
@@ -137,16 +187,81 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 *
 		 * @param {number} gridblockId Index of gridblock.
 		 */
-		removeFailedDynamic: function( gridblockId ) {
-			self.configs[ gridblockId ].$html.find( 'img' ).each( function() {
+		hasFailedDynamic: function( $html ) {
+			var hasFailedDynamic = false;
+			$html.find( 'img' ).each( function() {
 				var $this = $( this ),
 					src = $this.attr( 'src' );
 
 				if ( src && src.indexOf( '//wp-preview' ) > -1 && ! $this.attr( 'data-id-from-provider' ) ) {
-					self.removeGridblock( gridblockId );
+					hasFailedDynamic = true;
 					return false;
 				}
 			});
+
+			return hasFailedDynamic;
+		},
+
+		/**
+		 * Create a string that will be used to check if 2 griblocks are the sameish.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {jQuery} $element Element to create string for.
+		 * @return {string}          String with whitespace rmeoved.
+		 */
+		createUniqueMarkup: function( $element ) {
+			var html = $element[0].outerHTML;
+			return html.replace( / /g, '' );
+		},
+
+		/**
+		 * Add the src attributes for images that need them.
+		 *
+		 * @since 1.2
+		 */
+		translateImageUrls: function( $context ) {
+			var $imagesToTranslate = $context.find( '[data-boldgrid-asset-id]' );
+
+			$imagesToTranslate.each( function() {
+				var imageUrl,
+					$this = $( this ),
+					assetId = $this.data( 'boldgrid-asset-id' );
+
+				if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
+
+					// If the user has an API key place the asset images.
+					imageUrl = IMHWPB.configs.asset_server +
+						IMHWPB.configs.ajax_calls.get_asset + '?key=' +
+						IMHWPB.configs.api_key + '&id=' + assetId;
+
+					$this.attr( 'src', imageUrl );
+					$this.attr( 'data-pending-boldgrid-attribution', 1 );
+				} else {
+
+					// Otherwise insert place holders.
+					self.setPlaceholderSrc( $this );
+				}
+			} );
+		},
+
+		/**
+		 * Swap image with a placeholder from placehold.it
+		 *
+		 * @since 1.0
+		 */
+		setPlaceholderSrc: function( $this ) {
+
+			// Default to 300.
+			var width = ( $this.attr( 'width' ) ) ? $this.attr( 'width' ) : '300',
+				height = ( $this.attr( 'height' ) ) ? $this.attr( 'height' ) : '300';
+
+			$this.attr( 'src', '//placehold.it/' + width + 'x' + height + '/cccccc/' );
+		},
+
+		removeAttributionAttributes: function( $image ) {
+			$image.removeAttr( 'data-boldgrid-asset-id' )
+				  .removeAttr( 'data-pending-boldgrid-attribution' );
 		},
 
 		/**
@@ -156,13 +271,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 *
 		 * @param  {number} gridblockId Index of gridblock.
 		 */
-		removeSimpleGridblocks: function( gridblockId ) {
+		isSimpleGridblock: function( $html ) {
 			var valid_num_of_descendents = 3,
-				$testDiv = $( '<div>' ).html( self.configs[ gridblockId ].$html );
+				isSimpleGridblock = false,
+				$testDiv = $( '<div>' ).html( $html );
 
 			$testDiv.find( '.row:not(.row .row) > [class^="col-"] > hr' ).each( function() {
 				if ( ! $( this ).siblings().length ) {
-					self.removeGridblock( gridblockId );
+					isSimpleGridblock = true;
 					return false;
 				}
 			});
@@ -174,7 +290,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( ! $this.siblings().length  ) {
 					$descendents = $this.find( '*' );
 					if ( $descendents.length <= valid_num_of_descendents ) {
-						self.removeGridblock( gridblockId );
+						isSimpleGridblock = true;
 						return false;
 					}
 				}
@@ -187,7 +303,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( ! $this.siblings().length ) {
 					$hr = $this.find( 'hr' );
 					if ( ! $hr.siblings().length ) {
-						self.removeGridblock( gridblockId );
+						isSimpleGridblock = true;
 						return false;
 					}
 				}
@@ -195,13 +311,15 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			// Hide empty rows.
 			$testDiv.find( '> .row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type' ).each( function() {
-				self.removeGridblock( gridblockId );
+				isSimpleGridblock = true;
 				return false;
 			});
+
+			return isSimpleGridblock;
 		}
 	};
 
-	BOLDGRID.EDITOR.GRIDBLOCK.Filter = self;
-	BOLDGRID.EDITOR.GRIDBLOCK.Filter.setupConfigs();
+	BG.GRIDBLOCK.Filter = self;
+	BG.GRIDBLOCK.Filter.setupConfigs();
 
 } )( jQuery );

@@ -147,7 +147,6 @@ class Boldgrid_Editor_Assets {
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
 				'admin-url' => get_admin_url(),
-				'post_id' => ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null,
 				'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
 				'grid_block_html_nonce' => wp_create_nonce( 'boldgrid_gridblock_html_ajax_nonce' ),
 			) );
