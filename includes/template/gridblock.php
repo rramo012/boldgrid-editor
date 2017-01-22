@@ -18,8 +18,8 @@
 </div>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
-<div class="gridblock" data-id="{{data.id}}">
-	<iframe data-styles="0" data-gridblock="0" ></iframe>
+<div class="gridblock" data-id="{{data.id}}" data-styles="0" data-gridblock="0">
+	<i class="fa fa-arrows" aria-hidden="true"></i>
 	<div class='gridblock-html'>{{{data.html}}}</div>
 	<div class="add-gridblock"></div>
 </div>

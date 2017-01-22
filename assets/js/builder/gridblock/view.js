@@ -8,7 +8,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 ( function( $ ) {
 	'use strict';
 
-	var self = {
+	var BG = BOLDGRID.EDITOR,
+		self = {
 		$tinymceBody: null,
 		headMarkup: '',
 		$gridblockSection: null,
@@ -22,8 +23,21 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.createGridblocks();
 		},
 
+		/**
+		 * When clicking on the add gridblock button. Switch to visual tab before opening.
+		 *
+		 * @since 1.4
+		 */
 		setupAddGridblock: function() {
-			$( '#insert-gridblocks-button' ).on( 'click', BOLDGRID.EDITOR.CONTROLS.Section.enableSectionDrag );
+			$( '#insert-gridblocks-button' ).on( 'click', function() {
+				if ( ! BG.CONTROLS.Section.$container ) {
+					$( '.wp-switch-editor' ).click();
+					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 300 );
+				} else {
+					BG.CONTROLS.Section.enableSectionDrag();
+				}
+
+			} );
 		},
 
 		/**
@@ -34,8 +48,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		firstOpen: function() {
 			if ( false === self.openInit ) {
 				self.openInit = true;
-				BOLDGRID.EDITOR.GRIDBLOCK.View.centerSections();
-				BOLDGRID.EDITOR.GRIDBLOCK.Remote.loadRemoteGridblocks();
+				BG.GRIDBLOCK.View.centerSections();
+				BG.GRIDBLOCK.Remote.loadRemoteGridblocks();
 			}
 		},
 
@@ -131,8 +145,19 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		addFrameStyles: function() {
-			self.$gridblockSection.find( 'iframe[data-styles="0"]' ).each( function() {
-				$( this ).attr( 'data-styles', 1 ).contents().find( 'head' ).html( self.headMarkup );
+			self.$gridblockSection.find( '[data-styles="0"]' ).each( function() {
+				var $this = $( this ),
+					$iframe = $this.find( 'iframe' ),
+					$head = $iframe.contents().find( 'head' );
+
+				$head.html( self.headMarkup );
+
+				$iframe.on( 'load', function() {
+					if ( self.headMarkup ) {
+						$this.attr( 'data-styles', 1 );
+						$head.html( self.headMarkup );
+					}
+				} );
 			} );
 		},
 
@@ -192,19 +217,30 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  jQuery $gridblockContainer Container of Gridblocks.
 		 */
 		createIframes: function( $gridblockContainer ) {
-			$gridblockContainer.find( 'iframe[data-gridblock="0"]' ).each( function() {
-				var $this = $( this ),
-					$iframe = $this.contents(),
-					$gridblock = $this.closest( '.gridblock' ),
+			$gridblockContainer.find( '[data-gridblock="0"]' ).each( function() {
+				var load,
+					$gridblock = $( this ),
+					$iframe = $( '<iframe></iframe>' ),
 					html = $gridblock.find( '.gridblock-html' ).html();
 
-				$this.attr( 'data-gridblock', 1 );
+				$gridblock.prepend( $iframe );
+
 				$gridblock.find( '.gridblock-html' ).empty();
-				$iframe.find( 'body' )
-					.addClass( BoldgridEditor.body_class )
-					.addClass( 'mce-content-body' )
-					.css( 'overflow', 'hidden' )
-					.html( html );
+				$gridblock.attr( 'data-gridblock', 1 );
+
+				load = function() {
+					$iframe.contents()
+						.find( 'body' )
+						.addClass( BoldgridEditor.body_class )
+						.addClass( 'mce-content-body' )
+						.css( 'overflow', 'hidden' )
+						.html( html );
+
+					$iframe.contents().find( 'head' ).html( self.headMarkup );
+				};
+
+				load();
+				$iframe.on( 'load', load );
 			} );
 		},
 
@@ -217,7 +253,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		generateInitialMarkup: function() {
 			var markup = '';
-			$.each( BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks, function() {
+			$.each( BG.GRIDBLOCK.configs.gridblocks, function() {
 				if ( ! this.rendered ) {
 					this.rendered = true;
 					markup += self.getGridblockHtml( this );
@@ -243,7 +279,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		}
 	};
 
-	BOLDGRID.EDITOR.GRIDBLOCK.View = self;
-	$( BOLDGRID.EDITOR.GRIDBLOCK.View.init );
+	BG.GRIDBLOCK.View = self;
+	$( BG.GRIDBLOCK.View.init );
 
 } )( jQuery );

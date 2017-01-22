@@ -389,10 +389,21 @@ $fix-top-height: 79px;
 			background-color: #cccccc;
 			border-radius: 4px 0px 0px 4px;
 			transition: background-color .5s;
+			/*
 			background-image: url('../image/grip.png');
 			background-repeat: no-repeat;
 			background-position: center;
+			*/
 			cursor: move;
+		}
+
+		.fa-arrows {
+			position: absolute;
+		    top: 50%;
+		    color: #fff;
+		    left: -22px;
+		    transform: translateY(-50%);
+		    font-size: 16px;
 		}
 
 		// Overlay.

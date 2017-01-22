@@ -2028,10 +2028,20 @@ body.boldgrid-editor-fullscreen {
   background-color: #cccccc;
   border-radius: 4px 0px 0px 4px;
   transition: background-color .5s;
-  background-image: url("../image/grip.png");
-  background-repeat: no-repeat;
-  background-position: center;
+  /*
+			background-image: url('../image/grip.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			*/
   cursor: move; }
+
+.zoom-gridblocks-section .gridblock .fa-arrows {
+  position: absolute;
+  top: 50%;
+  color: #fff;
+  left: -22px;
+  transform: translateY(-50%);
+  font-size: 16px; }
 
 .zoom-gridblocks-section .gridblock:after {
   content: '';
