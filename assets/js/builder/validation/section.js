@@ -133,7 +133,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 			var $this = $( this ),
                 $parent = $this.parent();
 
-            if ( $parent.length && $parent[0] != self.$context[0] && false === $parent.hasClass( sectionClass ) ) {
+            if ( $parent.length && $parent[0] !== self.$context[0] && false === $parent.hasClass( sectionClass ) ) {
                $parent.addClass( sectionClass );
             }
 		} );
@@ -154,7 +154,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
             }
 
             if ( ! $this.closestContext( '.boldgrid-section', self.$context ).length  ) {
-                if ( $parent.length && $parent[0] != self.$context[0] ) {
+                if ( $parent.length && $parent[0] !== self.$context[0] ) {
                     $parent.addClass( sectionClass );
                 } else {
                     $this.parent().wrap( section );

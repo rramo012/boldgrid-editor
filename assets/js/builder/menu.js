@@ -1,27 +1,27 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
-( function ( $ ) {
-	"use strict";
+( function( $ ) {
+	'use strict';
 
 	var self,
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.Menu = {
 
-		$element : null,
-		
-		$activeElement : null,
-		
-		$mceContainer : null,
+		$element: null,
+
+		$activeElement: null,
+
+		$mceContainer: null,
 
 		/**
 		 * Initialize the menu control.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @return jQuery $element.
 		 */
-		init : function () {
+		init: function() {
 
 			this.create();
 			this.setupMenuDrag();
@@ -31,44 +31,45 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Get the target clicked on that corresponds to the menu item highlighted.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @param BG.Control control.
 		 * @return jQuery
 		 */
-		getTarget : function ( control ) {
+		getTarget: function( control ) {
 			return this.$element.targetData[ control.name ];
 		},
-		
+
 		/**
 		 * Get the current element being modified.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @return jQuery Element being modified.
 		 */
-		getCurrentTarget : function () {
-			
+		getCurrentTarget: function() {
+
 			var $target;
-			
+
 			if ( BG.Panel.currentControl ) {
-				if( BG.Panel.currentControl.getTarget ) {
+				if ( BG.Panel.currentControl.getTarget ) {
+
 					// Allow control to override the way a target is aquired.
 					$target = BG.Panel.currentControl.getTarget();
 				} else {
 					$target = self.getTarget( BG.Panel.currentControl );
 				}
 			}
-			
+
 			return $target;
 		},
 
 		/**
 		 * Create the menu element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		create : function () {
-			
+		create: function() {
+
 			this.$mceContainer = $( '#' + tinymce.activeEditor.theme.panel._items[0]._id );
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			this.$mceContainer.append( this.$element );
@@ -77,36 +78,36 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Setup the ability to drag the menu.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		setupMenuDrag : function() {
+		setupMenuDrag: function() {
 			this.$element.find( 'ul' ).draggable( {
 				containment: '#wp-content-editor-container',
-				scroll : false,
-				axis: "x",
-				cancel: "li"
+				scroll: false,
+				axis: 'x',
+				cancel: 'li'
 			} );
 		},
 
 		/**
 		 * Create the list item for the registered control.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @param BG.Control control.
 		 */
-		createListItem : function ( control ) {
+		createListItem: function( control ) {
 
 			var $dropdownUl,
-				$li = $('<li></li>').attr( 'data-action', 'menu-' + control.name ),
+				$li = $( '<li></li>' ).attr( 'data-action', 'menu-' + control.name ),
 				$icon = $( '<span></span>' ).addClass( control.iconClasses );
 
 			$li.append( $icon );
 
 			if ( control.menuDropDown ) {
 				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
-				$dropdownUl.html('<li class="title">' + control.menuDropDown.title + '</li>');
-				$.each( control.menuDropDown.options, function () {
+				$dropdownUl.html( '<li class="title">' + control.menuDropDown.title + '</li>' );
+				$.each( control.menuDropDown.options, function() {
 					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
 				} );
 				$li.append( $dropdownUl );
@@ -114,7 +115,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			if ( control.tooltip ) {
 				$li.append( wp.template( 'boldgrid-editor-tooltip' )( {
-					'message' : control.tooltip
+					'message': control.tooltip
 				} ) );
 			}
 
@@ -124,24 +125,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Activate the passed control.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @param BG.Control control.
 		 */
-		activateControl : function ( control ) {
+		activateControl: function( control ) {
 			self.deactivateControl();
 			this.$activeElement = BOLDGRID.EDITOR.Menu.$element
-				.find( '[data-action="menu-' + control.name + '"]')
+				.find( '[data-action="menu-' + control.name + '"]' )
 				.addClass( 'active' );
 
 		},
 
 		/**
 		 * Deactivate the active element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		deactivateControl : function () {
+		deactivateControl: function() {
 			if ( this.$activeElement ) {
 				this.$activeElement.removeClass( 'active' );
 				this.$activeElement = null;
@@ -150,10 +151,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Reactivate Menu.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		reactivateMenu : function () {
+		reactivateMenu: function() {
 			var $panel = BOLDGRID.EDITOR.Panel.$element;
 			if ( this.$activeElement && $panel.is( ':visible' ) ) {
 				this.$element.find( '[data-action="menu-' + $panel.attr( 'data-type' ) + '"]' )

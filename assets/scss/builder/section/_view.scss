@@ -279,7 +279,7 @@ $fix-top-height: 79px;
 
 }
 
-.boldgrid-zoomout .zoomout-section-2 {
+.boldgrid-zoomout .zoom-gridblocks-section {
 	display: block;
 }
 
@@ -330,7 +330,7 @@ $fix-top-height: 79px;
 	}
 }
 
-.zoomout-section-2 {
+.zoom-gridblocks-section {
 	width: 50%;
 	margin-top: $fix-top-height;
 	height: 100%;
@@ -352,19 +352,20 @@ $fix-top-height: 79px;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
+		margin-bottom: 80px;
 	}
 
 	.gridblock {
 		position: relative;
 		height: 300px;
 		background: white;
-		margin: 50px 0 0 50px;
+		margin: 50px 0 0 0;
 		border: 3px solid #cccccc;
 		border-radius: 1px;
 		transition:  border-color .5s;
-		left: -38px;
+		left: 7px;
 		cursor: move;
-		width: 584px;
+		width: 586px;
 		user-select: none;
 
 		iframe {
@@ -463,6 +464,84 @@ $fix-top-height: 79px;
 		&.dragging-gridblock .add-gridblock:before {
 			content: 'Drag to Page';
 			background: rgba(0,0,0,.6);
+		}
+	}
+}
+
+@media ( min-width: 1600px ) {
+	.zoom-gridblocks-section {
+		.gridblock {
+			height: 354px;
+			width: 690px;
+
+			iframe {
+			   transform: translateX(-50%) translateY(-50%) scale(0.59);
+			}
+		}
+	}
+}
+
+@media ( max-width: 1359px ) {
+	.zoom-gridblocks-section {
+		.gridblock {
+			height: 271px;
+		    width: 527px;
+
+			iframe {
+			   transform: translateX(-50%) translateY(-50%) scale(0.45);
+			}
+		}
+	}
+}
+
+@media ( max-width: 1220px ) {
+	.boldgrid-zoomout-section.zoom-gridblocks-section {
+		overflow-x: scroll;
+	}
+}
+
+@media ( max-width: 782px ) {
+	.boldgrid-zoomout {
+		.zoom-gridblocks-section {
+			display: none;
+		}
+
+		#wpcontent {
+			width: 100%;
+			top: 92px;
+		}
+
+		#wp-content-editor-tools {
+			top: 92px !important;
+			right: auto;
+			left: 0;
+		}
+
+		.zoom-navbar {
+			top: 46px;
+		}
+
+		#wp-admin-bar-menu-toggle {
+			display: none !important;
+		}
+	}
+}
+
+@media ( max-width: 600px ) {
+	.boldgrid-zoomout {
+		#wpwrap {
+			height: calc( 100% - 47px);
+		}
+		#wpcontent {
+			top: 46px;
+		}
+
+		.zoom-navbar {
+			top: 0;
+		}
+
+		#content_ifr {
+			margin-top: 25px;
 		}
 	}
 }

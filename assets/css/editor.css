@@ -1143,34 +1143,6 @@
 /*--------------------------------------------------------------
 # Post.php Modifications
 --------------------------------------------------------------*/
-#boldgrid-drag-pointer {
-  display: none;
-  position: fixed;
-  border-radius: 50%;
-  top: 10px;
-  left: 10px;
-  background-color: #f95b26;
-  height: 30px;
-  width: 30px;
-  z-index: 999999; }
-
-.section-dragging-active #boldgrid-drag-pointer {
-  display: block; }
-
-.wp-admin #boldgrid-drag-pointer {
-  margin-top: 20px;
-  margin-left: 20px; }
-
-.dragging-section.dragging-gridblock-iframe body {
-  box-shadow: 0 0 0 5px #f95b26; }
-
-.dragging-section.dragging-gridblock-iframe #boldgrid-drag-pointer {
-  margin-top: 20px;
-  margin-left: 20px; }
-
-/*--------------------------------------------------------------
-# Post.php Modifications
---------------------------------------------------------------*/
 /**
 * Editor Page overwrites to prevent the bootstrap columns from collapsing early
 * Stretch the outsides of the editor and make the second column narrow
@@ -1685,7 +1657,7 @@ body.boldgrid-editor-fullscreen {
   display: block; }
 
 /*--------------------------------------------------------------
-# Zoom Out Controls
+# Setup the view for sections.
 --------------------------------------------------------------*/
 .dragging-section .loading-gridblock {
   position: absolute;
@@ -1958,7 +1930,7 @@ body.boldgrid-editor-fullscreen {
   left: 50%;
   transform: translateX(-50%); }
 
-.boldgrid-zoomout .zoomout-section-2 {
+.boldgrid-zoomout .zoom-gridblocks-section {
   display: block; }
 
 .history-controls {
@@ -2001,7 +1973,7 @@ body.boldgrid-editor-fullscreen {
 .history-controls button[disabled] i {
   color: #ccc; }
 
-.zoomout-section-2 {
+.zoom-gridblocks-section {
   width: 50%;
   margin-top: 79px;
   height: 100%;
@@ -2009,7 +1981,7 @@ body.boldgrid-editor-fullscreen {
   overflow: scroll;
   overflow-x: hidden; }
 
-.zoomout-section-2:after {
+.zoom-gridblocks-section:after {
   visibility: hidden;
   display: block;
   font-size: 0;
@@ -2017,26 +1989,27 @@ body.boldgrid-editor-fullscreen {
   clear: both;
   height: 0; }
 
-.zoomout-section-2 .gridblocks {
+.zoom-gridblocks-section .gridblocks {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  margin-bottom: 80px; }
 
-.zoomout-section-2 .gridblock {
+.zoom-gridblocks-section .gridblock {
   position: relative;
   height: 300px;
   background: white;
-  margin: 50px 0 0 50px;
+  margin: 50px 0 0 0;
   border: 3px solid #cccccc;
   border-radius: 1px;
   transition: border-color .5s;
-  left: -38px;
+  left: 7px;
   cursor: move;
-  width: 584px;
+  width: 586px;
   user-select: none; }
 
-.zoomout-section-2 .gridblock iframe {
+.zoom-gridblocks-section .gridblock iframe {
   width: 1170px;
   height: 600px;
   position: absolute;
@@ -2044,7 +2017,7 @@ body.boldgrid-editor-fullscreen {
   top: 50%;
   transform: translateX(-50%) translateY(-50%) scale(0.5); }
 
-.zoomout-section-2 .gridblock:before {
+.zoom-gridblocks-section .gridblock:before {
   content: '';
   display: block;
   position: absolute;
@@ -2060,7 +2033,7 @@ body.boldgrid-editor-fullscreen {
   background-position: center;
   cursor: move; }
 
-.zoomout-section-2 .gridblock:after {
+.zoom-gridblocks-section .gridblock:after {
   content: '';
   display: block;
   position: absolute;
@@ -2071,25 +2044,25 @@ body.boldgrid-editor-fullscreen {
   background: rgba(255, 255, 255, 0);
   transition: background-color .5s; }
 
-.zoomout-section-2 .gridblock:hover {
+.zoom-gridblocks-section .gridblock:hover {
   border-color: #32373c; }
 
-.zoomout-section-2 .gridblock:hover:before {
+.zoom-gridblocks-section .gridblock:hover:before {
   background-color: #32373c; }
 
-.zoomout-section-2 .gridblock.dragging-gridblock:after, .zoomout-section-2 .gridblock:hover:after {
+.zoom-gridblocks-section .gridblock.dragging-gridblock:after, .zoom-gridblocks-section .gridblock:hover:after {
   background: rgba(255, 255, 255, 0.8); }
 
-.zoomout-section-2 .gridblock.dragging-gridblock .add-gridblock:before, .zoomout-section-2 .gridblock:hover .add-gridblock:before {
+.zoom-gridblocks-section .gridblock.dragging-gridblock .add-gridblock:before, .zoom-gridblocks-section .gridblock:hover .add-gridblock:before {
   opacity: 1; }
 
-.zoomout-section-2 .gridblock.dragging-gridblock {
+.zoom-gridblocks-section .gridblock.dragging-gridblock {
   border-color: #f95b26; }
 
-.zoomout-section-2 .gridblock.dragging-gridblock:before {
+.zoom-gridblocks-section .gridblock.dragging-gridblock:before {
   background-color: #f95b26; }
 
-.zoomout-section-2 .gridblock .add-gridblock:before {
+.zoom-gridblocks-section .gridblock .add-gridblock:before {
   content: '+ Add to Page';
   z-index: 1;
   opacity: 0;
@@ -2105,15 +2078,148 @@ body.boldgrid-editor-fullscreen {
   transition: background-color .2s, opacity .5s;
   transform: translateX(-50%) translateY(-50%); }
 
-.zoomout-section-2 .gridblock .add-gridblock:hover:before {
+.zoom-gridblocks-section .gridblock .add-gridblock:hover:before {
   background: rgba(0, 0, 0, 0.8); }
 
-.zoomout-section-2 .gridblock .add-gridblock:active:before {
+.zoom-gridblocks-section .gridblock .add-gridblock:active:before {
   background: rgba(0, 0, 0, 0.4); }
 
-.zoomout-section-2 .gridblock.dragging-gridblock .add-gridblock:before {
+.zoom-gridblocks-section .gridblock.dragging-gridblock .add-gridblock:before {
   content: 'Drag to Page';
   background: rgba(0, 0, 0, 0.6); }
+
+@media (min-width: 1600px) {
+  .zoom-gridblocks-section .gridblock {
+    height: 354px;
+    width: 690px; }
+  .zoom-gridblocks-section .gridblock iframe {
+    transform: translateX(-50%) translateY(-50%) scale(0.59); } }
+
+@media (max-width: 1359px) {
+  .zoom-gridblocks-section .gridblock {
+    height: 271px;
+    width: 527px; }
+  .zoom-gridblocks-section .gridblock iframe {
+    transform: translateX(-50%) translateY(-50%) scale(0.45); } }
+
+@media (max-width: 1220px) {
+  .boldgrid-zoomout-section.zoom-gridblocks-section {
+    overflow-x: scroll; } }
+
+@media (max-width: 782px) {
+  .boldgrid-zoomout .zoom-gridblocks-section {
+    display: none; }
+  .boldgrid-zoomout #wpcontent {
+    width: 100%;
+    top: 92px; }
+  .boldgrid-zoomout #wp-content-editor-tools {
+    top: 92px !important;
+    right: auto;
+    left: 0; }
+  .boldgrid-zoomout .zoom-navbar {
+    top: 46px; }
+  .boldgrid-zoomout #wp-admin-bar-menu-toggle {
+    display: none !important; } }
+
+@media (max-width: 600px) {
+  .boldgrid-zoomout #wpwrap {
+    height: calc( 100% - 47px); }
+  .boldgrid-zoomout #wpcontent {
+    top: 46px; }
+  .boldgrid-zoomout .zoom-navbar {
+    top: 0; }
+  .boldgrid-zoomout #content_ifr {
+    margin-top: 25px; } }
+
+/*--------------------------------------------------------------
+# Handler section drag controls.
+--------------------------------------------------------------*/
+#boldgrid-drag-pointer {
+  display: none;
+  position: fixed;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  background-color: #f95b26;
+  height: 30px;
+  width: 30px;
+  z-index: 999999; }
+
+.section-dragging-active #boldgrid-drag-pointer {
+  display: block; }
+
+.wp-admin #boldgrid-drag-pointer {
+  margin-top: 20px;
+  margin-left: 20px; }
+
+.dragging-section.dragging-gridblock-iframe body {
+  box-shadow: 0 0 0 5px #f95b26; }
+
+.dragging-section.dragging-gridblock-iframe #boldgrid-drag-pointer {
+  margin-top: 20px;
+  margin-left: 20px; }
+
+.dragging-section {
+  cursor: default; }
+
+.dragging-section *:hover {
+  cursor: move !important; }
+
+.dragging-section .boldgrid-section:hover {
+  outline: 2px solid #f95b26 !important;
+  cursor: move !important; }
+
+.dragging-section body {
+  overflow: hidden !important;
+  min-height: 800px; }
+
+.dragging-section .section-drag-element {
+  outline: 2px solid #f95b26; }
+
+.dragging-section .boldgrid-section {
+  position: relative; }
+
+.dragging-section .boldgrid-section:after {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: ' ';
+  z-index: 2; }
+
+.dragging-section .bg-zoom-controls .history-controls {
+  color: #23282d; }
+
+.dragging-section .boldgrid-section:before,
+.dragging-section .boldgrid-section:after {
+  display: block; }
+
+.dragging-section .boldgrid-section:hover:after {
+  background-color: rgba(249, 91, 38, 0.9); }
+
+.dragging-section .boldgrid-section:hover:before {
+  background-color: transparent;
+  content: 'Drag Section';
+  color: #fff;
+  font-size: 33px;
+  font-family: "Open Sans",sans-serif;
+  text-align: center;
+  line-height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 999;
+  right: 0;
+  transform: translateY(-50%);
+  font-variant: small-caps; }
+
+.dragging-section.dragging-gridblock-iframe .boldgrid-section:hover:before, .dragging-section.dragging-gridblock-iframe .boldgrid-section:hover:after {
+  display: none; }
+
+.dragging-section #boldgrid-draggable-resizing-overlay {
+  cursor: move !important; }
 
 /*--------------------------------------------------------------
 # General Edit Controls

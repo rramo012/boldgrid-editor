@@ -40,7 +40,7 @@
 		var last_key_press;
 
 		// Key Press handler
-		var keypress = function( e ) {
+		var keypress = function() {
 
 			if ( ! self.is_typing ) {
 				self.is_typing = true;
@@ -49,7 +49,7 @@
 
 			last_key_press = new Date().getTime();
 			var repeat_function = function( current_keypress ) {
-				if ( last_key_press == current_keypress ) {
+				if ( last_key_press === current_keypress ) {
 					self.is_typing = false;
 					$this.trigger( 'end_typing_boldgrid' );
 				}

@@ -24,8 +24,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @return {string}             Html requested.
 		 */
 		getHtml: function( gridblockId ) {
-			var dynamicImages,
-				html = '',
+			var html = '',
 				gridblockData = {};
 
 			if ( self.gridblockConfig.gridblocks[ gridblockId ] ) {

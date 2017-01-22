@@ -1,17 +1,17 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
-( function ( $ ) {
-	"use strict";
+( function( $ ) {
+	'use strict';
 
 	var self,
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.Panel = {
 
-		$element : null,
-		
-		currentControl : null,
+		$element: null,
+
+		currentControl: null,
 
 		/**
 		 * Initialize the panel.
@@ -20,12 +20,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @return jQuery $this.$element Panel Element
 		 */
-		init : function () {
+		init: function() {
 
 			this.create();
 			this._setupPanelClose();
 			this._setupDrag();
-			//this._setupPanelResize();
+
+			//This._setupPanelResize();
 			this._setupCustomizeLeave();
 			this._setupCustomizeDefault();
 			this._lockPanelScroll();
@@ -38,17 +39,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		create : function () {
+		create: function() {
 			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
 			$( 'body' ).append( this.$element );
 		},
-		
+
 		/**
 		 * Set the html for the panel body of the panel.
 		 *
 		 * @since 1.3
 		 */
-		setContent : function ( content ) {
+		setContent: function( content ) {
 			this.$element.find( '.panel-body' ).html( content );
 		},
 
@@ -57,19 +58,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		setTitle : function ( title ) {
+		setTitle: function( title ) {
 			this.$element.find( '.panel-title .name' ).html( title );
 		},
-		
+
 		/**
 		 * Reset Panel Position
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		resetPosition : function () {
+		resetPosition: function() {
 			this.$element.css( {
-				'top' : '',
-				'left' : ''
+				'top': '',
+				'left': ''
 			} );
 		},
 
@@ -78,28 +79,28 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		setDimensions : function ( width, height ) {
+		setDimensions: function( width, height ) {
 			this.$element.width( width );
 			this.$element.height( height );
 		},
 
 		/**
 		 * Center the panel.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		centerPanel : function () {
-			var $window = $(window),
-			    width = parseInt( this.$element.css('width') ),
-			    height = parseInt( this.$element.css('height') ),
+		centerPanel: function() {
+			var $window = $( window ),
+			    width = parseInt( this.$element.css( 'width' ) ),
+			    height = parseInt( this.$element.css( 'height' ) ),
 			    windowWidth = $window.width(),
 			    windowHeight = $window.height(),
 			    centerWidth = ( windowWidth / 2 ) - ( width / 2 ),
 			    centerHeight = ( windowHeight / 2 ) - ( height / 2 );
 
 			this.$element.css( {
-				'top' : centerHeight,
-				'left' : centerWidth
+				'top': centerHeight,
+				'left': centerWidth
 			} );
 		},
 
@@ -109,22 +110,22 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @param control BG.Control.
 		 * @since 1.3
 		 */
-		initScroll : function ( control ) {
+		initScroll: function( control ) {
 			// Default height of scroll is the height of body minus this number.
 			var sizeOffset = -66;
-			
+
 			if ( control.panel && control.panel.sizeOffset ) {
 				sizeOffset = control.panel.sizeOffset;
 			}
 
-			$( '.panel-body' ).slimScroll( { destroy : true } ).attr( 'style', '' );
+			$( '.panel-body' ).slimScroll( { destroy: true } ).attr( 'style', '' );
 			this.$element.find( self.getScrollTarget() ).slimScroll( {
 			    color: '#32373c',
 			    size: '8px',
 			    height: parseInt( control.panel.height ) + sizeOffset,
 			    alwaysVisible: true,
 			    disableFadeOut: true,
-			    wheelStep: 5,
+			    wheelStep: 5
 			} );
 		},
 
@@ -135,10 +136,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @param control BG.Control.
 		 * @return bool isOpenControl.
 		 */
-		isOpenControl : function ( control ) {
+		isOpenControl: function( control ) {
 			var isOpenControl = false;
 
-			if ( this.$element.is( ':visible' ) && this.$element.attr( 'data-type' ) == control.name ) {
+			if ( this.$element.is( ':visible' ) && this.$element.attr( 'data-type' ) === control.name ) {
 				isOpenControl = true;
 			}
 
@@ -150,11 +151,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		_setupDrag : function() {
+		_setupDrag: function() {
 			this.$element.draggable( {
 				containment: '#wpwrap',
 				handle: '.panel-title',
-				scroll : false
+				scroll: false
 			} );
 		},
 
@@ -163,7 +164,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		clearSelected : function () {
+		clearSelected: function() {
 			this.$element.find( '.selected' ).removeClass( 'selected' );
 		},
 
@@ -172,7 +173,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		_setupPanelResize : function() {
+		_setupPanelResize: function() {
 			this.$element.resizable();
 		},
 
@@ -181,18 +182,18 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		_setupPanelClose : function() {
-			this.$element.on( 'click', '.close-icon', function () {
+		_setupPanelClose: function() {
+			this.$element.on( 'click', '.close-icon', function() {
 				self.closePanel();
 			} );
 		},
-		
+
 		/**
 		 * Strip temp classes.
 		 *
 		 * @since 1.3
 		 */
-		removeClasses : function () {
+		removeClasses: function() {
 			BG.Controls.$container.find( '.bg-control-element' ).removeClass( 'bg-control-element' );
 		},
 
@@ -201,19 +202,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		closePanel : function () {
+		closePanel: function() {
 			self.$element.hide();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
 			self.removeClasses();
-			
+
 			if ( self.$element.hasClass( 'customize-open' ) ) {
-				this.$element.trigger('bg-customize-exit');
-				self.$element.removeClass('customize-open');
+				this.$element.trigger( 'bg-customize-exit' );
+				self.$element.removeClass( 'customize-open' );
 			}
-			
-			this.$element.find('.panel-body').empty();
-			
-			this.$element.trigger('bg-panel-close');
+
+			this.$element.find( '.panel-body' ).empty();
+
+			this.$element.trigger( 'bg-panel-close' );
 			tinymce.activeEditor.undoManager.add();
 		},
 
@@ -222,16 +223,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		scrollToSelected : function () {
+		scrollToSelected: function() {
 			var scrollPos, scrollOffset,
 				$selected = self.$element.find( '.selected:not(.filters .selected):visible' );
 
-			self.scrollTo(0);
+			self.scrollTo( 0 );
 
 			if ( ! $selected.length ) {
 				return;
 			}
-			
+
 			scrollOffset = 0;
 			if ( self.currentControl.panel.scrollOffset ) {
 				scrollOffset = self.currentControl.panel.scrollOffset;
@@ -240,22 +241,22 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			scrollPos = $selected.position().top + scrollOffset;
 			self.scrollTo( scrollPos + 'px' );
 		},
-		
+
 		/**
 		 * Get the controls scrollable target.
 		 *
 		 * @since 1.3
 		 * @return string target.
 		 */
-		getScrollTarget : function () {
-			var target = '.panel-body'; 
+		getScrollTarget: function() {
+			var target = '.panel-body';
 			if ( self.currentControl && self.currentControl.panel.scrollTarget ) {
 				target = self.currentControl.panel.scrollTarget;
 			}
-			
+
 			return target;
 		},
-		
+
 		/**
 		 * Scroll to a pixel position.
 		 *
@@ -263,9 +264,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @param integer to Position to scroll to.
 		 * @return string target.
 		 */
-		scrollTo : function ( to ) {
-			this.$element.find( self.getScrollTarget() ).slimScroll( { 
-			    scrollTo : to,
+		scrollTo: function( to ) {
+			this.$element.find( self.getScrollTarget() ).slimScroll( {
+			    scrollTo: to,
 			    alwaysVisible: true,
 			    disableFadeOut: true
 			} );
@@ -276,17 +277,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		clear : function () {
+		clear: function() {
 			this.$element.find( '.panel-title .name' ).empty();
 			this.$element.find( '.panel-body' ).empty();
 		},
-		
+
 		/**
 		 * Show the footer of a panel if the control configures it.
 		 *
 		 * @since 1.3
 		 */
-		_enableFooter : function ( config ) {
+		_enableFooter: function( config ) {
 			if ( config && config.includeFooter ) {
 				self.showFooter();
 			} else {
@@ -299,8 +300,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		hideFooter : function () {
-			this.$element.find('.panel-footer').hide();
+		hideFooter: function() {
+			this.$element.find( '.panel-footer' ).hide();
 		},
 
 		/**
@@ -308,8 +309,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		showFooter : function () {
-			this.$element.find('.panel-footer').show();
+		showFooter: function() {
+			this.$element.find( '.panel-footer' ).show();
 		},
 
 		/**
@@ -317,17 +318,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		_setupCustomize : function ( control ) {
-			
+		_setupCustomize: function( control ) {
+
 			if ( ! control.panel.customizeCallback ) {
 				return;
 			}
-			
-			self.$element.find('.panel-footer .customize .panel-button').on( 'click', function ( e ) {
+
+			self.$element.find( '.panel-footer .customize .panel-button' ).on( 'click', function( e ) {
 				e.preventDefault();
-				self.$element.trigger('bg-customize-open');
-				self.$element.addClass('customize-open');
-				if ( self.$element.attr('data-type') == control.name && self.currentControl.panel.customizeCallback !== true ) {
+				self.$element.trigger( 'bg-customize-open' );
+				self.$element.addClass( 'customize-open' );
+				if ( self.$element.attr( 'data-type' ) === control.name && true !== self.currentControl.panel.customizeCallback ) {
 					control.panel.customizeCallback();
 				}
 			} );
@@ -338,110 +339,106 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.3
 		 */
-		_setupCustomizeDefault : function () {
-			var panel = BG.Panel;
-
-			self.$element.find('.panel-footer .customize .panel-button').on( 'click', function ( e ) {
+		_setupCustomizeDefault: function() {
+			self.$element.find( '.panel-footer .customize .panel-button' ).on( 'click', function( e ) {
 				e.preventDefault();
 
-				if ( self.currentControl && self.currentControl.panel && self.currentControl.panel.customizeCallback === true ) {
-					self.$element.find('.panel-body .customize').show();
-					self.$element.find('.presets').hide();
-					self.$element.find('.title').hide();
-					self.scrollTo(0);
+				if ( self.currentControl && self.currentControl.panel && true === self.currentControl.panel.customizeCallback ) {
+					self.$element.find( '.panel-body .customize' ).show();
+					self.$element.find( '.presets' ).hide();
+					self.$element.find( '.title' ).hide();
+					self.scrollTo( 0 );
 					self.hideFooter();
 				}
 			} );
 		},
-		
+
 		/**
 		 * Hide a panels customization area upon clicking the back button.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		_setupCustomizeLeave : function () {
-			var panel = BG.Panel;
-
-			self.$element.on( 'click', '.back .panel-button', function ( e ) {
+		_setupCustomizeLeave: function() {
+			self.$element.on( 'click', '.back .panel-button', function( e ) {
 				e.preventDefault();
-				self.$element.removeClass('customize-open');
+				self.$element.removeClass( 'customize-open' );
 
-				if ( self.currentControl && self.currentControl.panel && self.currentControl.panel.customizeLeaveCallback === true ) {
-					self.$element.find('.presets').show();
-					self.$element.find('.title').show();
-					self.$element.find('.panel-body .customize').hide();
+				if ( self.currentControl && self.currentControl.panel && true === self.currentControl.panel.customizeLeaveCallback ) {
+					self.$element.find( '.presets' ).show();
+					self.$element.find( '.title' ).show();
+					self.$element.find( '.panel-body .customize' ).hide();
 					self.toggleFooter();
 					self.scrollToSelected();
-					self.$element.trigger('bg-customize-exit');
+					self.$element.trigger( 'bg-customize-exit' );
 				}
 			} );
 		},
-		
+
 		/**
 		 * Show the panel footer if something is selected.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		toggleFooter : function () {
-			if ( self.$element.find('.panel-body .selected').length ) {
+		toggleFooter: function() {
+			if ( self.$element.find( '.panel-body .selected' ).length ) {
 				self.showFooter();
 			} else {
 				self.hideFooter();
 			}
 		},
-		
+
 		/**
 		 * Unselect the current area.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		collapseSelection : function () {
-			if ( self.currentControl.name != 'icon' ) {
+		collapseSelection: function() {
+			if ( 'icon' !== self.currentControl.name ) {
 				tinyMCE.activeEditor.selection.collapse( false );
 			}
 		},
-		
+
 		/**
 		 * Setup scroll locking.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		_lockPanelScroll : function () {
+		_lockPanelScroll: function() {
 			if ( window.addEventListener ) {
 				this.$element[0].addEventListener( 'DOMMouseScroll', self._onWheel, false );
 				this.$element[0].addEventListener( 'mousewheel', self._onWheel, false );
 			}
 		},
-		
+
 		/**
 		 * Lock The scroll.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		_onWheel : function ( e ) {
+		_onWheel: function( e ) {
 			e = e || window.event;
 
 			if ( e.preventDefault ) {
 				e.preventDefault();
 			}
-			
-			e.returnValue = false; 
+
+			e.returnValue = false;
 		},
-		
+
 		/**
 		 * Open the panel for a control.
-		 * 
+		 *
 		 * @since 1.3
 		 */
-		open : function ( control ) {
+		open: function( control ) {
 			var $target;
 
 			tinymce.activeEditor.undoManager.add();
-			
+
 			BOLDGRID.EDITOR.Menu.activateControl( control );
-			
+
 			this.currentControl = control;
-			this.$element.addClass('ui-widget-content');
+			this.$element.addClass( 'ui-widget-content' );
 			this.setDimensions( control.panel.width, control.panel.height );
 			this.setTitle( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
@@ -452,15 +449,15 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.initScroll( control );
 			this.scrollToSelected();
 			this.collapseSelection();
-			
+
 			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
-			
+
 			self.removeClasses();
 			$target = BG.Menu.$element.targetData[ control.name ];
 			$target.addClass( 'bg-control-element' );
 
 			BG.CONTROLS.Color.initColorControls();
-			
+
 		}
 
 	};

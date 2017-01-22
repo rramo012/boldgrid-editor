@@ -130,7 +130,7 @@ class Boldgrid_Editor_Assets {
 				array(
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
-				'post_id' => ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : null,
+				'post_id' => $this->get_post_id(),
 				'site_url' => $this->get_post_url(),
 				'plugin_url' => plugins_url( '', $plugin_file ),
 				'is_IE' => $is_IE,
@@ -152,6 +152,23 @@ class Boldgrid_Editor_Assets {
 			) );
 
 				wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+	}
+
+	/**
+	 * Get the query arg post, if not found, get home page post id.
+	 *
+	 * @since 1.4
+	 *
+	 * @return integer Post id.
+	 */
+	public function get_post_id() {
+		$frontpage_id = get_option( 'page_on_front' );
+		$post_id = ! empty( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : null;
+		if ( ! $post_id ) {
+			$post_id = $frontpage_id;
+		}
+
+		return $post_id;
 	}
 
 	/**

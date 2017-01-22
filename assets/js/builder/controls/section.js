@@ -131,13 +131,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		updateHtmlSize: function() {
+			var rect, bodyHeight;
 
 			if ( ! $( 'body' ).hasClass( 'boldgrid-zoomout' ) ) {
 				return;
 			}
 
-			var rect = self.$container.$body[0].getBoundingClientRect(),
-				bodyHeight = rect.bottom - rect.top + 50;
+			rect = self.$container.$body[0].getBoundingClientRect(),
+			bodyHeight = rect.bottom - rect.top + 50;
 
 			self.$container.find( 'html' ).css( 'max-height', bodyHeight );
 			$( '#content_ifr' ).css( 'max-height', bodyHeight );

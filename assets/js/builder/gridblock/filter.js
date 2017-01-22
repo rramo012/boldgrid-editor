@@ -211,8 +211,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @return {string}          String with whitespace rmeoved.
 		 */
 		createUniqueMarkup: function( $element ) {
-			var html = $element[0].outerHTML;
-			return html.replace( / /g, '' );
+			$element = $element.clone();
+			$element.find( 'img' ).removeAttr( 'src' ).removeAttr( 'class' );
+			return $element[0].outerHTML.replace( /\s/g, '' );
 		},
 
 		/**
@@ -264,6 +265,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				  .removeAttr( 'data-pending-boldgrid-attribution' );
 		},
 
+
 		/**
 		 * Remove Gridblocks that should not be aviailable to users.
 		 *
@@ -276,12 +278,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				isSimpleGridblock = false,
 				$testDiv = $( '<div>' ).html( $html );
 
-			$testDiv.find( '.row:not(.row .row) > [class^="col-"] > hr' ).each( function() {
-				if ( ! $( this ).siblings().length ) {
-					isSimpleGridblock = true;
-					return false;
-				}
-			});
+			// Remove spaces from the test div. Causes areas with only spacers to fail tests.
+			$testDiv.find( '.mod-space' ).remove();
 
 			$testDiv.find( '.row:not(.row .row)' ).each( function() {
 				var $descendents,
@@ -310,7 +308,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			});
 
 			// Hide empty rows.
-			$testDiv.find( '> .row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type' ).each( function() {
+			$testDiv.find( '.row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type' ).each( function() {
 				isSimpleGridblock = true;
 				return false;
 			});

@@ -18,7 +18,6 @@ IMHWPB.Media = function( $ ) {
 		}
 	};
 
-
 	/**
 	 * Create New Tabs for the newly created window This function is called by
 	 * an iframe

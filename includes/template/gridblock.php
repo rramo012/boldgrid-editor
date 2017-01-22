@@ -12,6 +12,10 @@
 	</div>
 	<div class="bg-close-zoom-view"></div>
 </div>
+<div class="boldgrid-zoomout-section zoom-gridblocks-section">
+	<div class="gridblocks">
+	</div>
+</div>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
 <div class="gridblock" data-id="{{data.id}}">
@@ -27,10 +31,6 @@
 		<div class="enabled bg-editor-loading absolute"></div></div>
 </script>
 
-<div class="boldgrid-zoomout-section zoomout-section-2">
-	<div class="gridblocks">
-	</div>
-</div>
 <script type="text/html" id="tmpl-gridblock-iframe-styles">
 <style>
 body, html {

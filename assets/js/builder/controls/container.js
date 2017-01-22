@@ -2,52 +2,52 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
-( function ( $ ) {
-	"use strict"; 
+( function( $ ) {
+	'use strict';
 
 	var self,
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Container = {
 
-		name : 'container',
-		
-		tooltip : 'Section Width',
+		name: 'container',
 
-		priority : 15,
+		tooltip: 'Section Width',
 
-		iconClasses : 'fa fa-arrows-h',
+		priority: 15,
 
-		selectors : [ '.boldgrid-section .container', '.boldgrid-section .container-fluid' ],
+		iconClasses: 'fa fa-arrows-h',
 
-		init : function () {},
+		selectors: [ '.boldgrid-section .container', '.boldgrid-section .container-fluid' ],
 
-		onMenuClick : function () {
+		init: function() {},
+
+		onMenuClick: function() {
 			self.toggleSectionWidth();
 		},
-		
+
 		/**
 		 * Add a transition to the container changing size.
-		 * 
+		 *
 		 * @since 1.2.8
 		 */
-		transitionSize : function ( $container ) {
-			BG.Controls.$container.find('html').addClass('bg-disabled-handles');
-			$container.css('transition', 'width .5s');
-			setTimeout( function () {
-				$container.css('transition', '');
-				$( window ).trigger('resize');
+		transitionSize: function( $container ) {
+			BG.Controls.$container.find( 'html' ).addClass( 'bg-disabled-handles' );
+			$container.css( 'transition', 'width .5s' );
+			setTimeout( function() {
+				$container.css( 'transition', '' );
+				$( window ).trigger( 'resize' );
 				BOLDGRID.EDITOR.CONTROLS.Section.positionHandles();
 				BOLDGRID.EDITOR.RESIZE.Row.positionHandles();
-				BG.Controls.$container.find('html').removeClass('bg-disabled-handles');
+				BG.Controls.$container.find( 'html' ).removeClass( 'bg-disabled-handles' );
 			}, 600 );
 		},
-		
+
 		/**
 		 * Switch between a container and a container fluid.
 		 */
-		toggleSectionWidth : function ( $container ) {
-			
+		toggleSectionWidth: function( $container ) {
+
 			if ( ! $container ) {
 				$container = BG.Controls.$menu
 					.targetData[ self.name ].closest( '.container, .container-fluid' );

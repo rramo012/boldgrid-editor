@@ -41,7 +41,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Replace a placeholder gridblcok with a gridblock from config.
+		 * Replace a placeholder gridblock with a gridblock from config.
 		 *
 		 * @since 1.4
 		 *
@@ -50,6 +50,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		replaceGridblock: function( $placeHolder, gridblockId ) {
 			var selectedHtml = BG.GRIDBLOCK.Create.getHtml( gridblockId );
+			IMHWPB.tinymce_undo_disabled = true;
 
 			// Insert into page aciton.
 			if ( 'string' !== typeof selectedHtml ) {
@@ -93,7 +94,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				send_to_editor( $inserting[0].outerHTML );
 			}
 
-			// If current selection is inside of a row, insert above that row. Insert at top of row.
 			$placeHolder.replaceWith( $inserting );
 			draggable.validate_markup();
 
@@ -104,6 +104,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				BG.CONTROLS.Add.scrollToElement( $inserting, 0 );
 			} );
 			self.$window.trigger( 'resize' );
+
+			IMHWPB.tinymce_undo_disabled = false;
+			tinymce.activeEditor.undoManager.add();
 		}
 
 	};

@@ -18,7 +18,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.findElements();
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
+			self.setupAddGridblock();
 			self.createGridblocks();
+		},
+
+		setupAddGridblock: function() {
+			$( '#insert-gridblocks-button' ).on( 'click', BOLDGRID.EDITOR.CONTROLS.Section.enableSectionDrag );
 		},
 
 		/**

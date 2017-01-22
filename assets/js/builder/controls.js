@@ -1,55 +1,55 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
-( function ( $ ) {
-	"use strict";
+( function( $ ) {
+	'use strict';
 
-	var BG = BOLDGRID.EDITOR; 
+	var BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.Controls = {
-			
+
 		/**
 		 * @var jQuery $panel Panel DOM Element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		$panel : null,
+		$panel: null,
 
 		/**
 		 * @var jQuery $menu Menu DOM Element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		$menu : null,
-		
+		$menu: null,
+
 		/**
 		 * @var jQuery $colorControl Color Panel Element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		$colorControl : null,
-		
+		$colorControl: null,
+
 		/**
 		 * @var array controls All registered controls.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		controls : [],
-		
+		controls: [],
+
 		/**
 		 * @var jQuery $container tinymce iFrame Element.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		$container : null,
-		
+		$container: null,
+
 		/**
 		 * Initialize all controls for the builder.
 		 * This is the primary file and function for the builder directory.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		init: function ( $container ) {
+		init: function( $container ) {
 			this.$container = $container;
 
 			this.$container.find( 'body' ).css( 'marginTop', '50px' );
@@ -69,48 +69,48 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			//Create all controls.
 			this.setupControls();
-			
+
 			BG.CONTROLS.Generic.setupInputCustomization();
 			BG.CONTROLS.Generic.setupInputInitialization();
 			BG.NOTICE.Update.init();
-			
+
 		},
-		
+
 		/**
 		 * Check if the theme has the passed feature.
-		 * 
+		 *
 		 * @since 1.2.7
 		 * @param string feature.
 		 * @return bool.
 		 */
-		hasThemeFeature : function ( feature ) {
+		hasThemeFeature: function( feature ) {
 			return -1 !== BoldgridEditor.builder_config.theme_features.indexOf( feature );
 		},
-		
+
 		/**
 		 * Add inline style to a element in the tinymce DOM. Needs to wrap dom.Style to work in tinymce.
-		 * 
+		 *
 		 * @since 1.2.7
-		 * 
+		 *
 		 * @param jQuery element.
 		 * @param string property.
 		 * @param string value.
 		 */
-		addStyle : function ( element, property, value ) {
+		addStyle: function( element, property, value ) {
 			element.css( property, value );
 			tinymce.activeEditor.dom.setStyle( element, property, value );
 		},
 
 		/**
 		 * Setup general slide behavior within the panel. Update the displayed value when sliding.
-		 * 
+		 *
 		 * @since 1.2.7
-		 * 
+		 *
 		 * @param event.
 		 * @param ui.
 		 */
-		setupSliders : function () {
-			this.$panel.on( "slide", '.section .slider', function( event, ui ) {
+		setupSliders: function() {
+			this.$panel.on( 'slide', '.section .slider', function( event, ui ) {
 				var $this = $( this );
 				$this.siblings( '.value' ).html( ui.value );
 			} );
@@ -118,47 +118,47 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Add a control to the list of controls to be created.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		registerControl : function ( control ) {
+		registerControl: function( control ) {
 			this.controls.push( control );
 		},
-		
+
 		/**
 		 * Get the tinymce editor instance.
-		 * 
-		 * @since 1.2.7 
+		 *
+		 * @since 1.2.7
 		 * @return IMHWPB.WP_MCE_Draggable.
 		 */
-		editorMceInstance : function () {
+		editorMceInstance: function() {
 			var instance = false;
-			
+
 			if ( IMHWPB.WP_MCE_Draggable && IMHWPB.WP_MCE_Draggable.instance ) {
 				instance = IMHWPB.WP_MCE_Draggable.instance;
 			}
-			
+
 			return instance;
 		},
 
 		/**
 		 * Clear menu items storage array.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		clearMenuItems : function () {
+		clearMenuItems: function() {
 			this.$menu.items = [];
 		},
 
 		/**
 		 * Bind event for updating Drop Tab.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		_setupUpdateMenu : function () {
+		_setupUpdateMenu: function() {
 			var self = this;
-			
-			this.$container.on( 'click', function ( e ) {
+
+			this.$container.on( 'click', function( e ) {
 				self.$menu.find( 'li[data-action]' ).hide();
 
 				if ( ! self.$menu.items.length ) {
@@ -168,7 +168,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					self.$menu.show();
 				}
 
-				$.each( self.$menu.items, function () {
+				$.each( self.$menu.items, function() {
 					self.$menu.find( '[data-action="menu-' + this + '"]' ).show();
 
 					//If a panel is open.
@@ -176,30 +176,30 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				} );
 
 				self._closeOpenControl();
-				
+
 				if ( ! e.boldgridRefreshPanel ) {
 					BOLDGRID.EDITOR.CONTROLS.Color.closePicker();
 				}
-				
+
 				self.clearMenuItems();
 			} );
 		},
-		
+
 		/**
 		 * Bind event for clicking on the iFrame body.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		onEditibleClick : function () {
+		onEditibleClick: function() {
 			this._setupUpdateMenu();
 		},
-		
+
 		/**
 		 * If a control is open and the corresponding menu item is not present.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		_closeOpenControl : function () {
+		_closeOpenControl: function() {
 			if ( BG.Panel.currentControl && -1 === this.$menu.items.indexOf( BG.Panel.currentControl.name ) ) {
 				BG.Panel.closePanel();
 			}
@@ -207,14 +207,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Setup Controls.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		setupControls : function () {
+		setupControls: function() {
 			var self = this;
 
 			// Sort Controls by priority.
-			var compare = function ( a, b ) {
+			var compare = function( a, b ) {
 
 				if ( a.priority < b.priority ) {
 					return -1;
@@ -230,19 +230,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.controls.sort( compare );
 
 			// Bind each menu control.
-			$.each( this.controls, function () {
+			$.each( this.controls, function() {
 				self.setupControl( this );
 			} );
-			
+
 			BOLDGRID.EDITOR.CONTROLS.Section.init( self.$container );
 		},
 
 		/**
 		 * Setup a single control.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		setupControl : function ( control ) {
+		setupControl: function( control ) {
 			this.bindControlHandler( control );
 			BOLDGRID.EDITOR.Menu.createListItem( control );
 
@@ -253,28 +253,28 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		/**
 		 * Bind Event: Clicking on an elements selectors.
-		 * 
+		 *
 		 * @since 1.2.7
 		 */
-		bindControlHandler : function ( control ) {
+		bindControlHandler: function( control ) {
 			var self = this;
-			
+
 			// When the user clicks on an element that has an associated control.
 			// Add that control to the list of controls to be made visible.
-			this.$container.on( 'click', control.selectors.join(), function ( e ) {
+			this.$container.on( 'click', control.selectors.join(), function( e ) {
 				var $this = $( this );
 
 				//@TODO: Move this.
-				if ( 'box' == control.name ) {
+				if ( 'box' === control.name ) {
 					var isEditingNested, isNestedColumn;
-					
+
 					if ( e.boxFound ) {
 						return;
 					}
-					
-					isEditingNested = $this.closest('.editing-as-row').length;
-					isNestedColumn = $this.is('.row .row [class^="col-md"]');
-					
+
+					isEditingNested = $this.closest( '.editing-as-row' ).length;
+					isNestedColumn = $this.is( '.row .row [class^="col-md"]' );
+
 					if ( isEditingNested && false === isNestedColumn ) {
 						return;
 					}
@@ -283,9 +283,10 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 						e.boxFound = true;
 					}
 
-					if ( ! e.boxFound && $this.parent().closest('[class*="col-md"]').length ) {
-						var $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this );
-						var backgroundColor = $module.css('background-color');
+					if ( ! e.boxFound && $this.parent().closest( '[class*="col-md"]' ).length ) {
+						var $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this ),
+							backgroundColor = $module.css( 'background-color' );
+
 						if ( ! BOLDGRID.EDITOR.CONTROLS.Color.isColorTransparent( backgroundColor ) ) {
 							e.boxFound = true;
 						} else {
@@ -293,8 +294,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 						}
 					}
 				}
-				
-				if ( $this.closest('.wpview').length && control.name != 'edit-media' ) {
+
+				if ( $this.closest( '.wpview' ).length && control.name !== 'edit-media' ) {
 					return;
 				}
 

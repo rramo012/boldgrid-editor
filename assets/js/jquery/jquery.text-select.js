@@ -31,8 +31,8 @@
 		var mousedown_timestamp, mousedown, selecting, last_checked_mouse_move;
 
 		//Check for Selection start
-		var mousemove = function ( e ) {
-		   if ( !selecting && mousedown && mousedown_timestamp + selection_delay < e.timeStamp ) {
+		var mousemove = function( e ) {
+		   if ( ! selecting && mousedown && mousedown_timestamp + selection_delay < e.timeStamp ) {
 		       last_checked_mouse_move = e.timeStamp;
 		       selecting = true;
 		       startCallback();
@@ -40,20 +40,20 @@
 		};
 
 		//Select Stop Handler
-		var mouseup = function ( e ) {
+		var mouseup = function() {
 		    mousedown = false;
 		    selecting = false;
 			endCallback();
 		};
 
 		//Mousedown Handler
-		mousedown = function ( e ) {
+		mousedown = function( e ) {
 			var target = e.originalEvent.originalTarget || e.originalEvent.srcElement;
 			if ( target ) {
 				var $target = jQuery( target );
 				//Make sure the user didnt click on something draggable
-				if ( (!$target.is('[draggable="true"]') && !$target.closest('[draggable="true"]').length ) ) {
-					if ( (!$target.is('[unselectable="on"]') && !$target.closest('[unselectable="on"]').length ) ) {
+				if ( ( ! $target.is( '[draggable="true"]' ) && ! $target.closest( '[draggable="true"]' ).length ) ) {
+					if ( ( ! $target.is( '[unselectable="on"]' ) && ! $target.closest( '[unselectable="on"]' ).length ) ) {
 						mousedown_timestamp = e.timeStamp;
 						mousedown = true;
 					}
@@ -62,7 +62,7 @@
 		};
 
 		//Bind relevant events
-		$(this).on( 'mousedown', mousedown )
+		$( this ).on( 'mousedown', mousedown )
 				.on( 'mouseup dragend drop', mouseup )
 				.on( 'mousemove', mousemove );
 	};
