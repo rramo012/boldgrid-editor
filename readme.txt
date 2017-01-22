@@ -25,6 +25,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 == Changelog ==
 
 = 1.3.2 In progress =
+* New Feature:	JIRA WPB-2803	Added a new UI for Gridblocks.
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 
 = 1.3.1 =
