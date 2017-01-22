@@ -278,7 +278,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			'..'
 		) );
 
-		$gridblocks = [];
+		$gridblocks = array();
 		foreach ( $dir_files as $dir_file ) {
 			$layout = $dir . '/' . $dir_file;
 			$html = file_get_contents( $layout );
