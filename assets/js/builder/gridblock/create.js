@@ -11,8 +11,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	var BG = BOLDGRID.EDITOR,
 		self = {
 
-		gridblockConfig: BG.GRIDBLOCK.configs,
-
 		$window: $( window ),
 
 		/**
@@ -27,8 +25,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			var html = '',
 				gridblockData = {};
 
-			if ( self.gridblockConfig.gridblocks[ gridblockId ] ) {
-				gridblockData = self.gridblockConfig.gridblocks[ gridblockId ];
+			if ( BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] ) {
+				gridblockData = BG.GRIDBLOCK.configs.gridblocks[ gridblockId ];
 			}
 
 			if ( hasDownloadImages( gridblockData ) ) {
