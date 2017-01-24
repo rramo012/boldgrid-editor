@@ -360,7 +360,7 @@ e.preventDefault();
 
 			if ( BoldgridEditor.is_boldgrid_theme == false ) {
 				IMHWPB.Editor.instance.remove_editor_styles();
-				$( '[name="screen_columns"][value="' + IMHWPB.Editor.instance.original_column_val + '"]').click();
+				$( '[name="screen_columns"][value="' + IMHWPB.Editor.instance.original_column_val + '"]' ).click();
 			}
 
 			self.addDeactivateClasses();
@@ -373,11 +373,12 @@ e.preventDefault();
 				self.draggable_instance.bind_events();
 				self.bind_events();
 			} else {
-				self.load_draggable($(tinymce.activeEditor.iframeElement).contents());
+				self.load_draggable( $( tinymce.activeEditor.iframeElement ).contents() );
 			}
 
-			$('html').removeClass('draggable-inactive');
-			$container.contents().find('html').removeClass('draggable-inactive');
+			$( 'html' ).removeClass( 'draggable-inactive' );
+			$container.contents().find( 'html' ).removeClass( 'draggable-inactive' );
+			IMHWPB.Editor.instance.draggable = self.draggable_instance;
 		}
 
 		// Ajax save state.
@@ -391,11 +392,11 @@ e.preventDefault();
 	 *
 	 * @since 1.0.9
 	 */
-	this.saveDraggableState = function ( enabled ) {
+	this.saveDraggableState = function( enabled ) {
 		$.post( ajaxurl, {
-		    action : 'boldgrid_draggable_enabled',
-		    draggable_enabled : enabled ? 1 : 0,
-		    security : BoldgridEditor.draggableEnableNonce
+		    action: 'boldgrid_draggable_enabled',
+		    draggable_enabled: enabled ? 1 : 0,
+		    security: BoldgridEditor.draggableEnableNonce
 		} );
 	};
 
@@ -424,23 +425,23 @@ e.preventDefault();
 	/**
 	 * Create a hidden iframe that will allows us to view the front end site
 	 */
-	this.create_front_page_iframe = function () {
+	this.create_front_page_iframe = function() {
 
 		if ( BoldgridEditor.is_boldgrid_theme ) {
 			return;
 		}
 
-		var $temp_loaded_container = $('<div class="hidden temp-container">');
-		$.get( BoldgridEditor.site_url, function( data ){
+		var $temp_loaded_container = $( '<div class="hidden temp-container">' );
+		$.get( BoldgridEditor.site_url, function( data ) {
 
 			$temp_loaded_container.html( data );
 
 			//Create Iframe
-			$('html').append('<iframe id="resizer-iframe" width="1600" height="600"></iframe>');
-			self.$resizing_iframe = $('#resizer-iframe');
+			$( 'html' ).append( '<iframe id="resizer-iframe" width="1600" height="600"></iframe>' );
+			self.$resizing_iframe = $( '#resizer-iframe' );
 
 			//Remove Elements that we dont want loaded
-			$temp_loaded_container.find('script, meta, title').remove();
+			$temp_loaded_container.find( 'script, meta, title').remove();
 			$temp_loaded_container.find('img').attr('src', '');
 			$temp_loaded_container.find('img').attr('srcset', '');
 			$temp_loaded_container.find('[onload]').removeAttr('onload');

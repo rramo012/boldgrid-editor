@@ -1481,19 +1481,19 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.setMenuPosition = function( $currentPopover ) {
 		var popoverWidth, totalWidth,
 			boundingClientRect = $currentPopover[0].getBoundingClientRect(),
-			$sideMenu = $currentPopover.find( '.side-menu'),
+			$sideMenu = $currentPopover.find( '.side-menu' ),
 			htmlWidth = self.$html.width(),
 			buffer = 100;
 
 		if ( $sideMenu.length ) {
-			$currentPopover.removeClass('side-menu-left menu-align-left');
+			$currentPopover.removeClass( 'side-menu-left menu-align-left' );
 
 			// If side menu cant fit, point to left.
-			popoverWidth = $currentPopover.find('.popover-menu-imhwpb ul').width();
+			popoverWidth = $currentPopover.find( '.popover-menu-imhwpb ul' ).width();
 			totalWidth = boundingClientRect.right + $sideMenu.width();
 			totalWidth = totalWidth + buffer;
 			if ( totalWidth > self.$html.width() ) {
-				$currentPopover.addClass('side-menu-left');
+				$currentPopover.addClass( 'side-menu-left' );
 			}
 
 			// Context Menu cant fit align left.
@@ -1532,7 +1532,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		var type;
 		var $draggable;
 		var $tools;
-		if ( !event.relatedTarget ) {
+		if ( ! event.relatedTarget ) {
 			return;
 		}
 		self.remove_receptor_containers();
@@ -1576,13 +1576,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			$tools = $current_element.prev( '.draggable-tools-imhwpb' );
 			$draggable = $current_element;
 
-		}//endif
+		}//Endif
 
 		if ( $draggable && $draggable.length ) {
 			type = self.get_element_type( $draggable );
 			// Prevent a pending addition from occurring.
 			if ( type && self.hover_elements[ type ] &&
-					typeof self.hover_elements[ type ].add_element != "undefined" &&
+					typeof self.hover_elements[ type ].add_element != 'undefined' &&
 					self.hover_elements[ type ].add_element != null ) {
 
 				// In the case that the lowest child event leave does not trigger,
@@ -3903,13 +3903,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If for some reason drag is still active, remove it.
 			if ( self.$current_drag ) {
-				self.drag_handlers.end( event );
+				// This was causing issues on firefox drag elements.
+				//	self.drag_handlers.end( event );
 			}
 		},
 		/**
 		 * The event is activates the resize process.
 		 */
 		'mousedown.draggable' : function( event ) {
+
 			// If they user clicked on drag handle, return
 			$target = $( event.target );
 			if ( $target.closest( '.draggable-tools-imhwpb' ).length ) {
