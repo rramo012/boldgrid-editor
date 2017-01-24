@@ -7,7 +7,7 @@
 **Contributors:** imh_brad, joemoto, rramo012, timph
 **Tags:** inspiration,customization,build,create,design
 **Requires at least:** 4.3
-**Tested up to:** 4.7
+**Tested up to:** 4.7.1
 **License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.3.2 In progress ###
+### 1.3.2 ###
 * New Feature:	JIRA WPB-2803	Added a new UI for Gridblocks.
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 
