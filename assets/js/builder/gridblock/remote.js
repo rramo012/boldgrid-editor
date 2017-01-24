@@ -154,9 +154,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 					self.validateGridblock( newGridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();
-					setTimeout( function() {
-						BG.GRIDBLOCK.View.centerSections();
-					}, 1000 );
 				}
 
 			};

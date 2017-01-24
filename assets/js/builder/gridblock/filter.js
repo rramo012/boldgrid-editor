@@ -63,11 +63,18 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		storeImageReplacements: function( gridblockId ) {
 			var imageReplacements = [],
-				config = BG.GRIDBLOCK.configs.gridblocks;
+				config = BG.GRIDBLOCK.configs.gridblocks,
+				gridblock = config[ gridblockId ];
 
 			config[ gridblockId ].$html.find( '[data-pending-boldgrid-attribution]' ).each( function() {
 				imageReplacements.push( $( this ).data( 'boldgrid-asset-id' ) );
 			} );
+
+			if ( gridblock.build_profile_id ) {
+				gridblock.$html.find( 'img[data-imhwpb-asset-id]' ).each( function() {
+					imageReplacements.push( $( this ).data( 'imhwpb-asset-id' ) );
+				} );
+			}
 
 			config[ gridblockId ].imageReplacements = imageReplacements;
 		},
@@ -265,7 +272,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				  .removeAttr( 'data-pending-boldgrid-attribution' );
 		},
 
-
 		/**
 		 * Remove Gridblocks that should not be aviailable to users.
 		 *
@@ -276,7 +282,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		isSimpleGridblock: function( $html ) {
 			var valid_num_of_descendents = 3,
 				isSimpleGridblock = false,
-				$testDiv = $( '<div>' ).html( $html );
+				$testDiv = $( '<div>' ).html( $html.clone() );
 
 			// Remove spaces from the test div. Causes areas with only spacers to fail tests.
 			$testDiv.find( '.mod-space' ).remove();

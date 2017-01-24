@@ -1852,7 +1852,8 @@ body.boldgrid-editor-fullscreen {
   background: #f1f1f1;
   box-shadow: -7px 0px 0 0 #0073aa;
   cursor: pointer;
-  transition: background-color .5s, color .5s; }
+  transition: background-color .5s, color .5s;
+  text-decoration: none; }
 
 .boldgrid-zoomout .bg-close-zoom-view:hover {
   background: #FFF; }
@@ -2072,11 +2073,13 @@ body.boldgrid-editor-fullscreen {
 .zoom-gridblocks-section .gridblock.dragging-gridblock:before {
   background-color: #f95b26; }
 
+.zoom-gridblocks-section .gridblock .add-gridblock {
+  cursor: pointer; }
+
 .zoom-gridblocks-section .gridblock .add-gridblock:before {
   content: '+ Add to Page';
   z-index: 1;
   opacity: 0;
-  cursor: pointer;
   background: rgba(0, 0, 0, 0.5);
   padding: 20px 40px;
   font-size: 1.6em;

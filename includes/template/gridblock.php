@@ -1,7 +1,7 @@
 <div class="zoom-navbar zoom-navbar-top">
 	<div class="history-controls">
-		<button class='undo-link' type="button"><i class="mce-ico mce-i-undo"></i></button>
-		<button class='redo-link' type="button"><i class="mce-ico mce-i-redo"></i></button>
+		<button class='undo-link' title="Undo" type="button"><i class="mce-ico mce-i-undo"></i></button>
+		<button class='redo-link' title="Redo" type="button"><i class="mce-ico mce-i-redo"></i></button>
 	</div>
 	<div class="bg-zoom-controls">
 		<a class="exit-row-dragging">Exit GridBlock Dragging</a>
@@ -10,7 +10,9 @@
 		<div class="enabled bg-editor-loading absolute"></div>
 		<span>Loading GridBlocks</span>
 	</div>
-	<div class="bg-close-zoom-view"></div>
+	<a href="#" title="Close" class="bg-close-zoom-view">
+		<span class="screen-reader-text">Close</span>
+	</a>
 </div>
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
 	<div class="gridblocks">

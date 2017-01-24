@@ -74,6 +74,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			BG.CONTROLS.Generic.setupInputInitialization();
 			BG.NOTICE.Update.init();
 
+			this.browser = BG.Util.checkBrowser();
 		},
 
 		/**

@@ -100,20 +100,30 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		centerSections: function() {
 			self.$gridblockSection.find( 'iframe' ).each( function() {
-				var $this = $( this ),
-					className = 'centered-section',
-					$body = $this.contents().find( 'body' ),
-					$section = $body.find( '.boldgrid-section:only-of-type, .row:only-of-type' ),
-					sectionHeight = $section.length ? $section.height() : false,
-					iframeHeight = $this.height();
-
-				// If the section height is larger than the iframe height.
-				if ( sectionHeight && ( sectionHeight < iframeHeight ) ) {
-					$body.addClass( className );
-				}  else if ( false !== sectionHeight ) {
-					$body.removeClass( className );
-				}
+				self.centerSection( $( this ) );
 			} );
+		},
+
+		/**
+		 * Center a single section.
+		 *
+		 * @since 1.4
+		 *
+		 * @param  {jQuery} $this Iframe to center.
+		 */
+		centerSection: function( $this ) {
+			var className = 'centered-section',
+				$body = $this.contents().find( 'body' ),
+				$section = $body.find( '.boldgrid-section:only-of-type, .row:only-of-type' ),
+				sectionHeight = $section.length ? $section.height() : false,
+				iframeHeight = $this.height();
+
+			// If the section height is larger than the iframe height.
+			if ( sectionHeight && ( sectionHeight < iframeHeight ) ) {
+				$body.addClass( className );
+			}  else if ( false !== sectionHeight ) {
+				$body.removeClass( className );
+			}
 		},
 
 		/**
@@ -151,11 +161,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					$head = $iframe.contents().find( 'head' );
 
 				$head.html( self.headMarkup );
+				self.centerSection( $iframe );
 
 				$iframe.on( 'load', function() {
 					if ( self.headMarkup ) {
 						$this.attr( 'data-styles', 1 );
 						$head.html( self.headMarkup );
+						self.centerSection( $iframe );
 					}
 				} );
 			} );
@@ -177,6 +189,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.headMarkup = self.getHeadStyles( siteMarkup );
 				self.addFrameStyles();
 				self.addedStyles = true;
+
+				self.$gridblockSection.find( '[data-styles="0"]' ).attr( 'data-styles', 1 );
 			} );
 		},
 

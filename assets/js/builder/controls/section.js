@@ -137,6 +137,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return;
 			}
 
+			if ( 'Firefox' === BG.Controls.browser ) {
+				return;
+			}
+
 			rect = self.$container.$body[0].getBoundingClientRect(),
 			bodyHeight = rect.bottom - rect.top + 50;
 
@@ -159,10 +163,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		exitSectionDrag: function() {
+		exitSectionDrag: function( e ) {
 			var $body = $( 'body' ),
 				$window = $( window ),
 				$frameHtml = self.$container.find( 'html' );
+
+			e.preventDefault();
 
 			$body.removeClass( 'focus-on boldgrid-zoomout' );
 			$window.trigger( 'resize' );
@@ -174,7 +180,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( '#content_ifr' ).css( 'max-height', '' );
 
 			$( 'html, body' ).animate( {
-			     scrollTop: $( '#postdivrich' ).offset().top
+				 scrollTop: $( '#postdivrich' ).offset().top
 			}, 0 );
 		},
 
@@ -287,7 +293,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		transistionSection: function( $newSection ) {
 			IMHWPB.tinymce_undo_disabled = true;
 			$newSection.animate( {
-				    'background-color': 'transparent'
+					'background-color': 'transparent'
 				  }, 1500, 'swing', function() {
 						BG.Controls.addStyle( $newSection, 'background-color', '' );
 						IMHWPB.tinymce_undo_disabled = false;

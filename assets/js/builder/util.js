@@ -42,12 +42,38 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			allClasses = classString ? classString.split( ' ' ) : [];
 
 			$.each( allClasses, function() {
-				if ( this.indexOf( namespace ) === 0 ) {
+				if ( 0 === this.indexOf( namespace ) ) {
 					classes.push( this );
 				}
 			} );
 
 			return classes;
+		},
+
+		/**
+		 * Check the users browser.
+		 *
+		 * @since 1.4
+		 *
+		 * @return {string} User browser.
+		 */
+		checkBrowser: function() {
+			var browser,
+				chrome = navigator.userAgent.search( 'Chrome' ),
+				firefox = navigator.userAgent.search( 'Firefox' ),
+				ie8 = navigator.userAgent.search( 'MSIE 8.0' ),
+				ie9 = navigator.userAgent.search( 'MSIE 9.0' );
+
+			if ( chrome > -1 ) {
+				browser = 'Chrome';
+			} else if ( firefox > -1 ) {
+				browser = 'Firefox';
+			} else if ( ie9 > -1 ) {
+				browser = 'MSIE 9.0';
+			} else if ( ie8 > -1 ) {
+				browser = 'MSIE 8.0';
+			}
+			return browser;
 		}
 	};
 

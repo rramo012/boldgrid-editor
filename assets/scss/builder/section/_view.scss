@@ -183,6 +183,7 @@ $fix-top-height: 79px;
 		box-shadow: -7px 0px 0 0 #0073aa;
 		cursor: pointer;
 		transition: background-color .5s, color .5s;
+		text-decoration: none;
 
 		&:hover {
 			background: #FFF;
@@ -447,11 +448,13 @@ $fix-top-height: 79px;
 			}
 		}
 
+		.add-gridblock {
+			cursor: pointer;
+		}
 		.add-gridblock:before {
 			content: '+ Add to Page';
 			z-index: 1;
 			opacity: 0;
-			cursor: pointer;
 			background: rgba(0,0,0,.5);
 			padding: 20px 40px;
 			font-size: 1.6em;

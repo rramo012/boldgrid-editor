@@ -196,8 +196,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			if ( this.asset_id && this.url ) {
 
-				//Swap image and remove data indicators.
-				$image = gridblockData.$html.find( '[data-boldgrid-asset-id="' + this.asset_id + '"]' );
+				// Swap image and remove data indicators.
+				$image = gridblockData.$html.find(
+					'[data-boldgrid-asset-id="' + this.asset_id + '"], [data-imhwpb-asset-id="' + this.asset_id + '"]' );
 
 				addImageAttr( $image, this );
 				BG.GRIDBLOCK.Filter.removeAttributionAttributes( $image );
