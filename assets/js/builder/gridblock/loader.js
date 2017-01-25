@@ -16,6 +16,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			loadingGridblocks: false,
 
+			creatingIframe: false,
+
 			/**
 			 * Run this function the first time the view is open.
 			 *
@@ -91,6 +93,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					var gridblockId = blocks[ iteration ],
 						gridblock = ( gridblockId ) ? BGGB.configs.gridblocks[ gridblockId ] : false;
 
+					if ( true === self.creatingIframe ) {
+						return;
+					}
+
 					if ( ! gridblock ) {
 						clearInterval( interval );
 						self.loadingGridblocks = false;
@@ -118,6 +124,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					$iframe = $( '<iframe></iframe>' );
 
 				$gridblock.prepend( $iframe );
+				self.creatingIframe = true;
 
 				load = function() {
 					$contents = $iframe.contents();
@@ -125,6 +132,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.addBodyClasses( $contents );
 					BGGB.View.addStyles( $contents );
 					gridblock.iframeCreated = true;
+					self.creatingIframe = false;
 					$gridblock.removeClass( 'gridblock-loading' );
 					setTimeout( function() {
 						BGGB.View.centerSection( $iframe, $contents );
