@@ -22,7 +22,6 @@
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
 <div class="gridblock gridblock-loading" data-id="{{data.id}}">
 	<i class="fa fa-arrows" aria-hidden="true"></i>
-	<div class='gridblock-html'>{{{data.html}}}</div>
 	<div class="add-gridblock"></div>
 </div>
 </script>

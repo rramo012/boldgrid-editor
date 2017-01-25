@@ -20,11 +20,33 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
 			self.createGridblocks();
+			BG.GRIDBLOCK.Loader.loadGridblocks();
+			self.endlessScroll();
 		},
 
 		onLoad: function() {
 			self.setupAddGridblock();
 			self.getStyles();
+		},
+
+		/**
+		 * Setup infinite scroll of gridblocks.
+		 *
+		 * @since 1.4
+		 */
+		endlessScroll: function() {
+			var loadDistance = 1500,
+				$gridblocks = self.$gridblockSection.find( '.gridblocks' );
+
+			 self.$gridblockSection.on( 'scroll', function() {
+				var scrollTop = self.$gridblockSection.scrollTop(),
+					height = $gridblocks.height(),
+					diff = height - scrollTop;
+
+					if ( diff < loadDistance ) {
+						BG.GRIDBLOCK.Loader.loadGridblocks();
+					}
+			} );
 		},
 
 		/**
@@ -34,8 +56,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		setupAddGridblock: function() {
 			$( '#insert-gridblocks-button' ).on( 'click', function() {
+				$( '.wp-switch-editor' ).click();
+
 				if ( ! BG.CONTROLS.Section.$container ) {
-					$( '.wp-switch-editor' ).click();
 					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 300 );
 				} else {
 					BG.CONTROLS.Section.enableSectionDrag();
@@ -91,10 +114,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 *
 		 * @param  {jQuery} $this Iframe to center.
 		 */
-		centerSection: function( $iframe ) {
+		centerSection: function( $iframe, $contents ) {
 			var className = 'centered-section',
-				$body = $iframe.find( 'body' ),
-				$section = $body.find( '.boldgrid-section:only-of-type, .row:only-of-type' ),
+				$body = $contents.find( 'body' ),
+				$section = $body.find( '> .boldgrid-section' ),
 				sectionHeight = $section.length ? $section.height() : false,
 				iframeHeight = $iframe.height();
 
@@ -150,7 +173,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
 
 			$gridblockContainer.append( markup );
-			BG.GRIDBLOCK.Loader.loadGridblocks();
 		},
 
 		/**
@@ -227,8 +249,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		getGridblockHtml: function( gridblockData ) {
 			return wp.template( 'boldgrid-editor-gridblock' )( {
-				'id': gridblockData.gridblockId,
-				'html': gridblockData.getPreviewHtml()
+				'id': gridblockData.gridblockId
 			} );
 		}
 	};

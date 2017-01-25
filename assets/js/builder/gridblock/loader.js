@@ -14,6 +14,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			countGidblocksLoaded: 0,
 
+			loadingGridblocks: false,
+
 			/**
 			 * Run this function the first time the view is open.
 			 *
@@ -50,10 +52,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {Array} List of gridblock keys to be rendered.
 			 */
 			getPendingGridblockIds: function() {
-				var gridblockIds = [];
+				var gridblockIds = [],
+					currentCount = 0,
+					maxPerLoad = 10;
 
 				$.each( BGGB.configs.gridblocks, function( index ) {
-					if ( ! this.renderScheduled ) {
+					if ( ! this.renderScheduled && currentCount < maxPerLoad ) {
+						currentCount++;
 						this.renderScheduled = true;
 						gridblockIds.push( index );
 					}
@@ -68,9 +73,19 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @since 1.4
 			 */
 			loadGridblocks: function() {
-				var interval, load,
-					iteration = 0,
-					blocks = self.getPendingGridblockIds();
+				var interval, load, blocks,
+					iteration = 0;
+
+				if ( true === self.loadingGridblocks ) {
+					return;
+				}
+
+				self.loadingGridblocks = true;
+				blocks = self.getPendingGridblockIds();
+
+				if ( 0 === blocks.length ) {
+					return;
+				}
 
 				load = function() {
 					var gridblockId = blocks[ iteration ],
@@ -78,6 +93,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 					if ( ! gridblock ) {
 						clearInterval( interval );
+						self.loadingGridblocks = false;
 						return;
 					}
 
@@ -99,22 +115,19 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			createIframe: function( gridblock ) {
 				var load, postCssLoad, $contents,
 					$gridblock = BGGB.View.$gridblockSection.find( '[data-id="' + gridblock.gridblockId + '"]' ),
-					$iframe = $( '<iframe></iframe>' ),
-					html = $gridblock.find( '.gridblock-html' ).html();
+					$iframe = $( '<iframe></iframe>' );
 
 				$gridblock.prepend( $iframe );
-				$gridblock.find( '.gridblock-html' ).empty();
 
 				load = function() {
 					$contents = $iframe.contents();
-
-					$contents.find( 'body' ).html( html );
+					$contents.find( 'body' ).html( gridblock.getPreviewHtml() );
 					BGGB.View.addBodyClasses( $contents );
 					BGGB.View.addStyles( $contents );
 					gridblock.iframeCreated = true;
 					$gridblock.removeClass( 'gridblock-loading' );
 					setTimeout( function() {
-						BGGB.View.centerSection( $contents );
+						BGGB.View.centerSection( $iframe, $contents );
 						self.removeLoadingOverlay();
 					}, 500 );
 				};
