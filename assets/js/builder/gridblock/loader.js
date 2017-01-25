@@ -56,7 +56,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			getPendingGridblockIds: function() {
 				var gridblockIds = [],
 					currentCount = 0,
-					maxPerLoad = 10;
+					maxPerLoad = 5;
 
 				$.each( BGGB.configs.gridblocks, function( index ) {
 					if ( ! this.renderScheduled && currentCount < maxPerLoad ) {
@@ -132,11 +132,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.addBodyClasses( $contents );
 					BGGB.View.addStyles( $contents );
 					gridblock.iframeCreated = true;
-					self.creatingIframe = false;
 					$gridblock.removeClass( 'gridblock-loading' );
 					setTimeout( function() {
 						BGGB.View.centerSection( $iframe, $contents );
 						self.removeLoadingOverlay();
+						self.creatingIframe = false;
 					}, 500 );
 				};
 
