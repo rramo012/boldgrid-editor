@@ -11,16 +11,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	var BG = BOLDGRID.EDITOR,
 		self = {
 		$tinymceBody: null,
-		headMarkup: '',
 		$gridblockSection: null,
-		openInit: false,
+		headMarkup: false,
+		siteMarkup: '',
 
 		init: function() {
 			self.findElements();
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
-			self.setupAddGridblock();
 			self.createGridblocks();
+		},
+
+		onLoad: function() {
+			self.setupAddGridblock();
+			self.getStyles();
 		},
 
 		/**
@@ -38,19 +42,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 
 			} );
-		},
-
-		/**
-		 * Run this function the first time the view is open.
-		 *
-		 * @since 1.4
-		 */
-		firstOpen: function() {
-			if ( false === self.openInit ) {
-				self.openInit = true;
-				BG.GRIDBLOCK.View.centerSections();
-				BG.GRIDBLOCK.Remote.loadRemoteGridblocks();
-			}
 		},
 
 		/**
@@ -94,29 +85,18 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Center align the content of all gridblock options.
-		 *
-		 * @since 1.4
-		 */
-		centerSections: function() {
-			self.$gridblockSection.find( 'iframe' ).each( function() {
-				self.centerSection( $( this ) );
-			} );
-		},
-
-		/**
 		 * Center a single section.
 		 *
 		 * @since 1.4
 		 *
 		 * @param  {jQuery} $this Iframe to center.
 		 */
-		centerSection: function( $this ) {
+		centerSection: function( $iframe ) {
 			var className = 'centered-section',
-				$body = $this.contents().find( 'body' ),
+				$body = $iframe.find( 'body' ),
 				$section = $body.find( '.boldgrid-section:only-of-type, .row:only-of-type' ),
 				sectionHeight = $section.length ? $section.height() : false,
-				iframeHeight = $this.height();
+				iframeHeight = $iframe.height();
 
 			// If the section height is larger than the iframe height.
 			if ( sectionHeight && ( sectionHeight < iframeHeight ) ) {
@@ -124,6 +104,31 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			}  else if ( false !== sectionHeight ) {
 				$body.removeClass( className );
 			}
+		},
+
+		/**
+		 * Add body classes to iframe..
+		 *
+		 * @since 1.4
+		 *
+		 * @param {jQuery} $iframe iFrame
+		 */
+		addBodyClasses: function( $iframe ) {
+			$iframe.find( 'body' )
+				.addClass( BoldgridEditor.body_class )
+				.addClass( 'mce-content-body' )
+				.css( 'overflow', 'hidden' );
+		},
+
+		/**
+		 * Add styles to iframe.
+		 *
+		 * @since 1.4
+		 *
+		 * @param {jQuery} $iframe iFrame
+		 */
+		addStyles: function( $iframe ) {
+			$iframe.find( 'head' ).html( self.headMarkup );
 		},
 
 		/**
@@ -145,32 +150,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
 
 			$gridblockContainer.append( markup );
-			self.createIframes( $gridblockContainer );
-			self.applyStyles();
-		},
-
-		/**
-		 * Add css to each iframe.
-		 *
-		 * @since 1.4
-		 */
-		addFrameStyles: function() {
-			self.$gridblockSection.find( '[data-styles="0"]' ).each( function() {
-				var $this = $( this ),
-					$iframe = $this.find( 'iframe' ),
-					$head = $iframe.contents().find( 'head' );
-
-				$head.html( self.headMarkup );
-				self.centerSection( $iframe );
-
-				$iframe.on( 'load', function() {
-					if ( self.headMarkup ) {
-						$this.attr( 'data-styles', 1 );
-						$head.html( self.headMarkup );
-						self.centerSection( $iframe );
-					}
-				} );
-			} );
+			BG.GRIDBLOCK.Loader.loadGridblocks();
 		},
 
 		/**
@@ -178,19 +158,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 *
 		 * @since 1.4
 		 */
-		applyStyles: function() {
-			if ( self.addedStyles ) {
-				self.addFrameStyles();
-				return;
-			}
-
-			self.headMarkup = '';
+		getStyles: function() {
 			$.get( BoldgridEditor.site_url, function( siteMarkup ) {
+				var $window = $( window );
+				self.siteMarkup = siteMarkup;
 				self.headMarkup = self.getHeadStyles( siteMarkup );
-				self.addFrameStyles();
-				self.addedStyles = true;
 
-				self.$gridblockSection.find( '[data-styles="0"]' ).attr( 'data-styles', 1 );
+				$window.trigger( 'boldgrid_page_html', self.siteMarkup );
+				$window.trigger( 'boldgrid_head_styles', self.headMarkup );
 			} );
 		},
 
@@ -221,41 +196,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			headMarkup += wp.template( 'gridblock-iframe-styles' )();
 
 			return headMarkup;
-		},
-
-		/**
-		 * Create all iframes within the gridblocks.
-		 *
-		 * @since 1.4
-		 *
-		 * @param  jQuery $gridblockContainer Container of Gridblocks.
-		 */
-		createIframes: function( $gridblockContainer ) {
-			$gridblockContainer.find( '[data-gridblock="0"]' ).each( function() {
-				var load,
-					$gridblock = $( this ),
-					$iframe = $( '<iframe></iframe>' ),
-					html = $gridblock.find( '.gridblock-html' ).html();
-
-				$gridblock.prepend( $iframe );
-
-				$gridblock.find( '.gridblock-html' ).empty();
-				$gridblock.attr( 'data-gridblock', 1 );
-
-				load = function() {
-					$iframe.contents()
-						.find( 'body' )
-						.addClass( BoldgridEditor.body_class )
-						.addClass( 'mce-content-body' )
-						.css( 'overflow', 'hidden' )
-						.html( html );
-
-					$iframe.contents().find( 'head' ).html( self.headMarkup );
-				};
-
-				load();
-				$iframe.on( 'load', load );
-			} );
 		},
 
 		/**
@@ -294,6 +234,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	};
 
 	BG.GRIDBLOCK.View = self;
-	$( BG.GRIDBLOCK.View.init );
+	$( BG.GRIDBLOCK.View.onLoad );
 
 } )( jQuery );

@@ -297,6 +297,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/gridblock/filter.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-gridblock-loader',
+			plugins_url( '/assets/js/builder/gridblock/loader.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-button',
 			plugins_url( '/assets/js/builder/controls/button.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

@@ -354,6 +354,33 @@ $fix-top-height: 79px;
 		align-items: center;
 		justify-content: center;
 		margin-bottom: 80px;
+		position: relative;
+
+		&:before {
+			content:'';
+			background-color: #f1f1f1;
+			position:absolute;
+			top: 0;
+			left:0;
+			bottom: 0;
+			right: 0;
+			z-index: 1;
+			opacity: 0;
+			transition: opacity .5s, visibility .5s;
+			visibility: hidden;
+		}
+
+		&.gridblock-loading  {
+
+			&:before {
+				visibility : visible;
+				opacity: 1;
+			}
+
+			.gridblock {
+				display: none;
+			}
+		}
 	}
 
 	.gridblock {
@@ -368,6 +395,10 @@ $fix-top-height: 79px;
 		cursor: move;
 		width: 586px;
 		user-select: none;
+
+		&.gridblock-loading {
+			display: none;
+		}
 
 		iframe {
 			width: 1170px;

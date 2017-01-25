@@ -1995,7 +1995,28 @@ body.boldgrid-editor-fullscreen {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 80px; }
+  margin-bottom: 80px;
+  position: relative; }
+
+.zoom-gridblocks-section .gridblocks:before {
+  content: '';
+  background-color: #f1f1f1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .5s, visibility .5s;
+  visibility: hidden; }
+
+.zoom-gridblocks-section .gridblocks.gridblock-loading:before {
+  visibility: visible;
+  opacity: 1; }
+
+.zoom-gridblocks-section .gridblocks.gridblock-loading .gridblock {
+  display: none; }
 
 .zoom-gridblocks-section .gridblock {
   position: relative;
@@ -2009,6 +2030,9 @@ body.boldgrid-editor-fullscreen {
   cursor: move;
   width: 586px;
   user-select: none; }
+
+.zoom-gridblocks-section .gridblock.gridblock-loading {
+  display: none; }
 
 .zoom-gridblocks-section .gridblock iframe {
   width: 1170px;

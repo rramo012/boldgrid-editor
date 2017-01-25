@@ -201,7 +201,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			$( window ).trigger( 'resize' ).scrollTop( 0 );
 			self.updateHtmlSize();
-			BOLDGRID.EDITOR.GRIDBLOCK.View.firstOpen();
+			BOLDGRID.EDITOR.GRIDBLOCK.Loader.firstOpen();
 
 			$( '.bg-zoom-controls .slider' ).slider( {
 				min: 1,

@@ -687,7 +687,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		BG.RESIZE.Row.init( self.$master_container );
 		BG.Controls.init( self.$master_container );
 		BG.DRAG.Section.init( self.$master_container );
-		BG.GRIDBLOCK.Drag.init();
 
 		return self;
 	};
