@@ -257,6 +257,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/validation/section.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-style-remote',
+			plugins_url( '/assets/js/builder/style/remote.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls',
 			plugins_url( '/assets/js/builder/controls.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

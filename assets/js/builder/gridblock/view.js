@@ -26,7 +26,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 		onLoad: function() {
 			self.setupAddGridblock();
-			self.getStyles();
+			BG.STYLE.Remote.getStyles( BoldgridEditor.site_url );
 		},
 
 		/**
@@ -56,7 +56,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		setupAddGridblock: function() {
 			$( '#insert-gridblocks-button' ).on( 'click', function() {
-				$( '.wp-switch-editor' ).click();
+				$( '.wp-switch-editor.switch-tmce' ).click();
 
 				if ( ! BG.CONTROLS.Section.$container ) {
 					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 300 );
@@ -173,51 +173,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
 
 			$gridblockContainer.append( markup );
-		},
-
-		/**
-		 * Fetch the from front end and apply them.
-		 *
-		 * @since 1.4
-		 */
-		getStyles: function() {
-			$.get( BoldgridEditor.site_url, function( siteMarkup ) {
-				var $window = $( window );
-				self.siteMarkup = siteMarkup;
-				self.headMarkup = self.getHeadStyles( siteMarkup );
-
-				$window.trigger( 'boldgrid_page_html', self.siteMarkup );
-				$window.trigger( 'boldgrid_head_styles', self.headMarkup );
-			} );
-		},
-
-		/**
-		 * Given markup for a site, get all of the stylesheets.
-		 *
-		 * @since 1.4
-		 *
-		 * @param string siteMarkup Markup for an Entire site.
-		 * @return string Head markup that represents the styles.
-		 */
-		getHeadStyles: function( siteMarkup ) {
-			var $html = $( '<div>' ).html( siteMarkup ),
-				headMarkup = '';
-
-			$html.find( 'link, style' ).each( function() {
-				var $this = $( this ),
-					markup = this.outerHTML,
-					tagName = $this.prop( 'tagName' );
-
-				if ( 'LINK' === tagName && 'stylesheet' !== $this.attr( 'rel' ) ) {
-					markup = '';
-				}
-
-				headMarkup += markup;
-			} );
-
-			headMarkup += wp.template( 'gridblock-iframe-styles' )();
-
-			return headMarkup;
+			self.$gridblockSection.trigger( 'scroll' );
 		},
 
 		/**

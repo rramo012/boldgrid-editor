@@ -18,6 +18,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			creatingIframe: false,
 
+			$iframeTemp: false,
+
 			/**
 			 * Run this function the first time the view is open.
 			 *
@@ -38,7 +40,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @since 1.4
 			 */
 			removeLoadingOverlay: function() {
-				var minGridblocks = 9;
+				var minGridblocks = 4;
 
 				self.countGidblocksLoaded++;
 				if ( self.countGidblocksLoaded === minGridblocks ) {
@@ -56,7 +58,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			getPendingGridblockIds: function() {
 				var gridblockIds = [],
 					currentCount = 0,
-					maxPerLoad = 5;
+					maxPerLoad = 4;
 
 				$.each( BGGB.configs.gridblocks, function( index ) {
 					if ( ! this.renderScheduled && currentCount < maxPerLoad ) {
@@ -82,12 +84,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					return;
 				}
 
-				self.loadingGridblocks = true;
 				blocks = self.getPendingGridblockIds();
-
 				if ( 0 === blocks.length ) {
 					return;
 				}
+
+				self.loadingGridblocks = true;
 
 				load = function() {
 					var gridblockId = blocks[ iteration ],
@@ -100,6 +102,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					if ( ! gridblock ) {
 						clearInterval( interval );
 						self.loadingGridblocks = false;
+						BGGB.View.$gridblockSection.trigger( 'scroll' );
 						return;
 					}
 
@@ -121,7 +124,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			createIframe: function( gridblock ) {
 				var load, postCssLoad, $contents,
 					$gridblock = BGGB.View.$gridblockSection.find( '[data-id="' + gridblock.gridblockId + '"]' ),
-					$iframe = $( '<iframe></iframe>' );
+					$iframe = ( self.$iframeTemp ) ? self.$iframeTemp : $( '<iframe></iframe>' );
 
 				$gridblock.prepend( $iframe );
 				self.creatingIframe = true;
@@ -129,15 +132,17 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				load = function() {
 					$contents = $iframe.contents();
 					$contents.find( 'body' ).html( gridblock.getPreviewHtml() );
-					BGGB.View.addBodyClasses( $contents );
 					BGGB.View.addStyles( $contents );
+					BGGB.View.addBodyClasses( $contents );
+					self.$iframeTemp = $iframe.clone();
+
 					gridblock.iframeCreated = true;
-					$gridblock.removeClass( 'gridblock-loading' );
 					setTimeout( function() {
+						$gridblock.removeClass( 'gridblock-loading' );
 						BGGB.View.centerSection( $iframe, $contents );
 						self.removeLoadingOverlay();
 						self.creatingIframe = false;
-					}, 500 );
+					}, 300 );
 				};
 
 				postCssLoad = function() {
@@ -148,8 +153,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					}
 				};
 
-				postCssLoad();
-				$iframe.on( 'load', postCssLoad );
+				if ( 'Firefox' === BOLDGRID.EDITOR.Controls.browser  ) {
+					$iframe.on( 'load', postCssLoad );
+				} else {
+					postCssLoad();
+				}
 			}
 		};
 

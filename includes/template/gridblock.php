@@ -39,6 +39,10 @@ body, html {
 	padding: 0 !important;
 }
 
+body {
+	min-height: 100%;
+}
+
 .centered-section > .row:only-of-type,
 .centered-section > .boldgrid-section:only-of-type {
 	position: absolute;
