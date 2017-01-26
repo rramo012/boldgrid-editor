@@ -505,6 +505,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			if ( ! filterFound && ! type ) {
 				backgroundImageProp = $target.css( 'background-image' );
 				if ( backgroundImageProp && 'none' !== backgroundImageProp ) {
+
 					// Image filter selection hack, trouble selecting array data type.
 					BG.Panel.$element.find( '.filter[data-type]:first-of-type' ).click();
 					filterFound = true;
@@ -533,6 +534,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$currentSelection.css( 'background-color', prop );
 			} else {
 				$currentSelection.css( 'background-color', $target.css( 'background-color' ) );
+
 				// $target[0].style['background-image'] used instead of jQuery.css because of comaptbility issue with FF.
 				$currentSelection.css( 'background-image', $target[0].style['background-image'] );
 			}
