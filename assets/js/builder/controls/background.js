@@ -65,12 +65,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					button: {
 						text: 'Use this media'
 					},
+
 					 // Set to true to allow multiple files to be selected.
 					multiple: false
 				} );
 
 				// When an image is selected in the media frame.
 				self.uploadFrame.on( 'select', function() {
+
 					// Get media attachment details from the frame state.
 					var attachment = self.uploadFrame.state().get( 'selection' ).first().toJSON();
 
@@ -168,10 +170,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var panel = BG.Panel;
 
 			panel.$element.on( 'click', '.background-design .overlay-color .default-color', function( e ) {
-				e.preventDefault();
-
 				var $this = $( this ),
 					$target = BG.Menu.$element.targetData[ self.name ];
+
+				e.preventDefault();
 
 				$this.closest( '.color-controls' ).find( 'label' ).css( 'background-color', 'rgba(255,255,255,.5)' );
 
@@ -552,6 +554,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Controls.addStyle( $target, 'background',  '' );
 			self.updateBackgroundImage();
 			BG.Controls.addStyle( $target, 'background-size', 'cover' );
+			BG.Controls.addStyle( $target, 'background-position', '50% 50%' );
 		},
 
 		/**
@@ -570,21 +573,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_initVerticleSlider: function() {
 			var $target = BG.Menu.getTarget( self ),
-				defaultPos = $target.css( 'background-position-y' );
+				defaultPosY = $target.css( 'background-position-y' ),
+				defaultPosX = $target.css( 'background-position-x' );
 
-			defaultPos = defaultPos ? parseInt( defaultPos ) : 0;
+			defaultPosY = defaultPosY ? parseInt( defaultPosY ) : 50;
+			defaultPosX = defaultPosX ? parseInt( defaultPosX ) : 50;
 
 			BG.Panel.$element.find( '.background-design .vertical-position .slider' ).slider( {
 				min: 0,
 				max: 100,
-				value: defaultPos,
+				value: defaultPosY,
 				range: 'max',
 				slide: function( event, ui ) {
 					if ( $target.css( 'background-image' ) ) {
-						BG.Controls.addStyle( $target, 'background-position', '0% ' + ui.value + '%' );
+						BG.Controls.addStyle( $target, 'background-position', defaultPosX + '%' + ' ' + ui.value + '%' );
 					}
 				}
-			} ).siblings( '.value' ).html( defaultPos );
+			} ).siblings( '.value' ).html( defaultPosY );
 		},
 
 		/**
