@@ -395,6 +395,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		collapseSelection: function() {
 			if ( 'icon' !== self.currentControl.name ) {
 				tinyMCE.activeEditor.selection.collapse( false );
+				tinyMCE.activeEditor.nodeChanged();
 			}
 		},
 
