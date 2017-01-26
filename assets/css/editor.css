@@ -1759,7 +1759,8 @@ body.boldgrid-editor-fullscreen {
 
 .boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider .fa {
   position: absolute;
-  left: 16px; }
+  left: 16px;
+  cursor: pointer; }
 
 .boldgrid-zoomout .bg-zoom-controls .bg-zoom-slider .fa.fa-search-minus {
   bottom: 12px; }

@@ -44,9 +44,9 @@
 <script type="text/html" id="tmpl-boldgrid-editor-zoom-tools">
 <div class='bg-zoom-controls'>
 	<div class='bg-zoom-slider'>
-		<i class="fa fa-search-plus" aria-hidden="true"></i>
+		<i class="fa fa-search-plus zoom-in" aria-hidden="true"></i>
 		<div class="slider"></div>
-		<i class="fa fa-search-minus" aria-hidden="true"></i>
+		<i class="fa fa-search-minus zoom-out" aria-hidden="true"></i>
 	</div>
 </div>
 </script>

@@ -16,6 +16,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		$currentSection: [],
 
+		zoomSliderSettings: {
+			min: 1,
+			max: 6,
+			defaultVal: 3
+		},
+
 		/**
 		 * Init section controls.
 		 *
@@ -101,9 +107,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		bindHandlers: function() {
 
-			var stopPropagation = function( e ) {
-				e.stopPropagation();
-			};
+			var $zoomControls = $( '.bg-zoom-controls' ),
+				$zoomIn = $zoomControls.find( '.zoom-in' ),
+				$zoomOut = $zoomControls.find( '.zoom-out' ),
+				stopPropagation = function( e ) {
+					e.stopPropagation();
+				};
 
 			self.$container.on( 'mouseenter', 'html:not(.dragging-section) body > .boldgrid-section', self.positionHandles );
 			self.$container.on( 'mouseleave', 'html:not(.dragging-section) body > .boldgrid-section', self.hideHandles );
@@ -122,6 +131,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
 			$( '.exit-row-dragging, .bg-close-zoom-view' ).on( 'click', self.exitSectionDrag );
+			$zoomIn.on( 'click', self.zoom.zoomIn );
+			$zoomOut.on( 'click', self.zoom.zoomOut );
 			$( window ).on( 'resize', self.updateHtmlSize );
 		},
 
@@ -146,6 +157,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			self.$container.find( 'html' ).css( 'max-height', bodyHeight );
 			$( '#content_ifr' ).css( 'max-height', bodyHeight );
+		},
+
+		zoom: {
+			change: function( change ) {
+				var val = parseInt( self.$slider.slider( 'value' ) );
+				self.$slider.slider( 'value', change( val ) ).trigger( 'change' );
+			},
+			zoomIn: function() {
+				self.zoom.change( function( val ) {
+					return val + 1;
+				} );
+			},
+			zoomOut: function() {
+				self.zoom.change( function( val ) {
+					return val - 1;
+				} );
+			}
 		},
 
 		/**
@@ -190,8 +218,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		enableSectionDrag: function() {
+			var updateZoom;
+
 			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );
+			self.$slider = $( '.bg-zoom-controls .slider' );
 			BG.Controls.$menu.addClass( 'section-dragging' );
 
 			$( 'body' )
@@ -203,16 +234,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.updateHtmlSize();
 			BOLDGRID.EDITOR.GRIDBLOCK.Loader.firstOpen();
 
-			$( '.bg-zoom-controls .slider' ).slider( {
-				min: 1,
-				max: 6,
-				value: 3,
+			updateZoom = function( val ) {
+				self.removeZoomClasses();
+				self.$container.$body.addClass( 'zoom-scale-' + val );
+				self.updateHtmlSize();
+			};
+
+			self.$slider.slider( {
+				min: self.zoomSliderSettings.min,
+				max: self.zoomSliderSettings.max,
+				value: self.zoomSliderSettings.defaultVal,
 				orientation: 'vertical',
 				range: 'max',
+				change: function( event, ui ) {
+					updateZoom( ui.value );
+				},
 				slide: function( event, ui ) {
-					self.removeZoomClasses();
-					self.$container.$body.addClass( 'zoom-scale-' + ui.value );
-					self.updateHtmlSize();
+					updateZoom( ui.value );
 				}
 			} );
 		},
