@@ -193,6 +193,35 @@ class Boldgrid_Editor_MCE {
 		// Always show wordpress 2 toolbar.
 		$init['wordpress_adv_hidden'] = false;
 
+		// Add Underline to toolbar 1.
+		$init = $this->addInitItem( $init, 'toolbar1', 'underline', 'italic' );
+
+		return $init;
+	}
+
+	/**
+	 * Add to an Item to a tinymce config array.
+	 *
+	 * @since 1.4
+	 *
+	 * @param array $init  Full tinymce config.
+	 * @param string $key   Key of the config.
+	 * @param string $item  Item to add.
+	 * @param string $after Item to add after.
+	 */
+	public function addInitItem( $init, $key, $item, $after = null ) {
+		if ( ! empty( $init[ $key ] ) && false === is_array( $init[ $key ] ) ) {
+			$config = explode( ',', $init[ $key ] );
+
+			if ( false === array_search( $item, $config ) ) {
+				$curLocation = array_search( $after, $config );
+				$curLocation = $curLocation && $after ? $curLocation + 1 : sizeof( $config );
+				array_splice( $config, $curLocation, 0, $item );
+
+				$init[ $key ] = implode( ',', $config );
+			}
+		}
+
 		return $init;
 	}
 
