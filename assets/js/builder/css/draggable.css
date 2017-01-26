@@ -814,12 +814,14 @@ li[data-action="toggle-container"] {
 }
 
 html {
+	background-color: #f1f1f1;
 	padding:30px 45px 200px 45px;
 }
 
 html .mceContentBody  {
     max-width:100% !important;
     margin: 0 auto;
+	min-height: 200px;
 }
 
 * {
