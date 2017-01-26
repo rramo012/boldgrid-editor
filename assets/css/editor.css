@@ -2145,11 +2145,11 @@ body.boldgrid-editor-fullscreen {
     overflow-x: scroll; } }
 
 @media (max-width: 782px) {
-  .boldgrid-zoomout .zoom-gridblocks-section {
-    display: none; }
   .boldgrid-zoomout #wpcontent {
+    display: none; }
+  .boldgrid-zoomout .zoom-gridblocks-section {
     width: 100%;
-    top: 92px; }
+    margin-top: 92px; }
   .boldgrid-zoomout #wp-content-editor-tools {
     top: 92px !important;
     right: auto;
@@ -2160,14 +2160,8 @@ body.boldgrid-editor-fullscreen {
     display: none !important; } }
 
 @media (max-width: 600px) {
-  .boldgrid-zoomout #wpwrap {
-    height: calc( 100% - 47px); }
-  .boldgrid-zoomout #wpcontent {
-    top: 46px; }
   .boldgrid-zoomout .zoom-navbar {
-    top: 0; }
-  .boldgrid-zoomout #content_ifr {
-    margin-top: 25px; } }
+    top: 0; } }
 
 /*--------------------------------------------------------------
 # Handler section drag controls.

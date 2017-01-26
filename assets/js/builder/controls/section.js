@@ -149,7 +149,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			if ( 'Firefox' === BG.Controls.browser ) {
-				return;
+				if ( self.$container.$body.find( '.wpview' ).length ) {
+					return;
+				}
 			}
 
 			rect = self.$container.$body[0].getBoundingClientRect(),
@@ -213,12 +215,28 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
+		 * Check if the user can use zoomout view..
+		 *
+		 * @since 1.4
+		 */
+		zoomDisabled: function() {
+			if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_inactive ) {
+				alert( 'Add GridBlock requires that BoldGrid Editing be enabled on this page. You can enable it by clicking the move icon on your editor toolbar.' );
+				return true;
+			}
+		},
+
+		/**
 		 * Enable section dragging mode.
 		 *
 		 * @since 1.2.7
 		 */
 		enableSectionDrag: function() {
 			var updateZoom;
+
+			if ( self.zoomDisabled() ) {
+				return;
+			}
 
 			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );

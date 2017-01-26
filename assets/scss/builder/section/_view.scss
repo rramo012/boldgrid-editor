@@ -548,13 +548,13 @@ $fix-top-height: 79px;
 
 @media ( max-width: 782px ) {
 	.boldgrid-zoomout {
-		.zoom-gridblocks-section {
+		#wpcontent {
 			display: none;
 		}
 
-		#wpcontent {
+		.zoom-gridblocks-section {
 			width: 100%;
-			top: 92px;
+			margin-top: 92px;
 		}
 
 		#wp-content-editor-tools {
@@ -575,19 +575,8 @@ $fix-top-height: 79px;
 
 @media ( max-width: 600px ) {
 	.boldgrid-zoomout {
-		#wpwrap {
-			height: calc( 100% - 47px);
-		}
-		#wpcontent {
-			top: 46px;
-		}
-
 		.zoom-navbar {
 			top: 0;
-		}
-
-		#content_ifr {
-			margin-top: 25px;
 		}
 	}
 }

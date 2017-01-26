@@ -57,7 +57,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		setupAddGridblock: function() {
 			$( '#insert-gridblocks-button' ).on( 'click', function() {
 				$( '.wp-switch-editor.switch-tmce' ).click();
-
 				if ( ! BG.CONTROLS.Section.$container ) {
 					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 300 );
 				} else {
