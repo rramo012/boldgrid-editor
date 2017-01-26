@@ -344,7 +344,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			' .row .row button):not(p button):not(a button)',
 
 		// Lists.
-		'ul:not(' + self.master_container_id + ' .row .row ul)',
+		'ul:not(' + self.master_container_id + ' .row .row ul):not(.draggable-tools-imhwpb ul)',
 		'ol:not(' + self.master_container_id + ' .row .row ol)',
 		'dl:not(' + self.master_container_id + ' .row .row dl)',
 
@@ -651,7 +651,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				'<span  class="genericon genericon-menu" aria-hidden="true"></span>' +
 				'</div>';
 
-			if ( type == 'nested-row' ) {
+			if ( 'nested-row' === type ) {
 				popover += '<div title="Edit As Row" class="edit-as-row draggable-button">' +
 					'<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
 			}
@@ -1599,7 +1599,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		if ( $draggable && $draggable.length && $tools && $tools.length ) {
 			self.last_hover = new Date().getTime();
 			self.hover_elements[ type ] = {
-				'remove_element' : {
+				'remove_element': {
 					'element' : $draggable,
 					'tools' : $tools,
 				}
@@ -1729,6 +1729,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// If you have entered a popover rewrite to the popovers element.
 			var $closest_draggable = $current.closest( '.draggable-tools-imhwpb' );
+
 			if ( $closest_draggable.length ) {
 				$current = $closest_draggable.next();
 			}
