@@ -29,6 +29,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:       JIRA WPB-2828    Set default section background image position to center.
 * Bug Fix:      JIRA WPB-2830    Fixing an issue where column popover would disappear.
 * Bug Fix:      JIRA WPB-2505    Fixing an issue where swapping images was not working correctly.
+* Bug Fix:      JIRA WPB-2835    Fixing adding icons to empty areas.
 
 = 1.3.2 =
 * Bug Fix:	JIRA WPB-2803	Fixing issue adding GridBlocks.

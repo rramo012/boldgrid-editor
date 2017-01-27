@@ -171,24 +171,19 @@ class Boldgrid_Editor_MCE {
 	public function allow_empty_tags( $init ) {
 		$extra_tags = array (
 			'div[*]',
-			'i[*]'
+			'i[*]',
 		);
 
-		$init['extended_valid_elements'] = array ();
+		$extended_valid_elements = ! empty( $init['extended_valid_elements'] ) ?
+			$init['extended_valid_elements'] : array();
 
-		if ( empty( $init['extended_valid_elements'] ) ) {
-			$init['extended_valid_elements'] = '';
-		} elseif ( is_array( $init['extended_valid_elements'] ) ) {
-			$init['extended_valid_elements'] = array_merge( $init['extended_valid_elements'],
-				$extra_tags );
-
-			return $init;
-		} else {
-			$init['extended_valid_elements'] = $init['extended_valid_elements'] . ',';
+		if ( ! is_array( $extended_valid_elements ) ) {
+			$extended_valid_elements = explode( ',', $extended_valid_elements );
 		}
 
 		// Note: Using .= here can trigger a fatal error.
-		$init['extended_valid_elements'] = $init['extended_valid_elements'] . implode( ',', $extra_tags );
+		$extended_valid_elements = array_merge( $extended_valid_elements, $extra_tags );
+		$init['extended_valid_elements'] = implode( ',', $extended_valid_elements );
 
 		// Always show wordpress 2 toolbar.
 		$init['wordpress_adv_hidden'] = false;

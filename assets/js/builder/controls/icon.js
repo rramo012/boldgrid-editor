@@ -125,7 +125,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		insertNew: function() {
 			var $insertedIcon;
 
-			send_to_editor( '<i class="fa fa-cog bg-inserted-icon" aria-hidden="true"> </i>' );
+			send_to_editor( '<i class="fa fa-cog bg-inserted-icon" aria-hidden="true"><span style="display:none;">&nbsp;</span></i>' );
 			$insertedIcon = BG.Controls.$container.find( '.bg-inserted-icon' ).last();
 			BG.Controls.$container.find( '.bg-inserted-icon' ).removeClass( 'bg-inserted-icon' );
 			BG.Controls.$menu.targetData[ self.name ] = $insertedIcon;
