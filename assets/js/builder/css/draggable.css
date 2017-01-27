@@ -109,7 +109,6 @@ iframe[src^="https://maps.google.com"] {
     box-shadow: 0 0 0px 2px rgba(33, 117, 155, 1);
 }
 
-.boldgrid-section:hover,
 .changing-padding,
 .added-element,
 .content-border-imhwpb,
@@ -120,15 +119,26 @@ iframe[src^="https://maps.google.com"] {
     outline: 1px solid gray !important;
 }
 
-.no-select-imhwpb .boldgrid-section.content-border-imhwpb,
-.no-select-imhwpb .boldgrid-section.content-border-imhwpb:hover,
 .dragging-section .content-border-imhwpb,
 .dragging-section .draggable-tools-imhwpb + *:not(button),
 .dragging-section .draggable-tools-imhwpb + .row:not(button) > [class*="col-md"],
 .dragging-section .draggable-tools-imhwpb + *:not(button),
-.draggable-tools-imhwpb + .row .row > [class*="col-md"],
-.drag-progress .boldgrid-section:hover {
+.draggable-tools-imhwpb + .row .row > [class*="col-md"] {
 	outline-color: transparent !important;
+}
+
+.boldgrid-section.boldgrid-section-hover {
+	border-color: grey;
+}
+
+.boldgrid-section,
+.editing-as-row .boldgrid-section-hover,
+.boldgrid-is-typing .boldgrid-section-hover,
+.drag-progress .boldgrid-section.boldgrid-section-hover,
+.no-select-imhwpb .boldgrid-section.boldgrid-section-hover,
+.no-select-imhwpb .boldgrid-section.content-border-imhwpb:hover,
+.boldgrid-section {
+	border: 1px solid transparent;
 }
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,

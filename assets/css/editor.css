@@ -2194,11 +2194,7 @@ body.boldgrid-editor-fullscreen {
 .dragging-section {
   cursor: default; }
 
-.dragging-section *:hover {
-  cursor: move !important; }
-
 .dragging-section .boldgrid-section:hover {
-  outline: 2px solid #f95b26 !important;
   cursor: move !important; }
 
 .dragging-section body {
@@ -2229,7 +2225,7 @@ body.boldgrid-editor-fullscreen {
   display: block; }
 
 .dragging-section .boldgrid-section:hover:after {
-  background-color: rgba(249, 91, 38, 0.9); }
+  background-color: rgba(249, 91, 38, 0.75); }
 
 .dragging-section .boldgrid-section:hover:before {
   background-color: transparent;

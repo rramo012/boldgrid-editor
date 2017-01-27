@@ -1600,7 +1600,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.last_hover = new Date().getTime();
 			self.hover_elements[ type ] = {
 				'remove_element': {
-					'element' : $draggable,
+					'element': $draggable,
 					'tools' : $tools,
 				}
 			};

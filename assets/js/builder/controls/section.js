@@ -59,7 +59,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		removeBorder: function() {
 			if ( self.$currentSection && self.$currentSection.length ) {
-				self.$currentSection.removeClass( 'content-border-imhwpb' );
+				self.$currentSection.removeClass( 'boldgrid-section-hover' );
 			}
 		},
 
@@ -322,7 +322,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'transform':  'translateX(-50%)'
 			} );
 
-			self.$currentSection.addClass( 'content-border-imhwpb' );
+			self.$currentSection.addClass( 'boldgrid-section-hover' );
 
 			if ( this.getBoundingClientRect ) {
 				self.$popover.show();
