@@ -114,6 +114,29 @@ class Boldgrid_Editor_Builder_Fonts {
 	}
 
 	/**
+	 * If the font is a sytem fonts, lowercase it.
+	 *
+	 * @since 1.4
+	 *
+	 * @param  string $font_name Font name to check against.
+	 * @return string            Font name updated.
+	 */
+	public function update_system_font( $font_name ) {
+		$updated_font = strtolower( $font_name );
+		$lowercase_fonts = array(
+			'monospace',
+			'sans-serif',
+			'serif',
+		);
+
+		if ( in_array( $updated_font, $lowercase_fonts, true ) ) {
+			$font_name = $updated_font;
+		}
+
+		return $font_name;
+	}
+
+	/**
 	 * Get the themes fonts.
 	 *
 	 * @since 1.3.
@@ -129,7 +152,7 @@ class Boldgrid_Editor_Builder_Fonts {
 			'body_font_family',
 			'alternate_headings_font_family',
 			'headings_font_family',
-			// 'menu_font_family'
+			// 'menu_font_family',
 		);
 
 		$theme_fonts = array();
@@ -143,6 +166,7 @@ class Boldgrid_Editor_Builder_Fonts {
 				if ( false !== array_search( $key, $theme_mods, true ) ) {
 					$class_name = $this->thememod_class_name( $key );
 					if ( $class_name ) {
+						$default = $this->update_system_font( $default );
 						$theme_fonts[ $class_name ] = $default;
 					}
 				}
