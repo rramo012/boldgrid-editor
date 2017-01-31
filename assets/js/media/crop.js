@@ -465,8 +465,8 @@ BOLDGRID.EDITOR.Crop = function( $ ) {
 		} );
 
 		/*
-		 * When the modal is closed, remove it. This is to prevent any subsequent openings of the
-		 * modal to have issues caused by old data.
+		 * When the modal is closed, remove it. This prevents any subsequent openings of the modal
+		 * to have issues caused by old data.
 		 */
 		self.modal.on( 'close', function() {
 			self.modal.remove();
