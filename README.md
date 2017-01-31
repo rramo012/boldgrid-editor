@@ -36,6 +36,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug Fix:      JIRA WPB-2505    Fixing an issue where swapping images was not working correctly.
 * Bug Fix:      JIRA WPB-2835    Fixing adding icons to empty areas.
 * Bug Fix:      JIRA WPB-2840    Fixing issue with system fonts displaying in editor dropdowns.
+* Bug Fix:		JIRA WPB-2727    Replacing more than one image bug.
 
 ### 1.3.2 ###
 * Bug Fix:	JIRA WPB-2803	Fixing issue adding GridBlocks.
