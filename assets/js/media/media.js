@@ -18,6 +18,7 @@ IMHWPB.Media = function( $ ) {
 		}
 	};
 
+
 	/**
 	 * Create New Tabs for the newly created window This function is called by
 	 * an iframe
@@ -38,8 +39,8 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.handle_iframe_load = function( tabs ) {
 		// Unhide the selection panels
-		var $media_router = $( '.media-router' );
-		var $media_toolbar = $( '.media-toolbar-primary' );
+		var $media_router 	 = $( '.media-router' );
+		var $media_toolbar 	 = $( '.media-toolbar-primary' );
 		var $media_selection = $( '.media-selection' );
 
 		$( '.media-frame' ).removeClass( 'hide-toolbar hide-router' );
@@ -89,6 +90,56 @@ IMHWPB.Media = function( $ ) {
 			} );
 
 		$( '.media-router .media-menu-item:first' ).click();
+	};
+
+	this.sendGridblock = function( $inserting ) {
+		var draggable, editor, $selection, selectorString,
+			sendGridblock = false;
+
+		if ( ! $inserting || ! IMHWPB.WP_MCE_Draggable.draggable_instance ) {
+			return sendGridblock;
+		}
+
+		draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
+		editor = tinymce.activeEditor;
+		$selection = $( editor.selection.getNode() );
+
+		if ( $inserting.is( draggable.row_selectors_string ) ) {
+			selectorString = draggable.row_selectors_string;
+		} else {
+			selectorString = draggable.sectionSelectorString;
+		}
+
+		if ( $inserting.is( selectorString ) ) {
+
+			var $element = $selection.closest( selectorString );
+
+			/*
+			* If current selection is inside of a row, insert above that row. Otherwise
+			* insert at top of row.
+			*/
+
+			if ( $element.length ) {
+				$element.before( $inserting );
+			// If this is a row and foxus is not inside a row, Prepend the first section it finds.
+			} else if ( selectorString == draggable.row_selectors_string && $( editor.getBody() ).find( '.boldgrid-section' ).length ) {
+				$( editor.getBody() )
+					.find( '.boldgrid-section:first > .container, .boldgrid-section:first > .container-fluid' )
+					.prepend( $inserting );
+			} else {
+				$( editor.getBody() ).prepend( $inserting );
+			}
+
+			draggable.validate_markup();
+			editor.fire( 'setContent' );
+			editor.focus();
+			sendGridblock = true;
+			setTimeout( function() {
+				BOLDGRID.EDITOR.CONTROLS.Add.scrollToElement( $inserting, 0 );
+			} );
+		}
+
+		return sendGridblock;
 	};
 
 	/**
@@ -203,95 +254,95 @@ IMHWPB.Media = function( $ ) {
 		self.translate_image_urls();
 	};
 
-	this.prevent_attachment_content_actions = function() {
-		$( '.centered-content-boldgrid' ).on( 'click', 'button, a', function() {
+	this.prevent_attachment_content_actions = function () {
+		$('.centered-content-boldgrid').on('click', 'button, a', function () {
 			return false;
 		});
 	};
 
-	this.preselect_form = function() {
-		parent.jQuery( parent ).on( 'boldgrid_edit_form', function( event, form ) {
+	this.preselect_form = function () {
+		parent.jQuery(parent).on('boldgrid_edit_form', function ( event, form ) {
 			self.select_form_action( form );
 		});
 
-		if ( typeof parent.IMHWPB.editform != 'undefined' && parent.IMHWPB.editform ) {
+		if (typeof parent.IMHWPB.editform != "undefined" && parent.IMHWPB.editform ) {
 			self.select_form_action( parent.IMHWPB.editform );
 		}
 	};
 
-	this.select_form_action = function( form ) {
+	this.select_form_action = function ( form ) {
 		var settings = form.shortcode.attrs.named;
-		var $media_sidebar = $( '.media-sidebar-boldgrid' );
+		var $media_sidebar = $('.media-sidebar-boldgrid');
 		self.deselect_all_attachments();
 
-		var $title_checkbox = $media_sidebar.find( '#title-toggle-boldgrid' );
-		var $desc_checkbox = $media_sidebar.find( '#description-enable-boldgrid' );
-		var $ajax_checkbox = $media_sidebar.find( '#ajax-enable-boldgrid' );
-		self.preselect_checkbox( $title_checkbox, settings.title );
-		self.preselect_checkbox( $desc_checkbox, settings.description );
-		self.preselect_checkbox( $ajax_checkbox, settings.ajax );
+		var $title_checkbox = $media_sidebar.find("#title-toggle-boldgrid");
+		var $desc_checkbox = $media_sidebar.find("#description-enable-boldgrid");
+		var $ajax_checkbox = $media_sidebar.find("#ajax-enable-boldgrid");
+		self.preselect_checkbox($title_checkbox, settings.title);
+		self.preselect_checkbox($desc_checkbox, settings.description);
+		self.preselect_checkbox($ajax_checkbox, settings.ajax);
 
 		//Preset Tab index
-		var $tab_index_wrapper = $media_sidebar.find( '#tabindex-wrapper-boldgrid' );
+		var $tab_index_wrapper = $media_sidebar.find('#tabindex-wrapper-boldgrid');
 		if ( settings.tabindex ) {
-			$tab_index_wrapper.find( 'input' ).val( settings.tabindex );
-			$tab_index_wrapper.removeClass( 'hidden' );
+			$tab_index_wrapper.find('input').val(settings.tabindex);
+			$tab_index_wrapper.removeClass('hidden');
 		} else {
-			$tab_index_wrapper.find( 'input' ).val( '' );
-			$tab_index_wrapper.addClass( 'hidden' );
+			$tab_index_wrapper.find('input').val('');
+			$tab_index_wrapper.addClass('hidden');
 		}
 
-		$( '[data-form-id-boldgrid="' + settings.id + '"]' ).find( '.attachment-preview' ).click();
-	};
+		$('[data-form-id-boldgrid="' + settings.id + '"]').find('.attachment-preview').click();
+	}
 
-	this.preselect_checkbox = function( $checkbox, value ) {
-		if ( $checkbox.length ) {
-			if ( value == 'true' ) {
-				$checkbox.val( true );
-				$checkbox.prop( 'checked', true );
+	this.preselect_checkbox = function ( $checkbox, value ) {
+		if ($checkbox.length) {
+			if ( value == "true" ) {
+				$checkbox.val(true);
+				$checkbox.prop("checked", true);
 			} else {
-				$checkbox.val( false );
-				$checkbox.prop( 'checked', false );
+				$checkbox.val(false);
+				$checkbox.prop("checked", false);
 			}
 		}
 	};
 
-	this.bind_checkbox_selections = function() {
-		var $media_sidebar = $( '.media-sidebar-boldgrid' );
-		$media_sidebar.on( 'submit', 'form', function() {
+	this.bind_checkbox_selections = function () {
+		var $media_sidebar = $('.media-sidebar-boldgrid');
+		$media_sidebar.on('submit', 'form', function () {
 			return false;
 		});
 
-		$media_sidebar.find( '#title-toggle-boldgrid' ).on( 'click', function() {
+		$media_sidebar.find('#title-toggle-boldgrid').on('click', function () {
 			self.set_sidebar_title_visibility();
 		});
 
-		$media_sidebar.find( '#description-enable-boldgrid' ).on( 'click', function() {
+		$media_sidebar.find('#description-enable-boldgrid').on('click', function () {
 			self.set_sidebar_description_visibility();
 		});
 	};
 
-	this.set_sidebar_title_visibility = function() {
-		var $title = $( '.media-sidebar-boldgrid' ).find( '.gform_title' );
-		if ( $( '#title-toggle-boldgrid' ).prop( 'checked' ) ) {
+	this.set_sidebar_title_visibility = function () {
+		var $title = $('.media-sidebar-boldgrid').find('.gform_title');
+		if ($('#title-toggle-boldgrid').prop('checked')) {
 			$title.show();
 		} else {
 			$title.hide();
 		}
 	};
-	this.set_sidebar_description_visibility = function() {
-		var $description = $( '.media-sidebar-boldgrid' ).find( '.gform_description' );
-		if ( $( '#description-enable-boldgrid' ).prop( 'checked' ) ) {
+	this.set_sidebar_description_visibility = function () {
+		var $description = $('.media-sidebar-boldgrid').find('.gform_description');
+		if ($('#description-enable-boldgrid').prop('checked')) {
 			$description.show();
 		} else {
 			$description.hide();
 		}
 	};
 
-	this.register_sidebar_event_handlers = function() {
-		$( '.media-sidebar-boldgrid a[title="advanced-options"]' ).on( 'click', function( event ) {
+	this.register_sidebar_event_handlers = function () {
+		$('.media-sidebar-boldgrid a[title="advanced-options"]').on('click', function ( event ) {
 			event.preventDefault();
-			$( '#tabindex-wrapper-boldgrid' ).toggleClass( 'hidden' );
+			$('#tabindex-wrapper-boldgrid').toggleClass('hidden');
 		});
 
 	};
@@ -300,12 +351,12 @@ IMHWPB.Media = function( $ ) {
 	 * When the image on the sidebar changes, check if the image src is filled.
 	 * If so set the insert button accordingly
 	 */
-	this.disable_insert_button = function() {
-		$( '.media-sidebar img, .media-sidebar iframe' ).on( 'load', function() {
-			if ( $( this ).attr( 'src' ) ) {
-			   parent.IMHWPB.Media.instance.toggle_insert_button( true );
+	this.disable_insert_button = function () {
+		$('.media-sidebar img, .media-sidebar iframe').on('load', function () {
+			if ($(this).attr('src')) {
+			   parent.IMHWPB.Media.instance.toggle_insert_button(true);
 			} else {
-			   parent.IMHWPB.Media.instance.toggle_insert_button( false );
+			   parent.IMHWPB.Media.instance.toggle_insert_button(false);
 			}
 		});
 	};
@@ -313,9 +364,9 @@ IMHWPB.Media = function( $ ) {
 	/**
 	 * Updates the map
 	 */
-	this.perform_search = function() {
+	this.perform_search = function () {
 		self.search_params = {
-			'q': $( 'input[name="map-search-imhwpb"]' ).val()
+			'q' : $( 'input[name="map-search-imhwpb"]' ).val()
 		};
 		self.find_api_content( $( '.attachment.selected' ) );
 	};
@@ -330,15 +381,15 @@ IMHWPB.Media = function( $ ) {
 			self.perform_search();
 		} );
 
-		$( '.media-sidebar .searchbutton' ).on( 'click', function() {
+		$('.media-sidebar .searchbutton').on('click', function () {
 			self.perform_search();
 		});
 
-		$( '#search-map-imhwpb select[name="select-size-imhwpb"]' ).on( 'change', function() {
-			if ( $( this ).val() == 'custom' ) {
-				$( '#map-dimensions-imhwpb' ).removeClass( 'hidden' );
+		$( '#search-map-imhwpb select[name="select-size-imhwpb"]' ).on('change', function () {
+			if ($(this).val() == 'custom') {
+				$('#map-dimensions-imhwpb').removeClass('hidden');
 			} else {
-				$( '#map-dimensions-imhwpb' ).addClass( 'hidden' );
+				$('#map-dimensions-imhwpb').addClass('hidden');
 			}
 
 			self.update_map_size();
@@ -350,7 +401,7 @@ IMHWPB.Media = function( $ ) {
 	 *
 	 * @since 1.3.
 	 */
-	this.update_map_size = function() {
+	this.update_map_size = function () {
 		var $mediaIframe = $( '.media-sidebar .boldgrid-google-map' ),
 			size = self.find_selected_map_size();
 
@@ -368,15 +419,41 @@ IMHWPB.Media = function( $ ) {
 	};
 
 	/**
+	 * Add the src attributes for images that need them
+	 */
+	this.translate_image_urls = function () {
+		var $image_to_translate = $('[data-tabname="basic-gridblocks"] [data-boldgrid-asset-id]');
+
+		$image_to_translate.each( function () {
+			var $this = $(this);
+			var asset_id = $this.data('boldgrid-asset-id');
+
+			if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
+				//If the user has an API key place the asset images
+				var image_url = IMHWPB.configs.asset_server
+					+ IMHWPB.configs.ajax_calls.get_asset + '?key='
+					+ IMHWPB.configs.api_key + '&id=' + asset_id;
+
+				$this.attr( 'src', image_url );
+				$this.attr( 'data-pending-boldgrid-attribution', 1 );
+			} else {
+				//Otherwise insert place holders
+				IMHWPB.Media.GridBlocks.swap_image_with_placeholder( $this );
+			}
+
+		});
+	};
+
+	/**
 	 * Create a maps iframe.
 	 *
 	 * @since 1.3
 	 * @return HTML to be inserted.
 	 */
-	this.get_map_html = function() {
-		var $mediaIframe = $( '.media-sidebar iframe' ),
-			$iframe = $( '<iframe>' ),
-			$p = $( '<p>' ).addClass( 'boldgrid-google-maps' );
+	this.get_map_html = function () {
+		var $mediaIframe = $('.media-sidebar iframe'),
+			$iframe = $('<iframe>'),
+			$p = $('<p>').addClass('boldgrid-google-maps');
 
 		$iframe
 			.attr( 'frameborder', 0 )
@@ -396,25 +473,28 @@ IMHWPB.Media = function( $ ) {
 	this.find_selected_elements = function() {
 		var html = '';
 
-		switch ( IMHWPB.Globals['tab-details']['type'] ) {
+		switch( IMHWPB.Globals['tab-details']['type']) {
+			case 'html':
+				html = IMHWPB.Media.GridBlocks.get_selected_html();
+				break;
 			case 'api':
 				html = self.get_map_html();
 				break;
 			case 'shortcode-form':
-				var form_id = $( '.attachment[aria-checked="true"]' ).data( 'form-id-boldgrid' );
-				html = self.create_form_shortcode( form_id );
+				var form_id = $( '.attachment[aria-checked="true"]' ).data('form-id-boldgrid');
+				html = self.create_form_shortcode ( form_id );
 				break;
 		}
 
 		return html;
 	};
 
-	this.create_form_shortcode = function( form_id ) {
-		var $media_sidebar = $( '.media-sidebar-boldgrid' );
-		var title 		= $media_sidebar.find( '#title-toggle-boldgrid' ).prop( 'checked' );
-		var description = $media_sidebar.find( '#description-enable-boldgrid' ).prop( 'checked' );
-		var ajax 		= $media_sidebar.find( '#ajax-enable-boldgrid' ).prop( 'checked' );
-		var tabindex	= $media_sidebar.find( '#tabindex-wrapper-boldgrid input' ).val();
+	this.create_form_shortcode = function ( form_id ) {
+		var $media_sidebar = $('.media-sidebar-boldgrid');
+		var title 		= $media_sidebar.find('#title-toggle-boldgrid').prop('checked');
+		var description = $media_sidebar.find('#description-enable-boldgrid').prop('checked');
+		var ajax 		= $media_sidebar.find('#ajax-enable-boldgrid').prop('checked');
+		var tabindex	= $media_sidebar.find('#tabindex-wrapper-boldgrid input').val();
 
 		title = title ? ' title="true"' : ' title="false"';
 		description = description ? ' description="true"' : ' description="false"';
@@ -439,9 +519,9 @@ IMHWPB.Media = function( $ ) {
 	 * Based on the sidebar form, determine image size
 	 */
 	this.find_selected_map_size = function() {
-		var $media_sidebar = $( '.media-sidebar' );
+		var $media_sidebar = $( ".media-sidebar" );
 		var select = $media_sidebar.find( 'select[name="select-size-imhwpb"]' );
-		var selected_option = select.find( 'option:selected' );
+		var selected_option = select.find( "option:selected" );
 		var preset_width = selected_option.data( 'width' );
 		var preset_height = selected_option.data( 'height' );
 
@@ -453,10 +533,10 @@ IMHWPB.Media = function( $ ) {
 		}
 
 		return {
-			'width': preset_width,
-			'height': preset_height
+			'width' : preset_width,
+			'height' : preset_height
 		};
-	};
+	}
 
 	/**
 	 * Populates sidebar with new data
@@ -475,8 +555,8 @@ IMHWPB.Media = function( $ ) {
 			}
 		}
 
-		var src = IMHWPB.Globals['tab-details']['base-url'] +
-			'?' + $.param( $.extend( self.search_params, map_params, { 'output': 'embed' } ) );
+		var src = IMHWPB.Globals['tab-details']['base-url']
+			+ '?' + $.param( $.extend( self.search_params, map_params, { 'output' : 'embed' } ) );
 
 		self.update_map_size();
 		self.image_replacement( src );
@@ -489,33 +569,33 @@ IMHWPB.Media = function( $ ) {
 		// Take the image and replace the image in the right side
 		// pane with it every time you click on an attachment, no matter
 		// what
-		if ( 'raw' !== $attachment.data( 'html-type' ) ) {
+		if ( $attachment.data('html-type') != 'raw' ) {
 			var src = $attachment.find( 'img' ).attr( 'src' );
 			self.image_replacement( src );
 		} else {
 			self.image_replacement( '' );
 			var $media_sidebar = $( '.media-sidebar' );
-			var form_markup = $attachment.find( '.centered-content-boldgrid' ).html();
-			$media_sidebar.find( '.centered-content-boldgrid' ).html( '<div>' + form_markup + '</div>' );
-			$media_sidebar.find( '.fullwidth-imhwpb' ).addClass( 'hidden' );
+			var form_markup = $attachment.find('.centered-content-boldgrid').html();
+			$media_sidebar.find('.centered-content-boldgrid').html( '<div>' + form_markup + '</div>');
+			$media_sidebar.find( '.fullwidth-imhwpb' ).addClass('hidden');
 			$media_sidebar.find( '> div' ).removeClass( 'hidden' );
-			var resized_height = $media_sidebar.find( '.centered-content-boldgrid > div' )[0].getBoundingClientRect().height;
-			$( '.boldgrid-markup-container' ).css({ 'height': parseInt( resized_height ) + 15 + 'px' });
-			parent.IMHWPB.Media.instance.toggle_insert_button( true );
+			var resized_height = $media_sidebar.find('.centered-content-boldgrid > div')[0].getBoundingClientRect().height;
+			$('.boldgrid-markup-container').css({'height': parseInt(resized_height) + 15 + 'px'});
+			parent.IMHWPB.Media.instance.toggle_insert_button(true);
 		}
 	};
 
-	this.insert_markup = function( $attachment ) {
+	this.insert_markup = function ( $attachment ) {
 		var $media_sidebar = $( '.media-sidebar' );
-		var form_markup = $attachment.find( '.centered' ).html();
-		$( '.boldgrid-markup-container' ).html( form_markup );
+		var form_markup = $attachment.find('.centered').html();
+		$('.boldgrid-markup-container').html(form_markup);
 		$media_sidebar.find( '> div' ).removeClass( 'hidden' );
-		var resized_height = $media_sidebar.find( '.gform_wrapper' )[0].getBoundingClientRect().height;
-		$( '.boldgrid-markup-container' ).css({
-			'height': parseInt( resized_height ) + 15 + 'px'
+		var resized_height = $media_sidebar.find('.gform_wrapper')[0].getBoundingClientRect().height;
+		$('.boldgrid-markup-container').css({
+			'height': parseInt(resized_height) + 15 + 'px'
 		});
 
-		var form_id = $attachment.data( 'form-id-boldgrid' );
+		var form_id = $attachment.data('form-id-boldgrid');
 
 		//Set edit link
 		self.insert_edit_link( form_id );
@@ -523,22 +603,22 @@ IMHWPB.Media = function( $ ) {
 		//Make sure that settings are carried over
 		self.set_sidebar_title_visibility();
 		self.set_sidebar_description_visibility();
-		parent.IMHWPB.Media.instance.toggle_insert_button( true );
+		parent.IMHWPB.Media.instance.toggle_insert_button(true);
 	};
 
-	this.insert_edit_link = function( form_id ) {
+	this.insert_edit_link = function ( form_id ) {
 		var src = IMHWPB.Globals['admin-url'] + 'admin.php?page=gf_edit_forms&id=' + form_id;
 		var $media_sidebar = $( '.media-sidebar' )
-			.find( '.editform-link a:first' ).attr( 'href', src );
+			.find('.editform-link a:first').attr('href', src );
 	};
 
 	/**
 	 * Take an image and replace the src  in the sidebar
 	 */
-	this.image_replacement = function( src ) {
+	this.image_replacement = function ( src ) {
 		var $media_sidebar = $( '.media-sidebar' );
-		$media_sidebar.find( '.centered-content-boldgrid' ).empty();
-		$media_sidebar.find( 'img.fullwidth-imhwpb, iframe.fullwidth-imhwpb' ).attr( 'src', src ).removeClass( 'hidden' );
+		$media_sidebar.find('.centered-content-boldgrid').empty();
+		$media_sidebar.find( 'img.fullwidth-imhwpb, iframe.fullwidth-imhwpb' ).attr( 'src', src ).removeClass('hidden');
 		$media_sidebar.find( '> div' ).removeClass( 'hidden' );
 	};
 
@@ -585,14 +665,14 @@ IMHWPB.Media = function( $ ) {
 		} );
 
 		// When clicking on the deselect option. uncheck the box
-		$( document ).on( 'click', '.check[title="Deselect"]', function( e ) {
-			var $attachment = $( this ).closest( '.attachment' );
+		$( document ).on( 'click', '.check[title="Deselect"]', function(e) {
 			e.stopPropagation();
+			var $attachment = $( this ).closest( '.attachment' );
 			self.deselect_attachment( $attachment );
 
-			$( '.media-sidebar > div' ).addClass( 'hidden' );
-			if ( 0 === $( '.attachment.selected' ).length ) {
-				parent.IMHWPB.Media.instance.toggle_insert_button( false );
+			$('.media-sidebar > div').addClass('hidden');
+			if ($('.attachment.selected').length == 0) {
+				parent.IMHWPB.Media.instance.toggle_insert_button(false)
 			}
 
 		} );
