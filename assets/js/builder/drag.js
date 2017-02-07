@@ -2989,14 +2989,23 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 */
 		autoScroll : function ( event ) {
 			var isFixedTop = self.$mce_32.css('position') === 'fixed',
-				topOffset = self.$mce_32[0].getBoundingClientRect();
-				positionY = event.originalEvent.screenY - window.screenY;
+				topOffset = self.$mce_32[0].getBoundingClientRect(),
+				positionY = event.originalEvent.screenY;
+			
+			/*
+			 * On dual monitor setups where the height of the window is much larger than the 
+			 * main window, skip auto scroll. Unable to get consistent results. -100 window height is 
+			 * used to identify this scenario.
+			 */
+			if ( window.screenY < -100 ) {
+				return;
+			}
 
 			// 150: Is the range within the mce bar you must reach before scrolling up starts.
 			if ( positionY < topOffset.bottom + 150 && isFixedTop ) {
 				self.autoScrollSpeed = -1;
 			// 100: Is the range within the bottom bar you must get to before scrolling down starts.
-			} else if ( positionY > window.innerHeight + 100 ) {
+			} else if ( positionY > window.innerHeight - 100 ) {
 				self.autoScrollSpeed = 1;
 			} else {
 				self.autoScrollSpeed = false;
