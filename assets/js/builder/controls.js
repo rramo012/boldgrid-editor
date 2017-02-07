@@ -274,7 +274,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					}
 
 					isEditingNested = $this.closest( '.editing-as-row' ).length;
-					isNestedColumn = $this.is( '.row .row [class^="col-md"]' );
+					isNestedColumn = $this.is( '.row .row [class*="col-md"]' );
 
 					if ( isEditingNested && false === isNestedColumn ) {
 						return;
