@@ -25,22 +25,23 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 == Changelog ==
 
 = 1.3.4 In Progress =
-* Bug Fix:      JIRA WPB-2883    Error thrown while resizing.
-* Bug Fix:      JIRA WPB-2881    Column Drag outline is the wrong color.
-* Bug Fix:      JIRA WPB-2880    Gridblocks not vertically centered.
+* Bug fix:		JIRA WPB-2892	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
+* Bug fix:		JIRA WPB-2883	Error thrown while resizing.
+* Bug fix:		JIRA WPB-2881	Column Drag outline is the wrong color.
+* Bug fix:		JIRA WPB-2880	Gridblocks not vertically centered.
 
 = 1.3.3 =
-* Update:       JIRA WPB-2834    Add Underline to tinymce toolbar.
-* Update:       JIRA WPB-2828    Set default section background image position to center.
-* Bug Fix:      JIRA WPB-2830    Fixing an issue where column popover would disappear.
-* Bug Fix:      JIRA WPB-2505    Fixing an issue where swapping images was not working correctly.
-* Bug Fix:      JIRA WPB-2835    Fixing adding icons to empty areas.
-* Bug Fix:      JIRA WPB-2840    Fixing issue with system fonts displaying in editor dropdowns.
-* Bug Fix:		JIRA WPB-2727    Replace more than one image bug.
+* Update:		JIRA WPB-2834	Add Underline to tinymce toolbar.
+* Update:		JIRA WPB-2828	Set default section background image position to center.
+* Bug fix:		JIRA WPB-2830	Fixing an issue where column popover would disappear.
+* Bug fix:		JIRA WPB-2505	Fixing an issue where swapping images was not working correctly.
+* Bug fix:		JIRA WPB-2835	Fixing adding icons to empty areas.
+* Bug fix:		JIRA WPB-2840	Fixing issue with system fonts displaying in editor dropdowns.
+* Bug fix:		JIRA WPB-2727	Replace more than one image bug.
 
 = 1.3.2 =
-* Bug Fix:	JIRA WPB-2803	Fixing issue adding GridBlocks.
-* New Feature:	JIRA WPB-2803	Added a new UI for Gridblocks.
+* Bug fix:		JIRA WPB-2803	Fixing issue adding GridBlocks.
+* New feature:	JIRA WPB-2803	Added a new UI for Gridblocks.
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 
 = 1.3.1 =
@@ -53,8 +54,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:		JIRA WPB-2542	Removed duplicate maps types.
 * Update:		JIRA WPB-2543	Added Google maps edit link.
 * Update:		JIRA WPB-2532	Updating Dependencies.
-* Bug Fix:		JIRA WPB-2540	Fixed issue with text color and section backgrounds.
-* Bug Fix:		JIRA WPB-2533	Fixing issue with update notice blocking user interaction on loading failure.
+* Bug fix:		JIRA WPB-2540	Fixed issue with text color and section backgrounds.
+* Bug fix:		JIRA WPB-2533	Fixing issue with update notice blocking user interaction on loading failure.
 
 = 1.2.13 =
 * Update:		JIRA WPB-2522	Fixing panel issue after first time notice.
@@ -62,8 +63,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.2.12 =
 * Update:		JIRA WPB-2489	Added update notice for users updating to 1.3.
 * Update:		JIRA WPB-2479	Adding a conversion method from static maps to embed maps.
-* Bug Fix:		JIRA WPB-2456	Allow users to drag into empty sections.
-* Bug Fix:		JIRA WPB-2494	Fixed issue with system fonts used in themes.
+* Bug fix:		JIRA WPB-2456	Allow users to drag into empty sections.
+* Bug fix:		JIRA WPB-2494	Fixed issue with system fonts used in themes.
 
 = 1.2.11 =
 * Bug Fix:		JIRA WPB-2470	Fixing issue with popover panel items.
@@ -74,13 +75,13 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:		JIRA WPB-2440	Setting default text color for column backgrounds.
 * Update:       JIRA WPB-2065   Added default to font selection.
 * Update:       JIRA WPB-2461   Add Media now in Drop Tab > Add new.
-* Bug Fix:		JIRA WPB-2448	Fixing issue with column popover at the edge of the screen.
-* Bug Fix:		JIRA WPB-2457	Fixing z-index issue withe section popover.
-* Bug Fix:		JIRA WPB-2454	Image being cloned after pressing enter.
-* Bug Fix:		JIRA WPB-2442	Nested columns allowed for parent column backgrounds.
-* Bug Fix:      JIRA WPB-2441   Fixing issue with row resize cursor.
-* Bug Fix:      JIRA WPB-2447   Hide button color if multiple buttons in a paragraph.
-* Bug Fix:      JIRA WPB-2455   Staging colors and buttons will now be enqueued correctly.
+* Bug fix:		JIRA WPB-2448	Fixing issue with column popover at the edge of the screen.
+* Bug fix:		JIRA WPB-2457	Fixing z-index issue withe section popover.
+* Bug fix:		JIRA WPB-2454	Image being cloned after pressing enter.
+* Bug fix:		JIRA WPB-2442	Nested columns allowed for parent column backgrounds.
+* Bug fix:      JIRA WPB-2441   Fixing issue with row resize cursor.
+* Bug fix:      JIRA WPB-2447   Hide button color if multiple buttons in a paragraph.
+* Bug fix:      JIRA WPB-2455   Staging colors and buttons will now be enqueued correctly.
 * Update:		JIRA WBP-2426	Adjust the way crop modal hides router tabs.
 
 = 1.2.9 =
@@ -89,16 +90,16 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.2.8 =
 * Misc:			JIRA WPB-2420	Added EOF line breaks.
 * Update:		JIRA WPB-2407	Fix issue with direction of section popover menu.
-* Bug Fix:		JIRA WPB-2405	Fixed issue where section border did not show.
-* Bug Fix:		JIRA WPB-2408	Fixed issue where change icon does not appear.
-* Bug Fix:		JIRA WPB-2409	Fixed issue causing missing image toolbar.
-* Bug Fix:		JIRA WPB-2405	Fixed issue causing button customization to disappear.
-* Bug Fix:		JIRA WPB-2405	Reset class controls when opening customizer.
+* Bug fix:		JIRA WPB-2405	Fixed issue where section border did not show.
+* Bug fix:		JIRA WPB-2408	Fixed issue where change icon does not appear.
+* Bug fix:		JIRA WPB-2409	Fixed issue causing missing image toolbar.
+* Bug fix:		JIRA WPB-2405	Fixed issue causing button customization to disappear.
+* Bug fix:		JIRA WPB-2405	Reset class controls when opening customizer.
 * New feature:	JIRA WPB-2414	Change image added to BG menu bar.
 * New feature:	JIRA WPB-2406	Add my button designs to button panel.
 * New feature:	JIRA WPB-2406	Track my designs for images as the user makes changes.
 * New feature:	JIRA WPB-2415	Add Button Primary & Button Secondary to Button Panel.
-* Bug Fix:		JIRA WPB-2400	Wrapping content elements not contained, in theme default containers.
+* Bug fix:		JIRA WPB-2400	Wrapping content elements not contained, in theme default containers.
 
 = 1.2.7 =
 * Misc:			JIRA WPB-2344	Updated readme.txt for Tested up to 4.6.1.
@@ -188,51 +189,51 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.0.9 =
 * Misc:			JIRA WPB-1361	Added license file.
-* New Feature:	JIRA WPB-1695	Suggest crop: Add 'size' dropdown menu when cropping an image.
-* New Feature:	JIRA WPB-1698	Suggest crop: default selection should be as wide as it could be.
-* New Feature:	JIRA WPB-1697	Suggest crop: Center the default selection.
-* New Feature:	JIRA WPB-1528	Drag and drop enabled state is now remembered per theme.
+* New feature:	JIRA WPB-1695	Suggest crop: Add 'size' dropdown menu when cropping an image.
+* New feature:	JIRA WPB-1698	Suggest crop: default selection should be as wide as it could be.
+* New feature:	JIRA WPB-1697	Suggest crop: Center the default selection.
+* New feature:	JIRA WPB-1528	Drag and drop enabled state is now remembered per theme.
 * Update:		JIRA WPB-1696	Suggest crop: Do not trigger on 'Add Media'.
 * Update:		JIRA WPB-1738	Suggest crop: Remove feature switch.
 
 = 1.0.8 =
-* New Feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.
-* New Feature:	JIRA WPB-1684	Suggest image crop when replacing images of different aspect ratios.
+* New feature:	JIRA WPB-1665	Change button opens 'Replace Image' media modal.
+* New feature:	JIRA WPB-1684	Suggest image crop when replacing images of different aspect ratios.
 
 = 1.0.7 =
 * Rework:		JIRA WPB-1616	Updated require and include statements for standards.
 
 = 1.0.6 =
-* New Feature:	JIRA WPB-1520	Serve static Gridblocks via API
+* New feature:	JIRA WPB-1520	Serve static Gridblocks via API
 
 = 1.0.5.1 =
 * Bug fix:		JIRA WPB-1553	Fixed PHP version check condition (<5.3).
 
 = 1.0.5 =
-* New Feature:	JIRA WPB-1520	Adding Icons for draggable tools
+* New feature:	JIRA WPB-1520	Adding Icons for draggable tools
 * Usability:	JIRA WPB-1558	Improved popover hover responsiveness
 * Bug fix:		JIRA WPB-1553	Added support for __DIR__ in PHP <=5.2.
-* New Feature:	JIRA WPB-1026	Enable fontsize and family selection in tinymce
-* New Feature:	JIRA WPB-1523	Columns will now extend to the full height of row.
-* New Feature:	JIRA WPB-1332	Updating the loading graphic
+* New feature:	JIRA WPB-1026	Enable fontsize and family selection in tinymce
+* New feature:	JIRA WPB-1523	Columns will now extend to the full height of row.
+* New feature:	JIRA WPB-1332	Updating the loading graphic
 * Misc:			JIRA WPB-1468	Updated readme.txt for Tested up to: 4.4.1
-* New Feature:	JIRA WPB-1522   Standardize Drag Menu order
+* New feature:	JIRA WPB-1522   Standardize Drag Menu order
 * New feature:	JIRA WPB-1557	Add wp-image-## class to images when adding gridblocks.
 
 = 1.0.4 =
-* Bug Fix:		JIRA WPB-711	Fixing compatibility issues with IE 11, 12 and 13
+* Bug fix:		JIRA WPB-711	Fixing compatibility issues with IE 11, 12 and 13
 
 = 1.0.3 =
-* New Feature:	JIRA WPB-1432	Added unit tests
-* BugFix:		JIRA WPB-1381	Insert media will now be the default tab when changing an image
-* BugFix:		JIRA WPB-1453	Fixing issue causing tinymce height to be too large to too small
+* New feature:	JIRA WPB-1432	Added unit tests
+* Bug fix:		JIRA WPB-1381	Insert media will now be the default tab when changing an image
+* Bug fix:		JIRA WPB-1453	Fixing issue causing tinymce height to be too large to too small
 
 = 1.0.2 =
 * New feature:	JIRA WPB-1363	Updated readme.txt for WordPress standards.
 * Usability:    JIRA WPB-1256   Adding cache query args for tinymce styles
 
 = 1.0.1 =
-* BUG Fix: 						Fixing error experienced in non BG themes in editor
+* Bug fix: 						Fixing error experienced in non BG themes in editor
 
 = 1.0 =
 * Initial public release.
