@@ -27,6 +27,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 = 1.3.4 In Progress =
 * Bug Fix:      JIRA WPB-2883    Error thrown while resizing.
 * Bug Fix:      JIRA WPB-2881    Column Drag outline is the wrong color.
+* Bug Fix:      JIRA WPB-2880    Gridblocks not vertically centered.
 
 = 1.3.3 =
 * Update:       JIRA WPB-2834    Add Underline to tinymce toolbar.
