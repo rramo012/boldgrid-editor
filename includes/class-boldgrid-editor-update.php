@@ -2,20 +2,18 @@
 /**
  * BoldGrid Source Code
  *
- * @package Boldgrid_Editor_Update
+ * @package Boldgrid_Update
  * @copyright BoldGrid.com
- * @version $Id$
+ * @version 1.3
  * @author BoldGrid <support@boldgrid.com>
  */
 
 /**
- * BoldGrid Forms update class.
+ * BoldGrid update class.
  */
 class Boldgrid_Editor_Update {
 	/**
 	 * Parameters needed for this update class.
-	 *
-	 * @since 1.3.1
 	 *
 	 * @var array
 	 */
@@ -75,8 +73,6 @@ class Boldgrid_Editor_Update {
 
 	/**
 	 * Validate input plugin data.
-	 *
-	 * @since 1.3.1
 	 *
 	 * @return bool
 	 */
@@ -286,8 +282,6 @@ class Boldgrid_Editor_Update {
 	/**
 	 * Action to add a filter to check if this plugin should be auto-updated.
 	 *
-	 * @since 1.1.3
-	 *
 	 * @see wp_maybe_auto_update()
 	 */
 	public function wp_update_this_plugin () {
@@ -311,8 +305,6 @@ class Boldgrid_Editor_Update {
 
 	/**
 	 * Filter to check if this plugin should be auto-updated.
-	 *
-	 * @since 1.1.3
 	 *
 	 * @param bool $update Whether or not this plugin is set to update.
 	 * @param object $item The plugin transient object.
