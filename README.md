@@ -29,6 +29,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
+### 1.3.4 In Progess ###
+* Bug Fix:      JIRA WPB-2883    Error thrown while resizing.
+
 ### 1.3.3 ###
 * Update:       JIRA WPB-2834    Add Underline to tinymce toolbar.
 * Update:       JIRA WPB-2828    Set default section background image position to center.

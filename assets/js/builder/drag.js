@@ -1976,7 +1976,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			 */
 			if ( column_size === 1 && made_smaller ) {
 				if ( self.elementIsEmpty( self.resize.element ) ) {
-					var resizeElement = self.resize.element;
+					var $newSibiling,
+						resizeElement = self.resize.element;
+
 					self.resize.element.remove();
 					self.change_column_size( self.resize.sibling );
 
