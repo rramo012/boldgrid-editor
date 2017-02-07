@@ -158,8 +158,9 @@ class Boldgrid_Editor {
 		);
 		$this->set_path_configs( $path_configs );
 
-		// Add hooks:
 		$this->add_hooks();
+
+		$this->prepare_update();
 
 	}
 
@@ -301,9 +302,99 @@ class Boldgrid_Editor {
 		add_action( 'wp_ajax_boldgrid_gridblock_html', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_html_ajax' ) );
 
 		// Plugin updates.
-		$plugin_update = new Boldgrid_Editor_Update( $this );
+		$plugin_update = new Boldgrid_Editor_Update( array(
+			'plugin_key_code' => 'editor',
+			'slug' => 'boldgrid-editor',
+			'main_file_path' => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php',
+			'configs' => self::get_editor_configs(),
+			'version_data' => get_site_transient( 'boldgrid_editor_version_data' ),
+			'transient' => 'boldgrid_editor_version_data',
+		) );
 
 		$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
 		$boldgrid_editor_crop->add_hooks();
+	}
+
+	/**
+	 * Get the BoldGrid Editor configuration array.
+	 *
+	 * @since 1.3.3
+	 *
+	 * @static
+	 *
+	 * @return array
+	 */
+	public static function get_editor_configs() {
+		require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-config.php';
+
+		$config = new Boldgrid_Editor_Config();
+
+		return $config->get_configs();
+	}
+
+	/**
+	 * Prepare for the update class.
+	 *
+	 * @since 1.3.3
+	 *
+	 * @see self::wpcron()
+	 * @see self::load_update()
+	 */
+	public function prepare_update() {
+		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
+		$is_wpcli = ( defined( 'WP_CLI' ) && WP_CLI );
+
+		// Add an action to load this plugin on init, only in the dashboard.
+		if ( $is_cron || $is_wpcli || is_admin() ) {
+			add_action( 'init', array (
+				$this,
+				'load_update'
+			) );
+		}
+
+		// If DOING_CRON, then check if this plugin should be auto-updated.
+		if ( $is_cron ){
+			$this->wpcron();
+		}
+	}
+
+	/**
+	 * WP-CRON init.
+	 *
+	 * @since 1.3.3
+	 */
+	public function wpcron() {
+		// Ensure required definitions for pluggable.
+		if ( ! defined( 'AUTH_COOKIE' ) ) {
+			define( 'AUTH_COOKIE', null );
+		}
+
+		if ( ! defined( 'LOGGED_IN_COOKIE' ) ) {
+			define( 'LOGGED_IN_COOKIE', null );
+		}
+
+		// Load the pluggable class, if needed.
+		require_once ABSPATH . 'wp-includes/pluggable.php';
+	}
+
+	/**
+	 * Load update class.
+	 *
+	 * @since 1.3.3
+	 */
+	public function load_update() {
+		// Load and check for plugin updates.
+		require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-update.php';
+
+		$plugin_data = array(
+			'plugin_key_code' => 'editor',
+			'slug' => 'boldgrid-editor',
+			'main_file_path' => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php',
+			'configs' => $this->config->get_configs(),
+			'version_data' => get_site_transient( 'boldgrid_editor_version_data' ),
+			'transient' => 'boldgrid_editor_version_data',
+		);
+
+		$plugin_update = new Boldgrid_Editor_Update( $plugin_data );
 	}
 }
