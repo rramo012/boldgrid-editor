@@ -30,9 +30,6 @@ class Boldgrid_Editor_Update {
 
 	/**
 	 * Adds filters for plugin update hooks.
-	 *
-	 * @see self::wpcron()
-	 * @see self::wp_update_this_plugin()
 	 */
 	public function add_hooks() {
 		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
