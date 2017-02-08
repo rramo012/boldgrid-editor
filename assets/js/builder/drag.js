@@ -1266,10 +1266,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * before and after results in append or prepend.
 	 */
 	this.before_or_after_drop = function( $element, pos_obj ) {
-		var bounding_rect = $element.get( 0 ).getBoundingClientRect();
-		var slope = -( bounding_rect.height / bounding_rect.width );
-		var y_intercept = Math.floor( bounding_rect.bottom ) - ( slope ) * bounding_rect.left;
-		var position_y_on_slope = ( slope * pos_obj.x ) + y_intercept;
+		var drop_point,
+			bounding_rect = $element.get( 0 ).getBoundingClientRect(),
+			slope = -( bounding_rect.height / bounding_rect.width ),
+			y_intercept = Math.floor( bounding_rect.bottom ) - ( slope ) * bounding_rect.left,
+			position_y_on_slope = ( slope * pos_obj.x ) + y_intercept;
 
 		if ( position_y_on_slope <= pos_obj.y ) {
 			drop_point = 'after';
@@ -3201,6 +3202,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					// If the drag enter element is a parent, we will append or prepend.
 					// This handles cases where you are dragging into a container.
 					else if ( current_drag_is_parent ) {
+						var $first_child;
+
 						// Since we are in this block, we know that we have entered a column.
 						// First child is the first child of the column.
 						$first_child = $entered.find( '>:first-child' );
