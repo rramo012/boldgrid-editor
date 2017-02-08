@@ -238,6 +238,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				return;
 			}
 
+			$.fourpan.dismiss();
 			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );
 			self.$slider = $( '.bg-zoom-controls .slider' );
