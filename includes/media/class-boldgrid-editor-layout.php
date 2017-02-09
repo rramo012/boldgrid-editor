@@ -29,15 +29,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	);
 
 	/**
-	 * Sort by integer
-	 *
-	 * @return number
-	 */
-	public function sort_by_order( $a, $b ) {
-		return $b['str_length'] - $a['str_length'];
-	}
-
-	/**
 	 * Print outerHTML from DOMElements.
 	 *
 	 * @since 1.0.5.
@@ -58,7 +49,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 *
 	 * @return array $row_content
 	 */
-	public static function parse_gridblocks( $content ) {
+	public static function parse_gridblocks( $content, $post = null ) {
 		global $shortcode_tags;
 
 		$dom = new DOMDocument();
@@ -91,6 +82,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 				$rows[] = array (
 					'html' => $shortcode_translated_html,
 					'preview-html' => $shortcode_translated_html,
+					'is_post' => ! empty( $post ) ? 'post' === $post->type : false,
 					'str_length' => strlen( $shortcode_translated_html )
 				);
 			}
@@ -99,8 +91,37 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		return $rows;
 	}
 
+
+	/**
+	 * Sort By whether or not the post is of type of post.
+	 *
+	 * @since 1.4
+	 *
+	 * @global WP_post $post Current Post.
+	 *
+	 * @param  array $row_content Array of all gridblocks.
+	 * @return array $row_content Array of all gridblocks.
+	 */
+	public static function sort_by_post( $row_content ) {
+		global $post;
+
+		$current_type = $post ? $post->post_type : '';
+
+		$sort_by_post = function ( $a, $b ) {
+			return ! empty( $a['is_post'] );
+		};
+
+		if ( 'post' === $current_type ) {
+			usort( $row_content, $sort_by_post );
+		}
+
+		return $row_content;
+	}
+
 	/**
 	 * Sort the gridblocks by content length
+	 *
+	 * @since 1.0
 	 *
 	 * @param array $row_content
 	 * @return array $row_content
@@ -113,6 +134,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		// Sort by longest
 		if ( count( $row_content ) ) {
 			usort( $row_content, $sort_by_order );
+			$row_content = self::sort_by_post( $row_content );
 		}
 
 		return $row_content;
@@ -223,17 +245,15 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 *
 	 * @since 1.3
 	 *
-	 * @param $_REQUEST['post_id']
+	 * @global WP_post $post Current Post.
 	 *
+	 * @param $_REQUEST['post_id']
 	 * @return array
 	 */
 	public static function get_all_pages() {
-		// Set the current post status.
-		$post_id = ! empty( $_REQUEST['post_id'] ) ? $_REQUEST['post_id'] : null;
-		$post = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
-		$post_id = ! empty( $post_id ) ? $post_id : $post;
+		global $post;
 
-		$current_post_status = get_post_status( intval( $post_id ) );
+		$current_post_status = $post ? $post->post_status : '';
 
 		// Set the Page Statuses to display.
 		$page_statuses = self::$active_pages;
@@ -259,7 +279,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		// Grab all rows from all pages.
 		$row_content = array ();
 		foreach ( $pages as $page ) {
-			$row_content = array_merge( $row_content, self::parse_gridblocks( $page->post_content ) );
+			$row_content = array_merge( $row_content, self::parse_gridblocks( $page->post_content, $page ) );
 		}
 
 		return $row_content;
@@ -286,6 +306,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 				'id' => pathinfo( $layout, PATHINFO_FILENAME ),
 				'html' => $html,
 				'preview-html' => $html,
+				'is_post' => false,
 				'str_length' => strlen( $html )
 			);
 		}
