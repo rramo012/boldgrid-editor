@@ -29,7 +29,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.3.4 In Progress ###
+### 1.3.4 ###
 * Bug Fix:		JIRA WPB-2882	Fixing chrome drag auto scroll.
 * Bug fix:		JIRA WPB-2892	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
 * Bug fix:		JIRA WPB-2883	Error thrown while resizing.
