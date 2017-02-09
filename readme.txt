@@ -24,12 +24,13 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.3.4 In Progress =
+= 1.3.4  =
 * Bug Fix:		JIRA WPB-2882	Fixing chrome drag auto scroll.
 * Bug fix:		JIRA WPB-2892	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
 * Bug fix:		JIRA WPB-2883	Error thrown while resizing.
 * Bug fix:		JIRA WPB-2881	Column Drag outline is the wrong color.
 * Bug fix:		JIRA WPB-2880	Gridblocks not vertically centered.
+* Update:		JIRA WPB-2902	Prioritize Post Gridblocks when viewing posts.
 
 = 1.3.3 =
 * Update:		JIRA WPB-2834	Add Underline to tinymce toolbar.
