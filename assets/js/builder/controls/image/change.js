@@ -35,10 +35,9 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 
 			/*
 			 * Ensure the selected element is an image.
-			 *
-			 * todo: This is a temporary fix.
+			 * @todo: This is a temporary fix.
 			 */
-			if( 'IMG' !== node.nodeName && 1 === node.childElementCount && 'IMG' === node.firstChild.nodeName ) {
+			if ( node && 'IMG' !== node.nodeName && 1 === node.childElementCount && 'IMG' === node.firstChild.nodeName ) {
 				tinymce.activeEditor.selection.select( node.firstChild );
 			}
 
