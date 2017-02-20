@@ -31,6 +31,15 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 * @since 1.2.8
 		 */
 		openModal: function() {
+			var node = tinymce.activeEditor.selection.getNode();
+
+			/*
+			 * Ensure the selected element is an image.
+			 * @todo: This is a temporary fix.
+			 */
+			if ( node && 'IMG' !== node.nodeName && 1 === node.childElementCount && 'IMG' === node.firstChild.nodeName ) {
+				tinymce.activeEditor.selection.select( node.firstChild );
+			}
 
 			// Mimic the click of the "Edit" button.
 			tinymce.activeEditor.buttons.wp_img_edit.onclick();
