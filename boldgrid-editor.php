@@ -3,7 +3,7 @@
  * Plugin Name: BoldGrid Editor
  * Plugin URI: http://www.boldgrid.com
  * Description: Customized editing for pages and posts
- * Version: 1.3.5
+ * Version: 1.4
  * Author: BoldGrid.com <support@boldgrid.com>
  * Author URI: http://www.boldgrid.com
  * Text Domain: boldgrid-editor

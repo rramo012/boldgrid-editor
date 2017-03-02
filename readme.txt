@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design
 Requires at least: 4.3
-Tested up to: 4.7.1
+Tested up to: 4.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,9 +24,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.3.5 =
+= 1.4 =
 * Bug fix:		JIRA WPB-2912	Fixed issue when installing plugins from the Tools Import page.
 * Bug fix:		JIRA WPB-2504	Crop image screen closes immediately.
+* Bug fix:		JIRA WPB-2974	Updating section background image URLs.
 
 = 1.3.4 =
 * Bug Fix:		JIRA WPB-2882	Fixing chrome drag auto scroll.
