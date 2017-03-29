@@ -1,14 +1,16 @@
 <?php
 /**
  * Plugin Name: BoldGrid Editor
- * Plugin URI: http://www.boldgrid.com
+ * Plugin URI:  https://www.boldgrid.com
  * Description: Customized drag and drop editing for pages and posts. BoldGrid Editor adds functionality to the existing TinyMCE Editor to give you easier control over your content.
- * Version: 1.4.1
- * Author: BoldGrid.com <support@boldgrid.com>
- * Author URI: http://www.boldgrid.com
+ * Version:     1.4.1
+ * Author:      BoldGrid <support@boldgrid.com>
+ * Author URI:  https://www.boldgrid.com
  * Text Domain: boldgrid-editor
  * Domain Path: /languages
- * License: GPLv2 or later
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * @package     boldgrid-editor
  */
 
 // Prevent direct calls.

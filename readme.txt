@@ -24,6 +24,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.4.2 In progress =
+* Rework:		JIRA WPB-3096	Updated plugin header.
+
 = 1.4.1 =
 * Update:		JIRA WPB-3043	Updating plugin description.
 
