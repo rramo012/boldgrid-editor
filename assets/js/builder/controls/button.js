@@ -56,9 +56,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			{ name: 'btn btn-raised btn-pill' },
 			{ name: 'btn btn-raised btn-small-caps' },
 
-			{ name: 'btn btn-rounded btn-flat btn-small-caps' },
-			{ name: 'btn btn-pill btn-flat' },
-			{ name: 'btn btn-flat' },
+			{ name: 'btn btn-rounded btn-small-caps' },
+			{ name: 'btn btn-pill' },
+			{ name: 'btn' },
 
 			{ name: 'btn btn-longshadow btn-rounded' },
 			{ name: 'btn btn-longshadow btn-small-caps btn-pill' },
