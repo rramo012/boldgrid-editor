@@ -29,6 +29,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
+### 1.4.1 In Progress ###
+* Update:		JIRA WPB-3131	Removing btn-flat default class.
+
 ### 1.4.1 ###
 * Update:		JIRA WPB-3043	Updating plugin description.
 
