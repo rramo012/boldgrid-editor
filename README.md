@@ -7,7 +7,7 @@
 **Contributors:** imh_brad, joemoto, rramo012, timph
 **Tags:** inspiration,customization,build,create,design
 **Requires at least:** 4.3
-**Tested up to:** 4.7.3
+**Tested up to:** 4.7.4
 **License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
-### 1.4.2 In progres ###
+### 1.4.2 ###
 * Bug fix:		JIRA WPB-3151	Added check and load before using get_plugin_data() for updates.
 * Update:		JIRA WPB-3131	Removing btn-flat default class.
 
