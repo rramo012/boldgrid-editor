@@ -32,6 +32,8 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-bui
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-fonts.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-components.php';
 
+require_once BOLDGRID_EDITOR_PATH . '/includes/form/wpforms/includes/class-boldgrid-editor-form-wpforms.php';
+
 /**
  * BoldGrid Editor class
  */
@@ -209,6 +211,10 @@ class Boldgrid_Editor {
 		$boldgrid_editor_theme     = new Boldgrid_Editor_Theme();
 		$boldgrid_editor_version   = new Boldgrid_Editor_Version();
 		$boldgrid_editor_media_map = new Boldgrid_Editor_Media_Map();
+		$boldgrid_editor_wpforms   = new Boldgrid_Editor_Form_Wpforms();
+
+		// Init Form deps.
+		$boldgrid_editor_wpforms->init();
 
 		// Check PHP and WordPress versions for compatibility.
 		add_action( 'admin_init', array ( $boldgrid_editor_version, 'check_php_wp_versions' ) );
