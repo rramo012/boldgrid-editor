@@ -360,8 +360,8 @@ IMHWPB.Editor = function( $ ) {
 					}
 				} else if ( 'P' == node.tagName ) {
 					// When clicking enter on an empty P, Just add another P.
-					if ( enterKey == e.which && isEmpty && ! $current_node.find('img').length ) {
-						$newParagraph = $('<p><br data-mce-bogus="1"></p>');
+					if ( enterKey == e.which && isEmpty && ! $current_node.find( 'img' ).length ) {
+						$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
 						$current_node.after( $newParagraph );
 						editor.selection.setCursorLocation( $newParagraph[0], 0 );
 						return false;
@@ -369,7 +369,7 @@ IMHWPB.Editor = function( $ ) {
 
 					if ( e.which == '8' && isEmpty ) {
 						$prev = $current_node.prev();
-						if ( $prev.length && $prev.hasClass('draggable-tools-imhwpb') ) {
+						if ( $prev.length && $prev.hasClass( 'draggable-tools-imhwpb' ) ) {
 							$prev = $prev.prev();
 						}
 
@@ -379,18 +379,18 @@ IMHWPB.Editor = function( $ ) {
 								editor.selection.setCursorLocation( $prev[0], 0 );
 							} else {
 								editor.selection.select( $prev[0] );
-								editor.selection.collapse(0);
+								editor.selection.collapse( 0 );
 					        }
 							return false;
 						}
 					}
 
-				} else if ( 'IMG' == node.tagName || $current_node.is('.button-primary, .button-secondary, .btn' ) ) {
+				} else if ( 'IMG' == node.tagName || $current_node.is( '.button-primary, .button-secondary, .btn' ) ) {
 
 					if ( enterKey == e.which ) {
 
-						$newParagraph = $('<p><br data-mce-bogus="1"></p>');
-						var $parentP = $current_node.closest('p');
+						$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
+						var $parentP = $current_node.closest( 'p' );
 						if ( $parentP.length ) {
 							$parentP.after( $newParagraph );
 						} else {
@@ -408,7 +408,7 @@ IMHWPB.Editor = function( $ ) {
 			//Every time the user clicks on a new node.
 			//re-map to a different section
 			editor.on( 'NodeChange', function( e ) {
-				var $element = $(e.element);
+				var $element = $( e.element );
 
 				//If the element is an anchor
 					//And the user clicks on the last or first position in the content

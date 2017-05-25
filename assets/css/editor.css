@@ -2390,3 +2390,10 @@ body.boldgrid-editor-fullscreen {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 9999999;
   position: fixed; }
+
+/*--------------------------------------------------------------
+# Forms Integration
+--------------------------------------------------------------*/
+.boldgrid-wpforms[data-title="0"] .wpforms-title,
+.boldgrid-wpforms[data-description="0"] .wpforms-description {
+  display: none !important; }

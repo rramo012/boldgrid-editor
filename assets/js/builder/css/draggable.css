@@ -15,14 +15,6 @@ iframe[src^="https://maps.google.com"] {
 	max-width: 100%;
 }
 
-.dragging-imhwpb {
-    -webkit-box-shadow: 0 0 0px 2px #f95b26;
-     -moz-box-shadow: 0 0 0px 2px #f95b26;
-    box-shadow: 0 0 0px 2px #f95b26;
-    pointer-events: none;
-    transition: all !important;
-}
-
 .draggable-button {
 	border-radius: 3px;
     background-image: none;
@@ -82,33 +74,6 @@ iframe[src^="https://maps.google.com"] {
     cursor: ew-resize !important;
 }
 
-.dragging-imhwpb {
-	outline: none !important;
-}
-
-.row.dragging-imhwpb {
-    -webkit-box-shadow: 0 0 0px 2px rgba(204, 175, 11, 1);
-     -moz-box-shadow: 0 0 0px 2px rgba(204, 175, 11, 1);
-    box-shadow: 0 0 0px 2px rgba(204, 175, 11, 1);
-}
-.row .row.dragging-imhwpb   {
-    -webkit-box-shadow: 0 0 0px 2px #f95b26;
-     -moz-box-shadow: 0 0 0px 2px #f95b26;
-    box-shadow: 0 0 0px 2px #f95b26;
-}
-
-/**
-* When dragging columns set box shadow
-*/
-[class*="col-xs"].dragging-imhwpb,
-[class*="col-sm"].dragging-imhwpb,
-[class*="col-md"].dragging-imhwpb,
-[class*="col-lg"].dragging-imhwpb {
-    -webkit-box-shadow: 0 0 0px 2px rgba(33, 117, 155, 1);
-    -moz-box-shadow: 0 0 0px 2px rgba(33, 117, 155, 1);
-    box-shadow: 0 0 0px 2px rgba(33, 117, 155, 1);
-}
-
 .changing-padding,
 .added-element,
 .content-border-imhwpb,
@@ -147,7 +112,7 @@ iframe[src^="https://maps.google.com"] {
 }
 
 .drag-progress .dragging-imhwpb {
-	visibility: hidden;
+	display: none;
 }
 
 .editing-as-row .receptor-containers-imhwpb {
@@ -176,11 +141,6 @@ iframe[src^="https://maps.google.com"] {
     box-shadow: -4px 0px 0px 0px rgba(230,5,35,1);
 }
 
-
-.dragging-imhwpb.dragging-started-imhwpb {
-    position : absolute !important;
-    z-index: 100000;
-}
 
 .cloned-div-imhwpb {
     overflow-y: hidden;
