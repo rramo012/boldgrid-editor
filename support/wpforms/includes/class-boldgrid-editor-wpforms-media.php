@@ -1,7 +1,22 @@
 <?php
+/**
+ * Class: Boldgrid_Editor_Wpforms_Media
+ *
+ * Create the forms media tab.
+ *
+ * @since      1.4.4
+ * @package    Boldgrid_Editor
+ * @subpackage Boldgrid_Editor_Wpforms
+ * @author     BoldGrid <support@boldgrid.com>
+ * @link       https://boldgrid.com
+ */
 
 /**
- * BoldGrid Media Tab Form class
+ * Class: Boldgrid_Editor_Wpforms_Media
+ *
+ * Create the forms media tab.
+ *
+ * @since      1.4.4
  */
 class Boldgrid_Editor_Wpforms_Media extends Boldgrid_Editor_Media_Tab {
 

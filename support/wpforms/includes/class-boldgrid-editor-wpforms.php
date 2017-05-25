@@ -1,15 +1,24 @@
 <?php
+/**
+ * Class: Boldgrid_Editor_Wpforms
+ *
+ * Integration between WPForms and BoldGrid Editor.
+ *
+ * @since      1.4.4
+ * @package    Boldgrid_Editor
+ * @subpackage Boldgrid_Editor_Wpforms
+ * @author     BoldGrid <support@boldgrid.com>
+ * @link       https://boldgrid.com
+ */
 
 /**
- * BoldGrid Forms class
+ * Class: Boldgrid_Editor_Wpforms
+ *
+ * Integration between WPForms and BoldGrid Editor.
+ *
+ * @since      1.4.4
  */
 class Boldgrid_Editor_Wpforms {
-	/**
-	 * Class property to hold the Boldgrid_Ninja_Form_Config class:
-	 *
-	 * @var Boldgrid_Ninja_Forms_Config
-	 */
-	private $boldgrid_ninja_form_config;
 
 	/**
 	 * A full array of tab configurations
@@ -97,7 +106,7 @@ class Boldgrid_Editor_Wpforms {
 	}
 
 	/**
-	 * Initialization hook for BoldGrid Ninja forms.
+	 * Initialization hook for BoldGrid forms.
 	 *
 	 * @since 1.4.4
 	 */
