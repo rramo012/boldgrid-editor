@@ -43,33 +43,24 @@ class Boldgrid_Editor_Form_Wpforms {
 
 	/**
 	 * Initialize tab configs.
+	 *
+	 * @since 1.4.4
 	 */
-	public function __construct() {
+	public function initiallizeConfigs() {
 		$addonDir = dirname( __FILE__ );
 		$this->tab_configs = include( $addonDir . '/config/layouts.php' );
 
 		$this->path_configs = array (
 			'plugin_dir' => BOLDGRID_EDITOR_PATH,
+			'addon_directory' => realpath( dirname( __FILE__ ) . '/..'),
 			'plugin_filename' => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php'
 		);
 	}
 
-
 	/**
-	 * Get plugin directory
+	 * Javascript needed for editor.
 	 *
-	 * @static
-	 *
-	 * @return string
-	 */
-	public static function derive_plugin_dir() {
-		return realpath( dirname( dirname( dirname( __FILE__ ) ) ) );
-	}
-
-	/**
-	 * Javascript needed for editor
-	 *
-	 * @return void
+	 * @since 1.4.4
 	 */
 	public function enqueue_header_content() {
 		global $pagenow;
@@ -81,38 +72,44 @@ class Boldgrid_Editor_Form_Wpforms {
 			return;
 		}
 
-		wp_enqueue_script( 'media-imhwpb',
-			plugins_url( '/boldgrid/assets/js/media.js', $this->path_configs['plugin_filename'] ),
-			array (), BOLDGRID_EDITOR_VERSION, true );
-
 		wp_enqueue_script( 'boldgrid-form-shortcode',
-			plugins_url( '/boldgrid/assets/js/shortcode.js',
-				$this->path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION, true );
+			plugins_url( '/wpforms/assets/js/shortcode.js', $this->path_configs['addon_directory'] ),
+			array (), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**
-	 * Initialization hook for BoldGrid Ninja forms
+	 * Initialization hook for BoldGrid Ninja forms.
 	 *
-	 * @return void
+	 * @since 1.4.4
 	 */
 	public function init() {
-		global $pagenow;
-
 		add_action( 'admin_init', array ( $this, 'admin_init' ) );
-		add_filter( 'ninja_forms_starter_form_contents', array ( $this, 'modify_starter_forms' ) );
-		add_filter( 'wpforms_display_media_button', array( $this, 'remove_media_button' ) );
-/*
-		$test = do_shortcode( '[wpforms id="12370"]' );
-		var_dump( $test );die;
-		var_dump( wpforms_decode( get_posts( ['post_type' => 'wpforms'])[0]->post_content ) );*/
 	}
 
 	/**
-	 * Initialization process for administration section if Boldgrid Ninja Forms
+	 * Check if wp forms is active and has enough functionality for us to support it.
 	 *
-	 * @return void
+	 * The constant checks are deps we use in the plugin.
+	 *
+	 * @since 1.44
+	 *
+	 * @return boolean Is WP forms active and supportable?
+	 */
+	public function isWpformsActive() {
+		return function_exists('wpforms') && defined('WPFORMS_PLUGIN_URL')
+			&& defined('WPFORMS_VERSION') && ! defined('BOLDGRID_NINJA_FORM_VERSION');
+	}
+
+	/**
+	 * Initialization process for administration section of forms.
+	 *
+	 * @since 1.4.4
 	 */
 	public function admin_init() {
+		if ( ! $this->isWpformsActive() ) {
+			return;
+		}
+
 		$valid_pages = array (
 			'post.php',
 			'post-new.php',
@@ -123,103 +120,54 @@ class Boldgrid_Editor_Form_Wpforms {
 		if ( is_admin() && $edit_post_page ) {
 
 			// Create Media Modal Tabs
+			$this->initiallizeConfigs();
 			$this->create_tabs();
 
 			// Print all forms as media templates
-			add_action( 'print_media_templates',
-				array (
-					$this,
-					'print_media_templates'
-				) );
+			add_action( 'print_media_templates', array ( $this, 'print_media_templates' ) );
+			add_filter( 'wpforms_display_media_button', array( $this, 'remove_media_button' ) );
 
 			// load up any css / js we need
-			add_action( 'admin_enqueue_scripts',
-				array (
-					$this,
-					'enqueue_header_content'
-				), 15 );
+			add_action( 'admin_enqueue_scripts', array ( $this, 'enqueue_header_content' ), 15 );
+			add_editor_style( WPFORMS_PLUGIN_URL . 'assets/css/wpforms-full.css' );
 		}
 	}
 
 	/**
-	 * Static method that will add all forms that have been defined in the
-	 * boldgrid/includes/prebuilt-forms folder
+	 * Get form markup.
 	 *
-	 * @static
+	 * @since 1.4.4
 	 *
-	 * @return void
-	 */
-	public static function add_prebuilt_forms() {
-
-		// Get the site's title:
-		$site_title = get_bloginfo( 'name' );
-
-		// Get the site's email address:
-		$email_address = get_bloginfo( 'admin_email' );
-
-		// If the current blog's admin email address is missing, then try the network.
-		if ( empty( $email_address ) ) {
-			$email_address = get_site_option( 'admin_email' );
-		}
-	}
-
-	/**
-	 * Get form markup
-	 *
-	 * @static
-	 *
-	 * @param int $form_id
-	 *
-	 * @return string
+	 * @param int $form_id ID of Form.
+	 * @return string Markup of form.
 	 */
 	public static function get_form_markup( $form_id ) {
-		if ( function_exists( 'ninja_forms_display_form' ) ) {
-			return ninja_forms_return_echo( 'ninja_forms_display_form', $form_id );
-		}
+		return do_shortcode( '[wpforms id="' . $form_id . '"]' );
 	}
 
 	/**
-	 * Add prebuilt forms
+	 * Get all wpforms.
 	 *
-	 * @return string
-	 */
-	public function modify_starter_forms() {
-		self::add_prebuilt_forms();
-
-		return '';
-	}
-
-	/**
-	 * Get forms
-	 *
-	 * @static
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
 	public static function get_forms() {
-		// Todo:
-		// ninja_forms_get_all_forms());
+		$results = get_posts( ['post_type' => 'wpforms'] );
 
-		// Connect to the WordPress database:
-		global $wpdb;
+		// Initialize $form_ids array.
+		$form_ids = array();
 
-		// Query the database:
-		$results = $wpdb->get_results(
-			"SELECT distinct form_id FROM {$wpdb->prefix}ninja_forms_fields", OBJECT );
-
-		// Initialize $form_ids array:
-		$form_ids = array ();
-
-		// Populate the $form_ids array:
+		// Populate the $form_ids array.
 		foreach ( $results as $result ) {
-			if ( ! empty( $result->form_id ) ) {
+			if ( ! empty( $result->ID ) ) {
 				$form_ids[] = array (
-					'id' => $result->form_id
+					'id' => $result->ID
 				);
 			}
 		}
 
-		// Return the resulting array:
+		// Return the resulting array.
 		return $form_ids;
 	}
 
@@ -229,11 +177,12 @@ class Boldgrid_Editor_Form_Wpforms {
 	 * In the function below we disable displaying the media button
 	 * on pages. You can replace 'page' with your desired post type.
 	 *
+	 *  @since 1.4.4
+	 *
 	 * @param boolean $display
 	 * @return boolean
 	 */
 	public function remove_media_button( $display ) {
-return;
 		$screen = get_current_screen();
 
 		if ( 'page' == $screen->post_type ) {
@@ -244,33 +193,30 @@ return;
 	}
 
 	/**
-	 * Create Tabs based on configurations
+	 * Create Tabs based on configurations.
 	 *
+	 * @since 1.4.4
 	 */
 	public function create_tabs() {
-		require_once dirname( __FILE__ ) .
-			'/../../class-boldgrid-editor-forms-media-tab.php';
-
-		require_once dirname( __FILE__ ) .
-			 '/../../class-boldgrid-editor-forms-media.php';
+		require_once dirname( __FILE__ ) . '/class-boldgrid-editor-form-media.php';
 
 		$boldgrid_configs = $this->get_tab_configs();
 
 		$configs = $boldgrid_configs['tabs'];
 
-		/**
+		/*
 		 * Create each tab specified from the configuration.
 		 */
 		foreach ( $configs as $tab ) {
-			$media_tab = new Boldgrid_Editor_Forms_Media_Tab( $tab, $this->get_path_configs(), '/boldgrid' );
+			$media_tab = new Boldgrid_Editor_Form_Media( $tab, $this->get_path_configs(), '/' );
 			$media_tab->create();
 		}
 	}
 
 	/**
-	 * Get Templates for all forms and print them to the page
+	 * Get Templates for all forms and print them to the page.
 	 *
-	 * @return void
+	 * @since 1.4.4
 	 */
 	public function print_media_templates() {
 		$form_markup = array ();
@@ -281,7 +227,7 @@ return;
 			$form_markup[$form['id']] = self::get_form_markup( $form['id'] );
 		}
 
-		include BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/partial-page/form-not-found-tmpl.php';
+		require $this->path_configs['addon_directory'] . '/templates/form-not-found.php';
 
 		foreach ( $form_markup as $form_id => $markup ) {
 			$markup = str_replace( '<script', '<# print("<sc" + "ript"); #>', $markup );

@@ -15,8 +15,8 @@ return array(
 			),
 			'title' => 'Forms',
 			'slug' => 'boldgrid_form',
-			'attachments-template' => $addonDir . '/pages/form-attachments.php',
-			'sidebar-template' 	   => $addonDir . '/pages/form-sidebar.php',
+			'attachments-template' => $addonDir . '/../templates/form-attachments.php',
+			'sidebar-template' 	   => $addonDir . '/../templates/form-sidebar.php',
 			'route-tabs' => array (
 				'form-list' => array (
 					'name' => 'Available Forms',

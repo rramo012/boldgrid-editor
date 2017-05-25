@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 			<div class='editform-link'>
 				<a target="_parent" href="#">Edit Form</a>&nbsp;&nbsp;&nbsp; <a
 					target="_parent"
-					href="<?php echo get_admin_url() . 'admin.php?page=ninja-forms&tab=builder&form_id=new'; ?>">New
+					href="<?php echo get_admin_url() . 'admin.php?page=wpforms-builder'; ?>">New
 					Form</a>
 			</div>
 			<div class="inputgroup-boldgrid">

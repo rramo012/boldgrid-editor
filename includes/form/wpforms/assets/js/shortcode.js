@@ -8,7 +8,7 @@
 	media = {
 		state: [],
 
-		edit: function( text, update ) {
+		edit: function() {
 
 			wp.media.editor.open();
 
@@ -32,13 +32,13 @@
 	boldgrid_form = _.extend( {}, media, {
 
 		initialize: function() {
-			var options = this.shortcode.attrs.named;
-			var desc = options.description == 'true' ? '1' : '0';
-			var title = options.title == 'true' ? '1' : '0';
+			var options = this.shortcode.attrs.named,
+				desc = 'true' == options.description ? '1' : '0',
+				title = 'true' == options.title  ? '1' : '0',
+				currentSelector = 'editor-boldgrid-form-' + options.id;
 
-			var current_selector = 'editor-boldgrid-form-' + options.id;
-			if ( $( '#tmpl-' + current_selector ).length ) {
-				this.template = wp.media.template( current_selector );
+			if ( $( '#tmpl-' + currentSelector ).length ) {
+				this.template = wp.media.template( currentSelector );
 
 				this.render( '<div class="boldgrid-' + pluginName + '"' + 'data-id=\'' +
 					options.id + '\' data-description=' + desc +
@@ -60,13 +60,14 @@
 		}
 	} );
 
-	views.register( 'ninja_forms', _.extend( {}, boldgrid_form ) );
+	views.register( 'wpforms', _.extend( {}, boldgrid_form ) );
 
 	/**
 	 * Before Bold grid Initializes add the menu items
 	 */
-	jQuery( document ).on( 'BoldGridPreInit', function( event, wp_mce_draggable ) {
+	$( document ).on( 'BoldGridPreInit', function( event, wp_mce_draggable ) {
 		wp_mce_draggable.add_menu_item( 'Insert Form', 'column', function() {
+
 			//On click of the new form, Open the media modal to the forms tab
 			wp_mce_draggable.insert_from_media_modal_tab( 'iframe:boldgrid_form' );
 		} );

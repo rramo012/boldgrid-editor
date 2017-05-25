@@ -3,9 +3,12 @@
 /**
  * BoldGrid Media Tab Form class
  */
-class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
+class Boldgrid_Editor_Form_Media extends Boldgrid_Editor_Media_Tab {
+
 	/**
-	 * Fill out the tab content before printing
+	 * Fill out the tab content before printing.
+	 *
+	 * @since 1.4.4
 	 *
 	 * @return void
 	 */
@@ -22,10 +25,11 @@ class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
 	}
 
 	/**
-	 * Update the content configs of a tabs with the given argument
+	 * Update the content configs of a tabs with the given argument.
+	 *
+	 * @since 1.4.4
 	 *
 	 * @param array $form_content
-	 *
 	 * @return void
 	 */
 	public function update_config_content( $form_content ) {
@@ -37,15 +41,17 @@ class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
 	}
 
 	/**
-	 * Generate the form content for a page based on available forms
+	 * Generate the form content for a page based on available forms.
+	 *
+	 * @since 1.4.4
 	 *
 	 * @return array
 	 */
 	public function create_form_content() {
-		$form_data = $this->format_gf_form_data();
+		$form_data = $this->format_form_data();
 
 		foreach ( $form_data as $key => $form ) {
-			$form_data[$key]['html'] = Boldgrid_Ninja_Forms::get_form_markup( $form['id'] );
+			$form_data[$key]['html'] = Boldgrid_Editor_Form_Wpforms::get_form_markup( $form['id'] );
 		}
 		return $form_data;
 	}
@@ -53,12 +59,14 @@ class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
 	/**
 	 * Find all the forms for a user then create an array with only the relevant data
 	 *
+	 * @since 1.4.4
+	 *
 	 * @return array
 	 */
-	public function format_gf_form_data() {
+	public function format_form_data() {
 		$form_data = array ();
 
-		$forms = Boldgrid_Ninja_Forms::get_forms();
+		$forms = Boldgrid_Editor_Form_Wpforms::get_forms();
 
 		foreach ( $forms as $form ) {
 			$form_information['id'] = $form['id'];
@@ -71,6 +79,8 @@ class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
 
 	/**
 	 * Create a tabs content
+	 *
+	 * @since 1.4.4
 	 *
 	 * @return string
 	 */
@@ -93,15 +103,20 @@ class Boldgrid_Editor_Forms_Media extends Boldgrid_Editor_Forms_Media_Tab {
 	}
 
 	/**
-	 * Add Media tab styles
+	 * Add Media tab styles.
+	 *
+	 * @since 1.4.4
 	 *
 	 * @return void
 	 */
 	public function enqueue_form_header_content() {
 		wp_register_style( 'media-tab-form-css-imhwpb',
-			plugins_url( $this->asset_path_prefix . '/assets/css/media-tab-form.css',
-				$this->path_configs['plugin_filename'] ), array (), BOLDGRID_EDITOR_VERSION );
+			plugins_url( '/assets/css/media-tab-form.css', $this->path_configs['addon_directory'] .'/wpforms' ),
+			array (), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'media-tab-form-css-imhwpb' );
+
+		wp_enqueue_style( 'boldgrid-wpforms-styles',
+			WPFORMS_PLUGIN_URL . 'assets/css/wpforms-full.css', array (), WPFORMS_VERSION );
 	}
 }

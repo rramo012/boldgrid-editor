@@ -1,16 +1,19 @@
-.centered-content-boldgrid {
-	height: 500px;
-	width: 500px;
-}
-
 .attachment  {
 	width: 333px !important;
 }
 .wp-core-ui .attachment .thumbnail .centered {
 	transform: translate(-28%, -29%);
 }
+
 .centered-content-boldgrid {
 	transform: scale(.6);
+	padding: 0 0;
+	height: 500px;
+	width: 500px;
+}
+
+.boldgrid-markup-container {
+	background-color: transparent;
 }
 
 .boldgrid-markup-container .centered-content-boldgrid {
@@ -31,7 +34,7 @@
 }
 
 .inputgroup-boldgrid {
-	padding-top:3px;
+	padding-top: 3px;
 }
 
 .editform-link {
@@ -53,5 +56,5 @@
 }
 
 .wp-core-ui .attachment {
-	text-align:left;
+	text-align: left;
 }

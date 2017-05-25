@@ -223,6 +223,7 @@ class Boldgrid_Editor_Media_Tab {
 			'isIframe' => true,
 			'tabs' => $configs['route-tabs'],
 			'tab-details' => $configs['tab-details'],
+			'admin-url' => get_admin_url(),
 		) );
 
 		wp_enqueue_script( 'media-imhwpb' );
