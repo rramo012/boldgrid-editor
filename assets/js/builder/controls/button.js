@@ -396,6 +396,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
+		 * Deselect the tinymce after clicking edit.
+		 *
+		 * Since all of our buttons are actually anchors, a new feature in WordPress 4.8 changes
+		 * the color of links to blue, when selected. Deselect them on edit to give the user a realistic
+		 * preview.
+		 *
+		 * @since 1.4.0.1
+		 */
+		tinymceDeselectButton: function() {
+			tinymce.activeEditor.selection.select( tinymce.activeEditor.getBody() );
+		},
+
+		/**
 		 * Open the panel for this control.
 		 *
 		 * @since 1.2.7
@@ -418,6 +431,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} ) );
 
 			self.preselect();
+			self.tinymceDeselectButton();
 
 			// Open Panel.
 			panel.open( self );
