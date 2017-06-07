@@ -6,7 +6,8 @@ BOLDGRID.EDITOR.CONTROLS.MEDIA = BOLDGRID.EDITOR.CONTROLS.MEDIA || {};
 ( function() {
 	'use strict';
 
-	var self;
+	var self,
+	    BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.MEDIA.Map = {
 
@@ -32,6 +33,20 @@ BOLDGRID.EDITOR.CONTROLS.MEDIA = BOLDGRID.EDITOR.CONTROLS.MEDIA || {};
 		openModal: function() {
 			wp.media.editor.open();
 			wp.media.frame.setState( 'iframe:google_map' );
+			self.setContent();
+		},
+
+		/**
+		 * Set the tinymce content variable to make sure, when replacing the map works.
+		 *
+		 * @since 1.4.0.1
+		 */
+		setContent: function() {
+			var $target = BG.Menu.getTarget( this );
+
+			if ( BG.Controls.$container.find( $target ).length ) {
+				tinymce.activeEditor.selection.select( $target[0] );
+			}
 		},
 
 		onMenuClick: function() {

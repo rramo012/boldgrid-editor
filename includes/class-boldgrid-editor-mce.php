@@ -188,6 +188,9 @@ class Boldgrid_Editor_MCE {
 		// Always show wordpress 2 toolbar.
 		$init['wordpress_adv_hidden'] = false;
 
+		// Remove link hovers.
+		$init['inline_boundaries'] = false;
+
 		// Add Underline to toolbar 1.
 		$init = $this->addInitItem( $init, 'toolbar1', 'underline', 'italic' );
 
