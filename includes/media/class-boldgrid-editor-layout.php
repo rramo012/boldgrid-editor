@@ -286,35 +286,6 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
-	 * Returns All universal gridblocks
-	 *
-	 * @since 1.0.5
-	 */
-	public static function get_universal_gridblocks( $gridblocks = array() ) {
-		$dir = BOLDGRID_EDITOR_PATH . '/includes/layouts/universal';
-		$dir_files = scandir( $dir );
-		$dir_files = array_diff( $dir_files, array (
-			'.',
-			'..'
-		) );
-
-		$gridblocks = array();
-		foreach ( $dir_files as $dir_file ) {
-			$layout = $dir . '/' . $dir_file;
-			$html = file_get_contents( $layout );
-			$gridblocks[] = array (
-				'id' => pathinfo( $layout, PATHINFO_FILENAME ),
-				'html' => $html,
-				'preview-html' => $html,
-				'is_post' => false,
-				'str_length' => strlen( $html )
-			);
-		}
-
-		return $gridblocks;
-	}
-
-	/**
 	 * Sort, Remove Duplicates, and remove nested row
 	 *
 	 * @since 1.0.6
@@ -336,14 +307,15 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 * @return array Gridblocks.
 	 */
 	public static function get_all_gridblocks() {
-		$gridblocks = self::get_universal_gridblocks();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
+		$gridblocks = array();
 		if ( $is_bg_theme ) {
 			$current_gridblock_content = self::get_existing_layouts();
-			$gridblocks = array_merge ( $gridblocks, $current_gridblock_content );
+			$gridblocks = $current_gridblock_content;
 		}
 
+		return [];
 		return self::cleanup_gridblock_collection( $gridblocks );
 	}
 

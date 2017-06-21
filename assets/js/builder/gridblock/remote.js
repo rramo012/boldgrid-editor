@@ -62,12 +62,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param {Object} newGridblock Gridblock data.
 		 */
 		isUniqueGridblock: function( newGridblock ) {
-			var isUniqueGridblock = true;
+			var isUniqueGridblock = true,
+				$html = newGridblock['html-jquery'].clone();
 
-			newGridblock['html-jquery'].find( 'img' ).removeAttr( 'src class' );
-			newGridblock['html-jquery'].find( 'a' ).removeAttr( 'href' );
+			$html.find( 'img' ).removeAttr( 'src class' );
+			$html.find( 'a' ).removeAttr( 'href' );
 
-			newGridblock.uniqueMarkup = BG.GRIDBLOCK.Filter.createUniqueMarkup( newGridblock['html-jquery'] );
+			newGridblock.uniqueMarkup = BG.GRIDBLOCK.Filter.createUniqueMarkup( $html );
 
 			$.each( BG.GRIDBLOCK.configs.gridblocks, function() {
 				if ( newGridblock.uniqueMarkup === this.uniqueMarkup ) {
@@ -95,7 +96,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( isUnique && ! hasFailedDynamic && ! isSimpleGridblock ) {
 					BG.GRIDBLOCK.Filter.addGridblockConfig( this, index );
 				}
-
 			} );
 		},
 

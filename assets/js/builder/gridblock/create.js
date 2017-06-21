@@ -9,7 +9,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	'use strict';
 
 	var BG = BOLDGRID.EDITOR,
-		self = {
+	self = {
 
 		$window: $( window ),
 
@@ -30,7 +30,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			}
 
 			if ( hasDownloadImages( gridblockData ) ) {
-
 				// Need to assign this to config.
 				html = self.getDownloadImageMarkup( gridblockData );
 

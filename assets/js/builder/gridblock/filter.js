@@ -159,7 +159,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		addGridblockConfig: function( gridblockData, index ) {
 			var gridblockId = 'remote-' + index;
-
 			gridblockData.gridblockId = gridblockId;
 			gridblockData.$html = gridblockData['html-jquery'];
 			gridblockData.$previewHtml = gridblockData['preview-html-jquery'];

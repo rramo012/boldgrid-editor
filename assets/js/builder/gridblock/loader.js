@@ -30,7 +30,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					self.openInit = true;
 					BGGB.View.init();
 					BGGB.Drag.init();
-					BGGB.Remote.loadRemoteGridblocks();
+					BGGB.Generate.fetch().done( function( e ) {
+						console.log( e );
+					} );
+
+					//BGGB.Remote.loadRemoteGridblocks();
 				}
 			},
 
