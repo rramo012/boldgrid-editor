@@ -229,10 +229,10 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 	);
 } );
 
-gulp.task( 'default', function ( cb ) {
+gulp.task( 'build', function ( cb ) {
 	sequence (
-		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'phpcbf-includes', 'phpcbf-builder', 'readme' ],
-		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js', 'phpcs' ],
+		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'readme' ],
+		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
 		cb
 	);
 });

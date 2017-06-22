@@ -9,7 +9,7 @@
 		"bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right",
 		"bg-box bg-box-rounded-top-left bg-box-rounded-top-right",
 		"bg-box bg-box-rounded-bottom-right bg-box-rounded-top-right",
-		
+
 		"bg-box bg-box-rounded-bottom-right bg-box-rounded-top-left",
 		"bg-box bg-box-rounded-bottom-left bg-box-rounded-top-right",
 
@@ -47,10 +47,10 @@
 		"bg-box bg-box-square bg-box-border-double-thick"
 	],
 	"image" : [
-	
+
 		"bg-img bg-img-1",
 		"bg-img bg-img-2",
-	
+
 		"bg-img bg-img-square",
 		"bg-img bg-img-edged",
 		"bg-img bg-img-rounded",
@@ -60,11 +60,11 @@
 		"bg-img bg-img-rounded-bottom-left bg-img-rounded-bottom-right",
 		"bg-img bg-img-rounded-top-left bg-img-rounded-top-right",
 		"bg-img bg-img-rounded-bottom-right bg-img-rounded-top-right",
-		
+
 		"bg-img bg-img-rounded-bottom-right bg-img-rounded-top-left",
 		"bg-img bg-img-rounded-bottom-left bg-img-rounded-top-right",
 
-		
+
 		"bg-img bg-img-square bg-img-shadow-bottom-left",
 		"bg-img bg-img-edged bg-img-shadow-bottom-right",
 		"bg-img bg-img-circle bg-img-shadow-bottom-right",
