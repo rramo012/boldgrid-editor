@@ -31,9 +31,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.STYLE.Remote.getStyles( BoldgridEditor.site_url );
 		},
 
-		emptyGridblockPool: function () {
+		emptyGridblockPool: function() {
 			var pending = 0;
-			_.each( BG.GRIDBLOCK.configs.gridblocks, function ( gridblock ) {
+			_.each( BG.GRIDBLOCK.configs.gridblocks, function( gridblock ) {
 				if ( 'ready' === gridblock.state ) {
 					pending++;
 				}
@@ -128,28 +128,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Center a single section.
-		 *
-		 * @since 1.4
-		 *
-		 * @param  {jQuery} $this Iframe to center.
-		 */
-		centerSection: function( $iframe, $contents ) {
-			var className = 'centered-section',
-				$body = $contents.find( 'body' ),
-				$section = $body.find( '> .boldgrid-section' ),
-				sectionHeight = $section.length ? $section.height() : false,
-				iframeHeight = $iframe.height();
-
-			// If the section height is larger than the iframe height.
-			if ( sectionHeight && ( sectionHeight < iframeHeight ) ) {
-				$body.addClass( className );
-			}  else if ( false !== sectionHeight ) {
-				$body.removeClass( className );
-			}
-		},
-
-		/**
 		 * Add body classes to iframe..
 		 *
 		 * @since 1.4
@@ -159,7 +137,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		addBodyClasses: function( $iframe ) {
 			$iframe.find( 'body' )
 				.addClass( BoldgridEditor.body_class )
-				.addClass( 'mce-content-body entry-content' )
+				.addClass( 'mce-content-body entry-content centered-section' )
 				.css( 'overflow', 'hidden' );
 		},
 

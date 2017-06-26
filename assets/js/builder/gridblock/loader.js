@@ -140,7 +140,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					gridblock.state = 'iframeCreated';
 					setTimeout( function() {
 						$gridblock.removeClass( 'gridblock-loading' );
-						BGGB.View.centerSection( $iframe, $contents );
 						self.removeLoadingOverlay();
 						self.creatingIframe = false;
 					}, 300 );
