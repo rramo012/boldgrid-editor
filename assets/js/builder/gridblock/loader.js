@@ -30,9 +30,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					self.openInit = true;
 					BGGB.View.init();
 					BGGB.Drag.init();
-					BGGB.Generate.fetch().done( function( e ) {
-						console.log( e );
-					} );
+					BGGB.Generate.fetch();
 
 					//BGGB.Remote.loadRemoteGridblocks();
 				}
@@ -94,7 +92,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 
 				self.loadingGridblocks = true;
-
 				load = function() {
 					var gridblockId = blocks[ iteration ],
 						gridblock = ( gridblockId ) ? BGGB.configs.gridblocks[ gridblockId ] : false;
@@ -110,7 +107,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						return;
 					}
 
-					if ( ! this.iframeCreated ) {
+					if ( 'iframeCreated' !== gridblock.state ) {
 						self.createIframe( gridblock );
 					}
 
@@ -140,9 +137,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.addBodyClasses( $contents );
 					self.$iframeTemp = $iframe.clone();
 
-					gridblock.iframeCreated = true;
+					gridblock.state = 'iframeCreated';
 					setTimeout( function() {
-						$gridblock.show();
 						$gridblock.removeClass( 'gridblock-loading' );
 						BGGB.View.centerSection( $iframe, $contents );
 						self.removeLoadingOverlay();

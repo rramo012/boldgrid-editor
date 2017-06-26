@@ -1693,10 +1693,21 @@ body.boldgrid-editor-fullscreen {
 .zoom-navbar {
   display: none; }
 
+.zoom-navbar .boldgrid-gridblock-categories {
+  position: absolute;
+  top: 0;
+  left: 75%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%); }
+
+.zoom-navbar .boldgrid-gridblock-categories label {
+  font-weight: 600;
+  margin-right: 10px; }
+
 .zoom-navbar .loading-remote {
   display: none;
   position: absolute;
-  left: 75%;
+  left: 50%;
   transform: translateX(-50%);
   font-size: 17px;
   top: 14px; }

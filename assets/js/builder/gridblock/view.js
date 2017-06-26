@@ -12,6 +12,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		self = {
 		$tinymceBody: null,
 		$gridblockSection: null,
+		$gridblockNav: null,
 		headMarkup: false,
 		siteMarkup: '',
 
@@ -21,6 +22,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.setupUndoRedo();
 			self.createGridblocks();
 			BG.GRIDBLOCK.Loader.loadGridblocks();
+			BG.GRIDBLOCK.Category.init();
 			self.endlessScroll();
 		},
 
@@ -29,24 +31,42 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.STYLE.Remote.getStyles( BoldgridEditor.site_url );
 		},
 
+		emptyGridblockPool: function () {
+			var pending = 0;
+			_.each( BG.GRIDBLOCK.configs.gridblocks, function ( gridblock ) {
+				if ( 'ready' === gridblock.state ) {
+					pending++;
+				}
+			} );
+
+			return pending < 5;
+		},
+
 		/**
 		 * Setup infinite scroll of gridblocks.
 		 *
 		 * @since 1.4
 		 */
 		endlessScroll: function() {
-			var loadDistance = 1500,
+			var throttled,
+				loadDistance = 1500,
 				$gridblocks = self.$gridblockSection.find( '.gridblocks' );
 
-			 self.$gridblockSection.on( 'scroll', function() {
+			throttled = _.throttle( function() {
 				var scrollTop = self.$gridblockSection.scrollTop(),
 					height = $gridblocks.height(),
 					diff = height - scrollTop;
 
-					if ( diff < loadDistance ) {
-						BG.GRIDBLOCK.Loader.loadGridblocks();
+				if ( diff < loadDistance ) {
+					BG.GRIDBLOCK.Loader.loadGridblocks();
+
+					if ( self.emptyGridblockPool() ) {
+						BG.GRIDBLOCK.Generate.fetch();
 					}
-			} );
+				}
+			}, 300 );
+
+			self.$gridblockSection.on( 'scroll', throttled );
 		},
 
 		/**
@@ -104,6 +124,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		findElements: function() {
 			self.$gridblockSection = $( '.boldgrid-zoomout-section' );
+			self.$gridblockNav = $( '.zoom-navbar' );
 		},
 
 		/**
@@ -138,7 +159,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		addBodyClasses: function( $iframe ) {
 			$iframe.find( 'body' )
 				.addClass( BoldgridEditor.body_class )
-				.addClass( 'mce-content-body' )
+				.addClass( 'mce-content-body entry-content' )
 				.css( 'overflow', 'hidden' );
 		},
 
@@ -185,8 +206,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		generateInitialMarkup: function() {
 			var markup = '';
 			$.each( BG.GRIDBLOCK.configs.gridblocks, function() {
-				if ( ! this.rendered ) {
-					this.rendered = true;
+				if ( ! this.state ) {
+					this.state = 'ready';
 					markup += self.getGridblockHtml( this );
 				}
 			} );
@@ -204,7 +225,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		getGridblockHtml: function( gridblockData ) {
 			return wp.template( 'boldgrid-editor-gridblock' )( {
-				'id': gridblockData.gridblockId
+				'id': gridblockData.gridblockId,
+				'type': gridblockData.type,
+				'category': gridblockData.category,
+				'template': gridblockData.template
 			} );
 		}
 	};

@@ -10,7 +10,7 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 
 	BG.NOTICE.Update = {
 
-		title: 'New Release: BoldGrid Editor 1.3',
+		title: 'New Release: BoldGrid Editor',
 
 		template: wp.template( 'boldgrid-upgrade-notice' ),
 

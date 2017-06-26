@@ -8,8 +8,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	var BG = BOLDGRID.EDITOR,
 		Remote = BG.GRIDBLOCK.Remote;
 		self = {
-			fetch: function() {
+			gridblockCount: 0,
 
+			fetch: function() {
+				if ( self.fetching ) {
+					return false;
+				}
+
+				self.fetching = true;
 				Remote.gridblockLoadingUI.start();
 
 				return $.ajax( {
@@ -17,26 +23,43 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					data: {
 						'quantity': 10,
 						'color_palettes': true,
+						'type': BG.GRIDBLOCK.Category.getSearchType(),
+						//'template': 'call_to_action-1',
 						'category': 'real_estate'
 					}
 				}).done( function( gridblocks ) {
 
-					self.format( gridblocks );
-					Remote.validateGridblock( gridblocks );
-
+					self.addToConfig( gridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();
-				} ).always( Remote.gridblockLoadingUI.finish );
+
+				} ).always( function () {
+					self.fetching = false;
+					Remote.gridblockLoadingUI.finish();
+				} );
 			},
 
-			format: function( gridblocks ) {
+			addToConfig: function( gridblocks ) {
 				_.each( gridblocks, function( gridblockData, index ) {
 					gridblocks[ index ] = self.addRequiredProperties( gridblockData );
+					BG.GRIDBLOCK.Filter.addGridblockConfig( gridblocks[ index ], 'generated-' + self.gridblockCount );
+
+					self.gridblockCount++;
 				});
+			},
+
+			updateBackgroundImages: function( $html ) {
+				var backgroundImageOverride = $html.attr('gb-background-image');
+
+				if ( backgroundImageOverride ) {
+					$html.css( 'background-image', backgroundImageOverride );
+					$html.removeAttr( 'gb-background-image' );
+				}
 			},
 
 			addRequiredProperties: function( gridblockData ) {
 				var $html = $( gridblockData.html );
 
+				self.updateBackgroundImages( $html );
 				gridblockData[ 'preview-html' ] = gridblockData.html;
 				gridblockData[ 'html-jquery' ] = $html;
 				gridblockData[ 'preview-html-jquery' ] = $html.clone();

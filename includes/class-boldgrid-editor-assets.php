@@ -357,6 +357,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/gridblock/create.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-category',
+			plugins_url( '/assets/js/builder/gridblock/category.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-gridblocks-drag',
 			plugins_url( '/assets/js/builder/gridblock/drag.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

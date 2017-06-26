@@ -10,6 +10,19 @@
 		<div class="enabled bg-editor-loading absolute"></div>
 		<span>Loading GridBlocks</span>
 	</div>
+	<span class="boldgrid-gridblock-categories">
+		<label>Gridblock Filters</label>
+		<select>
+			<option value="all" selected>All Categories</option>
+			<option value="call_to_action">Welcome</option>
+			<option value="gallery">Gallery</option>
+			<option value="team">Team</option>
+			<option value="text">Text</option>
+			<option value="testimonial">Testimonial</option>
+			<option value="about">About</option>
+			<option value="services">Services</option>
+		</select>
+	</span>
 	<a href="#" title="Close" class="bg-close-zoom-view">
 		<span class="screen-reader-text">Close</span>
 	</a>
@@ -20,7 +33,7 @@
 </div>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
-<div class="gridblock gridblock-loading" data-id="{{data.id}}">
+<div class="gridblock gridblock-loading" data-id="{{data.id}}" data-type="{{data.type}}" data-category="{{data.category}}" data-template="{{data.template}}">
 	<i class="fa fa-arrows" aria-hidden="true"></i>
 	<div class="add-gridblock"></div>
 </div>
