@@ -164,7 +164,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		highlightElement: function() {
 			var $el = BG.Menu.getTarget( self );
 			tinymce.activeEditor.selection.select( $el[0] );
-			tinymce.activeEditor.execCommand( 'WP_Link' );
 		},
 
 		/**

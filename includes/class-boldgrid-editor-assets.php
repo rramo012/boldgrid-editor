@@ -297,6 +297,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/gridblock/remote.js', $plugin_file ), array( 'wp-util' ),
 		BOLDGRID_EDITOR_VERSION, true);
 
+		wp_enqueue_script( 'boldgrid-gridblock-image',
+			plugins_url( '/assets/js/builder/gridblock/image.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true);
+
 		wp_enqueue_script( 'boldgrid-gridblock-filter',
 			plugins_url( '/assets/js/builder/gridblock/filter.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

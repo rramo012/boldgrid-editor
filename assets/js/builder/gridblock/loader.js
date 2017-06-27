@@ -133,6 +133,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				load = function() {
 					$contents = $iframe.contents();
 					$contents.find( 'body' ).html( gridblock.getPreviewHtml() );
+					BGGB.Image.translateImages( $contents );
 					BGGB.View.addStyles( $contents );
 					BGGB.View.addBodyClasses( $contents );
 					self.$iframeTemp = $iframe.clone();
