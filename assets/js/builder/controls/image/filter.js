@@ -259,6 +259,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 				dataType: 'json',
 				data: {
 					action: 'boldgrid_canvas_image',
+					boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
 					attachement_id: $target.attachment_id,
 					image_data: self.preview.canvas.toDataURL()
 			  },

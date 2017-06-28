@@ -109,7 +109,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {jQuery} Element to preview with loading element nested.
 			 */
 			getPreviewPlaceHolder: function() {
-				var $clone = this.$previewHtml.clone();
+				var $clone = this.$html.clone();
 				$clone.prepend( wp.template( 'boldgrid-editor-gridblock-loading' )() );
 
 				return $clone;

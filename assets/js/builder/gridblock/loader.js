@@ -31,8 +31,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.init();
 					BGGB.Drag.init();
 					BGGB.Generate.fetch();
-
-					//BGGB.Remote.loadRemoteGridblocks();
 				}
 			},
 
@@ -132,8 +130,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				load = function() {
 					$contents = $iframe.contents();
-					$contents.find( 'body' ).html( gridblock.getPreviewHtml() );
-					BGGB.Image.translateImages( $contents );
+					BGGB.Image.translateImages( gridblock );
+					$contents.find( 'body' ).html( gridblock.$html );
 					BGGB.View.addStyles( $contents );
 					BGGB.View.addBodyClasses( $contents );
 					self.$iframeTemp = $iframe.clone();
