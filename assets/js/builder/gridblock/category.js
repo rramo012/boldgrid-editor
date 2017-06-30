@@ -2,7 +2,7 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
-( function( $ ) {
+( function() {
 	'use strict';
 
 	var BGGB = BOLDGRID.EDITOR.GRIDBLOCK,
@@ -18,9 +18,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				self.currentCategory = $select.val();
 				$select.on( 'change', function() {
-					var $this = $( this );
 					self.currentCategory = $select.val();
-
 					self.showGridblocks();
 				} );
 			},

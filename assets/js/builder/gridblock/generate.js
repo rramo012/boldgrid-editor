@@ -39,7 +39,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			getCategory: function() {
-				let category;
+				var category;
 				if ( BoldgridEditor && BoldgridEditor.inspiration && BoldgridEditor.inspiration.subcategory_key ) {
 					category = BoldgridEditor.inspiration.subcategory_key;
 				}
