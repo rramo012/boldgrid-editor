@@ -21,21 +21,30 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				return $.ajax( {
 					url: 'https://api-dev-rafaelh.boldgrid.com/v1/gridblocks',
 					data: {
-						'quantity': 10,
+						'quantity': 30,
 						'color_palettes': true,
 						'type': BG.GRIDBLOCK.Category.getSearchType(),
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
-						'category': 'real_estate'
+						'category': self.getCategory()
 					}
 				}).done( function( gridblocks ) {
 
 					self.addToConfig( gridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();
 
-				} ).always( function () {
+				} ).always( function() {
 					self.fetching = false;
 					Remote.gridblockLoadingUI.finish();
 				} );
+			},
+
+			getCategory: function() {
+				let category;
+				if ( BoldgridEditor && BoldgridEditor.inspiration && BoldgridEditor.inspiration.subcategory_key ) {
+					category = BoldgridEditor.inspiration.subcategory_key;
+				}
+
+				return category;
 			},
 
 			addToConfig: function( gridblocks ) {
@@ -48,7 +57,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			updateBackgroundImages: function( $html ) {
-				var backgroundImageOverride = $html.attr('gb-background-image');
+				var backgroundImageOverride = $html.attr( 'gb-background-image' );
 
 				if ( backgroundImageOverride ) {
 					$html.css( 'background-image', backgroundImageOverride );

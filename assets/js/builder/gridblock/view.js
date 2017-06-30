@@ -60,7 +60,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( diff < loadDistance ) {
 					BG.GRIDBLOCK.Loader.loadGridblocks();
 
-					if ( self.emptyGridblockPool() ) {
+					if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && self.emptyGridblockPool() ) {
 						BG.GRIDBLOCK.Generate.fetch();
 					}
 				}

@@ -82,6 +82,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 				$rows[] = array (
 					'html' => $shortcode_translated_html,
 					'preview-html' => $shortcode_translated_html,
+					'type' => 'saved',
 					'is_post' => ! empty( $post ) ? 'post' === $post->type : false,
 					'str_length' => strlen( $shortcode_translated_html )
 				);
@@ -307,16 +308,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 * @return array Gridblocks.
 	 */
 	public static function get_all_gridblocks() {
-		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
-
-		$gridblocks = array();
-		if ( $is_bg_theme ) {
-			$current_gridblock_content = self::get_existing_layouts();
-			$gridblocks = $current_gridblock_content;
-		}
-
-		return [];
-		return self::cleanup_gridblock_collection( $gridblocks );
+		return self::cleanup_gridblock_collection( self::get_existing_layouts() );
 	}
 
 	/**

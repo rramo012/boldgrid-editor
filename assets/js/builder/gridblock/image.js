@@ -16,9 +16,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @param  {Object} gridblockData Current Gridblock.
 			 */
 			translateImages: function( gridblockData ) {
-				self.replaceImages( gridblockData.$html );
-				self.replaceBackgrounds( gridblockData.$html );
-				gridblockData.dynamicImages = true;
+				if ( gridblockData.dynamicImages ) {
+					self.replaceImages( gridblockData.$html );
+					self.replaceBackgrounds( gridblockData.$html );
+				}
 			},
 
 			/**

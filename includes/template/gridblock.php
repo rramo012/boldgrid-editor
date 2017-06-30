@@ -21,6 +21,7 @@
 			<option value="testimonial">Testimonial</option>
 			<option value="about">About</option>
 			<option value="services">Services</option>
+			<option value="saved">My Gridblocks</option>
 		</select>
 	</span>
 	<a href="#" title="Close" class="bg-close-zoom-view">

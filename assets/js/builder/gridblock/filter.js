@@ -55,31 +55,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Find the images that need to be replaced and update the object.
-		 *
-		 * @since 1.4
-		 *
-		 * @param  {integer} gridblockId Index of Gridblock in config.
-		 */
-		storeImageReplacements: function( gridblockId ) {
-			var imageReplacements = [],
-				config = BG.GRIDBLOCK.configs.gridblocks,
-				gridblock = config[ gridblockId ];
-
-			config[ gridblockId ].$html.find( '[data-pending-boldgrid-attribution]' ).each( function() {
-				imageReplacements.push( $( this ).data( 'boldgrid-asset-id' ) );
-			} );
-
-			if ( gridblock.build_profile_id ) {
-				gridblock.$html.find( 'img[data-imhwpb-asset-id]' ).each( function() {
-					imageReplacements.push( $( this ).data( 'imhwpb-asset-id' ) );
-				} );
-			}
-
-			config[ gridblockId ].imageReplacements = imageReplacements;
-		},
-
-		/**
 		 * Config Methods.
 		 *
 		 * These are merged into the config object.
@@ -144,7 +119,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					this.uniqueMarkup = self.createUniqueMarkup( this.$html );
 					_.extend( this, self.configMethods );
 					BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] = this;
-					self.storeImageReplacements( gridblockId );
 				}
 			} );
 		},
@@ -159,6 +133,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		addGridblockConfig: function( gridblockData, index ) {
 			var gridblockId = 'remote-' + index;
+
+			gridblockData.dynamicImages = true;
 			gridblockData.gridblockId = gridblockId;
 			gridblockData.$html = gridblockData['html-jquery'];
 			gridblockData.$previewHtml = gridblockData['preview-html-jquery'];
@@ -170,9 +146,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			_.extend( gridblockData, self.configMethods );
 			BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] = gridblockData;
-
-			gridblockData.dynamicImages = BG.GRIDBLOCK.Remote.profileImageData( gridblockData );
-			self.storeImageReplacements( gridblockId );
 		},
 
 		/**

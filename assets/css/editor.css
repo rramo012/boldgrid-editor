@@ -1673,8 +1673,8 @@ body.boldgrid-editor-fullscreen {
   align-items: center;
   text-align: center; }
 
-.dragging-section .loading-gridblock .bg-editor-loading:before,
-.dragging-section .loading-gridblock .bg-editor-loading:after {
+.dragging-section .loading-gridblock .bg-editor-loading:after,
+.dragging-section .loading-gridblock .bg-editor-loading:before {
   margin-top: 55px;
   margin-left: -22px; }
 
@@ -1712,8 +1712,8 @@ body.boldgrid-editor-fullscreen {
   font-size: 17px;
   top: 14px; }
 
-.zoom-navbar .loading-remote .bg-editor-loading:before,
-.zoom-navbar .loading-remote .bg-editor-loading:after {
+.zoom-navbar .loading-remote .bg-editor-loading:after,
+.zoom-navbar .loading-remote .bg-editor-loading:before {
   left: -40px;
   height: 30px;
   width: 30px;
@@ -1739,17 +1739,17 @@ body.boldgrid-editor-fullscreen {
   user-select: none;
   border-bottom: 1px solid #cccccc; }
 
-.boldgrid-zoomout .mce-statusbar,
-.boldgrid-zoomout .wrap > *:not(#post),
-.boldgrid-zoomout #post-status-info,
-.boldgrid-zoomout .wp-editor-tabs,
 .boldgrid-zoomout #boldgrid-hide-post-title,
 .boldgrid-zoomout #local-storage-notice,
-.boldgrid-zoomout #wp-content-media-buttons,
-.boldgrid-zoomout .wp-editor-tabs,
+.boldgrid-zoomout #post-status-info,
 .boldgrid-zoomout #postbox-container-2,
+.boldgrid-zoomout #titlediv,
+.boldgrid-zoomout #wp-content-media-buttons,
+.boldgrid-zoomout .mce-statusbar,
 .boldgrid-zoomout .update-nag,
-.boldgrid-zoomout #titlediv {
+.boldgrid-zoomout .wp-editor-tabs,
+.boldgrid-zoomout .wp-editor-tabs,
+.boldgrid-zoomout .wrap > *:not(#post) {
   display: none !important; }
 
 .boldgrid-zoomout #wpbody-content {
@@ -1851,7 +1851,7 @@ body.boldgrid-editor-fullscreen {
   background-color: white; }
 
 .boldgrid-zoomout .exit-row-dragging:active {
-  box-shadow: 0px 0px 29px -12px black inset; }
+  box-shadow: 0 0 29px -12px black inset; }
 
 .boldgrid-zoomout .bg-close-zoom-view {
   position: absolute;
@@ -1862,7 +1862,7 @@ body.boldgrid-editor-fullscreen {
   width: 70px;
   height: 100%;
   background: #f1f1f1;
-  box-shadow: -7px 0px 0 0 #0073aa;
+  box-shadow: -7px 0 0 0 #0073aa;
   cursor: pointer;
   transition: background-color .5s, color .5s;
   text-decoration: none; }
@@ -1874,7 +1874,7 @@ body.boldgrid-editor-fullscreen {
   color: #0073aa; }
 
 .boldgrid-zoomout .bg-close-zoom-view:after {
-  content: "\f335";
+  content: '\f335';
   display: block;
   font: normal 22px/45px dashicons;
   color: black; }
@@ -1907,10 +1907,10 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout #post-body-content {
   min-width: 0; }
 
-.boldgrid-zoomout #wpwrap,
+.boldgrid-zoomout #poststuff,
 .boldgrid-zoomout #wpbody,
-.boldgrid-zoomout #wrap,
-.boldgrid-zoomout #poststuff {
+.boldgrid-zoomout #wpwrap,
+.boldgrid-zoomout #wrap {
   height: calc( 100% - 79px);
   min-width: 0;
   padding: 0;
@@ -1998,7 +1998,7 @@ body.boldgrid-editor-fullscreen {
   visibility: hidden;
   display: block;
   font-size: 0;
-  content: " ";
+  content: ' ';
   clear: both;
   height: 0; }
 
@@ -2030,11 +2030,14 @@ body.boldgrid-editor-fullscreen {
 .zoom-gridblocks-section .gridblocks.gridblock-loading .gridblock {
   display: none; }
 
+.zoom-gridblocks-section .gridblocks:not([filter="saved"]) .gridblock[data-type="saved"] {
+  display: none !important; }
+
 .zoom-gridblocks-section .gridblock {
   position: relative;
   height: 300px;
   background: white;
-  margin: 50px 0 0 0;
+  margin: 50px 0 0;
   border: 3px solid #cccccc;
   border-radius: 1px;
   transition: border-color .5s;
@@ -2063,7 +2066,7 @@ body.boldgrid-editor-fullscreen {
   height: 60px;
   transform: translateY(-50%) translateX(-100%);
   background-color: #cccccc;
-  border-radius: 4px 0px 0px 4px;
+  border-radius: 4px 0 0 4px;
   transition: background-color .5s;
   /*
 			background-image: url('../image/grip.png');

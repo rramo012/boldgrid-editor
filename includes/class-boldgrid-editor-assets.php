@@ -125,9 +125,9 @@ class Boldgrid_Editor_Assets {
 				'jquery-ui-resizable'
 		), BOLDGRID_EDITOR_VERSION, true );
 
-			// Send Variables to the view.
-			wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
-				array(
+		// Send Variables to the view.
+		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
+			array(
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 				'post_id' => $this->get_post_id(),
@@ -147,10 +147,11 @@ class Boldgrid_Editor_Assets {
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
 				'admin-url' => get_admin_url(),
+				'inspiration' => get_option( 'boldgrid_install_options' ),
 				'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' )
 			) );
 
-			wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
 	}
 
 	/**
