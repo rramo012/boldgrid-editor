@@ -245,8 +245,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				minIndex = 0;
 
 			// BG Themes.
-			if ( BoldgridEditor.colors.length ) {
-				maxIndex = BoldgridEditor.colors.length;
+			if ( BoldgridEditor.colors.defaults.length ) {
+				maxIndex = BoldgridEditor.colors.defaults.length;
 				minIndex = 1;
 			}
 

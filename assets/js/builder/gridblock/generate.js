@@ -24,7 +24,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						'quantity': 10,
 						'color_palettes': true,
 						'type': BG.GRIDBLOCK.Category.getSearchType(),
-						//'template': 'call_to_action-1',
+						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': 'real_estate'
 					}
 				}).done( function( gridblocks ) {

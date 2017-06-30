@@ -197,7 +197,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = BG.Menu.$element.targetData[ self.name ];
 
 				if ( 'class' === type ) {
-					value = BoldgridEditor.colors[ value - 1 ];
+					value = BoldgridEditor.colors.defaults[ value - 1 ];
 				}
 
 				$target.attr( 'data-bg-overlaycolor', value );
@@ -250,7 +250,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					type = $this.attr( 'data-type' );
 
 				if ( 'class' === type ) {
-					value = BoldgridEditor.colors[ value - 1 ];
+					value = BoldgridEditor.colors.defaults[ value - 1 ];
 				}
 
 				if ( 'gradient-color-1' === name ) {
@@ -750,11 +750,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		setPaletteGradients: function() {
 			var combos = [];
-			if ( BoldgridEditor.colors && BoldgridEditor.colors.length ) {
+			if ( BoldgridEditor.colors.defaults && BoldgridEditor.colors.defaults.length ) {
 				$.each( [ 0, 1 ], function() {
 					var color1, color2, direction;
-					color1 = BoldgridEditor.colors[ Math.floor( Math.random() * BoldgridEditor.colors.length ) ];
-					color2 = BoldgridEditor.colors[ Math.floor( Math.random() * BoldgridEditor.colors.length ) ];
+					color1 = BoldgridEditor.colors.defaults[ Math.floor( Math.random() * BoldgridEditor.colors.defaults.length ) ];
+					color2 = BoldgridEditor.colors.defaults[ Math.floor( Math.random() * BoldgridEditor.colors.defaults.length ) ];
 					if ( color1 !== color2 ) {
 						direction = self.randomGradientDirection();
 						combos.push( {

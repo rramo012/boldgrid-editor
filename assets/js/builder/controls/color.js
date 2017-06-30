@@ -289,7 +289,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		getPaletteBackgroundColors: function() {
 			var backgroundColors = {};
 
-			$.each( BoldgridEditor.colors, function( index ) {
+			$.each( BoldgridEditor.colors.defaults, function( index ) {
 				backgroundColors[ 'color' + ( index + 1 ) + '-' + 'background-color' ] = this;
 			} );
 
@@ -306,7 +306,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var colorNum,
 				backgroundColors = [];
 
-			$.each( BoldgridEditor.colors, function( index ) {
+			$.each( BoldgridEditor.colors.defaults, function( index ) {
 				colorNum = index + 1;
 
 				backgroundColors.push( {
@@ -471,14 +471,27 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		getColorsFormatted: function() {
 			var colors = [];
-			$.each( BoldgridEditor.colors, function( key ) {
+			$.each( BoldgridEditor.colors.defaults, function( key ) {
 
 				var colorNum = key + 1;
 				colors.push( {
 					'color': this,
-					'number': colorNum
+					'paletteNum': colorNum
 				} );
 			} );
+
+			return colors;
+		},
+
+		getGridblockColors: function() {
+			var colors = self.getColorsFormatted();
+
+			if ( BoldgridEditor.colors.neutral ) {
+				colors.push( {
+					'paletteNum': 'neutral',
+					'color': BoldgridEditor.colors.neutral
+				} );
+			}
 
 			return colors;
 		},

@@ -4,7 +4,7 @@
 		<h4>Theme Colors</h4>
 		<ul class='colors theme-colors'>
 			<# _.each( data.colors, function ( preset ) { #>
-				<li data-type="default" data-preset="{{preset.number}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
+				<li data-type="default" data-preset="{{preset.paletteNum}}" style='background-color:{{preset.color}}' class="panel-selection"></li>
 			<# }); #>
 		</ul>
 	</div>
