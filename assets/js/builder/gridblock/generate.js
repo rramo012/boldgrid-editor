@@ -7,8 +7,22 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 	var BG = BOLDGRID.EDITOR,
 		self = {
+			/**
+			 * Number of Gridblocks created.
+			 *
+			 * @since 1.5
+			 *
+			 * @type {Number}
+			 */
 			gridblockCount: 0,
 
+			/**
+			 * Get a set of GridBlocks.
+			 *
+			 * @since 1.5
+			 *
+			 * @return {$.deferred} Ajax response.
+			 */
 			fetch: function() {
 				if ( self.fetching ) {
 					return false;
@@ -40,7 +54,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			/**
 			 * Handle showing the loading graphic.
 			 *
-			 * @since 1.4
+			 * @since 1.5
 			 *
 			 * @type {Object}
 			 */
@@ -53,6 +67,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 			},
 
+			/**
+			 * Get the users installed category.
+			 *
+			 * @since 1.5
+			 *
+			 * @return {string} inspiration catgegory.
+			 */
 			getCategory: function() {
 				var category;
 				if ( BoldgridEditor && BoldgridEditor.inspiration && BoldgridEditor.inspiration.subcategory_key ) {
@@ -62,6 +83,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				return category;
 			},
 
+			/**
+			 * Add a set of Gridblocks to the configuration.
+			 *
+			 * @since 1.5
+			 *
+			 * @param {array} gridblocks Collection of GridBlock configs.
+			 */
 			addToConfig: function( gridblocks ) {
 				_.each( gridblocks, function( gridblockData, index ) {
 					gridblocks[ index ] = self.addRequiredProperties( gridblockData );
@@ -71,6 +99,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				});
 			},
 
+			/**
+			 * Set the background image for any remote gridblocks..
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {jQuery} $html Gridblock jqury object.
+			 */
 			updateBackgroundImages: function( $html ) {
 				var backgroundImageOverride = $html.attr( 'gb-background-image' );
 
@@ -80,6 +115,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 			},
 
+			/**
+			 * Set properties of gridblock configurations.
+			 *
+			 * @since 1.5
+			 *
+			 * @param {object} gridblockData A Gridblock config.
+			 */
 			addRequiredProperties: function( gridblockData ) {
 				var $html = $( gridblockData.html );
 

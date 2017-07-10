@@ -13,17 +13,27 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.onSelectChange();
 			},
 
+			/**
+			 * Setup the action of changing the category filter.
+			 *
+			 * @since 1.5
+			 */
 			onSelectChange: function() {
 				var $select = BGGB.View.$gridblockNav.find( '.boldgrid-gridblock-categories select' );
 
 				self.currentCategory = $select.val();
 				$select.on( 'change', function() {
 					self.currentCategory = $select.val();
-					self.showGridblocks();
+					self.showByCategory();
 				} );
 			},
 
-			showGridblocks: function() {
+			/**
+			 * Show the Gridblocks for the selected category.
+			 *
+			 * @since 1.5
+			 */
+			showByCategory: function() {
 				var $gridblocks = BGGB.View.$gridblockSection.find( '.gridblock' ),
 					$wrapper = BGGB.View.$gridblockSection.find( '.gridblocks' );
 
@@ -39,6 +49,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 			},
 
+			/**
+			 * Return the selected category.
+			 *
+			 * @since 1.5
+			 *
+			 * @return {string} Requested category.
+			 */
 			getSearchType: function() {
 				return 'all' !== self.currentCategory ? self.currentCategory : null;
 			}

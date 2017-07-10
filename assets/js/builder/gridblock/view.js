@@ -26,12 +26,24 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.endlessScroll();
 		},
 
+		/**
+		 * Process when page loads.
+		 *
+		 * @since 1.5
+		 */
 		onLoad: function() {
 			self.setupAddGridblock();
 			BG.STYLE.Remote.getStyles( BoldgridEditor.site_url );
 		},
 
-		emptyGridblockPool: function() {
+		/**
+		 * Check if we have enough grodblocks to display.
+		 *
+		 * @since 1.5
+		 *
+		 * @return {boolean} Whether or nor we should request more gridblocks.
+		 */
+		hasGridblocks: function() {
 			var pending = 0;
 			_.each( BG.GRIDBLOCK.configs.gridblocks, function( gridblock ) {
 				if ( 'ready' === gridblock.state ) {
@@ -39,6 +51,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 			} );
 
+			// 5 is the threshold for requesting more gridblocks.
 			return pending < 5;
 		},
 
@@ -60,7 +73,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( diff < loadDistance ) {
 					BG.GRIDBLOCK.Loader.loadGridblocks();
 
-					if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && self.emptyGridblockPool() ) {
+					if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && self.hasGridblocks() ) {
 						BG.GRIDBLOCK.Generate.fetch();
 					}
 				}
