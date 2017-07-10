@@ -90,10 +90,16 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 * @since 1.2.7
 		 */
 		validateComponentsUsed: function() {
-			$.each( BoldgridEditor.builder_config.components_used.image, function() {
+			var config = BoldgridEditor.builder_config.components_used;
+
+			$.each( config.image, function() {
 				var $temp = $( '<div>' ).attr( 'class', this.classes );
 				self.removeImageClass( $temp );
 				this.classes = $temp.attr( 'class' );
+			} );
+
+			config.image = _.uniq( config.image, function( item ) {
+				return item.a;
 			} );
 		},
 

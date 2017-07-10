@@ -13,7 +13,7 @@
 		"bg-box bg-box-rounded-bottom-right bg-box-rounded-top-left",
 		"bg-box bg-box-rounded-bottom-left bg-box-rounded-top-right",
 
-		
+
 		"bg-box bg-box-square bg-box-shadow-bottom-left",
 		"bg-box bg-box-edged bg-box-shadow-bottom-right",
 		"bg-box bg-box-pill bg-box-shadow-bottom-right",
@@ -55,6 +55,15 @@
 		"bg-img bg-img-edged",
 		"bg-img bg-img-rounded",
 		"bg-img bg-img-circle",
+
+		"bg-img bg-img-triangle",
+		"bg-img bg-img-circle",
+		"bg-img bg-img-pentagon",
+		"bg-img bg-img-bevel",
+		"bg-img bg-img-hexagon",
+		"bg-img bg-img-rabbet",
+		"bg-img bg-img-rhombus",
+		"bg-img bg-img-parallelogram",
 
 		"bg-img bg-img-rounded-bottom-left bg-img-rounded-top-left",
 		"bg-img bg-img-rounded-bottom-left bg-img-rounded-bottom-right",
