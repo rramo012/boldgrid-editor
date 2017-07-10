@@ -181,7 +181,13 @@ class Boldgrid_Editor_Wpforms {
 	 * @return array
 	 */
 	public static function get_forms() {
-		$results = get_posts( array( 'post_type' => 'wpforms' ) );
+		$results = get_posts( array(
+			'post_type' => 'wpforms',
+			'orderby'       => 'id',
+			'order'         => 'ASC',
+			'no_found_rows' => true,
+			'nopaging'      => true,
+		) );
 
 		// Initialize $form_ids array.
 		$form_ids = array();
