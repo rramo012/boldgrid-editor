@@ -6,7 +6,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 	'use strict';
 
 	var BG = BOLDGRID.EDITOR,
-		Remote = BG.GRIDBLOCK.Remote;
 		self = {
 			gridblockCount: 0,
 
@@ -16,7 +15,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				}
 
 				self.fetching = true;
-				Remote.gridblockLoadingUI.start();
+				self.gridblockLoadingUI.start();
 
 				return $.ajax( {
 					url: 'https://api-dev-rafaelh.boldgrid.com/v1/gridblocks',
@@ -34,8 +33,24 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				} ).always( function() {
 					self.fetching = false;
-					Remote.gridblockLoadingUI.finish();
+					self.gridblockLoadingUI.finish();
 				} );
+			},
+
+			/**
+			 * Handle showing the loading graphic.
+			 *
+			 * @since 1.4
+			 *
+			 * @type {Object}
+			 */
+			gridblockLoadingUI: {
+				start: function() {
+					$( 'body' ).addClass( 'loading-remote-body' );
+				},
+				finish: function() {
+					$( 'body' ).removeClass( 'loading-remote-body' );
+				}
 			},
 
 			getCategory: function() {
