@@ -32,10 +32,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.gridblockLoadingUI.start();
 
 				return $.ajax( {
-					url: 'https://api-dev-rafaelh.boldgrid.com/v1/gridblocks',
+					url: BoldgridEditor.plugin_configs.asset_server + BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
 					data: {
 						'quantity': 30,
-						'color_palettes': true,
+						'color_palettes': BoldgridEditor.is_boldgrid_theme,
 						'type': BG.GRIDBLOCK.Category.getSearchType(),
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': self.getCategory()

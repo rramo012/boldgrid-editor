@@ -204,7 +204,7 @@ class Boldgrid_Editor {
 		global $wp_customize;
 
 		$boldgrid_editor_ajax      = new Boldgrid_Editor_Ajax();
-		$boldgrid_editor_assets    = new Boldgrid_Editor_Assets();
+		$boldgrid_editor_assets    = new Boldgrid_Editor_Assets( $this->config->get_configs() );
 		$boldgrid_editor_builder   = new Boldgrid_Editor_Builder();
 		$boldgrid_editor_mce       = new Boldgrid_Editor_MCE();
 		$boldgrid_editor_media     = new Boldgrid_Editor_Media();

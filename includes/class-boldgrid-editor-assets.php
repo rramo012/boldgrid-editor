@@ -20,6 +20,10 @@
  */
 class Boldgrid_Editor_Assets {
 
+	public function __construct( $configs ) {
+		return $this->configs = $configs;
+	}
+
 	/**
 	 * Get minified or unminified asset suffix.
 	 *
@@ -128,6 +132,7 @@ class Boldgrid_Editor_Assets {
 		// Send Variables to the view.
 		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
 			array(
+				'plugin_configs' => $this->configs,
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 				'post_id' => $this->get_post_id(),
@@ -292,10 +297,6 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_script( 'boldgrid-editor-controls-image-design',
 			plugins_url( '/assets/js/builder/controls/image/design.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
-
-		wp_enqueue_script( 'boldgrid-gridblock-remote',
-			plugins_url( '/assets/js/builder/gridblock/remote.js', $plugin_file ), array( 'wp-util' ),
-		BOLDGRID_EDITOR_VERSION, true);
 
 		wp_enqueue_script( 'boldgrid-gridblock-image',
 			plugins_url( '/assets/js/builder/gridblock/image.js', $plugin_file ), array(),

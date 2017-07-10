@@ -7,10 +7,9 @@ if ( ! defined( 'WPINC' ) ) {
 
 return array (
 	'ajax_calls' => array (
-		'get_page_post_layouts' =>	'/api/page-post/get-configs',
 		'get_plugin_version' =>		'/api/open/get-plugin-version',
 		'get_asset' =>				'/api/open/get-asset',
-		'get_api_asset' =>			'/api/asset/get',
+		'gridblock_generate' =>		'/v1/gridblocks',
 	),
 	'asset_server' =>				'https://wp-assets.boldgrid.com',
 	'plugin_name' => 				'boldgrid-editor',
