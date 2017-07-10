@@ -186,7 +186,7 @@ class Boldgrid_Editor {
 	 */
 	public function front_end_hooks() {
 		$builder_fonts          = new Boldgrid_Editor_Builder_Fonts();
-		$boldgrid_editor_assets = new Boldgrid_Editor_Assets();
+		$boldgrid_editor_assets = new Boldgrid_Editor_Assets( $this->config->get_configs() );
 
 		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 90 );
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor_Theme', 'remove_theme_container' ), 50 );
