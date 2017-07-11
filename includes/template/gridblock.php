@@ -39,6 +39,11 @@
 	<div class="add-gridblock"></div>
 </div>
 </script>
+<script type="text/html" id="tmpl-boldgrid-editor-gridblock-error">
+<div class="gridblock-error">
+	<h3>Error loading GridBlocks. Please try again later.</h3>
+</div>
+</script>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock-loading">
 	<div class="loading-gridblock">

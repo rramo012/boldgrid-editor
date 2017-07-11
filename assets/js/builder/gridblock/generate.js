@@ -16,6 +16,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 */
 			gridblockCount: 0,
 
+			failure: false,
+
 			/**
 			 * Get a set of GridBlocks.
 			 *
@@ -24,7 +26,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {$.deferred} Ajax response.
 			 */
 			fetch: function() {
-				if ( self.fetching ) {
+				if ( self.fetching || self.failure ) {
 					return false;
 				}
 
@@ -32,7 +34,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.gridblockLoadingUI.start();
 
 				return $.ajax( {
-					url: BoldgridEditor.plugin_configs.asset_server + BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
+					url: BoldgridEditor.plugin_configs.asset_server +
+						BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
 					data: {
 						'quantity': 30,
 						'color_palettes': BoldgridEditor.is_boldgrid_theme,
@@ -48,6 +51,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				} ).always( function() {
 					self.fetching = false;
 					self.gridblockLoadingUI.finish();
+				} ).fail( function() {
+					self.failure = true;
+					BG.GRIDBLOCK.View.$gridblockSection.append( wp.template( 'boldgrid-editor-gridblock-error' )() );
 				} );
 			},
 

@@ -1752,6 +1752,12 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout .wrap > *:not(#post) {
   display: none !important; }
 
+.boldgrid-zoomout .gridblock-error {
+  text-align: center; }
+
+.boldgrid-zoomout .gridblock-error > * {
+  color: red; }
+
 .boldgrid-zoomout #wpbody-content {
   padding-bottom: 0; }
 

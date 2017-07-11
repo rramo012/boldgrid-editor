@@ -109,6 +109,14 @@ $fix-top-height: 79px;
 		display: none !important;
 	}
 
+	.gridblock-error {
+		text-align: center;
+
+		> * {
+			color: red;
+		}
+	}
+
 	#wpbody-content {
 		padding-bottom: 0;
 	}
