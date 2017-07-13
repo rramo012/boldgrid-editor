@@ -75,7 +75,7 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 */
 	public function test_get_post_url_post_not_found() {
 
-		$testClass = new Boldgrid_Editor_Assets();
+		$testClass = new Boldgrid_Editor_Assets( array() );
 		$get_post_url = $testClass->get_post_url();
 		$this->assertEquals( get_site_url(), $get_post_url );
 
@@ -92,4 +92,3 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	}
 
 }
-
