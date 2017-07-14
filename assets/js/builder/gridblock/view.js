@@ -70,7 +70,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					height = $gridblocks.height(),
 					diff = height - scrollTop;
 
-				if ( diff < loadDistance ) {
+				if ( diff < loadDistance && true === BG.CONTROLS.Section.sectionDragEnabled ) {
 					BG.GRIDBLOCK.Loader.loadGridblocks();
 
 					if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && self.hasGridblocks() ) {

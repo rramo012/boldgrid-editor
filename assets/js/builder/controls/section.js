@@ -199,7 +199,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$frameHtml = self.$container.find( 'html' );
 
 			e.preventDefault();
-
+			self.sectionDragEnabled = false;
 			$body.removeClass( 'focus-on boldgrid-zoomout' );
 			$window.trigger( 'resize' );
 			$frameHtml.removeClass( 'zoomout dragging-section' );
@@ -239,6 +239,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			$.fourpan.dismiss();
+			self.sectionDragEnabled = true;
 			self.$container.find( 'html' ).addClass( 'zoomout dragging-section' );
 			self.$container.$body.removeAttr( 'contenteditable' );
 			self.$slider = $( '.bg-zoom-controls .slider' );
@@ -252,6 +253,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( window ).trigger( 'resize' ).scrollTop( 0 );
 			self.updateHtmlSize();
 			BOLDGRID.EDITOR.GRIDBLOCK.Loader.firstOpen();
+			BG.GRIDBLOCK.View.$gridblockSection.trigger( 'scroll' );
 
 			updateZoom = function( val ) {
 				self.removeZoomClasses();

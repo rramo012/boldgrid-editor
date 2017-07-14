@@ -35,7 +35,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						src = $this.attr( 'src' );
 
 					$this.removeAttr( 'src' ).attr( 'dynamicImage', '' );
-
 					self.getDataURL( src ).done( function( result ) {
 						$this.attr( 'src', result );
 					} );
