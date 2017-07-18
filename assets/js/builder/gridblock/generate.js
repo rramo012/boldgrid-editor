@@ -26,9 +26,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {$.deferred} Ajax response.
 			 */
 			fetch: function() {
+				var type;
+
 				if ( self.fetching || self.failure ) {
 					return false;
 				}
+
+				type = BG.GRIDBLOCK.Category.getSearchType();
 
 				self.fetching = true;
 				self.gridblockLoadingUI.start();
@@ -37,10 +41,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					url: BoldgridEditor.plugin_configs.asset_server +
 						BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
 					data: {
-						'quantity': 30,
+
+						// If filtered to a type, load 30 otherwise 50.
+						'quantity': type ? 30 : 50,
 						'color_palettes': BoldgridEditor.is_boldgrid_theme,
 						'include_temporary_resources': true,
-						'type': BG.GRIDBLOCK.Category.getSearchType(),
+						'type': type,
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': self.getCategory()
 					}
