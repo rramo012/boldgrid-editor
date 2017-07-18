@@ -47,18 +47,32 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @since 1.5
 			 */
 			showByCategory: function() {
-				var $gridblocks = BGGB.View.$gridblockSection.find( '.gridblock' ),
+				var visibleGridblocks,
+					$gridblocks = BGGB.View.$gridblockSection.find( '.gridblock' ),
 					$wrapper = BGGB.View.$gridblockSection.find( '.gridblocks' );
 
 				$wrapper.attr( 'filter', self.currentCategory );
 
 				if ( 'all' === self.currentCategory ) {
-					$gridblocks.show();
-				} else {
 					$gridblocks
-						.hide()
-						.filter( '[data-type="' + self.currentCategory + '"]' )
+						.filter( ':not(.gridblock-loading)' )
+						.filter( ':not([data-type="saved"])' )
 						.show();
+
+					BGGB.View.$gridblockSection.scrollTop( 0 );
+
+				} else {
+					visibleGridblocks = $gridblocks
+						.hide()
+						.filter( '[data-type="' + self.currentCategory + '"]:not(.gridblock-loading)' )
+						.show()
+						.length;
+
+					BGGB.View.$gridblockSection.scrollTop( 0 );
+
+					if ( visibleGridblocks < 4 ) {
+						BGGB.View.updateDisplay();
+					}
 				}
 			},
 

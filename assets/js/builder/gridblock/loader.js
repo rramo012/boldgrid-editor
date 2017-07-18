@@ -127,8 +127,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					$gridblock = BGGB.View.$gridblockSection.find( '[data-id="' + gridblock.gridblockId + '"]' ),
 					$iframe = ( self.$iframeTemp ) ? self.$iframeTemp : $( '<iframe></iframe>' );
 
-				$gridblock.prepend( $iframe );
 				self.creatingIframe = true;
+				BGGB.View.$gridblockSection.find( '.gridblocks' ).append( $gridblock );
+				$gridblock.prepend( $iframe );
 
 				load = function() {
 					$contents = $iframe.contents();
@@ -137,6 +138,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.addStyles( $contents );
 					BGGB.View.addBodyClasses( $contents );
 					self.$iframeTemp = $iframe.clone();
+
+					if ( BGGB.Category.canDisplayGridblock( gridblock ) ) {
+						$gridblock.css( 'display', '' );
+					}
 
 					gridblock.state = 'iframeCreated';
 					setTimeout( function() {

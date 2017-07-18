@@ -52,7 +52,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			} );
 
 			// 5 is the threshold for requesting more gridblocks.
-			return pending < 5;
+			return pending >= 5;
 		},
 
 		/**
@@ -71,15 +71,24 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					diff = height - scrollTop;
 
 				if ( diff < loadDistance && true === BG.CONTROLS.Section.sectionDragEnabled ) {
-					BG.GRIDBLOCK.Loader.loadGridblocks();
-
-					if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && self.hasGridblocks() ) {
-						BG.GRIDBLOCK.Generate.fetch();
-					}
+					self.updateDisplay();
 				}
 			}, 300 );
 
 			self.$gridblockSection.on( 'scroll', throttled );
+		},
+
+		/**
+		 * Update the display of Gridblocks.
+		 *
+		 * @since 1.5
+		 */
+		updateDisplay: function() {
+			BG.GRIDBLOCK.Loader.loadGridblocks();
+
+			if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && ! self.hasGridblocks() ) {
+				BG.GRIDBLOCK.Generate.fetch();
+			}
 		},
 
 		/**
