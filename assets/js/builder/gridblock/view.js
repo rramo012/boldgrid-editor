@@ -46,7 +46,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		hasGridblocks: function() {
 			var pending = 0;
 			_.each( BG.GRIDBLOCK.configs.gridblocks, function( gridblock ) {
-				if ( 'ready' === gridblock.state ) {
+				if ( 'ready' === gridblock.state && BG.GRIDBLOCK.Category.canDisplayGridblock( gridblock ) ) {
 					pending++;
 				}
 			} );

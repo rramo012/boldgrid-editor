@@ -29,6 +29,19 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			/**
+			 * Check if we can display the grid block configuration.
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {Object} gridblockConfig Configruation for a Gridblock.
+			 * @return {boolean}                Whether or not the gridblock configuration can be displayed.
+			 */
+			canDisplayGridblock: function( gridblockConfig ) {
+				var category = BGGB.Category.currentCategory || 'all';
+				return gridblockConfig.type === category || ( 'all' === category && 'saved' !== gridblockConfig.type );
+			},
+
+			/**
 			 * Show the Gridblocks for the selected category.
 			 *
 			 * @since 1.5

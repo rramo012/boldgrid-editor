@@ -39,6 +39,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					data: {
 						'quantity': 30,
 						'color_palettes': BoldgridEditor.is_boldgrid_theme,
+						'include_temporary_resources': true,
 						'type': BG.GRIDBLOCK.Category.getSearchType(),
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': self.getCategory()

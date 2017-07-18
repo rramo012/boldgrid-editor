@@ -32,13 +32,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			replaceImages: function( gridblockData ) {
 				gridblockData.$html.find( 'img' ).each( function() {
 					var $this = $( this ),
-						src = $this.attr( 'src' );
+						src = $this.attr( 'data-src' );
 
-					$this.removeAttr( 'src' ).attr( 'dynamicImage', '' );
+					$this.removeAttr( 'data-src' ).attr( 'dynamicImage', '' );
 					self.getDataURL( src ).done( function( result ) {
 						$this.attr( 'src', result );
-					} ).fail( function () {
-						$( '[data-id="' + gridblockData.gridblockId + '"]').detach();
+					} ).fail( function() {
+						$( '[data-id="' + gridblockData.gridblockId + '"]' ).detach();
 					} );
 				} );
 			},
@@ -89,8 +89,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						backgroundImage = self.replaceBackgroundUrl( backgroundImage, result );
 						$gridblock.css( 'background-image', backgroundImage );
 						$gridblock.attr( 'dynamicImage', '' );
-					} ).fail( function () {
-						$( '[data-id="' + gridblockData.gridblockId + '"]').detach();
+					} ).fail( function() {
+						$( '[data-id="' + gridblockData.gridblockId + '"]' ).detach();
 					} );
 				}
 			},

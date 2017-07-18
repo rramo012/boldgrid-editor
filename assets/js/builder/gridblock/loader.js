@@ -62,9 +62,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				$.each( BGGB.configs.gridblocks, function( index ) {
 					if ( ! this.renderScheduled && currentCount < maxPerLoad ) {
-						currentCount++;
-						this.renderScheduled = true;
-						gridblockIds.push( index );
+						if ( BGGB.Category.canDisplayGridblock( this ) ) {
+							currentCount++;
+							this.renderScheduled = true;
+							gridblockIds.push( index );
+						}
 					}
 				} );
 
