@@ -17,8 +17,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 */
 			translateImages: function( gridblockData ) {
 				if ( gridblockData.dynamicImages ) {
-					self.replaceImages( gridblockData.$html );
-					self.replaceBackgrounds( gridblockData.$html );
+					self.replaceImages( gridblockData );
+					self.replaceBackgrounds( gridblockData );
 				}
 			},
 
@@ -29,14 +29,16 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 *
 			 * @param  {jQuery} $gridblock Gridblock Object.
 			 */
-			replaceImages: function( $gridblock ) {
-				$gridblock.find( 'img' ).each( function() {
+			replaceImages: function( gridblockData ) {
+				gridblockData.$html.find( 'img' ).each( function() {
 					var $this = $( this ),
 						src = $this.attr( 'src' );
 
 					$this.removeAttr( 'src' ).attr( 'dynamicImage', '' );
 					self.getDataURL( src ).done( function( result ) {
 						$this.attr( 'src', result );
+					} ).fail( function () {
+						$( '[data-id="' + gridblockData.gridblockId + '"]').detach();
 					} );
 				} );
 			},
@@ -74,8 +76,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 *
 			 * @param  {jQuery} $gridblock gridblock previewed.
 			 */
-			replaceBackgrounds: function( $gridblock ) {
-				var backgroundImage = $gridblock.css( 'background-image' ) || '',
+			replaceBackgrounds: function( gridblockData ) {
+				var $gridblock = gridblockData.$html,
+					backgroundImage = $gridblock.css( 'background-image' ) || '',
 					hasImage = backgroundImage.match( /url\(?.+?\)/ ),
 					imageUrl = self.getBackgroundUrl( $gridblock );
 
@@ -86,6 +89,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						backgroundImage = self.replaceBackgroundUrl( backgroundImage, result );
 						$gridblock.css( 'background-image', backgroundImage );
 						$gridblock.attr( 'dynamicImage', '' );
+					} ).fail( function () {
+						$( '[data-id="' + gridblockData.gridblockId + '"]').detach();
 					} );
 				}
 			},
@@ -170,6 +175,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					};
 
 					fr.readAsDataURL( xhr.response );
+				};
+
+				xhr.onerror = function() {
+					$deferred.reject();
 				};
 
 				xhr.send();
