@@ -62,12 +62,81 @@ body {
 	min-height: 100%;
 }
 
-.centered-section > .row:only-of-type,
-.centered-section > .boldgrid-section:only-of-type {
+.centered-section > *:only-of-type {
 	position: absolute;
 	top: 50%;
 	width: 100%;
 	transform: translateY(-50%);
 }
+.redacted-placeholder {
+	padding: 60px 0;
+	background-color: rgba(232, 232, 232, 0.67);
+}
+@font-face {
+    font-family: "Redacted Script";
+    src: url( "{{BoldgridEditor.plugin_url}}/assets/fonts/redacted/redacted-script-bold.eot");
+	src: url( "{{BoldgridEditor.plugin_url }}/assets/fonts/redacted/redacted-script-bold.woff2") format("woff2"),
+         url( "{{BoldgridEditor.plugin_url }}/assets/fonts/redacted/redacted-script-bold.woff") format("woff"),
+         url( "{{BoldgridEditor.plugin_url }}/assets/fonts/redacted/redacted-script-bold.otf") format("opentype"),
+         url( "{{BoldgridEditor.plugin_url }}/assets/fonts/redacted/redacted-script-bold.svg#filename") format("svg");
+}
+
+.redacted-placeholder {
+    font-family: "Redacted Script";
+    color: #cecece;
+}
+
 </style>
+</script>
+
+<script type="text/html" id="tmpl-gridblock-redacted-before">
+<div class="redacted-placeholder">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+				voluptatem.
+			</div>
+			<div class="col-md-4">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+				voluptatem.
+			</div>
+			<div class="col-md-4">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+				voluptatem.
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<script type="text/html" id="tmpl-gridblock-redacted-after">
+<div class="redacted-placeholder">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+				voluptatem. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis.
+			</div>
+			<div class="col-md-6">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+				voluptatem. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+				doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+				veritatis.
+			</div>
+		</div>
+	</div>
+</div>
 </script>

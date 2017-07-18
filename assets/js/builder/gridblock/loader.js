@@ -12,6 +12,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			openInit: false,
 
+			placeholderHtml: {},
+
 			countGidblocksLoaded: 0,
 
 			loadingGridblocks: false,
@@ -28,6 +30,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			firstOpen: function() {
 				if ( false === self.openInit ) {
 					self.openInit = true;
+					self.placeholderHtml.before = wp.template( 'gridblock-redacted-before' )();
+					self.placeholderHtml.after = wp.template( 'gridblock-redacted-after' )();
+
 					BGGB.View.init();
 					BGGB.Drag.init();
 					BGGB.Generate.fetch();
@@ -134,7 +139,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				load = function() {
 					$contents = $iframe.contents();
 					BGGB.Image.translateImages( gridblock );
-					$contents.find( 'body' ).html( gridblock.$html );
+					$contents.find( 'body' )
+						.html( $( '<div>' )
+							.html( gridblock.$html )
+							.prepend( self.placeholderHtml.before )
+							.append( self.placeholderHtml.after )
+					);
+
 					BGGB.View.addStyles( $contents );
 					BGGB.View.addBodyClasses( $contents );
 					self.$iframeTemp = $iframe.clone();
