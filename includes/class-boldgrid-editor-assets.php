@@ -120,6 +120,7 @@ class Boldgrid_Editor_Assets {
 	 */
 	public function enqueue_mce_interface() {
 		global $is_IE;
+		global $post;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
@@ -136,6 +137,7 @@ class Boldgrid_Editor_Assets {
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 				'post_id' => $this->get_post_id(),
+				'post_type' => $post ? $post->post_type : '',
 				'site_url' => $this->get_post_url(),
 				'plugin_url' => plugins_url( '', $plugin_file ),
 				'is_IE' => $is_IE,
