@@ -34,6 +34,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					self.placeholderHtml.after = wp.template( 'gridblock-redacted-after' )();
 
 					BGGB.View.init();
+					BGGB.Delete.init();
 					BGGB.Drag.init();
 					BGGB.Generate.fetch();
 				}

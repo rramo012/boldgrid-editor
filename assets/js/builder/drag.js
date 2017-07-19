@@ -16,8 +16,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.$body = self.$master_container.find( 'body' );
 	self.$html = self.$master_container.find( 'html' );
 	self.$validatedInput = $( 'input[name="boldgrid-in-page-containers"]' );
-	self.$resize_overlay = $( '<div id="boldgrid-draggable-resizing-overlay"></div>' );
-	self.$master_container.find( 'html' ).append( self.$resize_overlay );
+	self.resizeOverlay = wp.template( 'boldgrid-editor-mce-tools' )();
+	self.$master_container.find( 'html' ).append( self.resizeOverlay );
 	self.original_selector_strings = {};
 
 	self.scrollInterval = false;
@@ -1602,7 +1602,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.hover_elements[ type ] = {
 				'remove_element': {
 					'element': $draggable,
-					'tools' : $tools,
+					'tools': $tools
 				}
 			};
 			setTimeout( self.update_handles, self.hover_timout, self.last_hover );
@@ -1627,7 +1627,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * Return Row, Column, Content or nested-row.
 	 */
-	this.get_tooltip_type = function ( $current ) {
+	this.get_tooltip_type = function( $current ) {
 		// Even though HR's are nested they should not appear as nested.
 		if ( $current.is( self.nested_row_selector_string ) && $current.find('> .col-md-12 > hr:only-child').length == 0 && !self.editting_as_row ) {
 			var type = 'nested-row';
@@ -2992,10 +2992,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var isFixedTop = self.$mce_32.css('position') === 'fixed',
 				topOffset = self.$mce_32[0].getBoundingClientRect(),
 				positionY = event.originalEvent.screenY;
-			
+
 			/*
-			 * On dual monitor setups where the height of the window is much larger than the 
-			 * main window, skip auto scroll. Unable to get consistent results. -100 window height is 
+			 * On dual monitor setups where the height of the window is much larger than the
+			 * main window, skip auto scroll. Unable to get consistent results. -100 window height is
 			 * used to identify this scenario.
 			 */
 			if ( window.screenY < -100 ) {

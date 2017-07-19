@@ -356,6 +356,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/gridblock/view.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-gridblocks-delete',
+			plugins_url( '/assets/js/builder/gridblock/delete.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-gridblocks-add',
 			plugins_url( '/assets/js/builder/gridblock/add.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

@@ -16,7 +16,10 @@
 	</div>
 </div>
 </script>
-
+<script type="text/html" id="tmpl-boldgrid-editor-mce-tools">
+<div id="boldgrid-draggable-resizing-overlay"></div>
+<div class="delete-icon delete-icon-wrap"><span class="dashicons dashicons-trash delete-icon"></span></div>
+</script>
 <script type="text/html" id="tmpl-boldgrid-editor-control-menu">
 <div id='boldgrid-instance-menu' class='boldgrid-instance-menu'>
 	<ul>

@@ -71,11 +71,11 @@
 	.boldgrid-section:after  {
 		display: block;
 	}
-
-	 .boldgrid-section:hover:after {
+	.boldgrid-section:hover:after {
 		background-color: rgba(249, 91, 38, 0.75);
 	}
-	 .boldgrid-section:hover:before {
+	.boldgrid-section.delete-overlay:before,
+	.boldgrid-section:hover:before {
 		background-color: transparent;
 		content: 'Drag Section';
 		color: #fff;
@@ -90,6 +90,13 @@
 		right: 0;
 		transform: translateY(-50%);
 		font-variant: small-caps;
+	}
+
+	.boldgrid-section.delete-overlay:before {
+		content: 'Delete Section';
+	}
+	.boldgrid-section.delete-overlay:after {
+		background-color: rgba(255, 0, 0, 0.75);
 	}
 
 	&.dragging-gridblock-iframe .boldgrid-section:hover {

@@ -1690,6 +1690,25 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout-section {
   display: none; }
 
+.delete-icon-wrap {
+  color: white;
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  cursor: pointer;
+  box-shadow: 0px 2px 5px 0px #313131;
+  transition: color .25s;
+  position: 'fixed'; }
+
+.delete-icon-wrap:hover {
+  color: red; }
+
+.delete-icon-wrap .dashicons {
+  font-size: 24px;
+  margin-left: -3px;
+  margin-top: -7px; }
+
 .zoom-navbar {
   display: none; }
 
@@ -2247,6 +2266,7 @@ body.boldgrid-editor-fullscreen {
 .dragging-section .boldgrid-section:hover:after {
   background-color: rgba(249, 91, 38, 0.75); }
 
+.dragging-section .boldgrid-section.delete-overlay:before,
 .dragging-section .boldgrid-section:hover:before {
   background-color: transparent;
   content: 'Drag Section';
@@ -2262,6 +2282,12 @@ body.boldgrid-editor-fullscreen {
   right: 0;
   transform: translateY(-50%);
   font-variant: small-caps; }
+
+.dragging-section .boldgrid-section.delete-overlay:before {
+  content: 'Delete Section'; }
+
+.dragging-section .boldgrid-section.delete-overlay:after {
+  background-color: rgba(255, 0, 0, 0.75); }
 
 .dragging-section.dragging-gridblock-iframe .boldgrid-section:hover:before, .dragging-section.dragging-gridblock-iframe .boldgrid-section:hover:after {
   display: none; }
