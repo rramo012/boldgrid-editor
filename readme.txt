@@ -1,6 +1,6 @@
 === BoldGrid Editor ===
 Contributors: imh_brad, joemoto, rramo012, timph
-Tags: inspiration,customization,build,create,design
+Tags: drag and drop, tinymce, editor
 Requires at least: 4.3
 Tested up to: 4.8
 License: GPLv2 or later
@@ -24,7 +24,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.4.7 In Progress =
+= 1.4.7 =
 * Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.
 * New Feature:					Delete GridBlock button added to GridBlock UI.
 
