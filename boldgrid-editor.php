@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: BoldGrid Editor
- * Plugin URI: https://www.boldgrid.com/wordpress-page-builder-by-boldgrid/
+ * Plugin URI: https://www.boldgrid.com/boldgrid-editor/
  * Description: Customized drag and drop editing for pages and posts. BoldGrid Editor adds functionality to the existing TinyMCE Editor to give you easier control over your content.
  * Version: 1.4.7
  * Author: BoldGrid.com <support@boldgrid.com>
