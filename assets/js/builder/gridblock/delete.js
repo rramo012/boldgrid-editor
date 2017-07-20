@@ -29,7 +29,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.5
 		 */
 		bindEvents: function() {
-
 			self.$mceContainer
 				.on( 'mouseenter', '.dragging-section .boldgrid-section', self.section.mouseEnter )
 				.on( 'mouseleave', '.dragging-section .boldgrid-section', self.section.mouseLeave )
@@ -90,7 +89,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			click: function() {
 				self.$deleteIcon.$section.removeClass( 'delete-overlay' );
 				self.$deleteIcon.hide();
-				this.section.remove();
+				self.$deleteIcon.$section.remove();
 				tinymce.activeEditor.undoManager.add();
 			}
 		}

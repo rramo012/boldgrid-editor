@@ -1698,8 +1698,8 @@ body.boldgrid-editor-fullscreen {
   transform: translateY(-50%) translateX(-50%);
   cursor: pointer;
   box-shadow: 0px 2px 5px 0px #313131;
-  transition: color .25s;
-  position: 'fixed'; }
+  transition: color .5s;
+  position: fixed; }
 
 .delete-icon-wrap:hover {
   color: red; }

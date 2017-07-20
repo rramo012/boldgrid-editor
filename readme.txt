@@ -26,6 +26,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.4.7 In Progress =
 * Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.
+* New Feature:					Delete GridBlock button added to GridBlock UI.
 
 = 1.4.6 =
 * New Feature:	JIRA WPB-3246	Integrating new Dynamic GridBlocks.
