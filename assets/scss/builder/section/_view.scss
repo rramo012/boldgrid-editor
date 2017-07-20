@@ -37,7 +37,11 @@ $fix-top-height: 79px;
 	display: none;
 }
 
-.delete-icon-wrap {
+html:not(.dragging-section) .delete-icon-wrap {
+	display: none !important;
+}
+
+.dragging-section .delete-icon-wrap {
 	color: white;
 	background: rgb(31, 31, 31);
 	padding: 15px;
@@ -47,6 +51,7 @@ $fix-top-height: 79px;
 	box-shadow: 0px 2px 5px 0px #313131;
 	transition: color .5s;
 	position: fixed;
+	display: none;
 
 	&:hover {
 		color: red;

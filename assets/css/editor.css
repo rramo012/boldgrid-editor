@@ -1690,7 +1690,10 @@ body.boldgrid-editor-fullscreen {
 .boldgrid-zoomout-section {
   display: none; }
 
-.delete-icon-wrap {
+html:not(.dragging-section) .delete-icon-wrap {
+  display: none !important; }
+
+.dragging-section .delete-icon-wrap {
   color: white;
   background: #1f1f1f;
   padding: 15px;
@@ -1699,12 +1702,13 @@ body.boldgrid-editor-fullscreen {
   cursor: pointer;
   box-shadow: 0px 2px 5px 0px #313131;
   transition: color .5s;
-  position: fixed; }
+  position: fixed;
+  display: none; }
 
-.delete-icon-wrap:hover {
+.dragging-section .delete-icon-wrap:hover {
   color: red; }
 
-.delete-icon-wrap .dashicons {
+.dragging-section .delete-icon-wrap .dashicons {
   font-size: 24px;
   margin-left: -3px;
   margin-top: -7px; }

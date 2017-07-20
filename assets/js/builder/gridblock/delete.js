@@ -20,7 +20,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.$mceContainer = BG.Controls.$container;
 			self.$deleteIcon = self.$mceContainer.find( '.delete-icon-wrap' );
 			self.bindEvents();
-			console.log( 'ddd' );
 		},
 
 		/**
