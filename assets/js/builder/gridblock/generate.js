@@ -121,11 +121,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @param  {jQuery} $html Gridblock jqury object.
 			 */
 			updateBackgroundImages: function( $html ) {
-				var backgroundImageOverride = $html.attr( 'gb-background-image' );
+				var backgroundImageOverride = $html.attr( 'data-image-url' );
 
 				if ( backgroundImageOverride ) {
 					$html.css( 'background-image', backgroundImageOverride );
-					$html.removeAttr( 'gb-background-image' );
 				}
 			},
 
