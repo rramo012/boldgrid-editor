@@ -9,12 +9,12 @@ We've packed this release with many new features that can make your site stand o
 Here are just some of the features that are now available to you:
 </p>
 <div class='panel-actions'>
-	<p><a target="_blank" href='http://www.boldgrid.com/support/editing-your-pages/wordpress-page-post-editor/'
+	<p><a target="_blank" href='https://www.boldgrid.com/support/editing-your-pages/wordpress-page-post-editor/'
 		class='btn btn-rounded bg-primary-color'>Learn More</a></p>
 	<p><a class='btn btn-rounded bg-secondary-color dismiss'>Okay, got it!</a></p>
 </div>
 <ul>
-	<li>Background, Button & Image Designs</li>
+	<li>Background, Button &amp; Image Designs</li>
 	<li>Over 100 different Fonts and Icons</li>
 	<li>Unified Color Controls</li>
 	<li>Professional Image Filters</li>

@@ -221,7 +221,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		zoomDisabled: function() {
 			if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_inactive ) {
-				alert( 'Add GridBlock requires that BoldGrid Editing be enabled on this page. You can enable it by clicking the move icon on your editor toolbar.' );
+				alert( 'Add GridBlock requires that BoldGrid Editing be enabled on this page. You can enable it by clicking the move icon ☩ on your editor toolbar.' );
 				return true;
 			}
 		},

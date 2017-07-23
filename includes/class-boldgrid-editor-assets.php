@@ -296,6 +296,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/icon.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-help',
+			plugins_url( '/assets/js/builder/controls/help.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-image-design',
 			plugins_url( '/assets/js/builder/controls/image/design.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
