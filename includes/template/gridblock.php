@@ -87,6 +87,10 @@ body {
     color: #cecece;
 }
 
+.background-fixed {
+	background-attachment: scroll !important;
+}
+
 </style>
 </script>
 
