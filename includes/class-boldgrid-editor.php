@@ -207,7 +207,7 @@ class Boldgrid_Editor {
 		$boldgrid_editor_ajax      = new Boldgrid_Editor_Ajax();
 		$boldgrid_editor_assets    = new Boldgrid_Editor_Assets( $this->config->get_configs() );
 		$boldgrid_editor_builder   = new Boldgrid_Editor_Builder();
-		$boldgrid_editor_mce       = new Boldgrid_Editor_MCE();
+		$boldgrid_editor_mce       = new Boldgrid_Editor_MCE( $this->config );
 		$boldgrid_editor_media     = new Boldgrid_Editor_Media();
 		$boldgrid_editor_theme     = new Boldgrid_Editor_Theme();
 		$boldgrid_editor_version   = new Boldgrid_Editor_Version();
@@ -254,7 +254,7 @@ class Boldgrid_Editor {
 			}
 
 			// Currently only pages and posts are supported. @since 1.3.1
-			if( ! in_array( $current_post_type, array( 'page', 'post' ) ) ) {
+			if ( ! in_array( $current_post_type, $this->config->get_configs( 'allowed_post_types' ) ) ) {
 				return false;
 			}
 

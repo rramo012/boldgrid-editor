@@ -21,6 +21,15 @@
 class Boldgrid_Editor_MCE {
 
 	/**
+	 * Initialize class and set class properties.
+	 *
+	 * @since 1.4.7
+	 */
+	public function __construct( $configs ) {
+		return $this->configs = $configs;
+	}
+
+	/**
 	 * Add Help Pointer to Boldgrid Editing.
 	 *
 	 * @since 1.0
@@ -98,10 +107,7 @@ class Boldgrid_Editor_MCE {
 		global $typenow;
 
 		// verify the post type
-		if ( ! in_array( $typenow, array (
-			'post',
-			'page'
-		) ) ) {
+		if ( ! in_array( $typenow, $this->configs->get_configs( 'allowed_post_types' ) ) ) {
 			return;
 		}
 

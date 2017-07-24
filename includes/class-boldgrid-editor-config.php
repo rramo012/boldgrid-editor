@@ -38,7 +38,7 @@ class Boldgrid_Editor_Config {
 	 *
 	 * @param array $configs The configuration array.
 	 */
-	private function set_configs( $configs ) {
+	public function set_configs( $configs ) {
 		$this->configs = $configs;
 	}
 
