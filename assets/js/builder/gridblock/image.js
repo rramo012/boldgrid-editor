@@ -141,7 +141,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( self.isBackgroundImage( $image ) ) {
 					backgroundImageCss = $image.css( 'background-image' ) || '';
 					backgroundImageCss = self.replaceBackgroundUrl( backgroundImageCss, data.url );
-					$image.css( 'background-image', backgroundImageCss );
+
+					$image
+						.attr( 'data-image-url', data.url )
+						.css( 'background-image', backgroundImageCss );
 				} else {
 					$image.attr( 'src', data.url );
 

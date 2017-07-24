@@ -40,6 +40,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				return $.ajax( {
 					url: BoldgridEditor.plugin_configs.asset_server +
 						BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
+					dataType: 'json',
 					data: {
 
 						// If filtered to a type, load 30 otherwise 50.
@@ -52,7 +53,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						'category': self.getCategory()
 					}
 				}).done( function( gridblocks ) {
-
 					self.addToConfig( gridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();
 
@@ -121,10 +121,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @param  {jQuery} $html Gridblock jqury object.
 			 */
 			updateBackgroundImages: function( $html ) {
-				var backgroundImageOverride = $html.attr( 'data-image-url' );
+				var backgroundImageOverride = $html.attr( 'gb-background-image' );
 
 				if ( backgroundImageOverride ) {
-					$html.css( 'background-image', backgroundImageOverride );
+					$html
+						.removeAttr( 'gb-background-image' )
+						.css( 'background-image', backgroundImageOverride );
 				}
 			},
 
