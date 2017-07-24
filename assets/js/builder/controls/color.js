@@ -209,7 +209,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 
 				self.$colorPanel.find( '.panel-selection.selected' ).removeClass( 'selected' );
-				self.$colorPicker.iris( 'color', $preview.css( 'background-color' ) );
+				self.updatePicker( $preview.css( 'background-color' ) );
 				self.openPicker( $input );
 
 				if ( $currentSelection && $currentSelection.length ) {
@@ -434,8 +434,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			$controls = self.$colorPanel.find( '.color-control' );
 			$controls.find( 'ul.colors' ).removeClass( 'selected' );
-			self.$colorPicker.iris( 'color', selectedBackground );
+			self.updatePicker( selectedBackground );
 			self.selectColor( $controls.find( '.my-colors li:last-of-type' ) );
+		},
+
+		/**
+		 * Update color picker color.
+		 *
+		 * @since 1.5
+		 * @param  {string} color Color requested.
+		 */
+		updatePicker: function( color ) {
+			var alpha;
+
+			self.$colorPicker.iris( 'color', color );
+
+			// Update alpha slider.
+			alpha = parseInt( Color( color )._alpha * 100 );
+			self.$colorPanel.find( '.iris-slider-offset-alpha' ).slider( 'value', alpha );
 		},
 
 		/**
@@ -567,7 +583,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				type = 'default' === $this.data( 'type' ) ? 'class' : 'color';
 
 				self.$colorPanel.find( 'ul.colors .panel-selection' ).removeClass( 'selected' );
-				self.$colorPicker.iris( 'color', $this.css( 'background-color' ) );
+				self.updatePicker( $this.css( 'background-color' ) );
 				self.selectColor( $this );
 
 				self.$currentInput.val( $this.attr( 'data-preset' ) );
