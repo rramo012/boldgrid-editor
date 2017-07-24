@@ -199,6 +199,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$frameHtml = self.$container.find( 'html' );
 
 			e.preventDefault();
+			self.$container.validate_markup();
 			self.sectionDragEnabled = false;
 			$body.removeClass( 'focus-on boldgrid-zoomout' );
 			$window.trigger( 'resize' );

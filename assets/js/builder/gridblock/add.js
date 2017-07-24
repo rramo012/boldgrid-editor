@@ -51,6 +51,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		replaceGridblock: function( $placeHolder, gridblockId ) {
 			var selectedHtml = BG.GRIDBLOCK.Create.getHtml( gridblockId );
 			IMHWPB.tinymce_undo_disabled = true;
+			self.$window.trigger( 'resize' );
 
 			// Insert into page aciton.
 			if ( 'string' !== typeof selectedHtml ) {
