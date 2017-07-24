@@ -237,6 +237,7 @@ class Boldgrid_Editor_Assets {
 			'jquery-ui-droppable',
 			'jquery-ui-selectmenu',
 			'jquery-masonry',
+			'wp-util',
 		);
 
 		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
