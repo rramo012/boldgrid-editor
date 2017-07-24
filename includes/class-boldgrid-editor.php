@@ -146,6 +146,7 @@ class Boldgrid_Editor {
 	 */
 	public function __construct() {
 		$config = new Boldgrid_Editor_Config();
+		$config = apply_filters( 'boldgrid_editor_config', $config );
 		$this->set_config( $config );
 
 		$tab_configs = require BOLDGRID_EDITOR_PATH . '/includes/config/layouts.php';
