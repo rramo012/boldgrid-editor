@@ -29,8 +29,8 @@ class Boldgrid_Editor_Config {
 	 *
 	 * @return array
 	 */
-	public function get_configs() {
-		return $this->configs;
+	public function get_configs( $key = null ) {
+		return ! empty( $this->configs{$key} ) ? $this->configs{$key} : $this->configs;
 	}
 
 	/**
