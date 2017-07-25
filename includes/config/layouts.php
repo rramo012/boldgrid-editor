@@ -5,18 +5,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 return array (
 	'tabs' => array (
-		/*'insert-layout' => array (
-			'tab-details' => array (
-				'type' => 'html',
-				'selection-type' => 'single-item'
-			), // multi-select
-			'title' => 'Insert GridBlock',
-			'content-class' => 'Boldgrid_Layout',
-			'slug' => 'insert_layout',
-			'attachments-template' => BOLDGRID_EDITOR_PATH . '/pages/standard-attachments.php',
-			'sidebar-template' => BOLDGRID_EDITOR_PATH . '/pages/standard-sidebar.php',
-			'route-tabs' => array ()
-		),*/
 		'google-map' => array (
 			'tab-details' => array (
 				'type' => 'api',

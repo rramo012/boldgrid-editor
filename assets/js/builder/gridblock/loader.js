@@ -41,20 +41,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			/**
-			 * Remove the overlay that fades in the gridblocks.
-			 *
-			 * @since 1.4
-			 */
-			removeLoadingOverlay: function() {
-				var minGridblocks = 4;
-
-				self.countGidblocksLoaded++;
-				if ( self.countGidblocksLoaded === minGridblocks ) {
-					BGGB.View.$gridblockSection.find( '.gridblocks' ).removeClass( 'gridblock-loading' );
-				}
-			},
-
-			/**
 			 * Get a list of gridblocks that need to be rendered.
 			 *
 			 * @since 1.4
@@ -158,9 +144,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					gridblock.state = 'iframeCreated';
 					setTimeout( function() {
 						$gridblock.removeClass( 'gridblock-loading' );
-						self.removeLoadingOverlay();
 						self.creatingIframe = false;
-					}, 300 );
+					}, 200 );
 				};
 
 				postCssLoad = function() {

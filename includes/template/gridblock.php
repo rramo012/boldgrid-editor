@@ -29,7 +29,7 @@
 	</a>
 </div>
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
-	<div class="gridblocks gridblock-loading">
+	<div class="gridblocks">
 	</div>
 </div>
 
