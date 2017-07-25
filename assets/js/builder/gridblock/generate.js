@@ -41,6 +41,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					url: BoldgridEditor.plugin_configs.asset_server +
 						BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
 					dataType: 'json',
+					timeout: 10000,
 					data: {
 
 						// If filtered to a type, load 30 otherwise 50.
