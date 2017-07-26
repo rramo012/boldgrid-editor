@@ -141,7 +141,7 @@ class Boldgrid_Editor_Theme {
 		$boldgrid_palette_class = ! empty( $theme_mods['boldgrid_palette_class'] ) ?
 			$theme_mods['boldgrid_palette_class'] : 'palette-primary';
 
-		return ( $boldgrid_palette_class ? $boldgrid_palette_class : $stylzr_palette_class );
+		return $boldgrid_palette_class;
 	}
 
 
