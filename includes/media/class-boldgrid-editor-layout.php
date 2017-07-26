@@ -277,11 +277,16 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 
 		$pages = self::get_all_pages();
 
+		$pages = apply_filters( 'pre_boldgrid_editor_get_existing_layouts', $pages );
+
 		// Grab all rows from all pages.
-		$row_content = array ();
+		$row_content = array();
+
 		foreach ( $pages as $page ) {
 			$row_content = array_merge( $row_content, self::parse_gridblocks( $page->post_content, $page ) );
 		}
+
+		$row_content = apply_filters( 'boldgrid_editor_get_existing_layouts', $row_content );
 
 		return $row_content;
 	}
