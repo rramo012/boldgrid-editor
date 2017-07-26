@@ -220,9 +220,6 @@ class Boldgrid_Editor {
 		// Check PHP and WordPress versions for compatibility.
 		add_action( 'admin_init', array ( $boldgrid_editor_version, 'check_php_wp_versions' ) );
 
-		// Provide a way to access gridblock files in this plugin.
-		add_filter( 'boldgrid_create_gridblocks', 'Boldgrid_Layout::get_universal_gridblocks' );
-
 		// Upgrade old versions of maps.
 		add_action( 'admin_init', array( $boldgrid_editor_media_map, 'upgrade_maps' ) );
 

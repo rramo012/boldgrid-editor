@@ -26,23 +26,35 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {$.deferred} Ajax response.
 			 */
 			fetch: function() {
-				var type;
-
 				if ( self.fetching || self.failure ) {
 					return false;
 				}
 
-				type = BG.GRIDBLOCK.Category.getSearchType();
-
 				self.fetching = true;
 				self.gridblockLoadingUI.start();
+
+				return self.requestGridblocks().done( function( gridblocks ) {
+					self.addToConfig( gridblocks );
+					BG.GRIDBLOCK.View.createGridblocks();
+				} ).always( function() {
+					self.fetching = false;
+					self.gridblockLoadingUI.finish();
+				} ).fail( function() {
+					self.failure = true;
+					BG.GRIDBLOCK.View.$gridblockSection.append( wp.template( 'boldgrid-editor-gridblock-error' )() );
+				} );
+			},
+
+			requestGridblocks: function( options ) {
+				var type = BG.GRIDBLOCK.Category.getSearchType();
+				options = options || {};
 
 				return $.ajax( {
 					url: BoldgridEditor.plugin_configs.asset_server +
 						BoldgridEditor.plugin_configs.ajax_calls.gridblock_generate,
 					dataType: 'json',
 					timeout: 10000,
-					data: {
+					data: _.defaults( options, {
 
 						// If filtered to a type, load 30 otherwise 50.
 						'quantity': type ? 30 : 50,
@@ -52,18 +64,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						'type': type,
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': self.getCategory()
-					}
-				}).done( function( gridblocks ) {
-					self.addToConfig( gridblocks );
-					BG.GRIDBLOCK.View.createGridblocks();
-
-				} ).always( function() {
-					self.fetching = false;
-					self.gridblockLoadingUI.finish();
-				} ).fail( function() {
-					self.failure = true;
-					BG.GRIDBLOCK.View.$gridblockSection.append( wp.template( 'boldgrid-editor-gridblock-error' )() );
-				} );
+					} )
+				});
 			},
 
 			/**
