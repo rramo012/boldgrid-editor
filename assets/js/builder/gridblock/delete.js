@@ -90,6 +90,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.$deleteIcon.hide();
 				self.$deleteIcon.$section.remove();
 				tinymce.activeEditor.undoManager.add();
+				BG.GRIDBLOCK.Add.$window.trigger( 'resize' );
 			}
 		}
 

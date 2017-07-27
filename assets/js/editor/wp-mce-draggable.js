@@ -441,25 +441,25 @@ e.preventDefault();
 			self.$resizing_iframe = $( '#resizer-iframe' );
 
 			//Remove Elements that we dont want loaded
-			$temp_loaded_container.find( 'script, meta, title').remove();
-			$temp_loaded_container.find('img').attr('src', '');
-			$temp_loaded_container.find('img').attr('srcset', '');
-			$temp_loaded_container.find('[onload]').removeAttr('onload');
+			$temp_loaded_container.find( 'script, meta, title' ).remove();
+			$temp_loaded_container.find( 'img' ).attr( 'src', '' );
+			$temp_loaded_container.find( 'img' ).attr( 'srcset', '' );
+			$temp_loaded_container.find( '[onload]' ).removeAttr( 'onload' );
 
 			$stripped_without_styles = $temp_loaded_container.clone();
-			$stripped_without_styles.find('link, style').remove();
+			$stripped_without_styles.find( 'link, style' ).remove();
 
 			//Apply the bootstrap container class first and if not found
 			//Try to match front end window size.
 			self.$resizing_iframe[0]
 				.contentWindow
 				.document
-				.write($stripped_without_styles.html());
+				.write( $stripped_without_styles.html() );
 
 			$container = self.$resizing_iframe
 				.contents()
 				.find( 'article[class^="post-"]' )
-				.closest('.container, .container-fluid');
+				.closest( '.container, .container-fluid' );
 
 			if ( ! $container.length ) {
 				$container =  self.$resizing_iframe
@@ -468,24 +468,24 @@ e.preventDefault();
 					.closest( '.container, .container-fluid' );
 			}
 
-			if ( $container.hasClass('container') ) {
+			if ( $container.hasClass( 'container' ) ) {
 				self.bootstrap_container = 'container';
-			} else if ( $container.hasClass('container-fluid') ) {
+			} else if ( $container.hasClass( 'container-fluid' ) ) {
 				self.bootstrap_container = 'container-fluid';
 			}
 
 			if ( self.bootstrap_container ) {
-				//self.tinymce_body_container.addClass(self.bootstrap_container);
+				//Self.tinymce_body_container.addClass(self.bootstrap_container);
 				self.$resizing_iframe.remove();
-				$window.trigger('resize');
+				$window.trigger( 'resize' );
 				return;
 			} else {
 				self.$resizing_iframe[0].src = BoldgridEditor.site_url;
-				self.$resizing_iframe[0].onload = function () {
+				self.$resizing_iframe[0].onload = function() {
 					self.$post_container = self.$resizing_iframe
 						.contents()
 						.find( 'article[class^="post-"]' );
-					$window.trigger('resize');
+					$window.trigger( 'resize' );
 				};
 			}
 		});
@@ -494,7 +494,7 @@ e.preventDefault();
 	/**
 	 * Event to fire once the user resizes their window
 	 */
-	this.resize_done_event = function ( current_resize, force_update ) {
+	this.resize_done_event = function( current_resize, force_update ) {
 
 		if ( self.last_resize == current_resize || force_update) {
 			var $iframe_html = self.tinymce_body_container.closest('html');

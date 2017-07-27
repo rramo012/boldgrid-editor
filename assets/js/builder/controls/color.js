@@ -32,12 +32,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		textContrastClasses: [
-		    'color-neutral-text-default',
-		    'color1-text-default',
-		    'color2-text-default',
-		    'color3-text-default',
-		    'color4-text-default',
-		    'color5-text-default'
+			'color-neutral-text-default',
+			'color1-text-default',
+			'color2-text-default',
+			'color3-text-default',
+			'color4-text-default',
+			'color5-text-default',
+			'color-neutral-text-contrast',
+			'color-1-text-contrast',
+			'color-2-text-contrast',
+			'color-3-text-contrast',
+			'color-4-text-contrast',
+			'color-5-text-contrast'
 		],
 
 		backgroundColorClasses: [
@@ -144,7 +150,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param string index color num
 		 */
 		getColorClass: function( type, index ) {
-			return 'color' + index + '-' + type;
+			var seperator = 'text-contrast' === type ? '-' : '';
+			return 'color' + seperator + index + '-' + type;
 		},
 
 		/**

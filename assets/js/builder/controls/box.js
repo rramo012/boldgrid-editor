@@ -381,7 +381,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				BG.Controls.addStyle( $module, 'background-color', '' );
 
 				if ( 'class' === type ) {
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'text-default', value ) );
+					$module.addClass( BG.CONTROLS.Color.getColorClass( 'text-contrast', value ) );
 					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
 				} else {
 					BG.Controls.addStyle( $module, 'background-color', value );

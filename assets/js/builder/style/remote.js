@@ -55,7 +55,8 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 			 * @return string Head markup that represents the styles.
 			 */
 			getHeadElements: function( siteMarkup ) {
-				var $html = $( '<div>' ).html( siteMarkup ),
+				var siteMarkup = siteMarkup.replace( /<body\b[^<]*(?:(?!<\/body>)<[^<]*)*<\/body>/, '' ),
+					$html = $( '<div>' ).html( siteMarkup ),
 					headMarkup = '';
 
 				$html.find( 'link, style' ).each( function() {

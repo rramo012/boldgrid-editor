@@ -2251,7 +2251,9 @@ html:not(.dragging-section) .delete-icon-wrap {
   outline: 2px solid #f95b26; }
 
 .dragging-section .boldgrid-section {
-  position: relative; }
+  position: relative;
+  border: 0 !important;
+  outline: 0 !important; }
 
 .dragging-section .boldgrid-section:after {
   background-color: transparent;
