@@ -30,7 +30,7 @@ iframe[src^="https://maps.google.com"] {
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
-    color:  #FFFFFF;
+    color:  #FFFFFF !important;
 
     -khtml-user-select: none ;
    -moz-user-select: none ;
