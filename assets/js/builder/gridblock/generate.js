@@ -144,9 +144,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				var $html = $( gridblockData.html );
 
 				self.updateBackgroundImages( $html );
-				gridblockData[ 'preview-html' ] = gridblockData.html;
 				gridblockData[ 'html-jquery' ] = $html;
-				gridblockData[ 'preview-html-jquery' ] = $html.clone();
 
 				return gridblockData;
 			}

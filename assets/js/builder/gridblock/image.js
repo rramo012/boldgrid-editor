@@ -19,7 +19,28 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( gridblockData.dynamicImages ) {
 					self.replaceImages( gridblockData );
 					self.replaceBackgrounds( gridblockData );
+				} else {
+					self.transferSrcAttr( gridblockData );
 				}
+			},
+
+			/**
+			 * Transfer src attributes to elements.
+			 *
+			 * Gridblocks that halve already been installed have temporary src attributes that are
+			 * only applied when previewed.
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {object} gridblockData Current Gridblock.
+			 */
+			transferSrcAttr: function( gridblockData ) {
+				gridblockData.$html.find( 'img[data-src]' ).each( function() {
+					var $this = $( this ),
+						src = $this.attr( 'data-src' );
+
+					$this.removeAttr( 'data-src' ).attr( 'src', src );
+				} );
 			},
 
 			/**

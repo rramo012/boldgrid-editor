@@ -233,7 +233,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 				'post'
 			),
 			'post_status' => $status,
-			'posts_per_page' => - 1
+			'posts_per_page' => 20
 		);
 
 		$results = new WP_Query( $args );
@@ -285,6 +285,9 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		foreach ( $pages as $page ) {
 			$row_content = array_merge( $row_content, self::parse_gridblocks( $page->post_content, $page ) );
 		}
+
+		// Limit to 100 GridBlock for performance issues.
+		$row_content = array_slice( $row_content, 0, 100 );
 
 		$row_content = apply_filters( 'boldgrid_editor_get_existing_layouts', $row_content );
 

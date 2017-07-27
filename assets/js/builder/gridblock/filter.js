@@ -22,17 +22,32 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.GRIDBLOCK.configs.gridblocks = {};
 
 			$.each( self.configs, function( gridblockId ) {
+				this.html = self.unsetImageUrls( this.html );
 				this.$html = $( this.html );
-				this.$previewHtml = $( this['preview-html'] );
 
 				self.removeInvalidGridblocks( this, gridblockId );
-				self.stripSampleData( gridblockId );
-
-				self.translateImageUrls( this.$html );
-				self.translateImageUrls( this.$previewHtml );
 			} );
 
 			self.setConfig();
+		},
+
+		/**
+		 * Removing image src urls.
+		 *
+		 * @since 1.5
+		 *
+		 * @param  {string} html HTML to update.
+		 * @return {string}      Return html string.
+		 */
+		unsetImageUrls: function( html ) {
+			var matches = html.match( /<img.*?>/g );
+			matches = matches || [];
+
+			_.each( matches, function( match ) {
+				html = html.replace( match, match.replace( /\ssrc=/, ' data-src=' ) );
+			} );
+
+			return html;
 		},
 
 		/**
@@ -44,12 +59,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  {integer} gridblockId Index of Gridblock
 		 */
 		removeInvalidGridblocks: function( gridblock, gridblockId ) {
-			var hasFailedDynamic, isSimpleGridblock;
+			var isSimpleGridblock = self.isSimpleGridblock( gridblock.$html );
 
-			hasFailedDynamic = self.hasFailedDynamic( gridblock.$html );
-			isSimpleGridblock = self.isSimpleGridblock( gridblock.$html );
-
-			if ( isSimpleGridblock || hasFailedDynamic ) {
+			if ( isSimpleGridblock ) {
 				self.removeGridblock( gridblockId );
 			}
 		},
@@ -72,14 +84,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			/**
-			 * Get the jQuery Preview Object.
-			 * @return {jQuery} HTML to be added to be previewed.
-			 */
-			getPreviewHtml: function() {
-				return this.$previewHtml[0].outerHTML;
-			},
-
-			/**
 			 * Create a placeholder based on the preview object.
 			 * @return {jQuery} Element to preview with loading element nested.
 			 */
@@ -89,20 +93,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				return $clone;
 			}
-		},
-
-		/**
-		 * Remove links from anchors.
-		 *
-		 * @since 1.4
-		 *
-		 * @param  {integer} gridblockId Index of gridblock.
-		 */
-		stripSampleData: function( gridblockId ) {
-			var $html = self.configs[ gridblockId ].$html;
-
-			//$html.find( 'img' ).removeAttr( 'src class' );
-			$html.find( 'a' ).attr( 'href', '#' );
 		},
 
 		/**
@@ -137,7 +127,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			gridblockData.dynamicImages = true;
 			gridblockData.gridblockId = gridblockId;
 			gridblockData.$html = gridblockData['html-jquery'];
-			gridblockData.$previewHtml = gridblockData['preview-html-jquery'];
 
 			delete gridblockData.html;
 			delete gridblockData['preview-html'];
@@ -160,28 +149,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		/**
-		 * Remove any gridblocks from the config that did not get converted properly.
-		 *
-		 * @since 1.4
-		 *
-		 * @param {number} gridblockId Index of gridblock.
-		 */
-		hasFailedDynamic: function( $html ) {
-			var hasFailedDynamic = false;
-			$html.find( 'img' ).each( function() {
-				var $this = $( this ),
-					src = $this.attr( 'src' );
-
-				if ( src && src.indexOf( '//wp-preview' ) > -1 && ! $this.attr( 'data-id-from-provider' ) ) {
-					hasFailedDynamic = true;
-					return false;
-				}
-			});
-
-			return hasFailedDynamic;
-		},
-
-		/**
 		 * Create a string that will be used to check if 2 griblocks are the sameish.
 		 *
 		 * @since 1.4
@@ -191,38 +158,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		createUniqueMarkup: function( $element ) {
 			$element = $element.clone();
-			$element.find( 'img' ).removeAttr( 'src' ).removeAttr( 'class' );
+			$element.find( 'img' ).removeAttr( 'src' ).removeAttr( 'data-src' ).removeAttr( 'class' );
 			return $element[0].outerHTML.replace( /\s/g, '' );
-		},
-
-		/**
-		 * Add the src attributes for images that need them.
-		 *
-		 * @since 1.2
-		 */
-		translateImageUrls: function( $context ) {
-			var $imagesToTranslate = $context.find( '[data-boldgrid-asset-id]' );
-
-			$imagesToTranslate.each( function() {
-				var imageUrl,
-					$this = $( this ),
-					assetId = $this.data( 'boldgrid-asset-id' );
-
-				if ( IMHWPB.configs && IMHWPB.configs.api_key ) {
-
-					// If the user has an API key place the asset images.
-					imageUrl = IMHWPB.configs.asset_server +
-						IMHWPB.configs.ajax_calls.get_asset + '?key=' +
-						IMHWPB.configs.api_key + '&id=' + assetId;
-
-					$this.attr( 'src', imageUrl );
-					$this.attr( 'data-pending-boldgrid-attribution', 1 );
-				} else {
-
-					// Otherwise insert place holders.
-					self.setPlaceholderSrc( $this );
-				}
-			} );
 		},
 
 		/**
