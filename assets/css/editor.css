@@ -378,6 +378,12 @@
   width: 65%; }
 
 /*************** Background Panel ********************/
+.editor-panel[data-type="box"] .my-designs {
+  z-index: 1; }
+
+.editor-panel[data-type="box"] .panel-footer {
+  z-index: 2; }
+
 .editor-panel[data-type="box"].editor-panel,
 .editor-panel[data-type="box"] .panel-body {
   background-color: #ececec; }
@@ -389,6 +395,17 @@
   padding: 0;
   cursor: pointer;
   box-sizing: border-box; }
+
+.editor-panel[data-type="box"] .bg-box:before {
+  content: ' ';
+  background-image: url(../image/transparency.png);
+  background-size: 55px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1; }
 
 .editor-panel[data-type="box"] .bg-box.box-long {
   height: 114px; }
@@ -420,7 +437,7 @@
   top: -9px;
   right: -9px;
   color: #f95b26;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   background-size: 22px 27px;
   height: 21px;
@@ -619,7 +636,7 @@
   top: -9px;
   right: -9px;
   color: #f95b26;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   background-size: 22px 27px;
   height: 21px;
@@ -665,7 +682,7 @@
   top: -9px;
   right: -9px;
   color: #f95b26;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   background-size: 22px 27px;
   height: 21px;
@@ -707,7 +724,7 @@
   top: -9px;
   right: -9px;
   color: #f95b26;
-  background-color: white;
+  background: white;
   border-radius: 50%;
   background-size: 22px 27px;
   height: 21px;
