@@ -34,6 +34,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:                       Added filter for allowed_post_types for loading editor.
 * Update:                       Improving timing of GridBlock loading message.
 * Update:                       Improving performance of GridBlocks on sites with a lot of content.
+* Update:                       Updating background image urls.
+* Update:                       Updating Font Awesome icon selections.
 
 ### 1.4.7 ###
 * Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.
