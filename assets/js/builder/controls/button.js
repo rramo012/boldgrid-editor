@@ -117,6 +117,29 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupPresetClick();
 			self._setupColorClick();
 			self._setupCustomizeOpen();
+			self.removeSizeClasses();
+		},
+
+		/**
+		 * Remove large size classes from the used components.
+		 *
+		 * @since 1.5
+		 */
+		removeSizeClasses: function() {
+			var usedComponents = BoldgridEditor.builder_config.components_used.button;
+
+			_.each( usedComponents, function( value, index ) {
+				value.classes = value.classes.replace( /btn-(giant|jumbo)/g, '' );
+				usedComponents[ index ] = value;
+			} );
+
+			// Eliminate duplicates
+			usedComponents = _.uniq( usedComponents, false, function( comp ) {
+				return comp.classes;
+			} );
+
+			// Only allow 20 button designs.
+			BoldgridEditor.builder_config.components_used.button = usedComponents.slice( 0, 20 );
 		},
 
 		/**
