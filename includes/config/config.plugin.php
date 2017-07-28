@@ -17,4 +17,12 @@ return array (
 	'main_file_path'        => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php',
 	'plugin_transient_name' => 'boldgrid_editor_version_data',
 	'allowed_post_types'    => array( 'page', 'post' ),
+	'conflicting_assets'	=> array(
+		array(
+			'handle' => 'boldgrid-components',
+			'deps' => array(),
+			'version' => '2.0.3',
+			'src' => plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
+		)
+	)
 );

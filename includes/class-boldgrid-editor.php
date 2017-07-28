@@ -189,7 +189,7 @@ class Boldgrid_Editor {
 		$builder_fonts          = new Boldgrid_Editor_Builder_Fonts();
 		$boldgrid_editor_assets = new Boldgrid_Editor_Assets( $this->config->get_configs() );
 
-		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 90 );
+		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 999 );
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor_Theme', 'remove_theme_container' ), 50 );
 		add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
 	}

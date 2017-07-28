@@ -97,10 +97,8 @@ class Boldgrid_Editor_Assets {
 			'boldgrid-editor-public', plugins_url( self::get_minified_js( '/assets/js/editor/public' ), $plugin_file ),
 		array( 'jquery' ), BOLDGRID_EDITOR_VERSION, true );
 
-		// Boxes, image wraps, stuff like that.
-		wp_enqueue_style( 'boldgrid-components',
-			plugins_url( '/assets/css/components.min.css', $plugin_file ),
-		array(), BOLDGRID_EDITOR_VERSION );
+		// Enqueue Styles that which depend on version.
+		$this->enqueueLatest();
 
 		// Buttons.
 		wp_enqueue_style( 'boldgrid-buttons',
@@ -109,6 +107,32 @@ class Boldgrid_Editor_Assets {
 
 		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
 		wp_enqueue_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
+	}
+
+	/**
+	 * Check the version of an already enqueued stylesheet to make sure the latest version is enqueued.
+	 *
+	 * @since 1.5.
+	 */
+	public function enqueueLatest() {
+		global $wp_styles;
+
+		foreach ( $this->configs['conflicting_assets'] as $component ) {
+
+			$version = ! empty( $wp_styles->registered[ $component['handle'] ]->ver )
+				? $wp_styles->registered[ $component['handle'] ]->ver : false;
+
+			if ( $version && version_compare( $version, $component['version'], '<' ) ) {
+				wp_deregister_style( $component['handle'] );
+			}
+
+			wp_enqueue_style(
+				$component['handle'],
+				$component['src'],
+				$component['deps'],
+				$component['version']
+			);
+		}
 	}
 
 	/**
