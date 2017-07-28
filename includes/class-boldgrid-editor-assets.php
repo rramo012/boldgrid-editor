@@ -106,7 +106,6 @@ class Boldgrid_Editor_Assets {
 		array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
-		wp_enqueue_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.6.3' );
 	}
 
 	/**

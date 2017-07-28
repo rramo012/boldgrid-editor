@@ -21,8 +21,14 @@ return array (
 		array(
 			'handle' => 'boldgrid-components',
 			'deps' => array(),
-			'version' => '2.0.3',
+			'version' => '2.0.0',
 			'src' => plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
-		)
+		),
+		array(
+			'handle' => 'font-awesome',
+			'deps' => array(),
+			'version' => '4.7',
+			'src' => plugins_url( '/assets/css/font-awesome.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
+		),
 	)
 );
