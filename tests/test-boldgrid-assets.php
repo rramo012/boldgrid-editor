@@ -33,9 +33,10 @@ class Test_Boldgrid_Assets extends WP_UnitTestCase {
 		} );
 
 		// Test Action
-		add_action( 'wp_enqueue_scripts', function () {
+		$class = $this;
+		add_action( 'wp_enqueue_scripts', function () use ( &$class ) {
 			global $wp_styles;
-			$this->assertTrue( $wp_styles->registered[ 'boldgrid-components' ]->ver !== '0.0.0' );
+			$class->assertTrue( $wp_styles->registered[ 'boldgrid-components' ]->ver !== '0.0.0' );
 		}, 999999 );
 
 		do_action('wp_enqueue_scripts');
