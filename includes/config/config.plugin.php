@@ -23,12 +23,14 @@ return array (
 			'deps' => array(),
 			'version' => '2.0.0',
 			'src' => plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
+			'mce_str_match' => '/components.',
 		),
 		array(
 			'handle' => 'font-awesome',
 			'deps' => array(),
 			'version' => '4.7',
 			'src' => plugins_url( '/assets/css/font-awesome.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
+			'mce_str_match' => '/font-awesome.',
 		),
 	)
 );

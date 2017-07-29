@@ -265,23 +265,29 @@ class Boldgrid_Editor_MCE {
 	 * @return array
 	 */
 	public function add_styles_conflict( $styles ) {
+		$configs = $this->configs->get_configs();
 
-		$conditional_styles = array(
-			'/components.' => '/assets/css/components.min.css',
-			'/font-awesome.' => '/assets/css/font-awesome.min.css',
-		);
-
-		foreach( $conditional_styles as $check => $conditional_style ) {
+		foreach( $configs['conflicting_assets'] as $conditional_style ) {
 
 			$included = false;
-			foreach ( $styles as $style ) {
-				if ( false !== stripos( $style, $check ) ) {
-					$included = true;
+			$replacement_index = sizeof( $styles );
+			foreach ( $styles as $i => $style ) {
+				if ( false !== stripos( $style, $conditional_style['mce_str_match'] ) ) {
+					$parts = parse_url( $style );
+					$queryPart = ! empty( $parts['query'] ) ? $parts['query'] : '';
+					parse_str( $queryPart, $query );
+
+					$version = ! empty( $query['version'] ) ? $query['version'] : false;
+					$replacement_index = $i;
+
+					if ( $version && version_compare( $version, $conditional_style['version'], '>=' ) ) {
+						$included = true;
+					}
 				}
 			}
 
 			if ( ! $included ) {
-				$styles[] = plugins_url( $conditional_style, BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+				$styles[ $replacement_index ] = $conditional_style['src'] . '?version=' . $conditional_style['version'];
 			}
 
 		}
