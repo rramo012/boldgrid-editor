@@ -98,7 +98,7 @@ class Boldgrid_Editor_Assets {
 		array( 'jquery' ), BOLDGRID_EDITOR_VERSION, true );
 
 		// Enqueue Styles that which depend on version.
-		$this->enqueueLatest();
+		$this->enqueue_latest();
 
 		// Buttons.
 		wp_enqueue_style( 'boldgrid-buttons',
@@ -113,7 +113,7 @@ class Boldgrid_Editor_Assets {
 	 *
 	 * @since 1.5.
 	 */
-	public function enqueueLatest() {
+	public function enqueue_latest() {
 		global $wp_styles;
 
 		foreach ( $this->configs['conflicting_assets'] as $component ) {
