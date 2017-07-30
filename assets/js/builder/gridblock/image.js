@@ -52,14 +52,22 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 */
 			replaceImages: function( gridblockData ) {
 				gridblockData.$html.find( 'img' ).each( function() {
-					var $this = $( this ),
+					var	$this = $( this ),
 						src = $this.attr( 'data-src' );
 
-					$this.removeAttr( 'data-src' ).attr( 'dynamicImage', '' );
+					$this.removeAttr( 'data-src' );
+
+					// Get image data.
 					self.getDataURL( src ).done( function( result ) {
-						$this.attr( 'src', result );
+						$this.attr( 'dynamicImage', '' ).attr( 'src', result );
 					} ).fail( function() {
-						$( '[data-id="' + gridblockData.gridblockId + '"]' ).detach();
+
+						// Get the image via server.
+						self.getRedirectURL( src ).done( function ( result ) {
+							$this.attr( 'src', result );
+						} ).fail( function() {
+							BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
+						} );
 					} );
 				} );
 			},
@@ -98,20 +106,30 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @param  {jQuery} $gridblock gridblock previewed.
 			 */
 			replaceBackgrounds: function( gridblockData ) {
-				var $gridblock = gridblockData.$html,
+				var setBackground,
+					$gridblock = gridblockData.$html,
 					backgroundImage = $gridblock.css( 'background-image' ) || '',
 					hasImage = backgroundImage.match( /url\(?.+?\)/ ),
 					imageUrl = self.getBackgroundUrl( $gridblock );
+
+				setBackground = function ( result ) {
+					backgroundImage = self.replaceBackgroundUrl( backgroundImage, result );
+					$gridblock.css( 'background-image', backgroundImage );
+				};
 
 				if ( hasImage ) {
 					$gridblock.css( 'background-image', '' );
 
 					self.getDataURL( imageUrl ).done( function( result ) {
-						backgroundImage = self.replaceBackgroundUrl( backgroundImage, result );
-						$gridblock.css( 'background-image', backgroundImage );
+						setBackground( result );
 						$gridblock.attr( 'dynamicImage', '' );
 					} ).fail( function() {
-						$( '[data-id="' + gridblockData.gridblockId + '"]' ).detach();
+
+						// Get the image via server.
+						self.getRedirectURL( imageUrl ).done( function ( result ) {
+							setBackground( result );
+						} );
+
 					} );
 				}
 			},
@@ -195,7 +213,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 					var fr = new FileReader();
 					fr.onload = function() {
-						$deferred.resolve( this.result );
+						if ( 200 === xhr.status ) {
+							$deferred.resolve( this.result );
+						} else {
+							$deferred.reject();
+						}
 					};
 
 					fr.readAsDataURL( xhr.response );
@@ -208,7 +230,44 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				xhr.send();
 
 				return $deferred;
+			},
+
+			/**
+			 * Get the redirect image for an unsplash image.
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {string} src Remote image path.
+			 * @return {$.deferred} Deferred for callbacks.
+			 */
+			getRedirectURL: function( src ) {
+				var $deferred = $.Deferred();
+
+				$.ajax( {
+					type: 'post',
+					url: ajaxurl,
+					dataType: 'json',
+					timeout: 5000,
+					data: {
+						action: 'boldgrid_redirect_url',
+						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
+						urls: [ src ]
+					}
+				} ).done( function( response ) {
+					var image = response.data[ src ] || false;
+
+					if ( image ) {
+						$deferred.resolve( image );
+					} else {
+						$deferred.reject();
+					}
+				} ).fail( function () {
+					$deferred.reject();
+				} );
+
+				return $deferred;
 			}
+
 		};
 
 	BG.GRIDBLOCK.Image = self;

@@ -298,12 +298,11 @@ class Boldgrid_Editor {
 			add_filter( 'tiny_mce_before_init', array ( $boldgrid_editor_mce, 'allow_empty_tags' ), 29 );
 		}
 
-		add_action( 'wp_ajax_boldgrid_gridblock_image', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_image_ajax' ) );
-		add_action( 'wp_ajax_boldgrid_canvas_image',array ( $boldgrid_editor_ajax, 'upload_canvas_ajax' ) );
+		add_action( 'wp_ajax_boldgrid_canvas_image', array ( $boldgrid_editor_ajax, 'upload_canvas_ajax' ) );
+		add_action( 'wp_ajax_boldgrid_redirect_url', array ( $boldgrid_editor_ajax, 'get_redirect_url' ) );
 
 		// Save a users selection for enabling draggable.
 		add_action( 'wp_ajax_boldgrid_draggable_enabled', array ( $boldgrid_editor_ajax, 'ajax_draggable_enabled' ) );
-		add_action( 'wp_ajax_boldgrid_gridblock_html', array ( $boldgrid_editor_ajax, 'boldgrid_gridblock_html_ajax' ) );
 
 		$boldgrid_editor_crop = new Boldgrid_Editor_Crop();
 		$boldgrid_editor_crop->add_hooks();

@@ -37,6 +37,37 @@ class Boldgrid_Editor_Ajax {
 	}
 
 	/**
+	 * Get a redirect url. Used for unsplash images.
+	 *
+	 * @since 1.5
+	 */
+	public function get_redirect_url() {
+		$urls = ! empty( $_POST['urls'] ) ? $_POST['urls'] : null;
+		$nonce = ! empty( $_POST['boldgrid_gridblock_image_ajax_nonce'] ) ?  $_POST['boldgrid_gridblock_image_ajax_nonce'] : null;
+		$valid = wp_verify_nonce( $nonce, 'boldgrid_gridblock_image_ajax_nonce' );
+
+		if ( ! $valid ) {
+			status_header( 401 );
+			wp_send_json_error();
+		}
+
+		$redirectUrls = array();
+		foreach( $urls as $url ) {
+			$response = wp_remote_head( $url );
+			$headers = ! empty( $response['headers'] ) ? $response['headers']->getAll() : array();
+			$redirectUrl = ! empty( $headers['location'] ) ? $headers['location'] : false;
+			$redirectUrls[ $url ] = $redirectUrl;
+		}
+
+		if ( ! empty( $redirectUrls ) ) {
+			wp_send_json_success( $redirectUrls );
+		} else {
+			status_header( 400 );
+			wp_send_json_error();
+		}
+	}
+
+	/**
 	 * Save Image data to the media library.
 	 *
 	 * @since 1.2.3

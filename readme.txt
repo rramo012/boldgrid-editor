@@ -30,6 +30,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:                       Improving performance of GridBlocks on sites with a lot of content.
 * Update:                       Updating background image urls.
 * Update:                       Updating Font Awesome icon selections.
+* Update:                       Adding alternative image request methods.
 * Update:       JIRA WPB-3373   Use latest version of shared assets.
 
 = 1.4.7 =

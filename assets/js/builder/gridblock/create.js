@@ -53,28 +53,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				html = gridblockData.$html[0].outerHTML;
 			}
 
-			// Final Check, Make sure image tags are not broken.
-			return self.validateImageTags( html );
-		},
-
-		/**
-		 * Find all images and add a placeholder for each url empty tag.
-		 *
-		 * @since 1.2.4
-		 *
-		 * @return {string}  Html of Gridblock.
-		 */
-		validateImageTags: function( html ) {
-			var $div = $( '<div>' ).html( html );
-
-			$div.find( 'img' ).each( function() {
-				var $this = $( this );
-				if ( ! $this.attr( 'src' ) ) {
-					BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
-				}
-			} );
-
-			return $div.html();
+			return html;
 		},
 
 		/**

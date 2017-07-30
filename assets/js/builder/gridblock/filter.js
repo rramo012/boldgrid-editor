@@ -170,8 +170,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		setPlaceholderSrc: function( $this ) {
 
 			// Default to 300.
-			var width = ( $this.attr( 'width' ) ) ? $this.attr( 'width' ) : '300',
-				height = ( $this.attr( 'height' ) ) ? $this.attr( 'height' ) : '300';
+			var width = ( $this.attr( 'data-width' ) ) ? $this.attr( 'data-width' ) : '300',
+				height = ( $this.attr( 'data-height' ) ) ? $this.attr( 'data-height' ) : '300';
 
 			$this.attr( 'src', '//placehold.it/' + width + 'x' + height + '/cccccc/' );
 		},
