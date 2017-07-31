@@ -1,8 +1,8 @@
-( function( window, views, $ ) {
+( function( window, $ ) {
 	var postID = $( '#post_ID' ).val() || 0,
 		media, boldgrid_form;
 
-    var boldgrid_edit_form = jQuery.Event( 'boldgrid_edit_form' ),
+    var boldgrid_edit_form = $.Event( 'boldgrid_edit_form' ),
 		pluginName = 'wpforms';
 
 	media = {
@@ -64,7 +64,9 @@
 		}
 	} );
 
-	views.register( 'wpforms', _.extend( {}, boldgrid_form ) );
+	if ( wp.mce ) {
+		wp.mce.views.register( 'wpforms', _.extend( {}, boldgrid_form ) );
+	}
 
 	/**
 	 * Before Bold grid Initializes add the menu items
@@ -77,4 +79,4 @@
 		} );
 	});
 
-} )( window, window.wp.mce.views, window.jQuery );
+} )( window, window.jQuery );

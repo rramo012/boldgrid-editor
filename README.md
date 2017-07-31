@@ -38,6 +38,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:                       Updating Font Awesome icon selections.
 * Update:                       Adding alternative image request methods.
 * Update:       JIRA WPB-3373   Use latest version of shared assets.
+* Bug fix:      JIRA WPB-3348   Fixing an error on attachment page.
 
 ### 1.4.7 ###
 * Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.
