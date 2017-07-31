@@ -265,6 +265,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 			  },
 			  success: function( response ) {
 				if ( response && response.success ) {
+					response = response.data;
 
 					// Update image in editor.
 					$target.removeClass( 'wp-image-' + $target.attachment_id );

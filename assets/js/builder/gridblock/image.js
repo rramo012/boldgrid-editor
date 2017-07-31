@@ -56,14 +56,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						src = $this.attr( 'data-src' );
 
 					$this.removeAttr( 'data-src' );
+					$this.attr( 'dynamicImage', '' );
+
+					if ( ! self.isRandomUnsplash( src ) ) {
+						$this.attr( 'src', src );
+						return;
+					}
 
 					// Get image data.
 					self.getDataURL( src ).done( function( result ) {
-						$this.attr( 'dynamicImage', '' ).attr( 'src', result );
+						$this.attr( 'src', result );
 					} ).fail( function() {
 
 						// Get the image via server.
-						self.getRedirectURL( src ).done( function ( result ) {
+						self.getRedirectURL( src ).done( function( result ) {
 							$this.attr( 'src', result );
 						} ).fail( function() {
 							BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
@@ -112,26 +118,34 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					hasImage = backgroundImage.match( /url\(?.+?\)/ ),
 					imageUrl = self.getBackgroundUrl( $gridblock );
 
-				setBackground = function ( result ) {
+				setBackground = function( result ) {
 					backgroundImage = self.replaceBackgroundUrl( backgroundImage, result );
 					$gridblock.css( 'background-image', backgroundImage );
 				};
 
 				if ( hasImage ) {
+					$gridblock.attr( 'dynamicImage', '' );
+
+					if ( ! self.isRandomUnsplash( imageUrl ) ) {
+						return;
+					}
+
 					$gridblock.css( 'background-image', '' );
 
 					self.getDataURL( imageUrl ).done( function( result ) {
 						setBackground( result );
-						$gridblock.attr( 'dynamicImage', '' );
 					} ).fail( function() {
 
 						// Get the image via server.
-						self.getRedirectURL( imageUrl ).done( function ( result ) {
+						self.getRedirectURL( imageUrl ).done( function( result ) {
 							setBackground( result );
 						} );
-
 					} );
 				}
+			},
+
+			isRandomUnsplash: function( imageUrl ) {
+				return -1 !== imageUrl.indexOf( 'source.unsplash' );
 			},
 
 			/**
@@ -261,7 +275,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					} else {
 						$deferred.reject();
 					}
-				} ).fail( function () {
+				} ).fail( function() {
 					$deferred.reject();
 				} );
 

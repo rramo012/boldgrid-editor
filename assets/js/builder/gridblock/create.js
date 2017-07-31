@@ -103,7 +103,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					$element.removeAttr( 'dynamicimage' );
 
 					if ( response && response.success ) {
-						BG.GRIDBLOCK.Image.addImageUrl( $element, response );
+						BG.GRIDBLOCK.Image.addImageUrl( $element, response.data );
 					}
 
 					completed++;

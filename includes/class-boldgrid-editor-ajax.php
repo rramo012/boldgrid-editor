@@ -37,19 +37,31 @@ class Boldgrid_Editor_Ajax {
 	}
 
 	/**
-	 * Get a redirect url. Used for unsplash images.
+	 * Validate image nonce.
 	 *
 	 * @since 1.5
 	 */
-	public function get_redirect_url() {
-		$urls = ! empty( $_POST['urls'] ) ? $_POST['urls'] : null;
-		$nonce = ! empty( $_POST['boldgrid_gridblock_image_ajax_nonce'] ) ?  $_POST['boldgrid_gridblock_image_ajax_nonce'] : null;
+	public function validate_image_nonce() {
+		$nonce = ! empty( $_POST['boldgrid_gridblock_image_ajax_nonce'] ) ?
+			$_POST['boldgrid_gridblock_image_ajax_nonce'] : null;
+
 		$valid = wp_verify_nonce( $nonce, 'boldgrid_gridblock_image_ajax_nonce' );
 
 		if ( ! $valid ) {
 			status_header( 401 );
 			wp_send_json_error();
 		}
+	}
+
+	/**
+	 * Get a redirect url. Used for unsplash images.
+	 *
+	 * @since 1.5
+	 */
+	public function get_redirect_url() {
+		$urls = ! empty( $_POST['urls'] ) ? $_POST['urls'] : null;
+
+		$this->validate_image_nonce();
 
 		$redirectUrls = array();
 		foreach( $urls as $url ) {
@@ -68,6 +80,72 @@ class Boldgrid_Editor_Ajax {
 	}
 
 	/**
+	 * Ajax Call upload image.
+	 *
+	 * Works with base64 encoded image or a url.
+	 *
+	 * @since 1.5
+	 */
+	public function upload_image_ajax() {
+		$response = array();
+		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
+
+		$this->validate_image_nonce();
+
+		if ( $this->is_base_64( $image_data ) ) {
+			$response = $this->upload_encoded( $image_data );
+		} else {
+			$response = $this->upload_url( $image_data );
+		}
+
+		if ( ! empty( $response['success'] ) ) {
+			unset( $response['success'] );
+			wp_send_json_success( $response );
+		} else {
+			status_header( 400 );
+			wp_send_json_error();
+		}
+	}
+
+	/**
+	 * Check if a given image src is a base 64 representation.
+	 *
+	 * @since 1.5
+	 *
+	 * @param  string  $url Image src.
+	 * @return boolean      Whether or not the image is encoded.
+	 */
+	public function is_base_64( $url ) {
+		preg_match ( '/^data/', $url, $matches );
+		return ! empty( $matches[0] );
+	}
+
+	/**
+	 * Given a URL, attach the image to the current post.
+	 *
+	 * @since 1.5
+	 *
+	 * @param  string $image_data URL to the remote image.
+	 * @return array              Results of the upload.
+	 */
+	public function upload_url( $image_data ) {
+		global $post;
+
+		$attachment_id = media_sideload_image( $image_data . '&.png', $post->ID, null, 'id' );
+
+		$results = array();
+		if ( ! is_object( $attachment_id ) ) {
+			$results = array(
+				'success' => true,
+				'url' => wp_get_attachment_url( $attachment_id ),
+				'attachment_id' => $attachment_id,
+			);
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Save Image data to the media library.
 	 *
 	 * @since 1.2.3
@@ -75,8 +153,7 @@ class Boldgrid_Editor_Ajax {
 	 * @param string $_POST['image_data'].
 	 * @param integer $_POST['attachement_id'].
 	 */
-	public function upload_canvas_ajax() {
-		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
+	public function upload_encoded( $image_data ) {
 		$attachement_id = ! empty( $_POST['attachement_id'] ) ? (int) $_POST['attachement_id'] : null;
 
 		// Validate nonce
@@ -102,8 +179,7 @@ class Boldgrid_Editor_Ajax {
 		$filename = uniqid() . '.' . $extension;
 		$uploaded = wp_upload_bits( $filename, null, $data );
 
-		$success = false;
-		$response = array();
+		$response = array( 'success' => false );
 		if ( empty( $uploaded['error'] ) ) {
 
 			// Retrieve the file type from the file name.
@@ -135,22 +211,19 @@ class Boldgrid_Editor_Ajax {
 			);
 
 			if ( 0 != $attachment_id ) {
-				$success = true;
-
 				$attach_data = wp_generate_attachment_metadata( $attachment_id, $uploaded['file'] );
 				$result = wp_update_attachment_metadata( $attachment_id, $attach_data );
 
 				$response = array(
+					'success' => true,
 					'attachment_id' => $attachment_id,
 					'url' => $uploaded['url'],
-					'images' => Boldgrid_Editor_Builder::get_post_images( $original_attachment['post_parent'] )
+					'images' => Boldgrid_Editor_Builder::get_post_images( $original_attachment['post_parent'] ),
 				);
 			}
 		}
 
-		$response['success'] = $success;
-		print json_encode( $response );
-		wp_die();
+		return $response;
 	}
 
 }
