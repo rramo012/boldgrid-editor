@@ -219,7 +219,7 @@ class Boldgrid_Editor_Wpforms {
 	public function remove_media_button( $display ) {
 		$screen = get_current_screen();
 
-		if ( 'page' == $screen->post_type ) {
+		if ( 'page' === $screen->post_type || 'post' === $screen->post_type ) {
 			return false;
 		}
 
