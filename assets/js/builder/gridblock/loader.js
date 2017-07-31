@@ -142,8 +142,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					}
 
 					gridblock.state = 'iframeCreated';
-					$gridblock.removeClass( 'gridblock-loading' );
-					self.creatingIframe = false;
+
+					setTimeout( function() {
+						$gridblock.removeClass( 'gridblock-loading' );
+						self.creatingIframe = false;
+					}, 200 );
+
 				};
 
 				postCssLoad = function() {
