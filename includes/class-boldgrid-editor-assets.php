@@ -461,7 +461,8 @@ class Boldgrid_Editor_Assets {
 		plugins_url( '/assets/css/animate.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'boldgrid-components',
-		plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+			plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(),
+			$this->configs['conflicting_assets']['boldgrid-components']['version'] );
 
 		// If theme does not support BGTFW buttons, enqueue buttons.
 		if ( ! Boldgrid_Editor_Theme::has_feature( 'button-lib' ) ) {

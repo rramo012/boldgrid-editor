@@ -18,14 +18,14 @@ return array (
 	'plugin_transient_name' => 'boldgrid_editor_version_data',
 	'allowed_post_types'    => array( 'page', 'post' ),
 	'conflicting_assets'	=> array(
-		array(
+		'boldgrid-components' => array(
 			'handle' => 'boldgrid-components',
 			'deps' => array(),
 			'version' => '2.0.0',
 			'src' => plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 			'mce_str_match' => '/components.',
 		),
-		array(
+		'font-awesome' => array(
 			'handle' => 'font-awesome',
 			'deps' => array(),
 			'version' => '4.7',
