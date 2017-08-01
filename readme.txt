@@ -33,6 +33,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:                       Adding alternative image request methods.
 * Update:       JIRA WPB-3373   Use latest version of shared assets.
 * Bug fix:      JIRA WPB-3348   Fixing an error on attachment page.
+* Bug fix:      JIRA WPB-3383   Adding filter for posts to be excluded from My GridBlocks.
 
 = 1.4.7 =
 * Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.

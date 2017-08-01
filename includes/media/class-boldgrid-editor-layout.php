@@ -214,6 +214,30 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	}
 
 	/**
+	 * Get the posts id's that will be excluded in GridBlock look ups.
+	 *
+	 * @since 1.5
+	 *
+	 * @return array Post Id's to be excluded.
+	 */
+	public static function get_excluded_posts() {
+		$attribution_id = get_option( 'boldgrid_attribution', null );
+		$post_ids = ! empty( $attribution_id['page']['id'] )
+			? array( $attribution_id['page']['id'] ) : array();
+
+		/**
+		 * Allows you to exlude pages from parsing.
+		 *
+		 * Pages that are exluded from parsing will not be used for GridBlock lookups.
+		 *
+		 * @since 1.5
+		 *
+		 * @param array $post_ids A list of post ID's to be exluded.
+		 */
+		return apply_filters( 'Boldgrid\Editor\Media\Layout\exludedPosts', $post_ids );
+	}
+
+	/**
 	 * Get all pages and post.
 	 *
 	 * @since 1.3.
@@ -223,11 +247,10 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 * @return array pages.
 	 */
 	public static function get_pages( $status ) {
-		$attribution_id = get_option( 'boldgrid_attribution', null );
 
 		// Find Pages.
 		$args = array (
-			'post__not_in' => ! empty( $attribution_id['page']['id'] ) ? array( $attribution_id['page']['id'] ) : array(),
+			'post__not_in' => self::get_excluded_posts(),
 			'post_type' => array (
 				'page',
 				'post'
