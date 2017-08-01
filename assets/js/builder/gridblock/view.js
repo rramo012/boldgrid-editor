@@ -18,12 +18,23 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 		init: function() {
 			self.findElements();
+			self.setGridblockCount();
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
 			self.createGridblocks();
 			BG.GRIDBLOCK.Loader.loadGridblocks();
 			BG.GRIDBLOCK.Category.init();
 			self.endlessScroll();
+		},
+
+		/**
+		 * Set Gridblock count.
+		 *
+		 * @since 1.5
+		 */
+		setGridblockCount: function() {
+			self.$gridblockSection.find( '.gridblocks' )
+				.attr( 'my-gridblocks-count', BoldgridEditor.gridblocks.length.toString() );
 		},
 
 		/**

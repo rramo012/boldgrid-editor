@@ -2079,8 +2079,21 @@ html:not(.dragging-section) .delete-icon-wrap {
 .zoom-gridblocks-section .gridblocks.gridblock-loading .gridblock {
   display: none; }
 
+.zoom-gridblocks-section .gridblocks .my-gridblocks-404 {
+  display: none;
+  padding: 40px;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  background: white;
+  margin: 60px 30px;
+  border-top: 6px solid #0073aa; }
+
+.zoom-gridblocks-section .gridblocks:not([filter="saved"]) .my-gridblocks-404,
 .zoom-gridblocks-section .gridblocks:not([filter="saved"]) .gridblock[data-type="saved"] {
   display: none !important; }
+
+.zoom-gridblocks-section .gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404 {
+  display: block !important; }
 
 .zoom-gridblocks-section .gridblock {
   position: relative;

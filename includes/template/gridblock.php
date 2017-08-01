@@ -30,6 +30,10 @@
 </div>
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
 	<div class="gridblocks">
+		<div class="my-gridblocks-404">
+			We didn't find any GridBlocks on your pages. Once you add any GridBlocks to a post or page, it
+			will show up here for your convenience.
+		</div>
 	</div>
 </div>
 
