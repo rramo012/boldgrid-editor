@@ -58,10 +58,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				selectedHtml.always( function( html ) {
 
 					//Ignore history until always returns.
-					self.sendGridblock( html, $placeHolder );
+					self.sendGridblock( html, $placeHolder, gridblockId );
 				} );
 			} else {
-				self.sendGridblock( selectedHtml, $placeHolder );
+				self.sendGridblock( selectedHtml, $placeHolder, gridblockId );
 			}
 		},
 
@@ -87,13 +87,15 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  {string} html         Html to insert.
 		 * @param  {jQuery} $placeHolder Element created to show loading graphic.
 		 */
-		sendGridblock: function( html, $placeHolder ) {
+		sendGridblock: function( html, $placeHolder, gridblockId ) {
 			var $inserting = $( html ),
 				draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
 
 			if ( ! $inserting || ! draggable ) {
 				send_to_editor( $inserting[0].outerHTML );
 			}
+
+			$window.trigger( 'boldgrid_added_gridblock', gridblockId );
 
 			$placeHolder.replaceWith( $inserting );
 			draggable.validate_markup();
