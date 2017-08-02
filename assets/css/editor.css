@@ -1344,16 +1344,13 @@ body.boldgrid-editor-fullscreen {
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 14px;
   text-align: center;
-  line-height: 14px; }
+  line-height: 20px; }
 
 .draghandle:hover {
   color: #f95b26; }
 
-.draghandle.top:before {
-  content: "\f106"; }
-
-.draghandle.bottom:before {
-  content: "\f107"; }
+.draghandle:before {
+  content: "\f07d"; }
 
 .changing-padding-top .draghandle.top,
 .changing-padding-bottom .draghandle.bottom {

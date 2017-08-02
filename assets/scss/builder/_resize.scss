@@ -13,17 +13,14 @@
     font: normal normal normal 14px/1 FontAwesome;
     font-size: 14px;
     text-align: center;
-	line-height: 14px;
-    
-    &:hover {
-    	color: $hover-color;
-    }
-    
-	&.top:before {
-		content: "\f106";
+	line-height: 20px;
+
+	&:hover {
+		color: $hover-color;
 	}
-	&.bottom:before {
-		content: "\f107";
+
+	&:before {
+		content: "\f07d";
 	}
 }
 

@@ -12,7 +12,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 
 		$body: null,
 
-		handleSize: 14,
+		handleSize: 20,
 
 		$container: null,
 
@@ -170,12 +170,12 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$currentRow = $this;
 
 			self.$topHandle.css( {
-				'top': pos.top /*+ self.handleOffset*/,
+				'top': pos.top - 1,
 				'left': rightOffset
 			} );
 
 			self.$bottomHandle.css( {
-				'top': pos.bottom - self.handleOffset,
+				'top': pos.bottom - self.handleOffset + 1,
 				'left': rightOffset
 			} );
 
