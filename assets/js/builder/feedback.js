@@ -7,7 +7,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	var self,
 		BG = BOLDGRID.EDITOR;
 
-	BOLDGRID.EDITOR.Feedback = {
+	BG.Feedback = {
 
 		init: function() {
 			self.$input = $( '[name="boldgrid-record-feedback"]' );
