@@ -21,6 +21,15 @@
 class Boldgrid_Editor_Builder {
 
 	/**
+	 * Check if we have already recorded the feedback on this page load.
+	 *
+	 * @since 1.5
+	 *
+	 * @var boolean
+	 */
+	protected $has_recorded_feedback = false;
+
+	/**
 	 * Enqueue Styles in media buttons hook order. Ensures correct load order.
 	 *
 	 * @since 1.2.3
@@ -337,7 +346,8 @@ class Boldgrid_Editor_Builder {
 		$feedback = ! empty( $_REQUEST['boldgrid-record-feedback'] ) ?
 			$_REQUEST['boldgrid-record-feedback'] : null;
 
-		if ( $feedback ) {
+		if ( $feedback && empty( $this->has_recorded_feedback ) ) {
+			$this->has_recorded_feedback = true;
 			$feedback = sanitize_text_field( wp_unslash( $feedback ) );
 			$feedback = json_decode( $feedback, true );
 			$feedback = is_array( $feedback ) ? $feedback : array();

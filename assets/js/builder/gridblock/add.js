@@ -95,8 +95,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				send_to_editor( $inserting[0].outerHTML );
 			}
 
-			$window.trigger( 'boldgrid_added_gridblock', gridblockId );
-
 			$placeHolder.replaceWith( $inserting );
 			draggable.validate_markup();
 
@@ -106,10 +104,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			setTimeout( function() {
 				BG.CONTROLS.Add.scrollToElement( $inserting, 0 );
 			} );
+
 			self.$window.trigger( 'resize' );
 
 			IMHWPB.tinymce_undo_disabled = false;
 			tinymce.activeEditor.undoManager.add();
+
+			self.$window.trigger( 'boldgrid_added_gridblock', BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] );
 		}
 
 	};

@@ -16,9 +16,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 		bindEvents: function() {
 			$( window )
-				.on( 'boldgrid_added_gridblock', addGridblock );
+				.on( 'boldgrid_added_gridblock', self.addGridblock );
 		},
 
+		/**
+		 * Add an action to feedback.
+		 *
+		 * @since 1.5
+		 *
+		 * @param {object} options Object to store.
+		 */
 		add: function( options ) {
 			var val = self.$input.val() || '[]';
 			val = JSON.parse( val );
@@ -26,13 +33,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.$input.attr( 'value', JSON.stringify( val ) );
 		},
 
-		addGridblock: function( data ) {
-			BG.Feedback.add( {
-				'action': 'installed_gridblock',
-				'data': data
-			} );
+		/**
+		 * Record feedback when gridblock added.
+		 *
+		 * @since 1.5
+		 *
+		 * @param {Event} event
+		 * @param {Object} data
+		 */
+		addGridblock: function( event, data ) {
+			if ( data && data.template ) {
+				self.add( {
+					'action': 'installed_gridblock',
+					'data': {
+						'template' : data.template
+					}
+				} );
+			}
 		}
-
 	};
 
 	self = BOLDGRID.EDITOR.Feedback;
