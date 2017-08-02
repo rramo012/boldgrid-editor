@@ -25,6 +25,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.GRIDBLOCK.Loader.loadGridblocks();
 			BG.GRIDBLOCK.Category.init();
 			self.endlessScroll();
+			self.templateClass = self.getTemplateClass();
 		},
 
 		/**
@@ -158,6 +159,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		findElements: function() {
 			self.$gridblockSection = $( '.boldgrid-zoomout-section' );
 			self.$gridblockNav = $( '.zoom-navbar' );
+			self.$pageTemplate = $('#page_template');
+		},
+
+		/**
+		 * Get the class associated to templates.
+		 *
+		 * @since 1.5
+		 *
+		 * @return {string} class name.
+		 */
+		getTemplateClass: function () {
+			var val = self.$pageTemplate.val() || 'default';
+			val = val.split('.');
+			return 'page-template-' + val[0];
 		},
 
 		/**
@@ -171,6 +186,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			$iframe.find( 'body' )
 				.addClass( BoldgridEditor.body_class )
 				.addClass( 'mce-content-body entry-content centered-section' )
+				.addClass( self.templateClass )
 				.css( 'overflow', 'hidden' );
 		},
 
