@@ -104,7 +104,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.$element.find( '.presets' ).show();
 				panel.$element.find( '.box-design > .title' ).show();
 				panel.$element.find( '.box-design .customize' ).hide();
-				self.toggleFooter();
 				panel.scrollToSelected();
 			} );
 		},
@@ -190,7 +189,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					self.selfResetBorderClasses( $module );
 					panel.clearSelected();
 					self.removeModuleClasses( $module );
-					panel.hideFooter();
 					self._clearModuleClasses();
 					self._clearInlineStyles( $module );
 				} else {
@@ -201,7 +199,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					// Save Classes so that when the user mouse leaves we know that these classes are permanent.
 					self._saveModuleClasses();
 					$this.addClass( 'selected' );
-					panel.showFooter();
 				}
 
 			} );
@@ -258,7 +255,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setupBorderColor();
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 			panel.scrollTo( 0 );
-			panel.hideFooter();
 		},
 
 		/**
@@ -608,12 +604,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			moduleClasses = moduleClasses ? moduleClasses.split( ' ' ) : [];
 
 			$.each( moduleClasses, function() {
-				if ( this.indexOf( 'bg-box' ) === 0 ) {
+				if ( 0 === this.indexOf( 'bg-box' ) ) {
 					moduleBoxClasses.push( this );
 				}
 			} );
 
-			moduleBoxClasses = moduleBoxClasses.join( ' ' );
+			moduleBoxClasses = moduleBoxClasses.length ?  ( '.' + moduleBoxClasses.join( '.' ) ) : false;
 
 			/**
 			 * Grab all classes that start with bg-box from the target
@@ -623,26 +619,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find( '.presets > div' ).each( function() {
 				var $this = $( this );
 
-				if ( moduleBoxClasses && $this.hasClass( moduleBoxClasses ) ) {
+				if ( moduleBoxClasses && $this.filter( moduleBoxClasses ).length ) {
 					if ( $this.css( 'background-color' ) === $module.css( 'background-color' ) ) {
 						$this.addClass( 'selected' );
 						return false;
 					}
 				}
 			} );
-		},
-
-		/**
-		 * Show the panel footer if something is selected.
-		 *
-		 * @since 1.2.7
-		 */
-		toggleFooter: function() {
-			if ( BG.Panel.$element.find( '.selected' ).length ) {
-				BG.Panel.showFooter();
-			} else {
-				BG.Panel.hideFooter();
-			}
 		},
 
 		/**
@@ -751,8 +734,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.initScroll( self );
 			panel.scrollToSelected();
-			self.toggleFooter();
-
+			BG.Panel.showFooter();
 		}
 
 	};
