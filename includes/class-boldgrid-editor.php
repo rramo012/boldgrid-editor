@@ -259,6 +259,7 @@ class Boldgrid_Editor {
 			add_action( 'load-post-new.php', array( $boldgrid_editor_builder, 'add_help_tab' ) );
 
 			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_colors' ), 10, 2  );
+			add_action( 'save_post', array( $boldgrid_editor_builder, 'record_feedback' ), 10, 2  );
 			add_action( 'edit_form_after_title', array( $boldgrid_editor_builder, 'post_inputs' ) );
 			add_action( 'save_post', array( $boldgrid_editor_builder, 'save_container_meta' ), 10, 2  );
 

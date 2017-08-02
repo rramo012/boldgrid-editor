@@ -21,6 +21,15 @@
 class Boldgrid_Editor_Builder {
 
 	/**
+	 * Check if we have already recorded the feedback on this page load.
+	 *
+	 * @since 1.5
+	 *
+	 * @var boolean
+	 */
+	protected $has_recorded_feedback = false;
+
+	/**
 	 * Enqueue Styles in media buttons hook order. Ensures correct load order.
 	 *
 	 * @since 1.2.3
@@ -302,6 +311,7 @@ class Boldgrid_Editor_Builder {
 			checked='checked' name='boldgrid-in-page-containers'>
 		<input style='display:none' type='checkbox' value='<?php echo json_encode( $custom_colors ); ?>'
 			checked='checked' name='boldgrid-custom-colors'>
+		<input style='display:none' value name='boldgrid-record-feedback'>
 <?php
 	}
 
@@ -321,6 +331,30 @@ class Boldgrid_Editor_Builder {
 		$status = isset( $_REQUEST['boldgrid-in-page-containers'] ) ? intval( $_REQUEST['boldgrid-in-page-containers'] ) : null;
 		if ( $post_id && false === is_null( $status ) && ! wp_is_post_revision( $post_id ) ) {
 			$update = update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
+		}
+	}
+
+	/**
+	 * Record feedback.
+	 *
+	 * @since 1.5
+	 *
+	 * @param string $post_id integer.
+	 * @param mixed  $post WP_Post.
+	 */
+	public function record_feedback( $post_id, $post ) {
+		$feedback = ! empty( $_REQUEST['boldgrid-record-feedback'] ) ?
+			$_REQUEST['boldgrid-record-feedback'] : null;
+
+		if ( $feedback && empty( $this->has_recorded_feedback ) ) {
+			$this->has_recorded_feedback = true;
+			$feedback = sanitize_text_field( wp_unslash( $feedback ) );
+			$feedback = json_decode( $feedback, true );
+			$feedback = is_array( $feedback ) ? $feedback : array();
+
+			foreach( $feedback as $item ) {
+				do_action( 'boldgrid_feedback_add', $item['action'], $item['data'] );
+			}
 		}
 	}
 
