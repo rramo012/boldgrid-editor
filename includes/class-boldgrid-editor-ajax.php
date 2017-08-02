@@ -68,7 +68,9 @@ class Boldgrid_Editor_Ajax {
 			$response = wp_remote_head( $url );
 			$headers = ! empty( $response['headers'] ) ? $response['headers']->getAll() : array();
 			$redirectUrl = ! empty( $headers['location'] ) ? $headers['location'] : false;
-			$redirectUrls[ $url ] = $redirectUrl;
+			$content_type = ! empty( $headers['content-type'] ) ? $headers['content-type'] : false;
+			$isImage = $content_type && false === strpos( $content_type, 'text/html' );
+			$redirectUrls[ $url ] = $isImage ? $redirectUrl : false;
 		}
 
 		if ( ! empty( $redirectUrls ) ) {

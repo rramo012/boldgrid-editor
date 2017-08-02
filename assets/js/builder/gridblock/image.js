@@ -225,9 +225,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				xhr.responseType = 'blob';
 				xhr.onload = function() {
 
-					var fr = new FileReader();
+					var contentType,
+						fr = new FileReader();
+
 					fr.onload = function() {
-						if ( 200 === xhr.status ) {
+						contentType = xhr.getResponseHeader( 'content-type' ) || '';
+
+						if ( 200 === xhr.status && -1 !== contentType.indexOf( 'image' ) ) {
 							$deferred.resolve( this.result );
 						} else {
 							$deferred.reject();
