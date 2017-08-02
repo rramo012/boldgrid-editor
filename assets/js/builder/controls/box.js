@@ -143,8 +143,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_applyCloneStyles: function( $module ) {
 			if ( self.$targetModuleClone ) {
-				$module.attr( 'style', self.$targetModuleClone.attr( 'style' ) );
-				$module.attr( 'data-mce-style', self.$targetModuleClone.attr( 'style' ) );
+				$module.attr( 'style', self.$targetModuleClone.attr( 'style' ) || '' );
+				$module.attr( 'data-mce-style', self.$targetModuleClone.attr( 'style' ) || '' );
 			}
 		},
 
@@ -338,10 +338,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		removeModuleClasses: function( $module ) {
-			$.each( BoldgridEditor.builder_config.boxes, function() {
-				$module.removeClass( this );
+			$module.removeClass( function( index, css ) {
+				return ( css.match( /(^|\s)bg-box?\S+/g ) || []).join( ' ' );
 			} );
 
+			$module.removeClass( 'bg-background-color' );
 			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 			$module.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 			BG.Controls.addStyle( $module, 'background-color', '' );
@@ -655,13 +656,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 *
 		 * @since 1.2.7
 		 */
-		hideDuplicates: function() {
+		removeInvalid: function() {
 			var classes = [];
 			BG.Panel.$element.find( '.my-designs > *' ).each( function() {
 				var $this = $( this ),
-					uniqueValue = $this.attr( 'data-value' ) + $this.css( 'background-color' );
+					backgroundColor = $this.css( 'background-color' ),
+					uniqueValue = $this.attr( 'data-value' ) + backgroundColor;
 
-				if ( -1 === classes.indexOf( uniqueValue ) ) {
+				if ( -1 === classes.indexOf( uniqueValue ) && ! BG.CONTROLS.Color.isColorTransparent( backgroundColor ) ) {
 					classes.push( uniqueValue );
 				} else {
 					$this.hide();
@@ -686,7 +688,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				};
 
 				found = false;
-				$.each(  BoldgridEditor.builder_config.components_used.box, function() {
+				$.each( BoldgridEditor.builder_config.components_used.box, function() {
 					if ( this.style === styles.style && this.classes === styles.classes ) {
 						found = true;
 						return false;
@@ -723,7 +725,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			} ) );
 
 			self.styleMyDesigns();
-			self.hideDuplicates();
+			self.removeInvalid();
 
 			BOLDGRID.EDITOR.Panel.open( self );
 
