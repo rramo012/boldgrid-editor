@@ -99,13 +99,18 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
 						image_data: BG.GRIDBLOCK.Image.getEncodedSrc( $element )
 					}
-				} ).always( function( response ) {
+				} ).done( function( response ) {
 					$element.removeAttr( 'dynamicimage' );
 
 					if ( response && response.success ) {
 						BG.GRIDBLOCK.Image.addImageUrl( $element, response.data );
 					}
 
+					completed++;
+					if ( completed === $imageReplacements.length ) {
+						$deferred.resolve( gridblockData.getHtml() );
+					}
+				} ).fail( function() {
 					completed++;
 					if ( completed === $imageReplacements.length ) {
 						$deferred.resolve( gridblockData.getHtml() );

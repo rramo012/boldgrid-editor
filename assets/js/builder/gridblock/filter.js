@@ -173,7 +173,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			var width = ( $this.attr( 'data-width' ) ) ? $this.attr( 'data-width' ) : '300',
 				height = ( $this.attr( 'data-height' ) ) ? $this.attr( 'data-height' ) : '300';
 
-			$this.attr( 'src', '//placehold.it/' + width + 'x' + height + '/cccccc/' );
+			$this.attr( 'src', 'https://placehold.it/' + width + 'x' + height + '/cccccc/' );
 		},
 
 		removeAttributionAttributes: function( $image ) {
