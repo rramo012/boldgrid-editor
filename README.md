@@ -30,6 +30,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ## Changelog ##
 
+### 1.4.9 ###
+* Bug Fix:                      Remove image content type checking.
+
 ### 1.4.8 ###
 * Update:                       Added filter for allowed_post_types for loading editor.
 * Update:                       Improving timing of GridBlock loading message.
