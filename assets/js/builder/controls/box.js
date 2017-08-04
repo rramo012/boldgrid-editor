@@ -105,6 +105,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.$element.find( '.box-design > .title' ).show();
 				panel.$element.find( '.box-design .customize' ).hide();
 				panel.scrollToSelected();
+				BG.Panel.showFooter();
 			} );
 		},
 
@@ -158,14 +159,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.hoverIntent( {
 				out: function() {},
-			    over: function( e ) {
+				over: function( e ) {
 					var $this = $( this );
 
 					e.preventDefault();
 
 					self.addBox( $this );
 				},
-			    selector: '.box-design .presets .' + self.namespace
+				selector: '.box-design .presets .' + self.namespace
 			} );
 		},
 
@@ -255,6 +256,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.setupBorderColor();
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 			panel.scrollTo( 0 );
+			BG.Panel.hideFooter();
 		},
 
 		/**
