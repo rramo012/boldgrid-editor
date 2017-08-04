@@ -265,7 +265,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					type: 'post',
 					url: ajaxurl,
 					dataType: 'json',
-					timeout: 5000,
+					timeout: 8000,
 					data: {
 						action: 'boldgrid_redirect_url',
 						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
