@@ -62,12 +62,14 @@ class Boldgrid_Editor_Ajax {
 		$urls = ! empty( $_POST['urls'] ) ? $_POST['urls'] : null;
 
 		$this->validate_image_nonce();
+		$unsplash_404 = 'https://images.unsplash.com/photo-1446704477871-62a4972035cd?fit=crop&fm=jpg&h=800&q=50&w=1200';
 
 		$redirectUrls = array();
 		foreach( $urls as $url ) {
 			$response = wp_remote_head( $url );
 			$headers = ! empty( $response['headers'] ) ? $response['headers']->getAll() : array();
 			$redirectUrl = ! empty( $headers['location'] ) ? $headers['location'] : false;
+			$redirectUrl = ( $redirectUrl !== $unsplash_404 ) ? $redirectUrl : false;
 			$redirectUrls[ $url ] = $redirectUrl;
 		}
 
