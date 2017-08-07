@@ -201,6 +201,7 @@ class Boldgrid_Editor_Ajax {
 			);
 
 			$attachment = array_merge( $original_attachment, $attachment );
+			$post_parent = ! empty( $original_attachment['post_parent'] ) ? $original_attachment['post_parent'] : null;
 
 			/*
 			 * Insert the attachment into the media library.
@@ -209,7 +210,7 @@ class Boldgrid_Editor_Ajax {
 			$attachment_id = wp_insert_attachment(
 				$attachment,
 				$uploaded['file'],
-				$original_attachment['post_parent']
+				$post_parent
 			);
 
 			if ( 0 != $attachment_id ) {
@@ -220,7 +221,7 @@ class Boldgrid_Editor_Ajax {
 					'success' => true,
 					'attachment_id' => $attachment_id,
 					'url' => $uploaded['url'],
-					'images' => Boldgrid_Editor_Builder::get_post_images( $original_attachment['post_parent'] ),
+					'images' => Boldgrid_Editor_Builder::get_post_images( $post_parent ),
 				);
 			}
 		}
