@@ -200,6 +200,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			e.preventDefault();
 			self.$container.validate_markup();
+			self.$container.$body.find( '.loading-gridblock' ).remove();
 			self.sectionDragEnabled = false;
 			$body.removeClass( 'focus-on boldgrid-zoomout' );
 			$window.trigger( 'resize' );
