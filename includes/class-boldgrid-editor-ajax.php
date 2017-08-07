@@ -133,7 +133,8 @@ class Boldgrid_Editor_Ajax {
 	public function upload_url( $image_data ) {
 		global $post;
 
-		$attachment_id = media_sideload_image( $image_data . '&.png', $post->ID, null, 'id' );
+		$post_id = ! empty( $post->ID ) ? $post->ID : null;
+		$attachment_id = media_sideload_image( $image_data . '&.png', $post_id, null, 'id' );
 
 		$results = array();
 		if ( ! is_object( $attachment_id ) ) {
