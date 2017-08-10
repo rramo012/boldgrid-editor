@@ -338,12 +338,13 @@ hr.bg-hr {
 hr.bg-hr.bg-hr-1:after {
   content: "";
   display: block;
-  height: 10px;
+  height: 0px;
   margin: 0 auto;
   position: relative;
-  width: 10px;
+  width: 0px;
   transform: translateY(-50%);
-  top: 50%; }
+  top: 50%;
+  border: 6px solid; }
 
 hr.bg-hr.bg-hr-2:after {
   content: "";
@@ -355,6 +356,70 @@ hr.bg-hr.bg-hr-2:after {
   margin-left: -8px;
   position: absolute;
   background: transparent; }
+
+hr.bg-hr.bg-hr-3 {
+  border: 1px double;
+  border-left: 0;
+  border-right: 0;
+  background: transparent;
+  height: 2px; }
+
+hr.bg-hr.bg-hr-4 {
+  border: 1px dashed; }
+
+hr.bg-hr.bg-hr-5 {
+  border: 1px dotted; }
+
+hr.bg-hr.bg-hr-6 {
+  border: 2px dashed; }
+
+hr.bg-hr.bg-hr-7 {
+  border: 1px dotted;
+  border-left: 0;
+  border-right: 0;
+  height: 3px; }
+
+hr.bg-hr.bg-hr-8 {
+  border: 1px dotted;
+  border-bottom: 0; }
+
+hr.bg-hr.bg-hr-9 {
+  height: 10px;
+  border: 0;
+  box-shadow: 0 10px 10px -10px #8c8b8b inset; }
+
+hr.bg-hr.bg-hr-10 {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to left, #f0f0f0, #8c8b8b, #f0f0f0); }
+
+hr.bg-hr.bg-hr-11 {
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to left, #f0f0f0, #8c8b8b, #f0f0f0); }
+
+hr.bg-hr.bg-hr-12 {
+  height: 30px;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-radius: 20px; }
+
+hr.bg-hr.bg-hr-12:before {
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: #8c8b8b;
+  border-width: 0 0 1px 0;
+  border-radius: 20px; }
+
+hr.bg-hr.bg-hr-13 {
+  border: 0;
+  box-shadow: 0 0 10px 1px black; }
+
+hr.bg-hr.bg-hr-13:after {
+  content: "\00a0"; }
 
 /*--------------------------------------------------------------
 # Column Background Helpers

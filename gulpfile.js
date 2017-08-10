@@ -128,10 +128,10 @@ gulp.task('font-awesome', function () {
 
 gulp.task('boldgrid-components', function () {
 	gulp.src( [
-		config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/components.*'
-   ] )
-   .pipe( debug({title: 'BoldGrid Components:'}) )
-   .pipe( gulp.dest( config.cssDest ) );
+		config.src + '/node_modules/boldgrid-component-library/dist/css/components.*'
+	] )
+	.pipe( debug({title: 'BoldGrid Components:'}) )
+	.pipe( gulp.dest( config.cssDest ) );
 
 	gulp.src( [
 	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/bootstrap/bootstrap.min.css'
