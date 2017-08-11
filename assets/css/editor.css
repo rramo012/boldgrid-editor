@@ -693,6 +693,45 @@
   top: 5px;
   right: 5px; }
 
+/*************** Change Image Border Panel ********************/
+.editor-panel[data-type="hr"] .panel-selection {
+  margin: 10px 5px;
+  padding: 10px 5px;
+  display: block;
+  background-color: transparent;
+  width: initial;
+  height: initial; }
+
+.editor-panel[data-type="hr"] .panel-selection:hover {
+  background: #eee; }
+
+.editor-panel[data-type="hr"] .back {
+  margin-bottom: 0; }
+
+.editor-panel[data-type="hr"] .presets .selected {
+  position: relative;
+  background: #eee;
+  color: currentColor; }
+
+.editor-panel[data-type="hr"] .presets .selected:after {
+  content: "\f058";
+  font: normal normal normal 14px/1 FontAwesome;
+  width: 22px;
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  color: #f95b26;
+  background: white;
+  border-radius: 50%;
+  background-size: 22px 27px;
+  height: 21px;
+  text-align: center;
+  font-size: 20px; }
+
+.editor-panel[data-type="hr"] .presets .selected:after {
+  top: 0px;
+  right: 5px; }
+
 /*************** Button Panel ********************/
 .editor-panel[data-type="button"] {
   background-color: #eee; }
@@ -1161,6 +1200,12 @@
   color: #00a0d2; }
 
 /*--------------------------------------------------------------
+# Menu Styles
+--------------------------------------------------------------*/
+.mce-content-body hr[data-mce-selected] {
+  outline: none; }
+
+/*--------------------------------------------------------------
 # Post.php Modifications
 --------------------------------------------------------------*/
 /**
@@ -1522,6 +1567,9 @@ body.boldgrid-editor-fullscreen {
 ***/
 #tinymce .bg-control-element {
   outline: 2px dashed #f95b26 !important; }
+
+#tinymce a.bg-control-element, #tinymce hr.bg-control-element, #tinymce i.bg-control-element {
+  outline-offset: 15px; }
 
 #tinymce .fa:hover {
   color: #f95b26 !important; }

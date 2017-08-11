@@ -46,7 +46,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.2.7
 		 * @return jQuery Element being modified.
 		 */
-		getCurrentTarget: function() {
+		getCurrentTarget: function( control ) {
 
 			var $target;
 

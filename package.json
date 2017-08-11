@@ -21,6 +21,7 @@
 	},
 	"homepage": "https://github.com/BoldGrid/boldgrid-editor#readme",
 	"devDependencies": {
+		"boldgrid-component-library": "git+https://github.com/BoldGrid/components.git#master",
 		"gulp": "^3.9.1",
 		"gulp-autoprefixer": "^3.1.1",
 		"gulp-bower": "0.0.13",
@@ -45,7 +46,6 @@
 		"karma-phantomjs-launcher": "^1.0.2",
 		"karma-spec-reporter": "0.0.26",
 		"pump": "^1.0.1",
-		"run-sequence": "^1.2.2",
-		"boldgrid-component-library": "git+https://github.com/BoldGrid/components.git#master"
+		"run-sequence": "^1.2.2"
 	}
 }

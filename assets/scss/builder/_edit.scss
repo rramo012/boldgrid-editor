@@ -5,17 +5,22 @@
 #tinymce {
 	.bg-control-element {
 		outline: 2px dashed #f95b26 !important;
-	} 
-	
-	.fa:hover {
-        color: #f95b26 !important;
 	}
-	 
+	a, hr, i {
+		&.bg-control-element {
+			outline-offset: 15px;
+		}
+	}
+
+	.fa:hover {
+		color: #f95b26 !important;
+	}
+
 	img,
 	.fa {
 	    cursor: pointer;
 	}
-	
+
 	.background-fixed {
 	    background-attachment: scroll !important;
 	}
@@ -29,12 +34,12 @@
 	.draghandle {
 	   display: none !important;
 	}
-	
+
 	.boldgrid-section:hover {
 	   outline: none !important;
 	}
 }
 
-.bg-drag-popover:hover { 
+.bg-drag-popover:hover {
 	display: block !important;
 }

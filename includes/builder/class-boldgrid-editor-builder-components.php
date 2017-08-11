@@ -32,6 +32,7 @@ class Boldgrid_Editor_Builder_Components {
 		'box' => 'bg-box',
 		'button' => 'btn',
 		'image' => 'bg-img',
+		'hr' => 'bg-hr',
 	);
 
 	/**

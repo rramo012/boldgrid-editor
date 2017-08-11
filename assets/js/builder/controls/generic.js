@@ -150,9 +150,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		rotate: {
 			classes: [
-			    'fa-rotate-90',
-			    'fa-rotate-180',
-			    'fa-rotate-270'
+				'fa-rotate-90',
+				'fa-rotate-180',
+				'fa-rotate-270'
 			],
 			getDefault: function() {
 				var $el = BG.Menu.getCurrentTarget(),

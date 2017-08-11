@@ -312,6 +312,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/add.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-hr',
+			plugins_url( '/assets/js/builder/controls/hr.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-section',
 			plugins_url( '/assets/js/builder/controls/section.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );

@@ -64,10 +64,9 @@ class Boldgrid_Editor_Builder {
 		$fonts = new Boldgrid_Editor_Builder_Fonts();
 		$builder_components = new Boldgrid_Editor_Builder_Components();
 
-		$builder_configs = json_decode( file_get_contents(
-		BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
-		$builder_configs['fonts'] = json_decode( file_get_contents(
-		BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+		$builder_configs = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs['component_library'] = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/components.json' ), true );
+		$builder_configs['fonts'] = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
@@ -182,6 +181,7 @@ class Boldgrid_Editor_Builder {
 		$paths[] = $template_path . '/image.php';
 		$paths[] = $template_path . '/image-filter.php';
 		$paths[] = $template_path . '/color.php';
+		$paths[] = $template_path . '/hr.php';
 		$paths[] = $template_path . '/gridblock.php';
 		$paths[] = $template_path . '/font.php';
 		$paths[] = $template_path . '/background.php';

@@ -39,6 +39,7 @@ var config = {
 	fontDest : './assets/fonts',
 	cssDest : './assets/css',
 	jsDest : './assets/js',
+	jsonDir : './assets/json'
 };
 
 gulp.task( 'js-unit-tests', function (done) {
@@ -132,6 +133,12 @@ gulp.task('boldgrid-components', function () {
 	] )
 	.pipe( debug({title: 'BoldGrid Components:'}) )
 	.pipe( gulp.dest( config.cssDest ) );
+
+	gulp.src( [
+		config.src + '/node_modules/boldgrid-component-library/json/components.json'
+	] )
+	.pipe( debug({title: 'BoldGrid Components Json:'}) )
+	.pipe( gulp.dest( config.jsonDir ) );
 
 	gulp.src( [
 	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/bootstrap/bootstrap.min.css'
