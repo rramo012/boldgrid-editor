@@ -837,12 +837,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 				var $closest_receptor = $this.closest_context( self.original_selector_strings.row_selectors_string +
 						', ' + self.original_selector_strings.general_column_selectors_string, self.$master_container );
 				if ( $closest_receptor.is( self.original_selector_strings.row_selectors_string ) ) {
-					$this.wrap( '<div class=\'col-md-12\'><div class=\'row\'><div class=\'col-md-12\'></div></div></div>' );
+					$this.wrap( '<div class=\'col-md-12\'><div class=\'row bg-editor-hr-wrap\'><div class=\'col-md-12\'></div></div></div>' );
 				} else {
 					// This HR is not already draggable.
-					$this.wrap( '<div class=\'row\'><div class=\'col-md-12\'></div></div>' );
+					$this.wrap( '<div class=\'row bg-editor-hr-wrap\'><div class=\'col-md-12\'></div></div>' );
 				}
+			} else {
+				$this.closest( '.row' ).addClass( 'bg-editor-hr-wrap' );
 			}
+
 		} );
 	};
 

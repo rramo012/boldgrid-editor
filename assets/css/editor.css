@@ -335,6 +335,10 @@
   font-weight: normal;
   margin: 10px 0; }
 
+.color-panel .width-control .width,
+.editor-panel .width-control .width {
+  margin-top: 25px; }
+
 /*************** Panel Body ********************/
 .panel-body {
   overflow-y: scroll;
@@ -707,6 +711,9 @@
 
 .editor-panel[data-type="hr"] .back {
   margin-bottom: 0; }
+
+.editor-panel[data-type="hr"] .my-designs {
+  margin-bottom: 30px; }
 
 .editor-panel[data-type="hr"] .presets .selected {
   position: relative;

@@ -375,6 +375,32 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Generic control for applying classes to an component.
+		 *
+		 * @since 1.6
+		 *
+		 * @param  {object} control Control Class.
+		 */
+		setupPanelClick: function( control ) {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			if ( ! control.panel || ! control.panel.styleCallback ) {
+				return;
+			}
+
+			panel.$element.on( 'click', '[data-control-name="' + control.name + '"] .panel-selection', function() {
+				var $target = BG.Menu.getCurrentTarget(),
+					$this = $( this );
+
+				BG.Util.removeComponentClasses( $target, control.componentPrefix );
+
+				$target.addClass( $this.attr( 'data-preset' ) );
+				panel.$element.find( '.selected' ).removeClass( 'selected' );
+				$this.addClass( 'selected' );
+			} );
+		},
+
+		/**
 		 * Show the panel footer if something is selected.
 		 *
 		 * @since 1.3
@@ -426,6 +452,21 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			e.returnValue = false;
 		},
 
+		preselect: function() {
+			var $target, classes;
+
+			if ( ! this.currentControl.panel.preselectCallback ) {
+				return;
+			}
+
+			$target = BG.Menu.getCurrentTarget();
+			classes = BG.Util.getClassesLike( $target, this.currentControl.componentPrefix );
+
+			classes = classes.join( ' ' );
+			this.clearSelected();
+			this.$element.find( '[data-preset="' + classes + '"]:first' ).addClass( 'selected' );
+		},
+
 		/**
 		 * Open the panel for a control.
 		 *
@@ -443,11 +484,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.setDimensions( control.panel.width, control.panel.height );
 			this.setTitle( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
+			this.$element.find( '.panel-body' ).attr( 'data-control-name', control.name );
 			this._enableFooter( control.panel );
 			this._setupCustomize( control );
 			BG.Tooltip.renderTooltips();
 			this.$element.show();
 			this.initScroll( control );
+			this.preselect();
 			this.scrollToSelected();
 			this.collapseSelection();
 
