@@ -33,6 +33,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-bui
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-components.php';
 
 require_once BOLDGRID_EDITOR_PATH . '/support/wpforms/includes/class-boldgrid-editor-wpforms.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-templater.php';
 
 /**
  * BoldGrid Editor class
@@ -178,6 +179,8 @@ class Boldgrid_Editor {
 		} else {
 			$this->front_end_hooks();
 		}
+
+		Boldgrid_Editor_Templater::get_instance();
 	}
 
 	/**
@@ -269,6 +272,7 @@ class Boldgrid_Editor {
 			// Display and save admin notice state.
 			add_action( 'admin_init', array( $boldgrid_editor_version, 'display_update_notice' ) );
 			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
+			add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
 
 			// Creates all tabs as specified by the configuration.
 			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
