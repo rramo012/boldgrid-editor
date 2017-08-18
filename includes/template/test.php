@@ -8,6 +8,10 @@
 	margin-top: 0;
 }
 
+.page-template-templatetest-php.page-template-test header {
+	margin-bottom: 0;
+}
+
 </style>
 
 <?php get_header(); ?>
