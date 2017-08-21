@@ -48,5 +48,9 @@
 		"karma-spec-reporter": "0.0.26",
 		"pump": "^1.0.1",
 		"run-sequence": "^1.2.2"
+	},
+	"dependencies": {
+		"animate.css": "^3.5.2",
+		"bootstrap-sass": "^3.3.7"
 	}
 }

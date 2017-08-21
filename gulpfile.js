@@ -141,16 +141,10 @@ gulp.task('boldgrid-components', function () {
 	.pipe( gulp.dest( config.jsonDir ) );
 
 	gulp.src( [
-	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/bootstrap/bootstrap.min.css'
+		config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
 	] )
-	.pipe( debug({title: 'Bootstrap:'}) )
+	.pipe( debug({title: 'Font Controls:'}) )
 	.pipe( gulp.dest( config.cssDest ) );
-
-	gulp.src( [
-	    config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
-	] )
-    .pipe( debug({title: 'Font Controls:'}) )
-    .pipe( gulp.dest( config.cssDest ) );
 });
 
 gulp.task('copy-parallax-js', function () {

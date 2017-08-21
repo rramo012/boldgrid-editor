@@ -498,7 +498,7 @@ class Boldgrid_Editor_Assets {
 		plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-animate-css',
-		plugins_url( '/assets/css/animate.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+		plugins_url( '/assets/css/animate.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'boldgrid-components',
 			plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(),

@@ -240,6 +240,7 @@ class Boldgrid_Editor_MCE {
 	 */
 	public function prepend_bootstrap_styles( $styles ) {
 
+		$editor_boostrap = plugins_url( '/assets/css/editor-bootstrap.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		$boostrap_included = false;
 		foreach ( $styles as $style ) {
 			if ( -1 !== stripos( $style, 'bootstrap.min.css' ) ) {
@@ -248,8 +249,11 @@ class Boldgrid_Editor_MCE {
 		}
 
 		if ( ! $boostrap_included ) {
-			array_unshift( $styles, plugins_url( '/assets/css/bootstrap.min.css',
-				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+			// Bootsrap not added by the theme, prepend the styles.
+			array_unshift( $styles, $editor_boostrap );
+		} else {
+			// Bootsrap added by the theme, append bootstrap styles to overwrite break points.
+			$styles[] = $editor_boostrap;
 		}
 
 		return $styles;
