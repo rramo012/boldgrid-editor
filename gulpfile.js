@@ -24,7 +24,6 @@ var gulp    = require( 'gulp' ),
     jasmine = require('gulp-jasmine'),
     fs = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
-	bower    = require( 'gulp-bower' ),
 	server = require('karma').Server,
 	phpcs = require('gulp-phpcs'),
 	gutil = require('gutil'),
@@ -35,7 +34,6 @@ var gulp    = require( 'gulp' ),
 var config = {
     src:  './',
     dist: './',
-	bower : './bower_components',
 	fontDest : './assets/fonts',
 	cssDest : './assets/css',
 	jsDest : './assets/js',
@@ -47,11 +45,6 @@ gulp.task( 'js-unit-tests', function (done) {
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
 	}, done ).start();
-});
-
-//Download framework.
-gulp.task('bower', function () {
-	  return bower().pipe( gulp.dest( config.bower ) );
 });
 
 gulp.task('readme', function() {
@@ -115,13 +108,13 @@ gulp.task('phpcs', function () {
 
 gulp.task('font-awesome', function () {
 	gulp.src( [
-			config.bower + '/font-awesome/fonts/**/*',
+			'node_modules/font-awesome/fonts/**/*',
 		] )
 		.pipe( debug({title: 'Font Awesome Fonts:'}) )
 		.pipe( gulp.dest( config.fontDest ) );
 
 	gulp.src( [
-	   		config.bower + '/font-awesome/css/font-awesome.min.css',
+	   		'node_modules/font-awesome/css/font-awesome.min.css',
 	   	] )
 	   	.pipe( debug({title: 'Font Awesome CSS:'}) )
 	   	.pipe( gulp.dest( config.cssDest ) );
@@ -141,7 +134,7 @@ gulp.task('boldgrid-components', function () {
 	.pipe( gulp.dest( config.jsonDir ) );
 
 	gulp.src( [
-		config.bower + '/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
+		'node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
 	] )
 	.pipe( debug({title: 'Font Controls:'}) )
 	.pipe( gulp.dest( config.cssDest ) );
@@ -149,8 +142,8 @@ gulp.task('boldgrid-components', function () {
 
 gulp.task('copy-parallax-js', function () {
 	gulp.src( [
-		config.bower + '/jquery.stellar/jquery.stellar.js',
-		config.bower + '/jquery.stellar/jquery.stellar.min.js'
+		'node_modules/jquery.stellar/jquery.stellar.js',
+		'node_modules/jquery.stellar/jquery.stellar.min.js'
 	] )
 	.pipe( debug( {title: 'jQuery Stellar:'} ) )
 	.pipe( gulp.dest( config.jsDest + '/jquery-stellar' ) );
@@ -232,7 +225,7 @@ gulp.task( 'jsmin-editor', function ( cb ) {
 
 gulp.task( 'build', function ( cb ) {
 	sequence (
-		[ 'bower', 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'readme' ],
+		[ 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'readme' ],
 		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
 		cb
 	);

@@ -90,7 +90,7 @@ class Boldgrid_Editor_Assets {
 		// Parallax.
 		// @TODO only enqueue if the user is using this.
 		wp_enqueue_script( 'boldgrid-parallax',
-			plugins_url( '/assets/js/jquery-stellar/jquery.stellar.min.js', $plugin_file ),
+			plugins_url( '/assets/js/jquery-stellar/jquery.stellar.js', $plugin_file ),
 		array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script(

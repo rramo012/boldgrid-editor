@@ -25,7 +25,6 @@
 		"boldgrid-component-library": "git+https://github.com/BoldGrid/components.git#master",
 		"gulp": "^3.9.1",
 		"gulp-autoprefixer": "^3.1.1",
-		"gulp-bower": "0.0.13",
 		"gulp-concat": "^2.6.0",
 		"gulp-cssnano": "^2.1.1",
 		"gulp-debug": "^2.1.2",
@@ -51,6 +50,9 @@
 	},
 	"dependencies": {
 		"animate.css": "^3.5.2",
-		"bootstrap-sass": "^3.3.7"
+		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
+		"bootstrap-sass": "^3.3.7",
+		"font-awesome": "^4.7.0",
+		"jquery.stellar": "^0.6.2"
 	}
 }
