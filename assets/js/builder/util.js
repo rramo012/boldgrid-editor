@@ -51,6 +51,41 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Get all component classes.
+		 *
+		 * @since 1.5
+		 *
+		 * @param  {string} classes         Class string to test.
+		 * @param  {string} componentPrefix Component class name.
+		 * @return {array}                  Name of classes.
+		 */
+		getComponentClasses: function( classes, prefix ) {
+			var $temp = $('<div>').attr( 'class', classes ),
+				componentClasses = self.getClassesLike( $temp, prefix );
+
+			$temp.remove();
+
+			return componentClasses;
+		},
+
+		/**
+		 * Remove All component classes from an element.
+		 *
+		 * @since 1.5
+		 *
+		 * @param  {jQuery} $el    Element to modify.
+		 * @param  {string} prefix Compnent class name.
+		 */
+		removeComponentClasses: function( $el, prefix ) {
+			var pattern = '(^|\\s)' + prefix + '\\S+',
+				rgxp = new RegExp( pattern, 'g' );
+
+			$el.removeClass( function( index, css ) {
+				return ( css.match( rgxp ) || [] ).join( ' ' );
+			} );
+		},
+
+		/**
 		 * Check the users browser.
 		 *
 		 * @since 1.4

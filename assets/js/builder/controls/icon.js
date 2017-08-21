@@ -34,7 +34,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			customizeCallback: function() {
 				self.openCustomizer();
 			},
-			customizeSupport: [ 'fontColor', 'fontSize', 'margin', 'rotate' ],
+			customizeSupport: [ 'fontColor', 'fontSize', 'margin', 'rotate', 'customClasses' ],
 			customizeSupportOptions: {
 				margin: {
 					horMin: -30

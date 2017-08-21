@@ -39,6 +39,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title: 'Column Background',
 			height: '530px',
 			width: '290px',
+			customizeSupport: [ 'margin', 'customClasses' ],
 			includeFooter: true,
 			customizeCallback: function() {
 				self.openCustomizer();
@@ -357,7 +358,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_initSliders: function() {
 			self._initPaddingSlider();
-			BG.CONTROLS.Generic.margin.bind();
 		},
 
 		/**

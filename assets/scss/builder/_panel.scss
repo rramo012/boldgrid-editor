@@ -299,6 +299,14 @@
 	    }
     }
 
+	.width-control .width {
+		margin-top: 25px;
+	}
+
+	textarea {
+		width: 100%;
+		resize: vertical;
+	}
 }
 
 /*************** Panel Body ********************/
@@ -513,22 +521,22 @@
 	   display: none;
 	}
 
-	.preset-wrapper[data-type="color"] ~ .customize .background-color {
+	.preset-wrapper[data-type="color"] ~ * .customize .background-color {
 	   display: block;
 	}
-	.preset-wrapper[data-type="gradients"] ~ .customize .direction,
-	.preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-2,
-	.preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-1 {
+	.preset-wrapper[data-type="gradients"] ~ * .customize .direction,
+	.preset-wrapper[data-type="gradients"] ~ * .customize .gradient-color-2,
+	.preset-wrapper[data-type="gradients"] ~ * .customize .gradient-color-1 {
 	   display: block;
 	}
 
-	.preset-wrapper[data-type="pattern"] ~ .customize {
+	.preset-wrapper[data-type="pattern"] ~ * .customize {
 		.scroll-effects,
 		.background-color {
 		   display: block;
 		}
 	}
-	.preset-wrapper[data-type="image"] ~ .customize {
+	.preset-wrapper[data-type="image"] ~ * .customize {
 		.overlay-color,
 		.scroll-effects,
 		.vertical-position,
@@ -692,6 +700,10 @@
 
 	.back {
 		margin-bottom: 0;
+	}
+
+	.my-designs {
+		margin-bottom: 30px;
 	}
 
 	.presets .selected {
@@ -962,6 +974,8 @@
 	    overflow: hidden;
 	}
 }
+
+text
 
 .theme-designs .button-overrides,
 .theme-designs .button-overrides {

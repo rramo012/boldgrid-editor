@@ -34,7 +34,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 			includeFooter: true,
 			customizeCallback: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'margin' ]
+			customizeSupport: [ 'margin', 'customClasses' ]
 		},
 
 		/**

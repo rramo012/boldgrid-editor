@@ -20,13 +20,44 @@
 <script type="text/html" id="tmpl-boldgrid-editor-margin">
 	<div class='section margin-control' data-tooltip-id='box-margin'>
 		<h4>Margin</h4>
-		<div class='margin'>
+		<div class='margin margin-horizontal'>
 			<p>Horizontal (px)</p>
 			<div class="slider"></div>
 			<span class='value'></span>
 		</div>
 		<div class='margin-top'>
 			<p>Vertical (px)</p>
+			<div class="slider"></div>
+			<span class='value'></span>
+		</div>
+	</div>
+</script>
+<script type="text/html" id="tmpl-boldgrid-editor-custom-classes">
+	<div class='section custom-classes' data-tooltip-id='custom-classes'>
+		<h4>Custom Classes</h4>
+		<p>List any additional classes to seperated by spaces or commas.</p>
+		<textarea name="custom-classes" rows="3">Write something here</textarea>
+	</div>
+</script>
+<script type="text/html" id="tmpl-boldgrid-editor-horizontal-block-alignment">
+	<div class='horizontal-block-alignment section' data-tooltip-id='horizontal-block-alignment'>
+		<h4>Horizontal Alignment</h4>
+		<label>
+			<input type="radio" checked="checked" name="horizontal-block-alignment" value="left">Left
+		</label>
+		<label>
+			<input type="radio" name="horizontal-block-alignment" value="center">Center
+		</label>
+		<label>
+			<input type="radio" name="horizontal-block-alignment" value="right">Right
+		</label>
+	</div>
+</script>
+
+<script type="text/html" id="tmpl-boldgrid-editor-generic-width">
+	<div class='section width-control' data-tooltip-id='width'>
+		<h4>Width (%)</h4>
+		<div class='width'>
 			<div class="slider"></div>
 			<span class='value'></span>
 		</div>

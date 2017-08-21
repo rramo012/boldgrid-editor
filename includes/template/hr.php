@@ -7,8 +7,8 @@
 			<div class='presets my-designs'>
 				<ul>
 				<# _.each( data.myPresets, function ( preset ) { #>
-					<li data-preset="{{preset.classes}}" class="panel-selection">
-						<img class='{{preset.classes}}' src="{{data.src}}">
+					<li data-preset="{{preset}}" class="panel-selection">
+						<hr class="{{preset}}">
 					</li>
 				<# }); #>
 				</ul>

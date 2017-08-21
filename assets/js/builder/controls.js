@@ -250,6 +250,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			if ( control.setup ) {
 				control.setup();
 			}
+
+			BG.Panel.setupPanelClick( control );
 		},
 
 		/**

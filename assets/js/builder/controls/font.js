@@ -49,7 +49,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		setup: function() {
 			self._setupEffectClick();
-			BG.CONTROLS.Generic.fontColor.bind();
+			BG.CONTROLS.GENERIC.Fontcolor.bind();
 
 			self.templateMarkup = wp.template( 'boldgrid-editor-font' )( {
 				'textEffectClasses': BoldgridEditor.builder_config.textEffectClasses,
@@ -404,7 +404,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.open( self );
 			panel.scrollTo( 0 );
 
-			BG.CONTROLS.Generic.fontSize.bind();
+			BG.CONTROLS.GENERIC.Fontsize.bind();
 		}
 	};
 

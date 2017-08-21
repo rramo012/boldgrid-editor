@@ -12,105 +12,130 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name: 'hr',
 
-		tooltip: 'Horizontal Rule Styles',
+		tooltip: 'Horizontal Line',
 
 		priority: 80,
 
 		iconClasses: 'genericon genericon-minus',
 
-		selectors: [ '.row .row' ],
+		selectors: [ '.bg-editor-hr-wrap' ],
+
+		componentPrefix: 'bg-hr',
 
 		panel: {
-			title: 'Horizontal Rule Styles',
-			height: '450px',
+			title: 'Horizontal Line',
+			height: '550px',
 			width: '275px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'fontColor', 'margin' ],
-			customizeCallback: true
+			customizeSupport: [ 'fontColor', 'width' , 'margin', 'blockAlignment', 'customClasses' ],
+			customizeSupportOptions: {
+				margin: {
+					horizontal: false
+				}
+			},
+			customizeCallback: true,
+			preselectCallback: true,
+			styleCallback: true
 		},
+
+		maxMyDesigns: 10,
 
 		init: function() {
 			BG.Controls.registerControl( this );
+
+			self.myDesigns = [];
+			self.userDesigns._format();
+			self.template = wp.template( 'boldgrid-editor-hr' );
 		},
 
 		/**
-		 * On customization open.
+		 * Override the get target method to return the hr inside the target instead of the target.
 		 *
-		 * @since 1.2.7
+		 * @since 1.6
+		 *
+		 * @return {$} Hr element.
 		 */
-		openCustomizer: function() {
-			var panel = BG.Panel;
-			panel.$element.find( '.customize' ).show();
-			panel.$element.find( '.presets' ).hide();
-			panel.$element.find( '.hr-design > .title' ).hide();
-			BG.Panel.$element.trigger( 'bg-open-customization' );
-			panel.scrollTo( 0 );
-			BG.Panel.hideFooter();
-		},
-
-		onMenuClick: function() {
-			self.openPanel();
-		},
-
 		getTarget: function() {
 			return self.$currentTarget;
 		},
 
-		setupPanelClick: function() {
-			var controls = BOLDGRID.EDITOR.Controls,
-				panel = BOLDGRID.EDITOR.Panel;
-
-			panel.$element.on( 'click', '.hr-design .panel-selection', function() {
-				var $menu = controls.$menu,
-					$target = BG.Menu.getCurrentTarget(),
-					$this = $( this );
-
-				$target.removeClass(function( index, css ) {
-					return ( css.match( /(^|\s)bg-hr-\S+/g ) || [] ).join( ' ' );
-				} );
-
-				$target.addClass( $this.attr( 'data-preset' ) );
-				panel.$element.find( '.selected' ).removeClass( 'selected' );
-				$this.addClass( 'selected' );
-			} );
-		},
-
-		preselect: function() {
-			var $target = BG.Menu.getCurrentTarget(),
-				classes = BG.Util.getClassesLike( $target, 'bg-hr' );
-
-			classes = classes.join( ' ' );
-			BG.Panel.clearSelected();
-			BG.Panel.$element.find( '[data-preset="' + classes + '"]:first' ).addClass( 'selected' );
-		},
-
-		openPanel: function() {
-			var panel = BG.Panel,
-				template = wp.template( 'boldgrid-editor-hr' );
+		/**
+		 * When the user clicks on the menu item, open panel.
+		 *
+		 * @since 1.6
+		 */
+		onMenuClick: function() {
+			var panel = BG.Panel;
 
 			// Remove all content from the panel.
 			self.$currentTarget = BOLDGRID.EDITOR.Menu.getTarget( self ).find( 'hr:first' );
+			self.userDesigns._update();
 			panel.clear();
 
 			// Set markup for panel.
-			panel.$element.find( '.panel-body' ).html( template( {
+			panel.$element.find( '.panel-body' ).html( self.template( {
 				text: 'Horizontal Rule',
 				presets: BoldgridEditor.builder_config.component_library.hr.styles,
-				myPresets: BoldgridEditor.builder_config.component_library.hr || {}
+				myPresets: self.myDesigns
 			} ) );
 
 			panel.showFooter();
 
 			// Open Panel.
 			panel.open( self );
-			self.preselect();
-			self.setupPanelClick();
-		}
+		},
 
+		userDesigns: {
+
+			/**
+			 * Append a sting of CSS classes to my designs.
+			 *
+			 * @since 1.6
+			 *
+			 * @param  {string} classes  Classes to be added to my designs.
+			 */
+			append: function( classes ) {
+				var componentClasses = BG.Util.getComponentClasses( classes, self.componentPrefix ).join(' ');
+
+				// @TODO Check if these classes exist in any order.
+				// @TODO Make sure that if the design is removed from use, it's not added to my designs.
+				if ( componentClasses && -1 === self.myDesigns.indexOf( componentClasses ) ) {
+					self.myDesigns.push( componentClasses );
+				}
+			},
+
+			/**
+			 * Format the user components data into a format the template needs.
+			 *
+			 * @since 1.6
+			 */
+			_format: function() {
+				var builderConfig = BoldgridEditor.builder_config;
+
+				_.each( builderConfig.components_used.hr.slice( 0, self.maxMyDesigns ), function ( design ) {
+					self.userDesigns.append( design.classes );
+				} );
+			},
+
+			/**
+			 * Update My Designs with any designs added by the user.
+			 *
+			 * @since 1.6
+			 */
+			_update: function() {
+				if ( self.myDesigns.length >= self.maxMyDesigns ) {
+					return;
+				}
+
+				BG.Controls.$container.$body.find( 'hr' ).each( function() {
+					self.userDesigns.append( $( this ).attr('class') );
+				} );
+			}
+		}
 	};
 
-	BOLDGRID.EDITOR.CONTROLS.Hr.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Hr;
+	BOLDGRID.EDITOR.CONTROLS.Hr.init();
 
 } )( jQuery );

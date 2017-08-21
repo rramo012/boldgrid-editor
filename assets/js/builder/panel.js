@@ -110,22 +110,38 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @param control BG.Control.
 		 * @since 1.3
 		 */
-		initScroll: function( control ) {
-			// Default height of scroll is the height of body minus this number.
-			var sizeOffset = -66;
+		initScroll: function() {
+			self.createScrollbar( self.getScrollTarget(), this.currentControl.panel || {} );
+		},
 
-			if ( control.panel && control.panel.sizeOffset ) {
-				sizeOffset = control.panel.sizeOffset;
+		/**
+		 * Remove any existing scroll bar and add another to specified panel config.
+		 *
+		 * @since 1.5.1
+		 *
+		 * @param  {string} selector
+		 * @param  {object} config   Configuration.
+		 */
+		createScrollbar: function( selector, config ) {
+
+			// Default height of scroll is the height of body minus this number.
+			var sizeOffset = -66,
+				$target = this.$element.find( selector );
+
+			if ( config && config.sizeOffset ) {
+				sizeOffset = config.sizeOffset;
 			}
 
-			$( '.panel-body' ).slimScroll( { destroy: true } ).attr( 'style', '' );
-			this.$element.find( self.getScrollTarget() ).slimScroll( {
-			    color: '#32373c',
-			    size: '8px',
-			    height: parseInt( control.panel.height ) + sizeOffset,
-			    alwaysVisible: true,
-			    disableFadeOut: true,
-			    wheelStep: 5
+			// Remove existing scroll.
+			self.$element.find('.slimScrollDiv >:first-child').slimScroll( { destroy: true } ).attr( 'style', '' );
+
+			$target.slimScroll( {
+				color: '#32373c',
+				size: '8px',
+				height: parseInt( config.height ) + sizeOffset,
+				alwaysVisible: true,
+				disableFadeOut: true,
+				wheelStep: 5
 			} );
 		},
 
@@ -375,6 +391,32 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Generic control for applying classes to an component.
+		 *
+		 * @since 1.6
+		 *
+		 * @param  {object} control Control Class.
+		 */
+		setupPanelClick: function( control ) {
+			var panel = BOLDGRID.EDITOR.Panel;
+
+			if ( ! control.panel || ! control.panel.styleCallback ) {
+				return;
+			}
+
+			panel.$element.on( 'click', '[data-control-name="' + control.name + '"] .panel-selection', function() {
+				var $target = BG.Menu.getCurrentTarget(),
+					$this = $( this );
+
+				BG.Util.removeComponentClasses( $target, control.componentPrefix );
+
+				$target.addClass( $this.attr( 'data-preset' ) );
+				panel.$element.find( '.selected' ).removeClass( 'selected' );
+				$this.addClass( 'selected' );
+			} );
+		},
+
+		/**
 		 * Show the panel footer if something is selected.
 		 *
 		 * @since 1.3
@@ -426,6 +468,21 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			e.returnValue = false;
 		},
 
+		preselect: function() {
+			var $target, classes;
+
+			if ( ! this.currentControl.panel.preselectCallback ) {
+				return;
+			}
+
+			$target = BG.Menu.getCurrentTarget();
+			classes = BG.Util.getClassesLike( $target, this.currentControl.componentPrefix );
+
+			classes = classes.join( ' ' );
+			this.clearSelected();
+			this.$element.find( '[data-preset="' + classes + '"]:first' ).addClass( 'selected' );
+		},
+
 		/**
 		 * Open the panel for a control.
 		 *
@@ -443,11 +500,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.setDimensions( control.panel.width, control.panel.height );
 			this.setTitle( control.panel.title );
 			this.$element.attr( 'data-type', control.name );
+			this.$element.find( '.panel-body' ).attr( 'data-control-name', control.name );
 			this._enableFooter( control.panel );
 			this._setupCustomize( control );
 			BG.Tooltip.renderTooltips();
 			this.$element.show();
 			this.initScroll( control );
+			this.preselect();
 			this.scrollToSelected();
 			this.collapseSelection();
 

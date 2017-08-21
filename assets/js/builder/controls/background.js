@@ -36,6 +36,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			height: '600px',
 			width: '300px',
 			scrollTarget: '.presets',
+			customizeSupport: [ 'customClasses' ],
 			sizeOffset: -230
 		},
 
@@ -362,6 +363,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				panel.$element.find( '.preset-wrapper' ).show();
 				panel.$element.find( '.background-design .customize' ).hide();
+				panel.initScroll();
 				self.preselectBackground();
 				panel.scrollToSelected();
 			} );
@@ -606,6 +608,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._initSliders();
 			self.selectDefaults();
 			BG.Panel.$element.trigger( 'bg-open-customization' );
+
+			BG.Panel.createScrollbar( '.customize', {
+				'height' : self.panel.height
+			} );
 		},
 
 		/**

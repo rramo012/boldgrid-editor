@@ -43,19 +43,6 @@
 					<span class='value'></span>
 				</div>
 			</div>
-			<div class='section' data-tooltip-id='box-margin'>
-				<h4>Margin</h4>
-				<div class='margin'>
-					<p>Horizontal (px)</p>
-					<div class="slider"></div>
-					<span class='value'></span>
-				</div>
-				<div class='margin-top'>
-					<p>Vertical (px)</p>
-					<div class="slider"></div>
-					<span class='value'></span>
-				</div>
-			</div>
 		</div>
 	</div>
 </script>
