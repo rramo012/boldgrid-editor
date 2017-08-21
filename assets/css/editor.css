@@ -339,6 +339,11 @@
 .editor-panel .width-control .width {
   margin-top: 25px; }
 
+.color-panel textarea,
+.editor-panel textarea {
+  width: 100%;
+  resize: vertical; }
+
 /*************** Panel Body ********************/
 .panel-body {
   overflow-y: scroll;
@@ -965,6 +970,7 @@
 .editor-panel[data-type="image-filter"] .panel-body {
   overflow: hidden; }
 
+text
 .theme-designs .button-overrides,
 .theme-designs .button-overrides {
   background-color: transparent;
@@ -972,7 +978,10 @@
   border: none;
   box-shadow: none; }
 
-.theme-designs .button-overrides:hover, .theme-designs .button-overrides:active, .theme-designs .button-overrides:focus,
+text
+.theme-designs .button-overrides:hover, text
+.theme-designs .button-overrides:active, text
+.theme-designs .button-overrides:focus,
 .theme-designs .button-overrides:hover,
 .theme-designs .button-overrides:active,
 .theme-designs .button-overrides:focus {

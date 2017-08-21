@@ -302,6 +302,11 @@
 	.width-control .width {
 		margin-top: 25px;
 	}
+
+	textarea {
+		width: 100%;
+		resize: vertical;
+	}
 }
 
 /*************** Panel Body ********************/
@@ -969,6 +974,8 @@
 	    overflow: hidden;
 	}
 }
+
+text
 
 .theme-designs .button-overrides,
 .theme-designs .button-overrides {

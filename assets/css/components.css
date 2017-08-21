@@ -328,7 +328,7 @@
 # Horizontal Rule
 --------------------------------------------------------------*/
 hr.bg-hr {
-  background: none;
+  background: transparent;
   height: 0;
   position: relative;
   border: 1px solid;
@@ -365,40 +365,46 @@ hr.bg-hr.bg-hr-3 {
   height: 2px; }
 
 hr.bg-hr.bg-hr-4 {
-  border: 1px dashed; }
+  border: 1px dashed;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-5 {
-  border: 1px dotted; }
+  border: 1px dotted;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-6 {
   border: 2px dashed;
   border-left: 0;
-  border-right: 0; }
+  border-right: 0;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-7 {
   border: 1px dotted;
   border-left: 0;
   border-right: 0;
-  height: 3px; }
+  height: 3px;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-8 {
   border: 1px dotted;
-  border-bottom: 0; }
+  border-bottom: 0;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-9 {
   height: 10px;
   border: 0;
-  box-shadow: 0 10px 10px -10px #8c8b8b inset; }
+  box-shadow: 0 10px 10px -10px #8c8b8b inset;
+  background: transparent; }
 
 hr.bg-hr.bg-hr-10 {
   border: 0;
   height: 1px;
-  background-image: linear-gradient(to left, #f0f0f0, #8c8b8b, #f0f0f0); }
+  background-image: linear-gradient(to left, white, #8c8b8b, white); }
 
 hr.bg-hr.bg-hr-11 {
   border: 0;
   height: 3px;
-  background-image: linear-gradient(to left, #f0f0f0, #8c8b8b, #f0f0f0); }
+  background-image: linear-gradient(to left, white, #8c8b8b, white); }
 
 hr.bg-hr.bg-hr-13 {
   border: 0;
@@ -423,7 +429,11 @@ hr.bg-hr.bg-hr-17 {
   border: 0;
   height: 5px;
   border-top: 3px solid;
-  border-bottom: 3px solid; }
+  border-bottom: 3px solid;
+  background: transparent; }
+
+hr.bg-hr.bg-hr-18, hr.bg-hr.bg-hr-20 {
+  background: transparent; }
 
 hr.bg-hr.bg-hr-18:before, hr.bg-hr.bg-hr-20:before {
   content: "";

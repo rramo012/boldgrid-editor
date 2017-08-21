@@ -32,6 +32,13 @@
 		</div>
 	</div>
 </script>
+<script type="text/html" id="tmpl-boldgrid-editor-custom-classes">
+	<div class='section custom-classes' data-tooltip-id='custom-classes'>
+		<h4>Custom Classes</h4>
+		<p>List any additional classes to seperated by spaces or commas.</p>
+		<textarea name="custom-classes" rows="3">Write something here</textarea>
+	</div>
+</script>
 <script type="text/html" id="tmpl-boldgrid-editor-horizontal-block-alignment">
 	<div class='horizontal-block-alignment section' data-tooltip-id='horizontal-block-alignment'>
 		<h4>Horizontal Alignment</h4>

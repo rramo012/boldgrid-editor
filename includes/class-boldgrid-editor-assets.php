@@ -312,6 +312,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/builder/controls/generic/font-color.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
+		wp_enqueue_script( 'boldgrid-editor-controls-generic-classes',
+			plugins_url( '/assets/js/builder/controls/generic/custom-classes.js', $plugin_file ), array(),
+		BOLDGRID_EDITOR_VERSION, true );
+
 		wp_enqueue_script( 'boldgrid-editor-controls-generic-font-size',
 			plugins_url( '/assets/js/builder/controls/generic/font-size.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
