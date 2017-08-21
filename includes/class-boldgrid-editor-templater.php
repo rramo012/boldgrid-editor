@@ -1,11 +1,4 @@
 <?php
-/*
-Plugin Name: Page Template Plugin : 'Good To Be Bad'
-Plugin URI: http://www.wpexplorer.com/wordpress-page-templates-plugin/
-Version: 1.1.0
-Author: WPExplorer
-Author URI: http://www.wpexplorer.com/
-*/
 
 class Boldgrid_Editor_Templater {
 
@@ -36,7 +29,6 @@ class Boldgrid_Editor_Templater {
 	private function __construct() {
 
 		$this->templates = array();
-
 
 		// Add a filter to the attributes metabox to inject template into the cache.
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
@@ -73,7 +65,9 @@ class Boldgrid_Editor_Templater {
 
 		// Add your templates to this array.
 		$this->templates = array(
-			'template/test.php' => 'It\'s Good to Be Bad',
+			'template/page/fullwidth.php' => 'BoldGrid - FullWidth',
+			'template/page/left-sidebar.php' => 'BoldGrid - Left Sidebar',
+			'template/page/right-sidebar.php' => 'BoldGrid - Right Sidebar'
 		);
 
 	}
@@ -141,7 +135,6 @@ class Boldgrid_Editor_Templater {
 		$file = plugin_dir_path( __FILE__ ). get_post_meta(
 			$post->ID, '_wp_page_template', true
 		);
-
 		// Just to be safe, we check if the file exist first
 		if ( file_exists( $file ) ) {
 			return $file;
