@@ -99,7 +99,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			includeFooter: true,
 			customizeLeaveCallback: true,
 			customizeCallback: true,
-			customizeSupport: [ 'margin' ],
+			customizeSupport: [ 'margin', 'customClasses' ],
 			customizeSupportOptions: {
 				margin: {
 					horMin: -30

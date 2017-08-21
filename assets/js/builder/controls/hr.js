@@ -24,7 +24,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel: {
 			title: 'Horizontal Line',
-			height: '450px',
+			height: '550px',
 			width: '275px',
 			includeFooter: true,
 			customizeLeaveCallback: true,

@@ -43,7 +43,10 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				$target.removeClass( customClasses );
 				$target.attr( 'custom-classes', value );
 				$target.addClass( value );
-			} ).val( currentClasses );
+			} )
+			.val( currentClasses );
+
+			panel.$element.find('.custom-classes').show();
 		}
 	};
 

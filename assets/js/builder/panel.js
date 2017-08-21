@@ -110,22 +110,38 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @param control BG.Control.
 		 * @since 1.3
 		 */
-		initScroll: function( control ) {
-			// Default height of scroll is the height of body minus this number.
-			var sizeOffset = -66;
+		initScroll: function() {
+			self.createScrollbar( self.getScrollTarget(), this.currentControl.panel || {} );
+		},
 
-			if ( control.panel && control.panel.sizeOffset ) {
-				sizeOffset = control.panel.sizeOffset;
+		/**
+		 * Remove any existing scroll bar and add another to specified panel config.
+		 *
+		 * @since 1.5.1
+		 *
+		 * @param  {string} selector
+		 * @param  {object} config   Configuration.
+		 */
+		createScrollbar: function( selector, config ) {
+
+			// Default height of scroll is the height of body minus this number.
+			var sizeOffset = -66,
+				$target = this.$element.find( selector );
+
+			if ( config && config.sizeOffset ) {
+				sizeOffset = config.sizeOffset;
 			}
 
-			$( '.panel-body' ).slimScroll( { destroy: true } ).attr( 'style', '' );
-			this.$element.find( self.getScrollTarget() ).slimScroll( {
-			    color: '#32373c',
-			    size: '8px',
-			    height: parseInt( control.panel.height ) + sizeOffset,
-			    alwaysVisible: true,
-			    disableFadeOut: true,
-			    wheelStep: 5
+			// Remove existing scroll.
+			self.$element.find('.slimScrollDiv >:first-child').slimScroll( { destroy: true } ).attr( 'style', '' );
+
+			$target.slimScroll( {
+				color: '#32373c',
+				size: '8px',
+				height: parseInt( config.height ) + sizeOffset,
+				alwaysVisible: true,
+				disableFadeOut: true,
+				wheelStep: 5
 			} );
 		},
 

@@ -551,22 +551,22 @@
 .editor-panel[data-type="background"] .customize .section:not(.back) {
   display: none; }
 
-.editor-panel[data-type="background"] .preset-wrapper[data-type="color"] ~ .customize .background-color {
+.editor-panel[data-type="background"] .preset-wrapper[data-type="color"] ~ * .customize .background-color {
   display: block; }
 
-.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .direction,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-2,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ .customize .gradient-color-1 {
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ * .customize .direction,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ * .customize .gradient-color-2,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="gradients"] ~ * .customize .gradient-color-1 {
   display: block; }
 
-.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .scroll-effects,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ .customize .background-color {
+.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ * .customize .scroll-effects,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="pattern"] ~ * .customize .background-color {
   display: block; }
 
-.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .overlay-color,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .scroll-effects,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .vertical-position,
-.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ .customize .size {
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ * .customize .overlay-color,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ * .customize .scroll-effects,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ * .customize .vertical-position,
+.editor-panel[data-type="background"] .preset-wrapper[data-type="image"] ~ * .customize .size {
   display: block; }
 
 .editor-panel[data-type="background"] .add-image-controls {
