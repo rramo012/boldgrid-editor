@@ -260,6 +260,18 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.2.7
 		 */
 		bindControlHandler: function( control ) {
+
+			if ( control.selectors ) {
+				this.setupElementClick( control );
+			}
+
+			// When the user clicks on a menu item, perform the corresponding action.
+			if ( control.onMenuClick ) {
+				this.$menu.on( 'click', '[data-action="menu-' + control.name + '"]', control.onMenuClick );
+			}
+		},
+
+		setupElementClick: function( control ) {
 			var self = this;
 
 			// When the user clicks on an element that has an associated control.
@@ -316,11 +328,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 				self.$menu.items.push( control.name );
 			} );
-
-			// When the user clicks on a menu item, perform the corresponding action.
-			if ( control.onMenuClick ) {
-				this.$menu.on( 'click', '[data-action="menu-' + control.name + '"]', control.onMenuClick );
-			}
 		}
 	};
 

@@ -12,7 +12,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		name: 'help',
 
-		tooltip: 'BoldGrid Editor Guide',
+		tooltip: 'Help',
 
 		priority: 99,
 
@@ -20,12 +20,51 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		selectors: [ 'html' ],
 
+		menuDropDown: {
+			title: 'Help',
+			options: [
+				{
+					'name': 'Editing Guide',
+					'class': 'action font-awesome fa-question support-center'
+				},
+				{
+					'name': 'Information',
+					'class': 'action font-awesome fa-info bg-editor-information'
+				}
+			]
+		},
+
 		init: function() {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
-		onMenuClick: function() {
+		/**
+		 * Bind all events.
+		 *
+		 * @since 1.6
+		 */
+		setup: function() {
+			BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
+				.on( 'click', '.action.support-center', self.openSupportCenter )
+				.on( 'click', '.action.bg-editor-information', self.iconHelp );
+		},
+
+		/**
+		 * Go to the support center.
+		 *
+		 * @since 1.5
+		 */
+		openSupportCenter: function() {
 			window.open('https://www.boldgrid.com/support/editing-your-pages/wordpress-page-post-editor/?source=boldgrid-editor_drop-tab', '_blank');
+		},
+
+		/**
+		 * Open Icon control.
+		 *
+		 * @since 1.6
+		 */
+		iconHelp: function() {
+			BG.CONTROLS.Information.activate();
 		}
 
 	};

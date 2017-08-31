@@ -101,13 +101,15 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		createListItem: function( control ) {
 
 			var $dropdownUl,
-				$li = $( '<li></li>' ).attr( 'data-action', 'menu-' + control.name ).addClass( 'menu-dropdown-parent' ),
-				$icon = $( '<span></span>' ).addClass( control.iconClasses ).addClass( 'menu-dropdown-icon' );
+				$li = $( '<li></li>' ).attr( 'data-action', 'menu-' + control.name ),
+				$icon = $( '<span></span>' ).addClass( control.iconClasses );
 
 			$li.append( $icon );
 
 			if ( control.menuDropDown ) {
 				$dropdownUl = $( '<ul class="bg-editor-menu-dropdown"></ul>' );
+				$li.addClass( 'menu-dropdown-parent' );
+				$icon.addClass( 'menu-dropdown-icon' );
 				$dropdownUl.html( '<li class="title">' + control.menuDropDown.title + '</li>' );
 				$.each( control.menuDropDown.options, function() {
 					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );

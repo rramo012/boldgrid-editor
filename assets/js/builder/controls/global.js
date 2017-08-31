@@ -2,7 +2,7 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
-( function( $ ) {
+( function() {
 	'use strict';
 
 	var self,
@@ -46,18 +46,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		setup: function() {
-			self._setupMenuClick();
-		},
-
-		/**
-		 * Bind all events.
-		 *
-		 * @since 1.2.7
-		 */
-		_setupMenuClick: function() {
-		/*	BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
-				.on( 'click', '.action.add-gridblock', self.addGridblock )
-				.on( 'click', '.action.add-row', self.addSection );*/
+			/*	BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
+					.on( 'click', '.action.add-gridblock', self.addGridblock )
+					.on( 'click', '.action.add-row', self.addSection );*/
 		}
 
 	};

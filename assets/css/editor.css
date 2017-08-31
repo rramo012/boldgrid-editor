@@ -967,6 +967,35 @@
 .editor-panel[data-type="image-filter"] .panel-body {
   overflow: hidden; }
 
+.editor-panel[data-type="information"] {
+  user-select: initial; }
+
+.editor-panel[data-type="information"] .info-wrap {
+  display: flex;
+  padding: 0 25px; }
+
+.editor-panel[data-type="information"] ul {
+  list-style: none; }
+
+.editor-panel[data-type="information"] .control-name {
+  font-weight: bold;
+  margin-bottom: 5px; }
+
+.editor-panel[data-type="information"] .intro {
+  padding: 10px 20px 0;
+  margin: 0; }
+
+.editor-panel[data-type="information"] .help-text {
+  position: relative;
+  text-align: left;
+  margin: 20px 0 20px 30px;
+  padding: 0; }
+
+.editor-panel[data-type="information"] .help-text > *:first-child {
+  position: absolute;
+  left: -25px;
+  font-size: 20px; }
+
 .theme-designs .button-overrides {
   background-color: transparent;
   text-shadow: none;
