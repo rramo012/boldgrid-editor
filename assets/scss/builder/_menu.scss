@@ -48,32 +48,14 @@
 	   }
 	}
 	li span {
-		font-size: 23px;
+		font-size: 24px;
 		transition: color .3s;
 		padding: 2px;
 	}
-
-	li .fa-magic {
-		padding: 2px 3px;
-	}
-	li .fa-question {
-		padding: 2px 7px;
-	}
-
-	li .fa-info {
-		padding: 2px 9.5px;
-	}
-
-	li .fa-text-width {
-		padding: 3.5px 5px;
-		font-size: 20px;
-	}
-
-	li .fa-cog {
-		padding: 2px 3.75px;
-	}
-	li .fa-columns {
-		padding: 2px 3px;
+	li .fa {
+		width: 24px;
+	    height: 24px;
+	    text-align: center;
 	}
 	li .dashicons-edit {
 	    padding: 3px 2px 0;
@@ -97,11 +79,11 @@
     }
 
 	.bg-editor-menu-dropdown {
-	   display: none;
+		display: none;
 		background-color: white;
 		position: absolute;
 		z-index: 1;
-		left: -12px;
+		margin-left: -15px;
 		top: 48px;
 		box-shadow: 0px 0px 12px rgba(0,0,0,.175);
 		border: 1px solid rgba(0,0,0,.15);
@@ -155,7 +137,6 @@
 		   &:before {
 			   display: block;
 				position: absolute;
-				content: " ";
 				left: 0px;
 				top: 0px;
 				bottom: 0px;
@@ -172,11 +153,13 @@
 
 			&.add-gridblock::before {
 				background-image: url("../image/icons/insert-gridblock.png");
+				content: " ";
 			}
 			&.add-gridblock:hover::before {
 				background-image: url("../image/icons/insert-gridblock-hover.png");
 			}
 			&.add-row::before {
+				content: " ";
 				background-image: url("../image/icons/add-row.png");
 			}
 			&.add-row:hover::before {
