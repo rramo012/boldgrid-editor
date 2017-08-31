@@ -1,9 +1,6 @@
 /*--------------------------------------------------------------
 # Spinners
 --------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# Spinners
---------------------------------------------------------------*/
 .bg-editor-loading {
   display: none; }
 
@@ -970,21 +967,13 @@
 .editor-panel[data-type="image-filter"] .panel-body {
   overflow: hidden; }
 
-text
-.theme-designs .button-overrides,
 .theme-designs .button-overrides {
   background-color: transparent;
   text-shadow: none;
   border: none;
   box-shadow: none; }
 
-text
-.theme-designs .button-overrides:hover, text
-.theme-designs .button-overrides:active, text
-.theme-designs .button-overrides:focus,
-.theme-designs .button-overrides:hover,
-.theme-designs .button-overrides:active,
-.theme-designs .button-overrides:focus {
+.theme-designs .button-overrides:hover, .theme-designs .button-overrides:active, .theme-designs .button-overrides:focus {
   border: none;
   background-color: transparent;
   box-shadow: none; }
@@ -1053,28 +1042,14 @@ text
   color: #f95b26; }
 
 #boldgrid-instance-menu li span {
-  font-size: 23px;
+  font-size: 24px;
   transition: color .3s;
   padding: 2px; }
 
-#boldgrid-instance-menu li .fa-magic {
-  padding: 2px 3px; }
-
-#boldgrid-instance-menu li .fa-question {
-  padding: 2px 7px; }
-
-#boldgrid-instance-menu li .fa-info {
-  padding: 2px 9.5px; }
-
-#boldgrid-instance-menu li .fa-text-width {
-  padding: 3.5px 5px;
-  font-size: 20px; }
-
-#boldgrid-instance-menu li .fa-cog {
-  padding: 2px 3.75px; }
-
-#boldgrid-instance-menu li .fa-columns {
-  padding: 2px 3px; }
+#boldgrid-instance-menu li .fa {
+  width: 24px;
+  height: 24px;
+  text-align: center; }
 
 #boldgrid-instance-menu li .dashicons-edit {
   padding: 3px 2px 0;
@@ -1097,7 +1072,7 @@ text
   background-color: white;
   position: absolute;
   z-index: 1;
-  left: -12px;
+  margin-left: -15px;
   top: 48px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.175);
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1148,7 +1123,6 @@ text
 #boldgrid-instance-menu .bg-editor-menu-dropdown li:before {
   display: block;
   position: absolute;
-  content: " ";
   left: 0px;
   top: 0px;
   bottom: 0px;
@@ -1162,12 +1136,14 @@ text
   color: white; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-gridblock::before {
-  background-image: url("../image/icons/insert-gridblock.png"); }
+  background-image: url("../image/icons/insert-gridblock.png");
+  content: " "; }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-gridblock:hover::before {
   background-image: url("../image/icons/insert-gridblock-hover.png"); }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-row::before {
+  content: " ";
   background-image: url("../image/icons/add-row.png"); }
 
 #boldgrid-instance-menu .bg-editor-menu-dropdown li.add-row:hover::before {
@@ -1360,6 +1336,7 @@ body.boldgrid-editor-fullscreen {
   white-space: normal; }
 
 .wp-admin.wp-core-ui .boldgrid-tooltip-arrow {
+  top: 0;
   position: absolute;
   left: 50%;
   margin-left: -5px;

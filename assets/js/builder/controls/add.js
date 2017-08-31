@@ -53,33 +53,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
-		 * When clicking on the menu item "Add", drop down menu form more options.
-		 *
-		 * @since 1.2.7
-		 */
-		onMenuClick: function() {
-			$( this ).toggleClass( 'active' );
-		},
-
-		/**
 		 * Setup.
 		 *
 		 * @since 1.2.7
 		 */
 		setup: function() {
-			self.$element = $( '[data-action="menu-add"]' );
-
-			self._setupDimiss();
 			self._setupMenuClick();
-		},
-
-		/**
-		 * When clicking an element on the page, collapse menu.
-		 *
-		 * @since 1.2.7
-		 */
-		elementClick: function() {
-			self.$element.removeClass( 'active' );
 		},
 
 		/**
@@ -104,19 +83,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		openAddMedia: function() {
 			wp.media.editor.open();
 			wp.media.frame.setState( 'insert' );
-		},
-
-		/**
-		 * Bind Event: On click of document, collapse menu.
-		 *
-		 * @since 1.2.7
-		 */
-		_setupDimiss: function() {
-			$( document ).on( 'click', function( e ) {
-				if ( false === $( e.target ).hasClass( 'add-element-trigger' ) ) {
-					self.$element.removeClass( 'active' );
-				}
-			} );
 		},
 
 		/**

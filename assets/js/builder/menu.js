@@ -25,6 +25,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.create();
 			this.setupMenuDrag();
+			this.setupDimiss();
+			this.setupDropmenuOpen();
 
 			return this.$element;
 		},
@@ -99,8 +101,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		createListItem: function( control ) {
 
 			var $dropdownUl,
-				$li = $( '<li></li>' ).attr( 'data-action', 'menu-' + control.name ),
-				$icon = $( '<span></span>' ).addClass( control.iconClasses );
+				$li = $( '<li></li>' ).attr( 'data-action', 'menu-' + control.name ).addClass( 'menu-dropdown-parent' ),
+				$icon = $( '<span></span>' ).addClass( control.iconClasses ).addClass( 'menu-dropdown-icon' );
 
 			$li.append( $icon );
 
@@ -122,6 +124,28 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '> ul' ).append( $li );
 		},
 
+		/**
+		 * Bind Event: On click of document, collapse menu.
+		 *
+		 * @since 1.2.7
+		 */
+		setupDimiss: function() {
+			$( document ).on( 'click', function( e ) {
+				if ( false === $( e.target ).hasClass( 'menu-dropdown-icon' ) ) {
+					self.$element.removeClass( 'active' );
+				}
+			} );
+
+			BG.Controls.$container.on( 'click', function() {
+				self.$element.find( '.menu-dropdown-parent' ).removeClass( 'active' );
+			} );
+		},
+
+		setupDropmenuOpen: function () {
+			this.$element.on( 'click', '.menu-dropdown-parent', function () {
+				$( this ).toggleClass( 'active' ).siblings().removeClass( 'active' );
+			} );
+		},
 
 		/**
 		 * Activate the passed control.
