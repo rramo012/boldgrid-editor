@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function( $ ) {

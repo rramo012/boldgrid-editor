@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function( $ ) {
@@ -40,7 +40,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		create: function() {
-			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
+			this.$element = $( wp.template( 'BOLDGRID-editor-panel' )() );
 			$( 'body' ).append( this.$element );
 		},
 
@@ -133,7 +133,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 
 			// Remove existing scroll.
-			self.$element.find('.slimScrollDiv >:first-child').slimScroll( { destroy: true } ).attr( 'style', '' );
+			self.$element.find( '.slimScrollDiv >:first-child' ).slimScroll( { destroy: true } ).attr( 'style', '' );
 
 			$target.slimScroll( {
 				color: '#32373c',

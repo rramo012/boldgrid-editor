@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function( $ ) {
@@ -143,8 +143,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 
-		setupDropmenuOpen: function () {
-			this.$element.on( 'click', '.menu-dropdown-parent', function () {
+		setupDropmenuOpen: function() {
+			this.$element.on( 'click', '.menu-dropdown-parent', function() {
 				$( this ).toggleClass( 'active' ).siblings().removeClass( 'active' );
 			} );
 		},

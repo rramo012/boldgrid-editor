@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function( $ ) {
@@ -46,7 +46,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.add( {
 					'action': 'installed_gridblock',
 					'data': {
-						'template' : data.template
+						'template': data.template
 					}
 				} );
 			}

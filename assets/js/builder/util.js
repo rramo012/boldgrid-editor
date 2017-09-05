@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 ( function( $ ) {
@@ -60,7 +60,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @return {array}                  Name of classes.
 		 */
 		getComponentClasses: function( classes, prefix ) {
-			var $temp = $('<div>').attr( 'class', classes ),
+			var $temp = $( '<div>' ).attr( 'class', classes ),
 				componentClasses = self.getClassesLike( $temp, prefix );
 
 			$temp.remove();

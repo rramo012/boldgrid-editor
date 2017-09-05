@@ -1,4 +1,4 @@
-var BOLDGRID = BOLDGRID || {};
+BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
@@ -159,7 +159,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		findElements: function() {
 			self.$gridblockSection = $( '.boldgrid-zoomout-section' );
 			self.$gridblockNav = $( '.zoom-navbar' );
-			self.$pageTemplate = $('#page_template');
+			self.$pageTemplate = $( '#page_template' );
 		},
 
 		/**
@@ -169,9 +169,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 *
 		 * @return {string} class name.
 		 */
-		getTemplateClass: function () {
+		getTemplateClass: function() {
 			var val = self.$pageTemplate.val() || 'default';
-			val = val.split('.');
+			val = val.split( '.' );
 			return 'page-template-' + val[0];
 		},
 
