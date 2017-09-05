@@ -32,6 +32,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 ### 1.5.1 In Progress ###
 * New Feature:                  Allow customization of HR element.
+* New Feature:                  Adding information about the icons in the DropTab.
 * New Feature:                  Adding custom class inputs for buttons, backgrounds, hr, images and icons.
 
 ### 1.5 ###
