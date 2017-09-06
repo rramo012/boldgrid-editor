@@ -1,3 +1,5 @@
+import { Loader as ControlLoader } from './controls/loader';
+
 window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
@@ -66,6 +68,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.onEditibleClick();
 
 			this.setupSliders();
+
+			new ControlLoader().init();
 
 			//Create all controls.
 			this.setupControls();

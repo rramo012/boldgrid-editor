@@ -5,6 +5,10 @@ import 'istyping';
 import 'fourpan';
 import 'textselect';
 
+// Import Libs.
+import './builder/util';
+
+
 // Require all Builder files.
 function requireAll( r ) {
 	r.keys().forEach( r );

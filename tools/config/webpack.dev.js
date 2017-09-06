@@ -13,7 +13,7 @@ var webpackConfig = {
 	entry: [ './assets/js/index.js' ],
 
 	output: {
-		filename: './assets/js/editor.min.js',
+		filename: './bundle.js',
 		path: distDir,
 		publicPath: '/'
 	},

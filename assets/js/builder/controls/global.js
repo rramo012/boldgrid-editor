@@ -1,3 +1,5 @@
+import { Palette as ColorPalette } from './color/palette';
+
 window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
@@ -9,7 +11,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.CONTROLS.Global = {
-
 		$element: null,
 
 		name: 'global-options',
@@ -26,12 +27,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title: 'Global Options',
 			options: [
 				{
-					'name': 'Color Palette',
-					'class': 'action open-color-palette font-awesome fa-paint-brush'
+					name: 'Color Palette',
+					class: 'action open-color-palette font-awesome fa-paint-brush'
 				},
 				{
-					'name': 'Delete All Content',
-					'class': 'action delete-all-content font-awesome fa-trash'
+					name: 'Delete All Content',
+					class: 'action delete-all-content font-awesome fa-trash'
 				}
 			]
 		},
@@ -46,15 +47,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		setup: function() {
-
-			/*	BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
-					.on( 'click', '.action.add-gridblock', self.addGridblock )
-					.on( 'click', '.action.add-row', self.addSection );*/
+			BG.Menu.$element.find( '.bg-editor-menu-dropdown' ).on( 'click', '.action.open-color-palette', () => {
+				new ColorPalette().openPanel();
+			} );
 		}
-
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Global.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Global;
-
-} )( jQuery );
+} ( jQuery ) );

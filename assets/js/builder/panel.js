@@ -40,7 +40,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		create: function() {
-			this.$element = $( wp.template( 'BOLDGRID-editor-panel' )() );
+			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
 			$( 'body' ).append( this.$element );
 		},
 
