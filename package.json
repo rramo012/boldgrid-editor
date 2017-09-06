@@ -5,7 +5,6 @@
 	"main": "gulpfile.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"postinstall": "npm run build",
 		"start": "npm-run-all -p start-js start-css",
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
@@ -28,7 +27,6 @@
 	},
 	"homepage": "https://github.com/BoldGrid/boldgrid-editor#readme",
 	"devDependencies": {
-		"boldgrid-component-library": "git+https://github.com/BoldGrid/components.git#master",
 		"browser-sync": "^2.18.13",
 		"browser-sync-webpack-plugin": "^1.2.0",
 		"css-loader": "^0.28.7",
@@ -63,6 +61,7 @@
 		"babel-eslint": "^7.2.3",
 		"babel-loader": "^7.1.2",
 		"babel-minify-webpack-plugin": "^0.2.0",
+		"boldgrid-components": "^2.1.0",
 		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
 		"bootstrap-sass": "^3.3.7",
 		"copy-webpack-plugin": "^4.0.1",

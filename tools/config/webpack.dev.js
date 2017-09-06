@@ -5,17 +5,17 @@ const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const config = require( './local.dev.js' );
 
 const distDir = path.resolve( __dirname, '../..' );
+const srcDir = path.resolve( __dirname, '../..' );
 
 var webpackConfig = {
-	context: path.resolve( __dirname, '../..' ),
+	context: srcDir,
 
 	entry: [ './assets/js/index.js' ],
 
 	output: {
 		filename: './assets/js/editor.min.js',
 		path: distDir,
-		publicPath: '/',
-		sourceMapFilename: './assets/js/editor.min.map'
+		publicPath: '/'
 	},
 
 	devServer: {

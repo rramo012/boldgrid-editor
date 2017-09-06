@@ -46,22 +46,6 @@ gulp.task( 'js-unit-tests', function( done ) {
 	).start();
 } );
 
-gulp.task( 'readme', function() {
-	var badges = [
-		'[![Build Status](https://travis-ci.org/BoldGrid/boldgrid-editor.svg?branch=master)](https://travis-ci.org/BoldGrid/boldgrid-editor)',
-		'[![License](https://img.shields.io/badge/license-GPL--2.0%2B-orange.svg)](https://raw.githubusercontent.com/BoldGrid/boldgrid-editor/master/LICENSE)',
-		'[![PHP Version](https://img.shields.io/badge/PHP-5.3%2B-blue.svg)](https://php.net)',
-		'[![Code Climate](https://codeclimate.com/github/BoldGrid/boldgrid-editor/badges/gpa.svg)](https://codeclimate.com/github/BoldGrid/boldgrid-editor)',
-		'[![built with gulp](https://img.shields.io/badge/-gulp-eb4a4b.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAMAAAA7QZ0XAAAABlBMVEUAAAD%2F%2F%2F%2Bl2Z%2FdAAAAAXRSTlMAQObYZgAAABdJREFUeAFjAAFGRjSSEQzwUgwQkjAFAAtaAD0Ls2nMAAAAAElFTkSuQmCC)](http://gulpjs.com/)'
-	];
-
-	gulp
-		.src( [ 'readme.txt' ] )
-		.pipe( readme() )
-		.pipe( inject.prepend( badges.join( '\n' ) + '\n\n' ) )
-		.pipe( gulp.dest( '.' ) );
-} );
-
 gulp.task( 'boldgrid-components', function() {
 	gulp
 		.src( [
@@ -143,8 +127,8 @@ gulp.task( 'jsmin-editor', function( cb ) {
 
 gulp.task( 'build', function( cb ) {
 	sequence(
-		[ 'sass', 'jsmin-editor', 'jsmin-media', 'readme' ],
-		[ 'boldgrid-components', 'copy-parallax-js' ],
+		[ 'sass', 'jsmin-editor', 'jsmin-media' ],
+		[ 'boldgrid-components' ],
 		cb
 	);
 } );
