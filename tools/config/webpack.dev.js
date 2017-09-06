@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const config = require( './local.dev.js' );
 
+const distDir = path.resolve( __dirname, '../..' );
+
 var webpackConfig = {
 	context: path.resolve( __dirname, '../..' ),
 
@@ -12,10 +14,10 @@ var webpackConfig = {
 	],
 
 	output: {
-		filename: config.wordpressPath + 'bundle.js',
-		path: path.resolve( __dirname, './dist' ),
+		filename: './assets/js/editor.min.js',
+		path: distDir,
 		publicPath: '/',
-		library: 'BGEditorBundle'
+		sourceMapFilename: './assets/js/editor.min.map'
 	},
 
 	devServer: {
