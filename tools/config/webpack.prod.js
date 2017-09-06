@@ -7,6 +7,8 @@ const MinifyPlugin = require( 'babel-minify-webpack-plugin' );
 
 const srcDir = path.resolve( __dirname, '../..' );
 const distDir = path.resolve( __dirname, '../..' );
+const fontsDir = distDir + '/assets/fonts/';
+const cssDir = distDir + '/assets/css/';
 
 module.exports = {
 	context: srcDir,
@@ -79,6 +81,25 @@ module.exports = {
 	plugins: [
 		new MinifyPlugin(),
 
-		new webpack.NamedModulesPlugin()
+		new webpack.NamedModulesPlugin(),
+
+		new CopyWebpackPlugin( [
+			{
+				from: srcDir + '/node_modules/jquery.stellar/jquery.stellar.js',
+				to: distDir + '/assets/js/jquery-steller'
+			},
+			{
+				from: srcDir + '/node_modules/font-awesome/fonts',
+				to: fontsDir
+			},
+			{
+				from: srcDir + '/node_modules/font-awesome/css/font-awesome.min.css',
+				to: cssDir
+			},
+			{
+				from: srcDir + '/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
+				to: cssDir
+			}
+		] )
 	]
 };

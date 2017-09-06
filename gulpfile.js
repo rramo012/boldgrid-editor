@@ -16,14 +16,12 @@ var gulp = require( 'gulp' ),
 	uglify = require( 'gulp-uglify' ),
 	notify = require( 'gulp-notify' ),
 	concat = require( 'gulp-concat' ),
-	phpcbf = require( 'gulp-phpcbf' ),
 	inject = require( 'gulp-inject-string' ),
 	sequence = require( 'run-sequence' ),
 	jasmine = require( 'gulp-jasmine' ),
 	fs = require( 'fs' ),
 	autoprefixer = require( 'gulp-autoprefixer' ),
 	server = require( 'karma' ).Server,
-	phpcs = require( 'gulp-phpcs' ),
 	gutil = require( 'gutil' ),
 	readme = require( 'gulp-readme-to-markdown' ),
 	pump = require( 'pump' );
@@ -64,67 +62,6 @@ gulp.task( 'readme', function() {
 		.pipe( gulp.dest( '.' ) );
 } );
 
-gulp.task( 'phpcbf-includes', function() {
-	return gulp
-		.src( [ 'includes/class-boldgrid-editor-assets.php' ] )
-		.pipe(
-			phpcbf( {
-				bin: 'phpcbf',
-				standard: 'WordPress',
-				warningSeverity: 0
-			} )
-		)
-		.on( 'error', gutil.log )
-		.pipe( gulp.dest( 'includes' ) );
-} );
-
-gulp.task( 'phpcbf-builder', function() {
-	return gulp
-		.src( [ 'includes/builder/**/*.php', '!*/**/index.php' ] )
-		.pipe(
-			phpcbf( {
-				bin: 'phpcbf',
-				standard: 'WordPress',
-				warningSeverity: 0
-			} )
-		)
-		.on( 'error', gutil.log )
-		.pipe( gulp.dest( 'includes/builder' ) );
-} );
-
-gulp.task( 'phpcs', function() {
-	return ( gulp
-			.src( [
-				'includes/class-boldgrid-editor-assets.php',
-				'includes/builder/**/*.php',
-				'!*/**/index.php'
-			] )
-
-			// Validate files using PHP Code Sniffer.
-			.pipe(
-				phpcs( {
-					bin: 'phpcs',
-					standard: 'WordPress',
-					warningSeverity: 0
-				} )
-			)
-
-			// Log all problems that was found
-			.pipe( phpcs.reporter( 'log' ) ) );
-} );
-
-gulp.task( 'font-awesome', function() {
-	gulp
-		.src( [ 'node_modules/font-awesome/fonts/**/*' ] )
-		.pipe( debug( { title: 'Font Awesome Fonts:' } ) )
-		.pipe( gulp.dest( config.fontDest ) );
-
-	gulp
-		.src( [ 'node_modules/font-awesome/css/font-awesome.min.css' ] )
-		.pipe( debug( { title: 'Font Awesome CSS:' } ) )
-		.pipe( gulp.dest( config.cssDest ) );
-} );
-
 gulp.task( 'boldgrid-components', function() {
 	gulp
 		.src( [
@@ -141,23 +78,6 @@ gulp.task( 'boldgrid-components', function() {
 		] )
 		.pipe( debug( { title: 'BoldGrid Components Json:' } ) )
 		.pipe( gulp.dest( config.jsonDir ) );
-
-	gulp
-		.src( [
-			'node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css'
-		] )
-		.pipe( debug( { title: 'Font Controls:' } ) )
-		.pipe( gulp.dest( config.cssDest ) );
-} );
-
-gulp.task( 'copy-parallax-js', function() {
-	gulp
-		.src( [
-			'node_modules/jquery.stellar/jquery.stellar.js',
-			'node_modules/jquery.stellar/jquery.stellar.min.js'
-		] )
-		.pipe( debug( { title: 'jQuery Stellar:' } ) )
-		.pipe( gulp.dest( config.jsDest + '/jquery-stellar' ) );
 } );
 
 // Compile sass files.
@@ -224,7 +144,7 @@ gulp.task( 'jsmin-editor', function( cb ) {
 gulp.task( 'build', function( cb ) {
 	sequence(
 		[ 'sass', 'jsmin-editor', 'jsmin-media', 'readme' ],
-		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
+		[ 'boldgrid-components', 'copy-parallax-js' ],
 		cb
 	);
 } );
