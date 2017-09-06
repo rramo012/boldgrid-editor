@@ -6,10 +6,12 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"postinstall": "npm run build",
-		"build": "NODE_ENV=production webpack --colors && gulp build",
+		"start": "npm-run-all -p start-js start-css",
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
-		"dev": "npm-run-all -p start-js start-css"
+		"build": "npm-run-all -p build-gulp build-webpack",
+		"build-webpack": "NODE_ENV=production webpack --colors",
+		"build-gulp": "gulp build"
 	},
 	"repository": {
 		"type": "git",
