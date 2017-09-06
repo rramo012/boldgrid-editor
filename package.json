@@ -5,7 +5,7 @@
 	"main": "gulpfile.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"postinstall" : "npm run build",
+		"postinstall": "npm run build",
 		"start": "npm-run-all -p start-js start-css",
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
@@ -78,6 +78,7 @@
 		"html-webpack-plugin": "^2.30.1",
 		"istyping": "^1.0.0",
 		"jquery.stellar": "^0.6.2",
+		"karma-es6-shim": "^1.0.0",
 		"npm-run-all": "^4.1.1",
 		"postcss-loader": "^2.0.6",
 		"resolve-url-loader": "^2.1.0",
