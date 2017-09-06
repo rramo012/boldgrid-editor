@@ -86,7 +86,7 @@ module.exports = {
 		new CopyWebpackPlugin( [
 			{
 				from: srcDir + '/node_modules/jquery.stellar/jquery.stellar.js',
-				to: distDir + '/assets/js/jquery-steller'
+				to: distDir + '/assets/js/jquery-stellar'
 			},
 			{
 				from: srcDir + '/node_modules/font-awesome/fonts',

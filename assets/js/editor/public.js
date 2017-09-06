@@ -1,15 +1,17 @@
 ( function( $ ) {
-
 	$( function() {
 		onload();
 	} );
 
 	function onload() {
-		$( '.background-parallax' )
-			.attr( 'data-stellar-background-ratio', '.3' )
-			.css( 'background-position-x', 0 );
+		var $parallaxBackgrounds = $( '.background-parallax' );
 
-		$( 'body' ).stellar();
-	};
+		if ( $parallaxBackgrounds.length ) {
+			$parallaxBackgrounds
+				.attr( 'data-stellar-background-ratio', '.3' )
+				.css( 'background-position-x', 0 );
 
-} )( jQuery );
+			$( 'body' ).stellar();
+		}
+	}
+} ( jQuery ) );
