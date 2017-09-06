@@ -53,8 +53,10 @@ var webpackConfig = {
 			{
 				test: /\.js$/,
 				enforce: 'pre',
+				exclude: /node_modules/,
 				loader: 'eslint-loader',
 				options: {
+					configFile: srcDir + '/.eslintrc.js',
 					emitWarning: true
 				}
 			},

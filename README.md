@@ -38,4 +38,4 @@ yarn install
 npm start
 
 # Build for production
-npm run build
+yarn build
