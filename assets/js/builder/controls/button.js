@@ -9,7 +9,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.Button = {
-
 		name: 'button',
 
 		priority: 80,
@@ -76,6 +75,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		sizeClasses: [
 			'btn-tiny',
 			'btn-small',
+
 			// Normal.
 			'',
 			'btn-large',
@@ -130,7 +130,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			_.each( usedComponents, function( value, index ) {
 				value.classes = value.classes.replace( /btn-(giant|jumbo)/g, '' );
-				usedComponents[ index ] = value;
+				usedComponents[index] = value;
 			} );
 
 			// Eliminate duplicates
@@ -177,7 +177,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			// Remove all classes that begin with btn-color.
 			$el.removeClass( function( index, css ) {
-				return ( css.match( /(^|\s)btn-color\S+/g ) || []).join( ' ' );
+				return ( css.match( /(^|\s)btn-color\S+/g ) || [] ).join( ' ' );
 			} );
 		},
 
@@ -232,7 +232,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			send_to_editor( '<a class="button-primary bg-inserted-button" href="#">Button</a>' );
 			$insertedButton = BG.Controls.$container.find( '.bg-inserted-button' ).last();
 			BG.Controls.$container.find( '.bg-inserted-button' ).removeClass( 'bg-inserted-button' );
-			BG.Controls.$menu.targetData[ self.name ] = $insertedButton;
+			BG.Controls.$menu.targetData[self.name] = $insertedButton;
 			$insertedButton.click();
 			self.openPanel();
 		},
@@ -282,14 +282,13 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				// Adds Default color, which has no class.
 				if ( 0 !== currentIndex ) {
-					this.name += ' btn-color-' + ( currentIndex );
+					this.name += ' btn-color-' + currentIndex;
 				}
 
-				if ( ( count + 1 ) % 4 === 0 ) {
+				if ( 0 === ( count + 1 ) % 4 ) {
 					currentIndex++;
 				}
 			} );
-
 		},
 
 		/**
@@ -322,10 +321,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					value: defaultSize,
 					range: 'max',
 					slide: function( event, ui ) {
+
 						//Remove Classes
 						$el.removeClass( self.sizeClasses.join( ' ' ) );
 						if ( ui.value ) {
-							$el.addClass( self.sizeClasses[ ui.value - 1 ] );
+							$el.addClass( self.sizeClasses[ui.value - 1] );
 						}
 					}
 				} );
@@ -345,8 +345,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			return BG.CONTROLS.Color.colorTemplate( {
-				'colors': colors,
-				'customColors': []
+				colors: colors,
+				customColors: []
 			} );
 		},
 
@@ -361,7 +361,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				classes = BG.Util.getClassesLike( $target, 'btn' );
 
 			// Exclude Size Classes.
-			classes = $( '<div>' ).addClass( classes.join( ' ' ) )
+			classes = $( '<div>' )
+				.addClass( classes.join( ' ' ) )
 				.removeClass( 'bg-control-element ' + self.sizeClasses.join( ' ' ) )
 				.attr( 'class' );
 
@@ -396,7 +397,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		_updateMyDesigns: function() {
-
 			self.usedComponents = BoldgridEditor.builder_config.components_used.button.slice( 0 );
 
 			BG.Controls.$container.$body.find( '.btn' ).each( function() {
@@ -409,13 +409,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					} );
 
 				if ( -1 === savedIndex ) {
-					savedComponents.push({
+					savedComponents.push( {
 						style: $clone.attr( 'style' ),
 						classes: classes
 					} );
 				}
 			} );
-
 		},
 
 		/**
@@ -433,12 +432,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.clear();
 
 			// Set markup for panel.
-			panel.$element.find( '.panel-body' ).html( template( {
-				text: 'Button',
-				presets: self.classes,
-				myPresets: self.usedComponents,
-				colors: self.getColorsMarkup()
-			} ) );
+			panel.$element.find( '.panel-body' ).html(
+				template( {
+					text: 'Button',
+					presets: self.classes,
+					myPresets: self.usedComponents,
+					colors: self.getColorsMarkup()
+				} )
+			);
 
 			self.preselect();
 
@@ -449,10 +450,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			panel.$element.removeClass( 'ui-widget-content' );
 		}
-
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Button.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Button;
-
-} )( jQuery );
+} ( jQuery ) );

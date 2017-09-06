@@ -281,7 +281,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 				//@TODO: Move this.
 				if ( 'box' === control.name ) {
-					var isEditingNested, isNestedColumn;
+					let isEditingNested, isNestedColumn;
 
 					if ( e.boxFound ) {
 						return;
@@ -299,7 +299,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					}
 
 					if ( ! e.boxFound && $this.parent().closest( '[class*="col-md"]' ).length ) {
-						var $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this ),
+						let $module = BOLDGRID.EDITOR.CONTROLS.Box.findModule( $this ),
 							backgroundColor = $module.css( 'background-color' );
 
 						if ( ! BOLDGRID.EDITOR.CONTROLS.Color.isColorTransparent( backgroundColor ) ) {
@@ -310,7 +310,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					}
 				}
 
-				if ( $this.closest( '.wpview' ).length && control.name !== 'edit-media' ) {
+				if ( $this.closest( '.wpview' ).length && 'edit-media' !== control.name ) {
 					return;
 				}
 

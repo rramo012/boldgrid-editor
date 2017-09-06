@@ -112,7 +112,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				$icon.addClass( 'menu-dropdown-icon' );
 				$dropdownUl.html( '<li class="title">' + control.menuDropDown.title + '</li>' );
 				$.each( control.menuDropDown.options, function() {
-					$dropdownUl.append( '<li class="' + this['class'] + '">' + this.name + '</li>' );
+					$dropdownUl.append( '<li class="' + this.class + '">' + this.name + '</li>' );
 				} );
 				$li.append( $dropdownUl );
 			}

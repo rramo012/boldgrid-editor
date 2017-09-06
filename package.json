@@ -62,6 +62,7 @@
 		"animate.css": "^3.5.2",
 		"babel-eslint": "^7.2.3",
 		"babel-loader": "^7.1.2",
+		"babel-minify-webpack-plugin": "^0.2.0",
 		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
 		"bootstrap-sass": "^3.3.7",
 		"copy-webpack-plugin": "^4.0.1",

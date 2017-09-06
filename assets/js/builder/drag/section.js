@@ -166,6 +166,7 @@ BOLDGRID.EDITOR.DRAG = BOLDGRID.EDITOR.DRAG || {};
 						self.lastDragEvent = e.timeStamp;
 						self.drag( e );
 					}
+
 					/*
 					If ( ! self.lastScrollEvent || self.lastScrollEvent + 20 <= e.timeStamp ) {
 						self.lastScrollEvent = e.timeStamp;

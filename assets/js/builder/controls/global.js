@@ -46,6 +46,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		setup: function() {
+
 			/*	BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
 					.on( 'click', '.action.add-gridblock', self.addGridblock )
 					.on( 'click', '.action.add-row', self.addSection );*/

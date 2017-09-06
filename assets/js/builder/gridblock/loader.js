@@ -2,7 +2,7 @@ BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
-(function( $ ) {
+( function( $ ) {
 	'use strict';
 
 	var BGGB = BOLDGRID.EDITOR.GRIDBLOCK,
@@ -168,4 +168,4 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 	BGGB.Loader = self;
 
-})( jQuery );
+} )( jQuery );

@@ -178,7 +178,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 		removeAttributionAttributes: function( $image ) {
 			$image.removeAttr( 'data-boldgrid-asset-id' )
-				  .removeAttr( 'data-pending-boldgrid-attribution' );
+				.removeAttr( 'data-pending-boldgrid-attribution' );
 		},
 
 		/**
@@ -189,7 +189,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param  {number} gridblockId Index of gridblock.
 		 */
 		isSimpleGridblock: function( $html ) {
-			var valid_num_of_descendents = 3,
+			var validNumOfDescendents = 3,
 				isSimpleGridblock = false,
 				$testDiv = $( '<div>' ).html( $html.clone() );
 
@@ -202,12 +202,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				if ( ! $this.siblings().length  ) {
 					$descendents = $this.find( '*' );
-					if ( $descendents.length <= valid_num_of_descendents ) {
+					if ( $descendents.length <= validNumOfDescendents ) {
 						isSimpleGridblock = true;
 						return false;
 					}
 				}
-			});
+			} );
 
 			$testDiv.find( '.row:not(.row .row) > [class^="col-"] > .row' ).each( function() {
 				var $hr,
@@ -220,13 +220,13 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						return false;
 					}
 				}
-			});
+			} );
 
 			// Hide empty rows.
 			$testDiv.find( '.row:not(.row .row):only-of-type > [class^="col-"]:empty:only-of-type' ).each( function() {
 				isSimpleGridblock = true;
 				return false;
-			});
+			} );
 
 			return isSimpleGridblock;
 		}

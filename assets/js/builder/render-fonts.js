@@ -23,6 +23,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 				if ( family ) {
 					families[ family ] = families[ family ] || {};
+
 					// Add more props like sans serif and weight.
 				}
 			} );

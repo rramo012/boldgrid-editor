@@ -9,7 +9,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.CONTROLS.Add = {
-
 		$element: null,
 
 		name: 'add',
@@ -26,24 +25,24 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title: 'Add New',
 			options: [
 				{
-					'name': 'Media',
-					'class': 'action add-media dashicons dashicons-admin-media'
+					name: 'Media',
+					class: 'action add-media dashicons dashicons-admin-media'
 				},
 				{
-					'name': 'Button',
-					'class': 'action font-awesome add-button'
+					name: 'Button',
+					class: 'action font-awesome add-button'
 				},
 				{
-					'name': 'Icon',
-					'class': 'action font-awesome add-icon'
+					name: 'Icon',
+					class: 'action font-awesome add-icon'
 				},
 				{
-					'name': 'GridBlock',
-					'class': 'action add-gridblock'
+					name: 'GridBlock',
+					class: 'action add-gridblock'
 				},
 				{
-					'name': 'Section',
-					'class': 'action add-row'
+					name: 'Section',
+					class: 'action add-row'
 				}
 			]
 		},
@@ -67,7 +66,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		_setupMenuClick: function() {
-			BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
+			BG.Menu.$element
+				.find( '.bg-editor-menu-dropdown' )
 				.on( 'click', '.action.add-gridblock', self.addGridblock )
 				.on( 'click', '.action.add-row', self.addSection )
 				.on( 'click', '.action.add-button', BG.CONTROLS.Button.insertNew )
@@ -91,10 +91,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		scrollToElement: function( $newSection, duration ) {
-
-			$( 'html, body' ).animate({
+			$( 'html, body' ).animate(
+				{
 					scrollTop: $newSection.offset().top
-			}, duration );
+				},
+				duration
+			);
 		},
 
 		/**
@@ -104,12 +106,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		addSection: function() {
 			var $container = BOLDGRID.EDITOR.Controls.$container,
-				$newSection = $( wp.template( 'boldgrid-editor-empty-section' )() ) ;
+				$newSection = $( wp.template( 'boldgrid-editor-empty-section' )() );
 			$container.$body.prepend( $newSection );
 
 			self.scrollToElement( $newSection, 200 );
 			BG.CONTROLS.Section.transistionSection( $newSection );
-
 		},
 
 		/**
@@ -127,5 +128,4 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BOLDGRID.EDITOR.CONTROLS.Add.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Add;
-
-} )( jQuery );
+} ( jQuery ) );

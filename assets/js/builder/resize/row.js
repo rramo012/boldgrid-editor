@@ -115,7 +115,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					if ( 'padding-top' === setting ) {
 						padding = parseInt( self.$currentRow.css( setting ) ) - diff;
 						relativePos = 'top';
-						if ( padding > 0 && diff ) {
+						if ( 0 < padding && diff ) {
 							window.scrollBy( 0, -diff );
 						}
 					} else {
@@ -124,9 +124,11 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					}
 
 					// If padding is less than 0, prevent movement of handle.
-					if ( padding < 0 ) {
+					if ( 0 > padding ) {
 						rowPos = self.$currentRow[0].getBoundingClientRect();
-						ui.position.top = rowPos[ relativePos ] - (  ui.helper.hasClass( 'top' ) ? 0 : self.handleOffset );
+						ui.position.top =
+							rowPos[relativePos] -
+							( ui.helper.hasClass( 'top' ) ? 0 : self.handleOffset );
 						padding = 0;
 					}
 

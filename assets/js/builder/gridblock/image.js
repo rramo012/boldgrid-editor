@@ -268,6 +268,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					timeout: 8000,
 					data: {
 						action: 'boldgrid_redirect_url',
+						// eslint-disable-next-line
 						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
 						urls: [ src ]
 					}

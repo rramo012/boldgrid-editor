@@ -50,7 +50,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		replaceGridblock: function( $placeHolder, gridblockId ) {
 			var selectedHtml = BG.GRIDBLOCK.Create.getHtml( gridblockId );
-			IMHWPB.tinymce_undo_disabled = true;
+			IMHWPB['tinymce_undo_disabled'] = true;
 			self.$window.trigger( 'resize' );
 
 			// Insert into page aciton.
@@ -107,7 +107,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			self.$window.trigger( 'resize' );
 
-			IMHWPB.tinymce_undo_disabled = false;
+			IMHWPB['tinymce_undo_disabled'] = false;
 			tinymce.activeEditor.undoManager.add();
 
 			self.$window.trigger( 'boldgrid_added_gridblock', BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] );

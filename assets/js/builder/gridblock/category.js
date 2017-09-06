@@ -71,7 +71,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.View.$gridblockSection.scrollTop( 0 );
 
 					// If less than 4 gridblocks are showing, render more gridblocks.
-					if ( visibleGridblocks < 4 ) {
+					if ( 4 > visibleGridblocks ) {
 						BGGB.View.updateDisplay();
 					}
 				}

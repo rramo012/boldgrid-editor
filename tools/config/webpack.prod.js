@@ -3,6 +3,7 @@ const webpack = require( 'webpack' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
+const MinifyPlugin = require( 'babel-minify-webpack-plugin' );
 
 const srcDir = path.resolve( __dirname, '../..' );
 const distDir = path.resolve( __dirname, '../..' );
@@ -10,15 +11,12 @@ const distDir = path.resolve( __dirname, '../..' );
 module.exports = {
 	context: srcDir,
 
-	devtool: 'source-map',
-
 	entry: [ './assets/js/index.js' ],
 
 	output: {
 		filename: './assets/js/editor.min.js',
 		path: distDir,
-		publicPath: '/',
-		sourceMapFilename: './assets/js/editor.min.map'
+		publicPath: '/'
 	},
 
 	module: {
@@ -79,7 +77,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
+		new MinifyPlugin(),
 
 		new webpack.NamedModulesPlugin()
 	]

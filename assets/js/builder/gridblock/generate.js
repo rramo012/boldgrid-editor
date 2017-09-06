@@ -7,6 +7,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 	var BG = BOLDGRID.EDITOR,
 		self = {
+
 			/**
 			 * Number of Gridblocks created.
 			 *
@@ -65,7 +66,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),
 						'category': self.getCategory()
 					} )
-				});
+				} );
 			},
 
 			/**
@@ -113,7 +114,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BG.GRIDBLOCK.Filter.addGridblockConfig( gridblocks[ index ], 'generated-' + self.gridblockCount );
 
 					self.gridblockCount++;
-				});
+				} );
 			},
 
 			/**

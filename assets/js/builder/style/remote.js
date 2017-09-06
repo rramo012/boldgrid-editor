@@ -40,7 +40,9 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 				//IIf ( 'Firefox' !== BOLDGRID.EDITOR.Controls.browser ) {
 				//	$deferred = self.getHeadDownloaded( siteMarkup );
 				//} else {
+
 					$deferred = self.getHeadElements( siteMarkup );
+
 				//}
 
 				return $deferred;
@@ -94,7 +96,7 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 
 				var markAsResolved = function( styleIndex ) {
 					var index = pending.indexOf( styleIndex );
-					if ( index > -1 ) {
+					if ( -1 < index ) {
 						pending.splice( index, 1 );
 					}
 				};

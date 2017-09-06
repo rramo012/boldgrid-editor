@@ -29,7 +29,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				gridblockData = BG.GRIDBLOCK.configs.gridblocks[ gridblockId ];
 			}
 
-			 if ( self.getDynamicElements( gridblockData ).length ) {
+			if ( self.getDynamicElements( gridblockData ).length ) {
 				html = self.installImages( gridblockData );
 			} else {
 				html = self.getStaticHtml( gridblockData );
@@ -96,7 +96,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					timeout: 10000,
 					data: {
 						action: 'boldgrid_canvas_image',
+						// eslint-disable-next-line
 						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
+						// eslint-disable-next-line
 						image_data: BG.GRIDBLOCK.Image.getEncodedSrc( $element )
 					}
 				} ).done( function( response ) {

@@ -38,6 +38,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		section: {
+
 			/**
 			 * When the users mouse enters the section.
 			 */
@@ -53,6 +54,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 				self.$deleteIcon.$section = $this;
 			},
+
 			/**
 			 * When the users mouse leaves the section.
 			 * @param  {event} e Event
@@ -67,6 +69,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		},
 
 		icon: {
+
 			/**
 			 * When the users mouse enters the icon.
 			 */

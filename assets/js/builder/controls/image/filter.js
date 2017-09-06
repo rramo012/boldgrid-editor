@@ -198,7 +198,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 *
 		 * @since 1.2.7
 		 */
-		_setupInsertClick:function() {
+		_setupInsertClick: function() {
 			BOLDGRID.EDITOR.Panel.$element.on( 'click', '.preview .insert-image', function() {
 				self.insertImage();
 			} );
@@ -259,25 +259,29 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 				dataType: 'json',
 				data: {
 					action: 'boldgrid_canvas_image',
+
+					// eslint-disable-next-line
 					boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
+					// eslint-disable-next-line
 					attachement_id: $target.attachment_id,
+					// eslint-disable-next-line
 					image_data: self.preview.canvas.toDataURL()
-			  },
-			  success: function( response ) {
-				if ( response && response.success ) {
-					response = response.data;
+				},
+				success: function( response ) {
+					if ( response && response.success ) {
+						response = response.data;
 
-					// Update image in editor.
-					$target.removeClass( 'wp-image-' + $target.attachment_id );
-					$target.addClass( 'wp-image-' + response.attachment_id );
-					$target.attachment_id = response.attachment_id;
-					$target.attr( 'src', response.url );
-					$target.attr( 'data-mce-src', response.url );
+						// Update image in editor.
+						$target.removeClass( 'wp-image-' + $target.attachment_id );
+						$target.addClass( 'wp-image-' + response.attachment_id );
+						$target['attachment_id'] = response.attachment_id;
+						$target.attr( 'src', response.url );
+						$target.attr( 'data-mce-src', response.url );
 
-					// Update list of images that exists on the page.
-					BoldgridEditor.images = response.images;
-				  }
-			  }
+						// Update list of images that exists on the page.
+						BoldgridEditor.images = response.images;
+					}
+				}
 			} ).always( function() {
 				panel.$element.removeClass( 'rendering' );
 			} );
@@ -327,14 +331,14 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 *
 		 * @since 1.2.7
 		 */
-		get_image_src: function() {
+		getImageSrc: function() {
 			var src,
 				$target = BOLDGRID.EDITOR.Menu.getTarget( self ),
 				fullSrc = $target.attr( 'src' );
 
 			$.each( BoldgridEditor.images, function() {
 				if ( $target.hasClass( 'wp-image-' + this.attachment_id ) ) {
-					$target.attachment_id = this.attachment_id;
+					$target['attachment_id'] = this.attachment_id;
 					src = this.thumbnail;
 					return false;
 				}
@@ -363,7 +367,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 			// Remove all content from the panel.
 			panel.clear();
 
-			srcSet = this.get_image_src();
+			srcSet = this.getImageSrc();
 
 			// Set markup for panel.
 			panel.$element.removeClass( 'rendering' );
@@ -378,6 +382,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 			if ( ! srcSet.fullSrc || Caman.IO.isURLRemote( srcSet.fullSrc ) ) {
 				BG.Panel.$element.find( '.panel-body .remote-image-error' ).addClass( 'error-active' );
 			} else {
+
 				// Intialize Sliders.
 				self._setupSliders();
 				self._renderPanelThumbnails();

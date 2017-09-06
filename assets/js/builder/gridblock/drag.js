@@ -109,7 +109,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		endDrag: function() {
 			if ( self.currentDrag ) {
-				IMHWPB.tinymce_undo_disabled = false;
+				IMHWPB['tinymce_undo_disabled'] = false;
 				BG.DRAG.Section.$dragHelper.hide();
 				BG.DRAG.Section.showDragHelper = false;
 				BG.DRAG.Section.end();
@@ -150,7 +150,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				return;
 			}
 
-			IMHWPB.tinymce_undo_disabled = true;
+			IMHWPB['tinymce_undo_disabled'] = true;
 			config = BG.GRIDBLOCK.configs.gridblocks[ gridblockId ];
 			self.currentDrag = {
 				$gridblockUi: $this,

@@ -6,7 +6,7 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	'use strict';
 
 	BOLDGRID.EDITOR.VALIDATION.Section = {};
-	var self = BOLDGRID.EDITOR.VALIDATION.Section;
+	let self = BOLDGRID.EDITOR.VALIDATION.Section;
 
 	/**
 	 * Get the closest element within context.
@@ -14,18 +14,18 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	 * @since 1.2.7
 	 */
 	$.fn.closestContext = function( sel, context ) {
-        var $closest;
-        if ( this.is( sel ) ) {
-            $closest = this;
-        } else {
-            $closest = this.parentsUntil( context ).filter( sel ).eq( 0 );
-        }
+		var $closest;
+		if ( this.is( sel ) ) {
+			$closest = this;
+		} else {
+			$closest = this.parentsUntil( context ).filter( sel ).eq( 0 );
+		}
 
-        return $closest;
-    };
+		return $closest;
+	};
 
-	var defaultContainerClass = 'container',
-        sectionClass = 'boldgrid-section',
+	let defaultContainerClass = 'container',
+		sectionClass = 'boldgrid-section',
 		section = '<div class="' + sectionClass + '"></div>',
 		container = '<div class="' + defaultContainerClass + '"></div>';
 
@@ -34,33 +34,33 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	 *
 	 * @since 1.2.7
 	 */
-	var wrapElementGroup = function() {
+	let wrapElementGroup = function() {
 
 		var wrap,
 			group = [],
 			contentSelector = [
-			    'h1',
-			    'h2',
-			    'h3',
-			    'h4',
-			    'h5',
-			    'h6',
-			    'h7',
-			    'a',
-			    'img',
-			    'p',
-			    'button',
-			    'ul',
-			    'ol',
-			    'dl',
-			    'form',
-			    'table',
-			    '[data-imhwpb-draggable="true"]',
-			    '.wpview-wrap',
-			    '.wpview',
-			    'blockquote',
-			    'code',
-			    'abbr'
+				'h1',
+				'h2',
+				'h3',
+				'h4',
+				'h5',
+				'h6',
+				'h7',
+				'a',
+				'img',
+				'p',
+				'button',
+				'ul',
+				'ol',
+				'dl',
+				'form',
+				'table',
+				'[data-imhwpb-draggable="true"]',
+				'.wpview-wrap',
+				'.wpview',
+				'blockquote',
+				'code',
+				'abbr'
 			].join( ',' );
 
 		wrap = function() {
@@ -101,11 +101,11 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 		addSectionClass();
 
 		// Wrap all containers in sections.
-        wrapContainers();
+		wrapContainers();
 
-        // If row has a parent add the section to the parent.
+		// If row has a parent add the section to the parent.
 		addContainers();
-        copyClasses();
+		copyClasses();
 	};
 
 	/**
@@ -113,69 +113,69 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	 *
 	 * @since 1.2.7
 	 */
-    var copyClasses = function() {
-         self.$context.find( '.boldgrid-section > .container-fluid' ).each( function() {
+	let copyClasses = function() {
+		self.$context.find( '.boldgrid-section > .container-fluid' ).each( function() {
 			var $this = $( this ),
-                classToAdd = $this.attr( 'class' ).replace( 'container-fluid', '' );
+				classToAdd = $this.attr( 'class' ).replace( 'container-fluid', '' );
 
-             $this.attr( 'class', 'container-fluid' );
-             $this.parent().addClass( classToAdd );
+			$this.attr( 'class', 'container-fluid' );
+			$this.parent().addClass( classToAdd );
 		} );
-    };
+	};
 
 	/**
 	 * Add section class to container parents.
 	 *
 	 * @since 1.2.7
 	 */
-    var addSectionClass = function() {
-        self.$context.find( '.container' ).each( function() {
+	let addSectionClass = function() {
+		self.$context.find( '.container' ).each( function() {
 			var $this = $( this ),
-                $parent = $this.parent();
+				$parent = $this.parent();
 
-            if ( $parent.length && $parent[0] !== self.$context[0] && false === $parent.hasClass( sectionClass ) ) {
-               $parent.addClass( sectionClass );
-            }
+			if ( $parent.length && $parent[0] !== self.$context[0] && false === $parent.hasClass( sectionClass ) ) {
+				$parent.addClass( sectionClass );
+			}
 		} );
-    };
+	};
 
 	/**
 	 * Wrap top level rows in containers.
 	 *
 	 * @since 1.2.7
 	 */
-    var addContainers = function() {
-    	self.$context.find( '.row:not(.row .row)' ).each( function() {
+	let addContainers = function() {
+		self.$context.find( '.row:not(.row .row)' ).each( function() {
 			var $this = $( this ),
-                $parent = $this.parent();
+				$parent = $this.parent();
 
-            if ( ! $this.closestContext( '.container, .container-fluid', self.$context ).length ) {
-                $this.wrap( container );
-            }
+			if ( ! $this.closestContext( '.container, .container-fluid', self.$context ).length ) {
+				$this.wrap( container );
+			}
 
-            if ( ! $this.closestContext( '.boldgrid-section', self.$context ).length  ) {
-                if ( $parent.length && $parent[0] !== self.$context[0] ) {
-                    $parent.addClass( sectionClass );
-                } else {
-                    $this.parent().wrap( section );
-                }
-            }
+			if ( ! $this.closestContext( '.boldgrid-section', self.$context ).length  ) {
+				if ( $parent.length && $parent[0] !== self.$context[0] ) {
+					$parent.addClass( sectionClass );
+				} else {
+					$this.parent().wrap( section );
+				}
+			}
 		} );
-    };
+	};
 
 	/**
 	 * Wrap containers in sections.
 	 *
 	 * @since 1.2.7
 	 */
-    var wrapContainers = function() {
-    	self.$context.find( '.container, .container-fluid' ).each( function() {
+	let wrapContainers = function() {
+		self.$context.find( '.container, .container-fluid' ).each( function() {
 			var $this = $( this );
 
 			if ( ! $this.parent( '.boldgrid-section' ).length && false === $this.hasClass( sectionClass ) ) {
-                 $this.wrap( section );
+				$this.wrap( section );
 			}
 		} );
-    };
+	};
 
 } )( jQuery );

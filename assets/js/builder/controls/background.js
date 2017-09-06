@@ -60,14 +60,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 
 				// Create a new media frame.
-				self.uploadFrame = wp.media({
+				self.uploadFrame = wp.media( {
 					title: 'Select Background Image',
 					library: { type: 'image' },
 					button: {
 						text: 'Use this media'
 					},
 
-					 // Set to true to allow multiple files to be selected.
+					// Set to true to allow multiple files to be selected.
 					multiple: false
 				} );
 
@@ -380,7 +380,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'click', '.background-design .filter', function( e ) {
 				e.preventDefault();
 
-				var $this = $( this ),
+				let $this = $( this ),
 					type = $this.data( 'type' ),
 					label = $this.data( 'label' ),
 					$currentSelection = panel.$element.find( '.current-selection' ),
@@ -610,7 +610,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.trigger( 'bg-open-customization' );
 
 			BG.Panel.createScrollbar( '.customize', {
-				'height' : self.panel.height
+				'height': self.panel.height
 			} );
 		},
 
@@ -786,7 +786,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @return boolean.
 		 */
 		backgroundIsGradient: function( backgroundUrl ) {
-			return backgroundUrl.indexOf( 'linear-gradient' ) !== -1 && -1 === backgroundUrl.indexOf( 'url' );
+			return (
+				-1 !== backgroundUrl.indexOf( 'linear-gradient' ) &&
+				-1 === backgroundUrl.indexOf( 'url' )
+			);
 		},
 
 		/**

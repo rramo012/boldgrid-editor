@@ -64,7 +64,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			} );
 
 			// 5 is the threshold for requesting more gridblocks.
-			return pending >= 5;
+			return 5 <= pending;
 		},
 
 		/**

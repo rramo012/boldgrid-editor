@@ -22,7 +22,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			px = px ? parseInt( px ) : 0;
 
 			if ( fontSize && px ) {
-				ems =  ( px / fontSize ).toFixed( 1 );
+				ems = ( px / fontSize ).toFixed( 1 );
 			}
 
 			return ems;
@@ -99,13 +99,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				ie8 = navigator.userAgent.search( 'MSIE 8.0' ),
 				ie9 = navigator.userAgent.search( 'MSIE 9.0' );
 
-			if ( chrome > -1 ) {
+			if ( -1 < chrome ) {
 				browser = 'Chrome';
-			} else if ( firefox > -1 ) {
+			} else if ( -1 < firefox ) {
 				browser = 'Firefox';
-			} else if ( ie9 > -1 ) {
+			} else if ( -1 < ie9 ) {
 				browser = 'MSIE 9.0';
-			} else if ( ie8 > -1 ) {
+			} else if ( -1 < ie8 ) {
 				browser = 'MSIE 8.0';
 			}
 			return browser;
@@ -113,5 +113,4 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 	};
 
 	self = BOLDGRID.EDITOR.Util;
-
-} )( jQuery );
+} ( jQuery ) );

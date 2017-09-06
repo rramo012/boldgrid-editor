@@ -22,17 +22,17 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				options = {};
 			}
 
-			var minVert = options.vertMin || 0,
+			let minVert = options.vertMin || 0,
 				minHor = options.horMin || -15,
 				$target = BG.Menu.getCurrentTarget(),
 				defaultMarginVert = $target.css( 'margin-top' ),
 				defaultMarginHor = $target.css( 'margin-left' );
 
-			if ( options.horizontal === false ) {
+			if ( false === options.horizontal ) {
 				BG.Panel.$element.find( '.margin-horizontal' ).hide();
 			}
 
-			if ( options.vertical === false ) {
+			if ( false === options.vertical ) {
 				BG.Panel.$element.find( '.margin-top' ).hide();
 			}
 

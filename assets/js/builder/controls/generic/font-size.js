@@ -20,7 +20,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				elementSize = $el.css( 'font-size' ),
 				defaultSize = elementSize ?  parseInt( elementSize ) : 14;
 
-			defaultSize = ( defaultSize >= 5 ) ? defaultSize : 14;
+			defaultSize = 5 <= defaultSize ? defaultSize : 14;
 
 			BG.Panel.$element.find( '.section.size .value' ).html( defaultSize );
 			BG.Panel.$element.find( '.section.size .slider' ).slider( {

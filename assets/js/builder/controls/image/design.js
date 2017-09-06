@@ -114,7 +114,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 */
 		removeImageClass: function( $el ) {
 			$el.removeClass( function( index, css ) {
-			    return ( css.match( /(^|\s)wp-image-\S+/g ) || [] ).join( ' ' );
+				return ( css.match( /(^|\s)wp-image-\S+/g ) || [] ).join( ' ' );
 			} );
 
 			return $el;
@@ -135,12 +135,12 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 
 				// Remove Classes.
 				$target.removeClass( function( index, css ) {
-				    return ( css.match( /(^|\s)bg-img-\S+/g ) || []).join( ' ' );
+					return ( css.match( /(^|\s)bg-img-\S+/g ) || [] ).join( ' ' );
 				} );
 
 				self.removeModClasses( $target );
 				$target.removeClass( function( index, css ) {
-				    return ( css.match( /(^|\s)img-\S+/g ) || []).join( ' ' );
+					return ( css.match( /(^|\s)img-\S+/g ) || [] ).join( ' ' );
 				} );
 
 				tinyMCE.activeEditor.selection.collapse( false );
@@ -163,7 +163,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 		 */
 		removeModClasses: function( $target ) {
 			$target.parent( '[class^="mod-img"]' ).removeClass( function( index, css ) {
-			    return ( css.match( /(^|\s)mod-img-\S+/g ) || []).join( ' ' );
+				return ( css.match( /(^|\s)mod-img-\S+/g ) || [] ).join( ' ' );
 			} );
 		},
 
@@ -180,7 +180,7 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 			imageClasses = imageClasses ? imageClasses.split( ' ' ) : [];
 
 			$.each( imageClasses, function() {
-				if ( this.indexOf( 'bg-img' ) === 0 ) {
+				if ( 0 === this.indexOf( 'bg-img' ) ) {
 					bgImageClasses.push( this );
 				}
 			} );

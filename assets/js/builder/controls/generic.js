@@ -9,7 +9,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.CONTROLS.Generic = {
-
 		defaultCustomize: wp.template( 'boldgrid-editor-default-customize' ),
 
 		createCustomizeSection: function() {
@@ -34,17 +33,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				var customizationOption = this,
 					addOptions = {};
 
-				if ( customizeSupportOptions && customizeSupportOptions[ this ] ) {
-					addOptions = customizeSupportOptions[ this ];
+				if ( customizeSupportOptions && customizeSupportOptions[this] ) {
+					addOptions = customizeSupportOptions[this];
 				}
 
-				customizationOption = customizationOption.replace('-', '');
+				customizationOption = customizationOption.replace( '-', '' );
 				customizationOption = customizationOption.toLowerCase();
-				customizationOption = customizationOption.charAt(0).toUpperCase() + customizationOption.slice(1);
+				customizationOption = customizationOption.charAt( 0 ).toUpperCase() + customizationOption.slice( 1 );
 
-				BG.CONTROLS.GENERIC[ customizationOption ].render( addOptions );
+				BG.CONTROLS.GENERIC[customizationOption].render( addOptions );
 				BG.Tooltip.renderTooltips();
-				BG.CONTROLS.GENERIC[ customizationOption ].bind( addOptions );
+				BG.CONTROLS.GENERIC[customizationOption].bind( addOptions );
 			} );
 		},
 
@@ -92,9 +91,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				} );
 			} );
 		}
-
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.Generic;
-
-} )( jQuery );
+} ( jQuery ) );

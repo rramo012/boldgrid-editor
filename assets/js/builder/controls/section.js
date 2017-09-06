@@ -212,7 +212,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( '#content_ifr' ).css( 'max-height', '' );
 
 			$( 'html, body' ).animate( {
-				 scrollTop: $( '#postdivrich' ).offset().top
+				scrollTop: $( '#postdivrich' ).offset().top
 			}, 0 );
 		},
 
@@ -285,7 +285,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		removeZoomClasses: function() {
 			self.$container.$body.removeClass( function( index, css ) {
-				return ( css.match( /(^|\s)zoom-scale-\S+/g ) || []).join( ' ' );
+				return ( css.match( /(^|\s)zoom-scale-\S+/g ) || [] ).join( ' ' );
 			} );
 		},
 
@@ -322,9 +322,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$currentSection = $this;
 
 			self.$popover.css( {
-				'top':  pos.bottom + 35,
+				'top': pos.bottom + 35,
 				'left': 'calc(50% - 38px)',
-				'transform':  'translateX(-50%)'
+				'transform': 'translateX(-50%)'
 			} );
 
 			self.$currentSection.addClass( 'boldgrid-section-hover' );
@@ -352,14 +352,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param jQuery $newSection.
 		 */
 		transistionSection: function( $newSection ) {
-			IMHWPB.tinymce_undo_disabled = true;
+			IMHWPB['tinymce_undo_disabled'] = true;
+
 			$newSection.animate( {
 					'background-color': 'transparent'
-				  }, 1500, 'swing', function() {
+				}, 1500, 'swing', function() {
 						BG.Controls.addStyle( $newSection, 'background-color', '' );
-						IMHWPB.tinymce_undo_disabled = false;
+						IMHWPB['tinymce_undo_disabled'] = false;
 						tinymce.activeEditor.undoManager.add();
-				  }
+				}
 			);
 		},
 

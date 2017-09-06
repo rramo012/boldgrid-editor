@@ -28,7 +28,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			width: '275px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'fontColor', 'width' , 'margin', 'blockAlignment', 'customClasses' ],
+			customizeSupport: [ 'fontColor', 'width', 'margin', 'blockAlignment', 'customClasses' ],
 			customizeSupportOptions: {
 				margin: {
 					horizontal: false
@@ -96,7 +96,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			 * @param  {string} classes  Classes to be added to my designs.
 			 */
 			append: function( classes ) {
-				var componentClasses = BG.Util.getComponentClasses( classes, self.componentPrefix ).join(' ');
+				var componentClasses = BG.Util.getComponentClasses( classes, self.componentPrefix ).join( ' ' );
 
 				// @TODO Check if these classes exist in any order.
 				// @TODO Make sure that if the design is removed from use, it's not added to my designs.
@@ -113,7 +113,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			_format: function() {
 				var builderConfig = BoldgridEditor.builder_config;
 
-				_.each( builderConfig.components_used.hr.slice( 0, self.maxMyDesigns ), function ( design ) {
+				_.each( builderConfig.components_used.hr.slice( 0, self.maxMyDesigns ), function( design ) {
 					self.userDesigns.append( design.classes );
 				} );
 			},
@@ -129,7 +129,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				}
 
 				BG.Controls.$container.$body.find( 'hr' ).each( function() {
-					self.userDesigns.append( $( this ).attr('class') );
+					self.userDesigns.append( $( this ).attr( 'class' ) );
 				} );
 			}
 		}

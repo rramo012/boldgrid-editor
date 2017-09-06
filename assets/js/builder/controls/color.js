@@ -9,7 +9,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.CONTROLS.Color = {
-
 		$currentInput: null,
 
 		$colorPanel: null,
@@ -18,18 +17,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		colorTemplate: wp.template( 'boldgrid-editor-color' ),
 
-		transparentColors: [
-		    'rgba(0, 0, 0, 0)',
-		    'transparent'
-		],
+		transparentColors: [ 'rgba(0, 0, 0, 0)', 'transparent' ],
 
-		colorClasses: [
-			'color1-color',
-			'color2-color',
-			'color3-color',
-			'color4-color',
-			'color5-color'
-		],
+		colorClasses: [ 'color1-color', 'color2-color', 'color3-color', 'color4-color', 'color5-color' ],
 
 		textContrastClasses: [
 			'color-neutral-text-default',
@@ -56,12 +46,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		],
 
 		borderColorClasses: [
-          'color1-border-color',
-          'color2-border-color',
-          'color3-border-color',
-          'color4-border-color',
-          'color5-border-color'
-        ],
+			'color1-border-color',
+			'color2-border-color',
+			'color3-border-color',
+			'color4-border-color',
+			'color5-border-color'
+		],
 
 		customColors: BoldgridEditor.saved_colors,
 
@@ -112,7 +102,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.$currentInput.attr( 'data-type', 'color' );
 				self.$currentInput.val( '' ).change();
 				self.$colorPanel.find( '.selected' ).removeClass( 'selected' );
-				self.$currentInput.parent().find( 'label' ).css( 'background-color', '#333' );
+				self.$currentInput
+					.parent()
+					.find( 'label' )
+					.css( 'background-color', '#333' );
 			} );
 		},
 
@@ -197,11 +190,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.on( 'click', '.color-preview', function( e ) {
 				e.stopPropagation();
 
-				var $currentSelection,
+				let $currentSelection,
 					$preview = $( this ),
 					$input = BG.Panel.$element.find( 'input[name="' + $preview.attr( 'for' ) + '"]' );
 
 				if ( 'color' === $input.attr( 'data-type' ) || ! $input.attr( 'data-type' ) ) {
+
 					// Select Color From My Colors.
 					self.$colorPanel.find( '[data-type="custom"].panel-selection' ).each( function() {
 						var $this = $( this );
@@ -210,9 +204,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 							return false;
 						}
 					} );
-
 				} else if ( 'class' === $input.attr( 'data-type' ) ) {
-					$currentSelection = self.$colorPanel.find( '.panel-selection[data-preset="' + $input.val() + '"]' );
+					$currentSelection = self.$colorPanel.find(
+						'.panel-selection[data-preset="' + $input.val() + '"]'
+					);
 				}
 
 				self.$colorPanel.find( '.panel-selection.selected' ).removeClass( 'selected' );
@@ -222,7 +217,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( $currentSelection && $currentSelection.length ) {
 					self.selectColor( $currentSelection );
 				}
-
 			} );
 			BG.Panel.$element.on( 'change', 'input.color-control', function() {
 				var $this = $( this ),
@@ -266,7 +260,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @return string color.
 		 */
 		findAncestorColor: function( $element, property ) {
-			var color, elements = [];
+			var color,
+				elements = [];
 
 			elements.push( $element );
 
@@ -297,7 +292,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var backgroundColors = {};
 
 			$.each( BoldgridEditor.colors.defaults, function( index ) {
-				backgroundColors[ 'color' + ( index + 1 ) + '-' + 'background-color' ] = this;
+				backgroundColors['color' + ( index + 1 ) + '-' + 'background-color'] = this;
 			} );
 
 			return backgroundColors;
@@ -317,10 +312,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				colorNum = index + 1;
 
 				backgroundColors.push( {
-					'color': this,
-					'colorNum': colorNum,
-					'text': BG.CONTROLS.Color.getColorClass( 'text-default', colorNum ),
-					'background': BG.CONTROLS.Color.getColorClass( 'background-color', colorNum )
+					color: this,
+					colorNum: colorNum,
+					text: BG.CONTROLS.Color.getColorClass( 'text-default', colorNum ),
+					background: BG.CONTROLS.Color.getColorClass( 'background-color', colorNum )
 				} );
 			} );
 
@@ -334,7 +329,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @param bool.
 		 */
 		isColorTransparent: function( color ) {
-			return BG.CONTROLS.Color.transparentColors.indexOf( color ) !== -1 || ! color;
+			return -1 !== BG.CONTROLS.Color.transparentColors.indexOf( color ) || ! color;
 		},
 
 		/**
@@ -356,6 +351,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( false === self.isColorTransparent( inputValue ) ) {
 					$label.css( 'background-color', inputValue );
 				}
+
 				/*
 				If ( $target.is( self.colorClasses.join(',') + ',' + self.backgroundColorClasses.join(',') ) ) {
 					 * @TODO This has been commented out because we can not set the type to class.
@@ -392,7 +388,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				change: function( event, ui ) {
 					var $this = $( this ),
 						cssColor = ui.color.toCSS(),
-						$selection = $this.closest( '.color-control' )
+						$selection = $this
+							.closest( '.color-control' )
 							.find( '.colors .panel-selection.selected[data-preset]' );
 
 					if ( $selection.length && $selection.is( '[data-type="default"]' ) ) {
@@ -404,20 +401,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					if ( $selection.length ) {
 						$selection.css( 'background-color', cssColor );
 						$selection.attr( 'data-preset', cssColor );
-						self.customColors[ $selection.attr( 'data-index' ) ] = cssColor;
+						self.customColors[$selection.attr( 'data-index' )] = cssColor;
 					}
 
 					if ( self.$currentInput ) {
 						self.$currentInput.attr( 'data-type', type );
 						self.$currentInput.attr( 'value', cssColor );
 						self.$currentInput.change();
-
 					}
 				},
 				hide: false,
 				palettes: true
 			} );
-
 		},
 
 		/**
@@ -430,7 +425,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			var $controls, selectedBackground;
 
 			selectedBackground = self.$colorPanel
-				.find( '.colors .panel-selection.selected' ).css( 'background-color' );
+				.find( '.colors .panel-selection.selected' )
+				.css( 'background-color' );
 
 			if ( ! selectedBackground ) {
 				selectedBackground = self.$colorPicker.iris( 'color' );
@@ -478,10 +474,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		_renderColorOptions: function() {
-			self.$colorPanel.find( '.colors-wrap' ).html( self.colorTemplate( {
-				'colors': self.getColorsFormatted(),
-				'customColors': self.customColors
-			} ) );
+			self.$colorPanel.find( '.colors-wrap' ).html(
+				self.colorTemplate( {
+					colors: self.getColorsFormatted(),
+					customColors: self.customColors
+				} )
+			);
 
 			BOLDGRID.EDITOR.Tooltip.renderTooltips();
 		},
@@ -495,11 +493,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		getColorsFormatted: function() {
 			var colors = [];
 			$.each( BoldgridEditor.colors.defaults, function( key ) {
-
 				var colorNum = key + 1;
 				colors.push( {
-					'color': this,
-					'paletteNum': colorNum
+					color: this,
+					paletteNum: colorNum
 				} );
 			} );
 
@@ -511,8 +508,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			if ( BoldgridEditor.colors.neutral ) {
 				colors.push( {
-					'paletteNum': 'neutral',
-					'color': BoldgridEditor.colors.neutral
+					paletteNum: 'neutral',
+					color: BoldgridEditor.colors.neutral
 				} );
 			}
 
@@ -538,7 +535,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		_setupRemove: function() {
 			self.$colorPanel.on( 'click', '.color-picker-wrap .cancel', function( e ) {
-				var $selection, $control, $newSelection,
+				var $selection,
+					$control,
+					$newSelection,
 					$this = $( this );
 
 				e.preventDefault();
@@ -596,11 +595,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				self.$currentInput.val( $this.attr( 'data-preset' ) );
 				self.$currentInput.attr( 'data-type', type );
 				self.$currentInput.change();
-
 			} );
 		}
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.Color;
-
-} )( jQuery );
+} ( jQuery ) );

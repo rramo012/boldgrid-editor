@@ -146,8 +146,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$target = $menu.targetData[ self.name ],
 					$this = $( this );
 
-				$target.removeClass(function( index, css ) {
-				    return ( css.match( /(^|\s)fa-\S+/g ) || [] ).join( ' ' );
+				$target.removeClass( function( index, css ) {
+					return ( css.match( /(^|\s)fa-\S+/g ) || [] ).join( ' ' );
 				} );
 
 				$target.addClass( $this.find( 'i' ).attr( 'class' ) );

@@ -91,12 +91,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		centerPanel: function() {
 			var $window = $( window ),
-			    width = parseInt( this.$element.css( 'width' ) ),
-			    height = parseInt( this.$element.css( 'height' ) ),
-			    windowWidth = $window.width(),
-			    windowHeight = $window.height(),
-			    centerWidth = ( windowWidth / 2 ) - ( width / 2 ),
-			    centerHeight = ( windowHeight / 2 ) - ( height / 2 );
+				width = parseInt( this.$element.css( 'width' ) ),
+				height = parseInt( this.$element.css( 'height' ) ),
+				windowWidth = $window.width(),
+				windowHeight = $window.height(),
+				centerWidth = windowWidth / 2 - width / 2,
+				centerHeight = windowHeight / 2 - height / 2;
+
 
 			this.$element.css( {
 				'top': centerHeight,
@@ -282,9 +283,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		scrollTo: function( to ) {
 			this.$element.find( self.getScrollTarget() ).slimScroll( {
-			    scrollTo: to,
-			    alwaysVisible: true,
-			    disableFadeOut: true
+				scrollTo: to,
+				alwaysVisible: true,
+				disableFadeOut: true
 			} );
 		},
 

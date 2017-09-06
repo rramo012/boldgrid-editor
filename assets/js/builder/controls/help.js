@@ -9,7 +9,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.CONTROLS.Help = {
-
 		name: 'help',
 
 		tooltip: 'Help',
@@ -24,12 +23,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			title: 'Help',
 			options: [
 				{
-					'name': 'Editing Guide',
-					'class': 'action font-awesome fa-question support-center'
+					name: 'Editing Guide',
+					class: 'action font-awesome fa-question support-center'
 				},
 				{
-					'name': 'Information',
-					'class': 'action font-awesome fa-info bg-editor-information'
+					name: 'Information',
+					class: 'action font-awesome fa-info bg-editor-information'
 				}
 			]
 		},
@@ -44,7 +43,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.6
 		 */
 		setup: function() {
-			BG.Menu.$element.find( '.bg-editor-menu-dropdown' )
+			BG.Menu.$element
+				.find( '.bg-editor-menu-dropdown' )
 				.on( 'click', '.action.support-center', self.openSupportCenter )
 				.on( 'click', '.action.bg-editor-information', self.iconHelp );
 		},
@@ -55,7 +55,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.5
 		 */
 		openSupportCenter: function() {
-			window.open('https://www.boldgrid.com/support/editing-your-pages/wordpress-page-post-editor/?source=boldgrid-editor_drop-tab', '_blank');
+			window.open(
+				'https://www.boldgrid.com/support/editing-your-pages/wordpress-page-post-editor/?source=boldgrid-editor_drop-tab',
+				'_blank'
+			);
 		},
 
 		/**
@@ -66,10 +69,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		iconHelp: function() {
 			BG.CONTROLS.Information.activate();
 		}
-
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Help.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Help;
-
-} )();
+} () );

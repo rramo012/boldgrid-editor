@@ -13,7 +13,10 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		template: wp.template( 'boldgrid-editor-horizontal-block-alignment' ),
 
 		render: function() {
-			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.horizontal-block-alignment' ).remove();
+			BG.Panel.$element
+				.find( '.panel-body .customize' )
+				.find( '.section.horizontal-block-alignment' )
+				.remove();
 			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
 		},
 
@@ -34,15 +37,19 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 
 			$inputs.filter( '[value="' + currentAlignment + '"]' ).prop( 'checked', true );
 
-			BG.Panel.$element.on( 'change', '.section [name="horizontal-block-alignment"]', function() {
-				var $this = $( this ),
-					value = $this.attr( 'value' );
+			BG.Panel.$element.on(
+				'change',
+				'.section [name="horizontal-block-alignment"]',
+				function() {
+					var $this = $( this ),
+						value = $this.attr( 'value' );
 
-				self._applyMargin( $el, value );
-			} );
+					self._applyMargin( $el, value );
+				}
+			);
 		},
 
-		_applyMargin: function ( $el, value ) {
+		_applyMargin: function( $el, value ) {
 			$el.removeAttr( 'align' );
 
 			if ( 'center' === value ) {
@@ -59,5 +66,4 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.GENERIC.Blockalignment;
-
-} )( jQuery );
+} ( jQuery ) );
