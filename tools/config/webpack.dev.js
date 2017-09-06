@@ -9,9 +9,7 @@ const distDir = path.resolve( __dirname, '../..' );
 var webpackConfig = {
 	context: path.resolve( __dirname, '../..' ),
 
-	entry: [
-		'./assets/js/index.js'
-	],
+	entry: [ './assets/js/index.js' ],
 
 	output: {
 		filename: './assets/js/editor.min.js',
@@ -31,59 +29,65 @@ var webpackConfig = {
 		}
 	},
 
-  module: {
-    rules: [
-		{
-			test: /\.ejs$/,
-			loader: 'ejs-loader'
-		},
-		{
-    test: /\.html$/,
-    use: [ {
-      loader: 'html-loader',
-      options: {
-        minimize: true
-      }
-    } ]
-}, {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: [
-        'babel-loader'
-      ]
-  }, /*{
-      test: /\.js$/,
-      enforce: 'pre',
+	module: {
+		rules: [
+			{
+				test: /\.ejs$/,
+				loader: 'ejs-loader'
+			},
+			{
+				test: /\.html$/,
+				use: [
+					{
+						loader: 'html-loader',
+						options: {
+							minimize: true
+						}
+					}
+				]
+			},
+			{
+				test: /\.js$/,
+				use: [ 'babel-loader' ]
+			},
+			{
+				test: /\.js$/,
+				enforce: 'pre',
+				loader: 'eslint-loader',
+				options: {
+					emitWarning: true
+				}
+			},
+			{
+				test: /\.(scss|css)$/,
+				use: [
+					{
+						loader: 'style-loader'
+					},
+					{
+						loader: 'css-loader'
+					},
+					{
+						loader: 'sass-loader'
+					}
+				]
+			},
+			{
+				test: /\.(jpg|jpeg|png|gif|ico|svg)$/,
+				loader: 'url-loader',
+				query: {
+					limit: 10000, // Use data url for assets <= 10KB
+					name: 'static/images/[name].[hash].[ext]'
+				}
+			}
+		]
+	},
 
-      loader: 'eslint-loader',
-      options: {
-        emitWarning: true
-      }
-  }, */{
-      test: /\.(scss|css)$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader'
-      }, {
-        loader: 'sass-loader'
-      }]
-    }, {
-      test: /\.(jpg|jpeg|png|gif|ico|svg)$/,
-      loader: 'url-loader',
-      query: {
-        limit: 10000, // Use data url for assets <= 10KB
-        name: 'static/images/[name].[hash].[ext]'
-      }
-    }]
-  },
+	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
 
-  plugins: [
-
-    new webpack.HotModuleReplacementPlugin(),
-
-    new webpack.NamedModulesPlugin()
-  ]
+		new webpack.NamedModulesPlugin()
+	]
 };
 
 if ( config.devServer.proxy ) {

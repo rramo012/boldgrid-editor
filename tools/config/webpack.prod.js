@@ -40,18 +40,17 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				exclude: /node_modules/,
 				use: [ 'babel-loader' ]
 			},
-			/*{
-      test: /\.js$/,
-      enforce: 'pre',
-
-      loader: 'eslint-loader',
-      options: {
-		  emitWarning: true
-      }
-  },*/ {
+			{
+				test: /\.js$/,
+				enforce: 'pre',
+				loader: 'eslint-loader',
+				options: {
+					emitWarning: true
+				}
+			},
+			{
 				test: /\.(scss|css)$/,
 				use: ExtractTextPlugin.extract( {
 					fallback: 'style-loader',
