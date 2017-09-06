@@ -5,11 +5,16 @@
 [![built with gulp](https://img.shields.io/badge/-gulp-eb4a4b.svg?logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAAYAAAAOCAMAAAA7QZ0XAAAABlBMVEUAAAD%2F%2F%2F%2Bl2Z%2FdAAAAAXRSTlMAQObYZgAAABdJREFUeAFjAAFGRjSSEQzwUgwQkjAFAAtaAD0Ls2nMAAAAAElFTkSuQmCC)](http://gulpjs.com/)
 
 # BoldGrid Editor #
-**Contributors:** imh_brad, joemoto, rramo012, timph
+**Contributors:** rramo012, imh_brad, timph, joemoto
+
 **Tags:** drag and drop, tinymce, editor
+
 **Requires at least:** 4.4
+
 **Tested up to:** 4.8.1
+
 **License:** GPLv2 or later
+
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor.

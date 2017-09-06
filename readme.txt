@@ -1,5 +1,5 @@
 === BoldGrid Editor ===
-Contributors: imh_brad, joemoto, rramo012, timph
+Contributors: rramo012, imh_brad, joemoto, timph
 Tags: drag and drop, tinymce, editor
 Requires at least: 4.4
 Tested up to: 4.8.1
