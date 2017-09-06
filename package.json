@@ -5,12 +5,13 @@
 	"main": "gulpfile.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"postinstall" : "npm run build",
 		"start": "npm-run-all -p start-js start-css",
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
-		"build": "npm-run-all -p build-gulp build-webpack",
 		"build-webpack": "NODE_ENV=production webpack --colors",
-		"build-gulp": "gulp build"
+		"build-gulp": "gulp build",
+		"build": "npm run build-gulp & npm run build-webpack"
 	},
 	"repository": {
 		"type": "git",
