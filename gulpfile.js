@@ -189,27 +189,6 @@ gulp.task( 'sass', function() {
 		.pipe( gulp.dest( config.dist + '/assets/css' ) );
 } );
 
-gulp.task( 'jsmin-drag', function( cb ) {
-	pump(
-		[
-			gulp.src( [
-				config.src + 'assets/js/builder/**/*.js',
-				config.src + 'assets/js/jquery/**/*.js'
-			] ),
-			jshint(),
-			jshint.reporter( stylish ),
-
-			//jshint.reporter( 'fail' ),
-			concat( 'editor.js' ),
-			uglify(),
-			rename( {
-				suffix: '.min'
-			} ),
-			gulp.dest( config.dist + 'assets/js' )
-		],
-		cb
-	);
-} );
 gulp.task( 'jsmin-media', function( cb ) {
 	pump(
 		[
@@ -246,7 +225,7 @@ gulp.task( 'jsmin-editor', function( cb ) {
 
 gulp.task( 'build', function( cb ) {
 	sequence(
-		[ 'sass', 'jsmin-editor', 'jsmin-media', 'jsmin-drag', 'readme' ],
+		[ 'sass', 'jsmin-editor', 'jsmin-media', 'readme' ],
 		[ 'font-awesome', 'boldgrid-components', 'copy-parallax-js' ],
 		cb
 	);

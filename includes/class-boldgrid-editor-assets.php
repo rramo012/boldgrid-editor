@@ -106,6 +106,8 @@ class Boldgrid_Editor_Assets {
 		array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
+
+		wp_enqueue_script( 'bundle-test', 'http://localhost:4000/wordpress/bundle.js', array(), BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**
