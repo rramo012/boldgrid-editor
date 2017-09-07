@@ -4,4 +4,4 @@ function buildConfig( env ) {
 	return require( './tools/config/webpack.' + env + '.js' );
 }
 
-module.exports = buildConfig( env === 'production' ? 'prod' : 'dev' );
+module.exports = buildConfig( 'production' === env ? 'prod' : 'dev' );

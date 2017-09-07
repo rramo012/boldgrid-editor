@@ -48,7 +48,7 @@ var webpackConfig = {
 			},
 			{
 				test: /\.js$/,
-				use: [ 'babel-loader' ]
+				loader: 'babel-loader'
 			},
 			{
 				test: /\.js$/,

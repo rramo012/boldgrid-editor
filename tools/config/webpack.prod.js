@@ -40,11 +40,13 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				use: [ 'babel-loader' ]
+				use: [ 'babel-loader' ],
+				exclude: /node_modules/
 			},
 			{
 				test: /\.js$/,
 				enforce: 'pre',
+				exclude: /node_modules/,
 				loader: 'eslint-loader',
 				options: {
 					emitWarning: true
@@ -97,7 +99,9 @@ module.exports = {
 				to: cssDir
 			},
 			{
-				from: srcDir + '/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
+				from:
+					srcDir +
+					'/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
 				to: cssDir
 			}
 		] )

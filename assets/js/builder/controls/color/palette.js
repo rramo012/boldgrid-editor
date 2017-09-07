@@ -1,14 +1,14 @@
-// import { Colors } from 'boldgrid-controls';
-// import { ColorPalette } from 'boldgrid-controls/colors';
+import { Renderer as ColorPalette } from 'boldgrid-controls/src/controls/color';
 
 export class Palette {
 	constructor() {
 		this.panel = {
 			title: 'Color Palette',
 			height: '700px',
-			width: '500px'
+			width: '300px'
 		};
 
+		this.ColorPalette = new ColorPalette();
 	}
 
 	init() {
@@ -21,7 +21,7 @@ export class Palette {
 		panel.clear();
 
 		// Set markup for panel.
-		panel.$element.find( '.panel-body' ).html( 'So that just happened' );
+		this.ColorPalette.render( panel.$element.find( '.panel-body' ) );
 
 		panel.showFooter();
 

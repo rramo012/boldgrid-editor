@@ -98,7 +98,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				centerWidth = windowWidth / 2 - width / 2,
 				centerHeight = windowHeight / 2 - height / 2;
 
-
 			this.$element.css( {
 				'top': centerHeight,
 				'left': centerWidth

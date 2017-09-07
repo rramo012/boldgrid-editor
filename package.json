@@ -17,10 +17,7 @@
 		"type": "git",
 		"url": "git+https://github.com/BoldGrid/boldgrid-editor.git"
 	},
-	"keywords": [
-		"Editor",
-		"tinyMCE"
-	],
+	"keywords": ["Editor", "tinyMCE"],
 	"author": "The BoldGrid Team",
 	"license": "GPL-2.0",
 	"bugs": {
@@ -62,6 +59,8 @@
 		"babel-eslint": "^7.2.3",
 		"babel-loader": "^7.1.2",
 		"babel-minify-webpack-plugin": "^0.2.0",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-stage-0": "^6.24.1",
 		"boldgrid-components": "^2.1.0",
 		"boldgrid-controls": "https://github.com/BoldGrid/controls#master",
 		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
