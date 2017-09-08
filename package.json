@@ -17,7 +17,10 @@
 		"type": "git",
 		"url": "git+https://github.com/BoldGrid/boldgrid-editor.git"
 	},
-	"keywords": ["Editor", "tinyMCE"],
+	"keywords": [
+		"Editor",
+		"tinyMCE"
+	],
 	"author": "The BoldGrid Team",
 	"license": "GPL-2.0",
 	"bugs": {

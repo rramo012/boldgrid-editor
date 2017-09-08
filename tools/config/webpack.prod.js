@@ -40,8 +40,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				use: [ 'babel-loader' ],
-				exclude: /node_modules/
+				use: [ 'babel-loader' ]
 			},
 			{
 				test: /\.js$/,
@@ -99,11 +98,17 @@ module.exports = {
 				to: cssDir
 			},
 			{
+				from: require.resolve( 'boldgrid-controls/dist/static/sass.worker.js' ),
+				to: distDir + '/assets/js/sass-js'
+			},
+			{
 				from:
 					srcDir +
 					'/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
 				to: cssDir
 			}
-		] )
+		] ),
+
+		new ExtractTextPlugin( 'assets/css/bundle.min.css' )
 	]
 };

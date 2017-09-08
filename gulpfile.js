@@ -68,8 +68,7 @@ gulp.task( 'boldgrid-components', function() {
 gulp.task( 'sass', function() {
 	gulp
 		.src( [
-			config.dist + '/assets/scss/**/*.scss',
-			'node_modules/boldgrid-controls/dist/bundle.min.css'
+			config.dist + '/assets/scss/**/*.scss'
 		] )
 		.pipe(
 			sass( {

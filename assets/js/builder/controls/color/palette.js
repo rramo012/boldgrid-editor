@@ -1,14 +1,21 @@
-import { Renderer as ColorPalette } from 'boldgrid-controls/src/controls/color';
+import { ColorPalette } from 'boldgrid-controls';
 
 export class Palette {
 	constructor() {
 		this.panel = {
 			title: 'Color Palette',
-			height: '700px',
-			width: '300px'
+			height: '600px',
+			width: '325px'
 		};
 
-		this.ColorPalette = new ColorPalette();
+		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
+
+		this.ColorPalette = new ColorPalette( {
+			sass: {
+				WorkerUrl: this.workerUrl
+			}
+		} );
+
 	}
 
 	init() {
@@ -20,7 +27,6 @@ export class Palette {
 
 		panel.clear();
 
-		// Set markup for panel.
 		this.ColorPalette.render( panel.$element.find( '.panel-body' ) );
 
 		panel.showFooter();
