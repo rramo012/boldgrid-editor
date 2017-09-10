@@ -1,5 +1,8 @@
 import { ColorPalette } from 'boldgrid-controls';
 
+var $ = window.jQuery,
+	BG = BOLDGRID.EDITOR;
+
 export class Palette {
 	constructor() {
 		this.panel = {
@@ -10,16 +13,25 @@ export class Palette {
 
 		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
 
-		this.ColorPalette = new ColorPalette( {
+		this.colorPalette = new ColorPalette( {
 			sass: {
 				WorkerUrl: this.workerUrl
 			}
 		} );
-
 	}
 
 	init() {
-		BOLDGRID.EDITOR.Controls.registerControl( this );
+		BG.Controls.registerControl( this );
+	}
+
+	renderChange() {
+		let panel = BG.Panel,
+			$body = panel.$element.find( '.panel-body' ),
+			$control = this.colorPalette.render( $body );
+
+		$control.on( 'sass_compiled', ( e, data ) => {
+			this.addCss( BG.Controls.$container, 'bg-control-colors', data.result.text );
+		} );
 	}
 
 	openPanel() {
@@ -27,7 +39,7 @@ export class Palette {
 
 		panel.clear();
 
-		this.ColorPalette.render( panel.$element.find( '.panel-body' ) );
+		this.renderChange();
 
 		panel.showFooter();
 
