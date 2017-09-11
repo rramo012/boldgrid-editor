@@ -1218,8 +1218,8 @@ boldgrid-components@^2.1.0, "boldgrid-components@https://github.com/BoldGrid/com
     rimraf "^2.6.1"
 
 "boldgrid-controls@https://github.com/BoldGrid/controls#master":
-  version "2.0.7"
-  resolved "https://github.com/BoldGrid/controls#127341768d991f1f87a762cbf50fdda38cc6a81d"
+  version "2.0.9"
+  resolved "https://github.com/BoldGrid/controls#d6c1e549c66e0a5424f4ca8718e973cf89eb21a9"
   dependencies:
     Iris "https://github.com/Automattic/Iris#master"
     babel-minify-webpack-plugin "^0.2.0"

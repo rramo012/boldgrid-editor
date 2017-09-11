@@ -39,6 +39,13 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		controls: [],
 
 		/**
+		 * @var array controls All registered controls.
+		 *
+		 * @since 1.2.7
+		 */
+		indexedControls: {},
+
+		/**
 		 * @var jQuery $container tinymce iFrame Element.
 		 *
 		 * @since 1.2.7
@@ -128,6 +135,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		registerControl: function( control ) {
 			this.controls.push( control );
+			this.indexedControls[ control.name ] = control;
+		},
+
+		get: function( name ) {
+			return this.indexedControls[ name ];
 		},
 
 		/**

@@ -1,15 +1,21 @@
-import { ColorPalette } from 'boldgrid-controls';
+import { ColorPalette, StyleUpdater } from 'boldgrid-controls';
 
 var $ = window.jQuery,
 	BG = BOLDGRID.EDITOR;
 
 export class Palette {
 	constructor() {
+		this.name = 'palette-customization';
+
 		this.panel = {
 			title: 'Color Palette',
 			height: '600px',
 			width: '325px'
 		};
+
+		// Instantiate the css loader.
+		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
+		this.styleUpdater.init();
 
 		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
 
@@ -24,13 +30,23 @@ export class Palette {
 		BG.Controls.registerControl( this );
 	}
 
-	renderChange() {
+	setup() {
+		this.$input = $( '#boldgrid-control-styles' );
+	}
+
+	renderCustomization() {
 		let panel = BG.Panel,
 			$body = panel.$element.find( '.panel-body' ),
 			$control = this.colorPalette.render( $body );
 
 		$control.on( 'sass_compiled', ( e, data ) => {
-			this.addCss( BG.Controls.$container, 'bg-control-colors', data.result.text );
+			this.styleUpdater.update( {
+				id: 'bg-controls-colors',
+				css: data.result.text,
+				scss: data.scss
+			} );
+
+			this.$input.attr( 'value', JSON.stringify( this.styleUpdater.stylesState ) );
 		} );
 	}
 
@@ -39,7 +55,7 @@ export class Palette {
 
 		panel.clear();
 
-		this.renderChange();
+		this.renderCustomization();
 
 		panel.showFooter();
 

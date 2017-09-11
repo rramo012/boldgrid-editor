@@ -307,6 +307,7 @@ class Boldgrid_Editor_Builder {
 	public function post_inputs() {
 		$in_page_containers = $this->page_containers_val();
 		$custom_colors = Boldgrid_Editor_Option::get( 'custom_colors', array() );
+
 		?>
 		<input style='display:none' type='checkbox' value='<?php echo (int) $in_page_containers; ?>'
 			checked='checked' name='boldgrid-in-page-containers'>
@@ -314,6 +315,9 @@ class Boldgrid_Editor_Builder {
 			checked='checked' name='boldgrid-custom-colors'>
 		<input style='display:none' value name='boldgrid-record-feedback'>
 <?php
+
+		$builderStyles = new Boldgrid_Editor_Builder_Styles();
+		print $builderStyles->get_input();
 	}
 
 	/**

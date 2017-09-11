@@ -48,11 +48,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		setup: function() {
 			BG.Menu.$element.find( '.bg-editor-menu-dropdown' ).on( 'click', '.action.open-color-palette', () => {
-				new ColorPalette().openPanel();
+				BG.Controls.get( 'palette-customization' ).openPanel();
 			} );
 		}
 	};
 
 	BOLDGRID.EDITOR.CONTROLS.Global.init();
 	self = BOLDGRID.EDITOR.CONTROLS.Global;
-} ( jQuery ) );
+} )( jQuery );
