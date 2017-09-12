@@ -176,6 +176,7 @@ class Boldgrid_Editor_Assets {
 				'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
+				'control_styles' => Boldgrid_Editor_Builder_Styles::get_option(),
 				'admin-url' => get_admin_url(),
 				'inspiration' => get_option( 'boldgrid_install_options' ),
 				'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' )
@@ -263,16 +264,13 @@ class Boldgrid_Editor_Assets {
 			'wp-util',
 		);
 
-		if ( defined( 'SCRIPT_DEBUG' ) && ! SCRIPT_DEBUG ) {
-
-			wp_enqueue_script( 'boldgrid-editor-drag',
-				plugins_url( '/assets/js/editor.min.js', $plugin_file ),
-			$deps, BOLDGRID_EDITOR_VERSION, true );
-
-			return;
+		$script_url = plugins_url( '/assets/js/editor.min.js', $plugin_file );
+		if ( defined( 'BGEDITOR_SCRIPT_DEBUG' ) && BGEDITOR_SCRIPT_DEBUG ) {
+			$script_url = 'http://localhost:4000/bundle.js';
 		}
 
-		wp_enqueue_script( 'boldgrid-editor-bundle', 'http://localhost:4000/bundle.js', $deps, BOLDGRID_EDITOR_VERSION, true );
+		wp_enqueue_script( 'boldgrid-editor-drag',
+			$script_url, $deps, BOLDGRID_EDITOR_VERSION, true );
 	}
 
 	/**

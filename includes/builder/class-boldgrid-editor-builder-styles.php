@@ -2,9 +2,9 @@
 /**
  * Class: Boldgrid_Editor_Builder_Styles
  *
- * Add functionality for fully customizable editor pages.
+ * Handle adding custom stylesheets to the editor.
  *
- * @since      1.2
+ * @since      1.6
  * @package    Boldgrid_Editor
  * @subpackage Boldgrid_Editor_Builder
  * @author     BoldGrid <support@boldgrid.com>
@@ -14,25 +14,45 @@
 /**
  * Class: Boldgrid_Editor_Builder_Styles
  *
- * Add functionality for fully customizable editor pages.
+ * Handle adding custom stylesheets to the editor.
  *
- * @since      1.2
+ * @since      1.6
  */
 class Boldgrid_Editor_Builder_Styles {
 
+	/**
+	 * Get the html named input for the styles values.
+	 *
+	 * @since 1.6
+	 *
+	 * @return string HTML to render.
+	 */
 	public function get_input() {
-		$styles = get_option( 'boldgrid_control_styles', array() );
-		return "<input id='boldgrid-control-styles' style='display:none' value='" . json_encode( $styles ) ."' name='boldgrid-control-styles'>";
+		return "<input id='boldgrid-control-styles' style='display:none' name='boldgrid-control-styles'>";
 	}
 
 	/**
-	 * Save user colors created during edit process.
+	 * Get the option value we use to display styles.
 	 *
-	 * @since 1.3
+	 * @since 1.6
+	 *
+	 * @return array
+	 */
+	public static function get_option() {
+		$styles = get_option( 'boldgrid_controls', array() );
+		$styles = ! empty( $styles['styles'] ) ? $styles['styles'] : array();
+
+		return $styles;
+	}
+
+	/**
+	 * Save user styles created during edit process.
+	 *
+	 * @since 1.6
 	 */
 	public function save() {
-		if ( isset( $_REQUEST['boldgrid-control-styles'] ) ) {
 
+		if ( isset( $_REQUEST['boldgrid-control-styles'] ) ) {
 			$styles = ! empty( $_REQUEST['boldgrid-control-styles'] ) ?
 				sanitize_text_field( wp_unslash( $_REQUEST['boldgrid-control-styles'] ) ) : '';
 
@@ -40,7 +60,6 @@ class Boldgrid_Editor_Builder_Styles {
 			$styles = is_array( $styles ) ? $styles : array();
 
 			//@todo create stylesheet.
-
 			update_option( 'boldgrid_controls', array(
 				'styles' => array(
 					'configuration' => $styles,

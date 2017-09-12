@@ -4,6 +4,7 @@ var $ = window.jQuery,
 	BG = BOLDGRID.EDITOR;
 
 export class Palette {
+
 	constructor() {
 		this.name = 'palette-customization';
 
@@ -12,11 +13,69 @@ export class Palette {
 			height: '600px',
 			width: '325px'
 		};
+	}
 
-		// Instantiate the css loader.
-		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
-		this.styleUpdater.init();
+	/**
+	 * Initialize this controls, usually ryns right after the constructor.
+	 *
+	 * @since 1.6
+	 */
+	init() {
+		BG.Controls.registerControl( this );
+	}
 
+	/**
+	 * Universal control setup, runs on mce or DOM loaded.
+	 *
+	 * @since 1.6
+	 */
+	setup() {
+		this.$input = $( '#boldgrid-control-styles' );
+		this._setupStyleLoader();
+		this._setupCustomize();
+	}
+
+	/**
+	 * Open the palette customization panel.
+	 *
+	 * @since 1.6.0
+	 */
+	openPanel() {
+		let panel = BOLDGRID.EDITOR.Panel;
+
+		panel.clear();
+
+		this.renderCustomization( panel.$element.find( '.panel-body' ) );
+
+		panel.showFooter();
+
+		// Open Panel.
+		panel.open( this );
+	}
+
+	/**
+	 * Render the customization of color palettes.
+	 *
+	 * @since 1.6
+	 */
+	renderCustomization( $target ) {
+		this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
+			this.styleUpdater.update( {
+				id: 'bg-controls-colors',
+				css: data.result.text,
+				scss: data.scss
+			} );
+
+			this._updateInput();
+		} );
+	}
+
+	/**
+	 * Setup the Color Palette Control.
+	 *
+	 * @since 1.6
+	 */
+	_setupCustomize() {
 		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
 
 		this.colorPalette = new ColorPalette( {
@@ -26,42 +85,27 @@ export class Palette {
 		} );
 	}
 
-	init() {
-		BG.Controls.registerControl( this );
+	/**
+	 * Instantiate the css loader.
+	 *
+	 * @since 1.6
+	 */
+	_setupStyleLoader() {
+		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
+		this.styleUpdater.loadSavedConfig( BoldgridEditor.control_styles.configuration || [] );
+		this.styleUpdater.setup();
+		this._updateInput();
 	}
 
-	setup() {
-		this.$input = $( '#boldgrid-control-styles' );
+	/**
+	 * Update the on page input which will be saved to wordpress.
+	 *
+	 * @since 1.6
+	 */
+	_updateInput() {
+		this.$input.attr( 'value', JSON.stringify( this.styleUpdater.stylesState ) );
 	}
 
-	renderCustomization() {
-		let panel = BG.Panel,
-			$body = panel.$element.find( '.panel-body' ),
-			$control = this.colorPalette.render( $body );
-
-		$control.on( 'sass_compiled', ( e, data ) => {
-			this.styleUpdater.update( {
-				id: 'bg-controls-colors',
-				css: data.result.text,
-				scss: data.scss
-			} );
-
-			this.$input.attr( 'value', JSON.stringify( this.styleUpdater.stylesState ) );
-		} );
-	}
-
-	openPanel() {
-		let panel = BOLDGRID.EDITOR.Panel;
-
-		panel.clear();
-
-		this.renderCustomization();
-
-		panel.showFooter();
-
-		// Open Panel.
-		panel.open( this );
-	}
 }
 
 export { Palette as default };
