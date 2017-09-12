@@ -106,6 +106,12 @@ class Boldgrid_Editor_Assets {
 		array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
+
+		// Control Styles.
+		$style_url = Boldgrid_Editor_Builder_Styles::get_url_info();
+		if ( $style_url['url'] ) {
+			wp_enqueue_style( 'boldgrid-custom-styles',  $style_url['url'], array(), $style_url['timestamp'] );
+		}
 	}
 
 	/**

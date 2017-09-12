@@ -19,6 +19,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-ajax.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-assets.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-mce.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-theme.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-fs.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-version.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
