@@ -1218,8 +1218,8 @@ boldgrid-components@^2.1.0, "boldgrid-components@https://github.com/BoldGrid/com
     rimraf "^2.6.1"
 
 "boldgrid-controls@https://github.com/BoldGrid/controls#master":
-  version "2.0.9"
-  resolved "https://github.com/BoldGrid/controls#d6c1e549c66e0a5424f4ca8718e973cf89eb21a9"
+  version "2.0.10"
+  resolved "https://github.com/BoldGrid/controls#37c3f853e79e094888bc23c12be64e9413a3941d"
   dependencies:
     Iris "https://github.com/Automattic/Iris#master"
     babel-minify-webpack-plugin "^0.2.0"
@@ -4108,13 +4108,19 @@ jasmine@^2.3.0:
     glob "^7.0.6"
     jasmine-core "~2.8.0"
 
+jquery-slimscroll@^1.3.8:
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/jquery-slimscroll/-/jquery-slimscroll-1.3.8.tgz#8481c44e7a47687653908a28f7f70aed64c84e36"
+  dependencies:
+    jquery ">= 1.7"
+
 jquery.stellar@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/jquery.stellar/-/jquery.stellar-0.6.2.tgz#034003fa3475dde69bba05a3faf6168775ad69dd"
   dependencies:
     jquery ">=1.4.3"
 
-jquery@>=1.4.3:
+"jquery@>= 1.7", jquery@>=1.4.3:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -7463,6 +7469,10 @@ wordwrap@~0.0.2:
 wordwrap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
+
+"wp-color-picker-alpha@https://github.com/rramo012/wp-color-picker-alpha#master":
+  version "1.0.1"
+  resolved "https://github.com/rramo012/wp-color-picker-alpha#0ace32fa4ef55f0ac7e6e677f687da7e20660af1"
 
 wrap-ansi@^2.0.0:
   version "2.1.0"

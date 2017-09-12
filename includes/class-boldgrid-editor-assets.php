@@ -181,6 +181,7 @@ class Boldgrid_Editor_Assets {
 				'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
 				'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
+				'display_intro' => true,
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
 				'control_styles' => Boldgrid_Editor_Builder_Styles::get_option(),
 				'admin-url' => get_admin_url(),
@@ -236,10 +237,6 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_script( 'boldgrid-editor-slim-scroll',
-			plugins_url( '/assets/js/slimscroll/jquery.slimscroll.min.js', $plugin_file ), array(),
-		BOLDGRID_EDITOR_VERSION, true );
-
 		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
 			'//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
 		false, BOLDGRID_EDITOR_VERSION, false );
@@ -253,19 +250,15 @@ class Boldgrid_Editor_Assets {
 	public function enqueue_drag_scripts() {
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
-		// Color Picker with alpha channel: https://github.com/23r9i0/wp-color-picker-alpha.
-		// @TODO Add this dep to gulp build.
-		wp_enqueue_script( 'wp-color-picker-alpha',
-			plugins_url( '/assets/js/wp-color-picker-alpha/wp-color-picker-alpha.js', $plugin_file ),
-		array( 'jquery', 'wp-color-picker' ), null, true );
-
 		// Dependencies.
 		$deps = array(
+			'jquery',
 			'jquery-ui-draggable',
 			'jquery-ui-resizable',
 			'jquery-ui-slider',
 			'jquery-ui-droppable',
 			'jquery-ui-selectmenu',
+			'wp-color-picker',
 			'jquery-masonry',
 			'wp-util',
 		);

@@ -1,7 +1,7 @@
 /*************** Background Panel ********************/
-.editor-panel[data-type="box"] {
+.editor-panel[data-type='box'] {
 	.my-designs {
-		z-index:1;
+		z-index: 1;
 	}
 
 	.panel-footer {
@@ -33,41 +33,41 @@
 	}
 
 	.bg-box.box-long {
-	    height: 114px;
+		height: 114px;
 	}
 	.bg-box.box-wide {
-	    width: 106px;
+		width: 106px;
 	}
 	.panel-body,
 	.box-design {
-	   height:100%;
-	   width: 100%;
+		height: 100%;
+		width: 100%;
 	}
 
 	.back {
 		margin-bottom: 0;
 	}
 
-    .presets {
-	    margin: 0 10px;
-	    padding-bottom: 45px;
-	    font-size: 7px;
+	.presets {
+		margin: 0 10px;
+		padding-bottom: 45px;
+		font-size: 7px;
 
-	    &.my-designs {
-	        padding-bottom: 15px;
-	    }
-    }
+		&.my-designs {
+			padding-bottom: 15px;
+		}
+	}
 
-    .presets .selected {
-       @include selected-preset();
-    }
+	.presets .selected {
+		@include selected-preset();
+	}
 
-    .color-controls .title {
-    	margin-left: 10px;
-    	margin-right: 10px;
-    }
+	.color-controls .title {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
 
-    .box-design .customize {
-    	display: none;
-    }
+	.box-design .customize {
+		display: none;
+	}
 }

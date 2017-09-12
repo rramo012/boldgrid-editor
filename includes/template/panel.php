@@ -2,6 +2,7 @@
 <div class='editor-panel ui-widget-content'>
 	<div class='panel-title'>
 		<span class="name"></span>
+		<span class="info"></span>
 		<span class="dashicons dashicons-no-alt close-icon"></span>
 	</div>
 	<div class='panel-body'>

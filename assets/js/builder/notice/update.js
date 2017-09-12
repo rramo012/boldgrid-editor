@@ -2,6 +2,8 @@ window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 
+import { Base as Notice } from './base';
+
 ( function( $ ) {
 	'use strict';
 
@@ -9,13 +11,14 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		BG = BOLDGRID.EDITOR;
 
 	BG.NOTICE.Update = {
-
 		title: 'New Release: BoldGrid Editor',
 
 		template: wp.template( 'boldgrid-upgrade-notice' ),
 
 		init: function() {
 			if ( BoldgridEditor.display_update_notice ) {
+				this.notice = new Notice();
+
 				self.displayPanel();
 
 				// Delay event, make sure user sees modal.
@@ -31,13 +34,9 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		bindEvents: function() {
-			var stopProp = function( e ) {
-				e.stopPropagation();
-			};
 
-			self.bindDismissButton();
-			self.panelClick();
-			BG.Panel.$element.on( 'click', stopProp );
+			this.notice.bindDismissButton();
+			self.bodyClick();
 		},
 
 		/**
@@ -45,53 +44,16 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 *
 		 * @since 1.3
 		 */
-		panelClick: function() {
-			$( 'body' ).one( 'click', function() {
-				self.dismissPanel();
+		bodyClick: function() {
+			var stopProp = function( e ) {
+				e.stopPropagation();
+			};
+
+			$( 'body' ).one( 'click', () => {
+				this.notice.dismissPanel();
 			} );
-		},
 
-		/**
-		 * Bind the event of dismiss to the OKay button.
-		 *
-		 * @since 1.3
-		 */
-		bindDismissButton: function() {
-			BG.Panel.$element.find( '.bg-upgrade-notice .dismiss' ).one( 'click', function() {
-				self.dismissPanel();
-			} );
-		},
-
-		/**
-		 * Hide the panel.
-		 *
-		 * @since 1.3
-		 */
-		dismissPanel: function() {
-			var $body = $( 'body' );
-
-			$body.addClass( 'fadeout-background' );
-			BG.Panel.$element
-				.addClass( 'bounceOutDown' )
-				.one( 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-					self.removeEffects();
-				} );
-
-			setTimeout( function() {
-				self.removeEffects();
-			}, 1000 );
-		},
-
-		/**
-		 * Remove the effects added to the notification.
-		 *
-		 * @since 1.3
-		 */
-		removeEffects: function() {
-			$( 'body' ).removeClass( 'bg-editor-intro-1-3 fadeout-background' );
-			BG.Panel.resetPosition();
-			BG.Panel.$element.hide();
-			BG.Panel.$element.removeClass( 'animated bounceOutDown bounceInDown' );
+			BG.Panel.$element.on( 'click', stopProp );
 		},
 
 		/**
@@ -100,7 +62,7 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		displayPanel: function() {
-			$( 'body' ).addClass( 'bg-editor-intro-1-3' );
+			$( 'body' ).addClass( 'bg-editor-intro-1-3 bg-editor-intro' );
 			self.initPanel();
 			self.renderPanel();
 		},
@@ -111,7 +73,8 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 		 * @since 1.3
 		 */
 		animatePanel: function() {
-			BG.Panel.$element.addClass( 'animated bounceInDown' )
+			BG.Panel.$element
+				.addClass( 'animated bounceInDown' )
 				.one( 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
 					$( '.bg-editor-loading' ).hide();
 				} );
@@ -137,9 +100,7 @@ BOLDGRID.EDITOR.NOTICE = BOLDGRID.EDITOR.NOTICE || {};
 			BG.Panel.setTitle( self.title );
 			BG.Panel.setContent( self.template() );
 		}
-
 	};
 
 	self = BG.NOTICE.Update;
-
 } )( jQuery );

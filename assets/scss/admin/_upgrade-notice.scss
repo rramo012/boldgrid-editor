@@ -1,163 +1,183 @@
 .bg-editor-intro-1-3 {
-    .bg-editor-loading {
-    	display: block;
-    }
-    .editor-panel {
-        z-index: 99999999;
-        border: none;
-        box-shadow: 0 0 18px 0 rgba(255, 255, 255, 0.3);
-        
-        .panel-title {
-            margin: 0;
-            cursor: default;
-        }
-        
-        .close-icon {
-        	display: none;
-        }
-        
-        .panel-body {
-	        overflow-y: hidden;
-	        padding: 0 15px 15px;
-            border-radius: 10px;
-            position: absolute;
-            top: 48px;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-        
-        h2,
-        .btn {
-            font-family: 'Josefin Sans';
-            text-transform: uppercase;
-            font-weight: 300;
-        }
-        h2 {
-            font-size: 32px;
-        }
-        p,
-        ul {
-	        font-family: 'Exo 2';
-	        font-size: 16px;
-	        font-weight: 300;
-	        line-height: 1.7;
-	        margin-left: 10px;
-        }
-        
-        ul {
-            line-height: 1.5em;
-            text-align: left;
-            padding-left: 30px;
-            list-style: square outside url(../image/notice/bullet.png);
-            
-            li {
-                padding-left: 5px;
-    			font-weight: 600;
-    			font-size: 14px;
-            }
-        }
-        
-        p.intro {
-            width: 65%;
-        }
-        
-        .editor-icon {
-		    height: 28px;
-		    width: auto;
-		    margin-right: 5px;
-        }
-        
-        .editor-preview {
-            img {
-                border: 2px solid #ececec;
-                position: absolute;
-                right: 20px;
-                bottom: -20px;
-            }
-        }
-        
-        .panel-actions {
-            position: absolute;
-            top: 25px;
-            right: 60px;
-        }
-        
-        .btn {
-            font-size: 13px;
-            font-weight: 600;
-            padding: 10px 35px;
-            line-height: inherit;
-            
-            &.bg-primary-color {
-                background-color: $boldgrid-color;
-                color: white;
-                
-                &:hover {
-                    background-color: darken( $boldgrid-color, 8% );
-                }
-            }
-            &.bg-secondary-color {
-	            background-color: #ececec;
-	            color: #000;
-	            
-	            &:hover {
-                    background-color: lighten( #ececec, 5% );
-	            }
-	        }
-        }
-        
-        top: calc( 50% - 200px ) !important;
-        left: calc( 50% - 400px ) !important;
-        
-        @media screen and (max-width: 915px) {
-            left: 0 !important;
-            right: 0 !important; 
-            top: 0 !important;
-            position: absolute;
-            height: 800px !important;
-            width: auto !important;
-            
-            h2 {
-                line-height: 1.1em;
-            }
-            
-            .editor-preview {
-                display: none;
-            }
-            
-            .panel-actions {
-                position: static;
-            }
-            
-            p.intro {
-                width: 100%;
-            }
-		}
-    }
-	@keyframes bg-fade-out {
-	    0%   { background-color: rgba(0 ,0, 0, .7); }
-		100% { background-color: transparent; }
+	.editor-panel {
+		top: calc(50% - 200px) !important;
+		left: calc(50% - 400px) !important;
 	}
-    @keyframes bg-fade-in {
-	    0%   { background-color: transparent; }
-		100% { background-color: rgba(0 ,0, 0, .7); }
+
+	p,
+	ul {
+		font-family: 'Exo 2';
+		font-weight: 300;
+		line-height: 1.7;
+		margin-left: 10px;
+	}
+
+	ul {
+		line-height: 1.5em;
+		text-align: left;
+		padding-left: 30px;
+		list-style: square outside url(../image/notice/bullet.png);
+
+		li {
+			padding-left: 5px;
+			font-weight: 600;
+			font-size: 14px;
+		}
+	}
+}
+
+.bg-editor-intro {
+	.bg-editor-loading {
+		display: block;
+	}
+	.editor-panel {
+		z-index: 99999999;
+		border: none;
+		box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.3);
+
+		p {
+			font-size: 16px;
+		}
+
+		.panel-title {
+			margin: 0;
+			cursor: default;
+		}
+
+		.close-icon {
+			display: none;
+		}
+
+		.panel-body {
+			overflow-y: hidden;
+			padding: 0 15px 15px;
+			border-radius: 10px;
+			position: absolute;
+			top: 48px;
+			bottom: 0;
+			right: 0;
+			left: 0;
+		}
+
+		h2,
+		.btn {
+			font-family: 'Josefin Sans';
+			text-transform: uppercase;
+			font-weight: 300;
+		}
+		h2 {
+			font-size: 32px;
+		}
+
+		p.intro {
+			width: 65%;
+		}
+
+		.editor-icon {
+			height: 28px;
+			width: auto;
+			margin-right: 5px;
+		}
+
+		.editor-preview {
+			img {
+				border: 2px solid #ececec;
+				position: absolute;
+				right: 20px;
+				bottom: -20px;
+			}
+		}
+
+		.panel-actions {
+			position: absolute;
+			top: 25px;
+			right: 60px;
+		}
+
+		.btn {
+			font-size: 13px;
+			font-weight: 600;
+			padding: 10px 35px;
+			line-height: inherit;
+
+			&.bg-primary-color {
+				background-color: $boldgrid-color;
+				color: white;
+
+				&:hover {
+					background-color: darken($boldgrid-color, 8%);
+				}
+
+				&[disabled] {
+					background-color: lighten($boldgrid-color, 30%);
+				}
+			}
+			&.bg-secondary-color {
+				background-color: #ececec;
+				color: #000;
+
+				&:hover {
+					background-color: lighten(#ececec, 5%);
+				}
+			}
+		}
+
+		@media screen and (max-width: 915px) {
+			left: 0 !important;
+			right: 0 !important;
+			top: 0 !important;
+			position: absolute;
+			height: 800px !important;
+			width: auto !important;
+
+			h2 {
+				line-height: 1.1em;
+			}
+
+			.editor-preview {
+				display: none;
+			}
+
+			.panel-actions {
+				position: static;
+			}
+
+			p.intro {
+				width: 100%;
+			}
+		}
+	}
+	@keyframes bg-fade-out {
+		0% {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
+		100% {
+			background-color: transparent;
+		}
+	}
+	@keyframes bg-fade-in {
+		0% {
+			background-color: transparent;
+		}
+		100% {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
 	}
 	&.fadeout-background:after {
-	    animation-name: bg-fade-out;
-    	animation-duration: 1s;
+		animation-name: bg-fade-out;
+		animation-duration: 1s;
 	}
-    &:after {
-	    animation-name: bg-fade-in;
-    	animation-duration: 1s;
-    
-	    content: ' ';
-	    left: 0;
-	    right: 0; 
-	    top: 0;
-	    bottom: 0;
-	    background-color: rgba(0 ,0, 0, .7);
-	    z-index: 9999999;
-	    position: fixed;
+	&:after {
+		animation-name: bg-fade-in;
+		animation-duration: 1s;
+
+		content: ' ';
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background-color: rgba(255, 255, 255, 0.7);
+		z-index: 9999999;
+		position: fixed;
 	}
 }

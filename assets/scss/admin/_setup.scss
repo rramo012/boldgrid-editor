@@ -1,0 +1,48 @@
+.bg-editor-intro .step {
+	&:not(.active) {
+		display: none;
+	}
+}
+
+
+.bg-editor-intro .editor-panel {
+	.panel-title {
+		pointer-events: none;
+	}
+
+	.setup {
+		padding: 10px;
+
+		.palette-selection p {
+			font-size: 14px;
+		}
+
+		h2 {
+			line-height: 1.1;
+			font-size: 24px;
+			margin-bottom: 0;
+		}
+
+		.buttons {
+			text-align: right;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: 15px 20px;
+			bottom: 0;
+		}
+
+		p {
+			font-family: inherit;
+			margin-left: 0;
+		}
+	}
+}
+
+.setup .palette-selection .palette-row  {
+	margin-right: -1px;
+
+	li {
+		margin-bottom: 0;
+	}
+}

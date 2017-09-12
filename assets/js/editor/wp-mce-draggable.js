@@ -456,7 +456,7 @@ e.preventDefault();
 				.document
 				.write( $stripped_without_styles.html() );
 
-			$container = self.$resizing_iframe
+			var $container = self.$resizing_iframe
 				.contents()
 				.find( 'article[class^="post-"]' )
 				.closest( '.container, .container-fluid' );

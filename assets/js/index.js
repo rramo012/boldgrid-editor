@@ -4,6 +4,8 @@ window.BOLDGRID = window.BOLDGRID || {};
 import 'istyping';
 import 'fourpan';
 import 'textselect';
+import 'jquery-slimScroll';
+import 'wp-color-picker-alpha';
 
 // Import Libs.
 import './builder/util';

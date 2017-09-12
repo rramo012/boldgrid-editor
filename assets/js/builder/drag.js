@@ -1204,7 +1204,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$master_container
 			.find( self.original_selector_strings.general_column_selectors_string )
 			.each( function() {
-				$current_element = $( this );
+				var $current_element = $( this );
 				$current_element.addClass( self.find_column_sizes( $current_element ) );
 			} );
 	};

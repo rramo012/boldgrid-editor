@@ -63,6 +63,15 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Set info.
+		 *
+		 * @since 1.6
+		 */
+		setInfo: function( title ) {
+			this.$element.find( '.panel-title .info' ).html( title );
+		},
+
+		/**
 		 * Reset Panel Position
 		 *
 		 * @since 1.3
@@ -295,6 +304,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		clear: function() {
 			this.$element.find( '.panel-title .name' ).empty();
+			this.$element.find( '.panel-title .info' ).empty();
 			this.$element.find( '.panel-body' ).empty();
 		},
 
