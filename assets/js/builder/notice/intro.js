@@ -5,8 +5,10 @@ import templateHtml from '../../../../includes/template/intro.html';
 import { Base as Notice } from './base';
 import { ColorPaletteSelection } from 'boldgrid-controls';
 
-export class Intro {
+export class Intro extends Notice {
 	constructor() {
+		super();
+
 		this.name = 'intro';
 
 		this.panel = {
@@ -23,17 +25,29 @@ export class Intro {
 	 */
 	init() {
 		if ( BoldgridEditor.display_intro ) {
+
 			this.$body = $( 'body' );
-			this.notice = new Notice();
+			this.settings = this.getDefaults();
 
 			this.templateMarkup = _.template( templateHtml )();
 			this.$panelHtml = $( this.templateMarkup );
 
 			this.openPanel();
 			this._setupNav();
-			this.notice.bindDismissButton();
+			this.bindDismissButton();
 			this._setupStepActions();
 		}
+	}
+
+	getDefaults() {
+		return {
+			template: {
+				choice: 'full-width'
+			},
+			palette: {
+				choice: [ 'red', 'blue', 'green' ]
+			}
+		};
 	}
 
 	/**
@@ -48,6 +62,16 @@ export class Intro {
 		BG.Panel.setContent( this.$panelHtml );
 		BG.Panel.centerPanel();
 		BG.Panel.$element.show();
+	}
+
+	dismissPanel() {
+		super.dismissPanel();
+
+		// Pass the color settings to the ColorPalette tool to format to the massive config.
+		// Compile the color palettes, and apply.( This should tie into what we have already. )
+
+		// Make ajax call to save the given settings.
+		console.log( this.settings );
 	}
 
 	/**
@@ -65,6 +89,10 @@ export class Intro {
 
 			$control.one( 'palette-selection', () => {
 				this.$currentStep.find( '[data-action-step]' ).removeAttr( 'disabled' );
+			} );
+
+			$control.on( 'palette-selection', () => {
+				this.settings.palette.choice = this.selection.getSelectedPalette();
 			} );
 		} );
 	}

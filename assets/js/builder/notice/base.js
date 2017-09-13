@@ -35,7 +35,7 @@ export class Base {
 	 * @since 1.3
 	 */
 	dismissPanel() {
-		var $body = $( 'body' );
+		let $body = $( 'body' );
 
 		$body.addClass( 'fadeout-background' );
 		BG.Panel.$element

@@ -34,7 +34,6 @@ import { Base as Notice } from './base';
 		 * @since 1.3
 		 */
 		bindEvents: function() {
-
 			this.notice.bindDismissButton();
 			self.bodyClick();
 		},
