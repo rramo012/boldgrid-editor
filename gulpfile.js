@@ -48,18 +48,12 @@ gulp.task( 'js-unit-tests', function( done ) {
 
 gulp.task( 'boldgrid-components', function() {
 	gulp
-		.src( [
-			config.src +
-				'/node_modules/boldgrid-component-library/dist/css/components.*'
-		] )
+		.src( [ config.src + '/node_modules/boldgrid-component-library/dist/css/components.*' ] )
 		.pipe( debug( { title: 'BoldGrid Components:' } ) )
 		.pipe( gulp.dest( config.cssDest ) );
 
 	gulp
-		.src( [
-			config.src +
-				'/node_modules/boldgrid-component-library/json/components.json'
-		] )
+		.src( [ config.src + '/node_modules/boldgrid-component-library/json/components.json' ] )
 		.pipe( debug( { title: 'BoldGrid Components Json:' } ) )
 		.pipe( gulp.dest( config.jsonDir ) );
 } );
@@ -67,9 +61,7 @@ gulp.task( 'boldgrid-components', function() {
 // Compile sass files.
 gulp.task( 'sass', function() {
 	gulp
-		.src( [
-			config.dist + '/assets/scss/**/*.scss'
-		] )
+		.src( [ config.dist + '/assets/scss/**/*.scss' ] )
 		.pipe(
 			sass( {
 				includePaths: [ config.dist + 'assets/scss/' ]
@@ -93,13 +85,17 @@ gulp.task( 'sass', function() {
 		.pipe( gulp.dest( config.dist + '/assets/css' ) );
 } );
 
+gulp.task( 'merge-webpack', function() {
+	gulp
+		.src( [ config.dist + '/assets/css/editor.min.css', config.dist + '/assets/css/bundle.min.css' ] )
+		.pipe( concat( 'editor.min.css' ) )
+		.pipe( gulp.dest( config.dist + '/assets/css/' ) );
+} );
+
 gulp.task( 'jsmin-media', function( cb ) {
 	pump(
 		[
-			gulp.src( [
-				'!' + config.src + 'assets/js/media/**/*.min.js',
-				config.src + 'assets/js/media/**/*.js'
-			] ),
+			gulp.src( [ '!' + config.src + 'assets/js/media/**/*.min.js', config.src + 'assets/js/media/**/*.js' ] ),
 			uglify(),
 			rename( {
 				suffix: '.min'
@@ -113,10 +109,7 @@ gulp.task( 'jsmin-media', function( cb ) {
 gulp.task( 'jsmin-editor', function( cb ) {
 	pump(
 		[
-			gulp.src( [
-				'!' + config.src + 'assets/js/editor/**/*.min.js',
-				config.src + 'assets/js/editor/**/*.js'
-			] ),
+			gulp.src( [ '!' + config.src + 'assets/js/editor/**/*.min.js', config.src + 'assets/js/editor/**/*.js' ] ),
 			uglify(),
 			rename( {
 				suffix: '.min'
@@ -128,11 +121,7 @@ gulp.task( 'jsmin-editor', function( cb ) {
 } );
 
 gulp.task( 'build', function( cb ) {
-	sequence(
-		[ 'sass', 'jsmin-editor', 'jsmin-media' ],
-		[ 'boldgrid-components' ],
-		cb
-	);
+	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], [ 'boldgrid-components', 'merge-webpack' ], cb );
 } );
 
 gulp.task( 'watch', function() {
