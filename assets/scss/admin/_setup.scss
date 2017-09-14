@@ -4,7 +4,6 @@
 	}
 }
 
-
 .bg-editor-intro .editor-panel {
 	.panel-title {
 		pointer-events: none;
@@ -39,10 +38,19 @@
 	}
 }
 
-.setup .palette-selection .palette-row  {
+.setup .palette-selection .palette-row {
 	margin-right: -1px;
 
 	li {
 		margin-bottom: 0;
+	}
+}
+
+.setup .choose-template {
+	.bg-editor-radio {
+		text-align: left;
+		max-width: 240px;
+		margin: 0 auto;
+		margin-top: 30px;
 	}
 }

@@ -11,7 +11,7 @@ class Boldgrid_Editor_Templater {
 	 * The array of templates that this plugin tracks.
 	 */
 	protected $templates = array(
-		'template/page/fullwidth.php' => 'BoldGrid - FullWidth',
+		'template/page/fullwidth.php' => 'BoldGrid - Full Width',
 		'template/page/left-sidebar.php' => 'BoldGrid - Left Sidebar',
 		'template/page/right-sidebar.php' => 'BoldGrid - Right Sidebar'
 	);

@@ -25,13 +25,13 @@ export class Intro extends Notice {
 	 */
 	init() {
 		if ( BoldgridEditor.display_intro ) {
-
 			this.selection = new ColorPaletteSelection();
 			this.$body = $( 'body' );
 			this.settings = this.getDefaults();
 
 			this.templateMarkup = _.template( templateHtml )();
 			this.$panelHtml = $( this.templateMarkup );
+			this.$templateInputs = this.$panelHtml.find( 'input[name="template"]' );
 
 			this.openPanel();
 			this._setupNav();
@@ -43,7 +43,7 @@ export class Intro extends Notice {
 	getDefaults() {
 		return {
 			template: {
-				choice: 'full-width'
+				choice: 'fullwidth'
 			},
 			palette: {
 				choice: this.selection.randomSelection()
@@ -70,6 +70,7 @@ export class Intro extends Notice {
 
 		// Compile the color palettes, and apply.( This should tie into what we have already. )
 		BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
+		this.settings.template.choice = this.$templateInputs.filter( ':checked' ).val();
 
 		// Make ajax call to save the given settings.
 		this.saveSettings();
@@ -87,15 +88,15 @@ export class Intro extends Notice {
 				boldgrid_editor_setup: BoldgridEditor.setupNonce,
 				settings: this.settings
 			}
-		} ).done( function( response ) {
+		} )
+			.done( function( response ) {
 
-			// Close loading graphic.
+				// Close loading graphic.
+			} )
+			.fail( function() {
 
-		} ).fail( function() {
-
-			// Add the defaults in a post input and save later.
-
-		} );
+				// Add the defaults in a post input and save later.
+			} );
 	}
 
 	/**

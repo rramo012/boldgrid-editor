@@ -83,6 +83,50 @@
   background: #f7f7f7;
   z-index: 999; }
 
+.bg-editor-radio input {
+  padding: 15px;
+  background: #ececec;
+  border-radius: 5px;
+  margin: 7px 0;
+  display: block;
+  font-size: 15px;
+  position: relative;
+  width: 100%;
+  border: 0;
+  height: 40px;
+  box-shadow: none;
+  text-align: left;
+  transition: background-color, color .5s; }
+
+.bg-editor-radio input:after {
+  content: attr(text);
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+  margin-left: 20px; }
+
+.bg-editor-radio input:hover {
+  background-color: #dadde0; }
+
+.bg-editor-radio input:checked {
+  color: white;
+  background: #32373c; }
+
+.bg-editor-radio input:checked:before {
+  color: #32373c;
+  content: '\f058';
+  display: block;
+  position: absolute;
+  left: -20px;
+  font: normal normal normal 16px/1 FontAwesome;
+  transform: translateY(-50%);
+  top: 50%;
+  height: initial;
+  margin: initial;
+  line-height: initial;
+  background-color: initial;
+  text-indent: initial; }
+
 /*--------------------------------------------------------------
 # Panel Styles
 --------------------------------------------------------------*/
@@ -1261,6 +1305,9 @@
 --------------------------------------------------------------*/
 .mce-content-body hr[data-mce-selected] {
   outline: none; }
+
+.mce-widget[aria-label="BoldGrid Editing"] {
+  display: none; }
 
 /*--------------------------------------------------------------
 # Post.php Modifications
@@ -2620,6 +2667,12 @@ html:not(.dragging-section) .delete-icon-wrap {
 
 .setup .palette-selection .palette-row li {
   margin-bottom: 0; }
+
+.setup .choose-template .bg-editor-radio {
+  text-align: left;
+  max-width: 240px;
+  margin: 0 auto;
+  margin-top: 30px; }
 
 /*--------------------------------------------------------------
 # Forms Integration

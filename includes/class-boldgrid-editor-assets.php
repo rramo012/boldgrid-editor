@@ -190,6 +190,7 @@ class Boldgrid_Editor_Assets {
 				'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 				'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 				'display_intro' => Boldgrid_Editor_Builder::should_show_setup(),
+				'display_intro' => true,
 				'setup_settings' => Boldgrid_Editor_Option::get( 'setup' ),
 				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
 				'control_styles' => Boldgrid_Editor_Builder_Styles::get_option(),
