@@ -31,17 +31,26 @@ class Boldgrid_Editor_Templater {
 		return ! empty( $this->templates[ $name ] );
 	}
 
+	public function get_template_choice() {
+		$setup = Boldgrid_Editor_Option::get( 'setup', array() );
+		return ! empty( $setup['template']['choice'] ) ? $setup['template']['choice'] : false;
+	}
+
 	public function set_default_metabox() {
 		global $post;
 
+		$template_choice = $this->get_template_choice();
+
 		if ( 'page' == $post->post_type
+			&& $template_choice
+			&& 'default' !== $template_choice
 			&& 0 != count( get_page_templates( $post ) )
 
 			// Not the page for listing posts.
 			&& get_option( 'page_for_posts' ) != $post->ID
 			&& '' == $post->page_template // Only when page_template is not set
 		) {
-			$post->page_template = 'template/page/fullwidth.php';
+			$post->page_template = 'template/page/' . $template_choice . '.php';
 		}
 	}
 
