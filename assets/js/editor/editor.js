@@ -561,14 +561,6 @@ IMHWPB.Editor = function( $ ) {
 
 				IMHWPB.WP_MCE_Draggable.instance = new IMHWPB.WP_MCE_Draggable();
 
-				setTimeout( function () {
-					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-				}, 1000);
-
-				setTimeout( function () {
-					IMHWPB.WP_MCE_Draggable.instance.refresh_iframe_height();
-				}, 3000);
-
 				var $tinymce_iframe = $(event.target.iframeElement).contents();
 				if ( BoldgridEditor.body_class ) {
 					$tinymce_iframe.find('body').addClass(BoldgridEditor.body_class);
@@ -778,6 +770,7 @@ IMHWPB.Editor = function( $ ) {
 		$( '#wp-content-editor-container' ).removeClass(
 			'mce-viewsize-phone-imhwpb mce-viewsize-tablet-imhwpb mce-viewsize-monitor-imhwpb' );
 	};
+
 	/**
 	 * Set the width of the editor
 	 */

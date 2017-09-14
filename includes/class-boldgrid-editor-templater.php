@@ -98,7 +98,7 @@ class Boldgrid_Editor_Templater {
 		}
 
 		// New cache, therefore remove the old one
-		wp_cache_delete( $cache_key , 'themes');
+		wp_cache_delete( $cache_key , 'themes' );
 
 		// Now add our template to the list of templates by merging our templates
 		// with the existing templates array from the cache.

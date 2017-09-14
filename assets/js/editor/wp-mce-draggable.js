@@ -37,13 +37,18 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	var menu_items = [];
 
+	// Failsafe.
+	setTimeout( function() {
+		self.$loading.removeClass( 'active' );
+	}, 3000 );
+
 	this.bind_window_resize = function() {
-		$window.on( 'resize', function( ) {
-			if ( self.draggable_inactive == false ) {
+		$window.on( 'resize', function() {
+			if ( false == self.draggable_inactive ) {
 				self.last_resize = new Date().getTime();
 				setTimeout( self.resize_done_event, 250, self.last_resize );
 			}
-		});
+		} );
 	};
 
 	this.highlight_screen_size = function( type ) {
@@ -156,7 +161,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 			} )
 			.on( 'resize_start_dwpb.draggable_mce', self.prevent_edit )
 			.on( 'resize_done_dwpb.draggable_mce', self.column_resize_done )
-			.on( 'boldgrid_modify_content.draggable_mce', self.boldgrid_modify_content )
 			;
 
 		//Selection Event
@@ -164,18 +168,10 @@ IMHWPB.WP_MCE_Draggable = function() {
 	};
 
 	/**
-	 * When an element is modified, refresh the iframe height
-	 */
-	this.boldgrid_modify_content = function() {
-		self.refresh_iframe_height();
-	};
-
-	/**
 	 * Delete element
 	 */
 	this.delete_element = function() {
 		self.add_tiny_mce_history();
-		self.refresh_iframe_height();
 	};
 
 	/**
@@ -267,18 +263,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 		}
 
 		$window.trigger( 'resize' );
-	};
-
-	/**
-	 * Maintain the height of the editor based on the body and not html as wordpress is doing
-	 */
-	this.refresh_iframe_height = function() {
-		// Experientially disabling this.
-		return;
-		var new_height = tinymce.activeEditor.getBody().getBoundingClientRect().height + 100;
-		if ( new_height > 700 ) {
-			$( tinymce.activeEditor.iframeElement ).css( 'height', new_height + 'px' );
-		}
 	};
 
 	/**
@@ -502,9 +486,11 @@ IMHWPB.WP_MCE_Draggable = function() {
 		if ( self.last_resize == current_resize || force_update) {
 			var $iframe_html = self.tinymce_body_container.closest('html');
 			var $iframe_body = self.tinymce_body_container;
+
 			if ( ! self.bootstrap_container && self.$resizing_iframe ) {
 				//Something went wrong
 				if ( ! self.$post_container || ! self.$post_container.width() ) {
+					self.$loading.removeClass( 'active' );
 					return;
 				}
 
@@ -553,7 +539,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 			//Highlight the current display type
 			self.update_device_highlighting();
-			self.refresh_iframe_height();
 			self.$window.trigger( 'resize.boldgrid-gallery' );
 			self.$loading.removeClass( 'active' );
 		}
