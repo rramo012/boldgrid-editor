@@ -311,6 +311,10 @@ class Boldgrid_Editor {
 		add_action( 'wp_ajax_boldgrid_editor_setup', array ( $boldgrid_editor_ajax, 'setup' ) );
 		add_action( 'wp_ajax_boldgrid_redirect_url', array ( $boldgrid_editor_ajax, 'get_redirect_url' ) );
 
+		add_filter( 'the_editor', function ( $test ) {
+			return '<div class="bg-editor-loading-main active"><div class="bg-editor-loading"></div>' . $test . '</div>';
+		} );
+
 		// Save a users selection for enabling draggable.
 		add_action( 'wp_ajax_boldgrid_draggable_enabled', array ( $boldgrid_editor_ajax, 'ajax_draggable_enabled' ) );
 

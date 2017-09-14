@@ -18,6 +18,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.draggable_instance = false;
 
+	this.$loading =  $( '.bg-editor-loading-main' );
+
 	/**
 	 * The Main Window
 	 */
@@ -150,8 +152,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 			.on( 'boldgrid_edit_row.draggable_mce', self.edit_row )
 			.on( 'click.draggable_mce', 'button:not([data-mce-bogus])',  self.set_button_cursor )
 			.on( 'click.draggable_mce', 'a',  function( e ) {
-e.preventDefault();
-} )
+				e.preventDefault();
+			} )
 			.on( 'resize_start_dwpb.draggable_mce', self.prevent_edit )
 			.on( 'resize_done_dwpb.draggable_mce', self.column_resize_done )
 			.on( 'boldgrid_modify_content.draggable_mce', self.boldgrid_modify_content )
@@ -428,6 +430,7 @@ e.preventDefault();
 	this.create_front_page_iframe = function() {
 
 		if ( BoldgridEditor.is_boldgrid_theme ) {
+			self.$loading.removeClass( 'active' );
 			return;
 		}
 
@@ -473,7 +476,6 @@ e.preventDefault();
 			} else if ( $container.hasClass( 'container-fluid' ) ) {
 				self.bootstrap_container = 'container-fluid';
 			}
-
 			if ( self.bootstrap_container ) {
 				//Self.tinymce_body_container.addClass(self.bootstrap_container);
 				self.$resizing_iframe.remove();
@@ -485,6 +487,7 @@ e.preventDefault();
 					self.$post_container = self.$resizing_iframe
 						.contents()
 						.find( 'article[class^="post-"]' );
+
 					$window.trigger( 'resize' );
 				};
 			}
@@ -552,7 +555,7 @@ e.preventDefault();
 			self.update_device_highlighting();
 			self.refresh_iframe_height();
 			self.$window.trigger( 'resize.boldgrid-gallery' );
-
+			self.$loading.removeClass( 'active' );
 		}
 	};
 
