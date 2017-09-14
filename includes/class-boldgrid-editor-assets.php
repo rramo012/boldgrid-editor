@@ -105,6 +105,10 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/css/buttons.min.css', $plugin_file ),
 		array(), BOLDGRID_EDITOR_VERSION );
 
+		wp_enqueue_style( 'boldgrid-fe',
+			plugins_url( '/assets/css/editor-fe.min.css', $plugin_file ),
+		array(), BOLDGRID_EDITOR_VERSION );
+
 		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
 
 		// Control Styles.
@@ -165,8 +169,10 @@ class Boldgrid_Editor_Assets {
 				'plugin_configs' => $this->configs,
 				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
 				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
+				'post' => ( array ) $post,
 				'post_id' => $this->get_post_id(),
 				'post_type' => $post ? $post->post_type : '',
+				'is_boldgrid_template' => Boldgrid_Editor_Templater::get_instance()->is_custom_template( $post->page_template ),
 				'site_url' => $this->get_post_url(),
 				'plugin_url' => plugins_url( '', $plugin_file ),
 				'is_IE' => $is_IE,
@@ -310,7 +316,6 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'editor-css-imhwpb' );
 
 		wp_register_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', $plugin_file ), '4.7' );
-
 	}
 
 }

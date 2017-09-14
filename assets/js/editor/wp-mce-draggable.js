@@ -413,7 +413,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.create_front_page_iframe = function() {
 
-		if ( BoldgridEditor.is_boldgrid_theme ) {
+		if ( BoldgridEditor.is_boldgrid_theme || BoldgridEditor.is_boldgrid_template ) {
 			self.$loading.removeClass( 'active' );
 			return;
 		}

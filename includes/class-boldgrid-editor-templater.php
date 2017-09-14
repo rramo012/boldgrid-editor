@@ -10,7 +10,11 @@ class Boldgrid_Editor_Templater {
 	/**
 	 * The array of templates that this plugin tracks.
 	 */
-	protected $templates;
+	protected $templates = array(
+		'template/page/fullwidth.php' => 'BoldGrid - FullWidth',
+		'template/page/left-sidebar.php' => 'BoldGrid - Left Sidebar',
+		'template/page/right-sidebar.php' => 'BoldGrid - Right Sidebar'
+	);
 
 	/**
 	 * Returns an instance of this class.
@@ -23,12 +27,28 @@ class Boldgrid_Editor_Templater {
 		return self::$instance;
 	}
 
+	public function is_custom_template( $name ) {
+		return ! empty( $this->templates[ $name ] );
+	}
+
+	public function set_default_metabox() {
+		global $post;
+
+		if ( 'page' == $post->post_type
+			&& 0 != count( get_page_templates( $post ) )
+
+			// Not the page for listing posts.
+			&& get_option( 'page_for_posts' ) != $post->ID
+			&& '' == $post->page_template // Only when page_template is not set
+		) {
+			$post->page_template = 'template/page/fullwidth.php';
+		}
+	}
+
 	/**
 	 * Initializes the plugin by setting filters and administration functions.
 	 */
 	private function __construct() {
-
-		$this->templates = array();
 
 		// Add a filter to the attributes metabox to inject template into the cache.
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
@@ -60,14 +80,6 @@ class Boldgrid_Editor_Templater {
 		add_filter(
 			'template_include',
 			array( $this, 'view_project_template')
-		);
-
-
-		// Add your templates to this array.
-		$this->templates = array(
-			'template/page/fullwidth.php' => 'BoldGrid - FullWidth',
-			'template/page/left-sidebar.php' => 'BoldGrid - Left Sidebar',
-			'template/page/right-sidebar.php' => 'BoldGrid - Right Sidebar'
 		);
 
 	}

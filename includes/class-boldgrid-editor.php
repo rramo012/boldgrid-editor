@@ -182,7 +182,6 @@ class Boldgrid_Editor {
 			$this->front_end_hooks();
 		}
 
-		Boldgrid_Editor_Templater::get_instance();
 	}
 
 	/**
@@ -197,6 +196,7 @@ class Boldgrid_Editor {
 		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 999 );
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor_Theme', 'remove_theme_container' ), 50 );
 		add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
+		$boldgrid_editor_templater = Boldgrid_Editor_Templater::get_instance();
 	}
 
 	/**
@@ -219,6 +219,9 @@ class Boldgrid_Editor {
 		$boldgrid_editor_version   = new Boldgrid_Editor_Version();
 		$boldgrid_editor_media_map = new Boldgrid_Editor_Media_Map();
 		$boldgrid_editor_wpforms   = new Boldgrid_Editor_Wpforms();
+		$boldgrid_editor_templater = Boldgrid_Editor_Templater::get_instance();
+
+		add_action( 'add_meta_boxes', array( $boldgrid_editor_templater, 'set_default_metabox' ), 1 );
 
 		// Init Form deps.
 		$boldgrid_editor_wpforms->init();
