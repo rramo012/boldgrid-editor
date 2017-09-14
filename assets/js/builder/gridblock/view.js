@@ -198,7 +198,15 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @param {jQuery} $iframe iFrame
 		 */
 		addStyles: function( $iframe ) {
-			$iframe.find( 'head' ).html( self.headMarkup );
+			let headMarkup = self.headMarkup;
+
+			// @todo fix this so that it pulls in all styles.
+			let $colorsStyles = BOLDGRID.EDITOR.Controls.$container.find( '#bg-controls-colors' );
+			if ( $colorsStyles.length ) {
+				headMarkup += $colorsStyles[0].outerHTML;
+			}
+
+			$iframe.find( 'head' ).html( headMarkup );
 		},
 
 		/**

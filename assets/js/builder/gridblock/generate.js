@@ -59,7 +59,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 						// If filtered to a type, load 30 otherwise 50.
 						'quantity': type ? 30 : 50,
-						'color_palettes': BoldgridEditor.is_boldgrid_theme,
+						'color_palettes': 1,
 						'include_temporary_resources': 1,
 						'transparent_backgrounds': 'post' === BoldgridEditor.post_type ? 1 : 0,
 						'type': type,

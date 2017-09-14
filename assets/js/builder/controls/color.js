@@ -2,6 +2,8 @@ window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
+import { Palette } from './color/palette';
+
 ( function( $ ) {
 	'use strict';
 
@@ -61,6 +63,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		init: function() {
+			let palette = new Palette(),
+				settings = palette.getPaletteSettings();
+
+			self.importPaletteSettings( settings );
+
 			self._create();
 			self._setupClosePicker();
 			self._renderColorOptions();
@@ -77,6 +84,20 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupOpenCustomization();
 
 			return self;
+		},
+
+		/**
+		 * Set the global property for color settings.
+		 *
+		 * @since 1.6
+		 */
+		importPaletteSettings( settings ) {
+			if ( settings ) {
+				BoldgridEditor.colors = {
+					defaults: settings.palettes[0].colors,
+					neutral: settings.palettes[0]['neutral-color']
+				};
+			}
 		},
 
 		/**
@@ -491,7 +512,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @return array colors.
 		 */
 		getColorsFormatted: function() {
-			var colors = [];
+			let colors = [];
 			$.each( BoldgridEditor.colors.defaults, function( key ) {
 				var colorNum = key + 1;
 				colors.push( {

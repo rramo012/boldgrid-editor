@@ -1534,7 +1534,7 @@ body.boldgrid-editor-fullscreen {
   margin-top: 25px; }
 
 .editor-panel label.color-preview:before {
-  content: "\f1fc";
+  content: '\f1fc';
   font: normal normal normal 14px/1 FontAwesome;
   position: absolute;
   top: -20px;
@@ -1551,7 +1551,7 @@ body.boldgrid-editor-fullscreen {
   height: 25px;
   width: 25px;
   display: inline-block;
-  border: 2px solid #E1E1E1;
+  border: 2px solid #e1e1e1;
   border-radius: 50%;
   margin: 3px;
   cursor: pointer;
@@ -1595,9 +1595,6 @@ body.boldgrid-editor-fullscreen {
   height: auto !important;
   top: 200px;
   right: 300px; }
-
-.color-panel.non-bg-theme .theme-colors-wrap {
-  display: none; }
 
 .color-panel .wp-color-result {
   display: none; }
@@ -1661,7 +1658,7 @@ body.boldgrid-editor-fullscreen {
   padding-bottom: 10px;
   margin-bottom: 15px; }
 
-.color-panel[current-selection="custom"] .links {
+.color-panel[current-selection='custom'] .links {
   display: block; }
 
 /*--------------------------------------------------------------

@@ -88,13 +88,29 @@ export class Palette {
 	 * @return {Object} Palette settings.
 	 */
 	getPaletteSettings() {
-		let settings = BoldgridEditor.paletteSettings || this.paletteSettings;
+		let settings = this.getSavedPaletteSettings() || this.paletteSettings;
 
 		if ( ! settings && BoldgridEditor.setup_settings && BoldgridEditor.setup_settings.palette ) {
 			settings = this.paletteConfig.createSimpleConfig( BoldgridEditor.setup_settings.palette.choice );
 		}
 
 		return settings;
+	}
+
+	getSavedPaletteSettings() {
+		let colorControls,
+			paletteSettings,
+			config = BoldgridEditor.control_styles.configuration;
+
+		if ( config ) {
+			colorControls = _.find( config, value => {
+				return 'bg-controls-colors' === value.id;
+			} );
+
+			paletteSettings = colorControls.options ? colorControls.options.paletteSettings : false;
+		}
+
+		return paletteSettings;
 	}
 
 	/**
@@ -113,13 +129,20 @@ export class Palette {
 		} );
 
 		$control = this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
+			let paletteSettings;
+
 			this.styleUpdater.update( {
 				id: 'bg-controls-colors',
 				css: data.result.text,
 				scss: data.scss
 			} );
 
+			paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.state );
+			this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
+			this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
+
 			this._updateInput();
+			BG.CONTROLS.Color.importPaletteSettings( paletteSettings );
 		} );
 
 		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
