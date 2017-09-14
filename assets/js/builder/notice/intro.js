@@ -3,7 +3,7 @@ var $ = window.jQuery,
 
 import templateHtml from '../../../../includes/template/intro.html';
 import { Base as Notice } from './base';
-import { ColorPaletteSelection, PaletteConfiguration } from 'boldgrid-controls';
+import { ColorPaletteSelection } from 'boldgrid-controls';
 
 export class Intro extends Notice {
 	constructor() {
@@ -27,7 +27,6 @@ export class Intro extends Notice {
 		if ( BoldgridEditor.display_intro ) {
 
 			this.selection = new ColorPaletteSelection();
-			this.paletteConfig = new PaletteConfiguration();
 			this.$body = $( 'body' );
 			this.settings = this.getDefaults();
 
@@ -69,13 +68,34 @@ export class Intro extends Notice {
 	dismissPanel() {
 		super.dismissPanel();
 
-		// Pass the color settings to the ColorPalette tool to format to the massive config.
-		let config = this.paletteConfig.createSimpleConfig( this.settings.palette );
-
 		// Compile the color palettes, and apply.( This should tie into what we have already. )
-		BG.Controls.get( 'Palette' ).updatePalette( config );
+		BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
 
 		// Make ajax call to save the given settings.
+		this.saveSettings();
+	}
+
+	saveSettings() {
+		$.ajax( {
+			type: 'post',
+			url: ajaxurl,
+			dataType: 'json',
+			timeout: 10000,
+			data: {
+				action: 'boldgrid_editor_setup',
+				// eslint-disable-next-line
+				boldgrid_editor_setup: BoldgridEditor.setupNonce,
+				settings: this.settings
+			}
+		} ).done( function( response ) {
+
+			// Close loading graphic.
+
+		} ).fail( function() {
+
+			// Add the defaults in a post input and save later.
+
+		} );
 	}
 
 	/**

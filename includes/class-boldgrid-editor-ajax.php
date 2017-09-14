@@ -21,6 +21,18 @@
 class Boldgrid_Editor_Ajax {
 
 	/**
+	 * List of nonces.
+	 *
+	 * @since 1.6
+	 *
+	 * @var array
+	 */
+	protected static $nonces = array(
+		'image' => 'boldgrid_gridblock_image_ajax_nonce',
+		'setup' => 'boldgrid_editor_setup',
+	);
+
+	/**
 	 * Saves the state of the drag and drop editor feature.
 	 * Ajax Action: wp_ajax_boldgrid_draggable_enabled.
 	 *
@@ -41,11 +53,11 @@ class Boldgrid_Editor_Ajax {
 	 *
 	 * @since 1.5
 	 */
-	public function validate_image_nonce() {
-		$nonce = ! empty( $_POST['boldgrid_gridblock_image_ajax_nonce'] ) ?
-			$_POST['boldgrid_gridblock_image_ajax_nonce'] : null;
+	public function validate_nonce( $name ) {
+		$nonce = ! empty( $_POST[ self::$nonces[ $name ] ] ) ?
+			$_POST[ self::$nonces[ $name ] ] : null;
 
-		$valid = wp_verify_nonce( $nonce, 'boldgrid_gridblock_image_ajax_nonce' );
+		$valid = wp_verify_nonce( $nonce, self::$nonces[ $name ] );
 
 		if ( ! $valid ) {
 			status_header( 401 );
@@ -61,7 +73,7 @@ class Boldgrid_Editor_Ajax {
 	public function get_redirect_url() {
 		$urls = ! empty( $_POST['urls'] ) ? $_POST['urls'] : null;
 
-		$this->validate_image_nonce();
+		$this->validate_nonce( 'image' );
 		$unsplash_404 = 'https://images.unsplash.com/photo-1446704477871-62a4972035cd?fit=crop&fm=jpg&h=800&q=50&w=1200';
 
 		$redirectUrls = array();
@@ -92,7 +104,7 @@ class Boldgrid_Editor_Ajax {
 		$response = array();
 		$image_data = ! empty( $_POST['image_data'] ) ? $_POST['image_data'] : null;
 
-		$this->validate_image_nonce();
+		$this->validate_nonce( 'image' );
 
 		if ( $this->is_base_64( $image_data ) ) {
 			$response = $this->upload_encoded( $image_data );
@@ -103,6 +115,26 @@ class Boldgrid_Editor_Ajax {
 		if ( ! empty( $response['success'] ) ) {
 			unset( $response['success'] );
 			wp_send_json_success( $response );
+		} else {
+			status_header( 400 );
+			wp_send_json_error();
+		}
+	}
+
+	/**
+	 * Ajax Call save setup settings.
+	 *
+	 * @since 1.5
+	 */
+	public function setup() {
+		$response = array();
+		$settings = ! empty( $_POST['settings'] ) ? $_POST['settings'] : 'setup-failed';
+
+		$this->validate_nonce( 'setup' );
+
+		if ( ! empty( $settings ) ) {
+			Boldgrid_Editor_Option::update( 'setup', $settings );
+			wp_send_json_success( $settings );
 		} else {
 			status_header( 400 );
 			wp_send_json_error();

@@ -199,6 +199,25 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
+	 * Should we show the setup?
+	 *
+	 * @since 1.6
+	 *
+	 * @return boolean Should we show first time setup.
+	 */
+	public static function should_show_setup() {
+		$show = false;
+		$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
+		$setup = Boldgrid_Editor_Option::get( 'setup' );
+
+		if ( ! $is_boldgrid_theme && ! $setup ) {
+			$show = true;
+		}
+
+		return $show;
+	}
+
+	/**
 	 * Get all patterns to be used by tool.
 	 *
 	 * @since 1.2.3

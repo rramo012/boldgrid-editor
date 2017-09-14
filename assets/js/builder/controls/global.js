@@ -48,7 +48,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		setup: function() {
 			BG.Menu.$element.find( '.bg-editor-menu-dropdown' ).on( 'click', '.action.open-color-palette', () => {
-				BG.Controls.get( 'palette-customization' ).openPanel();
+				BG.Controls.get( 'Palette' ).openPanel();
 			} );
 		}
 	};

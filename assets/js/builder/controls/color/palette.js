@@ -1,11 +1,12 @@
-import { ColorPalette, StyleUpdater } from 'boldgrid-controls';
+import { ColorPalette, StyleUpdater, PaletteConfiguration } from 'boldgrid-controls';
 
 var $ = window.jQuery,
 	BG = BOLDGRID.EDITOR;
 
 export class Palette {
-
 	constructor() {
+		this.paletteConfig = new PaletteConfiguration();
+
 		this.name = 'Palette';
 
 		this.panel = {
@@ -54,10 +55,46 @@ export class Palette {
 		panel.open( this );
 	}
 
-	updatePalette( settings ) {
+	/**
+	 * Manually set palette settings.
+	 *
+	 * Given an object like: {'colors':[red,white,blue], 'neutral-color': 'yellow'}
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param {Object} settings Palette Settings.
+	 */
+	setPaletteSettings( settings ) {
+		let $tempDiv = $( '<div>' ).hide();
+		$( 'html' ).append( $tempDiv );
 
-		// this.colorPalette.
-		console.log( settings );
+		// Pass the color settings to the ColorPalette tool to format to the massive config.
+		this.paletteSettings = this.paletteConfig.createSimpleConfig( settings );
+
+		this.renderCustomization( $tempDiv ).on( 'sass_compiled', ( e, data ) => {
+			if ( 'activatePalette' === data.source ) {
+				$tempDiv.remove();
+			}
+		} );
+
+		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
+	}
+
+	/**
+	 * Get the currently saved palette settings.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {Object} Palette settings.
+	 */
+	getPaletteSettings() {
+		let settings = BoldgridEditor.paletteSettings || this.paletteSettings;
+
+		if ( ! settings && BoldgridEditor.setup_settings && BoldgridEditor.setup_settings.palette ) {
+			settings = this.paletteConfig.createSimpleConfig( BoldgridEditor.setup_settings.palette.choice );
+		}
+
+		return settings;
 	}
 
 	/**
@@ -66,14 +103,16 @@ export class Palette {
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
+		let $control;
+
 		this.colorPalette = new ColorPalette( {
 			sass: {
 				WorkerUrl: this.workerUrl
 			},
-			paletteSettings: {}
+			paletteSettings: this.getPaletteSettings()
 		} );
 
-		this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
+		$control = this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
 			this.styleUpdater.update( {
 				id: 'bg-controls-colors',
 				css: data.result.text,
@@ -82,6 +121,10 @@ export class Palette {
 
 			this._updateInput();
 		} );
+
+		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
+
+		return $control;
 	}
 
 	/**
@@ -104,7 +147,6 @@ export class Palette {
 	_updateInput() {
 		this.$input.attr( 'value', JSON.stringify( this.styleUpdater.stylesState ) );
 	}
-
 }
 
 export { Palette as default };
