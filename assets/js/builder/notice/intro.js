@@ -3,7 +3,7 @@ var $ = window.jQuery,
 
 import templateHtml from '../../../../includes/template/intro.html';
 import { Base as Notice } from './base';
-import { ColorPaletteSelection } from 'boldgrid-controls';
+import { ColorPaletteSelection, PaletteConfiguration } from 'boldgrid-controls';
 
 export class Intro extends Notice {
 	constructor() {
@@ -26,6 +26,8 @@ export class Intro extends Notice {
 	init() {
 		if ( BoldgridEditor.display_intro ) {
 
+			this.selection = new ColorPaletteSelection();
+			this.paletteConfig = new PaletteConfiguration();
 			this.$body = $( 'body' );
 			this.settings = this.getDefaults();
 
@@ -45,7 +47,7 @@ export class Intro extends Notice {
 				choice: 'full-width'
 			},
 			palette: {
-				choice: [ 'red', 'blue', 'green' ]
+				choice: this.selection.randomSelection()
 			}
 		};
 	}
@@ -68,10 +70,12 @@ export class Intro extends Notice {
 		super.dismissPanel();
 
 		// Pass the color settings to the ColorPalette tool to format to the massive config.
+		let config = this.paletteConfig.createSimpleConfig( this.settings.palette );
+
 		// Compile the color palettes, and apply.( This should tie into what we have already. )
+		BG.Controls.get( 'Palette' ).updatePalette( config );
 
 		// Make ajax call to save the given settings.
-		console.log( this.settings );
 	}
 
 	/**
@@ -83,7 +87,6 @@ export class Intro extends Notice {
 		this.$panelHtml.on( 'boldgrid-editor-choose-color-palette', () => {
 			let $control;
 
-			this.selection = new ColorPaletteSelection();
 			$control = this.selection.create();
 			this.$panelHtml.find( '.choose-palette' ).html( $control );
 

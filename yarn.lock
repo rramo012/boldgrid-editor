@@ -1218,8 +1218,8 @@ boldgrid-components@^2.1.0, "boldgrid-components@https://github.com/BoldGrid/com
     rimraf "^2.6.1"
 
 "boldgrid-controls@https://github.com/BoldGrid/controls#master":
-  version "2.0.10"
-  resolved "https://github.com/BoldGrid/controls#37c3f853e79e094888bc23c12be64e9413a3941d"
+  version "2.0.12"
+  resolved "https://github.com/BoldGrid/controls#7e89aa4439bfdd0afe213f7c2ed14fa5f17c33aa"
   dependencies:
     Iris "https://github.com/Automattic/Iris#master"
     babel-minify-webpack-plugin "^0.2.0"
@@ -1228,10 +1228,13 @@ boldgrid-components@^2.1.0, "boldgrid-components@https://github.com/BoldGrid/com
     color "https://github.com/Automattic/Color.js"
     color-js "^1.0.4"
     eslint-config-wordpress "^2.0.0"
+    google-material-color-palette-json "^2.0.1"
     html-loader "^0.5.1"
     http-server "^0.10.0"
+    jquery "1.*"
     jshint-loader "^0.8.4"
     normalize.css "^7.0.0"
+    npm-run-all "^4.1.1"
     raw-loader "^0.5.1"
     rimraf "^2.6.1"
     sass.js "0.10.4"
@@ -3281,6 +3284,10 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
+google-material-color-palette-json@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/google-material-color-palette-json/-/google-material-color-palette-json-2.0.1.tgz#3948ee7bcfb7f1e59690c16626cf1dea7a4ff89a"
+
 graceful-fs@^3.0.0:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
@@ -4119,6 +4126,10 @@ jquery.stellar@^0.6.2:
   resolved "https://registry.yarnpkg.com/jquery.stellar/-/jquery.stellar-0.6.2.tgz#034003fa3475dde69bba05a3faf6168775ad69dd"
   dependencies:
     jquery ">=1.4.3"
+
+jquery@1.*:
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
 
 "jquery@>= 1.7", jquery@>=1.4.3:
   version "3.2.1"

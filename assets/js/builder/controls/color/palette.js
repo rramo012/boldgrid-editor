@@ -6,13 +6,15 @@ var $ = window.jQuery,
 export class Palette {
 
 	constructor() {
-		this.name = 'palette-customization';
+		this.name = 'Palette';
 
 		this.panel = {
 			title: 'Color Palette',
 			height: '600px',
 			width: '325px'
 		};
+
+		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
 	}
 
 	/**
@@ -32,7 +34,6 @@ export class Palette {
 	setup() {
 		this.$input = $( '#boldgrid-control-styles' );
 		this._setupStyleLoader();
-		this._setupCustomize();
 	}
 
 	/**
@@ -53,12 +54,25 @@ export class Palette {
 		panel.open( this );
 	}
 
+	updatePalette( settings ) {
+
+		// this.colorPalette.
+		console.log( settings );
+	}
+
 	/**
 	 * Render the customization of color palettes.
 	 *
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
+		this.colorPalette = new ColorPalette( {
+			sass: {
+				WorkerUrl: this.workerUrl
+			},
+			paletteSettings: {}
+		} );
+
 		this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
 			this.styleUpdater.update( {
 				id: 'bg-controls-colors',
@@ -67,21 +81,6 @@ export class Palette {
 			} );
 
 			this._updateInput();
-		} );
-	}
-
-	/**
-	 * Setup the Color Palette Control.
-	 *
-	 * @since 1.6
-	 */
-	_setupCustomize() {
-		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
-
-		this.colorPalette = new ColorPalette( {
-			sass: {
-				WorkerUrl: this.workerUrl
-			}
 		} );
 	}
 
