@@ -17,7 +17,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		tooltip: 'Global Options',
 
-		priority: 95,
+		priority: 2,
 
 		iconClasses: 'fa fa-globe',
 
@@ -31,7 +31,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					class: 'action open-color-palette font-awesome fa-paint-brush'
 				},
 				{
-					name: 'Delete All Content',
+					name: 'Delete Post Content',
 					class: 'action delete-all-content font-awesome fa-trash'
 				}
 			]

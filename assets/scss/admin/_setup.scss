@@ -13,7 +13,7 @@
 		padding: 10px;
 
 		.palette-selection p {
-			font-size: 14px;
+			font-size: 15px;
 		}
 
 		h2 {
@@ -46,11 +46,28 @@
 	}
 }
 
+.setup .welcome {
+	img {
+		position: absolute;
+		width: 75px;
+		left: 20px;
+		top: 25px;
+	}
+	.step-content {
+		margin-left: 90px;
+	}
+}
+
 .setup .choose-template {
 	.bg-editor-radio {
 		text-align: left;
 		max-width: 240px;
 		margin: 0 auto;
 		margin-top: 30px;
+	}
+}
+.setup .done {
+	a.support-link {
+		color: #0073aa;
 	}
 }

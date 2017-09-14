@@ -13,7 +13,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		tooltip: 'Help',
 
-		priority: 99,
+		priority: 3,
 
 		iconClasses: 'fa fa-question',
 

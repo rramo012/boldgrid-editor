@@ -14,7 +14,7 @@ export class Intro extends Notice {
 		this.panel = {
 			title: 'BoldGrid Editor - Setup',
 			height: '285px',
-			width: '550px'
+			width: '650px'
 		};
 	}
 
