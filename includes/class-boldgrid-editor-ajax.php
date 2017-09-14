@@ -122,26 +122,6 @@ class Boldgrid_Editor_Ajax {
 	}
 
 	/**
-	 * Ajax Call save setup settings.
-	 *
-	 * @since 1.5
-	 */
-	public function setup() {
-		$response = array();
-		$settings = ! empty( $_POST['settings'] ) ? $_POST['settings'] : 'setup-failed';
-
-		$this->validate_nonce( 'setup' );
-
-		if ( ! empty( $settings ) ) {
-			Boldgrid_Editor_Option::update( 'setup', $settings );
-			wp_send_json_success( $settings );
-		} else {
-			status_header( 400 );
-			wp_send_json_error();
-		}
-	}
-
-	/**
 	 * Check if a given image src is a base 64 representation.
 	 *
 	 * @since 1.5

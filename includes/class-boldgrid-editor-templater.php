@@ -31,15 +31,10 @@ class Boldgrid_Editor_Templater {
 		return ! empty( $this->templates[ $name ] );
 	}
 
-	public function get_template_choice() {
-		$setup = Boldgrid_Editor_Option::get( 'setup', array() );
-		return ! empty( $setup['template']['choice'] ) ? $setup['template']['choice'] : false;
-	}
-
 	public function set_default_metabox() {
 		global $post;
 
-		$template_choice = $this->get_template_choice();
+		$template_choice = Boldgrid_Editor_Setup::get_template_choice();
 
 		if ( 'page' == $post->post_type
 			&& $template_choice

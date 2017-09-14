@@ -22,6 +22,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-theme.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-fs.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-version.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-setup.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
 
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media.php';
@@ -219,6 +220,7 @@ class Boldgrid_Editor {
 		$boldgrid_editor_version   = new Boldgrid_Editor_Version();
 		$boldgrid_editor_media_map = new Boldgrid_Editor_Media_Map();
 		$boldgrid_editor_wpforms   = new Boldgrid_Editor_Wpforms();
+		$boldgrid_editor_setup     = new Boldgrid_Editor_Setup();
 		$boldgrid_editor_templater = Boldgrid_Editor_Templater::get_instance();
 
 		add_action( 'add_meta_boxes', array( $boldgrid_editor_templater, 'set_default_metabox' ), 1 );
@@ -278,6 +280,7 @@ class Boldgrid_Editor {
 
 			// Display and save admin notice state.
 			add_action( 'admin_init', array( $boldgrid_editor_version, 'display_update_notice' ) );
+			add_action( 'admin_init', array( $boldgrid_editor_setup, 'reset_editor_action' ) );
 			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
 			add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
 
@@ -311,11 +314,12 @@ class Boldgrid_Editor {
 		}
 
 		add_action( 'wp_ajax_boldgrid_canvas_image', array ( $boldgrid_editor_ajax, 'upload_image_ajax' ) );
-		add_action( 'wp_ajax_boldgrid_editor_setup', array ( $boldgrid_editor_ajax, 'setup' ) );
+		add_action( 'wp_ajax_boldgrid_editor_setup', array ( $boldgrid_editor_setup, 'ajax' ) );
 		add_action( 'wp_ajax_boldgrid_redirect_url', array ( $boldgrid_editor_ajax, 'get_redirect_url' ) );
 
-		add_filter( 'the_editor', function ( $test ) {
-			return '<div class="bg-editor-loading-main active"><div class="bg-editor-loading"></div>' . $test . '</div>';
+		// Add Loading Graphic.
+		add_filter( 'the_editor', function ( $html ) {
+			return '<div class="bg-editor-loading-main active"><div class="bg-editor-loading"></div>' . $html . '</div>';
 		} );
 
 		// Save a users selection for enabling draggable.
