@@ -111,9 +111,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			 * @since 1.6
 			 */
 			_format: function() {
-				var builderConfig = BoldgridEditor.builder_config;
+				var builderConfig = BoldgridEditor.builder_config,
+					hrUsed = BoldgridEditor.builder_config.components_used.hr || [];
 
-				_.each( builderConfig.components_used.hr.slice( 0, self.maxMyDesigns ), function( design ) {
+				_.each( hrUsed.slice( 0, self.maxMyDesigns ), function( design ) {
 					self.userDesigns.append( design.classes );
 				} );
 			},
