@@ -87,6 +87,16 @@ import { Palette } from './color/palette';
 		},
 
 		/**
+		 * Update the global property.
+		 *
+		 * @since 1.6
+		 */
+		updatePaletteSettings( settings ) {
+			this.importPaletteSettings( settings );
+			this._renderColorOptions();
+		},
+
+		/**
 		 * Set the global property for color settings.
 		 *
 		 * @since 1.6
@@ -97,8 +107,6 @@ import { Palette } from './color/palette';
 					defaults: settings.palettes[0].colors,
 					neutral: settings.palettes[0]['neutral-color']
 				};
-
-				this._renderColorOptions();
 			}
 		},
 

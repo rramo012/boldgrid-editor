@@ -119,7 +119,10 @@ export class Palette {
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
-		let $control;
+		let $control,
+			postUpdate = _.debounce( () => {
+				this._postPaletteUpdate();
+			}, 2000 );
 
 		this.colorPalette = new ColorPalette( {
 			sass: {
@@ -129,7 +132,6 @@ export class Palette {
 		} );
 
 		$control = this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
-			let paletteSettings;
 
 			this.styleUpdater.update( {
 				id: 'bg-controls-colors',
@@ -137,17 +139,28 @@ export class Palette {
 				scss: data.scss
 			} );
 
-			paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.state );
-			this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
-			this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
-
-			this._updateInput();
-			BG.CONTROLS.Color.importPaletteSettings( paletteSettings );
+			postUpdate();
 		} );
 
 		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
 
 		return $control;
+	}
+
+	/**
+	 * Process to occur after a palette updates.
+	 *
+	 * @since 1.6
+	 */
+	_postPaletteUpdate() {
+		let paletteSettings;
+
+		paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.state );
+		this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
+		this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
+
+		this._updateInput();
+		BG.CONTROLS.Color.updatePaletteSettings( paletteSettings );
 	}
 
 	/**
