@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div class="container-fluid">
+<div class="container-fluid entry-content bg-custom-template">
 	<div class="row">
 		<div class="col-md-8">
 		<?php
