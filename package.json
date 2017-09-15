@@ -10,8 +10,7 @@
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
 		"build-webpack": "NODE_ENV=production webpack --colors",
-		"build-gulp": "gulp build",
-		"build": "npm run build-webpack & npm run build-gulp"
+		"build": "npm run build-webpack & gulp build & gulp merge-webpack"
 	},
 	"repository": {
 		"type": "git",

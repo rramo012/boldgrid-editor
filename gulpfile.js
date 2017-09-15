@@ -121,7 +121,7 @@ gulp.task( 'jsmin-editor', function( cb ) {
 } );
 
 gulp.task( 'build', function( cb ) {
-	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], [ 'boldgrid-components', 'merge-webpack' ], cb );
+	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], [ 'boldgrid-components' ], cb );
 } );
 
 gulp.task( 'watch', function() {
