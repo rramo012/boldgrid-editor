@@ -68,7 +68,10 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 						markup = this.outerHTML,
 						tagName = $this.prop( 'tagName' );
 
-					if ( 'LINK' === tagName && 'stylesheet' !== $this.attr( 'rel' ) && 'boldgrid-custom-styles-css' !== $this.attr( 'id' ) ) {
+					if ( 'LINK' === tagName &&
+						'stylesheet' !== $this.attr( 'rel' ) &&
+						'boldgrid-custom-styles-css' !== $this.attr( 'id' )
+					) {
 						markup = '';
 					}
 

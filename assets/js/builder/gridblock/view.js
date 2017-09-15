@@ -200,12 +200,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		addStyles: function( $iframe ) {
 			let headMarkup = self.headMarkup;
 
-			// @todo fix this so that it pulls in all styles.
-			let $colorsStyles = BOLDGRID.EDITOR.Controls.$container.find( '#bg-controls-colors' );
-			if ( $colorsStyles.length ) {
-				headMarkup += $colorsStyles[0].outerHTML;
-			}
-
+			headMarkup += '<style>' + BG.Controls.get( 'Palette' ).getStylesheetCss() + '</style>';
 			$iframe.find( 'head' ).html( headMarkup );
 		},
 

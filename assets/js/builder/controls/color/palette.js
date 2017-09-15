@@ -97,13 +97,20 @@ export class Palette {
 		return settings;
 	}
 
+	/**
+	 * Get the currently saved palette settings.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {object} Palette settings.
+	 */
 	getSavedPaletteSettings() {
 		let colorControls,
 			paletteSettings,
 			config = BoldgridEditor.control_styles.configuration;
 
-		if ( config ) {
-			colorControls = _.find( config, value => {
+		if ( config.length ) {
+			colorControls = _.find( config, ( value ) => {
 				return 'bg-controls-colors' === value.id;
 			} );
 
@@ -148,19 +155,39 @@ export class Palette {
 	}
 
 	/**
-	 * Process to occur after a palette updates.
+	 * Save the palette settings from control into an config we will save to the DB.
 	 *
 	 * @since 1.6
 	 */
-	_postPaletteUpdate() {
+	_savePaletteSettings() {
 		let paletteSettings;
 
 		paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.state );
 		this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
 		this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
-
-		this._updateInput();
 		BG.CONTROLS.Color.updatePaletteSettings( paletteSettings );
+	}
+
+	/**
+	 * Process to occur after a palette updates.
+	 *
+	 * @since 1.6
+	 */
+	_postPaletteUpdate() {
+		this._savePaletteSettings();
+		this._updateInput();
+		this.allCss = this.styleUpdater.getStylesheetCss();
+	}
+
+	/**
+	 * @todo move the style update into a service.
+	 */
+	getStylesheetCss() {
+		if ( ! this.allCss ) {
+			this.allCss = this.styleUpdater.getStylesheetCss();
+		}
+
+		return this.allCss;
 	}
 
 	/**
@@ -172,6 +199,7 @@ export class Palette {
 		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
 		this.styleUpdater.loadSavedConfig( BoldgridEditor.control_styles.configuration || [] );
 		this.styleUpdater.setup();
+		console.log( this.styleUpdater );
 		this._updateInput();
 	}
 
