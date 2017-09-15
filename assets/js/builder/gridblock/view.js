@@ -28,6 +28,21 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.templateClass = self.getTemplateClass();
 		},
 
+		onOpen: function() {
+			self.$gridblockSection.trigger( 'scroll' );
+			self.updateCustomStyles();
+		},
+
+		updateCustomStyles: function() {
+			_.each( BG.GRIDBLOCK.configs.gridblocks, ( gridblock ) => {
+				if ( 'iframeCreated' === gridblock.state ) {
+					gridblock.$iframeContents
+						.find( '#boldgrid-custom-styles' )
+						.html( BG.Controls.get( 'Palette' ).getStylesheetCss() );
+				}
+			} );
+		},
+
 		/**
 		 * Set Gridblock count.
 		 *
@@ -200,7 +215,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		addStyles: function( $iframe ) {
 			let headMarkup = self.headMarkup;
 
-			headMarkup += '<style>' + BG.Controls.get( 'Palette' ).getStylesheetCss() + '</style>';
+			headMarkup += '<style id="boldgrid-custom-styles">' +
+				BG.Controls.get( 'Palette' ).getStylesheetCss() + '</style>';
+
 			$iframe.find( 'head' ).html( headMarkup );
 		},
 

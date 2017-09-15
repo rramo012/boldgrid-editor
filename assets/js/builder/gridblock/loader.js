@@ -142,6 +142,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					}
 
 					gridblock.state = 'iframeCreated';
+					gridblock.$iframeContents = $contents;
 
 					setTimeout( function() {
 						$gridblock.removeClass( 'gridblock-loading' );

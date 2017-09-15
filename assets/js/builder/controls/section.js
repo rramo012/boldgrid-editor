@@ -255,7 +255,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$( window ).trigger( 'resize' ).scrollTop( 0 );
 			self.updateHtmlSize();
 			BOLDGRID.EDITOR.GRIDBLOCK.Loader.firstOpen();
-			BG.GRIDBLOCK.View.$gridblockSection.trigger( 'scroll' );
+			BG.GRIDBLOCK.View.onOpen();
 
 			updateZoom = function( val ) {
 				self.removeZoomClasses();
@@ -276,6 +276,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					updateZoom( ui.value );
 				}
 			} );
+
 		},
 
 		/**
