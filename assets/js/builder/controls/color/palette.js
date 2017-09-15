@@ -199,7 +199,6 @@ export class Palette {
 		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
 		this.styleUpdater.loadSavedConfig( BoldgridEditor.control_styles.configuration || [] );
 		this.styleUpdater.setup();
-		console.log( this.styleUpdater );
 		this._updateInput();
 	}
 
