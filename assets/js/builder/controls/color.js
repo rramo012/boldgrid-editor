@@ -97,6 +97,8 @@ import { Palette } from './color/palette';
 					defaults: settings.palettes[0].colors,
 					neutral: settings.palettes[0]['neutral-color']
 				};
+
+				this._renderColorOptions();
 			}
 		},
 
@@ -621,4 +623,4 @@ import { Palette } from './color/palette';
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.Color;
-} ( jQuery ) );
+}( jQuery ) );
