@@ -109,7 +109,8 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/css/editor-fe.min.css', $plugin_file ),
 		array(), BOLDGRID_EDITOR_VERSION );
 
-		wp_enqueue_style( 'bootstrap-styles', plugins_url( '/assets/css/bootstrap.min.css', $plugin_file ), '3.3.7' );
+		wp_enqueue_style( 'bootstrap-styles',
+			plugins_url( '/assets/css/editor-bootstrap.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		// Control Styles.
 		$style_url = Boldgrid_Editor_Builder_Styles::get_url_info();
