@@ -72,6 +72,12 @@ export class Intro extends Notice {
 		BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
 		this.settings.template.choice = this.$templateInputs.filter( ':checked' ).val();
 
+		// If the user enters the first time setup on a page, update the meta box.
+		if ( 'auto-draft' === BoldgridEditor.post.post_status && 'default' !== this.settings.template.choice ) {
+			let val = 'template/page/' + this.settings.template.choice + '.php';
+			$( '#page_template' ).val( val ).change();
+		}
+
 		// Make ajax call to save the given settings.
 		this.saveSettings();
 	}
@@ -84,6 +90,7 @@ export class Intro extends Notice {
 			timeout: 10000,
 			data: {
 				action: 'boldgrid_editor_setup',
+
 				// eslint-disable-next-line
 				boldgrid_editor_setup: BoldgridEditor.setupNonce,
 				settings: this.settings
