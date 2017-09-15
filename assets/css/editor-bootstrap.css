@@ -823,3 +823,9 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
+
+.mod-reset {
+  margin: 0; }
+
+.text-center {
+  text-align: center; }
