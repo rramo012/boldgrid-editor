@@ -250,6 +250,10 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
 			'//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
 		false, BOLDGRID_EDITOR_VERSION, false );
+
+		wp_enqueue_style( 'boldgrid-editor-fonts',
+			'https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600',
+		false, BOLDGRID_EDITOR_VERSION, false );
 	}
 
 	/**
