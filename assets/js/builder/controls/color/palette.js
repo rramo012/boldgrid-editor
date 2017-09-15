@@ -109,7 +109,7 @@ export class Palette {
 			paletteSettings,
 			config = BoldgridEditor.control_styles.configuration;
 
-		if ( config.length ) {
+		if ( config && config.length ) {
 			colorControls = _.find( config, ( value ) => {
 				return 'bg-controls-colors' === value.id;
 			} );
