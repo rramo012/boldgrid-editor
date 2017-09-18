@@ -31,6 +31,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					class: 'action open-color-palette font-awesome fa-paint-brush'
 				},
 				{
+					name: 'Post Settings',
+					class: 'action edit-page-settings font-awesome fa-cogs'
+				},
+				{
 					name: 'Delete Post Content',
 					class: 'action delete-all-content font-awesome fa-trash'
 				}
@@ -50,6 +54,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Menu.$element.find( '.bg-editor-menu-dropdown' ).on( 'click', '.action.open-color-palette', () => {
 				BG.Controls.get( 'Palette' ).openPanel();
 			} );
+			BG.Menu.$element
+				.find( '.bg-editor-menu-dropdown' )
+				.on( 'click', '.action.delete-all-content,.action.edit-page-settings', () => {
+					alert( 'This is a sample setting only.' );
+				} );
 		}
 	};
 

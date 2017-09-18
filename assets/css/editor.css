@@ -1076,6 +1076,15 @@
   left: -25px;
   font-size: 20px; }
 
+.bgctrl-color-palette .iris-picker {
+  left: -10px;
+  position: relative;
+  padding-right: 20px; }
+
+.bgctrl-color-palette .iris-alpha-slider.iris-strip {
+  position: absolute;
+  right: -4px; }
+
 .theme-designs .button-overrides {
   background-color: transparent;
   text-shadow: none;
