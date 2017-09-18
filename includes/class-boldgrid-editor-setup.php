@@ -55,6 +55,7 @@ class Boldgrid_Editor_Setup {
 	 */
 	public function reset_editor_settings() {
 		Boldgrid_Editor_Option::update( 'setup', array() );
+		update_option( 'boldgrid_controls', array() );
 	}
 
 	/**
