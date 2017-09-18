@@ -42,6 +42,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		init: function() {
+
+			// @todo this needs better handling perhaps a filter.
+			if ( ! BoldgridEditor.is_boldgrid_theme ) {
+				this.menuDropDown.options.splice( 0, 1 );
+			}
+
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
