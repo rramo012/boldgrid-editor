@@ -3,7 +3,7 @@ var $ = window.jQuery,
 
 import templateHtml from '../../../../includes/template/intro.html';
 import { Base as Notice } from './base';
-import { ColorPaletteSelection } from 'boldgrid-controls';
+import { ColorPaletteSelection } from '@boldgrid/controls';
 
 export class Intro extends Notice {
 	constructor() {

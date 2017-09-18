@@ -98,7 +98,7 @@ module.exports = {
 				to: cssDir
 			},
 			{
-				from: require.resolve( 'boldgrid-controls/dist/static/sass.worker.js' ),
+				from: require.resolve( '@boldgrid/controls/dist/static/sass.worker.js' ),
 				to: distDir + '/assets/js/sass-js'
 			},
 			{

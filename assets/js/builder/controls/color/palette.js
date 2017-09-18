@@ -1,4 +1,4 @@
-import { ColorPalette, StyleUpdater, PaletteConfiguration } from 'boldgrid-controls';
+import { ColorPalette, StyleUpdater, PaletteConfiguration } from '@boldgrid/controls';
 
 var $ = window.jQuery,
 	BG = BOLDGRID.EDITOR;
