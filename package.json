@@ -57,7 +57,7 @@
 		"style-loader": "^0.18.2"
 	},
 	"dependencies": {
-		"@boldgrid/controls": "^0.0.2",
+		"@boldgrid/controls": "^0.0.4",
 		"animate.css": "^3.5.2",
 		"babel-eslint": "^7.2.3",
 		"babel-loader": "^7.1.2",
@@ -90,6 +90,6 @@
 		"textselect": "^1.0.0",
 		"url-loader": "^0.5.9",
 		"webpack": "^3.5.5",
-		"wp-color-picker-alpha": "https://github.com/rramo012/wp-color-picker-alpha#master"
+		"wp-color-picker-alpha": "git+https://github.com/rramo012/wp-color-picker-alpha.git#master"
 	}
 }
