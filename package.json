@@ -57,13 +57,14 @@
 		"style-loader": "^0.18.2"
 	},
 	"dependencies": {
+		"@boldgrid/controls": "^0.0.2",
 		"animate.css": "^3.5.2",
 		"babel-eslint": "^7.2.3",
 		"babel-loader": "^7.1.2",
 		"babel-minify-webpack-plugin": "^0.2.0",
 		"babel-preset-es2015": "^6.24.1",
 		"babel-preset-stage-0": "^6.24.1",
-		"boldgrid-components": "^2.1.0",
+		"boldgrid-components": "^2.2.0",
 		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
 		"bootstrap-sass": "^3.3.7",
 		"copy-webpack-plugin": "^4.0.1",
