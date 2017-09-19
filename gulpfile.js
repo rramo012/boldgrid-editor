@@ -48,12 +48,12 @@ gulp.task( 'js-unit-tests', function( done ) {
 
 gulp.task( 'boldgrid-components', function() {
 	gulp
-		.src( [ config.src + '/node_modules/boldgrid-component-library/dist/css/components.*' ] )
+		.src( [ config.src + '/node_modules/@boldgrid/components/dist/css/components.*' ] )
 		.pipe( debug( { title: 'BoldGrid Components:' } ) )
 		.pipe( gulp.dest( config.cssDest ) );
 
 	gulp
-		.src( [ config.src + '/node_modules/boldgrid-component-library/json/components.json' ] )
+		.src( [ config.src + '/node_modules/@boldgrid/components/json/components.json' ] )
 		.pipe( debug( { title: 'BoldGrid Components Json:' } ) )
 		.pipe( gulp.dest( config.jsonDir ) );
 } );
@@ -121,7 +121,7 @@ gulp.task( 'jsmin-editor', function( cb ) {
 } );
 
 gulp.task( 'build', function( cb ) {
-	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], [ 'boldgrid-components' ], cb );
+	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], cb );
 } );
 
 gulp.task( 'watch', function() {

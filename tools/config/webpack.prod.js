@@ -102,6 +102,14 @@ module.exports = {
 				to: distDir + '/assets/js/sass-js'
 			},
 			{
+				from: require.resolve( '@boldgrid/components/dist/css/components.min.css' ),
+				to: cssDir
+			},
+			{
+				from: require.resolve( '@boldgrid/components/dist/css/components.css' ),
+				to: cssDir
+			},
+			{
 				from:
 					srcDir +
 					'/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
