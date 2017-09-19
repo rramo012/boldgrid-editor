@@ -16,7 +16,7 @@ return array (
 	'plugin_key_code'       => 'editor',
 	'main_file_path'        => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php',
 	'plugin_transient_name' => 'boldgrid_editor_version_data',
-	'allowed_post_types'    => array( 'page', 'post' ),
+	'allowed_post_types'    => array( 'page', 'post', 'gridblock' ),
 	'conflicting_assets'	=> array(
 		'boldgrid-components' => array(
 			'handle' => 'boldgrid-components',

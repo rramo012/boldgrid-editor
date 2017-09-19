@@ -30,6 +30,8 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-layout.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media-map.php';
 
+require_once BOLDGRID_EDITOR_PATH . '/includes/gridblock/class-boldgrid-editor-gridblock-post.php';
+
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-fonts.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/builder/class-boldgrid-editor-builder-styles.php';
@@ -70,82 +72,6 @@ class Boldgrid_Editor {
 	private $is_boldgrid_theme = false;
 
 	/**
-	 * Get $this->settings
-	 *
-	 * @return array
-	 */
-	public function get_config() {
-		return $this->config;
-	}
-
-	/**
-	 * Set $this->settings
-	 *
-	 * @return bool
-	 */
-	public function set_config( $config ) {
-		$this->config = $config;
-		return true;
-	}
-
-	/**
-	 * Get $this->tab_configs
-	 *
-	 * @return array
-	 */
-	public function get_tab_configs() {
-		return $this->tab_configs;
-	}
-
-	/**
-	 * Set $this->tab_configs
-	 *
-	 * @return array
-	 */
-	public function set_tab_configs( $tab_configs ) {
-		$this->tab_configs = $tab_configs;
-		return true;
-	}
-
-	/**
-	 * Get $this->path_configs
-	 *
-	 * @return array
-	 */
-	public function get_path_configs() {
-		return $this->path_configs;
-	}
-
-	/**
-	 * Set $this->path_configs
-	 *
-	 * @return bool
-	 */
-	public function set_path_configs( $path_configs ) {
-		$this->path_configs = $path_configs;
-		return true;
-	}
-
-	/**
-	 * Get $this->is_boldgrid_theme
-	 *
-	 * @return array
-	 */
-	public function get_is_boldgrid_theme() {
-		return $this->is_boldgrid_theme;
-	}
-
-	/**
-	 * Set $this->is_boldgrid_theme
-	 *
-	 * @return bool
-	 */
-	public function set_is_boldgrid_theme( $is_boldgrid_theme ) {
-		$this->is_boldgrid_theme = $is_boldgrid_theme;
-		return true;
-	}
-
-	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -168,7 +94,6 @@ class Boldgrid_Editor {
 		$this->add_hooks();
 
 		$this->prepare_plugin_update();
-
 	}
 
 	/**
@@ -177,12 +102,16 @@ class Boldgrid_Editor {
 	 * @since 1.2.7
 	 */
 	public function add_hooks() {
+		$boldgrid_gridblock_post = new Boldgrid_Editor_Gridblock_Post( $this->config->get_configs() );
+		$boldgrid_gridblock_post->add_hooks();
+
 		if ( is_admin() && current_user_can( 'edit_pages' ) ) {
 			$this->add_admin_hooks();
-		} else {
-			$this->front_end_hooks();
 		}
 
+		if ( ! is_admin() ) {
+			$this->front_end_hooks();
+		}
 	}
 
 	/**
@@ -362,5 +291,81 @@ class Boldgrid_Editor {
 
 			$plugin_update->add_hooks();
 		}
+	}
+
+	/**
+	 * Get $this->settings
+	 *
+	 * @return array
+	 */
+	public function get_config() {
+		return $this->config;
+	}
+
+	/**
+	 * Set $this->settings
+	 *
+	 * @return bool
+	 */
+	public function set_config( $config ) {
+		$this->config = $config;
+		return true;
+	}
+
+	/**
+	 * Get $this->tab_configs
+	 *
+	 * @return array
+	 */
+	public function get_tab_configs() {
+		return $this->tab_configs;
+	}
+
+	/**
+	 * Set $this->tab_configs
+	 *
+	 * @return array
+	 */
+	public function set_tab_configs( $tab_configs ) {
+		$this->tab_configs = $tab_configs;
+		return true;
+	}
+
+	/**
+	 * Get $this->path_configs
+	 *
+	 * @return array
+	 */
+	public function get_path_configs() {
+		return $this->path_configs;
+	}
+
+	/**
+	 * Set $this->path_configs
+	 *
+	 * @return bool
+	 */
+	public function set_path_configs( $path_configs ) {
+		$this->path_configs = $path_configs;
+		return true;
+	}
+
+	/**
+	 * Get $this->is_boldgrid_theme
+	 *
+	 * @return array
+	 */
+	public function get_is_boldgrid_theme() {
+		return $this->is_boldgrid_theme;
+	}
+
+	/**
+	 * Set $this->is_boldgrid_theme
+	 *
+	 * @return bool
+	 */
+	public function set_is_boldgrid_theme( $is_boldgrid_theme ) {
+		$this->is_boldgrid_theme = $is_boldgrid_theme;
+		return true;
 	}
 }
