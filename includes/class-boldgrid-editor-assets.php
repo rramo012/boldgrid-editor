@@ -288,6 +288,27 @@ class Boldgrid_Editor_Assets {
 	}
 
 	/**
+	 * Get the url for css to the editor.
+	 *
+	 * Check for a unique constant. Reason for this is in order for dev scripts to be used
+	 * webpack dev server must be running.
+	 *
+	 * @since 1.0
+	 *
+	 * @return string url to editor css file.
+	 */
+	public function static editor_css_url() {
+		$suffix = '.min';
+
+		if ( defined( 'BGEDITOR_SCRIPT_DEBUG' ) && BGEDITOR_SCRIPT_DEBUG ) {
+			$suffix = '';
+		}
+
+		return plugins_url( '/assets/css/editor' . $suffix . '.css',
+			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+	}
+
+	/**
 	 * Add All Styles needed for the editor in the the wordpress doc.
 	 *
 	 * @since 1.0
@@ -300,8 +321,7 @@ class Boldgrid_Editor_Assets {
 		wp_register_style( 'genericons-imhwpb',
 		plugins_url( '/assets/css/genericons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
-		wp_register_style( 'editor-css-imhwpb',
-		plugins_url( '/assets/css/editor' . $suffix . '.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+		wp_register_style( 'editor-css-imhwpb', self::editor_css_url(), array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-animate-css',
 		plugins_url( '/assets/css/animate.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
