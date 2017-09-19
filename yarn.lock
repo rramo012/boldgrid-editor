@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@boldgrid/components@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.3.0.tgz#7980fb740528beb7f55c73bf3ad85f30ea0a15d9"
+"@boldgrid/components@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.3.2.tgz#111890da248b6caaa3293946d5725d5afbb126bd"
   dependencies:
     babel-core "^6.22.1"
     babel-eslint "^7.2.3"
@@ -22,6 +22,7 @@
     eslint-plugin-html "^2.0.3"
     extract-text-webpack-plugin "^2.1.0"
     file-loader "^0.9.0"
+    generate-json-webpack-plugin "^0.2.2"
     html-loader "^0.5.1"
     html-minifier "^3.5.2"
     html-webpack-plugin "^2.28.0"
@@ -3402,6 +3403,10 @@ gaze@^1.0.0:
 generate-function@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/generate-function/-/generate-function-2.0.0.tgz#6858fe7c0969b7d4e9093337647ac79f60dfbe74"
+
+generate-json-webpack-plugin@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/generate-json-webpack-plugin/-/generate-json-webpack-plugin-0.2.2.tgz#fdb42821044b5b3fc3f0240ac26c25f7b3795db0"
 
 generate-object-property@^1.1.0:
   version "1.2.0"

@@ -46,18 +46,6 @@ gulp.task( 'js-unit-tests', function( done ) {
 	).start();
 } );
 
-gulp.task( 'boldgrid-components', function() {
-	gulp
-		.src( [ config.src + '/node_modules/@boldgrid/components/dist/css/components.*' ] )
-		.pipe( debug( { title: 'BoldGrid Components:' } ) )
-		.pipe( gulp.dest( config.cssDest ) );
-
-	gulp
-		.src( [ config.src + '/node_modules/@boldgrid/components/json/components.json' ] )
-		.pipe( debug( { title: 'BoldGrid Components Json:' } ) )
-		.pipe( gulp.dest( config.jsonDir ) );
-} );
-
 // Compile sass files.
 gulp.task( 'sass', function() {
 	gulp

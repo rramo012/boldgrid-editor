@@ -8,6 +8,7 @@ const MinifyPlugin = require( 'babel-minify-webpack-plugin' );
 const srcDir = path.resolve( __dirname, '../..' );
 const distDir = path.resolve( __dirname, '../..' );
 const fontsDir = distDir + '/assets/fonts/';
+const jsonDir = distDir + '/assets/json/';
 const cssDir = distDir + '/assets/css/';
 
 module.exports = {
@@ -108,6 +109,10 @@ module.exports = {
 			{
 				from: require.resolve( '@boldgrid/components/dist/css/components.css' ),
 				to: cssDir
+			},
+			{
+				from: require.resolve( '@boldgrid/components/dist/json/components.json' ),
+				to: jsonDir
 			},
 			{
 				from:
