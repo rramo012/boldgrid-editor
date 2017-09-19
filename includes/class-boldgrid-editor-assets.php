@@ -297,7 +297,7 @@ class Boldgrid_Editor_Assets {
 	 *
 	 * @return string url to editor css file.
 	 */
-	public function static editor_css_url() {
+	public static function editor_css_url() {
 		$suffix = '.min';
 
 		if ( defined( 'BGEDITOR_SCRIPT_DEBUG' ) && BGEDITOR_SCRIPT_DEBUG ) {
