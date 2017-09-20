@@ -244,6 +244,7 @@ class Boldgrid_Editor {
 
 		add_action( 'wp_ajax_boldgrid_canvas_image', array ( $boldgrid_editor_ajax, 'upload_image_ajax' ) );
 		add_action( 'wp_ajax_boldgrid_editor_setup', array ( $boldgrid_editor_setup, 'ajax' ) );
+		add_action( 'wp_ajax_boldgrid_editor_save_gridblock', array ( $boldgrid_editor_ajax, 'save_gridblock' ) );
 		add_action( 'wp_ajax_boldgrid_redirect_url', array ( $boldgrid_editor_ajax, 'get_redirect_url' ) );
 
 		// Add Loading Graphic.

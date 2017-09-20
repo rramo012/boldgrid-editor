@@ -127,6 +127,32 @@
   background-color: initial;
   text-indent: initial; }
 
+.bg-editor-button {
+  font-family: 'Josefin Sans';
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 35px;
+  line-height: inherit; }
+
+.bg-editor-button.bg-primary-color {
+  background-color: #f95b26;
+  color: white; }
+
+.bg-editor-button.bg-primary-color:hover {
+  background-color: #f04107; }
+
+.bg-editor-button.bg-primary-color[disabled] {
+  background-color: #fdccbb; }
+
+.bg-editor-button.bg-secondary-color {
+  background-color: #ececec;
+  color: #000; }
+
+.bg-editor-button.bg-secondary-color:hover {
+  background-color: #f9f9f9; }
+
 /*--------------------------------------------------------------
 # Panel Styles
 --------------------------------------------------------------*/
@@ -1084,6 +1110,35 @@
 .bgctrl-color-palette .iris-alpha-slider.iris-strip {
   position: absolute;
   right: -4px; }
+
+.editor-panel[data-type="Library"] .save-gridblock {
+  text-align: center;
+  margin-top: 15%; }
+
+.editor-panel[data-type="Library"] .save-gridblock h2 {
+  font-size: 2.5em;
+  font-weight: 300; }
+
+.editor-panel[data-type="Library"] .save-gridblock h4 {
+  font-size: 1.2em;
+  color: #9c9c9c;
+  font-weight: normal; }
+
+.editor-panel[data-type="Library"] .save-gridblock form {
+  margin-top: 25px; }
+
+.editor-panel[data-type="Library"] .save-gridblock input {
+  padding: 14px;
+  width: 50%;
+  font-size: 1.3em;
+  border: 1px solid #ececec; }
+
+.editor-panel[data-type="Library"] .save-gridblock .bg-editor-button {
+  line-height: 7px;
+  border-radius: 0 5px 5px 0;
+  margin-left: -5px;
+  padding-top: 26px;
+  padding-bottom: 26px; }
 
 .theme-designs .button-overrides {
   background-color: transparent;
@@ -2543,8 +2598,7 @@ html:not(.dragging-section) .delete-icon-wrap {
   right: 0;
   left: 0; }
 
-.bg-editor-intro .editor-panel h2,
-.bg-editor-intro .editor-panel .btn {
+.bg-editor-intro .editor-panel h2 {
   font-family: 'Josefin Sans';
   text-transform: uppercase;
   font-weight: 300; }
@@ -2570,29 +2624,6 @@ html:not(.dragging-section) .delete-icon-wrap {
   position: absolute;
   top: 25px;
   right: 60px; }
-
-.bg-editor-intro .editor-panel .btn {
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 35px;
-  line-height: inherit; }
-
-.bg-editor-intro .editor-panel .btn.bg-primary-color {
-  background-color: #f95b26;
-  color: white; }
-
-.bg-editor-intro .editor-panel .btn.bg-primary-color:hover {
-  background-color: #f04107; }
-
-.bg-editor-intro .editor-panel .btn.bg-primary-color[disabled] {
-  background-color: #fdccbb; }
-
-.bg-editor-intro .editor-panel .btn.bg-secondary-color {
-  background-color: #ececec;
-  color: #000; }
-
-.bg-editor-intro .editor-panel .btn.bg-secondary-color:hover {
-  background-color: #f9f9f9; }
 
 @media screen and (max-width: 915px) {
   .bg-editor-intro .editor-panel {

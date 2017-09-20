@@ -51,6 +51,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		setContent: function( content ) {
 			this.$element.find( '.panel-body' ).html( content );
+
+			return this;
 		},
 
 		/**
@@ -521,13 +523,11 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.collapseSelection();
 
 			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
-
 			self.removeClasses();
 			$target = BG.Menu.$element.targetData[ control.name ] || $();
 			$target.addClass( 'bg-control-element' );
 
 			BG.CONTROLS.Color.initColorControls();
-
 		}
 
 	};

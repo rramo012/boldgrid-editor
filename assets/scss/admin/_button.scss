@@ -1,0 +1,31 @@
+.bg-editor-button {
+	font-family: 'Josefin Sans';
+	text-transform: uppercase;
+	font-weight: 300;
+
+	font-size: 13px;
+	font-weight: 600;
+	padding: 10px 35px;
+	line-height: inherit;
+
+	&.bg-primary-color {
+		background-color: $boldgrid-color;
+		color: white;
+
+		&:hover {
+			background-color: darken($boldgrid-color, 8%);
+		}
+
+		&[disabled] {
+			background-color: lighten($boldgrid-color, 30%);
+		}
+	}
+	&.bg-secondary-color {
+		background-color: #ececec;
+		color: #000;
+
+		&:hover {
+			background-color: lighten(#ececec, 5%);
+		}
+	}
+}

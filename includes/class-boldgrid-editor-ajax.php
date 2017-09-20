@@ -30,6 +30,7 @@ class Boldgrid_Editor_Ajax {
 	protected static $nonces = array(
 		'image' => 'boldgrid_gridblock_image_ajax_nonce',
 		'setup' => 'boldgrid_editor_setup',
+		'gridblock_save' => 'boldgrid_editor_gridblock_save',
 	);
 
 	/**
@@ -87,6 +88,32 @@ class Boldgrid_Editor_Ajax {
 
 		if ( ! empty( $redirectUrls ) ) {
 			wp_send_json_success( $redirectUrls );
+		} else {
+			status_header( 400 );
+			wp_send_json_error();
+		}
+	}
+
+	/**
+	 * Save a Gridblock.
+	 *
+	 * @since 1.6
+	 */
+	public function save_gridblock() {
+		$title = ! empty( $_POST['title'] ) ? $_POST['title'] : null;
+		$html = ! empty( $_POST['html'] ) ? $_POST['html'] : null;
+
+		$this->validate_nonce( 'gridblock_save' );
+
+		$post_id = wp_insert_post( array(
+			'post_title' => $title,
+			'post_content' => $html,
+			'post_type' => 'gridblock',
+			'post_status' => 'publish',
+		) );
+
+		if ( ! empty( $post_id ) ) {
+			wp_send_json_success( get_post( $post_id ) );
 		} else {
 			status_header( 400 );
 			wp_send_json_error();

@@ -76,6 +76,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element = $( wp.template( 'boldgrid-editor-control-menu' )() );
 			this.$mceContainer.append( this.$element );
 			this.$element.items = [];
+			this.$element.targetData = false;
 		},
 
 		/**

@@ -183,6 +183,7 @@ class Boldgrid_Editor_Assets {
 			'admin-url' => get_admin_url(),
 			'inspiration' => get_option( 'boldgrid_install_options' ),
 			'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
+			'nonce_gridblock_save' => wp_create_nonce( 'boldgrid_editor_gridblock_save' ),
 		);
 
 		/**
