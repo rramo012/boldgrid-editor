@@ -8,8 +8,8 @@ import 'jquery-slimScroll';
 import 'wp-color-picker-alpha';
 
 // Import Libs.
+import './builder/tinymce/wp-mce-draggable';
 import './builder/util';
-
 
 // Require all Builder files.
 function requireAll( r ) {

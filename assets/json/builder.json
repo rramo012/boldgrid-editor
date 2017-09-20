@@ -120,6 +120,9 @@
         "bg-box-pointer bg-box-pointer-top",
         "bg-box-pointer bg-box-pointer-bottom"
     ],
+    "gridblock": {
+        "disabledUnsplashImages": false
+    },
     "helpTooltip": {
         "[data-tooltip-id='color-saved']": "Add colors to this section to reuse them. Upon updating your page, these colors will be saved.",
         "[data-tooltip-id='color-theme']": "These colors are determined by your theme. You can change these colors by customizing your theme.",

@@ -1,4 +1,4 @@
-var IMHWPB = IMHWPB || {};
+window.IMHWPB = IMHWPB || {};
 
 /**
  * IMHWPB.WP_MCE_Draggable Responsible for interfacing with tinymce and the draggable class.
@@ -39,7 +39,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	// Failsafe.
 	setTimeout( function() {
-		self.$loading.removeClass( 'active' );
+		// Self.$loading.removeClass( 'active' );
 	}, 3000 );
 
 	this.bind_window_resize = function() {

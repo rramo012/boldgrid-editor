@@ -145,62 +145,54 @@ class Boldgrid_Editor_Assets {
 		}
 	}
 
-	/**
-	 * Enqueue WPMCE Draggable.
-	 *
-	 * @since 1.2.3
-	 *
-	 * @global $is_IE
-	 */
-	public function enqueue_mce_interface() {
+	public function get_js_vars() {
 		global $is_IE;
 		global $post;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 
-		wp_register_script( 'wp-mce-draggable-imhwpb',
-			plugins_url( self::get_minified_js( '/assets/js/editor/wp-mce-draggable' ), $plugin_file ),
-			array(
-				'jquery-ui-resizable'
-		), BOLDGRID_EDITOR_VERSION, true );
+		$vars = array(
+			'plugin_configs' => $this->configs,
+			'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
+			'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
+			'post' => ( array ) $post,
+			'post_id' => $this->get_post_id(),
+			'post_type' => $post ? $post->post_type : '',
+			'is_boldgrid_template' => Boldgrid_Editor_Templater::get_instance()->is_custom_template( $post->page_template ),
+			'site_url' => $this->get_post_url(),
+			'plugin_url' => plugins_url( '', $plugin_file ),
+			'is_IE' => $is_IE,
+			'version' => BOLDGRID_EDITOR_VERSION,
+			//'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
+			'hasDraggableEnabled' => true,
+			'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
+			'setupNonce' => wp_create_nonce( 'boldgrid_editor_setup' ),
+			'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
+			'images' => Boldgrid_Editor_Builder::get_post_images(),
+			'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
+			'saved_colors' => Boldgrid_Editor_Option::get( 'custom_colors', array() ),
+			'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
+			'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
+			'default_container' => Boldgrid_Editor_Builder::get_page_container(),
+			//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
+			'display_update_notice' => false,
+			'display_intro' => Boldgrid_Editor_Setup::should_show_setup(),
+			'setup_settings' => Boldgrid_Editor_Option::get( 'setup' ),
+			'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
+			'control_styles' => Boldgrid_Editor_Builder_Styles::get_option(),
+			'admin-url' => get_admin_url(),
+			'inspiration' => get_option( 'boldgrid_install_options' ),
+			'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' ),
+		);
 
-		// Send Variables to the view.
-		wp_localize_script( 'wp-mce-draggable-imhwpb', 'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
-			array(
-				'plugin_configs' => $this->configs,
-				'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
-				'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
-				'post' => ( array ) $post,
-				'post_id' => $this->get_post_id(),
-				'post_type' => $post ? $post->post_type : '',
-				'is_boldgrid_template' => Boldgrid_Editor_Templater::get_instance()->is_custom_template( $post->page_template ),
-				'site_url' => $this->get_post_url(),
-				'plugin_url' => plugins_url( '', $plugin_file ),
-				'is_IE' => $is_IE,
-				'version' => BOLDGRID_EDITOR_VERSION,
-				//'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
-				'hasDraggableEnabled' => true,
-				'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
-				'setupNonce' => wp_create_nonce( 'boldgrid_editor_setup' ),
-				'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
-				'images' => Boldgrid_Editor_Builder::get_post_images(),
-				'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
-				'saved_colors' => Boldgrid_Editor_Option::get( 'custom_colors', array() ),
-				'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
-				'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
-				'default_container' => Boldgrid_Editor_Builder::get_page_container(),
-				//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
-				'display_update_notice' => false,
-				'display_intro' => Boldgrid_Editor_Setup::should_show_setup(),
-				'setup_settings' => Boldgrid_Editor_Option::get( 'setup' ),
-				'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),
-				'control_styles' => Boldgrid_Editor_Builder_Styles::get_option(),
-				'admin-url' => get_admin_url(),
-				'inspiration' => get_option( 'boldgrid_install_options' ),
-				'grid_block_nonce' => wp_create_nonce( 'boldgrid_gridblock_image_ajax_nonce' )
-			) );
-
-		wp_enqueue_script( 'wp-mce-draggable-imhwpb' );
+		/**
+		 * Overrdie any of the variables sent to the front end application.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @param type  $var Array of variables to be passed to editor scripts.
+		 */
+		return apply_filters( 'BoldgridEditor\PageBuilder', $vars );
 	}
 
 	/**
@@ -240,8 +232,6 @@ class Boldgrid_Editor_Assets {
 		wp_enqueue_style( 'boldgrid-editor-css-suggest-crop',
 		plugins_url( '/assets/css/crop.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
-		// Drag n Drop Assets.
-		$this->enqueue_mce_interface();
 		$this->enqueue_drag_scripts();
 
 		wp_enqueue_script( 'boldgrid-editor-caman',
@@ -283,8 +273,17 @@ class Boldgrid_Editor_Assets {
 			$script_url = 'http://localhost:4000/bundle.js';
 		}
 
-		wp_enqueue_script( 'boldgrid-editor-drag',
+		wp_register_script( 'boldgrid-editor-drag',
 			$script_url, $deps, BOLDGRID_EDITOR_VERSION, true );
+
+		// Send Variables to the view.
+		wp_localize_script(
+			'boldgrid-editor-drag',
+			'BoldgridEditor = BoldgridEditor || {}; BoldgridEditor',
+			$this->get_js_vars()
+		);
+
+		wp_enqueue_script( 'boldgrid-editor-drag' );
 	}
 
 	/**

@@ -66,7 +66,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 */
 		getDynamicElements: function( gridblockData ) {
 			var $dynamicElements = gridblockData.$html.find( '[dynamicImage]' );
-			if ( gridblockData.$html[0].hasAttribute( 'dynamicImage' ) ) {
+
+			if ( gridblockData.$html[0].hasAttribute( 'dynamicImage' ) &&
+				'none' !== gridblockData.$html.css( 'background-image' ) ) {
+
 				$dynamicElements.push( gridblockData.$html );
 			}
 
@@ -96,8 +99,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					timeout: 10000,
 					data: {
 						action: 'boldgrid_canvas_image',
+
 						// eslint-disable-next-line
 						boldgrid_gridblock_image_ajax_nonce: BoldgridEditor.grid_block_nonce,
+
 						// eslint-disable-next-line
 						image_data: BG.GRIDBLOCK.Image.getEncodedSrc( $element )
 					}

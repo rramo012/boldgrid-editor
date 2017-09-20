@@ -64,9 +64,9 @@ class Boldgrid_Editor_Gridblock_Post {
 			'supports'            => array(
 				'title',
 				'editor',
-				'author',
+				// 'author',
 				'revisions',
-				'custom-fields'
+				// 'custom-fields'
 			),
 			'taxonomies'          => array( 'gridblock_type' ),
 			'hierarchical'        => false,

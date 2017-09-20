@@ -5,7 +5,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 ( function( $ ) {
 	'use strict';
 
-	var BG = BOLDGRID.EDITOR,
+	var config = BoldgridEditor.builder_config.gridblock,
+		BG = BOLDGRID.EDITOR,
 		self = {
 
 			/**
@@ -63,6 +64,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						return;
 					}
 
+					if ( config.disabledUnsplashImages ) {
+						BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
+						return;
+					}
+
 					// Get image data.
 					self.getDataURL( src ).done( function( result ) {
 						$this.attr( 'src', result );
@@ -76,32 +82,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						} );
 					} );
 				} );
-			},
-
-			/**
-			 * Replace the background url with a new url.
-			 *
-			 * @since 1.5
-			 *
-			 * @param  {string} css CSS rule for background image.
-			 * @param  {string} url URL to swap.
-			 * @return {string}     New CSS rule with the url requested.
-			 */
-			replaceBackgroundUrl: function( css, url ) {
-				return css.replace( /url\(.+?\)/, 'url(' + url + ')' );
-			},
-
-			/**
-			 * Get the url used in a background.
-			 *
-			 * @since 1.5
-			 *
-			 * @param  {jQuery} $element Element with background.
-			 * @return {string}          URL.
-			 */
-			getBackgroundUrl: function( $element ) {
-				var backgroundImage = $element.css( 'background-image' ) || '';
-				return backgroundImage.replace( /.*\s?url\([\'\"]?/, '' ).replace( /[\'\"]?\).*/, '' );
 			},
 
 			/**
@@ -132,6 +112,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 					$gridblock.css( 'background-image', '' );
 
+					if ( config.disabledUnsplashImages ) {
+						return;
+					}
+
 					self.getDataURL( imageUrl ).done( function( result ) {
 						setBackground( result );
 					} ).fail( function() {
@@ -142,6 +126,32 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						} );
 					} );
 				}
+			},
+
+			/**
+			 * Replace the background url with a new url.
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {string} css CSS rule for background image.
+			 * @param  {string} url URL to swap.
+			 * @return {string}     New CSS rule with the url requested.
+			 */
+			replaceBackgroundUrl: function( css, url ) {
+				return css.replace( /url\(.+?\)/, 'url(' + url + ')' );
+			},
+
+			/**
+			 * Get the url used in a background.
+			 *
+			 * @since 1.5
+			 *
+			 * @param  {jQuery} $element Element with background.
+			 * @return {string}          URL.
+			 */
+			getBackgroundUrl: function( $element ) {
+				var backgroundImage = $element.css( 'background-image' ) || '';
+				return backgroundImage.replace( /.*\s?url\([\'\"]?/, '' ).replace( /[\'\"]?\).*/, '' );
 			},
 
 			isRandomUnsplash: function( imageUrl ) {
