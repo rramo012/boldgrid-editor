@@ -39,7 +39,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	// Failsafe.
 	setTimeout( function() {
-		// Self.$loading.removeClass( 'active' );
+		self.$loading.removeClass( 'active' );
 	}, 3000 );
 
 	this.bind_window_resize = function() {

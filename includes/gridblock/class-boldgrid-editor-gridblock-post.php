@@ -66,7 +66,7 @@ class Boldgrid_Editor_Gridblock_Post {
 				'editor',
 				// 'author',
 				'revisions',
-				// 'custom-fields'
+				'custom-fields'
 			),
 			'taxonomies'          => array( 'gridblock_type' ),
 			'hierarchical'        => false,
@@ -75,6 +75,8 @@ class Boldgrid_Editor_Gridblock_Post {
 			// 'show_in_admin_bar'   => false,
 			'menu_position'       => 5,
 			'public'              => true,
+			// 'query_var'           => true,
+			// 'publicly_queryable'  => true,
 			'exclude_from_search' => true,
 			'capability_type'     => 'page',
 		);
@@ -102,7 +104,23 @@ class Boldgrid_Editor_Gridblock_Post {
 
 		// Registering your Custom Post Type
 		register_post_type( 'gridblock', $args );
+	}
 
+	/**
+	 * When viewing a gridblock, set the post type to full width.
+	 *
+	 * @since 1.6
+	 *
+	 * @param string $template
+	 */
+	public function set_template( $template ) {
+		global $post;
+
+		if ( $post && 'gridblock' === $post->post_type ) {
+			$template = BOLDGRID_EDITOR_PATH . '/includes/template/page/fullwidth.php';
+		}
+
+		return $template;
 	}
 
 	/**
@@ -120,5 +138,7 @@ class Boldgrid_Editor_Gridblock_Post {
 		} else {
 			add_action( 'init', array ( $this, 'register_post_type' ) );
 		}
+
+		add_action( 'template_include', array( $this, 'set_template' ) );
 	}
 }

@@ -333,7 +333,9 @@ class Boldgrid_Editor_Builder {
 	 */
 	public function save_container_meta( $post_id, $post ) {
 		$post_id = ! empty( $post_id ) ? $post_id : null;
-		$status = isset( $_REQUEST['boldgrid-in-page-containers'] ) ? intval( $_REQUEST['boldgrid-in-page-containers'] ) : null;
+		$status = isset( $_REQUEST['boldgrid-in-page-containers'] ) ?
+			intval( $_REQUEST['boldgrid-in-page-containers'] ) : null;
+
 		if ( $post_id && false === is_null( $status ) && ! wp_is_post_revision( $post_id ) ) {
 			$update = update_post_meta( $post_id, 'boldgrid_in_page_containers', $status );
 		}
