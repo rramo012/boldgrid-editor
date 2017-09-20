@@ -34,7 +34,9 @@ export class Save {
 	 * @since 1.6
 	 */
 	setup() {
-		this.openPanel();
+		this.openPanel( {
+			html: 'this is the new html'
+		} );
 		this._bindHandlers();
 	}
 
@@ -47,8 +49,10 @@ export class Save {
 	 */
 	openPanel( gridblockData ) {
 		this.gridblockData = gridblockData;
+		this.$html = $( LibraryInputTemplate );
+		this._setState( 'save-prompt' );
 
-		BG.Panel.setContent( LibraryInputTemplate ).open( this );
+		BG.Panel.setContent( this.$html ).open( this );
 		BG.Panel.centerPanel();
 	}
 
@@ -77,6 +81,10 @@ export class Save {
 		} );
 	}
 
+	_setState( state ) {
+		this.$html.attr( 'state', state );
+	}
+
 	/**
 	 * Bind all event handlers.
 	 *
@@ -94,7 +102,8 @@ export class Save {
 	_setupFormSubmit() {
 		BG.Panel.$element.on( 'submit', '.save-gridblock form', ( e ) => {
 			let $form = $( event.target ),
-				$button = $form.find( '.bg-editor-button' );
+				$button = $form.find( '.bg-editor-button' ),
+				$input = $form.find( 'input' );
 
 			e.preventDefault();
 
@@ -102,9 +111,16 @@ export class Save {
 			$button.attr( 'disabled', 'disabled' );
 
 			this.save( {
-				title: 'This is the title',
-				html: 'This is the html'
-			} ).always( function() {
+				title: $input.val(),
+				html: this.gridblockData.html
+			} )
+			.fail(  () => {
+				this._setState( 'save-failed' );
+			} )
+			.success(  () => {
+				this._setState( 'save-success' );
+			} )
+			.always( () => {
 				BG.Panel.$element.css( 'cursor', '' );
 				$button.removeAttr( 'disabled' );
 			} );

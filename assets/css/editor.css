@@ -52,6 +52,34 @@
     transform: scale(1);
     opacity: 0; } }
 
+.bg-editor-overlay.fadeout-background:after, .fadeout-background.bg-editor-intro:after {
+  animation-name: bg-fade-out;
+  animation-duration: .5s; }
+
+.bg-editor-overlay:after, .bg-editor-intro:after {
+  animation-name: bg-fade-in;
+  animation-duration: .5s;
+  content: ' ';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 99999;
+  position: fixed; }
+
+@keyframes bg-fade-out {
+  0% {
+    background-color: rgba(255, 255, 255, 0.7); }
+  100% {
+    background-color: transparent; } }
+
+@keyframes bg-fade-in {
+  0% {
+    background-color: transparent; }
+  100% {
+    background-color: rgba(255, 255, 255, 0.7); } }
+
 .bg-editor-loading-main.active {
   position: relative; }
 
@@ -1111,29 +1139,42 @@
   position: absolute;
   right: -4px; }
 
-.editor-panel[data-type="Library"] .save-gridblock {
+.editor-panel[data-type='Library'] .save-gridblock {
   text-align: center;
-  margin-top: 15%; }
+  margin-top: 15%;
+  padding: 0 40px; }
 
-.editor-panel[data-type="Library"] .save-gridblock h2 {
+.editor-panel[data-type='Library'] .save-gridblock .save-state {
+  display: none; }
+
+.editor-panel[data-type='Library'] .save-gridblock[state="save-prompt"] .save-prompt,
+.editor-panel[data-type='Library'] .save-gridblock[state="save-failed"] .save-failed,
+.editor-panel[data-type='Library'] .save-gridblock[state="save-success"] .save-success {
+  display: block; }
+
+.editor-panel[data-type='Library'] .save-gridblock .save-success img {
+  margin-top: 30px; }
+
+.editor-panel[data-type='Library'] .save-gridblock h2 {
   font-size: 2.5em;
   font-weight: 300; }
 
-.editor-panel[data-type="Library"] .save-gridblock h4 {
+.editor-panel[data-type='Library'] .save-gridblock h4 {
   font-size: 1.2em;
   color: #9c9c9c;
-  font-weight: normal; }
+  font-weight: normal;
+  line-height: 1.5em; }
 
-.editor-panel[data-type="Library"] .save-gridblock form {
+.editor-panel[data-type='Library'] .save-gridblock form {
   margin-top: 25px; }
 
-.editor-panel[data-type="Library"] .save-gridblock input {
+.editor-panel[data-type='Library'] .save-gridblock input {
   padding: 14px;
   width: 50%;
   font-size: 1.3em;
   border: 1px solid #ececec; }
 
-.editor-panel[data-type="Library"] .save-gridblock .bg-editor-button {
+.editor-panel[data-type='Library'] .save-gridblock .bg-editor-button {
   line-height: 7px;
   border-radius: 0 5px 5px 0;
   margin-left: -5px;
@@ -2641,34 +2682,6 @@ html:not(.dragging-section) .delete-icon-wrap {
     position: static; }
   .bg-editor-intro .editor-panel p.intro {
     width: 100%; } }
-
-@keyframes bg-fade-out {
-  0% {
-    background-color: rgba(255, 255, 255, 0.7); }
-  100% {
-    background-color: transparent; } }
-
-@keyframes bg-fade-in {
-  0% {
-    background-color: transparent; }
-  100% {
-    background-color: rgba(255, 255, 255, 0.7); } }
-
-.bg-editor-intro.fadeout-background:after {
-  animation-name: bg-fade-out;
-  animation-duration: 1s; }
-
-.bg-editor-intro:after {
-  animation-name: bg-fade-in;
-  animation-duration: 1s;
-  content: ' ';
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
-  z-index: 9999999;
-  position: fixed; }
 
 .bg-editor-intro .step:not(.active) {
   display: none; }

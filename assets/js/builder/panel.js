@@ -21,6 +21,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @return jQuery $this.$element Panel Element
 		 */
 		init: function() {
+			this.$body = $( 'body' );
 
 			this.create();
 			this._setupPanelClose();
@@ -41,7 +42,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		create: function() {
 			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
-			$( 'body' ).append( this.$element );
+			this.$body.append( this.$element );
 		},
 
 		/**
@@ -242,6 +243,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-body' ).empty();
 
 			this.$element.trigger( 'bg-panel-close' );
+			this.$body.removeClass( 'bg-editor-overlay' );
 			tinymce.activeEditor.undoManager.add();
 		},
 
@@ -496,6 +498,17 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Show overlay while this panel is displayed. 
+		 *
+		 * @since 1.6
+		 */
+		showOverlay() {
+			if ( this.currentControl.panel && this.currentControl.panel.showOverlay ) {
+				this.$body.addClass( 'bg-editor-overlay' );
+			}
+		},
+
+		/**
 		 * Open the panel for a control.
 		 *
 		 * @since 1.3
@@ -521,6 +534,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.preselect();
 			this.scrollToSelected();
 			this.collapseSelection();
+			this.showOverlay();
 
 			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
 			self.removeClasses();

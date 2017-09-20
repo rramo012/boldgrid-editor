@@ -27,9 +27,12 @@
 }
 
 .bg-editor-intro {
+	@extend .bg-editor-overlay;
+
 	.bg-editor-loading {
 		display: block;
 	}
+
 	.editor-panel {
 		z-index: 99999999;
 		border: none;
@@ -118,37 +121,5 @@
 			}
 		}
 	}
-	@keyframes bg-fade-out {
-		0% {
-			background-color: rgba(255, 255, 255, 0.7);
-		}
-		100% {
-			background-color: transparent;
-		}
-	}
-	@keyframes bg-fade-in {
-		0% {
-			background-color: transparent;
-		}
-		100% {
-			background-color: rgba(255, 255, 255, 0.7);
-		}
-	}
-	&.fadeout-background:after {
-		animation-name: bg-fade-out;
-		animation-duration: 1s;
-	}
-	&:after {
-		animation-name: bg-fade-in;
-		animation-duration: 1s;
 
-		content: ' ';
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		background-color: rgba(255, 255, 255, 0.7);
-		z-index: 9999999;
-		position: fixed;
-	}
 }
