@@ -1,10 +1,13 @@
+.gridblock-template-default #content.site-content,
 .page-template-templatepagefullwidth-php.page-template-fullwidth #content.site-content {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0; }
 
+.gridblock-template-default .site-footer,
 .page-template-templatepagefullwidth-php.page-template-fullwidth .site-footer {
   margin-top: 0; }
 
+.gridblock-template-default header,
 .page-template-templatepagefullwidth-php.page-template-fullwidth header {
   margin-bottom: 0; }

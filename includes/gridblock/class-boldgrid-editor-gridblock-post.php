@@ -98,6 +98,8 @@ class Boldgrid_Editor_Gridblock_Post {
 				'rewrite' => array( 'slug' => 'gridblocks' ),
 				'label' => __( 'GridBlock Types' ),
 				'show_admin_column' => true,
+				'show_in_menu' => false,
+				'show_in_nav_menus' => false,
 				'description' => 'ffff'
 			)
 		);
