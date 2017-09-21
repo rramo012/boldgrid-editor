@@ -13,8 +13,10 @@
 		&[state="save-success"] .save-success {
 			display: block;
 		}
-		.save-success img {
-			margin-top: 30px;
+		.save-failed, .save-success {
+			button {
+				margin-top: 30px;
+			}
 		}
 
 		h2 {
@@ -40,7 +42,7 @@
 			border: 1px solid #ececec;
 		}
 
-		.bg-editor-button {
+		.save.bg-editor-button {
 			line-height: 7px;
 			border-radius: 0 5px 5px 0;
 			margin-left: -5px;

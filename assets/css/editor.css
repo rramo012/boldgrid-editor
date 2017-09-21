@@ -203,6 +203,14 @@
   -ms-user-select: none;
   user-select: none; }
 
+.color-panel.drag-disabled .panel-title,
+.editor-panel.drag-disabled .panel-title {
+  pointer-events: none; }
+
+.color-panel.drag-disabled .panel-title .close-icon,
+.editor-panel.drag-disabled .panel-title .close-icon {
+  pointer-events: initial; }
+
 .color-panel .panel-title,
 .editor-panel .panel-title {
   cursor: move;
@@ -1152,7 +1160,7 @@
 .editor-panel[data-type='Library'] .save-gridblock[state="save-success"] .save-success {
   display: block; }
 
-.editor-panel[data-type='Library'] .save-gridblock .save-success img {
+.editor-panel[data-type='Library'] .save-gridblock .save-failed button, .editor-panel[data-type='Library'] .save-gridblock .save-success button {
   margin-top: 30px; }
 
 .editor-panel[data-type='Library'] .save-gridblock h2 {
@@ -1174,7 +1182,7 @@
   font-size: 1.3em;
   border: 1px solid #ececec; }
 
-.editor-panel[data-type='Library'] .save-gridblock .bg-editor-button {
+.editor-panel[data-type='Library'] .save-gridblock .save.bg-editor-button {
   line-height: 7px;
   border-radius: 0 5px 5px 0;
   margin-left: -5px;

@@ -18,6 +18,14 @@
 	-ms-user-select: none;
 	user-select: none;
 
+	&.drag-disabled .panel-title {
+		pointer-events: none;
+
+		.close-icon {
+			pointer-events: initial;
+		}
+	}
+
 	.panel-title {
 		cursor: move;
 		background-color: $panel-color;

@@ -13,7 +13,6 @@ export class Save {
 			title: 'GridBlock Library',
 			height: '430px',
 			width: '600px',
-			disableDrag: true,
 			autoCenter: true,
 			showOverlay: true
 		};
@@ -34,9 +33,10 @@ export class Save {
 	 * @since 1.6
 	 */
 	setup() {
-		this.openPanel( {
+
+		/*this.openPanel( {
 			html: 'this is the new html'
-		} );
+		} );*/
 		this._bindHandlers();
 	}
 
@@ -81,6 +81,13 @@ export class Save {
 		} );
 	}
 
+	/**
+	 * Set the current state.
+	 *
+	 * @since 1.6
+	 *
+	 * @param {string} state The state attr to be set.
+	 */
 	_setState( state ) {
 		this.$html.attr( 'state', state );
 	}

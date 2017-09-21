@@ -31,6 +31,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this._setupCustomizeLeave();
 			this._setupCustomizeDefault();
 			this._lockPanelScroll();
+			this._setupAutoCenter();
 
 			return this.$element;
 		},
@@ -211,7 +212,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.3
 		 */
 		_setupPanelClose: function() {
-			this.$element.on( 'click', '.close-icon', function() {
+			this.$element.on( 'click', '.close-icon, button.dismiss', function() {
 				self.closePanel();
 			} );
 		},
@@ -242,6 +243,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.$element.find( '.panel-body' ).empty();
 
+			this.$element.removeClass( 'drag-disabled' );
 			this.$element.trigger( 'bg-panel-close' );
 			this.$body.removeClass( 'bg-editor-overlay' );
 			tinymce.activeEditor.undoManager.add();
@@ -498,14 +500,25 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
-		 * Show overlay while this panel is displayed. 
+		 * Show overlay while this panel is displayed.
 		 *
 		 * @since 1.6
 		 */
 		showOverlay() {
 			if ( this.currentControl.panel && this.currentControl.panel.showOverlay ) {
 				this.$body.addClass( 'bg-editor-overlay' );
+				this.$element.addClass( 'drag-disabled' );
 			}
+		},
+
+		_setupAutoCenter() {
+			let debounceCallback = _.debounce( () => {
+				if ( this.currentControl.panel.autoCenter ) {
+					this.centerPanel();
+				}
+			}, 500 );
+
+			$( window ).on( 'resize', debounceCallback );
 		},
 
 		/**
