@@ -236,11 +236,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.4
 		 */
 		createGridblocks: function() {
-			var markup = self.generateInitialMarkup(),
-				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
+			var markup, $gridblockContainer;
 
-			$gridblockContainer.append( markup );
-			self.$gridblockSection.trigger( 'scroll' );
+			if ( self.$gridblockSection ) {
+				$gridblockContainer = self.$gridblockSection.find( '.gridblocks' );
+				markup = self.generateInitialMarkup();
+				$gridblockContainer.append( markup );
+				self.$gridblockSection.trigger( 'scroll' );
+			}
 		},
 
 		/**

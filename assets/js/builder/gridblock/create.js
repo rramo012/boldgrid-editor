@@ -91,6 +91,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			$imageReplacements.each( function() {
 				var $element = $( this );
+				$element.removeAttr( 'dynamicimage' );
 
 				$.ajax( {
 					type: 'post',
@@ -107,7 +108,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						image_data: BG.GRIDBLOCK.Image.getEncodedSrc( $element )
 					}
 				} ).done( function( response ) {
-					$element.removeAttr( 'dynamicimage' );
 
 					if ( response && response.success ) {
 						BG.GRIDBLOCK.Image.addImageUrl( $element, response.data );

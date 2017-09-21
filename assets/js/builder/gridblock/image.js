@@ -155,7 +155,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			},
 
 			isRandomUnsplash: function( imageUrl ) {
-				return -1 !== imageUrl.indexOf( 'source.unsplash' );
+				return imageUrl && -1 !== imageUrl.indexOf( 'source.unsplash' );
 			},
 
 			/**
@@ -200,6 +200,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 */
 			addImageUrl: function( $image, data ) {
 				var backgroundImageCss;
+
+				$image.removeAttr( 'dynamicimage' );
 
 				if ( self.isBackgroundImage( $image ) ) {
 					backgroundImageCss = $image.css( 'background-image' ) || '';

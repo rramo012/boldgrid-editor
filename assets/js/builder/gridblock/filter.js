@@ -136,9 +136,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		addGridblockConfig: function( gridblockData, index ) {
 			var gridblockId = 'remote-' + index;
 
-			gridblockData.dynamicImages = true;
-			gridblockData.gridblockId = gridblockId;
-			gridblockData.$html = gridblockData['html-jquery'];
+			gridblockData = _.defaults( gridblockData, {
+				dynamicImages: true,
+				gridblockId: gridblockId,
+				$html: gridblockData['html-jquery']
+			} );
 
 			delete gridblockData.html;
 			delete gridblockData['preview-html'];

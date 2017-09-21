@@ -119,6 +119,7 @@ export class Save {
 		let gridblockData = {
 			html: post.post_content,
 			post: post,
+			dynamicImages: false,
 			type: 'saved',
 			'html-jquery': $( post.post_content )
 		};
