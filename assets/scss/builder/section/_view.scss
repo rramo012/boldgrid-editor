@@ -453,6 +453,10 @@ html:not(.dragging-section) .delete-icon-wrap {
 		display: block !important;
 	}
 
+	.gridblocks[filter="saved"] .action-items .save {
+		display: none;
+	}
+
 	.gridblock {
 		position     : relative;
 		height       : 300px;
@@ -491,11 +495,6 @@ html:not(.dragging-section) .delete-icon-wrap {
 			background-color: #cccccc;
 			border-radius   : 4px 0 0 4px;
 			transition      : background-color .5s;
-			/*
-			background-image: url('../image/grip.png');
-			background-repeat: no-repeat;
-			background-position: center;
-			*/
 			cursor          : move;
 		}
 

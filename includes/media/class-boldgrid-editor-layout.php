@@ -253,6 +253,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 			'post__not_in' => self::get_excluded_posts(),
 			'post_type' => array (
 				'page',
+				'gridblock',
 				'post'
 			),
 			'post_status' => $status,

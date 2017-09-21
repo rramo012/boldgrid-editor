@@ -2413,6 +2413,9 @@ html:not(.dragging-section) .delete-icon-wrap {
 .zoom-gridblocks-section .gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404 {
   display: block !important; }
 
+.zoom-gridblocks-section .gridblocks[filter="saved"] .action-items .save {
+  display: none; }
+
 .zoom-gridblocks-section .gridblock {
   position: relative;
   height: 300px;
@@ -2448,11 +2451,6 @@ html:not(.dragging-section) .delete-icon-wrap {
   background-color: #cccccc;
   border-radius: 4px 0 0 4px;
   transition: background-color .5s;
-  /*
-			background-image: url('../image/grip.png');
-			background-repeat: no-repeat;
-			background-position: center;
-			*/
   cursor: move; }
 
 .zoom-gridblocks-section .gridblock .fa-arrows {

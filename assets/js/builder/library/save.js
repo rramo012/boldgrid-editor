@@ -111,6 +111,23 @@ export class Save {
 	}
 
 	/**
+	 * Add the newly created gridblock to the list of saved gridblocks.
+	 *
+	 * @since 1.6
+	 */
+	_addToConfig( post ) {
+		let gridblockData = {
+			html: post.post_content,
+			post: post,
+			type: 'saved',
+			'html-jquery': $( post.post_content )
+		};
+
+		BG.GRIDBLOCK.Filter.addGridblockConfig( gridblockData, 'ui-saved-' + post.ID );
+		BG.GRIDBLOCK.View.createGridblocks();
+	}
+
+	/**
 	 * Set the current state.
 	 *
 	 * @since 1.6
@@ -152,9 +169,10 @@ export class Save {
 				.fail( () => {
 					this._setState( 'save-failed' );
 				} )
-				.done( ( response, e ) => {
+				.done( ( response ) => {
 					this.$html.find( '.gridblock-permalink' ).attr( 'href', response.data.guid );
 					this._setState( 'save-success' );
+					this._addToConfig( response.data );
 				} )
 				.always( () => {
 					BG.Panel.hideLoading();
