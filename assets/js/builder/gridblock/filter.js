@@ -24,7 +24,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			$.each( self.configs, function( gridblockId ) {
 				this.html = self.unsetImageUrls( this.html );
 				this.$html = $( this.html );
-
 				self.removeInvalidGridblocks( this, gridblockId );
 			} );
 
@@ -116,7 +115,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			$.each( self.configs, function( gridblockId ) {
 				if ( ! self.removedGridlocks[ gridblockId ] ) {
 					delete this.html;
-					delete this['preview-html'];
 					this.gridblockId = gridblockId;
 					this.uniqueMarkup = self.createUniqueMarkup( this.$html );
 					_.extend( this, self.configMethods );
@@ -143,9 +141,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			} );
 
 			delete gridblockData.html;
-			delete gridblockData['preview-html'];
 			delete gridblockData['html-jquery'];
-			delete gridblockData['preview-html-jquery'];
 
 			_.extend( gridblockData, self.configMethods );
 			BG.GRIDBLOCK.configs.gridblocks[ gridblockId ] = gridblockData;

@@ -52,6 +52,10 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	public static function parse_gridblocks( $content, $post = null ) {
 		global $shortcode_tags;
 
+		if ( 'gridblock' === $post->post_type ) {
+		//	return array( self::format_gridblock_data( $post, $content ) );
+		}
+
 		$dom = new DOMDocument();
 
 		@$dom->loadHTML( self::utf8_to_html( $content ) );
@@ -75,23 +79,25 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 					}
 				}
 
-				// In the future we could translate the shortcodes and display them
-				// $shortcode_translated_html = do_shortcode( $row_html );
-				$shortcode_translated_html = wpautop( $row_html );
-
-				$rows[] = array (
-					'html' => $shortcode_translated_html,
-					'preview-html' => $shortcode_translated_html,
-					'type' => 'saved',
-					'is_post' => ! empty( $post ) ? 'post' === $post->type : false,
-					'str_length' => strlen( $shortcode_translated_html )
-				);
+				$rows[] = self::format_gridblock_data( $post, $row_html );
 			}
 		}
 
 		return $rows;
 	}
 
+	public static function format_gridblock_data( $post, $html ) {
+		// In the future we could translate the shortcodes and display them
+		// $shortcode_translated_html = do_shortcode( $row_html );
+		$shortcode_translated_html = wpautop( $html );
+
+		return array (
+			'html' => $shortcode_translated_html,
+			'type' => 'saved',
+			'is_post' => ! empty( $post ) ? 'post' === $post->post_type : false,
+			'str_length' => strlen( $shortcode_translated_html )
+		);
+	}
 
 	/**
 	 * Sort By whether or not the post is of type of post.
