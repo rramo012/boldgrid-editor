@@ -2,6 +2,8 @@ window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
+import { Save } from './save';
+
 ( function( $ ) {
 	'use strict';
 
@@ -37,6 +39,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					BGGB.Delete.init();
 					BGGB.Drag.init();
 					BGGB.Generate.fetch();
+
+					new Save().init();
 				}
 			},
 

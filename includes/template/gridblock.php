@@ -41,6 +41,9 @@
 <div class="gridblock gridblock-loading" data-id="{{data.id}}" data-type="{{data.type}}" data-category="{{data.category}}" data-template="{{data.template}}">
 	<i class="fa fa-arrows" aria-hidden="true"></i>
 	<div class="add-gridblock"></div>
+	<div class="action-items">
+		<i class="fa fa-heart-o save" aria-hidden="true" title="Add to GridBlock library"></i>
+	</div>
 </div>
 </script>
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock-error">

@@ -1991,7 +1991,8 @@ html:not(.dragging-section) .delete-icon-wrap {
 .dragging-section .delete-icon-wrap .dashicons {
   font-size: 24px;
   margin-left: -3px;
-  margin-top: -7px; }
+  margin-top: -7px;
+  vertical-align: middle; }
 
 .zoom-navbar {
   display: none; }
@@ -2461,6 +2462,41 @@ html:not(.dragging-section) .delete-icon-wrap {
 .zoom-gridblocks-section .gridblock.dragging-gridblock .add-gridblock:before {
   content: 'Drag to Page';
   background: rgba(0, 0, 0, 0.6); }
+
+.zoom-gridblocks-section .gridblock:hover .action-items {
+  opacity: 1; }
+
+.zoom-gridblocks-section .gridblock .action-items {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  text-align: right;
+  padding: 17px;
+  z-index: 1;
+  font-size: 28px;
+  transition: opacity .5s; }
+
+.zoom-gridblocks-section .gridblock .action-items .fa {
+  padding: 10px;
+  margin: 0 8px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0px 2px 5px 0px #313131;
+  cursor: pointer;
+  transition: background-color .5s; }
+
+.zoom-gridblocks-section .gridblock .action-items .fa:before {
+  vertical-align: sub; }
+
+.zoom-gridblocks-section .gridblock .action-items .fa:hover {
+  background-color: #f95b26; }
 
 @media (min-width: 1600px) {
   .zoom-gridblocks-section .gridblock {

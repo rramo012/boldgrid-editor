@@ -92,6 +92,18 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$clone.prepend( wp.template( 'boldgrid-editor-gridblock-loading' )() );
 
 				return $clone;
+			},
+
+			getTitle: function() {
+				let title,
+					template = this.template;
+
+				if ( template ) {
+					title = template.replace( /[-_]/g, ' ' );
+					title = title.charAt( 0 ).toUpperCase() + title.slice( 1 );
+				}
+
+				return title;
 			}
 		},
 

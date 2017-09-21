@@ -53,18 +53,6 @@ class Boldgrid_Editor_Version {
 	}
 
 	/**
-	 * If we should display admin notice, add body classes to trigger css.
-	 *
-	 * @since 1.3
-	 */
-	public function display_update_notice() {
-		if ( self::should_display_notice() ) {
-			wp_enqueue_style( 'bg-notification-fonts',
-				'https://fonts.googleapis.com/css?family=Exo+2:300,600|Josefin+Sans:300,600' );
-		}
-	}
-
-	/**
 	 * Add option that will prevent admin notice from displaying again.
 	 *
 	 * @since 1.3

@@ -208,7 +208,6 @@ class Boldgrid_Editor {
 			add_action( 'media_buttons', array( $boldgrid_editor_builder, 'enqueue_styles' ) );
 
 			// Display and save admin notice state.
-			add_action( 'admin_init', array( $boldgrid_editor_version, 'display_update_notice' ) );
 			add_action( 'admin_init', array( $boldgrid_editor_setup, 'reset_editor_action' ) );
 			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
 			add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );

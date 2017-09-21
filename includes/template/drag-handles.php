@@ -16,6 +16,7 @@
 					<li class="no-select-imhwpb action-list" data-action="move-up">Move Up</li>
 					<li class="no-select-imhwpb action-list" data-action="move-down">Move Down</li>
 					<li class="no-select-imhwpb action-list" data-action="add-new">Add Empty Section</li>
+					<li class="no-select-imhwpb action-list" data-action="save-gridblock">Save GridBlock</li>
 					<li class="no-select-imhwpb action-list" data-action="background">Change Background</li>
 				</ul>
 			</div>
@@ -25,4 +26,3 @@
 		</span>
 	</div>
 </script>
-

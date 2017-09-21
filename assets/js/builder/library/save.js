@@ -5,7 +5,6 @@ var $ = window.jQuery,
 import LibraryInputTemplate from '../../../../includes/template/gridblock-library.html';
 
 export class Save {
-
 	constructor() {
 		this.name = 'Library';
 
@@ -33,10 +32,6 @@ export class Save {
 	 * @since 1.6
 	 */
 	setup() {
-
-		/*this.openPanel( {
-			html: 'this is the new html'
-		} );*/
 		this._bindHandlers();
 	}
 
@@ -52,6 +47,13 @@ export class Save {
 		this.$html = $( LibraryInputTemplate );
 		this._setState( 'save-prompt' );
 
+		if ( gridblockData.title ) {
+			this.$html
+				.find( 'input' )
+				.val( gridblockData.title )
+				.change();
+		}
+
 		BG.Panel.setContent( this.$html ).open( this );
 		BG.Panel.centerPanel();
 	}
@@ -64,7 +66,7 @@ export class Save {
 	 * @param  {Object} data     Data to save.
 	 * @return {$.deferred}      Ajax deffered object.
 	 */
-	save( data ) {
+	ajax( data ) {
 		data.action = 'boldgrid_editor_save_gridblock';
 		data['boldgrid_editor_gridblock_save'] = BoldgridEditor.nonce_gridblock_save;
 
@@ -74,11 +76,37 @@ export class Save {
 			method: 'POST',
 			timeout: 5000,
 			data: data
-		} ).always( ( response ) => {
-			console.log( response );
-		} ).fail( ( response ) => {
-			console.log( response );
 		} );
+	}
+
+	/**
+	 * Save the GridBlock Data.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  {Object} data     GridBlock data.
+	 * @return {$.Deferred}      Response.
+	 */
+	save( data ) {
+		let $deferred = $.Deferred();
+
+		if ( 'string' !== typeof data.html ) {
+			data.html.always( ( html ) => {
+				data.html = html;
+
+				this.ajax( data )
+					.fail( ( response ) => {
+						$deferred.reject( response );
+					} )
+					.done( ( response ) => {
+						$deferred.resolve( response );
+					} );
+			} );
+
+			return $deferred;
+		} else {
+			return this.ajax( data );
+		}
 	}
 
 	/**
@@ -107,7 +135,7 @@ export class Save {
 	 * @since 1.6
 	 */
 	_setupFormSubmit() {
-		BG.Panel.$element.on( 'submit', '.save-gridblock form', ( e ) => {
+		BG.Panel.$element.on( 'submit', '.save-gridblock form', e => {
 			let $form = $( event.target ),
 				$button = $form.find( '.bg-editor-button' ),
 				$input = $form.find( 'input' );
@@ -121,16 +149,17 @@ export class Save {
 				title: $input.val(),
 				html: this.gridblockData.html
 			} )
-			.fail(  () => {
-				this._setState( 'save-failed' );
-			} )
-			.success(  () => {
-				this._setState( 'save-success' );
-			} )
-			.always( () => {
-				BG.Panel.$element.css( 'cursor', '' );
-				$button.removeAttr( 'disabled' );
-			} );
+				.fail( () => {
+					this._setState( 'save-failed' );
+				} )
+				.done( ( response, e ) => {
+					this.$html.find( '.gridblock-permalink' ).attr( 'href', response.data.guid );
+					this._setState( 'save-success' );
+				} )
+				.always( () => {
+					BG.Panel.$element.css( 'cursor', '' );
+					$button.removeAttr( 'disabled' );
+				} );
 		} );
 	}
 }

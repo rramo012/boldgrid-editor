@@ -511,9 +511,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 		},
 
+		/**
+		 * Handle auto rectenering panels on window resize.
+		 *
+		 * @since 1.6
+		 */
 		_setupAutoCenter() {
 			let debounceCallback = _.debounce( () => {
-				if ( this.currentControl.panel.autoCenter ) {
+				if ( this.currentControl && this.currentControl.panel.autoCenter ) {
 					this.centerPanel();
 				}
 			}, 500 );

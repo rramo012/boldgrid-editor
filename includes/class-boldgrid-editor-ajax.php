@@ -80,7 +80,7 @@ class Boldgrid_Editor_Ajax {
 		$redirectUrls = array();
 		foreach( $urls as $url ) {
 			$response = wp_remote_head( $url );
-			$headers = ! empty( $response['headers'] ) ? $response['headers']->getAll() : array();
+			$headers = is_array( $response ) && ! empty( $response['headers'] ) ? $response['headers']->getAll() : array();
 			$redirectUrl = ! empty( $headers['location'] ) ? $headers['location'] : false;
 			$redirectUrl = ( $redirectUrl !== $unsplash_404 ) ? $redirectUrl : false;
 			$redirectUrls[ $url ] = $redirectUrl;

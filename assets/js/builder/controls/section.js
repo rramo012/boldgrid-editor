@@ -101,6 +101,17 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
+		 * Save a GridBlock.
+		 *
+		 * @since 1.6
+		 */
+		_saveGridblock() {
+			BG.Controls.get( 'Library' ).openPanel( {
+				html: self.$currentSection[0].outerHTML
+			} );
+		},
+
+		/**
 		 * Bind all events.
 		 *
 		 * @since 1.2.7
@@ -123,6 +134,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="move-up"]', self.moveUp );
 			self.$popover.on( 'click', '[data-action="move-down"]', self.moveDown );
 			self.$popover.on( 'click', '[data-action="background"]', self.background );
+			self.$popover.on( 'click', '[data-action="save-gridblock"]', self._saveGridblock );
 			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
 			self.$popover.on( 'click', '[data-action]', stopPropagation );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
