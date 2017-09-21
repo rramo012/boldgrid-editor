@@ -43,6 +43,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		create: function() {
 			this.$element = $( wp.template( 'boldgrid-editor-panel' )() );
+			this.$loading = this.$element.find( '.bg-loading-spinner' );
 			this.$body.append( this.$element );
 		},
 
@@ -73,6 +74,24 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		setInfo: function( title ) {
 			this.$element.find( '.panel-title .info' ).html( title );
+		},
+
+		/**
+		 * Show a loading graphix in the panel.
+		 *
+		 * @since 1.6
+		 */
+		showLoading: function() {
+			this.$loading.addClass( 'enabled' );
+		},
+
+		/**
+		* Hide the loading graphic in the panel.
+		*
+		* @since 1.6
+		*/
+		hideLoading: function() {
+			this.$loading.removeClass( 'enabled' );
 		},
 
 		/**
@@ -233,6 +252,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 */
 		closePanel: function() {
 			self.$element.hide();
+			BG.Panel.hideLoading();
 			BOLDGRID.EDITOR.Menu.deactivateControl();
 			self.removeClasses();
 
@@ -312,6 +332,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.$element.find( '.panel-title .name' ).empty();
 			this.$element.find( '.panel-title .info' ).empty();
 			this.$element.find( '.panel-body' ).empty();
+			this.$element.find( '.panel-title .icon' ).attr( 'class', '' );
 		},
 
 		/**
@@ -527,6 +548,19 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
+		 * Set the icon displayed based on the current control.
+		 *
+		 * @since 1.6
+		 */
+		_setIcon() {
+			if ( this.currentControl.panel && this.currentControl.panel.icon ) {
+				this.$element.find( '.panel-title [data-id="icon"]' )
+					.attr( 'class', this.currentControl.panel.icon )
+					.addClass( 'icon' );
+			}
+		},
+
+		/**
 		 * Open the panel for a control.
 		 *
 		 * @since 1.3
@@ -553,6 +587,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.scrollToSelected();
 			this.collapseSelection();
 			this.showOverlay();
+			this._setIcon();
 
 			BOLDGRID.EDITOR.CONTROLS.Generic.initControls();
 			self.removeClasses();

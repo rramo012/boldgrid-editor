@@ -10,6 +10,7 @@ export class Save {
 
 		this.panel = {
 			title: 'GridBlock Library',
+			icon: 'gridblock-grid-icon',
 			height: '430px',
 			width: '600px',
 			autoCenter: true,
@@ -32,6 +33,10 @@ export class Save {
 	 * @since 1.6
 	 */
 	setup() {
+		this.openPanel( {
+			'html': 'ddd'
+		} );
+
 		this._bindHandlers();
 	}
 
@@ -142,7 +147,7 @@ export class Save {
 
 			e.preventDefault();
 
-			BG.Panel.$element.css( 'cursor', 'progress' );
+			BG.Panel.showLoading();
 			$button.attr( 'disabled', 'disabled' );
 
 			this.save( {
@@ -157,7 +162,7 @@ export class Save {
 					this._setState( 'save-success' );
 				} )
 				.always( () => {
-					BG.Panel.$element.css( 'cursor', '' );
+					BG.Panel.hideLoading();
 					$button.removeAttr( 'disabled' );
 				} );
 		} );

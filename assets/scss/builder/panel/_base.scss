@@ -64,6 +64,27 @@
 		margin-bottom: 10px;
 	}
 
+	.bg-loading-spinner {
+		position: absolute;
+		right: 0;
+		bottom: 10px;
+		right: 10px;
+	}
+
+	.panel-title .icon {
+		position: absolute;
+		left: 20px;
+	}
+
+	.panel-title .icon + .name {
+		margin-left: 23px;
+	}
+
+	.fa.icon {
+		font-size: 20px;
+		left: 24px;
+	}
+
 	.panel-selection {
 		width: 70px;
 		height: 70px;

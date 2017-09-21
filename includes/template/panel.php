@@ -1,6 +1,7 @@
 <script type="text/html" id="tmpl-boldgrid-editor-panel">
 <div class='editor-panel ui-widget-content'>
 	<div class='panel-title'>
+		<span data-id="icon"></span>
 		<span class="name"></span>
 		<span class="info"></span>
 		<span class="dashicons dashicons-no-alt close-icon"></span>
@@ -15,6 +16,7 @@
 			<a class='panel-button add-media' href="#"><span class="dashicons dashicons-images-alt"></span> Add Image</a>
 		</div>
 	</div>
+	<span class="bg-loading-spinner"></span>
 </div>
 </script>
 <script type="text/html" id="tmpl-boldgrid-editor-mce-tools">

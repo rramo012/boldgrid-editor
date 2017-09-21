@@ -8,12 +8,13 @@
 			display: none;
 		}
 
-		&[state="save-prompt"] .save-prompt,
-		&[state="save-failed"] .save-failed,
-		&[state="save-success"] .save-success {
+		&[state='save-prompt'] .save-prompt,
+		&[state='save-failed'] .save-failed,
+		&[state='save-success'] .save-success {
 			display: block;
 		}
-		.save-failed, .save-success {
+		.save-failed,
+		.save-success {
 			button {
 				margin-top: 30px;
 			}

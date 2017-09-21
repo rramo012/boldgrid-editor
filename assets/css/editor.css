@@ -1,6 +1,32 @@
 /*--------------------------------------------------------------
 # Loading
 --------------------------------------------------------------*/
+.bg-loading-spinner {
+  display: none;
+  position: relative; }
+
+.bg-loading-spinner.enabled {
+  display: inline-block !important; }
+
+.bg-loading-spinner.enabled:before {
+  content: ' ';
+  background-image: url(../image/boldgrid-logo.svg);
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat; }
+
+.bg-loading-spinner.enabled:after {
+  content: ' ';
+  width: 50px;
+  height: 50px;
+  background-color: #000;
+  display: block;
+  border-radius: 100%;
+  animation: sk-scaleout 1s infinite ease-in-out;
+  position: absolute;
+  top: 0; }
+
 .bg-editor-loading {
   display: none; }
 
@@ -11,15 +37,15 @@
   content: ' ';
   width: 50px;
   height: 50px;
-  background-color: #FFF;
+  background-color: #fff;
   position: fixed;
   top: 50%;
   left: 50%;
-  top: calc( 50% - 25px);
+  top: calc(50% - 25px);
   z-index: 99999999;
   border-radius: 100%;
-  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out; }
+  -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+  animation: sk-scaleout 1s infinite ease-in-out; }
 
 .bg-editor-loading:before {
   content: ' ';
@@ -248,6 +274,27 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   margin-bottom: 10px; }
+
+.color-panel .bg-loading-spinner,
+.editor-panel .bg-loading-spinner {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  right: 10px; }
+
+.color-panel .panel-title .icon,
+.editor-panel .panel-title .icon {
+  position: absolute;
+  left: 20px; }
+
+.color-panel .panel-title .icon + .name,
+.editor-panel .panel-title .icon + .name {
+  margin-left: 23px; }
+
+.color-panel .fa.icon,
+.editor-panel .fa.icon {
+  font-size: 20px;
+  left: 24px; }
 
 .color-panel .panel-selection,
 .editor-panel .panel-selection {
@@ -1155,12 +1202,13 @@
 .editor-panel[data-type='Library'] .save-gridblock .save-state {
   display: none; }
 
-.editor-panel[data-type='Library'] .save-gridblock[state="save-prompt"] .save-prompt,
-.editor-panel[data-type='Library'] .save-gridblock[state="save-failed"] .save-failed,
-.editor-panel[data-type='Library'] .save-gridblock[state="save-success"] .save-success {
+.editor-panel[data-type='Library'] .save-gridblock[state='save-prompt'] .save-prompt,
+.editor-panel[data-type='Library'] .save-gridblock[state='save-failed'] .save-failed,
+.editor-panel[data-type='Library'] .save-gridblock[state='save-success'] .save-success {
   display: block; }
 
-.editor-panel[data-type='Library'] .save-gridblock .save-failed button, .editor-panel[data-type='Library'] .save-gridblock .save-success button {
+.editor-panel[data-type='Library'] .save-gridblock .save-failed button,
+.editor-panel[data-type='Library'] .save-gridblock .save-success button {
   margin-top: 30px; }
 
 .editor-panel[data-type='Library'] .save-gridblock h2 {
@@ -1429,7 +1477,8 @@
 * Editor Page overwrites to prevent the bootstrap columns from collapsing early
 * Stretch the outsides of the editor and make the second column narrow
 */
-.folded #wpcontent, .folded #wpfooter {
+.folded #wpcontent,
+.folded #wpfooter {
   margin-left: 20px; }
 
 #poststuff #post-body.columns-2 {
@@ -1438,7 +1487,8 @@
 #post-body.columns-2 #postbox-container-1 {
   margin-right: -214px; }
 
-#wpcontent, #wpfooter {
+#wpcontent,
+#wpfooter {
   margin-left: 142px; }
 
 #post-body.columns-2 #postbox-container-1,
@@ -1452,6 +1502,7 @@
 .spinner {
   margin: 4px 4px 0; }
 
+.gridblock-grid-icon,
 .gridblock-icon .wp-media-buttons-icon {
   background: url("../image/gridblock-icon.svg");
   background-repeat: no-repeat;
@@ -1461,6 +1512,12 @@
 
 .gridblock-icon:hover .wp-media-buttons-icon {
   transform: rotate(120deg); }
+
+.gridblock-grid-icon {
+  background-size: 100%;
+  display: inline-block;
+  height: 20px;
+  width: 18px; }
 
 body.boldgrid-editor-fullscreen {
   overflow: hidden; }
@@ -1482,7 +1539,7 @@ body.boldgrid-editor-fullscreen {
   bottom: 0;
   right: 0;
   overflow: scroll;
-  max-height: calc( 100% - 101px); }
+  max-height: calc(100% - 101px); }
 
 .bg-zoom-controls {
   display: none; }
