@@ -27,6 +27,7 @@ export class Save {
 
 			BG.Controls.get( 'Library' ).openPanel( {
 				title: gridblockData.getTitle(),
+				type: gridblockData.type,
 				html: BG.GRIDBLOCK.Create.getHtml( gridblockId )
 			} );
 		} );

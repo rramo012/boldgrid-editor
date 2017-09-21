@@ -19,7 +19,7 @@ export class Save {
 	}
 
 	/**
-	 * Initialize this controls, usually ryns right after the constructor.
+	 * Initialize this controls, usually runs right after the constructor.
 	 *
 	 * @since 1.6
 	 */
@@ -33,10 +33,6 @@ export class Save {
 	 * @since 1.6
 	 */
 	setup() {
-		this.openPanel( {
-			'html': 'ddd'
-		} );
-
 		this._bindHandlers();
 	}
 
@@ -150,10 +146,9 @@ export class Save {
 			BG.Panel.showLoading();
 			$button.attr( 'disabled', 'disabled' );
 
-			this.save( {
-				title: $input.val(),
-				html: this.gridblockData.html
-			} )
+			this.gridblockData.title = $input.val();
+
+			this.save( this.gridblockData )
 				.fail( () => {
 					this._setState( 'save-failed' );
 				} )

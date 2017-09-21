@@ -100,7 +100,8 @@ class Boldgrid_Editor_Ajax {
 	 * @since 1.6
 	 */
 	public function save_gridblock() {
-		$title = ! empty( $_POST['title'] ) ? $_POST['title'] : null;
+		$title = ! empty( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : null;
+		$type = ! empty( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : null;
 		$html = ! empty( $_POST['html'] ) ? $_POST['html'] : null;
 
 		$this->validate_nonce( 'gridblock_save' );
@@ -111,6 +112,10 @@ class Boldgrid_Editor_Ajax {
 			'post_type' => 'gridblock',
 			'post_status' => 'publish',
 		) );
+
+		if ( ! empty( $type ) && ! empty( $post_id ) ) {
+			$output = wp_set_post_terms( $post_id, array( $type ), 'gridblock_type' );
+		}
 
 		if ( ! empty( $post_id ) ) {
 			wp_send_json_success( get_post( $post_id ) );
