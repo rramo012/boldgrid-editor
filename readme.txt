@@ -24,6 +24,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.5.2 In Progress =
+* New Feature:                  Control for hiding and showing page titles.
+
 = 1.5.1 =
 * New Feature:                  Allow customization of HR element.
 * New Feature:                  Adding information about the icons in the DropTab.

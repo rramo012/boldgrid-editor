@@ -1,5 +1,22 @@
 <?php
+/**
+ * File: class-boldgrid-editor-templater.php
+ *
+ * Registers custom templates.
+ *
+ * @since      1.6
+ * @package    Boldgrid_Editor
+ * @author     BoldGrid <support@boldgrid.com>
+ * @link       https://boldgrid.com
+ */
 
+/**
+ * Class: Boldgrid_Editor_Templater
+ *
+ * Registers custom templates.
+ *
+ * @since      1.6
+ */
 class Boldgrid_Editor_Templater {
 
 	/**
@@ -9,51 +26,21 @@ class Boldgrid_Editor_Templater {
 
 	/**
 	 * The array of templates that this plugin tracks.
+	 *
+	 * @since 1.6
 	 */
-	protected $templates = array(
+	public $templates = array(
 		'template/page/fullwidth.php' => 'BoldGrid - Full Width',
 		'template/page/left-sidebar.php' => 'BoldGrid - Left Sidebar',
 		'template/page/right-sidebar.php' => 'BoldGrid - Right Sidebar'
 	);
 
 	/**
-	 * Returns an instance of this class.
-	 */
-	public static function get_instance() {
-		if ( null == self::$instance ) {
-			self::$instance = new Boldgrid_Editor_Templater();
-		}
-
-		return self::$instance;
-	}
-
-	public function is_custom_template( $name ) {
-		return ! empty( $this->templates[ $name ] );
-	}
-
-	public function set_default_metabox() {
-		global $post;
-
-		$template_choice = Boldgrid_Editor_Setup::get_template_choice();
-
-		if ( 'page' == $post->post_type
-			&& $template_choice
-			&& 'default' !== $template_choice
-			&& 0 != count( get_page_templates( $post ) )
-
-			// Not the page for listing posts.
-			&& get_option( 'page_for_posts' ) != $post->ID
-			&& '' == $post->page_template // Only when page_template is not set
-		) {
-			$post->page_template = 'template/page/' . $template_choice . '.php';
-		}
-	}
-
-	/**
 	 * Initializes the plugin by setting filters and administration functions.
+	 *
+	 * @since 1.6
 	 */
-	private function __construct() {
-
+	public function init() {
 		// Add a filter to the attributes metabox to inject template into the cache.
 		if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
 
@@ -82,6 +69,42 @@ class Boldgrid_Editor_Templater {
 		// Add a filter to the template include to determine if the page has our
 		// template assigned and return it's path
 		add_filter( 'template_include', array( $this, 'view_project_template') );
+
+		add_action( 'add_meta_boxes-page', array( $boldgrid_editor_templater, 'set_default_metabox' ), 1 );
+	}
+
+	/**
+	 * Is the passed template a custom template?
+	 *
+	 * @since 1.6
+	 * @param  string  $name Name of template.
+	 * @return boolean       Is the passed template a custom template?
+	 */
+	public function is_custom_template( $name ) {
+		return ! empty( $this->templates[ $name ] );
+	}
+
+	/**
+	 * Set the page meta box default value to the users choice.
+	 *
+	 * @since 1.6
+	 */
+	public function set_default_metabox() {
+		global $post;
+
+		$template_choice = Boldgrid_Editor_Setup::get_template_choice();
+
+		if ( 'page' == $post->post_type
+			&& $template_choice
+			&& 'default' !== $template_choice
+			&& 0 != count( get_page_templates( $post ) )
+
+			// Not the page for listing posts.
+			&& get_option( 'page_for_posts' ) != $post->ID
+			&& '' == $post->page_template // Only when page_template is not set
+		) {
+			$post->page_template = 'template/page/' . $template_choice . '.php';
+		}
 	}
 
 	/**

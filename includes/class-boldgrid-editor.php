@@ -25,6 +25,8 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php'
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-setup.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
 
+require_once BOLDGRID_EDITOR_PATH . '/controls/class-boldgrid-controls-page-title.php';
+
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-media-tab.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/media/class-boldgrid-editor-layout.php';
@@ -75,6 +77,8 @@ class Boldgrid_Editor {
 	 * Constructor.
 	 */
 	public function __construct() {
+		$this->is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
+
 		$config = new Boldgrid_Editor_Config();
 		$config = apply_filters( 'boldgrid_editor_config', $config );
 		$this->set_config( $config );
@@ -90,9 +94,15 @@ class Boldgrid_Editor {
 			'plugin_filename' => $plugin_filename
 		);
 		$this->set_path_configs( $path_configs );
+	}
 
+	/**
+	 * Run the plugin hooks and registration process.
+	 *
+	 * @since 1.6
+	 */
+	public function run() {
 		$this->add_hooks();
-
 		$this->prepare_plugin_update();
 	}
 
@@ -102,8 +112,16 @@ class Boldgrid_Editor {
 	 * @since 1.2.7
 	 */
 	public function add_hooks() {
+		Boldgrid_Editor_Service::register( 'templater', new Boldgrid_Editor_Templater() );
+
+		if ( ! $this->is_boldgrid_theme ) {
+			Boldgrid_Editor_Service::get( 'templater' )->init();
+		}
+
 		$boldgrid_gridblock_post = new Boldgrid_Editor_Gridblock_Post( $this->config->get_configs() );
 		$boldgrid_gridblock_post->add_hooks();
+
+		$this->setup_page_title();
 
 		if ( is_admin() && current_user_can( 'edit_pages' ) ) {
 			$this->add_admin_hooks();
@@ -112,6 +130,24 @@ class Boldgrid_Editor {
 		if ( ! is_admin() ) {
 			$this->front_end_hooks();
 		}
+	}
+
+	/**
+	 * Setup the page title control.
+	 *
+	 * @since 1.6
+	 */
+	public function setup_page_title() {
+		$configs = $this->config->get_configs();
+
+		$configs['controls']['page_title']['enabled'] = ! $this->is_boldgrid_theme;
+
+		Boldgrid_Editor_Service::register(
+			'page_title',
+			new Boldgrid_Controls_Page_Title( $configs['controls']['page_title'] )
+		);
+
+		Boldgrid_Editor_Service::get( 'page_title' )->init();
 	}
 
 	/**
@@ -126,7 +162,6 @@ class Boldgrid_Editor {
 		add_action( 'wp_enqueue_scripts', array( $boldgrid_editor_assets,'front_end' ), 999 );
 		add_filter( 'boldgrid_theme_framework_config', array( 'Boldgrid_Editor_Theme', 'remove_theme_container' ), 50 );
 		add_action( 'wp_head', array ( $builder_fonts, 'render_page_fonts' ) );
-		$boldgrid_editor_templater = Boldgrid_Editor_Templater::get_instance();
 	}
 
 	/**
@@ -150,9 +185,6 @@ class Boldgrid_Editor {
 		$boldgrid_editor_media_map = new Boldgrid_Editor_Media_Map();
 		$boldgrid_editor_wpforms   = new Boldgrid_Editor_Wpforms();
 		$boldgrid_editor_setup     = new Boldgrid_Editor_Setup();
-		$boldgrid_editor_templater = Boldgrid_Editor_Templater::get_instance();
-
-		add_action( 'add_meta_boxes', array( $boldgrid_editor_templater, 'set_default_metabox' ), 1 );
 
 		// Init Form deps.
 		$boldgrid_editor_wpforms->init();
@@ -195,6 +227,9 @@ class Boldgrid_Editor {
 				return false;
 			}
 
+			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
+			$this->set_is_boldgrid_theme( $is_boldgrid_theme );
+
 			add_action( 'load-post.php', array( $boldgrid_editor_builder, 'add_help_tab' ) );
 			add_action( 'load-post-new.php', array( $boldgrid_editor_builder, 'add_help_tab' ) );
 
@@ -211,10 +246,6 @@ class Boldgrid_Editor {
 			add_action( 'admin_init', array( $boldgrid_editor_setup, 'reset_editor_action' ) );
 			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
 			add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
-
-			// Creates all tabs as specified by the configuration.
-			$is_boldgrid_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
-			$this->set_is_boldgrid_theme( $is_boldgrid_theme );
 
 			// Create media modal tabs.
 			$configs = array_merge( $this->get_path_configs(), $this->get_tab_configs() );

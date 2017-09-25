@@ -207,6 +207,21 @@
 .bg-editor-button.bg-secondary-color:hover {
   background-color: #f9f9f9; }
 
+#boldgrid-hide-post-title.boldgrid-controls {
+  margin: 10px 10px 0;
+  display: none; }
+
+#boldgrid-hide-post-title.boldgrid-controls .dashicons-editor-help:hover {
+  cursor: help; }
+
+#boldgrid-hide-post-title.boldgrid-controls .dashicons-editor-help:hover + .boldgrid-tooltip {
+  display: inline-block;
+  left: 33px;
+  margin-top: 20px; }
+
+.post-php.post-type-page.boldgrid-editor-template #boldgrid-hide-post-title.boldgrid-controls {
+  display: block; }
+
 /*--------------------------------------------------------------
 # Panel Styles
 --------------------------------------------------------------*/

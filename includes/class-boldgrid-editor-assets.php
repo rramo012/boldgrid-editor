@@ -145,20 +145,28 @@ class Boldgrid_Editor_Assets {
 		}
 	}
 
+	/**
+	 * Get the JS var's to be passed into the builder.
+	 *
+	 * @since 1.6
+	 *
+	 * @return array List of variables to be passed.
+	 */
 	public function get_js_vars() {
 		global $is_IE;
 		global $post;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
+		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
 		$vars = array(
 			'plugin_configs' => $this->configs,
-			'is_boldgrid_theme' => Boldgrid_Editor_Theme::is_editing_boldgrid_theme(),
+			'is_boldgrid_theme' => $is_bg_theme,
 			'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 			'post' => ( array ) $post,
 			'post_id' => $this->get_post_id(),
 			'post_type' => $post ? $post->post_type : '',
-			'is_boldgrid_template' => Boldgrid_Editor_Templater::get_instance()->is_custom_template( $post->page_template ),
+			'is_boldgrid_template' => Boldgrid_Editor_Service::get( 'templater' )->is_custom_template( $post->page_template ),
 			'site_url' => $this->get_post_url(),
 			'plugin_url' => plugins_url( '', $plugin_file ),
 			'is_IE' => $is_IE,
@@ -171,6 +179,7 @@ class Boldgrid_Editor_Assets {
 			'images' => Boldgrid_Editor_Builder::get_post_images(),
 			'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
 			'saved_colors' => Boldgrid_Editor_Option::get( 'custom_colors', array() ),
+			'internalPageTemplates' => Boldgrid_Editor_Service::get( 'templater' )->templates,
 			'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
 			'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
 			'default_container' => Boldgrid_Editor_Builder::get_page_container(),

@@ -33,6 +33,7 @@ if ( ! defined( 'BOLDGRID_EDITOR_CONFIGDIR' ) ) {
 
 // Load the editor class.
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-service.php';
 
 register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
 
@@ -40,7 +41,12 @@ register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activ
  * Initialize the editor plugin for Editors and Administrators in the admin section.
  */
 function boldgrid_editor_init () {
-	$boldgrid_editor = new Boldgrid_Editor();
+	Boldgrid_Editor_Service::register(
+		'main',
+		new Boldgrid_Editor()
+	);
+
+	Boldgrid_Editor_Service::get( 'main' )->run();
 }
 
 // Load on an early hook so we can tie into framework configs.
