@@ -1,20 +1,23 @@
 <?php get_header(); ?>
 
-<div class="bg-custom-template">
-<?php
-	while ( have_posts() ) {
+<main class="main bg-custom-template" role="main">
+	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<?php
 		the_post();
 
 		if ( Boldgrid_Editor_Service::get( 'page_title' )->has_title_displayed() ) { ?>
-			<div class="container entry-header">
-				<h1><?php print the_title(); ?></h1>
-			</div>
+			<header class="container entry-header">
+				<h1 class="entry-title"><?php the_title(); ?></h1>
+			</header>
 		<?php } ?>
 
 		<div class="entry-content">
-			<h1><?php print the_content(); ?></h1>
+			<?php the_content(); ?>
 		</div>
-<?php } ?>
-</div>
+		<div class="bg-edit-link">
+			<a href="<?php print get_edit_post_link() ?>"></a>
+		</div>
+	</article>
+</main>
 
 <?php get_footer(); ?>
