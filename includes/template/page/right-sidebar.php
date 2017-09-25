@@ -16,7 +16,8 @@
 					<?php the_content(); ?>
 				</div>
 				<div class="bg-edit-link">
-					<a href="<?php print get_edit_post_link() ?>"></a>
+					<a title="Edit Page" href="<?php print get_edit_post_link() ?>"><i class="fa fa-pencil"
+						aria-hidden="true"></i></a>
 				</div>
 			</article>
 		</div>
