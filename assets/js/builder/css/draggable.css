@@ -575,6 +575,7 @@ iframe[src^="https://maps.google.com"] {
 	padding-left: 5px;
     padding-top: 3px;
 }
+.popover-imhwpb .popover-menu-imhwpb li[data-action="save-gridblock"]::before,
 .popover-imhwpb .popover-menu-imhwpb li[data-action="section-width"]::before {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
@@ -594,6 +595,10 @@ iframe[src^="https://maps.google.com"] {
 }
 .popover-imhwpb .popover-menu-imhwpb li[data-action="vertical-alignment"]::before {
 	content: "\f207";
+}
+.popover-imhwpb .popover-menu-imhwpb li[data-action="save-gridblock"]::before {
+	padding: 5px 5px;
+	content: "\f08a";
 }
 .popover-imhwpb .popover-menu-imhwpb li[data-action="vertical-alignment"]:after {
 	content: "\f139";
