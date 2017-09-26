@@ -1,3 +1,5 @@
+var BG = BOLDGRID.EDITOR;
+
 window.IMHWPB = IMHWPB || {};
 
 /**
@@ -18,7 +20,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.draggable_instance = false;
 
-	this.$loading =  $( '.bg-editor-loading-main' );
+	this.$loading = $( '.bg-editor-loading-main' );
 
 	/**
 	 * The Main Window
@@ -33,8 +35,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 	this.tablet_width_needed = 1250; //890 + 300;
 	this.desktop_width_needed = 1270; //1100 + 300;
 
-	this.bootstrap_container = null;
-
 	var menu_items = [];
 
 	// Failsafe.
@@ -43,12 +43,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	}, 3000 );
 
 	this.bind_window_resize = function() {
-		$window.on( 'resize', function() {
-			if ( false == self.draggable_inactive ) {
-				self.last_resize = new Date().getTime();
-				setTimeout( self.resize_done_event, 250, self.last_resize );
-			}
-		} );
+		let resizeProcess = _.debounce( self.resize_done_event, 300 );
+		$window.on( 'resize', resizeProcess );
 	};
 
 	this.highlight_screen_size = function( type ) {
@@ -69,19 +65,23 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Initiate the BoldGrid Dragging for the tinymce window
 	 */
 	this.load_draggable = function( $container ) {
-
 		if ( false == self.draggable_instance ) {
 
 			// Run all function that should run before draggable is initialized
 			$( document ).trigger( pre_init, this );
 
-			IMHWPB.WP_MCE_Draggable.draggable_instance = $container.IMHWPB_Draggable( {
-				'dragImage': 'actual',
-				'add_media_event_handler': self.add_media_action,
-				'insert_layout_event_handler': self.insert_layout_action,
-				'menu_items': menu_items,
-				'main_container': true
-			}, $ ).init();
+			IMHWPB.WP_MCE_Draggable.draggable_instance = $container
+				.IMHWPB_Draggable(
+					{
+						dragImage: 'actual',
+						add_media_event_handler: self.add_media_action,
+						insert_layout_event_handler: self.insert_layout_action,
+						menu_items: menu_items,
+						main_container: true
+					},
+					$
+				)
+				.init();
 
 			self.draggable_instance = IMHWPB.WP_MCE_Draggable.draggable_instance;
 		}
@@ -94,7 +94,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * The event that should happen when the user selects add media from a
 	 * dropdown
 	 */
-	this.add_media_action = function( ) {
+	this.add_media_action = function() {
 		self.insert_from_media_modal_tab( 'insert' );
 	};
 
@@ -102,9 +102,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Insert content from the media modal tab to the editor
 	 */
 	this.insert_from_media_modal_tab = function( tab_slug ) {
-
-		tinymce.activeEditor.selection.setCursorLocation(
-			self.draggable_instance.$boldgrid_menu_action_clicked, 0 );
+		tinymce.activeEditor.selection.setCursorLocation( self.draggable_instance.$boldgrid_menu_action_clicked, 0 );
 
 		wp.media.editor.open();
 		wp.media.frame.setState( tab_slug );
@@ -114,8 +112,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * The event that should happen when the user selects add layout from a
 	 * dropdown
 	 */
-	this.insert_layout_action = function( ) {
-		BOLDGRID.EDITOR.CONTROLS.Section.enableSectionDrag();
+	this.insert_layout_action = function() {
+		BG.CONTROLS.Section.enableSectionDrag();
 	};
 
 	/**
@@ -124,7 +122,9 @@ IMHWPB.WP_MCE_Draggable = function() {
 	this.set_button_cursor = function( e ) {
 		if ( e.clientX ) {
 			var this_button = $( this );
-			var buttons = self.draggable_instance.$master_container.find( 'button:not([data-mce-bogus])' ).not( this_button );
+			var buttons = self.draggable_instance.$master_container
+				.find( 'button:not([data-mce-bogus])' )
+				.not( this_button );
 			self.replace_all_buttons( buttons );
 			tinymce.activeEditor.selection.setCursorLocation( this, 1 );
 		}
@@ -137,15 +137,13 @@ IMHWPB.WP_MCE_Draggable = function() {
 		buttons.each( function() {
 			var html = this.outerHTML;
 			$( this ).replaceWith( html );
-		});
-
+		} );
 	};
 
 	/**
 	 * Bind actions to the common events
 	 */
 	this.bind_events = function() {
-
 		self.draggable_instance.$master_container
 			.on( 'mousedown.draggable_mce', '.draggable-tools-imhwpb', self.boldgrid_tool_click )
 			.on( 'mouseup.draggable_mce', '.draggable-tools-imhwpb', self.boldgrid_tool_click )
@@ -155,13 +153,12 @@ IMHWPB.WP_MCE_Draggable = function() {
 			.on( 'drag_end_dwpb.draggable_mce', self.drag_end_event )
 			.on( 'add_row_event_dwpb.draggable_mce', self.set_cursor )
 			.on( 'boldgrid_edit_row.draggable_mce', self.edit_row )
-			.on( 'click.draggable_mce', 'button:not([data-mce-bogus])',  self.set_button_cursor )
-			.on( 'click.draggable_mce', 'a',  function( e ) {
+			.on( 'click.draggable_mce', 'button:not([data-mce-bogus])', self.set_button_cursor )
+			.on( 'click.draggable_mce', 'a', function( e ) {
 				e.preventDefault();
 			} )
 			.on( 'resize_start_dwpb.draggable_mce', self.prevent_edit )
-			.on( 'resize_done_dwpb.draggable_mce', self.column_resize_done )
-			;
+			.on( 'resize_done_dwpb.draggable_mce', self.column_resize_done );
 
 		//Selection Event
 		self.draggable_instance.$master_container.textSelect( self.text_select_start, self.text_select_end );
@@ -285,8 +282,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Setup the tinymce gallery objects
 	 */
 	this.initialize_gallery_objects = function( $container ) {
-		if ( typeof IMHWPBGallery != 'undefined' &&
-			typeof IMHWPBGallery.init_gallery != 'undefined' ) {
+		if ( 'undefined' != typeof IMHWPBGallery && 'undefined' != typeof IMHWPBGallery.init_gallery ) {
 			$container.find( '.masonry' ).removeClass( 'masonry' );
 			IMHWPBGallery.init_gallery( $container );
 		}
@@ -308,8 +304,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Deslect a tinymce image
 	 */
 	this.remove_mce_resize_handles = function() {
-		self.draggable_instance.$master_container.find( '[data-mce-selected]' ).removeAttr(
-			'data-mce-selected' );
+		self.draggable_instance.$master_container.find( '[data-mce-selected]' ).removeAttr( 'data-mce-selected' );
 		self.draggable_instance.$master_container.find( '.mce-resizehandle' ).remove();
 		$( '.mce-wp-image-toolbar' ).hide();
 		self.draggable_instance.$master_container.find( self.resize_selector ).hide();
@@ -317,283 +312,128 @@ IMHWPB.WP_MCE_Draggable = function() {
 
 	this.addDeactivateClasses = function() {
 		$( 'html' ).addClass( 'draggable-inactive' );
-		$( tinymce.activeEditor.iframeElement ).contents().find( 'html' ).addClass( 'draggable-inactive' );
-	};
-
-	/**
-	 * Activates and deactivates the draggable plugin
-	 */
-	this.toggle_draggable_plugin = function( event ) {
-
-		var $container = $( tinymce.activeEditor.iframeElement ),
-			currentDocument = $container.contents().get( 0 );
-
-		self.draggable_inactive = self.set_style_sheet_inactive( 'draggable',
-			! self.draggable_inactive, currentDocument );
-
-		var $target;
-		if ( typeof event != 'undefined' ) {
-			$target = $( event.target );
-		}
-
-		if ( self.draggable_inactive ) {
-			self.remove_icon_highlights();
-			self.draggable_instance.unbind_all_events();
-
-			if ( $target ) {
-				$target.closest( 'div' ).removeClass( 'mce-active' );
-			}
-
-			if ( BoldgridEditor.is_boldgrid_theme == false ) {
-				IMHWPB.Editor.instance.remove_editor_styles();
-				$( '[name="screen_columns"][value="' + IMHWPB.Editor.instance.original_column_val + '"]' ).click();
-			}
-
-			self.addDeactivateClasses();
-		} else {
-			if ( $target ) {
-				$target.closest( 'div' ).addClass( 'mce-active' );
-			}
-
-			if ( self.draggable_instance.bind_events ) {
-				self.draggable_instance.bind_events();
-				self.bind_events();
-			} else {
-				self.load_draggable( $( tinymce.activeEditor.iframeElement ).contents() );
-			}
-
-			$( 'html' ).removeClass( 'draggable-inactive' );
-			$container.contents().find( 'html' ).removeClass( 'draggable-inactive' );
-			IMHWPB.Editor.instance.draggable = self.draggable_instance;
-		}
-
-		// Ajax save state.
-		self.saveDraggableState( ! self.draggable_inactive );
-
-		$window.trigger( 'resize' );
-	};
-
-	/**
-	 * When the user toggles the Drag and Drop, ajax to save choice
-	 *
-	 * @since 1.0.9
-	 */
-	this.saveDraggableState = function( enabled ) {
-		$.post( ajaxurl, {
-		    action: 'boldgrid_draggable_enabled',
-		    draggable_enabled: enabled ? 1 : 0,
-		    security: BoldgridEditor.draggableEnableNonce
-		} );
-	};
-
-	/**
-	 * Set a style sheet inactive
-	 */
-	this.set_style_sheet_inactive = function( name, inactive_bool, doc ) {
-
-		if ( typeof doc == 'undefined' ) {
-			doc = document;
-		}
-
-		var stylesheet_status;
-		var regex = new RegExp( name, 'i' );
-		$.each( doc.styleSheets, function( key, stylesheet ) {
-			if ( stylesheet.href && stylesheet.href.match( regex ) ) {
-				stylesheet.disabled = inactive_bool;
-				stylesheet_status = stylesheet.disabled;
-				return false;
-			}
-		} );
-
-		return stylesheet_status;
-	};
-
-	/**
-	 * Create a hidden iframe that will allows us to view the front end site
-	 */
-	this.create_front_page_iframe = function() {
-
-		if ( BoldgridEditor.is_boldgrid_theme || BoldgridEditor.is_boldgrid_template ) {
-			self.$loading.removeClass( 'active' );
-			return;
-		}
-
-		var $temp_loaded_container = $( '<div class="hidden temp-container">' );
-		$.get( BoldgridEditor.site_url, function( data ) {
-
-			$temp_loaded_container.html( data );
-
-			//Create Iframe
-			$( 'html' ).append( '<iframe id="resizer-iframe" width="1600" height="600"></iframe>' );
-			self.$resizing_iframe = $( '#resizer-iframe' );
-
-			//Remove Elements that we dont want loaded
-			$temp_loaded_container.find( 'script, meta, title' ).remove();
-			$temp_loaded_container.find( 'img' ).attr( 'src', '' );
-			$temp_loaded_container.find( 'img' ).attr( 'srcset', '' );
-			$temp_loaded_container.find( '[onload]' ).removeAttr( 'onload' );
-
-			$stripped_without_styles = $temp_loaded_container.clone();
-			$stripped_without_styles.find( 'link, style' ).remove();
-
-			//Apply the bootstrap container class first and if not found
-			//Try to match front end window size.
-			self.$resizing_iframe[0]
-				.contentWindow
-				.document
-				.write( $stripped_without_styles.html() );
-
-			var $container = self.$resizing_iframe
-				.contents()
-				.find( 'article[class^="post-"]' )
-				.closest( '.container, .container-fluid' );
-
-			if ( ! $container.length ) {
-				$container =  self.$resizing_iframe
-					.contents()
-					.find( 'article[class^="post-"] .entry-content > :first-child' )
-					.closest( '.container, .container-fluid' );
-			}
-
-			if ( $container.hasClass( 'container' ) ) {
-				self.bootstrap_container = 'container';
-			} else if ( $container.hasClass( 'container-fluid' ) ) {
-				self.bootstrap_container = 'container-fluid';
-			}
-			if ( self.bootstrap_container ) {
-				//Self.tinymce_body_container.addClass(self.bootstrap_container);
-				self.$resizing_iframe.remove();
-				$window.trigger( 'resize' );
-				return;
-			} else {
-				self.$resizing_iframe[0].src = BoldgridEditor.site_url;
-				self.$resizing_iframe[0].onload = function() {
-					self.$post_container = self.$resizing_iframe
-						.contents()
-						.find( 'article[class^="post-"]' );
-
-					$window.trigger( 'resize' );
-				};
-			}
-		});
+		$( tinymce.activeEditor.iframeElement )
+			.contents()
+			.find( 'html' )
+			.addClass( 'draggable-inactive' );
 	};
 
 	/**
 	 * Event to fire once the user resizes their window
 	 */
-	this.resize_done_event = function( current_resize, force_update ) {
+	this.resize_done_event = function() {
+		self.updateScreenLayout();
+		self.updateResizingIframe();
 
-		if ( self.last_resize == current_resize || force_update) {
-			var $iframe_html = self.tinymce_body_container.closest('html');
-			var $iframe_body = self.tinymce_body_container;
+		//Highlight the current display type
+		self.update_device_highlighting();
+		self.$window.trigger( 'resize.boldgrid-gallery' );
+		self.$loading.removeClass( 'active' );
+	};
 
-			if ( ! self.bootstrap_container && self.$resizing_iframe ) {
-				//Something went wrong
-				if ( ! self.$post_container || ! self.$post_container.width() ) {
-					self.$loading.removeClass( 'active' );
-					return;
-				}
+	this.updateResizingIframe = function() {
+		if ( BG.Service.editorWidth.resizable ) {
 
-				//Set the temporary hidden iframe to the same width as the editor
-				//Then find the post width on the front end iframe and set the
-				//editor to the same width
-				self.$resizing_iframe.attr('width', $iframe_html.width());
-				$iframe_body.css('width', self.$post_container.width());
-			}
+			/**
+			 * Set the temporary hidden iframe to the same width as the editor.
+			 * Then find the post width on the front end iframe and set the
+			 * editor to the same width.
+			 */
+			BG.Service.editorWidth.$resizeiframe.attr( 'width', self.$tinymceHTML.width() );
+			self.tinymce_body_container.css( 'width', BG.Service.editorWidth.$postContainer.width() );
+		}
+	};
 
-			//No Display Type Selected
-			if ( !IMHWPB.Editor.instance.currently_selected_size ) {
-				if ( window.innerWidth > 1470 ) {
-					all_elements_visible();
-				} else if ( window.innerWidth > 1355 ) {
-					collapse_sidebar();
-				} else if ( window.innerWidth > 1041 ) {
-					min_visible();
-				} else if (  window.innerWidth <= 1040 ) {
-					self.set_num_columns(2);
-				}
-			//Monitor type Selected
-			} else if ( IMHWPB.Editor.instance.currently_selected_size == 'monitor' ) {
+	this.updateScreenLayout = function() {
 
-				if ( window.innerWidth > 1470 ) {
-					all_elements_visible();
-				} else if ( window.innerWidth > 1355 ) {
-					collapse_sidebar();
-				} else {
-					min_visible();
-				}
-			//Tablet type Selected
-			} else if ( IMHWPB.Editor.instance.currently_selected_size == 'tablet' ) {
-
-				if ( window.innerWidth > 1250 ) {
-					all_elements_visible();
-				} else if ( window.innerWidth > 1134 ) {
-					collapse_sidebar();
-				} else {
-					min_visible();
-				}
-			//Phone type Selected
-			} else if ( IMHWPB.Editor.instance.currently_selected_size == 'phone' ) {
+		// No Display Type Selected.
+		if ( ! IMHWPB.Editor.instance.currently_selected_size ) {
+			if ( 1470 < window.innerWidth ) {
 				all_elements_visible();
+			} else if ( 1355 < window.innerWidth ) {
+				collapse_sidebar();
+			} else if ( 1041 < window.innerWidth ) {
+				min_visible();
+			} else if ( 1040 >= window.innerWidth ) {
+				self.set_num_columns( 2 );
 			}
 
-			//Highlight the current display type
-			self.update_device_highlighting();
-			self.$window.trigger( 'resize.boldgrid-gallery' );
-			self.$loading.removeClass( 'active' );
+			// Monitor type Selected.
+		} else if ( 'monitor' == IMHWPB.Editor.instance.currently_selected_size ) {
+			if ( 1470 < window.innerWidth ) {
+				all_elements_visible();
+			} else if ( 1355 < window.innerWidth ) {
+				collapse_sidebar();
+			} else {
+				min_visible();
+			}
+
+			// Tablet type Selected.
+		} else if ( 'tablet' == IMHWPB.Editor.instance.currently_selected_size ) {
+			if ( 1250 < window.innerWidth ) {
+				all_elements_visible();
+			} else if ( 1134 < window.innerWidth ) {
+				collapse_sidebar();
+			} else {
+				min_visible();
+			}
+
+			// Phone type Selected.
+		} else if ( 'phone' == IMHWPB.Editor.instance.currently_selected_size ) {
+			all_elements_visible();
 		}
 	};
 
 	/**
 	 * Layout arrangement for Large displays
 	 */
-	var all_elements_visible = function () {
-		self.set_num_columns(2);
-		self.$body.removeClass('folded');
-		self.$window.trigger('scroll');
-	}
+	var all_elements_visible = function() {
+		self.set_num_columns( 2 );
+		self.$body.removeClass( 'folded' );
+		self.$window.trigger( 'scroll' );
+	};
 
 	/**
 	 * Layout arrangement for Medium displays
 	 */
-	var collapse_sidebar = function () {
-		self.set_num_columns(2);
-		self.$body.addClass('folded');
-		self.$window.trigger('scroll');
-	}
+	var collapse_sidebar = function() {
+		self.set_num_columns( 2 );
+		self.$body.addClass( 'folded' );
+		self.$window.trigger( 'scroll' );
+	};
 
 	/**
 	 * Layout arrangement for Small displays
 	 */
-	var min_visible = function () {
-		self.set_num_columns(1);
-		self.$body.addClass('folded');
-		self.$window.trigger('scroll');
+	var min_visible = function() {
+		self.set_num_columns( 1 );
+		self.$body.addClass( 'folded' );
+		self.$window.trigger( 'scroll' );
 	};
 
 	/**
 	 * Set the number of columns for the page
 	 */
-	this.set_num_columns = function (columns) {
-		if ( columns == 1 ) {
-			self.$post_body.addClass('columns-1').removeClass('columns-2');
+	this.set_num_columns = function( columns ) {
+		if ( 1 == columns ) {
+			self.$post_body.addClass( 'columns-1' ).removeClass( 'columns-2' );
 		} else {
-			self.$post_body.addClass('columns-2').removeClass('columns-1');
+			self.$post_body.addClass( 'columns-2' ).removeClass( 'columns-1' );
 		}
-	}
+	};
 
 	/**
 	 * Highlight Current Device
 	 */
-	this.update_device_highlighting = function () {
+	this.update_device_highlighting = function() {
 		if ( self.$mce_iframe && ! self.draggable_inactive ) {
 			var iframe_width = self.$mce_iframe.width();
-			if ( iframe_width > 1061 ) {
-				self.highlight_screen_size('desktop');
-			} else if ( iframe_width  > 837  ) {
-				self.highlight_screen_size('tablet');
+			if ( 1061 < iframe_width ) {
+				self.highlight_screen_size( 'desktop' );
+			} else if ( 837 < iframe_width ) {
+				self.highlight_screen_size( 'tablet' );
 			} else {
-				self.highlight_screen_size('phone');
+				self.highlight_screen_size( 'phone' );
 			}
 		}
 	};
@@ -602,27 +442,27 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * What should happen when the user clicks on the collapse menu?
 	 * This fires after wordpresses action on the button
 	 */
-	this.bind_collapse_click = function () {
-		$('#collapse-menu').on('click', function () {
-			if ( !IMHWPB.Editor.instance.currently_selected_size ) {
-				if (  window.innerWidth > 1355 && window.innerWidth < 1470 ) {
-					if ( self.$body.hasClass('folded') ) {
-						self.set_num_columns(2);
-						self.$window.trigger('scroll');
+	this.bind_collapse_click = function() {
+		$( '#collapse-menu' ).on( 'click', function() {
+			if ( ! IMHWPB.Editor.instance.currently_selected_size ) {
+				if ( 1355 < window.innerWidth && 1470 > window.innerWidth ) {
+					if ( self.$body.hasClass( 'folded' ) ) {
+						self.set_num_columns( 2 );
+						self.$window.trigger( 'scroll' );
 					} else {
-						self.set_num_columns(1);
-						self.$window.trigger('scroll');
+						self.set_num_columns( 1 );
+						self.$window.trigger( 'scroll' );
 					}
 				}
 			}
 			self.update_device_highlighting();
-		});
+		} );
 	};
 
-	this.bind_column_switch = function () {
-		$('[name="screen_columns"]').on('click', function (){
+	this.bind_column_switch = function() {
+		$( '[name="screen_columns"]' ).on( 'click', function() {
 			self.update_device_highlighting();
-		});
+		} );
 	};
 
 	/**
@@ -630,80 +470,87 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.add_menu_item = function( title, element_type, callback ) {
 		menu_items.push( {
-			'title' : title,
-			'element_type' : element_type,
-			'callback' : callback,
+			title: title,
+			element_type: element_type,
+			callback: callback
 		} );
 	};
 
 	/**
 	 * Action that occurs when the user clicks edit as row inside the editor.
 	 */
-	this.edit_row = function ( event , nested_row ) {
-		var $p = $(nested_row).find('p, a');
+	this.edit_row = function( event, nested_row ) {
+		var $p = $( nested_row ).find( 'p, a' );
 		if ( $p.length ) {
 			tinymce.activeEditor.selection.setCursorLocation( $p[0], 0 );
 		}
-
 	};
 
 	/**
 	 * Bind the controls that set the size of the overlay
 	 */
-	this.bind_min_max_controls = function () {
-		var $maximize_row_button = $('#max-row-overlay');
-		var $min_row_button = $('#min-row-overlay');
-		$maximize_row_button.on('click', function () {
-			self.$resize_div.animate({
-				height: "1000px",
-			  }, 1000);
-		});
+	this.bind_min_max_controls = function() {
+		var $maximize_row_button = $( '#max-row-overlay' );
+		var $min_row_button = $( '#min-row-overlay' );
+		$maximize_row_button.on( 'click', function() {
+			self.$resize_div.animate(
+				{
+					height: '1000px'
+				},
+				1000
+			);
+		} );
 
-		$min_row_button.on('click', function () {
-			self.$resize_div.animate({
-				height: "0px",
-			  }, 1000);
-		});
+		$min_row_button.on( 'click', function() {
+			self.$resize_div.animate(
+				{
+					height: '0px'
+				},
+				1000
+			);
+		} );
 	};
 
 	/**
 	 * Setup the controls for resizing the edit row overlay
 	 */
 	this.create_resize_handle = function() {
-		var  $temp_overlay = $( '.temp-overlay' );
-		self.$resize_div.resizable( {
-			handles : {
-				'n' : $( ".resizable-n" )
-			},
-			start : function( event, ui ) {
-				$temp_overlay.addClass( 'active' );
-			},
-			stop : function( event, ui ) {
-				$temp_overlay.removeClass( 'active' );
-			}
-		} ).bind( "resize", function( e, ui ) {
-			$( this ).css( "top", "auto" );
-		} ).removeClass('ui-resizable');
+		var $temp_overlay = $( '.temp-overlay' );
+		self.$resize_div
+			.resizable( {
+				handles: {
+					n: $( '.resizable-n' )
+				},
+				start: function( event, ui ) {
+					$temp_overlay.addClass( 'active' );
+				},
+				stop: function( event, ui ) {
+					$temp_overlay.removeClass( 'active' );
+				}
+			} )
+			.bind( 'resize', function( e, ui ) {
+				$( this ).css( 'top', 'auto' );
+			} )
+			.removeClass( 'ui-resizable' );
 	};
 
 	$( function() {
+		self.$window = $( window );
+		self.$body = $( 'body' );
+		self.$post_body = $( '#post-body' );
+		self.$editor_content_container = $( '#poststuff' );
+		self.$overlay_preview = $( '#boldgrid-overlay-preview' );
+		self.$resize_div = $( '#resizable' );
 
-		self.$window = $(window);
-		self.$body = $('body');
-		self.$post_body = $('#post-body');
-		self.$editor_content_container = $('#poststuff');
-		self.$overlay_preview = $('#boldgrid-overlay-preview');
-		self.$resize_div = $( "#resizable" );
-
-		self.$mce_iframe = $(tinymce.activeEditor.iframeElement);
-		self.tinymce_body_container = self.$mce_iframe.contents().find('body');
+		self.$mce_iframe = $( tinymce.activeEditor.iframeElement );
+		self.tinymce_body_container = self.$mce_iframe.contents().find( 'body' );
+		self.$tinymceHTML = self.$mce_iframe.contents().find( 'html' );
 
 		self.bind_column_switch();
-		self.create_front_page_iframe();
 		self.bind_window_resize();
 		self.bind_collapse_click();
 		self.bind_min_max_controls();
 		self.create_resize_handle();
-
+		self.$window.trigger( 'resize' );
 	} );
 };

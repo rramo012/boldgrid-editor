@@ -577,8 +577,6 @@ IMHWPB.Editor = function( $ ) {
 				} else {
 					//If this is not a boldgrid theme we will disable by default,
 					//and deactivate style sheets
-					IMHWPB.WP_MCE_Draggable.instance.set_style_sheet_inactive(
-							'draggable', true, $(event.target.iframeElement).contents().get(0) );
 					IMHWPB.WP_MCE_Draggable.instance.draggable_inactive = true;
 					IMHWPB.WP_MCE_Draggable.instance.addDeactivateClasses();
 
@@ -728,9 +726,7 @@ IMHWPB.Editor = function( $ ) {
 	 * Toggle the active state of the draggable plugin
 	 */
 	this.toggle_draggable_plugin = function ( event ) {
-		if ( typeof IMHWPB.WP_MCE_Draggable != 'undefined' && typeof IMHWPB.WP_MCE_Draggable.instance != 'undefined' ) {
-			IMHWPB.WP_MCE_Draggable.instance.toggle_draggable_plugin( event );
-		}
+		console.log( 'disabled' );
 	};
 
 	/**
@@ -758,7 +754,7 @@ IMHWPB.Editor = function( $ ) {
 		}
 
 		if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_inactive == false) {
-			IMHWPB.WP_MCE_Draggable.instance.resize_done_event(null, true);
+			IMHWPB.WP_MCE_Draggable.instance.resize_done_event();
 			$window.trigger( 'resize' );
 		}
 	};

@@ -20,6 +20,9 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 				$.get( url, function( siteMarkup ) {
 					var $window = $( window );
 					self.siteMarkup = siteMarkup;
+
+					$( window ).trigger( 'pageMarkup', siteMarkup );
+
 					self.fetchStyles( siteMarkup ).done( function( markup ) {
 						BG.GRIDBLOCK.View.headMarkup = markup;
 						$window.trigger( 'boldgrid_page_html', self.siteMarkup );

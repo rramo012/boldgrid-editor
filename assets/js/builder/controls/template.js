@@ -1,4 +1,5 @@
-var $body = $( 'body' );
+var $ = jQuery,
+	$body = $( 'body' );
 
 export class Template {
 	constructor() {
