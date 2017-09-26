@@ -173,6 +173,7 @@ class Boldgrid_Editor_Assets {
 			'version' => BOLDGRID_EDITOR_VERSION,
 			//'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
 			'hasDraggableEnabled' => true,
+			'default_tab' => wp_default_editor(),
 			'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 			'setupNonce' => wp_create_nonce( 'boldgrid_editor_setup' ),
 			'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),

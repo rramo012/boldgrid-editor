@@ -558,7 +558,6 @@ IMHWPB.Editor = function( $ ) {
 			 * When the editor is initialized load the draggable ability
 			 */
 			editor.on('init', function( event ) {
-
 				IMHWPB.WP_MCE_Draggable.instance = new IMHWPB.WP_MCE_Draggable();
 
 				var $tinymce_iframe = $(event.target.iframeElement).contents();

@@ -279,7 +279,8 @@ class Boldgrid_Editor {
 
 		// Add Loading Graphic.
 		add_filter( 'the_editor', function ( $html ) {
-			return '<div class="bg-editor-loading-main active"><div class="bg-editor-loading"></div>' . $html . '</div>';
+			$active = 'tinymce' ===  wp_default_editor() ? 'active' : '';
+			return '<div class="bg-editor-loading-main ' . $active . '"><div class="bg-editor-loading"></div>' . $html . '</div>';
 		} );
 
 		// Save a users selection for enabling draggable.
