@@ -54,6 +54,27 @@ class Boldgrid_Editor_Builder {
 	}
 
 	/**
+	 * Determine if we need to enqueue button.min.css.
+	 *
+	 * @since 1.6
+	 *
+	 * @return boolean True if we must enqueue old buttons file.
+	 */
+	public function requires_deprecated_buttons() {
+		$requires_deprecated_buttons = false;
+		$builder_styles = new Boldgrid_Editor_Builder_Styles();
+		$has_saved_buttons = $builder_styles->has_custom_style( 'bg-controls-buttons' );
+
+		if ( ! Boldgrid_Editor_Service::get('main')->get_is_boldgrid_theme() || ! Boldgrid_Editor_Theme::has_feature( 'button-lib' ) ) {
+			if ( ! $has_saved_buttons && Boldgrid_Editor_Version::is_version_older('1.6') ) {
+				$requires_deprecated_buttons = true;
+			}
+		}
+
+		return $requires_deprecated_buttons;
+	}
+
+	/**
 	 * Get configuration to be used in the page styler.
 	 *
 	 * @since 1.2.3

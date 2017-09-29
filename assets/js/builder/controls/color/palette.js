@@ -150,6 +150,13 @@ export class Palette {
 			this.colorPalette.updateButtons( ( result ) => {
 				let scss = result.map.sourcesContent.join( '' );
 
+				this.styleUpdaterParent.update( {
+					id: 'bg-controls-buttons',
+					css: result.text,
+					scss: scss,
+					priority: 60
+				} );
+
 				this.styleUpdater.update( {
 					id: 'bg-controls-buttons',
 					css: result.text,
@@ -203,11 +210,30 @@ export class Palette {
 	}
 
 	/**
+	 * Setup a style loader for the parent window (wordpress admin).
+	 *
+	 * @since 1.6
+	 */
+	_setupParentLoader() {
+		let configs = BoldgridEditor.control_styles.configuration || [],
+			state = _.find( configs, ( config ) => {
+				return 'bg-controls-buttons' === config.id;
+			} );
+
+		state = state ? [ state ] : [];
+		this.styleUpdaterParent = new StyleUpdater( document );
+		this.styleUpdaterParent.loadSavedConfig( state );
+		this.styleUpdaterParent.setup();
+	}
+
+	/**
 	 * Instantiate the css loader.
 	 *
 	 * @since 1.6
 	 */
 	_setupStyleLoader() {
+		this._setupParentLoader();
+
 		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
 		this.styleUpdater.loadSavedConfig( BoldgridEditor.control_styles.configuration || [] );
 		this.styleUpdater.setup();

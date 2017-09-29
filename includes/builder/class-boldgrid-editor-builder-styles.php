@@ -48,6 +48,29 @@ class Boldgrid_Editor_Builder_Styles {
 	}
 
 	/**
+	 * Check if the user has saved a specific type of custom style.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string  $name Name of custom style.
+	 * @return boolean       Whether or not the style has been saved.
+	 */
+	public function has_custom_style( $name ) {
+		$has_custom_style = false;
+		$option = Boldgrid_Editor_Builder_Styles::get_option();
+		$configs = ! empty( $option['configuration'] ) ? $option['configuration'] : array();
+
+		foreach( $configs as $config ) {
+			if ( $name === $config['id'] ) {
+				$has_custom_style = true;
+				break;
+			}
+		}
+
+		return $has_custom_style;
+	}
+
+	/**
 	 * Get the option value we use to display styles.
 	 *
 	 * @since 1.6

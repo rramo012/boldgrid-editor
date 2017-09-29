@@ -101,9 +101,12 @@ class Boldgrid_Editor_Assets {
 		$this->enqueue_latest();
 
 		// Buttons.
-		wp_enqueue_style( 'boldgrid-buttons',
+		$builder = new Boldgrid_Editor_Builder();
+		if ( $builder->requires_deprecated_buttons() ) {
+			wp_enqueue_style( 'boldgrid-buttons',
 			plugins_url( '/assets/css/buttons.min.css', $plugin_file ),
-		array(), BOLDGRID_EDITOR_VERSION );
+			array(), BOLDGRID_EDITOR_VERSION );
+		}
 
 		wp_enqueue_style( 'boldgrid-fe',
 			plugins_url( '/assets/css/editor-fe.min.css', $plugin_file ),
@@ -115,7 +118,7 @@ class Boldgrid_Editor_Assets {
 		// Control Styles.
 		$style_url = Boldgrid_Editor_Builder_Styles::get_url_info();
 		if ( $style_url['url'] ) {
-			wp_enqueue_style( 'boldgrid-custom-styles',  $style_url['url'], array(), $style_url['timestamp'] );
+			wp_enqueue_style( 'boldgrid-custom-styles', $style_url['url'], array(), $style_url['timestamp'] );
 		}
 	}
 
@@ -341,7 +344,8 @@ class Boldgrid_Editor_Assets {
 			$this->configs['conflicting_assets']['boldgrid-components']['version'] );
 
 		// If theme does not support BGTFW buttons, enqueue buttons.
-		if ( ! Boldgrid_Editor_Theme::has_feature( 'button-lib' ) ) {
+		$builder = new Boldgrid_Editor_Builder();
+		if ( $builder->requires_deprecated_buttons() ) {
 			wp_enqueue_style( 'boldgrid-buttons',
 			plugins_url( '/assets/css/buttons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 		}

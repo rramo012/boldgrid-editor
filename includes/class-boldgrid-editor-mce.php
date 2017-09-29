@@ -331,7 +331,8 @@ class Boldgrid_Editor_MCE {
 
 		$styles[] = Boldgrid_Editor_Assets::editor_css_url();
 
-		if ( ! Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
+		$builder = new Boldgrid_Editor_Builder();
+		if ( $builder->requires_deprecated_buttons() ) {
 			$styles[] = plugins_url( '/assets/css/buttons.min.css',
 				BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 		}
