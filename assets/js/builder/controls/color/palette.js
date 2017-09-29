@@ -133,7 +133,8 @@ export class Palette {
 
 		this.colorPalette = new ColorPalette( {
 			sass: {
-				WorkerUrl: this.workerUrl
+				workerURL: this.workerUrl,
+				basePath: BoldgridEditor['plugin_url'] + '/assets/scss'
 			},
 			paletteSettings: this.getPaletteSettings()
 		} );
@@ -144,6 +145,17 @@ export class Palette {
 				id: 'bg-controls-colors',
 				css: data.result.text,
 				scss: data.scss
+			} );
+
+			this.colorPalette.updateButtons( ( result ) => {
+				let scss = result.map.sourcesContent.join( '' );
+
+				this.styleUpdater.update( {
+					id: 'bg-controls-buttons',
+					css: result.text,
+					scss: scss,
+					priority: 60
+				} );
 			} );
 
 			postUpdate();

@@ -10,6 +10,7 @@ const distDir = path.resolve( __dirname, '../..' );
 const fontsDir = distDir + '/assets/fonts/';
 const jsonDir = distDir + '/assets/json/';
 const cssDir = distDir + '/assets/css/';
+const scssDir = distDir + '/assets/scss/';
 
 module.exports = {
 	context: srcDir,
@@ -113,6 +114,10 @@ module.exports = {
 			{
 				from: require.resolve( '@boldgrid/components/dist/json/components.json' ),
 				to: jsonDir
+			},
+			{
+				from: path.resolve( require.resolve( 'Buttons/scss/buttons.scss' ), '..' ),
+				to: path.resolve( scssDir, 'button-scss' )
 			},
 			{
 				from:
