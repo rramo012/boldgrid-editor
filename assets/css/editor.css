@@ -2605,6 +2605,31 @@ html:not(.dragging-section) .delete-icon-wrap {
   .boldgrid-zoomout .zoom-navbar {
     top: 0; } }
 
+.wp-admin .editing-blocker {
+  position: absolute;
+  z-index: 999;
+  background: #f7f7f7;
+  margin-top: 67px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0; }
+
+.wp-admin .editing-blocker .gridblock-lead {
+  padding: 50px;
+  padding-bottom: 30px;
+  margin: 75px 20% 0 20%;
+  border: 2px solid #272c30;
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.25);
+  background: white; }
+
+.wp-admin .editing-blocker .gridblock-lead .actions, .wp-admin .editing-blocker .gridblock-lead p {
+  text-align: center;
+  font-size: 25px; }
+
+.wp-admin .editing-blocker .gridblock-lead .actions {
+  margin: 20px 0; }
+
 /*--------------------------------------------------------------
 # Handler section drag controls.
 --------------------------------------------------------------*/

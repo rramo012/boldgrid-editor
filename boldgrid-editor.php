@@ -26,6 +26,11 @@ if ( ! defined( 'BOLDGRID_EDITOR_PATH' ) ) {
 	define( 'BOLDGRID_EDITOR_PATH', dirname( __FILE__ ) );
 }
 
+// Define Editor entry.
+if ( ! defined( 'BOLDGRID_EDITOR_ENTRY' ) ) {
+	define( 'BOLDGRID_EDITOR_ENTRY', __FILE__ );
+}
+
 // Define Editor configuration directory.
 if ( ! defined( 'BOLDGRID_EDITOR_CONFIGDIR' ) ) {
 	define( 'BOLDGRID_EDITOR_CONFIGDIR', BOLDGRID_EDITOR_PATH . '/includes/config' );

@@ -9,7 +9,7 @@
 				<?php
 				the_post();
 
-				if ( Boldgrid_Editor_Service::get( 'page_title' )->has_title_displayed() ) { ?>
+				if ( Boldgrid_Editor_Service::get( 'page_title' )->has_title_displayed() && get_the_title() ) { ?>
 					<header class="container entry-header">
 						<h1 class="entry-title"><?php the_title(); ?></h1>
 					</header>

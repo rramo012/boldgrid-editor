@@ -40,9 +40,20 @@ class Boldgrid_Editor_Builder_Styles {
 	 */
 	public static function get_url_info() {
 		$option = self::get_option();
+		$is_bg_theme = Boldgrid_Editor_Service::get( 'main' )->get_is_boldgrid_theme();
+		$url = false;
+
+		// Currently disabled for BG themes. BG themes should use the BG color palette system (theme switching).
+		if ( ! $is_bg_theme ) {
+			if ( ! empty( $option['css_filename'] ) ) {
+				$url = $option['css_filename'];
+			} else {
+				$url = plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY );
+			}
+		}
 
 		return array(
-			'url' => ! empty( $option['css_filename'] ) ? $option['css_filename'] : false,
+			'url' => $url,
 			'timestamp' => ! empty( $option['timestamp'] ) ? $option['timestamp'] : false,
 		);
 	}

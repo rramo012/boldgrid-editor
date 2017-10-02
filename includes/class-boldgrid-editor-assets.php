@@ -100,14 +100,6 @@ class Boldgrid_Editor_Assets {
 		// Enqueue Styles that which depend on version.
 		$this->enqueue_latest();
 
-		// Buttons.
-		$builder = new Boldgrid_Editor_Builder();
-		if ( $builder->requires_deprecated_buttons() ) {
-			wp_enqueue_style( 'boldgrid-buttons',
-			plugins_url( '/assets/css/buttons.min.css', $plugin_file ),
-			array(), BOLDGRID_EDITOR_VERSION );
-		}
-
 		wp_enqueue_style( 'boldgrid-fe',
 			plugins_url( '/assets/css/editor-fe.min.css', $plugin_file ),
 		array(), BOLDGRID_EDITOR_VERSION );
@@ -119,6 +111,14 @@ class Boldgrid_Editor_Assets {
 		$style_url = Boldgrid_Editor_Builder_Styles::get_url_info();
 		if ( $style_url['url'] ) {
 			wp_enqueue_style( 'boldgrid-custom-styles', $style_url['url'], array(), $style_url['timestamp'] );
+		}
+
+		// Buttons.
+		$builder = new Boldgrid_Editor_Builder();
+		if ( $builder->requires_deprecated_buttons() ) {
+			wp_enqueue_style( 'boldgrid-buttons',
+			plugins_url( '/assets/css/buttons.min.css', $plugin_file ),
+			array(), BOLDGRID_EDITOR_VERSION );
 		}
 	}
 
@@ -158,8 +158,10 @@ class Boldgrid_Editor_Assets {
 	public function get_js_vars() {
 		global $is_IE;
 		global $post;
+		global $pagenow;
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
+		$post_type = $post ? $post->post_type : '';
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
 		$vars = array(
@@ -168,7 +170,7 @@ class Boldgrid_Editor_Assets {
 			'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 			'post' => ( array ) $post,
 			'post_id' => $this->get_post_id(),
-			'post_type' => $post ? $post->post_type : '',
+			'post_type' => $post_type,
 			'is_boldgrid_template' => Boldgrid_Editor_Service::get( 'templater' )->is_custom_template( $post->page_template ),
 			'site_url' => $this->get_post_url(),
 			'plugin_url' => plugins_url( '', $plugin_file ),
@@ -189,6 +191,7 @@ class Boldgrid_Editor_Assets {
 			'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 			//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 			'display_update_notice' => false,
+			'display_gridblock_lead' => $pagenow === 'post-new.php',
 			'display_intro' => Boldgrid_Editor_Setup::should_show_setup(),
 			'setup_settings' => Boldgrid_Editor_Option::get( 'setup' ),
 			'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),

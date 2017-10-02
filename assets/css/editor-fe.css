@@ -34,6 +34,6 @@
 .page-template-templatepagefullwidth-php.page-template-fullwidth .site-footer {
   margin-top: 0; }
 
-.gridblock-template-default header,
-.page-template-templatepagefullwidth-php.page-template-fullwidth header {
+.gridblock-template-default header:not(.entry-header),
+.page-template-templatepagefullwidth-php.page-template-fullwidth header:not(.entry-header) {
   margin-bottom: 0; }
