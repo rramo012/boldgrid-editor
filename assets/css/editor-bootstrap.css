@@ -829,3 +829,24 @@
 
 .text-center {
   text-align: center; }
+
+/*
+ * http://getbootstrap.com/docs/3.3/css/#type-headings
+ */
+.h1 {
+  font-size: 36px; }
+
+.h2 {
+  font-size: 30px; }
+
+.h3 {
+  font-size: 24px; }
+
+.h4 {
+  font-size: 18px; }
+
+.h5 {
+  font-size: 14px; }
+
+.h6 {
+  font-size: 12px; }
