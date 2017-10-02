@@ -162,6 +162,7 @@ class Boldgrid_Editor_Assets {
 
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 		$post_type = $post ? $post->post_type : '';
+		$default_tab = wp_default_editor();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
 		$vars = array(
@@ -191,7 +192,7 @@ class Boldgrid_Editor_Assets {
 			'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 			//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 			'display_update_notice' => false,
-			'display_gridblock_lead' => $pagenow === 'post-new.php',
+			'display_gridblock_lead' => 'post-new.php' === $pagenow && 'tinymce' === $default_tab,
 			'display_intro' => Boldgrid_Editor_Setup::should_show_setup(),
 			'setup_settings' => Boldgrid_Editor_Option::get( 'setup' ),
 			'gridblocks' => Boldgrid_Layout::get_all_gridblocks(),

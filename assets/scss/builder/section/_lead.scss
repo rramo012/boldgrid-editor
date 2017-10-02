@@ -25,6 +25,7 @@
 			.actions, p {
 				text-align: center;
 				font-size: 25px;
+				white-space: initial;
 			}
 
 			.actions {
@@ -43,5 +44,12 @@
 				}
 			}
 		}
+	}
+}
+
+@media ( max-width: 988px) {
+	.wp-admin .editing-blocker .gridblock-lead {
+		margin-left: 10%;
+		margin-right: 10%;
 	}
 }

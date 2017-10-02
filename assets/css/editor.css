@@ -2645,7 +2645,8 @@ html:not(.dragging-section) .delete-icon-wrap {
 
 .wp-admin .editing-blocker .gridblock-lead .actions, .wp-admin .editing-blocker .gridblock-lead p {
   text-align: center;
-  font-size: 25px; }
+  font-size: 25px;
+  white-space: initial; }
 
 .wp-admin .editing-blocker .gridblock-lead .actions {
   margin: 20px 0; }
@@ -2659,6 +2660,11 @@ html:not(.dragging-section) .delete-icon-wrap {
   height: 18px;
   vertical-align: text-top;
   margin: 0 2px; }
+
+@media (max-width: 988px) {
+  .wp-admin .editing-blocker .gridblock-lead {
+    margin-left: 10%;
+    margin-right: 10%; } }
 
 /*--------------------------------------------------------------
 # Handler section drag controls.
