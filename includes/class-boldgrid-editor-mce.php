@@ -80,7 +80,7 @@ class Boldgrid_Editor_MCE {
 	 * @since 1.1.
 	 */
 	public function load_editor_hooks() {
-		echo '<button type="button" id="insert-gridblocks-button" class="button gridblock-icon">' .
+		echo '<button type="button" id="insert-gridblocks-button" class="button gridblock-icon boldgrid-color">' .
 			'<span class="wp-media-buttons-icon"></span> Add GridBlock</button>';
 	}
 

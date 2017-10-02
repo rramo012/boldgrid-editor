@@ -207,6 +207,22 @@
 .bg-editor-button.bg-secondary-color:hover {
   background-color: #f9f9f9; }
 
+.button.boldgrid-color {
+  background-color: #f95b26;
+  color: white;
+  text-shadow: none;
+  border-color: #e63e06 #e63e06 #e63e06;
+  box-shadow: 0 1px 0 #e63e06; }
+
+.button.boldgrid-color:hover, .button.boldgrid-color:focus, .button.boldgrid-color:active {
+  background-color: #f96635;
+  border-color: #e63e06;
+  color: white; }
+
+.button.boldgrid-color:active {
+  background-color: #e63e06;
+  box-shadow: inset 0 2px 0 #e63e06; }
+
 #boldgrid-hide-post-title.boldgrid-controls {
   margin: 10px 10px 0;
   display: none; }
@@ -1519,7 +1535,7 @@
 
 .gridblock-grid-icon,
 .gridblock-icon .wp-media-buttons-icon {
-  background: url("../image/gridblock-icon.svg");
+  background: url("../image/gridblock-icon-white.svg");
   background-repeat: no-repeat;
   background-size: 18px 18px;
   transition-duration: 0.8s;
@@ -2629,6 +2645,16 @@ html:not(.dragging-section) .delete-icon-wrap {
 
 .wp-admin .editing-blocker .gridblock-lead .actions {
   margin: 20px 0; }
+
+.wp-admin .editing-blocker .gridblock-lead .actions a {
+  text-decoration: none; }
+
+.wp-admin .editing-blocker .gridblock-lead .actions .wp-media-buttons-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: text-top;
+  margin: 0 2px; }
 
 /*--------------------------------------------------------------
 # Handler section drag controls.

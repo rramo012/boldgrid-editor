@@ -24,6 +24,18 @@
 
 			.actions {
 				margin: 20px 0;
+
+				a {
+					text-decoration: none;
+				}
+
+				.wp-media-buttons-icon {
+					display: inline-block;
+					width: 18px;
+					height: 18px;
+					vertical-align: text-top;
+					margin: 0 2px;
+				}
 			}
 		}
 	}
