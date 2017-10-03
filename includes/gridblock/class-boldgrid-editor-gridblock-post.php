@@ -33,14 +33,14 @@ class Boldgrid_Editor_Gridblock_Post {
 	 */
 	protected function get_type_labels() {
 		return array(
-			'name'                => _x( 'GridBlocks', 'Post Type General Name', 'boldgrid-editor' ),
+			'name'                => _x( 'GridBlock Library', 'Post Type General Name', 'boldgrid-editor' ),
 			'singular_name'       => _x( 'GridBlock', 'Post Type Singular Name', 'boldgrid-editor' ),
-			'menu_name'           => __( 'GridBlocks', 'boldgrid-editor' ),
+			'menu_name'           => __( 'BoldGrid Editor', 'boldgrid-editor' ),
 			'parent_item_colon'   => __( 'Parent GridBlock', 'boldgrid-editor' ),
-			'all_items'           => __( 'All GridBlocks', 'boldgrid-editor' ),
+			'all_items'           => __( 'GridBlock Library', 'boldgrid-editor' ),
 			'view_item'           => __( 'View GridBlocks', 'boldgrid-editor' ),
 			'add_new_item'        => __( 'Add New GridBlock', 'boldgrid-editor' ),
-			'add_new'             => __( 'Add New', 'boldgrid-editor' ),
+			'add_new'             => __( 'Add New GridBlock', 'boldgrid-editor' ),
 			'edit_item'           => __( 'Edit GridBlock', 'boldgrid-editor' ),
 			'update_item'         => __( 'Update GridBlock', 'boldgrid-editor' ),
 			'search_items'        => __( 'Search GridBlock', 'boldgrid-editor' ),
@@ -61,6 +61,7 @@ class Boldgrid_Editor_Gridblock_Post {
 			'label'               => __( 'gridblock', 'boldgrid-editor' ),
 			'description'         => __( 'My GridBlocks', 'boldgrid-editor' ),
 			'labels'              => $this->get_type_labels(),
+			'menu_icon'           => 'dashicons-edit',
 			'supports'            => array(
 				'title',
 				'editor',
@@ -73,7 +74,7 @@ class Boldgrid_Editor_Gridblock_Post {
 			'show_ui'             => true,
 			// 'show_in_menu'        => false,
 			// 'show_in_admin_bar'   => false,
-			'menu_position'       => 5,
+			'menu_position'       => 60,
 			'public'              => true,
 			// 'query_var'           => true,
 			// 'publicly_queryable'  => true,
