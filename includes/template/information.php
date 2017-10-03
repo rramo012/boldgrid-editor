@@ -1,6 +1,6 @@
 <script type="text/html" id="tmpl-boldgrid-editor-information">
 	<p class="intro">
-		The following options are displayed within the BoldGrid DropTab after clicking on elements in the page &amp; post editor.
+		The following options are displayed within the BoldGrid DropTab after clicking on elements in the Page &amp; Post editor.
 		The options available change depending on the element you click. To use any of these controls: click on the element you
 		want to customize, and then choose the corresponding customization option.
 	</p>
@@ -26,7 +26,7 @@
 				<ul class="help-text">
 					<span class="genericon genericon-gallery"></span>
 					<li class="control-name">Column Background</li>
-					<li class="description">Assign a background to a column. This option is available after into a column.
+					<li class="description">Assign a background to a column. This option is available after clicking into a column.
 					Columns are indentified by the blue drag handles.</li>
 				</ul>
 			</li>
@@ -45,7 +45,7 @@
 				<i class="fa fa-text-width" aria-hidden="true"></i>
 				<li class="control-name">Font</li>
 				<li class="description">Change the font for the currently selected element. Any element with text
-					will have this controls enabled.</li>
+					will have this control enabled.</li>
 				</ul>
 			</li>
 			<li>
@@ -53,7 +53,7 @@
 					<i class="fa fa-magic" aria-hidden="true"></i>
 					<li class="control-name">Images Filters</li>
 					<li class="description">Change the appearence of a photo. We'll perserve your
-						original photo, and create a new one with your modifications.
+						original photo and create a new one with your modifications.
 						This option is available after clicking on an image.</li>
 				</ul>
 			</li>
@@ -61,7 +61,7 @@
 				<ul class="help-text">
 					<i class="fa fa-minus" aria-hidden="true"></i>
 					<li class="control-name">Horizontal Line</li>
-					<li class="description">Change the design of a Horinzonal Line. Available after clicking on a
+					<li class="description">Change the design of a horinzonal line. Available after clicking on a
 					horizontal line element.</li>
 				</ul>
 			</li>

@@ -13,7 +13,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		name: 'information',
 
 		panel: {
-			title: 'DropTab Information',
+			title: 'Controls Information',
 			height: '575px',
 			icon: 'fa fa-info',
 			width: '750px'
