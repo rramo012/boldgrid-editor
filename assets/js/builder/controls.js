@@ -78,7 +78,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			new ControlLoader().init();
 
-			//Create all controls.
+			// Create all controls.
 			this.setupControls();
 
 			BG.CONTROLS.Generic.setupInputCustomization();
@@ -238,6 +238,9 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 
 			BOLDGRID.EDITOR.CONTROLS.Section.init( self.$container );
+
+			// Trigger a click on the body to display global controls.
+			this.$container.find( 'body' ).click();
 		},
 
 		/**

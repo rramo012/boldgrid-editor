@@ -14,10 +14,30 @@ export class Template {
 	 */
 	init() {
 		this.updateBodyClass();
+		this.updateDefaultContainer();
 
 		this.$templateInput.on( 'change', () => {
 			this.updateBodyClass();
+			this.updateDefaultContainer();
 		} );
+
+	}
+
+	/**
+	 * Update the defualt container used for the page depending on the template used.
+	 *
+	 * @since 1.6
+	 */
+	updateDefaultContainer() {
+		let config = BoldgridEditor.builder_config.templateContainers;
+
+		if ( BoldgridEditor.is_boldgrid_template ) {
+			if ( config[ this.$templateInput.val() ] ) {
+				BoldgridEditor['default_container'] = config[ this.$templateInput.val() ];
+			} else {
+				BoldgridEditor['default_container'] = 'container-fluid';
+			}
+		}
 	}
 
 	/**
