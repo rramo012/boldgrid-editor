@@ -45,6 +45,6 @@ class Boldgrid_Editor_Upgrade {
 	 * @since 1.6
 	 */
 	public function on_plugin_update() {
-		Boldgrid_Editor_Option::update( 'has_flushed_rewrite', false );
+		Boldgrid_Editor_Option::update( 'has_flushed_rewrite', 0 );
 	}
 }

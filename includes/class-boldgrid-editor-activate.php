@@ -28,7 +28,7 @@ class Boldgrid_Editor_Activate {
 	 */
 	public static function on_activate() {
 		Boldgrid_Editor_Option::update( 'activated_version', BOLDGRID_EDITOR_VERSION );
-		Boldgrid_Editor_Option::update( 'has_flushed_rewrite', false );
+		Boldgrid_Editor_Option::update( 'has_flushed_rewrite', 0 );
 	}
 
 	/**

@@ -38,7 +38,7 @@ class Boldgrid_Editor_Gridblock_Post {
 			'menu_name'           => __( 'BoldGrid Editor', 'boldgrid-editor' ),
 			'parent_item_colon'   => __( 'Parent GridBlock', 'boldgrid-editor' ),
 			'all_items'           => __( 'GridBlock Library', 'boldgrid-editor' ),
-			'view_item'           => __( 'View GridBlocks', 'boldgrid-editor' ),
+			'view_item'           => __( 'View GridBlock', 'boldgrid-editor' ),
 			'add_new_item'        => __( 'Add New GridBlock', 'boldgrid-editor' ),
 			'add_new'             => __( 'Add New GridBlock', 'boldgrid-editor' ),
 			'edit_item'           => __( 'Edit GridBlock', 'boldgrid-editor' ),
@@ -79,7 +79,6 @@ class Boldgrid_Editor_Gridblock_Post {
 			// 'query_var'           => true,
 			// 'publicly_queryable'  => true,
 			'exclude_from_search' => true,
-			'capability_type'     => 'page',
 		);
 	}
 
@@ -101,7 +100,7 @@ class Boldgrid_Editor_Gridblock_Post {
 				'show_admin_column' => true,
 				'show_in_menu' => false,
 				'show_in_nav_menus' => false,
-				'description' => 'ffff'
+				'description' => 'GridBlock Types'
 			)
 		);
 
@@ -133,6 +132,20 @@ class Boldgrid_Editor_Gridblock_Post {
 	}
 
 	/**
+	 * Prevent non authors from viewing GridBlocks.
+	 *
+	 * @since 1.6
+	 */
+	public function restrict_public_access() {
+		global $post;
+		$post_type = ! empty( $post->post_type ) ? $post->post_type : false;
+		if ( 'gridblock' ===  $post_type && ! current_user_can( 'edit_pages' ) ) {
+			wp_redirect( home_url(), 301 );
+			exit;
+		}
+	}
+
+	/**
 	* Check the filter we are currently running through and hook in if needed.
 	*
 	* Reason: This plugin loads in different hooks depending on were it's running from. In admin
@@ -149,5 +162,6 @@ class Boldgrid_Editor_Gridblock_Post {
 		}
 
 		add_action( 'template_include', array( $this, 'set_template' ) );
+		add_action( 'template_redirect', array( $this, 'restrict_public_access' ) );
 	}
 }
