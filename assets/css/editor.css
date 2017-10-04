@@ -2970,6 +2970,9 @@ html:not(.dragging-section) .delete-icon-wrap {
 .setup .welcome .step-content {
   margin-left: 90px; }
 
+.setup .welcome .lead {
+  font-size: 14px; }
+
 .setup .choose-template .bg-editor-radio {
   text-align: left;
   max-width: 240px;

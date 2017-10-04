@@ -35,6 +35,7 @@ export class Intro extends Notice {
 
 			this.openPanel();
 			this._setupNav();
+			this._addPanelSettings( 'welcome' );
 			this.bindDismissButton();
 			this._setupStepActions();
 		}
@@ -46,7 +47,7 @@ export class Intro extends Notice {
 				choice: 'fullwidth'
 			},
 			palette: {
-				choice: this.selection.randomSelection()
+				choice: null
 			}
 		};
 	}
@@ -69,7 +70,7 @@ export class Intro extends Notice {
 		super.dismissPanel();
 
 		// Compile the color palettes, and apply.( This should tie into what we have already. )
-		BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
+		// BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
 		this.settings.template.choice = this.$templateInputs.filter( ':checked' ).val();
 
 		// If the user enters the first time setup on a page, update the meta box.
@@ -129,6 +130,25 @@ export class Intro extends Notice {
 	}
 
 	/**
+	 * Set the panel settings.
+	 *
+	 * @since 1.6
+	 *
+	 * @param {string} step Step from the panel.
+	 */
+	_addPanelSettings( step ) {
+		this.$currentStep = this.$panelHtml.find( '[data-step="' + step + '"]' );
+
+		// Update Panel Settings.
+		BG.Panel.setTitle( this.$currentStep.data( 'panel-title' ) );
+		BG.Panel.setInfo( this.$currentStep.data( 'panel-info' ) );
+		BG.Panel.setDimensions(
+			this.$currentStep.data( 'panel-width' ) || this.panel.width,
+			this.$currentStep.data( 'panel-height' ) || this.panel.height
+		);
+	}
+
+	/**
 	 * Setup the handling of steps.
 	 *
 	 * @since 1.6
@@ -138,18 +158,9 @@ export class Intro extends Notice {
 			let $this = $( e.target ),
 				step = $this.data( 'action-step' );
 
-			this.$currentStep = this.$panelHtml.find( '[data-step="' + step + '"]' );
-
+			this._addPanelSettings( step );
 			this.$panelHtml.trigger( 'boldgrid-editor-' + step );
 			this.$panelHtml.find( '.step' ).removeClass( 'active' );
-
-			// Update Panel Settings.
-			BG.Panel.setTitle( this.$currentStep.data( 'panel-title' ) );
-			BG.Panel.setInfo( this.$currentStep.data( 'panel-info' ) );
-			BG.Panel.setDimensions(
-				this.$currentStep.data( 'panel-width' ) || this.panel.width,
-				this.$currentStep.data( 'panel-height' ) || this.panel.height
-			);
 
 			BG.Panel.centerPanel();
 
