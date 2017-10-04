@@ -48,7 +48,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				slide: function( event, ui ) {
 
 					// Remove Classes.
-					$el.removeClass( self.rotate.classes.join( ' ' ) );
+					$el.removeClass( self.classes.join( ' ' ) );
 					if ( ui.value ) {
 						$el.addClass( 'fa-rotate-' + ui.value );
 					}

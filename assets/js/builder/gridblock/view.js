@@ -127,7 +127,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			$( '#insert-gridblocks-button' ).on( 'click', function() {
 				$( '.wp-switch-editor.switch-tmce' ).click();
 				if ( ! BG.CONTROLS.Section.$container ) {
-					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 300 );
+					setTimeout( BG.CONTROLS.Section.enableSectionDrag, 600 );
 				} else {
 					BG.CONTROLS.Section.enableSectionDrag();
 				}

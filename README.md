@@ -33,7 +33,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 2. Activate the plugin through the Plugins menu in WordPress.
 
-## Development ##
+## JS/CSS Development ##
 
 ```
 # Install dependencies
@@ -42,5 +42,10 @@ yarn install
 # Run localhost:4000 with hot reload
 npm start
 
+# Add the following to your wp-config.php
+define( 'SCRIPT_DEBUG', true );
+define( 'BGEDITOR_SCRIPT_DEBUG', true );
+
 # Build for production
 yarn build
+```

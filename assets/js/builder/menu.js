@@ -135,7 +135,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		setupDimiss: function() {
 			$( document ).on( 'click', function( e ) {
 				if ( false === $( e.target ).hasClass( 'menu-dropdown-icon' ) ) {
-					self.$element.removeClass( 'active' );
+					self.$element.find( '.menu-dropdown-parent' ).removeClass( 'active' );
 				}
 			} );
 
