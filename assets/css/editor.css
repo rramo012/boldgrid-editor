@@ -23,7 +23,7 @@
   background-color: #000;
   display: block;
   border-radius: 100%;
-  animation: testsss 1s infinite ease-in-out;
+  animation: sk-scaleout 1s infinite ease-in-out;
   position: absolute;
   top: 0; }
 
@@ -44,8 +44,7 @@
   top: calc(50% - 25px);
   z-index: 99999999;
   border-radius: 100%;
-  -webkit-animation: testsss 1s infinite ease-in-out;
-  animation: testsss 1s infinite ease-in-out; }
+  animation: sk-scaleout 1s infinite ease-in-out; }
 
 .bg-editor-loading:before {
   content: ' ';
@@ -62,19 +61,10 @@
 .bg-editor-loading.absolute:after, .bg-editor-loading.absolute:before {
   position: absolute; }
 
-@-webkit-keyframes testsss {
+@keyframes sk-scaleout {
   0% {
-    -webkit-transform: scale(0); }
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0; } }
-
-@keyframes testsss {
-  0% {
-    -webkit-transform: scale(0);
     transform: scale(0); }
   100% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 0; } }
 
