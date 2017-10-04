@@ -14,7 +14,8 @@ export class Intro extends Notice {
 		this.panel = {
 			title: 'BoldGrid Editor - Setup',
 			height: '285px',
-			width: '650px'
+			width: '650px',
+			autoCenter: true
 		};
 	}
 
@@ -58,6 +59,7 @@ export class Intro extends Notice {
 	 * @since 1.6
 	 */
 	openPanel() {
+		BG.Panel.currentControl = this;
 		this.$body.addClass( 'bg-editor-intro' );
 		BG.Panel.setDimensions( this.panel.width, this.panel.height );
 		BG.Panel.setTitle( this.panel.title );

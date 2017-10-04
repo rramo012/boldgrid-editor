@@ -533,7 +533,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		},
 
 		/**
-		 * Handle auto rectenering panels on window resize.
+		 * Handle auto recentering panels on window resize.
 		 *
 		 * @since 1.6
 		 */

@@ -155,7 +155,7 @@ export class Save {
 	 */
 	_setupFormSubmit() {
 		BG.Panel.$element.on( 'submit', '.save-gridblock form', e => {
-			let $form = $( event.target ),
+			let $form = $( e.target ),
 				$button = $form.find( '.bg-editor-button' ),
 				$input = $form.find( 'input' );
 

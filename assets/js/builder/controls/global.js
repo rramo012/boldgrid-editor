@@ -30,10 +30,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					name: 'Color Palette',
 					class: 'action open-color-palette font-awesome fa-paint-brush'
 				},
+
+				/*
 				{
 					name: 'Post Settings',
 					class: 'action edit-page-settings font-awesome fa-cogs'
 				},
+				*/
+
 				{
 					name: 'Delete Post Content',
 					class: 'action delete-all-content font-awesome fa-trash'
@@ -48,7 +52,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				this.menuDropDown.options.splice( 0, 1 );
 			}
 
-			BOLDGRID.EDITOR.Controls.registerControl( this );
+			BG.Controls.registerControl( this );
+		},
+
+		/**
+		 * Delete the posts content.
+		 *
+		 * @since 1.6
+		 */
+		deleteContent() {
+			BG.Controls.$container.find( 'body' ).html( '<p></p>' );
+			BG.Controls.$container.validate_markup();
+			IMHWPB.WP_MCE_Draggable.instance.add_tiny_mce_history();
 		},
 
 		/**
@@ -63,7 +78,10 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Menu.$element
 				.find( '.bg-editor-menu-dropdown' )
 				.on( 'click', '.action.delete-all-content,.action.edit-page-settings', () => {
-					alert( 'This is a sample setting only.' );
+					let response = confirm( 'Are you sure you want to clear this post\'s content?' );
+					if ( response ) {
+						this.deleteContent();
+					}
 				} );
 		}
 	};

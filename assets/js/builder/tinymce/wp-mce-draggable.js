@@ -86,7 +86,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 			self.draggable_instance = IMHWPB.WP_MCE_Draggable.draggable_instance;
 		}
 
-		tinymce.activeEditor.controlManager.setActive( 'toggle_draggable_imhwpb', true );
 		self.bind_events();
 	};
 
