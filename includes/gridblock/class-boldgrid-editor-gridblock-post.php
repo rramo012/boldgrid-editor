@@ -107,6 +107,12 @@ class Boldgrid_Editor_Gridblock_Post {
 
 		// Registering your Custom Post Type
 		register_post_type( 'gridblock', $args );
+
+		// Flush rewrite rules if we haven't done so already.
+		if ( ! Boldgrid_Editor_Option::get( 'has_flushed_rewrite' ) ) {
+			Boldgrid_Editor_Option::update( 'has_flushed_rewrite', true );
+			flush_rewrite_rules();
+		}
 	}
 
 	/**
