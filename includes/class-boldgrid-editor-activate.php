@@ -28,6 +28,16 @@ class Boldgrid_Editor_Activate {
 	 */
 	public static function on_activate() {
 		Boldgrid_Editor_Option::update( 'activated_version', BOLDGRID_EDITOR_VERSION );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * On plugin deactivation.
+	 *
+	 * @since 1.6
+	 */
+	public static function on_deactivate() {
+		flush_rewrite_rules();
 	}
 
 }

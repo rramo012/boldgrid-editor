@@ -38,9 +38,9 @@ if ( ! defined( 'BOLDGRID_EDITOR_CONFIGDIR' ) ) {
 
 // Load the editor class.
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor.php';
-require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-service.php';
 
 register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
+register_deactivation_hook( __FILE__,  array( 'Boldgrid_Editor_Activate', 'on_deactivate' ) );
 
 /**
  * Initialize the editor plugin for Editors and Administrators in the admin section.
@@ -53,6 +53,10 @@ function boldgrid_editor_init () {
 
 	Boldgrid_Editor_Service::get( 'main' )->run();
 }
+
+// Plugin update checks.
+$upgrade = new Boldgrid_Editor_Upgrade();
+add_action( 'upgrader_process_complete', array( $upgrade, 'plugin_update_check' ), 10, 2 );
 
 // Load on an early hook so we can tie into framework configs.
 if ( is_admin() ) {
