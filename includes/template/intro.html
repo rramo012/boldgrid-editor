@@ -13,15 +13,27 @@
 			</p>
 		</div>
 	</div>
-	<div data-step="choose-template" data-panel-info="Step 1/3" class="step choose-template"  data-panel-width="395" data-panel-height="510" data-panel-title="BoldGrid Editor - Templates">
+	<div data-step="choose-template" data-panel-info="Step 1/3" class="step choose-template"  data-panel-width="350" data-panel-height="550" data-panel-title="BoldGrid Editor - Templates">
 		<h3>Choose your default template:</h3>
-		<p>The BoldGrid Editor includes 3 custom page templates provide more layout control.
+		<p class="lead">The BoldGrid Editor includes 3 custom page templates provide more layout control.
 			Choose your default page template to use on new pages.</p>
 		<div class="template-control">
-			<input class="bgtfw sidebar" type="radio" name="template" checked value="fullwidth" text="Full Width">
-			<input class="bgtfw sidebar" type="radio" name="template" value="left-sidebar" text="Full Width">
-			<input class="bgtfw sidebar" type="radio" name="template" value="right-sidebar" text="Right Sidebar">
-			<input class="bgtfw sidebar" type="radio" name="template" value="default" text="Default Theme Template">
+			<span class="radio">
+				<span class="label">Full Width (Recommended)</span>
+				<input class="template sidebar none" type="radio" name="template" checked value="fullwidth">
+			</span>
+			<span class="radio">
+				<span class="label">Right Sidebar</span>
+				<input class="template sidebar right" type="radio" name="template" value="right-sidebar">
+			</span>
+			<span class="radio">
+				<span class="label">Left Sidebar</span>
+				<input class="template sidebar left" type="radio" name="template" value="left-sidebar">
+			</span>
+			<span class="radio">
+				<span class="label">Theme Default</span>
+				<input class="template default" type="radio" name="template" value="default">
+			</span>
 		</div>
 		<p class="buttons">
 			<a class='btn bg-editor-button btn-rounded bg-primary-color' data-action-step="choose-color-palette">Next Step</a>

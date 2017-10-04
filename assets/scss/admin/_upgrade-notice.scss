@@ -26,66 +26,11 @@
 	}
 }
 
-.template-control {
-	text-align: center;
-
-	input[type="radio"] {
-		height: 100px;
-		width: auto;
-		box-shadow: none;
-		border: none;
-		margin: 10px;
-		position: relative;
-
-		&:checked:before {
-			background: none;
-		}
-
-		&:checked:before,
-		&:before {
-			background: none;
-			font-size: 16px;
-			left: 0;
-			position: absolute;
-			top: -28px;
-			content: attr(text);
-			width: auto;
-			height: auto;
-			color: black;
-			text-indent: 0;
-		}
-	}
-
-
-	.sidebar:after {
-		content: '';
-		width: 100px;
-		height: 100px;
-		display: block;
-		background-image: url(../../assets/image/page-templates/fullwidth.svg);
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-	.sidebar.right:after {
-		transform: rotate(180deg);
-		transform-origin: 50% 50%;
-	}
-}
-
 .bg-editor-intro {
 	@extend .bg-editor-overlay;
 
 	.bg-editor-loading {
 		display: block;
-	}
-
-
-	.bgtfw.sidebar.left {
-		transform: rotate(180deg);
-		transform-origin: 50% 50%;
-	}
-	.bgtfw.sidebar.none {
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M2.12 29.96h27.84V2.12H2.12v27.84zM.04 1.26C.04.6.58.04 1.26.04H30.8c.7 0 1.24.54 1.24 1.22V30.8c0 .7-.55 1.24-1.23 1.24H1.28C.6 32.04.04 31.5.04 30.8V1.27z'/%3E%3C/svg%3E");
 	}
 
 	.editor-panel {
