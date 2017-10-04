@@ -22,7 +22,7 @@
 			display: block;
 
 			border-radius: 100%;
-			animation: sk-scaleout 1s infinite ease-in-out;
+			animation: testsss 1s infinite ease-in-out;
 			position: absolute;
 			top: 0;
 		}
@@ -48,8 +48,8 @@
 		z-index: 99999999;
 
 		border-radius: 100%;
-		-webkit-animation: sk-scaleout 1s infinite ease-in-out;
-		animation: sk-scaleout 1s infinite ease-in-out;
+		-webkit-animation: testsss 1s infinite ease-in-out;
+		animation: testsss 1s infinite ease-in-out;
 	}
 
 	&:before {
@@ -70,7 +70,7 @@
 	}
 }
 
-@-webkit-keyframes sk-scaleout {
+@-webkit-keyframes testsss {
 	0% {
 		-webkit-transform: scale(0);
 	}
@@ -80,7 +80,7 @@
 	}
 }
 
-@keyframes sk-scaleout {
+@keyframes testsss {
 	0% {
 		-webkit-transform: scale(0);
 		transform: scale(0);

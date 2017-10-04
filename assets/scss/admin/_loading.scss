@@ -1,5 +1,9 @@
 $top: 180px;
 
+.post-type-gridblock .bg-editor-loading-main.active .bg-editor-loading:after {
+	opacity: 0;
+}
+
 .bg-editor-loading-main.active {
 	position: relative;
 
