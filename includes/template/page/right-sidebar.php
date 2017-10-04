@@ -15,10 +15,7 @@
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div>
-				<div class="bg-edit-link">
-					<a title="Edit Page" href="<?php print get_edit_post_link() ?>"><i class="fa fa-pencil"
-						aria-hidden="true"></i></a>
-				</div>
+				<?php include( __DIR__ . '../entry-footer.php' ); ?>
 			</article>
 		</div>
 		<div class="col-md-4">
