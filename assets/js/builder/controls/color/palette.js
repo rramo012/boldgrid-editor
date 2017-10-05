@@ -181,7 +181,7 @@ export class Palette {
 	_savePaletteSettings() {
 		let paletteSettings;
 
-		paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.state );
+		paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.format_current_palette_state() );
 		this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
 		this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
 		BG.CONTROLS.Color.updatePaletteSettings( paletteSettings );
