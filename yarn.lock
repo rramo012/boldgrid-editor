@@ -38,9 +38,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/controls@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.1.0.tgz#48c10ce2ecd5c97d66f6302717c95fe1bd8995bf"
+"@boldgrid/controls@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.1.1.tgz#06734baef98fc4f96a0b3a426f60ba0423b98fc6"
   dependencies:
     "@boldgrid/components" "^2.3.0"
     Buttons "https://github.com/alexwolfe/Buttons"
@@ -61,9 +61,9 @@
     rimraf "^2.6.1"
     sass.js "0.10.4"
 
-"Buttons@https://github.com/alexwolfe/Buttons":
+"Buttons@git+https://github.com/alexwolfe/Buttons.git":
   version "2.0.0"
-  resolved "https://github.com/alexwolfe/Buttons#556a7e030a4048a4c50a81da99145badc155388c"
+  resolved "git+https://github.com/alexwolfe/Buttons.git#556a7e030a4048a4c50a81da99145badc155388c"
   dependencies:
     grunt "^0.4.5"
     grunt-saucelabs "^8.3.2"
