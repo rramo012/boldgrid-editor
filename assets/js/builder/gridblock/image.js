@@ -64,8 +64,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						return;
 					}
 
+					BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
+
 					if ( config.disabledUnsplashImages ) {
-						BG.GRIDBLOCK.Filter.setPlaceholderSrc( $this );
 						return;
 					}
 

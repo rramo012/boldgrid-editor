@@ -92,7 +92,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
 
 			if ( ! $inserting || ! draggable ) {
-				send_to_editor( $inserting[0].outerHTML );
+				window.send_to_editor( $inserting[0].outerHTML );
 			}
 
 			$placeHolder.replaceWith( $inserting );
