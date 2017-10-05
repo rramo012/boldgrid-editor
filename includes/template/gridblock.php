@@ -12,17 +12,7 @@
 	</div>
 	<span class="boldgrid-gridblock-categories">
 		<label>Gridblock Filters</label>
-		<select>
-			<option value="all" selected>All Categories</option>
-			<option value="call_to_action">Welcome</option>
-			<option value="gallery">Gallery</option>
-			<option value="team">Team</option>
-			<option value="text">Text</option>
-			<option value="testimonial">Testimonial</option>
-			<option value="about">About</option>
-			<option value="services">Services</option>
-			<option value="saved">My Gridblocks</option>
-		</select>
+		<select></select>
 	</span>
 	<a href="#" title="Close" class="bg-close-zoom-view">
 		<span class="screen-reader-text">Close</span>
@@ -30,9 +20,13 @@
 </div>
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
 	<div class="gridblocks">
-		<div class="my-gridblocks-404">
+		<div class="my-gridblocks-404 saved">
 			We didn't find any GridBlocks on your pages. Once you add any GridBlocks to a post or page, it
 			will show up here for your convenience.
+		</div>
+		<div class="my-gridblocks-404 library">
+			You haven't added any GridBlocks to your library. When you save any GridBlocks they will appear
+			here for your convenience.
 		</div>
 	</div>
 </div>

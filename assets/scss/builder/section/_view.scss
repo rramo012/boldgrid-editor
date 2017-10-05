@@ -440,6 +440,7 @@ html:not(.dragging-section) .delete-icon-wrap {
 			background: white;
 			margin: 60px 30px;
 			border-top: 6px solid #0073aa;
+			font-weight: lighter;
 		}
 	}
 
@@ -449,12 +450,16 @@ html:not(.dragging-section) .delete-icon-wrap {
 			display: none !important;
 		}
 	}
-	.gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404 {
+	.gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404.saved,
+	.gridblocks[filter="library"][library-gridblocks-count="0"] .my-gridblocks-404.library {
 		display: block !important;
 	}
 
-	.gridblocks[filter="saved"] .action-items .save {
-		display: none;
+	.gridblocks[filter="library"],
+	.gridblocks[filter="saved"] {
+		.action-items .save {
+			display: none;
+		}
 	}
 
 	.gridblock {

@@ -17,6 +17,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		siteMarkup: '',
 
 		init: function() {
+			self.$filterSelect = $( '.boldgrid-gridblock-categories select' );
+			self.setFilterOptions();
+
 			self.findElements();
 			self.setGridblockCount();
 			self.positionGridblockContainer();
@@ -26,6 +29,26 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.GRIDBLOCK.Category.init();
 			self.endlessScroll();
 			self.templateClass = self.getTemplateClass();
+		},
+
+		/**
+		 * Set the filters used for requests.
+		 *
+		 * @since 1.6
+		 */
+		setFilterOptions( additionalFilters ) {
+			let html = '',
+				allFilters = [],
+				filters = BoldgridEditor.builder_config.gridblock.filters;
+
+			additionalFilters = additionalFilters || [];
+			allFilters = additionalFilters.concat( filters );
+
+			for ( let filter of filters ) {
+				html += '<option value="' + filter.slug + '">' + filter.title + '</option>';
+			}
+
+			self.$filterSelect.html( html );
 		},
 
 		onOpen: function() {
@@ -49,8 +72,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.5
 		 */
 		setGridblockCount: function() {
+			let total = BoldgridEditor.gridblocks.length,
+				types = _.countBy( BoldgridEditor.gridblocks || [], 'type' );
+
 			self.$gridblockSection.find( '.gridblocks' )
-				.attr( 'my-gridblocks-count', BoldgridEditor.gridblocks.length.toString() );
+				.attr( 'my-gridblocks-count', ( types.saved || 0 ).toString() )
+				.attr( 'library-gridblocks-count', ( types.library || 0 ).toString() );
 		},
 
 		/**
@@ -111,9 +138,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.5
 		 */
 		updateDisplay: function() {
+			let isSaved = BG.GRIDBLOCK.Category.isSavedCategory( BG.GRIDBLOCK.Category.currentCategory );
 			BG.GRIDBLOCK.Loader.loadGridblocks();
 
-			if ( 'saved' !== BG.GRIDBLOCK.Category.currentCategory && ! self.hasGridblocks() ) {
+			if ( ! isSaved && ! self.hasGridblocks() ) {
 				BG.GRIDBLOCK.Generate.fetch();
 			}
 		},

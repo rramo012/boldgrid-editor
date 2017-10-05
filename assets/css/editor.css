@@ -2496,15 +2496,18 @@ html:not(.dragging-section) .delete-icon-wrap {
   line-height: 1.5em;
   background: white;
   margin: 60px 30px;
-  border-top: 6px solid #0073aa; }
+  border-top: 6px solid #0073aa;
+  font-weight: lighter; }
 
 .zoom-gridblocks-section .gridblocks:not([filter="saved"]) .my-gridblocks-404,
 .zoom-gridblocks-section .gridblocks:not([filter="saved"]) .gridblock[data-type="saved"] {
   display: none !important; }
 
-.zoom-gridblocks-section .gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404 {
+.zoom-gridblocks-section .gridblocks[filter="saved"][my-gridblocks-count="0"] .my-gridblocks-404.saved,
+.zoom-gridblocks-section .gridblocks[filter="library"][library-gridblocks-count="0"] .my-gridblocks-404.library {
   display: block !important; }
 
+.zoom-gridblocks-section .gridblocks[filter="library"] .action-items .save,
 .zoom-gridblocks-section .gridblocks[filter="saved"] .action-items .save {
   display: none; }
 

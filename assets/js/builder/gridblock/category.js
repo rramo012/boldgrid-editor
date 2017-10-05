@@ -9,8 +9,16 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		self = {
 			currentCategory: null,
 
+			savedCategories: [
+				'library', 'saved'
+			],
+
 			init: function() {
 				self.onSelectChange();
+			},
+
+			isSavedCategory( category ) {
+				return -1 !== self.savedCategories.indexOf( category );
 			},
 
 			/**
@@ -37,8 +45,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {boolean}                Whether or not the gridblock configuration can be displayed.
 			 */
 			canDisplayGridblock: function( gridblockConfig ) {
-				var category = BGGB.Category.currentCategory || 'all';
-				return gridblockConfig.type === category || ( 'all' === category && 'saved' !== gridblockConfig.type );
+				var category = BGGB.Category.currentCategory || 'all',
+					isSaved = self.isSavedCategory( gridblockConfig.type );
+
+				return gridblockConfig.type === category || ( 'all' === category && ! isSaved );
 			},
 
 			/**
@@ -57,6 +67,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 					$gridblocks
 						.filter( ':not(.gridblock-loading)' )
 						.filter( ':not([data-type="saved"])' )
+						.filter( ':not([data-type="library"])' )
 						.show();
 
 					BGGB.View.$gridblockSection.scrollTop( 0 );
