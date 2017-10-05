@@ -63,7 +63,7 @@ class Boldgrid_Editor_Builder {
 	public function requires_deprecated_buttons() {
 		$requires_deprecated_buttons = false;
 		$builder_styles = new Boldgrid_Editor_Builder_Styles();
-		$has_saved_buttons = $builder_styles->has_custom_style( 'bg-controls-buttons' );
+		$has_saved_buttons = $builder_styles->has_custom_style( 'bg-controls-colors' );
 
 		if ( ! Boldgrid_Editor_Service::get('main')->get_is_boldgrid_theme() || ! Boldgrid_Editor_Theme::has_feature( 'button-lib' ) ) {
 			if ( ! $has_saved_buttons && Boldgrid_Editor_Version::is_version_older('1.6') ) {

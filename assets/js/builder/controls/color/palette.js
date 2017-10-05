@@ -16,6 +16,14 @@ export class Palette {
 		};
 
 		this.workerUrl = BoldgridEditor.plugin_url + '/assets/js/sass-js/sass.worker.js?' + BoldgridEditor.version;
+
+		this.colorPalette = new ColorPalette( {
+			sass: {
+				workerURL: this.workerUrl,
+				basePath: BoldgridEditor['plugin_url'] + '/assets/scss'
+			},
+			paletteSettings: this.getPaletteSettings()
+		} );
 	}
 
 	/**
@@ -131,14 +139,6 @@ export class Palette {
 				this._postPaletteUpdate();
 			}, 2000 );
 
-		this.colorPalette = new ColorPalette( {
-			sass: {
-				workerURL: this.workerUrl,
-				basePath: BoldgridEditor['plugin_url'] + '/assets/scss'
-			},
-			paletteSettings: this.getPaletteSettings()
-		} );
-
 		$control = this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
 
 			this.styleUpdater.update( {
@@ -147,22 +147,11 @@ export class Palette {
 				scss: data.scss
 			} );
 
-			this.colorPalette.updateButtons( ( result ) => {
-				let scss = result.map.sourcesContent.join( '' );
-
-				this.styleUpdaterParent.update( {
-					id: 'bg-controls-buttons',
-					css: result.text,
-					scss: scss,
-					priority: 60
-				} );
-
-				this.styleUpdater.update( {
-					id: 'bg-controls-buttons',
-					css: result.text,
-					scss: scss,
-					priority: 60
-				} );
+			this.styleUpdaterParent.update( {
+				id: 'bg-controls-colors',
+				css: data.result.text,
+				scss: data.scss,
+				priority: 60
 			} );
 
 			postUpdate();
@@ -217,7 +206,7 @@ export class Palette {
 	_setupParentLoader() {
 		let configs = BoldgridEditor.control_styles.configuration || [],
 			state = _.find( configs, ( config ) => {
-				return 'bg-controls-buttons' === config.id;
+				return 'bg-controls-colors' === config.id;
 			} );
 
 		state = state ? [ state ] : [];

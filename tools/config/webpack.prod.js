@@ -116,8 +116,8 @@ module.exports = {
 				to: jsonDir
 			},
 			{
-				from: path.resolve( require.resolve( 'Buttons/scss/buttons.scss' ), '..' ),
-				to: path.resolve( scssDir, 'button-scss' )
+				from: 'node_modules/@boldgrid/controls/dist/scss/color-palette-scss',
+				to: path.resolve( scssDir, 'color-palette-scss' )
 			},
 			{
 				from:

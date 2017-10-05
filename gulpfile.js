@@ -49,7 +49,7 @@ gulp.task( 'js-unit-tests', function( done ) {
 // Compile sass files.
 gulp.task( 'sass', function() {
 	gulp
-		.src( [ config.dist + '/assets/scss/**/*.scss', '!' + config.src + 'assets/scss/button-scss/**/*' ] )
+		.src( [ config.dist + '/assets/scss/**/*.scss', '!' + config.src + 'assets/scss/color-palette-scss/**/*' ] )
 		.pipe(
 			sass( {
 				includePaths: [ config.dist + 'assets/scss/' ]
