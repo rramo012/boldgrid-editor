@@ -76,8 +76,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupCustomizeLeave();
 			self._setupSliderChange();
 
-			let presets = self.getBoxMarkup();
-			self.$presets = self.applyUiStyles( presets );
+			self.presetsMarkup = self.getBoxMarkup();
 		},
 
 		/**
@@ -513,33 +512,21 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 * @return array presets.
 		 */
-		applyUiStyles: function( presets ) {
+		updateUiStyles: function() {
 			let $newElement,
+				presets = self.presetsMarkup,
 				presetsHtml = '',
 				colorCount = 0,
 				backgrounds = [],
 				backgroundColors = BG.CONTROLS.Color.getBackgroundForegroundColors(),
-				nonBgThemeColors = [
-					'#2980b9',
-					'#bdc3c7',
-					'#e74c3c',
-					'rgb(224, 224, 224)',
-					'#f39c12',
-					'#ffffff'
-				],
 				colors = [ '#fff', '#000', 'rgb(236, 236, 236)' ];
 
-
-			if ( ! BoldgridEditor.is_boldgrid_theme ) {
-				colors = nonBgThemeColors;
-			} else {
-				$.each( backgroundColors, function() {
-					backgrounds.push( {
-						'color': this.color,
-						'colorClass': this.background + ' ' + this.text
-					} );
+			$.each( backgroundColors, function() {
+				backgrounds.push( {
+					'color': this.color,
+					'colorClass': this.background + ' ' + this.text
 				} );
-			}
+			} );
 
 			$.each( colors, function() {
 				backgrounds.push( {
@@ -569,6 +556,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				presetsHtml += $newElement[0].outerHTML;
 			} );
+
+			self.$presets = presetsHtml;
 
 			return presetsHtml;
 		},
@@ -713,6 +702,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			var panel =  BG.Panel,
 				template = wp.template( 'boldgrid-editor-box' );
+
+			self.updateUiStyles();
 
 			self._saveModuleClasses();
 			self._updateMyDesigns();

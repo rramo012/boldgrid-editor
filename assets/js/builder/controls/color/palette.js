@@ -1,7 +1,7 @@
-import { ColorPalette, StyleUpdater, PaletteConfiguration } from '@boldgrid/controls';
-
 var $ = window.jQuery,
 	BG = BOLDGRID.EDITOR;
+
+import { ColorPalette, StyleUpdater, PaletteConfiguration } from '@boldgrid/controls';
 
 export class Palette {
 	constructor() {
