@@ -35,6 +35,26 @@
 			font-family: inherit;
 			margin-left: 0;
 		}
+
+		@media screen and (max-width: 915px) {
+			.buttons {
+				position: static;
+
+				.btn {
+					margin: 5px 0;
+				}
+			}
+
+			.welcome {
+				.step-content {
+					margin-left: 0;
+				}
+
+				img {
+					display: none;
+				}
+			}
+		}
 	}
 }
 

@@ -2910,7 +2910,8 @@ html:not(.dragging-section) .delete-icon-wrap {
     left: 0 !important;
     right: 0 !important;
     top: 0 !important;
-    position: absolute;
+    bottom: 0 !important;
+    position: fixed;
     height: 800px !important;
     width: auto !important; }
   .bg-editor-intro .editor-panel h2 {
@@ -2919,6 +2920,8 @@ html:not(.dragging-section) .delete-icon-wrap {
     display: none; }
   .bg-editor-intro .editor-panel .panel-actions {
     position: static; }
+  .bg-editor-intro .editor-panel .panel-title {
+    border-radius: 0; }
   .bg-editor-intro .editor-panel p.intro {
     width: 100%; } }
 
@@ -2950,6 +2953,16 @@ html:not(.dragging-section) .delete-icon-wrap {
 .bg-editor-intro .editor-panel .setup p {
   font-family: inherit;
   margin-left: 0; }
+
+@media screen and (max-width: 915px) {
+  .bg-editor-intro .editor-panel .setup .buttons {
+    position: static; }
+  .bg-editor-intro .editor-panel .setup .buttons .btn {
+    margin: 5px 0; }
+  .bg-editor-intro .editor-panel .setup .welcome .step-content {
+    margin-left: 0; }
+  .bg-editor-intro .editor-panel .setup .welcome img {
+    display: none; } }
 
 .setup .palette-selection .palette-row {
   margin-right: -1px; }

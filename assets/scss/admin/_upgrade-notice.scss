@@ -100,7 +100,8 @@
 			left: 0 !important;
 			right: 0 !important;
 			top: 0 !important;
-			position: absolute;
+			bottom: 0 !important;
+			position: fixed;
 			height: 800px !important;
 			width: auto !important;
 
@@ -114,6 +115,10 @@
 
 			.panel-actions {
 				position: static;
+			}
+
+			.panel-title {
+				border-radius: 0;
 			}
 
 			p.intro {
