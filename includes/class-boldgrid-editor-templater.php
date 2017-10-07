@@ -70,7 +70,7 @@ class Boldgrid_Editor_Templater {
 		// template assigned and return it's path
 		add_filter( 'template_include', array( $this, 'view_project_template') );
 
-		add_action( 'add_meta_boxes-page', array( $this, 'set_default_metabox' ), 1 );
+		add_action( 'add_meta_boxes_page', array( $this, 'set_default_metabox' ), 1 );
 	}
 
 	/**

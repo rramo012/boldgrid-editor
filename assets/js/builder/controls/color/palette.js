@@ -131,10 +131,7 @@ export class Palette {
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
-		let $control,
-			postUpdate = _.debounce( () => {
-				this._postPaletteUpdate();
-			}, 2000 );
+		let $control;
 
 		$control = this.colorPalette.render( $target, this.getPaletteSettings() ).on( 'sass_compiled', ( e, data ) => {
 
@@ -151,7 +148,7 @@ export class Palette {
 				priority: 60
 			} );
 
-			postUpdate();
+			this._postPaletteUpdate();
 		} );
 
 		return $control;
@@ -232,7 +229,7 @@ export class Palette {
 	 * @since 1.6
 	 */
 	_updateInput() {
-		this.$input.attr( 'value', JSON.stringify( this.styleUpdater.stylesState ) );
+		this.$input.val( JSON.stringify( this.styleUpdater.stylesState ) );
 	}
 }
 

@@ -89,10 +89,7 @@ class Boldgrid_Editor_Builder_Styles {
 	 * @return array
 	 */
 	public static function get_option() {
-		$styles = get_option( 'boldgrid_controls', array() );
-		$styles = ! empty( $styles['styles'] ) ? $styles['styles'] : array();
-
-		return $styles;
+		return Boldgrid_Editor_Option::get( 'styles', array() );
 	}
 
 	/**
@@ -137,7 +134,6 @@ class Boldgrid_Editor_Builder_Styles {
 	 * @since 1.6
 	 */
 	public function save() {
-
 		if ( isset( $_REQUEST['boldgrid-control-styles'] ) ) {
 			$styles = ! empty( $_REQUEST['boldgrid-control-styles'] ) ?
 				sanitize_text_field( wp_unslash( $_REQUEST['boldgrid-control-styles'] ) ) : '';
@@ -149,12 +145,10 @@ class Boldgrid_Editor_Builder_Styles {
 			$css = $this->create_css_string( $styles );
 			$css_file = $this->create_file( $css );
 
-			update_option( 'boldgrid_controls', array(
-				'styles' => array(
-					'configuration' => $styles,
-					'css_filename' => $css_file,
-					'timestamp' => time()
-				)
+			Boldgrid_Editor_Option::update( 'styles', array(
+				'configuration' => $styles,
+				'css_filename' => $css_file,
+				'timestamp' => time()
 			) );
 		}
 	}

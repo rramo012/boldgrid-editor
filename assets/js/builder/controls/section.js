@@ -340,10 +340,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				'transform': 'translateX(-50%)'
 			} );
 
-			self.$currentSection.addClass( 'boldgrid-section-hover' );
-
 			if ( this.getBoundingClientRect ) {
 				self.$popover.show();
+			}
+
+			if ( self.$popover.is( ':visible' ) ) {
+				self.$currentSection.addClass( 'boldgrid-section-hover' );
 			}
 		},
 
