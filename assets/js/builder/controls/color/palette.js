@@ -21,8 +21,7 @@ export class Palette {
 			sass: {
 				workerURL: this.workerUrl,
 				basePath: BoldgridEditor['plugin_url'] + '/assets/scss'
-			},
-			paletteSettings: this.getPaletteSettings()
+			}
 		} );
 	}
 
@@ -84,8 +83,6 @@ export class Palette {
 				$tempDiv.remove();
 			}
 		} );
-
-		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
 	}
 
 	/**
@@ -96,7 +93,7 @@ export class Palette {
 	 * @return {Object} Palette settings.
 	 */
 	getPaletteSettings() {
-		let settings = this.getSavedPaletteSettings() || this.paletteSettings;
+		let settings = this.updatedPaletteSettings || this.getLivePalettes() || this.paletteSettings;
 
 		if ( ! settings && BoldgridEditor.setup_settings && BoldgridEditor.setup_settings.palette ) {
 			settings = this.paletteConfig.createSimpleConfig( BoldgridEditor.setup_settings.palette.choice );
@@ -112,7 +109,7 @@ export class Palette {
 	 *
 	 * @return {object} Palette settings.
 	 */
-	getSavedPaletteSettings() {
+	getLivePalettes() {
 		let colorControls,
 			paletteSettings,
 			config = BoldgridEditor.control_styles.configuration;
@@ -139,7 +136,7 @@ export class Palette {
 				this._postPaletteUpdate();
 			}, 2000 );
 
-		$control = this.colorPalette.render( $target ).on( 'sass_compiled', ( e, data ) => {
+		$control = this.colorPalette.render( $target, this.getPaletteSettings() ).on( 'sass_compiled', ( e, data ) => {
 
 			this.styleUpdater.update( {
 				id: 'bg-controls-colors',
@@ -157,8 +154,6 @@ export class Palette {
 			postUpdate();
 		} );
 
-		BOLDGRID.COLOR_PALETTE.Modify['first_update'] = false;
-
 		return $control;
 	}
 
@@ -174,6 +169,8 @@ export class Palette {
 		this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
 		this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
 		BG.CONTROLS.Color.updatePaletteSettings( paletteSettings );
+
+		this.updatedPaletteSettings = paletteSettings;
 	}
 
 	/**

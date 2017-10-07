@@ -5,7 +5,7 @@ import 'istyping';
 import 'fourpan';
 import 'textselect';
 import 'jquery-slimScroll';
-import 'wp-color-picker-alpha';
+import 'wp-color-picker-alpha/src/wp-color-picker-alpha.js';
 
 // Import Libs.
 import './builder/tinymce/wp-mce-draggable';
