@@ -6,12 +6,14 @@
 	@include box-sizing(border-box);
 }
 
-.mod-reset {
-	margin: 0;
-}
-
 .text-center {
 	text-align: center;
+}
+.text-right {
+	text-align: right;
+}
+.text-left {
+	text-align: left;
 }
 
 /*

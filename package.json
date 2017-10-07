@@ -57,7 +57,7 @@
 		"style-loader": "^0.18.2"
 	},
 	"dependencies": {
-		"@boldgrid/components": "^2.3.2",
+		"@boldgrid/components": "^2.5.0",
 		"@boldgrid/controls": "^0.2.0",
 		"animate.css": "^3.5.2",
 		"babel-eslint": "^7.2.3",

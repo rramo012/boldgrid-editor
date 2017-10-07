@@ -824,11 +824,14 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-.mod-reset {
-  margin: 0; }
-
 .text-center {
   text-align: center; }
+
+.text-right {
+  text-align: right; }
+
+.text-left {
+  text-align: left; }
 
 /*
  * http://getbootstrap.com/docs/3.3/css/#type-headings
