@@ -75,7 +75,17 @@ class Boldgrid_Editor_Assets {
 	 * @return string url.
 	 */
 	public function get_post_url() {
-		$permalink = ! empty( $_REQUEST['post'] ) ? get_permalink( intval( $_REQUEST['post'] ) ) : null;
+		global $pagenow;
+
+		$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
+
+		// If this is a new page, use the preview page.
+		if ( 'post-new.php' === $pagenow ) {
+			$post_id = Boldgrid_Editor_Option::get( 'preview_page_id' );
+		}
+
+		$permalink = ! empty( $post_id ) ? get_permalink( intval( $post_id ) ) : null;
+
 		return ( $permalink ? $permalink : get_site_url() );
 	}
 
@@ -153,13 +163,16 @@ class Boldgrid_Editor_Assets {
 	 *
 	 * @since 1.6
 	 *
+	 * @global $is_IE.
+	 * @global $post.
+	 * @global $pagenow.
+	 *
 	 * @return array List of variables to be passed.
 	 */
 	public function get_js_vars() {
-		global $is_IE;
-		global $post;
-		global $pagenow;
+		global $is_IE, $post, $pagenow;
 
+		$fs = Boldgrid_Editor_Service::get( 'file_system' )->get_wp_filesystem();
 		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
 		$post_type = $post ? $post->post_type : '';
 		$default_tab = wp_default_editor();
@@ -182,7 +195,7 @@ class Boldgrid_Editor_Assets {
 			'default_tab' => wp_default_editor(),
 			'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 			'setupNonce' => wp_create_nonce( 'boldgrid_editor_setup' ),
-			'icons' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
+			'icons' => json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/font-awesome.json' ), true ),
 			'images' => Boldgrid_Editor_Builder::get_post_images(),
 			'colors' => Boldgrid_Editor_Theme::get_color_palettes(),
 			'saved_colors' => Boldgrid_Editor_Option::get( 'custom_colors', array() ),

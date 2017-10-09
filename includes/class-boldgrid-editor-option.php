@@ -50,4 +50,19 @@ class Boldgrid_Editor_Option {
 		$boldgrid_editor[ $key ] = $value;
 		update_option( self::OPTION_NAMESPACE, $boldgrid_editor );
 	}
+
+	/**
+	 * Delete key from options array.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $key
+	 */
+	public static function delete( $key ) {
+		$boldgrid_editor = get_option( self::OPTION_NAMESPACE, array() );
+		if ( isset( $boldgrid_editor[ $key ] ) ) {
+			unset( $boldgrid_editor[ $key ] );
+			update_option( self::OPTION_NAMESPACE, $boldgrid_editor );
+		}
+	}
 }

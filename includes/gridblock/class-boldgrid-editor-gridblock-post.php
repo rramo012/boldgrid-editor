@@ -125,7 +125,7 @@ class Boldgrid_Editor_Gridblock_Post {
 		global $post;
 
 		if ( $post && 'gridblock' === $post->post_type ) {
-			$template = BOLDGRID_EDITOR_PATH . '/includes/template/page/fullwidth.php';
+			$template = Boldgrid_Editor_Service::get( 'templater' )->get_full_path( 'fullwidth' );
 		}
 
 		return $template;

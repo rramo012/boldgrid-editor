@@ -22,12 +22,25 @@ class Boldgrid_Editor_Fs {
 
 	public function __construct() {
 		$this->wp_filesystem = $this->init();
+
+		return $this;
+	}
+
+	/**
+	 * Accessor.
+	 *
+	 * @since 1.6
+	 *
+	 * @return wp_filesystem Wordpress global.
+	 */
+	public function get_wp_filesystem() {
+		return $this->wp_filesystem;
 	}
 
 	/**
 	 * Initialize the WP_Filesystem.
 	 *
-	 * @since 1.2.3
+	 * @since 1.6
 	 * @global $wp_filesystem WordPress Filesystem global.
 	 */
 	public function init() {

@@ -68,7 +68,7 @@ class Boldgrid_Editor_Builder_Styles {
 	 */
 	public function has_custom_style( $name ) {
 		$has_custom_style = false;
-		$option = Boldgrid_Editor_Builder_Styles::get_option();
+		$option = self::get_option();
 		$configs = ! empty( $option['configuration'] ) ? $option['configuration'] : array();
 
 		foreach( $configs as $config ) {

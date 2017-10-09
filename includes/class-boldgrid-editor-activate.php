@@ -38,6 +38,6 @@ class Boldgrid_Editor_Activate {
 	 */
 	public static function on_deactivate() {
 		flush_rewrite_rules();
+		Boldgrid_Editor_Preview::delete_post();
 	}
-
 }

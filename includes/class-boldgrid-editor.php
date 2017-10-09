@@ -19,6 +19,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-ajax.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-assets.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-mce.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-theme.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-preview.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-fs.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-version.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php';
@@ -122,6 +123,11 @@ class Boldgrid_Editor {
 
 		$boldgrid_gridblock_post = new Boldgrid_Editor_Gridblock_Post( $this->config->get_configs() );
 		$boldgrid_gridblock_post->add_hooks();
+
+		Boldgrid_Editor_Service::register( 'preview_page', new Boldgrid_Editor_Preview() );
+		Boldgrid_Editor_Service::get( 'preview_page' )->init();
+
+		Boldgrid_Editor_Service::register( 'file_system', new Boldgrid_Editor_Fs() );
 
 		$this->setup_page_title();
 
@@ -247,7 +253,6 @@ class Boldgrid_Editor {
 			// Display and save admin notice state.
 			add_action( 'admin_init', array( $boldgrid_editor_setup, 'reset_editor_action' ) );
 			add_action( 'shutdown', array ( $boldgrid_editor_version, 'save_notice_state' ) );
-			add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
 
 			// Create media modal tabs.
 			$configs = array_merge( $this->get_path_configs(), $this->get_tab_configs() );

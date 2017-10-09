@@ -45,11 +45,13 @@ class Boldgrid_Editor_Builder {
 	 * @since 1.2.3
 	 */
 	public function add_help_tab() {
+		$fs = Boldgrid_Editor_Service::get( 'file_system' )->get_wp_filesystem();
+
 		$screen = get_current_screen();
 		$screen->add_help_tab( array(
 			'id'       => 'boldgrid-editor',
 			'title'    => __( 'Boldgrid Editor' ),
-			'content'  => file_get_contents( BOLDGRID_EDITOR_PATH . '/pages/help-tab.html' ),
+			'content'  => $fs->get_contents( BOLDGRID_EDITOR_PATH . '/pages/help-tab.html' ),
 		) );
 	}
 
@@ -82,12 +84,14 @@ class Boldgrid_Editor_Builder {
 	 * @return array Configs for the styler.
 	 */
 	public static function get_builder_config() {
+		$fs = Boldgrid_Editor_Service::get( 'file_system' )->get_wp_filesystem();
 		$fonts = new Boldgrid_Editor_Builder_Fonts();
 		$builder_components = new Boldgrid_Editor_Builder_Components();
 
-		$builder_configs = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
-		$builder_configs['component_library'] = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/components.json' ), true );
-		$builder_configs['fonts'] = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
+
+		$builder_configs = json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/builder.json' ), true );
+		$builder_configs['component_library'] = json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/components.json' ), true );
+		$builder_configs['fonts'] = json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/webfonts.json' ), true );
 		$builder_configs['theme_fonts'] = $fonts->get_theme_fonts();
 		$builder_configs['theme_features'] = self::get_theme_features();
 		$builder_configs['components_used'] = $builder_components->get_components();
@@ -248,14 +252,15 @@ class Boldgrid_Editor_Builder {
 	 */
 	public static function get_background_data() {
 		// Grab the first 20 gradients.
-		$gradients = json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
+		$fs = Boldgrid_Editor_Service::get( 'file_system' )->get_wp_filesystem();
+		$gradients = json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/preset-gradients.json' ) );
 		$gradients = array_slice( $gradients, 0, 20 );
 
 		return array(
 			'color' => array(),
-			'image' => json_decode( file_get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
+			'image' => json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/sample-images.json' ) ),
 			'pattern' => self::get_patterns(),
-			// 'default_gradients' =>  json_decode( file_get_contents ( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
+			// 'default_gradients' =>  json_decode( $fs->get_contents( BOLDGRID_EDITOR_PATH . '/assets/json/gradients.json' ) ),
 			'gradients' => $gradients,
 		);
 	}

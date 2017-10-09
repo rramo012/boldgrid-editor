@@ -103,8 +103,33 @@ class Boldgrid_Editor_Templater {
 			&& get_option( 'page_for_posts' ) != $post->ID
 			&& '' == $post->page_template // Only when page_template is not set
 		) {
-			$post->page_template = 'template/page/' . $template_choice . '.php';
+			$post->page_template = $this->get_template_slug( $template_choice );
 		}
+	}
+
+	/**
+	 * Get template path, given name.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $template_name Name of template.
+	 * @return string                Template name.
+	 */
+	public function get_template_slug( $template_name ) {
+		return 'template/page/' . $template_name . '.php';
+	}
+
+	/**
+	 * Get full path to a template file given name.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $template_name Name of template.
+	 * @return string                Template ppath.
+	 */
+	public function get_full_path( $template_name ) {
+		$template_path = BOLDGRID_EDITOR_PATH . '/includes/';
+		return $template_path . $this->get_template_slug( $template_name );
 	}
 
 	/**

@@ -17,38 +17,20 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 			 * @since 1.4
 			 */
 			getStyles: function( url ) {
-				$.get( url, function( siteMarkup ) {
-					var $window = $( window );
+				let onComplete = ( siteMarkup ) => {
 					self.siteMarkup = siteMarkup;
+					BG.GRIDBLOCK.View.headMarkup = self.getHeadElements( siteMarkup );
+					BG.$window.trigger( 'boldgrid_page_html', self.siteMarkup );
+					BG.$window.trigger( 'boldgrid_head_styles', self.headMarkup );
+				};
 
-					$( window ).trigger( 'pageMarkup', siteMarkup );
-
-					self.fetchStyles( siteMarkup ).done( function( markup ) {
-						BG.GRIDBLOCK.View.headMarkup = markup;
-						$window.trigger( 'boldgrid_page_html', self.siteMarkup );
-						$window.trigger( 'boldgrid_head_styles', self.headMarkup );
+				$.get( url )
+					.success( ( markup ) => {
+						onComplete( markup );
+					} )
+					.fail( ( event ) => {
+						onComplete( event.responseText || '' );
 					} );
-				} );
-			},
-
-			/**
-			 * Depending on the browser. Use a different method for loading the styles.
-			 *
-			 * @return {$.Deferred} Deferred jquery element to be resolved when styles are retreived.
-			 */
-			fetchStyles: function( siteMarkup ) {
-				var $deferred;
-
-				// Disabled, fonts font work ( relative paths in styles )
-				//IIf ( 'Firefox' !== BOLDGRID.EDITOR.Controls.browser ) {
-				//	$deferred = self.getHeadDownloaded( siteMarkup );
-				//} else {
-
-					$deferred = self.getHeadElements( siteMarkup );
-
-				//}
-
-				return $deferred;
 			},
 
 			/**
@@ -83,86 +65,9 @@ BOLDGRID.EDITOR.STYLE = BOLDGRID.EDITOR.STYLE || {};
 
 				headMarkup += wp.template( 'gridblock-iframe-styles' )();
 
-				return $.Deferred().resolve( headMarkup );
-			},
-
-			/**
-			 * Given markup for a site, get all of the stylesheets markup.
-			 *
-			 * @since 1.4
-			 *
-			 * @param string siteMarkup Markup for an Entire site.
-			 * @return string Head markup that represents the styles.
-			 */
-			getHeadDownloaded: function( siteMarkup ) {
-				var $html = $( '<div>' ).html( siteMarkup ),
-					$deffered = $.Deferred(),
-					styles = [],
-					pending = [];
-
-				var markAsResolved = function( styleIndex ) {
-					var index = pending.indexOf( styleIndex );
-					if ( -1 < index ) {
-						pending.splice( index, 1 );
-					}
-				};
-
-				var getMarkup = function() {
-					var markup = '';
-
-					$.each( styles, function() {
-						if ( ! this.html ) {
-							return;
-						}
-
-						if ( 'LINK' === this.tagName ) {
-							markup += $( '<style type="text/css">' ).html( this.html )[0].outerHTML;
-						} else {
-							markup += this.html;
-						}
-					} );
-
-					return markup;
-				};
-
-				var isFinished = function() {
-					if ( ! pending.length ) {
-						$deffered.resolve( getMarkup() );
-					}
-				};
-
-				$html.find( 'link, style' ).each( function( index ) {
-					var $this = $( this ),
-						markup = this.outerHTML,
-						tagName = $this.prop( 'tagName' );
-
-					if ( 'LINK' === tagName && 'stylesheet' !== $this.attr( 'rel' ) ) {
-						markup = '';
-					} else if ( 'LINK' === tagName ) {
-						markup = '';
-						pending.push( index );
-						$.get( $this.attr( 'href' ), function( resp ) {
-							styles[ index ].html = resp;
-							markAsResolved( index );
-							isFinished();
-						} );
-					}
-
-					styles.push( {
-						'tagName': tagName,
-						'href': $this.attr( 'href' ),
-						'html': markup
-					} );
-				} );
-
-				styles.push( {
-					'tagName': 'STYLE',
-					'href': '',
-					'html': wp.template( 'gridblock-iframe-styles' )()
-				} );
-
-				return $deffered;
+				return headMarkup;
 			}
+
 		};
 
 	BG.STYLE.Remote = self;
