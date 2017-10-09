@@ -657,7 +657,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				if ( -1 === classes.indexOf( uniqueValue ) && ! BG.CONTROLS.Color.isColorTransparent( backgroundColor ) ) {
 					classes.push( uniqueValue );
 				} else {
-					$this.hide();
+					$this.remove();
 				}
 			} );
 		},
