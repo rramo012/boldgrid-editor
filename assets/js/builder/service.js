@@ -3,6 +3,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 import EditorWidth from './tinymce/width';
 import StyleUpdater from './style/updater';
+import LoadingGraphic from './tinymce/loading';
 
 export class Service {
 	init() {
@@ -24,6 +25,7 @@ export class Service {
 	 */
 	_onWindowLoad() {
 		this.editorWidth = new EditorWidth().init();
+		this.loading = new LoadingGraphic().init();
 	}
 
 	/**

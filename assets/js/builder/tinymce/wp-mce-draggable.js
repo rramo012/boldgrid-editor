@@ -20,8 +20,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.draggable_instance = false;
 
-	this.$loading = $( '.bg-editor-loading-main' );
-
 	/**
 	 * The Main Window
 	 */
@@ -36,11 +34,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 	this.desktop_width_needed = 1270; //1100 + 300;
 
 	var menu_items = [];
-
-	// Failsafe.
-	setTimeout( function() {
-		self.$loading.removeClass( 'active' );
-	}, 3000 );
 
 	this.bind_window_resize = function() {
 		let resizeProcess = _.debounce( self.resize_done_event, 300 );
@@ -327,7 +320,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 		//Highlight the current display type
 		self.update_device_highlighting();
 		self.$window.trigger( 'resize.boldgrid-gallery' );
-		self.$loading.removeClass( 'active' );
 	};
 
 	this.updateResizingIframe = function() {

@@ -68,7 +68,13 @@ export class Width {
 	_postIframeProcess() {
 		this.$postContainer = this._findPostContainer();
 		this.resizable = this.$postContainer.length && this.$postContainer.width() ? true : false;
-		$( window ).trigger( 'resize' );
+
+		if ( IMHWPB.WP_MCE_Draggable.instance )  {
+			IMHWPB.WP_MCE_Draggable.instance.resize_done_event();
+		}
+
+		BG.$window.trigger( 'boldgrid_post_width', { width: this.$postContainer.width() } );
+		BG.Service.loading.hide();
 	}
 
 	/**
@@ -101,28 +107,6 @@ export class Width {
 		setTimeout( function() {
 			$deferred.resolve();
 		}, 3000 );
-
-		return $deferred;
-	}
-
-	_setIframeData2( html ) {
-		let $deferred = $.Deferred();
-
-		// Replace tags we don't want loaded.
-		html = html.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
-		html = html.replace( /<img[^>]*>/g, '' );
-
-		// This set timeout is to prevent infinite spinner.
-		setTimeout( () => {
-			this.$resizeiframe[0]
-				.contentWindow
-				.document
-				.write( html );
-
-			setTimeout( () => {
-				$deferred.resolve();
-			}, this.stylesheetWaitTime );
-		}, 100 );
 
 		return $deferred;
 	}
