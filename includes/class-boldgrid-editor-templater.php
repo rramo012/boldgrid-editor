@@ -185,21 +185,23 @@ class Boldgrid_Editor_Templater {
 			return $template;
 		}
 
+		$post_meta = get_page_template_slug( $post_id );
+
+		if ( ! empty( $_GET['preview'] ) && 'true' === $_GET['preview'] ) {
+			$preview_meta = Boldgrid_Editor_Option::get( 'preview_meta' );
+			$post_meta = isset( $preview_meta['template'] ) ? $preview_meta['template'] : false;
+		}
+
 		// Return default template if we don't have a custom one defined
-		if ( ! isset( $this->templates[get_post_meta(
-			$post->ID, '_wp_page_template', true
-		)] ) ) {
+		if ( ! isset( $this->templates[ $post_meta ] ) ) {
 			return $template;
 		}
 
-		$file = plugin_dir_path( __FILE__ ). get_post_meta(
-			$post->ID, '_wp_page_template', true
-		);
+		$file = BOLDGRID_EDITOR_PATH . '/includes/' . $post_meta;
+
 		// Just to be safe, we check if the file exist first
 		if ( file_exists( $file ) ) {
-			return $file;
-		} else {
-			echo $file;
+			$template = $file;
 		}
 
 		// Return template

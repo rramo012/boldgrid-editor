@@ -27,6 +27,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-setup.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-service.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-upgrade.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-postmeta.php';
 
 require_once BOLDGRID_EDITOR_PATH . '/controls/class-boldgrid-controls-page-title.php';
 
@@ -123,6 +124,9 @@ class Boldgrid_Editor {
 
 		$boldgrid_gridblock_post = new Boldgrid_Editor_Gridblock_Post( $this->config->get_configs() );
 		$boldgrid_gridblock_post->add_hooks();
+
+		$boldgrid_gridblock_postmeta = new Boldgrid_Editor_Postmeta();
+		$boldgrid_gridblock_postmeta->init();
 
 		Boldgrid_Editor_Service::register( 'preview_page', new Boldgrid_Editor_Preview() );
 		Boldgrid_Editor_Service::get( 'preview_page' )->init();
