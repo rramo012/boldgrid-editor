@@ -32,6 +32,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this._setupCustomizeDefault();
 			this._lockPanelScroll();
 			this._setupAutoCenter();
+			this._setupEscapeClose();
 
 			return this.$element;
 		},
@@ -192,6 +193,25 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			}
 
 			return isOpenControl;
+		},
+
+		/**
+		 * When the user presses escpae, close the panel.
+		 *
+		 * @since 1.6
+		 */
+		_setupEscapeClose() {
+			let callback = ( e ) => {
+				if ( 27 === e.keyCode &&
+					this.currentControl && this.currentControl.panel && ! this.currentControl.panel.disabledClose &&
+					this.$element.is( ':visible' ) ) {
+
+					self.closePanel();
+				}
+			};
+
+			BG.$window.on( 'keyup', callback );
+			BG.Controls.$container.on( 'keyup', callback );
 		},
 
 		/**

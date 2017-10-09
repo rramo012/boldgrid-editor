@@ -1,4 +1,7 @@
+let $ = jQuery;
+
 window.BOLDGRID = window.BOLDGRID || {};
+BOLDGRID.EDITOR.$window = $( window );
 
 // Require jquery plugins.
 import 'istyping';

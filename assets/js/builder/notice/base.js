@@ -25,7 +25,7 @@ export class Base {
 	removeEffects() {
 		$( 'body' ).removeClass( 'bg-editor-intro-1-3 fadeout-background bg-editor-intro' );
 		BG.Panel.resetPosition();
-		BG.Panel.$element.hide();
+		BG.Panel.closePanel();
 		BG.Panel.$element.removeClass( 'animated bounceOutDown bounceInDown' );
 	}
 

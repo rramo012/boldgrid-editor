@@ -15,6 +15,7 @@ export class Intro extends Notice {
 			title: 'BoldGrid Editor - Setup',
 			height: '285px',
 			width: '650px',
+			disabledClose: true,
 			autoCenter: true
 		};
 	}

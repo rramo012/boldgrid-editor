@@ -26,6 +26,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.5.2 In Progress =
 * New Feature:                  Control for hiding and showing page titles.
+* New Feature:                  Escape now closes an open panel.
 
 = 1.5.1 =
 * New Feature:                  Allow customization of HR element.
