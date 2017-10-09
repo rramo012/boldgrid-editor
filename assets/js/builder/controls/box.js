@@ -648,9 +648,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 * @since 1.2.7
 		 */
 		removeInvalid: function() {
-			var classes = [];
-			BG.Panel.$element.find( '.my-designs > *' ).each( function() {
-				var $this = $( this ),
+			let classes = [],
+				$myDesigns = BG.Panel.$element.find( '.my-designs' );
+
+			$myDesigns.find( '> *' ).each( function() {
+				let $this = $( this ),
 					backgroundColor = $this.css( 'background-color' ),
 					uniqueValue = $this.attr( 'data-value' ) + backgroundColor;
 
@@ -660,6 +662,12 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					$this.remove();
 				}
 			} );
+
+			// Remove my designs if all designs are invalid.
+			if ( ! classes.length ) {
+				$myDesigns.remove();
+				BG.Panel.$element.find( '.my-designs-title' ).remove();
+			}
 		},
 
 		/**

@@ -1,7 +1,7 @@
 <script type="text/html" id="tmpl-boldgrid-editor-box">
 	<div class='box-design'>
 		<# if ( data.myPresets.length ) { #>
-		<div class='title'>
+		<div class='title my-designs-title'>
 			<h4>My Designs</h4>
 		</div>
 		<div class='my-designs presets grid'>
