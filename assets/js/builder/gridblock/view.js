@@ -51,17 +51,29 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.$filterSelect.html( html );
 		},
 
+		/**
+		 * Process for the opening of te gridblock UI.
+		 *
+		 * @since 1.6
+		 */
 		onOpen: function() {
 			self.$gridblockSection.trigger( 'scroll' );
 			self.updateCustomStyles();
 		},
 
+		/**
+		 * Update all gridblocks with the latest custom styles.
+		 *
+		 * @since 1.6
+		 */
 		updateCustomStyles: function() {
+			let stylesheetCss = BG.Service.styleUpdater.getStylesheetCss();
+
 			_.each( BG.GRIDBLOCK.configs.gridblocks, ( gridblock ) => {
 				if ( 'iframeCreated' === gridblock.state ) {
 					gridblock.$iframeContents
 						.find( '#boldgrid-custom-styles' )
-						.html( BG.Controls.get( 'Palette' ).getStylesheetCss() );
+						.html( stylesheetCss );
 				}
 			} );
 		},
@@ -127,7 +139,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				if ( diff < loadDistance && true === BG.CONTROLS.Section.sectionDragEnabled ) {
 					self.updateDisplay();
 				}
-			}, 300 );
+			}, 800 );
 
 			self.$gridblockSection.on( 'scroll', throttled );
 		},
@@ -244,7 +256,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			let headMarkup = self.headMarkup;
 
 			headMarkup += '<style id="boldgrid-custom-styles">' +
-				BG.Controls.get( 'Palette' ).getStylesheetCss() + '</style>';
+				BG.Service.styleUpdater.getCachedCss() + '</style>';
 
 			$iframe.find( 'head' ).html( headMarkup );
 		},

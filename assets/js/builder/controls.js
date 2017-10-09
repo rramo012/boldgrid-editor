@@ -86,6 +86,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			BG.NOTICE.Update.init();
 
 			this.browser = BG.Util.checkBrowser();
+
+			BG.$window.trigger( 'boldgrid_editor_loaded' );
 		},
 
 		/**
@@ -138,6 +140,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this.indexedControls[ control.name ] = control;
 		},
 
+		/**
+		 * Get a control instance by name.
+		 *
+		 * @since 1.6
+		 *
+		 * @param  {string} name Control name.
+		 * @return {object}      Control instance.
+		 */
 		get: function( name ) {
 			return this.indexedControls[ name ];
 		},

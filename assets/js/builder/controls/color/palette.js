@@ -40,8 +40,7 @@ export class Palette {
 	 * @since 1.6
 	 */
 	setup() {
-		this.$input = $( '#boldgrid-control-styles' );
-		this._setupStyleLoader();
+		this._setupParentLoader();
 	}
 
 	/**
@@ -135,7 +134,7 @@ export class Palette {
 
 		$control = this.colorPalette.render( $target, this.getPaletteSettings() ).on( 'sass_compiled', ( e, data ) => {
 
-			this.styleUpdater.update( {
+			BG.Service.styleUpdater.update( {
 				id: 'bg-controls-colors',
 				css: data.result.text,
 				scss: data.scss
@@ -163,8 +162,8 @@ export class Palette {
 		let paletteSettings;
 
 		paletteSettings = this.paletteConfig.createSavableState( BOLDGRID.COLOR_PALETTE.Modify.format_current_palette_state() );
-		this.styleUpdater.stylesState[0].options = this.styleUpdater.stylesState[0].options || {};
-		this.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
+		BG.Service.styleUpdater.stylesState[0].options = BG.Service.styleUpdater.stylesState[0].options || {};
+		BG.Service.styleUpdater.stylesState[0].options.paletteSettings = paletteSettings;
 		BG.CONTROLS.Color.updatePaletteSettings( paletteSettings );
 
 		this.updatedPaletteSettings = paletteSettings;
@@ -177,19 +176,7 @@ export class Palette {
 	 */
 	_postPaletteUpdate() {
 		this._savePaletteSettings();
-		this._updateInput();
-		this.allCss = this.styleUpdater.getStylesheetCss();
-	}
-
-	/**
-	 * @todo move the style update into a service.
-	 */
-	getStylesheetCss() {
-		if ( ! this.allCss ) {
-			this.allCss = this.styleUpdater.getStylesheetCss();
-		}
-
-		return this.allCss;
+		BG.Service.styleUpdater.updateInput();
 	}
 
 	/**
@@ -209,28 +196,6 @@ export class Palette {
 		this.styleUpdaterParent.setup();
 	}
 
-	/**
-	 * Instantiate the css loader.
-	 *
-	 * @since 1.6
-	 */
-	_setupStyleLoader() {
-		this._setupParentLoader();
-
-		this.styleUpdater = new StyleUpdater( BG.Controls.$container );
-		this.styleUpdater.loadSavedConfig( BoldgridEditor.control_styles.configuration || [] );
-		this.styleUpdater.setup();
-		this._updateInput();
-	}
-
-	/**
-	 * Update the on page input which will be saved to wordpress.
-	 *
-	 * @since 1.6
-	 */
-	_updateInput() {
-		this.$input.val( JSON.stringify( this.styleUpdater.stylesState ) );
-	}
 }
 
 export { Palette as default };
