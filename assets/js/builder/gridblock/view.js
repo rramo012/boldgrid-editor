@@ -38,7 +38,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				url: BoldgridEditor.plugin_configs.asset_server +
 					BoldgridEditor.plugin_configs.ajax_calls.gridblock_types,
 				dataType: 'json',
-				timeout: 4000
+				timeout: 4000,
+				data: {
+					'release_channel': BoldgridEditor.boldgrid_settings.theme_release_channel,
+					'key': BoldgridEditor.boldgrid_settings.api_key
+				}
 			} )
 			.done( ( data ) => {
 				this.setFilterOptions( data );

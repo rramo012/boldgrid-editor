@@ -186,6 +186,9 @@ class Boldgrid_Editor_Assets {
 		$default_tab = wp_default_editor();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
+		$boldgrid_settings = get_option( 'boldgrid_settings' );
+		$boldgrid_settings['api_key'] = get_option( 'boldgrid_api_key' );
+
 		$vars = array(
 			'plugin_configs' => $this->configs,
 			'is_boldgrid_theme' => $is_bg_theme,
@@ -211,6 +214,7 @@ class Boldgrid_Editor_Assets {
 			'internalPageTemplates' => Boldgrid_Editor_Service::get( 'templater' )->templates,
 			'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
 			'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
+			'boldgrid_settings' => $boldgrid_settings,
 			'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 			//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 			'display_update_notice' => false,
