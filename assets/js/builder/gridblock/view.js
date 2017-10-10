@@ -17,8 +17,10 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		siteMarkup: '',
 
 		init: function() {
-			self.$filterSelect = $( '.boldgrid-gridblock-categories select' );
-			self.setFilterOptions();
+			self.$filterSelectWrap = $( '.boldgrid-gridblock-categories' );
+			self.$filterSelect = self.$filterSelectWrap.find( 'select' );
+
+			self.fetchTypes();
 
 			self.findElements();
 			self.setGridblockCount();
@@ -29,6 +31,20 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			BG.GRIDBLOCK.Category.init();
 			self.endlessScroll();
 			self.templateClass = self.getTemplateClass();
+		},
+
+		fetchTypes() {
+			return $.ajax( {
+				url: BoldgridEditor.plugin_configs.asset_server +
+					BoldgridEditor.plugin_configs.ajax_calls.gridblock_types,
+				dataType: 'json',
+				timeout: 4000
+			} )
+			.done( ( data ) => {
+				this.setFilterOptions( data );
+			} ).fail( () => {
+				this.setFilterOptions();
+			} );
 		},
 
 		/**
@@ -44,11 +60,12 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			additionalFilters = additionalFilters || [];
 			allFilters = additionalFilters.concat( filters );
 
-			for ( let filter of filters ) {
+			for ( let filter of allFilters ) {
 				html += '<option value="' + filter.slug + '">' + filter.title + '</option>';
 			}
 
 			self.$filterSelect.html( html );
+			self.$filterSelectWrap.fadeIn();
 		},
 
 		/**
