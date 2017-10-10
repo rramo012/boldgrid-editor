@@ -181,10 +181,11 @@ class Boldgrid_Editor_Templater {
 		global $post;
 
 		// Return template if post is empty
-		if ( ! $post ) {
+		if ( ! $post || ! $post->ID ) {
 			return $template;
 		}
 
+		$post_id = $post->ID;
 		$post_meta = get_page_template_slug( $post_id );
 
 		if ( ! empty( $_GET['preview'] ) && 'true' === $_GET['preview'] ) {
