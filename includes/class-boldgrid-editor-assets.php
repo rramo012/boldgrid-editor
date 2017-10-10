@@ -189,6 +189,7 @@ class Boldgrid_Editor_Assets {
 		$vars = array(
 			'plugin_configs' => $this->configs,
 			'is_boldgrid_theme' => $is_bg_theme,
+			'is_add_new' => 'post-new.php' === $pagenow,
 			'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 			'post' => ( array ) $post,
 			'post_id' => $this->get_post_id(),

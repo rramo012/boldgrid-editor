@@ -153,9 +153,8 @@ class Boldgrid_Editor_Preview {
 	public function set_dynamic_template( $template ) {
 		global $post;
 
-		$templater = Boldgrid_Editor_Service::get( 'templater' );
-		if ( $post->ID === $this->preview_page_id && 'page' === $post->post_type ) {
-
+		if ( $post && $post->ID === $this->preview_page_id && 'page' === $post->post_type ) {
+			$templater = Boldgrid_Editor_Service::get( 'templater' );
 			$template_choice = Boldgrid_Editor_Setup::get_template_choice();
 			if ( $templater->is_custom_template( $templater->get_template_slug( $template_choice ) ) ) {
 				$template = $templater->get_full_path( $template_choice );
