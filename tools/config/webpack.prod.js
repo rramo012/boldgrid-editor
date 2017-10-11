@@ -88,7 +88,7 @@ module.exports = {
 
 		new CopyWebpackPlugin( [
 			{
-				from: srcDir + '/node_modules/jquery.stellar/jquery.stellar.js',
+				from: require.resolve( 'jquery.stellar/jquery.stellar.js' ),
 				to: distDir + '/assets/js/jquery-stellar'
 			},
 			{
@@ -96,7 +96,7 @@ module.exports = {
 				to: fontsDir
 			},
 			{
-				from: srcDir + '/node_modules/font-awesome/css/font-awesome.min.css',
+				from: require.resolve( 'font-awesome/css/font-awesome.min.css' ),
 				to: cssDir
 			},
 			{
@@ -120,9 +120,7 @@ module.exports = {
 				to: path.resolve( scssDir, 'color-palette-scss' )
 			},
 			{
-				from:
-					srcDir +
-					'/node_modules/boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css',
+				from: require.resolve( 'boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css' ),
 				to: cssDir
 			}
 		] ),
