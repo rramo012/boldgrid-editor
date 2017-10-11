@@ -9,7 +9,7 @@ export class Width {
 		this.resizable = false;
 		this.stylesheetWaitTime = 500;
 
-		this._setup();
+		this.updateIframeUrl();
 
 		return this;
 	}
@@ -82,10 +82,16 @@ export class Width {
 	 *
 	 * @since 1.6
 	 */
-	_setup() {
+	updateIframeUrl( url ) {
+		url = url || BoldgridEditor.site_url;
+
 		if ( ! BoldgridEditor.is_boldgrid_theme || 'post' === BoldgridEditor.post_type  ) {
-			this.$resizeiframe = this.createIframe();
-			this._setIframeData().done( () => {
+
+			if ( ! this.$resizeiframe ) {
+				this.$resizeiframe = this.createIframe();
+			}
+
+			this._setIframeData( url ).done( () => {
 				this._postIframeProcess();
 			} );
 		}
@@ -96,10 +102,10 @@ export class Width {
 	 *
 	 * @since 1.6
 	 */
-	_setIframeData() {
+	_setIframeData( url ) {
 		let $deferred = $.Deferred();
 
-		this.$resizeiframe[0].src = BoldgridEditor.site_url;
+		this.$resizeiframe[0].src = url;
 		this.$resizeiframe[0].onload = function() {
 			$deferred.resolve();
 		};

@@ -7,9 +7,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 return array (
 	'ajax_calls' => array (
-		'get_plugin_version' =>	'/api/open/get-plugin-version',
+		'get_plugin_version' => '/api/open/get-plugin-version',
 		'get_asset'          => '/api/open/get-asset',
-		'gridblock_generate' =>	'/v1/gridblocks',
+		'gridblock_generate' => '/v1/gridblocks',
+		'gridblock_types'    => '/v1/gridblocks/types'
 	),
 	'asset_server'          => 'https://wp-assets.boldgrid.com',
 	'plugin_name'           => 'boldgrid-editor',
@@ -26,7 +27,7 @@ return array (
 		'boldgrid-components' => array(
 			'handle' => 'boldgrid-components',
 			'deps' => array(),
-			'version' => '2.5.0',
+			'version' => '2.5.1',
 			'src' => plugins_url( '/assets/css/components.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 			'mce_str_match' => '/components.',
 		),

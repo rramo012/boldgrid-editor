@@ -61,6 +61,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 						'quantity': type ? 30 : 50,
 						'color_palettes': 1,
 						'include_temporary_resources': 1,
+						'release_channel': BoldgridEditor.boldgrid_settings.theme_release_channel,
+						'key': BoldgridEditor.boldgrid_settings.api_key,
 						'transparent_backgrounds': 'post' === BoldgridEditor.post_type ? 1 : 0,
 						'type': type,
 						'color': JSON.stringify( { 'colors': BG.CONTROLS.Color.getGridblockColors() } ),

@@ -78,6 +78,7 @@ class Boldgrid_Editor_Assets {
 		global $pagenow;
 
 		$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
+		$post_type = ! empty( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : null;
 
 		// If this is a new page, use the preview page.
 		if ( 'post-new.php' === $pagenow ) {
@@ -85,8 +86,15 @@ class Boldgrid_Editor_Assets {
 		}
 
 		$permalink = ! empty( $post_id ) ? get_permalink( intval( $post_id ) ) : null;
+		$permalink = ( $permalink ? $permalink : get_site_url() );
 
-		return ( $permalink ? $permalink : get_site_url() );
+		$permalink = add_query_arg( array(
+			'bg_preview_page' => 1,
+			'bg_post_id' => $post_id,
+			'bg_is_post' => intval( ! $post_type ),
+		), $permalink );
+
+		return $permalink;
 	}
 
 	/**
@@ -178,9 +186,13 @@ class Boldgrid_Editor_Assets {
 		$default_tab = wp_default_editor();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
+		$boldgrid_settings = get_option( 'boldgrid_settings' );
+		$boldgrid_settings['api_key'] = get_option( 'boldgrid_api_key' );
+
 		$vars = array(
 			'plugin_configs' => $this->configs,
 			'is_boldgrid_theme' => $is_bg_theme,
+			'is_add_new' => 'post-new.php' === $pagenow,
 			'body_class' => Boldgrid_Editor_Theme::theme_body_class(),
 			'post' => ( array ) $post,
 			'post_id' => $this->get_post_id(),
@@ -202,6 +214,7 @@ class Boldgrid_Editor_Assets {
 			'internalPageTemplates' => Boldgrid_Editor_Service::get( 'templater' )->templates,
 			'sample_backgrounds' => Boldgrid_Editor_Builder::get_background_data(),
 			'builder_config' => Boldgrid_Editor_Builder::get_builder_config(),
+			'boldgrid_settings' => $boldgrid_settings,
 			'default_container' => Boldgrid_Editor_Builder::get_page_container(),
 			//'display_update_notice' => Boldgrid_Editor_Version::should_display_notice(),
 			'display_update_notice' => false,

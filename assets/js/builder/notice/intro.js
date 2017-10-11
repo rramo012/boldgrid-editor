@@ -69,8 +69,16 @@ export class Intro extends Notice {
 		BG.Panel.$element.show();
 	}
 
+	needsIframeRefresh() {
+		return BoldgridEditor.is_add_new && 'page' === BoldgridEditor.post_type;
+	}
+
 	dismissPanel() {
 		super.dismissPanel();
+
+		if ( this.needsIframeRefresh() ) {
+			BG.Service.loading.show();
+		}
 
 		// Compile the color palettes, and apply.( This should tie into what we have already. )
 		// BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
@@ -100,14 +108,11 @@ export class Intro extends Notice {
 				settings: this.settings
 			}
 		} )
-			.done( function( response ) {
-
-				// Close loading graphic.
-			} )
-			.fail( function() {
-
-				// Add the defaults in a post input and save later.
-			} );
+		.always( () => {
+			if ( this.needsIframeRefresh() ) {
+				BOLDGRID.EDITOR.Service.editorWidth.updateIframeUrl();
+			}
+		} );
 	}
 
 	/**

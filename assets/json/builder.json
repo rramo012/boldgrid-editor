@@ -134,34 +134,6 @@
             {
                 "slug": "saved",
                 "title": "Used Gridblocks"
-            },
-            {
-                "slug": "call_to_action",
-                "title": "Welcome"
-            },
-            {
-                "slug": "gallery",
-                "title": "Gallery"
-            },
-            {
-                "slug": "team",
-                "title": "Team"
-            },
-            {
-                "slug": "text",
-                "title": "Text"
-            },
-            {
-                "slug": "testimonial",
-                "title": "Testimonial"
-            },
-            {
-                "slug": "about",
-                "title": "About"
-            },
-            {
-                "slug": "services",
-                "title": "Services"
             }
         ]
     },

@@ -2147,6 +2147,7 @@ html:not(.dragging-section) .delete-icon-wrap {
   display: none; }
 
 .zoom-navbar .boldgrid-gridblock-categories {
+  display: none;
   position: absolute;
   top: 0;
   left: 75%;

@@ -34,6 +34,7 @@ class Boldgrid_Editor_Preview {
 
 		// Wrapping in permission check to make sure it only runs for logged in users.
 		if ( current_user_can( 'edit_pages' ) ) {
+			add_action( 'init', array( $this, 'preload' ) );
 			add_action( 'template_include', array( $this, 'set_dynamic_template' ) );
 			add_action( 'load-post-new.php', array( $this, 'on_editor_load' ) );
 			add_action( 'load-post.php', array( $this, 'on_editor_load' ) );
@@ -152,17 +153,54 @@ class Boldgrid_Editor_Preview {
 	public function set_dynamic_template( $template ) {
 		global $post;
 
-		$templater = Boldgrid_Editor_Service::get( 'templater' );
-
-		if ( $post->ID === $this->preview_page_id ) {
-
+		if ( $post && $post->ID === $this->preview_page_id && 'page' === $post->post_type ) {
+			$templater = Boldgrid_Editor_Service::get( 'templater' );
 			$template_choice = Boldgrid_Editor_Setup::get_template_choice();
-			if ( $templater->is_custom_template( $template_choice ) ) {
+			if ( $templater->is_custom_template( $templater->get_template_slug( $template_choice ) ) ) {
 				$template = $templater->get_full_path( $template_choice );
 			}
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Before loading this page on the front end. Run this process.
+	 *
+	 * @since 1.6
+	 */
+	public function preload() {
+		if ( ! is_admin() ) {
+
+			$post_id = ! empty( $_GET['bg_post_id'] ) ? intval( $_GET['bg_post_id'] ) : false;
+			$post = get_post( $post_id );
+
+			if ( $post && $post->ID === $this->preview_page_id ) {
+				$this->set_dynamic_posttype( $post );
+			}
+		}
+	}
+
+	/**
+	 * Given a is post parameter, toggle the page to a post to simulate container widths.
+	 *
+	 * @since 1.6
+	 */
+	public function set_dynamic_posttype( $post ) {
+		$is_post = ! empty( $_GET['bg_is_post'] ) ? intval( $_GET['bg_is_post'] ) : false;
+		$post_type = $post->post_type;
+		$new_post_type = false;
+
+		if ( $is_post && 'page' === $post_type ) {
+			$new_post_type = 'post';
+		} else if ( ! $is_post && 'page' !== $post_type ) {
+			$new_post_type = 'page';
+		}
+
+		if ( $new_post_type ) {
+			$post->post_type = $new_post_type;
+			wp_update_post( $post );
+		}
 	}
 
 	/**

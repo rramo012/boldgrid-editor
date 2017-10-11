@@ -38,9 +38,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/components@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.5.0.tgz#7678763c811eb3d3496d384483ae6c58148a4912"
+"@boldgrid/components@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.5.1.tgz#491b4eb894cdda6d3f79c60e313417c2d07fcc7b"
   dependencies:
     babel-core "^6.22.1"
     babel-eslint "^7.2.3"
@@ -97,9 +97,9 @@
     rimraf "^2.6.1"
     sass.js "0.10.4"
 
-"Buttons@git+https://github.com/alexwolfe/Buttons.git":
+"Buttons@https://github.com/alexwolfe/Buttons":
   version "2.0.0"
-  resolved "git+https://github.com/alexwolfe/Buttons.git#0a91b65bc9e3a8bbbefbe1af20047dabed0d742e"
+  resolved "https://github.com/alexwolfe/Buttons#0a91b65bc9e3a8bbbefbe1af20047dabed0d742e"
   dependencies:
     grunt "^0.4.5"
     grunt-saucelabs "^8.3.2"
