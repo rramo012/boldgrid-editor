@@ -101,7 +101,12 @@ class Boldgrid_Editor_Builder_Styles {
 	 * @return array
 	 */
 	public static function get_option() {
-		return Boldgrid_Editor_Option::get( 'styles', array() );
+		$option_name = 'styles';
+		if ( ! is_admin() && ! empty( $_GET['preview'] ) && 'true' === $_GET['preview'] ) {
+			$option_name = 'preview_styles';
+		}
+
+		return Boldgrid_Editor_Option::get( $option_name, array() );
 	}
 
 	/**
@@ -129,10 +134,9 @@ class Boldgrid_Editor_Builder_Styles {
 	 * @param  string $css CSS to save to a file.
 	 * @return string      URL to new file.
 	 */
-	public function create_file( $css ) {
+	public function create_file( $css, $filename = '/boldgrid/custom-styles.css' ) {
 		$upload_dir = wp_upload_dir();
 		wp_mkdir_p( $upload_dir['basedir'] . '/boldgrid' );
-		$filename = '/boldgrid/custom-styles.css';
 		$new_filename = $upload_dir['basedir'] . $filename;
 		$editor_fs = new Boldgrid_Editor_Fs();
 		$editor_fs->save( $css, $new_filename );
@@ -155,13 +159,26 @@ class Boldgrid_Editor_Builder_Styles {
 
 			// Create stylesheet.
 			$css = $this->create_css_string( $styles );
-			$css_file = $this->create_file( $css );
 
-			Boldgrid_Editor_Option::update( 'styles', array(
-				'configuration' => $styles,
-				'css_filename' => $css_file,
-				'timestamp' => time()
-			) );
+			if ( ! empty( $_POST['wp-preview'] ) ) {
+				// If previewing the page save to another option.
+				$css_file = $this->create_file( $css, '/boldgrid/preview-custom-styles.css' );
+
+				Boldgrid_Editor_Option::update( 'preview_styles', array(
+					'configuration' => $styles,
+					'css_filename' => $css_file,
+					'timestamp' => time()
+				) );
+
+			} else {
+				$css_file = $this->create_file( $css );
+
+				Boldgrid_Editor_Option::update( 'styles', array(
+					'configuration' => $styles,
+					'css_filename' => $css_file,
+					'timestamp' => time()
+				) );
+			}
 		}
 	}
 

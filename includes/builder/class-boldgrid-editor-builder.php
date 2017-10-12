@@ -379,7 +379,7 @@ class Boldgrid_Editor_Builder {
 		$feedback = ! empty( $_REQUEST['boldgrid-record-feedback'] ) ?
 			$_REQUEST['boldgrid-record-feedback'] : null;
 
-		if ( $feedback && empty( $this->has_recorded_feedback ) ) {
+		if ( $feedback && empty( $this->has_recorded_feedback ) && empty( $_POST['wp-preview'] ) ) {
 			$this->has_recorded_feedback = true;
 			$feedback = sanitize_text_field( wp_unslash( $feedback ) );
 			$feedback = json_decode( $feedback, true );
