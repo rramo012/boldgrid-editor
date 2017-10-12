@@ -37,3 +37,21 @@
 .h6 {
 	font-size: $font-size-h6;
 }
+
+
+/**
+ * Below this line needs to be removed only for demo purposes.
+ */
+a {
+	box-shadow: none;
+}
+
+.boldgrid-section {
+	h1, h2, h3, h4, h5, h6 {
+		padding: 1.5em 0 0;
+	}
+}
+
+.boldgrid-section.dynamic-gridblock p + p {
+	margin: inherit;
+}

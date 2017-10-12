@@ -853,3 +853,15 @@
 
 .h6 {
   font-size: 12px; }
+
+/**
+ * Below this line needs to be removed only for demo purposes.
+ */
+a {
+  box-shadow: none; }
+
+.boldgrid-section h1, .boldgrid-section h2, .boldgrid-section h3, .boldgrid-section h4, .boldgrid-section h5, .boldgrid-section h6 {
+  padding: 1.5em 0 0; }
+
+.boldgrid-section.dynamic-gridblock p + p {
+  margin: inherit; }
