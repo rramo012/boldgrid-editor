@@ -59,6 +59,18 @@ class Boldgrid_Editor_Builder_Styles {
 	}
 
 	/**
+	 * Check if the theme requires the default stylesheet.
+	 *
+	 * @since 1.6
+	 *
+	 * @return boolean.
+	 */
+	public function requires_default_styles() {
+		$option = self::get_option();
+		return empty( $option['css_filename'] ) && ! Boldgrid_Editor_Service::get( 'main' )->get_is_boldgrid_theme();
+	}
+
+	/**
 	 * Check if the user has saved a specific type of custom style.
 	 *
 	 * @since 1.6

@@ -320,6 +320,7 @@ class Boldgrid_Editor_MCE {
 
 		array_unshift( $styles, plugins_url( '/assets/js/builder/css/before-theme.css',
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ) );
+
 		array_unshift( $styles, '//fonts.googleapis.com/css?family=Open+Sans:600' );
 
 		// Add a couple of styles that need to append the iframe head.
@@ -330,6 +331,11 @@ class Boldgrid_Editor_MCE {
 			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 
 		$styles[] = Boldgrid_Editor_Assets::editor_css_url();
+
+		$builder_styles = new Boldgrid_Editor_Builder_Styles();
+		if ( $builder_styles->requires_default_styles() ) {
+			$styles[] = plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY );
+		}
 
 		$builder = new Boldgrid_Editor_Builder();
 		if ( $builder->requires_deprecated_buttons() ) {

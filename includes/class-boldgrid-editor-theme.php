@@ -21,6 +21,18 @@
 class Boldgrid_Editor_Theme {
 
 	/**
+	 * Default palette.
+	 *
+	 * @since 1.6
+	 *
+	 * @return array          Default palette to used when theme doesn't define one.
+	 */
+	public static $default_palette = array(
+		'defaults' => array( 'rgb(33, 150, 243)', 'rgb(13, 71, 161)', 'rgb(187, 222, 251)', 'rgb(238, 238, 238)', 'rgb(19, 19, 19)' ),
+		'neutral' => 'white',
+	);
+
+	/**
 	 * Check if theme supports a feature.
 	 *
 	 * @since 1.0
@@ -104,10 +116,16 @@ class Boldgrid_Editor_Theme {
 		$neutral = ! empty( $color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] ) ?
 			$color_palettes_decoded['state']['palettes'][ $active_palette ]['neutral-color'] : false;
 
-		return array(
+		$palette = array(
 			'defaults' => $colors,
 			'neutral' => $neutral,
 		);
+
+		if ( ! $palette['defaults'] ) {
+			$palette = self::$default_palette;
+		}
+
+		return $palette;
 	}
 
 	/**

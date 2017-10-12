@@ -373,6 +373,12 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/css/components' . $suffix . '.css', $plugin_file ), array(),
 			$this->configs['conflicting_assets']['boldgrid-components']['version'] );
 
+		$builder_styles = new Boldgrid_Editor_Builder_Styles();
+		if ( $builder_styles->requires_default_styles() ) {
+			wp_enqueue_style( 'boldgrid-custom-styles',
+				plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY ), array(), BOLDGRID_EDITOR_VERSION );
+		}
+
 		// If theme does not support BGTFW buttons, enqueue buttons.
 		$builder = new Boldgrid_Editor_Builder();
 		if ( $builder->requires_deprecated_buttons() ) {
