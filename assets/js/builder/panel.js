@@ -83,6 +83,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @since 1.6
 		 */
 		showLoading: function() {
+			this.$element.find( '.panel-body' ).addClass( 'block-access-overlay' );
 			this.$loading.addClass( 'enabled' );
 		},
 
@@ -92,6 +93,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		* @since 1.6
 		*/
 		hideLoading: function() {
+			this.$element.find( '.panel-body' ).removeClass( 'block-access-overlay' );
 			this.$loading.removeClass( 'enabled' );
 		},
 

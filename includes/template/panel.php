@@ -6,10 +6,7 @@
 		<span class="info"></span>
 		<span class="dashicons dashicons-no-alt close-icon"></span>
 	</div>
-	<div class='panel-body'>
-		<ul>
-		</ul>
-	</div>
+	<div class='panel-body'></div>
 	<div class='panel-footer'>
 		<div class='customize'>
 			<a class='panel-button customize-design' href="#"><span class="dashicons dashicons-admin-customizer"></span> Customize Design</a>

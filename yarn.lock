@@ -74,9 +74,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/controls@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.4.0.tgz#48777c727e261931e0c08e8a661fa996643741b9"
+"@boldgrid/controls@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.5.0.tgz#31505dc974a459ee11e1ebf7d4171856c0f26f2c"
   dependencies:
     "@boldgrid/components" "^2.3.0"
     Buttons "https://github.com/alexwolfe/Buttons"

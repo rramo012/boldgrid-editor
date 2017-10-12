@@ -23,6 +23,8 @@ export class Palette {
 				basePath: BoldgridEditor['plugin_url'] + '/assets/scss'
 			}
 		} );
+
+		this.colorPalette.init();
 	}
 
 	/**
@@ -49,16 +51,18 @@ export class Palette {
 	 * @since 1.6.0
 	 */
 	openPanel() {
-		let panel = BOLDGRID.EDITOR.Panel;
+		BG.Panel.clear();
 
-		panel.clear();
+		if ( ! this.colorPalette.initialCompilesDone ) {
+			BG.Panel.showLoading();
+		}
 
-		this.renderCustomization( panel.$element.find( '.panel-body' ) );
+		this.renderCustomization( BG.Panel.$element.find( '.panel-body' ) );
 
-		panel.showFooter();
+		BG.Panel.showFooter();
 
 		// Open Panel.
-		panel.open( this );
+		BG.Panel.open( this );
 	}
 
 	/**
@@ -130,9 +134,19 @@ export class Palette {
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
-		let $control;
+		let $control = this.colorPalette.render( $target, this.getPaletteSettings() );
 
-		$control = this.colorPalette.render( $target, this.getPaletteSettings() ).on( 'sass_compiled', ( e, data ) => {
+		// Once the control is fully rendered run an initialization method.
+		if ( ! this.colorPalette.initialCompilesDone ) {
+			$control.on( 'rendered', () => {
+				this.colorPalette.initialCompiles( 3 ).done( () => {
+					BG.Panel.hideLoading();
+				} );
+			} );
+		}
+
+		// Once sass is compiled from the control, update the stylesheets.
+		$control.on( 'sass_compiled', ( e, data ) => {
 
 			BG.Service.styleUpdater.update( {
 				id: 'bg-controls-colors',
