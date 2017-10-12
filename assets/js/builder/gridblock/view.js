@@ -33,6 +33,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.templateClass = self.getTemplateClass();
 		},
 
+		/**
+		 * Get remote Gridblock types.
+		 *
+		 * @since 1.6
+		 */
 		fetchTypes() {
 			return $.ajax( {
 				url: BoldgridEditor.plugin_configs.asset_server +
@@ -62,7 +67,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				filters = BoldgridEditor.builder_config.gridblock.filters;
 
 			additionalFilters = additionalFilters || [];
-			allFilters = additionalFilters.concat( filters );
+			allFilters = filters.concat( additionalFilters );
 
 			for ( let filter of allFilters ) {
 				html += '<option value="' + filter.slug + '">' + filter.title + '</option>';
