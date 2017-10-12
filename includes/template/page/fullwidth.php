@@ -14,7 +14,7 @@
 		<div class="entry-content">
 			<?php the_content(); ?>
 		</div>
-		<?php include( __DIR__ . '../entry-footer.php' ); ?>
+		<?php include( __DIR__ . '/entry-footer.php' ); ?>
 	</article>
 </main>
 
