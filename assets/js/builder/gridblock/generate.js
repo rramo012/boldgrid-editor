@@ -19,6 +19,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 			failure: false,
 
+			licenseTypes: [],
+
 			/**
 			 * Get a set of GridBlocks.
 			 *
@@ -34,7 +36,9 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.fetching = true;
 				self.gridblockLoadingUI.start();
 
-				return self.requestGridblocks().done( function( gridblocks ) {
+				return self.requestGridblocks().done( function( gridblocks, text, xhr ) {
+					self.licenseTypes = xhr.getResponseHeader( 'License-Types' ) || [];
+
 					self.addToConfig( gridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();
 				} ).always( function() {

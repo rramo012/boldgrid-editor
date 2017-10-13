@@ -146,7 +146,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				$this = $( this ),
 				gridblockId = $this.attr( 'data-id' );
 
-			if ( false === isTargetValid( e ) ) {
+			if ( false === isTargetValid( e ) ||
+				( $this.attr( 'data-is-premium' ) && $this.attr( 'data-requires-premium' ) ) ) {
 				return;
 			}
 

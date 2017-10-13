@@ -18,6 +18,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 
 		init: function() {
 			self.$filterSelectWrap = $( '.boldgrid-gridblock-categories' );
+			self.gridblockTemplate = wp.template( 'boldgrid-editor-gridblock' );
 			self.$filterSelect = self.$filterSelectWrap.find( 'select' );
 
 			self.fetchTypes();
@@ -340,12 +341,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @return {string}               Markup to add in gridblock iframe.
 		 */
 		getGridblockHtml: function( gridblockData ) {
-			return wp.template( 'boldgrid-editor-gridblock' )( {
-				'id': gridblockData.gridblockId,
-				'type': gridblockData.type,
-				'category': gridblockData.category,
-				'template': gridblockData.template
-			} );
+			gridblockData['requires_premium'] = -1 === BG.GRIDBLOCK.Generate.licenseTypes.indexOf( 'premium' );
+			return self.gridblockTemplate( gridblockData );
 		}
 	};
 

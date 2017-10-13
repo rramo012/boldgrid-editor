@@ -34,10 +34,15 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		onGridblockClick: function() {
 			var $placeHolder,
 				$this = $( this ),
-				gridblockId = $this.closest( '.gridblock' ).attr( 'data-id' );
+				$gridblock = $this.closest( '.gridblock' ),
+				gridblockId = $this.attr( 'data-id' );
 
-			$placeHolder = self.insertPlaceHolder( gridblockId );
-			self.replaceGridblock( $placeHolder, gridblockId );
+			if ( $gridblock.attr( 'data-is-premium' ) && $gridblock.attr( 'data-requires-premium' ) ) {
+				window.open( BoldgridEditor.plugin_configs.urls.premium_key, '_blank' );
+			} else {
+				$placeHolder = self.insertPlaceHolder( gridblockId );
+				self.replaceGridblock( $placeHolder, gridblockId );
+			}
 		},
 
 		/**

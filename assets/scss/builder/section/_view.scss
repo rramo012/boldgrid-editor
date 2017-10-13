@@ -574,6 +574,45 @@ html:not(.dragging-section) .delete-icon-wrap {
 			transform : translateX(-50%) translateY(-50%);
 		}
 
+		&[data-is-premium="1"][data-requires-premium="1"] {
+			cursor: default;
+
+			.add-gridblock:before {
+				content : 'Upgrade To Premium';
+			}
+
+			.save {
+				display: none !important;
+			}
+		}
+
+		.premium-label {
+			opacity: 0;
+			font-variant: small-caps;
+			bottom: 0;
+			font-size: 20px;
+			padding: 20px;
+			z-index: 1;
+			background: linear-gradient(to right, black, rgba(255, 255, 255, 0));
+			width: 65%;
+			color: white;
+			font-weight: lighter;
+			position: absolute;
+			transition: opacity .5s;
+
+			.boldgrid-seal {
+				position: absolute;
+				left: -20px;
+				top: 13px;
+			}
+		}
+
+		&[data-is-premium="1"]:hover {
+			.premium-label {
+				opacity: 1;
+			}
+		}
+
 		.add-gridblock:hover:before {
 			background: rgba(0,0,0,.8);
 		}

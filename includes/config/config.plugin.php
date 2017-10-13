@@ -15,6 +15,9 @@ return array (
 	'asset_server'          => 'https://wp-assets.boldgrid.com',
 	'plugin_name'           => 'boldgrid-editor',
 	'plugin_key_code'       => 'editor',
+	'urls' => array(
+		'premium_key' => 'https://www.boldgrid.com/connect-keys'
+	),
 	'main_file_path'        => BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php',
 	'plugin_transient_name' => 'boldgrid_editor_version_data',
 	'allowed_post_types'    => array( 'page', 'post', 'gridblock' ),

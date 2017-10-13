@@ -32,9 +32,16 @@
 </div>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock">
-<div class="gridblock gridblock-loading" data-id="{{data.id}}" data-type="{{data.type}}" data-category="{{data.category}}" data-template="{{data.template}}">
+<div class="gridblock gridblock-loading"
+	data-id="{{data.gridblockId}}" data-type="{{data.type}}" data-category="{{data.category}}"
+	data-is-premium="{{data.is_premium ? 1 : 0}}" data-requires-premium="{{data.requires_premium ? 1 : 0}}"
+	data-template="{{data.template}}">
 	<i class="fa fa-arrows" aria-hidden="true"></i>
 	<div class="add-gridblock"></div>
+	<div class="premium-label">
+		<img class="boldgrid-seal" src="{{BoldgridEditor.plugin_url + '/assets/image/bg-seal.png'}}">
+		Premium GridBlock
+	</div>
 	<div class="action-items">
 		<i class="fa fa-heart-o save" aria-hidden="true" title="Add to GridBlock library"></i>
 	</div>
