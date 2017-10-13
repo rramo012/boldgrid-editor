@@ -50,6 +50,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				} );
 			},
 
+			needsUpgrade( $gridblock ) {
+				return parseInt( $gridblock.attr( 'data-is-premium' ) ) &&
+					parseInt( $gridblock.attr( 'data-requires-premium' ) );
+			},
+
 			requestGridblocks: function( options ) {
 				var type = BG.GRIDBLOCK.Category.getSearchType();
 				options = options || {};
