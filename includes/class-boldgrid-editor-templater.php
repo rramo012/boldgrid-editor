@@ -180,6 +180,15 @@ class Boldgrid_Editor_Templater {
 		// Get global post
 		global $post;
 
+		$is_custom_template = $this->is_custom_template( $template );
+
+		// We rendered this page automatically in an iframe for window width.
+		$preview_page = ! empty( $_GET['bg_preview_page'] ) ? intval( $_GET['bg_preview_page'] ) : false;
+		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
+		if ( $preview_page && ! $is_custom_template && $template_choice ) {
+			return $template;
+		}
+
 		// Return template if post is empty
 		if ( ! $post || ! $post->ID ) {
 			return $template;
@@ -193,6 +202,10 @@ class Boldgrid_Editor_Templater {
 			$post_meta = isset( $preview_meta['template'] ) ? $preview_meta['template'] : false;
 		}
 
+		if ( $is_custom_template ) {
+			$post_meta = $template;
+		}
+
 		// Return default template if we don't have a custom one defined
 		if ( ! isset( $this->templates[ $post_meta ] ) ) {
 			return $template;
@@ -203,11 +216,24 @@ class Boldgrid_Editor_Templater {
 		// Just to be safe, we check if the file exist first
 		if ( file_exists( $file ) ) {
 			$template = $file;
+			add_filter( 'body_class', array( $this, 'add_body_class' ) );
 		}
 
 		// Return template
 		return $template;
 
+	}
+
+	/**
+	 * Add body class when editor template is used.
+	 *
+	 * @since 1.6
+	 *
+	 * @param array $classes array of classes.
+	 */
+	public function add_body_class( $classes ) {
+		$classes[] = 'boldgrid-editor-template';
+		return $classes;
 	}
 
 }

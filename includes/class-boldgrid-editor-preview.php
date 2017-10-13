@@ -35,7 +35,7 @@ class Boldgrid_Editor_Preview {
 		// Wrapping in permission check to make sure it only runs for logged in users.
 		if ( current_user_can( 'edit_pages' ) ) {
 			add_action( 'init', array( $this, 'preload' ) );
-			add_action( 'template_include', array( $this, 'set_dynamic_template' ) );
+			add_action( 'template_include', array( $this, 'set_dynamic_template' ), 5 );
 			add_action( 'load-post-new.php', array( $this, 'on_editor_load' ) );
 			add_action( 'load-post.php', array( $this, 'on_editor_load' ) );
 			add_filter( 'the_content', array(  $this, 'override_post_content' ) );
@@ -158,6 +158,19 @@ class Boldgrid_Editor_Preview {
 			$template_choice = Boldgrid_Editor_Setup::get_template_choice();
 			if ( $templater->is_custom_template( $templater->get_template_slug( $template_choice ) ) ) {
 				$template = $templater->get_full_path( $template_choice );
+			}
+		}
+
+		$preview_page = ! empty( $_GET['bg_preview_page'] ) ? intval( $_GET['bg_preview_page'] ) : false;
+		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
+
+		if ( $post && $preview_page && $template_choice ) {
+			$template_choice = ( 'default' === $template_choice ) ? 'index.php' : $template_choice;
+			$template_path = locate_template( $template_choice );
+			if ( Boldgrid_Editor_Service::get( 'templater' )->is_custom_template( $template_choice ) ) {
+				$template = $template_choice;
+			} else {
+				$template = $template_path;
 			}
 		}
 

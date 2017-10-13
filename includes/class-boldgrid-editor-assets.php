@@ -76,13 +76,20 @@ class Boldgrid_Editor_Assets {
 	 */
 	public function get_post_url() {
 		global $pagenow;
+		global $post;
 
+		$is_post = false;
 		$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : null;
 		$post_type = ! empty( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : null;
 
 		// If this is a new page, use the preview page.
 		if ( 'post-new.php' === $pagenow ) {
 			$post_id = Boldgrid_Editor_Option::get( 'preview_page_id' );
+			$is_post = ! intval( $post_type );
+		}
+
+		if ( $post ) {
+			$is_post = ( 'post' === $post->post_type );
 		}
 
 		$permalink = ! empty( $post_id ) ? get_permalink( intval( $post_id ) ) : null;
@@ -91,7 +98,7 @@ class Boldgrid_Editor_Assets {
 		$permalink = add_query_arg( array(
 			'bg_preview_page' => 1,
 			'bg_post_id' => $post_id,
-			'bg_is_post' => intval( ! $post_type ),
+			'bg_is_post' => $is_post,
 		), $permalink );
 
 		return $permalink;

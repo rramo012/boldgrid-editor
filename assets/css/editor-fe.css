@@ -25,16 +25,24 @@
 .bg-edit-link .fa:hover {
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5); }
 
+.boldgrid-editor-template #content.site-content,
 .gridblock-template-default #content.site-content,
 .page-template-templatepagefullwidth-php.page-template-fullwidth #content.site-content {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0; }
 
+.boldgrid-editor-template .site-footer,
 .gridblock-template-default .site-footer,
 .page-template-templatepagefullwidth-php.page-template-fullwidth .site-footer {
   margin-top: 0; }
 
+.boldgrid-editor-template header:not(.entry-header),
 .gridblock-template-default header:not(.entry-header),
 .page-template-templatepagefullwidth-php.page-template-fullwidth header:not(.entry-header) {
   margin-bottom: 0; }
+
+.boldgrid-editor-template .sidebar-main,
+.gridblock-template-default .sidebar-main,
+.page-template-templatepagefullwidth-php.page-template-fullwidth .sidebar-main {
+  padding: 0; }

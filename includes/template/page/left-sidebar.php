@@ -4,7 +4,7 @@
 		<div class="col-md-4">
 			<?php get_sidebar( $name = null ); ?>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-8 sidebar-main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php
 				the_post();

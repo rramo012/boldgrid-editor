@@ -37,7 +37,8 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				self.gridblockLoadingUI.start();
 
 				return self.requestGridblocks().done( function( gridblocks, text, xhr ) {
-					self.licenseTypes = xhr.getResponseHeader( 'License-Types' ) || [];
+					self.licenseTypes = xhr.getResponseHeader( 'License-Types' ) || '[]';
+					self.licenseTypes = JSON.parse( self.licenseTypes );
 
 					self.addToConfig( gridblocks );
 					BG.GRIDBLOCK.View.createGridblocks();

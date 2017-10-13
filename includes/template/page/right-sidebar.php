@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <div class="container-fluid bg-custom-template">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-8 sidebar-main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php
 				the_post();

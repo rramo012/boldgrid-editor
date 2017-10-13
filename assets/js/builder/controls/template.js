@@ -16,9 +16,13 @@ export class Template {
 		this.updateBodyClass();
 		this.updateDefaultContainer();
 
-		this.$templateInput.on( 'change', () => {
+		this.$templateInput.on( 'change', ( e ) => {
 			this.updateBodyClass();
 			this.updateDefaultContainer();
+
+			BOLDGRID.EDITOR.Service.loading.show();
+			BOLDGRID.EDITOR.Service.editorWidth.updateIframeUrl(
+				BoldgridEditor.site_url + '&template_choice=' + $( e.target ).val() );
 		} );
 
 	}

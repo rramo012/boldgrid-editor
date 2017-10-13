@@ -1,6 +1,7 @@
 @import 'variables';
 @import './front-end/edit-link';
 
+.boldgrid-editor-template,
 .gridblock-template-default,
 .page-template-templatepagefullwidth-php.page-template-fullwidth, /*,
 .page-template-templatepageleft-sidebar-php.page-template-left-sidebar,
@@ -16,5 +17,8 @@
 
 	header:not(.entry-header) {
 		margin-bottom: 0;
+	}
+	.sidebar-main {
+		padding: 0;
 	}
 }
