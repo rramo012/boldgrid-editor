@@ -98,10 +98,11 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				draggable = IMHWPB.WP_MCE_Draggable.draggable_instance;
 
 			if ( ! $inserting || ! draggable ) {
-				window.send_to_editor( $inserting[0].outerHTML );
+				window.send_to_editor( $inserting.html() );
+			} else {
+				$placeHolder.replaceWith( $inserting.html() );
 			}
 
-			$placeHolder.replaceWith( $inserting );
 			draggable.validate_markup();
 
 			tinymce.activeEditor.fire( 'setContent' );

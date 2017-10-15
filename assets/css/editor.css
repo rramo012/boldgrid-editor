@@ -2110,6 +2110,9 @@ body.boldgrid-editor-fullscreen {
 /*--------------------------------------------------------------
 # Setup the view for sections.
 --------------------------------------------------------------*/
+.temp-gridblock-wrapper {
+  position: relative; }
+
 .dragging-section .loading-gridblock {
   position: absolute;
   width: 100%;

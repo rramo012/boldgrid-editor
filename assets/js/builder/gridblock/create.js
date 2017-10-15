@@ -50,7 +50,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			var html = gridblockData.html;
 
 			if ( gridblockData.$html ) {
-				html = gridblockData.$html[0].outerHTML;
+				html = gridblockData.getHtml();
 			}
 
 			return html;

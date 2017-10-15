@@ -53,7 +53,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		global $shortcode_tags;
 
 		if ( 'gridblock' === $post->post_type ) {
-		//	return array( self::format_gridblock_data( $post, $content ) );
+			return array( self::format_gridblock_data( $post, $content ) );
 		}
 
 		$dom = new DOMDocument();

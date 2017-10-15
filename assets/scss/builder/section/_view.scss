@@ -1,5 +1,9 @@
 $fix-top-height: 79px;
 
+.temp-gridblock-wrapper {
+	position: relative;
+}
+
 // Loading Gridblocks.
 .dragging-section .loading-gridblock {
 	position       : absolute;

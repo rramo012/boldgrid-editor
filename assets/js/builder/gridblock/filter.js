@@ -20,10 +20,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		setupConfigs: function() {
 			BG.GRIDBLOCK.configs = {};
 			BG.GRIDBLOCK.configs.gridblocks = {};
+			self.loadingTemplate = wp.template( 'boldgrid-editor-gridblock-loading' );
 
 			$.each( self.configs, function( gridblockId ) {
+
 				this.html = self.unsetImageUrls( this.html );
+
 				this.$html = $( this.html );
+
 				self.removeInvalidGridblocks( this, gridblockId );
 			} );
 
@@ -79,18 +83,29 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 * @return {jQuery} HTML to be added to the page.
 			 */
 			getHtml: function() {
-				return this.$html[0].outerHTML;
+				let html = '';
+
+				this.$html.each( function() {
+					if ( this.outerHTML ) {
+						html += this.outerHTML;
+					}
+				} );
+
+				return '<div class="temp-gridblock-wrapper">' + html + '</div>';
 			},
 
 			/**
 			 * Create a placeholder based on the preview object.
+			 *
 			 * @return {jQuery} Element to preview with loading element nested.
 			 */
 			getPreviewPlaceHolder: function() {
-				var $clone = this.$html.clone();
-				$clone.prepend( wp.template( 'boldgrid-editor-gridblock-loading' )() );
+				let $placeholder;
 
-				return $clone;
+				$placeholder = $( this.getHtml() );
+				$placeholder.prepend( self.loadingTemplate() );
+
+				return $placeholder;
 			},
 
 			getTitle: function() {
