@@ -36,6 +36,7 @@ class Boldgrid_Editor_Preview {
 		if ( current_user_can( 'edit_pages' ) ) {
 			add_action( 'init', array( $this, 'preload' ) );
 			add_action( 'template_include', array( $this, 'set_dynamic_template' ), 5 );
+			add_action( 'template_include', array( $this, 'template_via_url' ), 6 );
 			add_action( 'load-post-new.php', array( $this, 'on_editor_load' ) );
 			add_action( 'load-post.php', array( $this, 'on_editor_load' ) );
 			add_filter( 'the_content', array(  $this, 'override_post_content' ) );
@@ -161,10 +162,23 @@ class Boldgrid_Editor_Preview {
 			}
 		}
 
-		$preview_page = ! empty( $_GET['bg_preview_page'] ) ? intval( $_GET['bg_preview_page'] ) : false;
+		return $template;
+	}
+
+	/**
+	 * Set the users template via a url param. Only works if user can edit and requested via editor.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $template
+	 * @return string           Template name.
+	 */
+	public function template_via_url( $template ) {
+		global $post;
+
 		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
 
-		if ( $post && $preview_page && $template_choice ) {
+		if ( $post && self::is_template_via_url() ) {
 			$template_choice = ( 'default' === $template_choice ) ? 'index.php' : $template_choice;
 			$template_path = locate_template( $template_choice );
 			if ( Boldgrid_Editor_Service::get( 'templater' )->is_custom_template( $template_choice ) ) {
@@ -175,6 +189,20 @@ class Boldgrid_Editor_Preview {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Check if the user has enabled template via url.
+	 *
+	 * @since 1.6
+	 *
+	 * @return boolean Is template via URL.
+	 */
+	public static function is_template_via_url() {
+		$preview_page = ! empty( $_GET['bg_preview_page'] ) ? intval( $_GET['bg_preview_page'] ) : false;
+		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
+
+		return $preview_page && $template_choice;
 	}
 
 	/**

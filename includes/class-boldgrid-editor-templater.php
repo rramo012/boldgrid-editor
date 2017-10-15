@@ -182,10 +182,8 @@ class Boldgrid_Editor_Templater {
 
 		$is_custom_template = $this->is_custom_template( $template );
 
-		// We rendered this page automatically in an iframe for window width.
-		$preview_page = ! empty( $_GET['bg_preview_page'] ) ? intval( $_GET['bg_preview_page'] ) : false;
-		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
-		if ( $preview_page && ! $is_custom_template && $template_choice ) {
+		// We rendered this page automatically in an iframe for window width && it is not a BG template.
+		if ( ! $is_custom_template && Boldgrid_Editor_Preview::is_template_via_url() ) {
 			return $template;
 		}
 
@@ -202,6 +200,7 @@ class Boldgrid_Editor_Templater {
 			$post_meta = isset( $preview_meta['template'] ) ? $preview_meta['template'] : false;
 		}
 
+		// If this template passed in by the hook is one of our templates, override post meta.
 		if ( $is_custom_template ) {
 			$post_meta = $template;
 		}
