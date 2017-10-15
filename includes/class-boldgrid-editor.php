@@ -290,7 +290,7 @@ class Boldgrid_Editor {
 
 		// Add Loading Graphic.
 		add_filter( 'the_editor', function ( $html ) {
-			$active = 'tinymce' ===  wp_default_editor() ? 'active' : '';
+			$active = 'tinymce' ===  wp_default_editor() ? 'active' : 'disabled';
 			return '<div class="bg-editor-loading-main ' . $active . '"><div class="bg-editor-loading"></div>' . $html . '</div>';
 		} );
 

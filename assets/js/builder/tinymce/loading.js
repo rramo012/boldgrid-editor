@@ -30,6 +30,11 @@ export class Loading {
 	 */
 	hide() {
 		this.$element.removeClass( 'active' );
+
+		// After animation is complete remove loading elements.
+		setTimeout( () => {
+			this.$element.addClass( 'disabled' );
+		}, 500 );
 	}
 
 	/**
@@ -38,7 +43,12 @@ export class Loading {
 	 * @since 1.6
 	 */
 	show() {
-		this.$element.addClass( 'active' );
+		this.$element.removeClass( 'disabled' );
+
+		// Set timeout is needed because removing the disabled class allows pseudo elements to appear, takes time.
+		setTimeout( () => {
+			this.$element.addClass( 'active' );
+		} );
 	}
 
 	/**
