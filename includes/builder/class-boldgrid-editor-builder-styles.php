@@ -160,6 +160,10 @@ class Boldgrid_Editor_Builder_Styles {
 			// Create stylesheet.
 			$css = $this->create_css_string( $styles );
 
+			if ( empty( $css ) ) {
+				return;
+			}
+
 			if ( ! empty( $_POST['wp-preview'] ) ) {
 				// If previewing the page save to another option.
 				$css_file = $this->create_file( $css, '/boldgrid/preview-custom-styles.css' );
