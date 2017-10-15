@@ -193,6 +193,8 @@ class Boldgrid_Editor_Assets {
 		$default_tab = wp_default_editor();
 		$is_bg_theme = Boldgrid_Editor_Theme::is_editing_boldgrid_theme();
 
+		$builder = new Boldgrid_Editor_Builder();
+
 		$boldgrid_settings = get_option( 'boldgrid_settings' );
 		$boldgrid_settings['api_key'] = get_option( 'boldgrid_api_key' );
 
@@ -236,6 +238,7 @@ class Boldgrid_Editor_Assets {
 			'nonce_gridblock_save' => wp_create_nonce( 'boldgrid_editor_gridblock_save' ),
 			'features' => array(
 				'template_via_url' => ! $is_bg_theme,
+				'button_colors' => ! $builder->requires_deprecated_buttons(),
 			),
 		);
 

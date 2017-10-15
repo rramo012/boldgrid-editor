@@ -340,7 +340,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		getColorsMarkup: function() {
 			var colors = self.defaultColorClasses;
 
-			if ( BoldgridEditor.is_boldgrid_theme && BG.Controls.hasThemeFeature( 'button-lib' ) ) {
+			if ( ( BoldgridEditor.features.button_colors && ! BoldgridEditor.is_boldgrid_theme ) || BG.Controls.hasThemeFeature( 'button-lib' ) ) {
 				colors = BG.CONTROLS.Color.getColorsFormatted();
 			}
 
