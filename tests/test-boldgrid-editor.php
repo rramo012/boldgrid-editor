@@ -78,7 +78,7 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 
 		$testClass = new Boldgrid_Editor_Assets( array() );
 		$get_post_url = $testClass->get_post_url();
-		$this->assertEquals( get_site_url() . '?bg_preview_page=1&bg_is_post=1', $get_post_url );
+		$this->assertEquals( get_site_url() . '?bg_preview_page=1', $get_post_url );
 
 	}
 
