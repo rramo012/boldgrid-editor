@@ -179,11 +179,13 @@ class Boldgrid_Editor_Preview {
 		$template_choice = ! empty( $_GET['template_choice'] ) ? $_GET['template_choice'] : false;
 
 		if ( $post && self::is_template_via_url() ) {
-			$template_choice = ( 'default' === $template_choice ) ? 'index.php' : $template_choice;
+			$template_choice = ( 'default' === $template_choice ) ? 'page.php' : $template_choice;
 			$template_path = locate_template( $template_choice );
+			$template_path = ! ( $template_path ) ?  locate_template( 'index.php' ) : $template_path;
+
 			if ( Boldgrid_Editor_Service::get( 'templater' )->is_custom_template( $template_choice ) ) {
 				$template = $template_choice;
-			} else {
+			} else if ( $template_path ) {
 				$template = $template_path;
 			}
 		}
