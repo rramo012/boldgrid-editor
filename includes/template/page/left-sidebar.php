@@ -2,7 +2,10 @@
 <main class="main bg-custom-template container-fluid" role="main">
 	<div class="row">
 		<div class="col-md-4">
-			<?php get_sidebar( $name = null ); ?>
+			<?php
+				get_sidebar();
+				do_action( 'boldgrid_editor_sidebar' );
+			?>
 		</div>
 		<div class="col-md-8 sidebar-main">
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

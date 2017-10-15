@@ -19,7 +19,10 @@
 			</article>
 		</div>
 		<div class="col-md-4">
-			<?php get_sidebar( $name = null ); ?>
+			<?php
+			get_sidebar();
+			do_action( 'boldgrid_editor_sidebar' );
+			?>
 		</div>
 	</div>
 </div>

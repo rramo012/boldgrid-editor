@@ -20,9 +20,11 @@ export class Template {
 			this.updateBodyClass();
 			this.updateDefaultContainer();
 
-			BOLDGRID.EDITOR.Service.loading.show();
-			BOLDGRID.EDITOR.Service.editorWidth.updateIframeUrl(
-				BoldgridEditor.site_url + '&template_choice=' + $( e.target ).val() );
+			if ( BoldgridEditor.features.template_via_url ) {
+				BOLDGRID.EDITOR.Service.loading.show();
+				BOLDGRID.EDITOR.Service.editorWidth.updateIframeUrl(
+					BoldgridEditor.site_url + '&template_choice=' + $( e.target ).val() );
+			}
 		} );
 
 	}
