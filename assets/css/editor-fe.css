@@ -26,6 +26,15 @@
 .bg-edit-link .fa:hover {
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5); }
 
+.boldgrid-editor-template,
+.gridblock-template-default,
+.page-template-templatepagefullwidth-php.page-template-fullwidth {
+  /*
+	#page.site {
+		padding: 0;
+	}
+*/ }
+
 .boldgrid-editor-template #content.site-content,
 .gridblock-template-default #content.site-content,
 .page-template-templatepagefullwidth-php.page-template-fullwidth #content.site-content {
@@ -47,6 +56,35 @@
 .gridblock-template-default header:not(.entry-header),
 .page-template-templatepagefullwidth-php.page-template-fullwidth header:not(.entry-header) {
   margin-bottom: 0; }
+
+/** common class resets **/
+.page-template.boldgrid-editor-template #site-content.container {
+  width: 100%;
+  padding: 0; }
+
+.page-template.boldgrid-editor-template .entry-header {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.page-template.boldgrid-editor-template .entry-header .entry-title {
+  margin: 0; }
+
+.page-template.boldgrid-editor-template .entry-content,
+.page-template.boldgrid-editor-template .entry-content .the-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0; }
+
+.page-template.boldgrid-editor-template .bg-page-article {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0; }
+
+.bg-custom-template {
+  padding: 0; }
 
 .bg-custom-template .bge-content-main {
   padding: 0; }

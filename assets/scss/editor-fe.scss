@@ -22,9 +22,48 @@
 	header:not(.entry-header) {
 		margin-bottom: 0;
 	}
+/*
+	#page.site {
+		padding: 0;
+	}
+*/
+}
+
+/** common class resets **/
+.page-template.boldgrid-editor-template {
+	#site-content.container {
+		width: 100%;
+		padding: 0;
+	}
+
+	.entry-header {
+		padding-bottom: 20px;
+		padding-top: 20px;
+		margin-top: 0;
+		margin-bottom: 0;
+
+		.entry-title {
+			margin: 0;
+		}
+	}
+	.entry-content,
+	.entry-content .the-content {
+		width: 100%;
+		max-width: 100%;
+		padding: 0;
+	}
+
+	.bg-page-article {
+		width: 100%;
+		max-width: 100%;
+		padding: 0;
+		margin: 0;
+	}
 }
 
 .bg-custom-template {
+	padding: 0;
+
 	.bge-content-main {
 		padding: 0;
 	}

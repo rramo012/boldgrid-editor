@@ -2,7 +2,7 @@
 <main class="main bg-custom-template <?php print ! empty( $sidebar_location ) ? $sidebar_location : ''?>"
 	role="main">
 	<div class="bge-content-main">
-		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+		<article id="post-<?php the_ID(); ?>" <?php post_class( 'bg-page-article' ); ?>>
 			<?php
 			the_post();
 
