@@ -41,5 +41,18 @@ return array (
 			'src' => plugins_url( '/assets/css/font-awesome.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' ),
 			'mce_str_match' => '/font-awesome.',
 		),
+	),
+	'widget' => array(
+		'areas' => array(
+			'boldgrid-editor-sidebar' => array(
+				'name' => __( 'BoldGrid Editor Sidebar', 'boldgrid-editor' ),
+				'id' => 'boldgrid-editor-sidebar',
+				'description' => __( 'Widgets in this area will on BoldGrid Editor templates.', 'boldgrid-editor' ),
+				'before_widget' => '<div id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</div>',
+				'before_title'  => '<h2 class="widget-title">',
+				'after_title'   => '</h2>',
+			)
+		)
 	)
 );

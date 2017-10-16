@@ -64,7 +64,7 @@
 		"babel-minify-webpack-plugin": "^0.2.0",
 		"babel-preset-es2015": "^6.24.1",
 		"babel-preset-stage-0": "^6.24.1",
-		"boldgrid-theme-framework": "git+https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
+		"boldgrid-theme-framework": "https://github.com/BoldGrid/boldgrid-theme-framework.git#dev",
 		"bootstrap-sass": "^3.3.7",
 		"copy-webpack-plugin": "^4.0.1",
 		"eslint": "^4.6.1",

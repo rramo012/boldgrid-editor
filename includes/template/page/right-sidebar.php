@@ -1,29 +1,3 @@
-<?php get_header(); ?>
-<div class="container-fluid bg-custom-template">
-	<div class="row">
-		<div class="col-md-8 sidebar-main">
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?php
-				the_post();
-
-				if ( Boldgrid_Editor_Service::get( 'page_title' )->has_title_displayed() && get_the_title() ) { ?>
-					<header class="container entry-header">
-						<h1 class="entry-title"><?php the_title(); ?></h1>
-					</header>
-				<?php } ?>
-
-				<div class="entry-content">
-					<?php the_content(); ?>
-				</div>
-				<?php include( __DIR__ . '/entry-footer.php' ); ?>
-			</article>
-		</div>
-		<div class="col-md-4">
-			<?php
-			get_sidebar();
-			do_action( 'boldgrid_editor_sidebar' );
-			?>
-		</div>
-	</div>
-</div>
-<?php get_footer(); ?>
+<?php
+$sidebar_location = 'sidebar-right';
+include( __DIR__ . '/base.php' );

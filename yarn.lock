@@ -1397,6 +1397,10 @@ boldgrid-components@^2.1.0:
   dependencies:
     boldgrid-components "^2.1.0"
 
+"boldgrid-theme-framework@https://github.com/BoldGrid/boldgrid-theme-framework.git#dev":
+  version "1.0.0"
+  resolved "https://github.com/BoldGrid/boldgrid-theme-framework.git#26fa3ff0989e8383c2ed8ced63503112eefaa243"
+
 boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"

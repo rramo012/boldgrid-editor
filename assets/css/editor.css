@@ -1345,7 +1345,7 @@
   border: 1px solid #ececec; }
 
 .editor-panel[data-type='Library'] .save-gridblock .save.bg-editor-button {
-  line-height: 7px;
+  line-height: 4px;
   border-radius: 0 5px 5px 0;
   margin-left: -5px;
   padding-top: 26px;

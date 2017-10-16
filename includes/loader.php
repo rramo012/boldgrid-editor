@@ -21,6 +21,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-service.php
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-upgrade.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-postmeta.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-templater.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-widget.php';
 
 // Controls.
 require_once BOLDGRID_EDITOR_PATH . '/controls/class-boldgrid-controls-page-title.php';

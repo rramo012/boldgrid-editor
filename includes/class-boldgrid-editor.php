@@ -61,6 +61,8 @@ class Boldgrid_Editor {
 			'plugin_filename' => $plugin_filename
 		);
 		$this->set_path_configs( $path_configs );
+
+		Boldgrid_Editor_Service::register( 'config', $config->get_configs() );
 	}
 
 	/**
@@ -83,6 +85,9 @@ class Boldgrid_Editor {
 
 		if ( ! $this->is_boldgrid_theme ) {
 			Boldgrid_Editor_Service::get( 'templater' )->init();
+
+			$widget = new Boldgrid_Editor_Widget();
+			$widget->init();
 		} else {
 
 			// Load boldgrid theme framework hooks.
