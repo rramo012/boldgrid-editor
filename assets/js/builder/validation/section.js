@@ -109,6 +109,19 @@ BOLDGRID.EDITOR.VALIDATION = BOLDGRID.EDITOR.VALIDATION || {};
 	};
 
 	/**
+	 * Update all containers with a context to the default container.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  {jQuery} $context Jquery element(s).
+	 */
+	self.updateContainers = function( $context ) {
+		$context.find( ' .container, .container-fluid' ).each( function() {
+			$( this ).removeClass( 'container container-fluid' ).addClass( BoldgridEditor.default_container );
+		} );
+	};
+
+	/**
 	 * Copy classes from container-fluid onto section.
 	 *
 	 * @since 1.2.7

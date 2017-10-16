@@ -48,6 +48,7 @@ export class Lead {
 	_bindDismiss() {
 		this.$template.find( '.add-blank' ).add( '#insert-media-button, #insert-gridblocks-button' ).one( 'click', () => {
 			this.dismissPrompt();
+			BG.VALIDATION.Section.updateContainers( BOLDGRID.EDITOR.Controls.$container );
 		} );
 	}
 
