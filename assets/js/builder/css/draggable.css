@@ -274,7 +274,6 @@ iframe[src^="https://maps.google.com"] {
 
 .left-popover-imhwpb, .right-popover-imhwpb {
     width: 40px;
-    top: 0px;
 }
 
 .right-popover-imhwpb {
@@ -282,7 +281,7 @@ iframe[src^="https://maps.google.com"] {
 }
 
 .left-popover-imhwpb {
-    left: -26px;
+    left: -39px;
 }
 
 .left-popover-imhwpb div.draggable-button, .right-popover-imhwpb div.draggable-button {
@@ -838,10 +837,6 @@ body {
 
 .right-popover-imhwpb {
     right: -45px;
-}
-
-.left-popover-imhwpb {
-     left: -23px;
 }
 
 button {

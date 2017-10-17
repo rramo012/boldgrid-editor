@@ -66,7 +66,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 			IMHWPB.WP_MCE_Draggable.draggable_instance = $container
 				.IMHWPB_Draggable(
 					{
-						dragImage: 'actual',
 						add_media_event_handler: self.add_media_action,
 						insert_layout_event_handler: self.insert_layout_action,
 						menu_items: menu_items,
@@ -141,7 +140,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 			.on( 'mouseup.draggable_mce', '.draggable-tools-imhwpb', self.boldgrid_tool_click )
 			.on( 'add_column_dwpb.draggable_mce', self.add_column_done )
 			.on( 'drag_start_dwpb.draggable_mce', self.drag_start )
-			.on( 'delete_dwpb.draggable_mce', self.delete_element )
+			.on( 'delete_dwpb.draggable_mce', self.add_history )
+			.on( 'boldgrid_clone_element', self.add_history )
 			.on( 'drag_end_dwpb.draggable_mce', self.drag_end_event )
 			.on( 'add_row_event_dwpb.draggable_mce', self.set_cursor )
 			.on( 'boldgrid_edit_row.draggable_mce', self.edit_row )
@@ -159,7 +159,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	/**
 	 * Delete element
 	 */
-	this.delete_element = function() {
+	this.add_history = function() {
 		self.add_tiny_mce_history();
 	};
 

@@ -1,5 +1,3 @@
-import { Loader as ControlLoader } from './controls/loader';
-
 window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
@@ -76,7 +74,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			this.setupSliders();
 
-			new ControlLoader().init();
+			BG.$window.trigger( 'boldgrid_editor_preload' );
 
 			// Create all controls.
 			this.setupControls();

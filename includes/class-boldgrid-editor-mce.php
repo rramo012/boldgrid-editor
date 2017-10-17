@@ -349,8 +349,12 @@ class Boldgrid_Editor_MCE {
 		// Add Query Args.
 		$mce_css = array ();
 		foreach ( $styles as $editor_style ) {
-			$mce_css[] = add_query_arg( 'boldgrid-editor-version', BOLDGRID_EDITOR_VERSION,
-				$editor_style );
+			$query_arg = BOLDGRID_EDITOR_VERSION;
+			if ( defined( 'BGEDITOR_SCRIPT_DEBUG' ) && BGEDITOR_SCRIPT_DEBUG ) {
+				$query_arg = time();
+			}
+
+			$mce_css[] = add_query_arg( 'boldgrid-editor-version', $query_arg, $editor_style );
 		}
 
 		return implode( ',', $mce_css );
