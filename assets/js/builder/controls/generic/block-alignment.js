@@ -28,7 +28,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				marginRight = parseInt( $el.css( 'margin-right' ) );
 
 			if ( 0 === marginLeft && 0 === marginRight ) {
-				currentAlignment = 'center';
+				currentAlignment = $el.is( 'hr' ) ? 'center' : 'left';
 			} else if ( 0 === marginLeft ) {
 				currentAlignment = 'left';
 			} else if ( 0 === marginRight ) {
@@ -37,12 +37,11 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 
 			$inputs.filter( '[value="' + currentAlignment + '"]' ).prop( 'checked', true );
 
-			BG.Panel.$element.on(
+			BG.Panel.$element.find( '.section [name="horizontal-block-alignment"]' ).on(
 				'change',
-				'.section [name="horizontal-block-alignment"]',
 				function() {
 					var $this = $( this ),
-						value = $this.attr( 'value' );
+						value = $this.val();
 
 					self._applyMargin( $el, value );
 				}
@@ -56,11 +55,11 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				$el.css( 'margin-left', 'auto' );
 				$el.css( 'margin-right', 'auto' );
 			} else if ( 'left' === value ) {
-				$el.css( 'margin-right', '' );
+				$el.css( 'margin-right', 'auto' );
 				$el.css( 'margin-left', '0' );
 			} else {
 				$el.css( 'margin-right', '0' );
-				$el.css( 'margin-left', '' );
+				$el.css( 'margin-left', 'auto' );
 			}
 		}
 	};

@@ -62,7 +62,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				// Find other values.
 				$siblingInputs.each( function() {
-					controlClassnames.push( $( this ).attr( 'value' ) );
+					controlClassnames.push( $( this ).val() );
 				} );
 
 				$el.removeClass( controlClassnames.join( ' ' ) );
@@ -85,7 +85,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				panel.$element.find( '.class-control input' ).each( function() {
 					var $this = $( this );
-					if ( $el.hasClass( $this.attr( 'value' ) ) ) {
+					if ( $el.hasClass( $this.val() ) ) {
 						$this.prop( 'checked', true );
 					}
 				} );

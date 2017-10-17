@@ -24,6 +24,8 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 
 			let minVert = options.vertMin || 0,
 				minHor = options.horMin || -15,
+				maxHor = options.horMax || 50,
+				maxVert = options.vertMax || 200,
 				$target = BG.Menu.getCurrentTarget(),
 				defaultMarginVert = $target.css( 'margin-top' ),
 				defaultMarginHor = $target.css( 'margin-left' );
@@ -36,12 +38,12 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				BG.Panel.$element.find( '.margin-top' ).hide();
 			}
 
-			defaultMarginVert = defaultMarginVert  ? parseInt( defaultMarginVert ) : 0;
-			defaultMarginHor = defaultMarginHor ? parseInt( defaultMarginHor ) : 0;
+			defaultMarginVert = defaultMarginVert && 'auto' !== defaultMarginVert ? parseInt( defaultMarginVert ) : 0;
+			defaultMarginHor = defaultMarginHor && 'auto' !== defaultMarginHor ? parseInt( defaultMarginHor ) : 0;
 
 			BG.Panel.$element.find( '.panel-body .customize .margin-horizontal .slider' ).slider( {
 				min: minHor,
-				max: 50,
+				max: maxHor,
 				value: defaultMarginHor,
 				range: 'max',
 				slide: function( event, ui ) {
@@ -54,7 +56,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 
 			BG.Panel.$element.find( '.panel-body .customize .margin-top .slider' ).slider( {
 				min: minVert,
-				max: 200,
+				max: maxVert,
 				value: defaultMarginVert,
 				range: 'max',
 				slide: function( event, ui ) {

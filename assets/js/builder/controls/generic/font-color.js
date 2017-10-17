@@ -37,7 +37,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 			panel.$element.on( 'change', '.section [name="font-color"]', function() {
 				var $this = $( this ),
 					$target = BG.Menu.getCurrentTarget(),
-					value = $this.attr( 'value' ),
+					value = $this.val(),
 					type = $this.attr( 'data-type' );
 
 				$target.removeClass( BG.CONTROLS.Color.colorClasses.join( ' ' ) );

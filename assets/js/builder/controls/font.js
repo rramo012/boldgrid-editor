@@ -39,7 +39,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		panel: {
 			title: 'Text Setting',
 			height: '450px',
-			width: '268px'
+			width: '268px',
+			includeFooter: true,
+			customizeLeaveCallback: true,
+			customizeSupport: [ 'width', 'margin', 'blockAlignment', 'customClasses' ],
+			customizeCallback: true,
+			customizeSupportOptions: {
+				margin: {
+					horMin: -50,
+					vertMin: -50,
+					vertMax: 200
+				}
+			}
 		},
 
 		/**

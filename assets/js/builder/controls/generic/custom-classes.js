@@ -40,7 +40,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 				.on( 'input', function() {
 					var $this = $( this ),
 						customClasses = $target.attr( 'custom-classes' ),
-						value = $this.attr( 'value' );
+						value = $this.val();
 
 					value = value.replace( ',', ' ' );
 

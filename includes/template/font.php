@@ -1,5 +1,6 @@
 <script type="text/html" id="tmpl-boldgrid-editor-font">
-	<div class='section family' >
+	<div class="choices supports-customization">
+	<div class='section family presets selected'>
 		<h4>Font</h4>
 		<div class="font-family-select selectize-dropdown-content">
 			<select>
@@ -18,12 +19,12 @@
 		<label for="font-color" class='color-preview'></label>
 		<input type="text" data-type="" name='font-color' class='color-control' value=''>
 	</div>
-	<div class='section size'>
+	<div class='section size presets'>
 		<h4>Font Size (px)</h4>
 		<div class="slider"></div>
 		<span class='value'></span>
 	</div>
-	<div class='section effects' data-tooltip-id='text-effect'>
+	<div class='section effects presets' data-tooltip-id='text-effect'>
 		<h4>Effects</h4>
 		<ul>
 			<li class='panel-selection none-selected'><i class="fa fa-ban" aria-hidden="true"></i></li>
@@ -34,7 +35,7 @@
 			<# }); #>
 		</ul>
 	</div>
-	<div class='section spacing' data-tooltip-id='spacing'>
+	<div class='section spacing presets' data-tooltip-id='spacing'>
 		<h4>Spacing</h4>
 		<div class='character'>
 			<p>Letter Spacing (px)</p>
@@ -46,5 +47,6 @@
 			<div class="slider"></div>
 			<span class='value'></span>
 		</div>
+	</div>
 	</div>
 </script>
