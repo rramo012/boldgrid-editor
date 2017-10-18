@@ -1,3 +1,5 @@
+var BG = BOLDGRID.EDITOR;
+
 import ContentDragging from './drag/content.js';
 import ColumnDragging from './drag/column.js';
 
@@ -904,7 +906,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Bind all events.
 	 */
 	this.bind_events = function() {
-return;
 		// Bind Event Handlers to container.
 		self.bind_drag_listeners();
 		self.bind_container_events();
@@ -1110,7 +1111,6 @@ return;
 	 * Sets up dragging for all elements defined.
 	 */
 	this.bind_drag_listeners = function() {
-		return;
 		self.$window.on( 'dragover.draggable', self.drag_handlers.over );
 
 		self
@@ -1140,7 +1140,7 @@ return;
 	 * Removes a popover.
 	 */
 	$.fn.remove_popover_imhwpb = function() {
-		$( this ).remove();
+		// $( this ).remove();
 	};
 
 	/**
@@ -1371,15 +1371,6 @@ return;
 		}
 
 		return true;
-	};
-
-	/**
-	 * Drags the an absolutely position element over another then deletes it.
-	 */
-	this.slide_in_place = function( $draged_element, $new_element ) {
-		var newOffset = $new_element.offset();
-		var dragOffset = $draged_element.offset();
-		self.drag_cleanup();
 	};
 
 	/**
@@ -2175,7 +2166,7 @@ return;
 		self.remove_resizing_classes( $markup );
 		self.remove_border_classes( $markup );
 		self.removeClasses( $markup );
-		$markup.find( '.draggable-tools-imhwpb' ).remove();
+		// $markup.find( '.draggable-tools-imhwpb' ).remove();
 		return $markup.html();
 	};
 
@@ -2812,7 +2803,7 @@ return;
 		hide_tooltips: function() {
 			if ( ! self.$current_drag ) {
 				setTimeout( function() {
-					self.find( '.draggable-tools-imhwpb' ).addClass( 'hidden' );
+					self.$body.find( '.draggable-tools-imhwpb' ).addClass( 'hidden' );
 				}, 100 );
 			}
 		},
@@ -2821,7 +2812,6 @@ return;
 		 * Handle the drop event of a draggable.
 		 */
 		drop: function( event ) {
-			console.log( event );
 
 			if ( self.$current_drag ) {
 				self.prevent_default( event );
@@ -2841,7 +2831,6 @@ return;
 		 * ensue.
 		 */
 		end: function( event ) {
-			console.log( event );
 			if ( self.drag_drop_triggered ) {
 				return;
 			}
@@ -2865,14 +2854,14 @@ return;
 		 */
 		start: function( event ) {
 			var $new_column, $row, row_size;
-			console.log( 'ddd' ) ;
 
 			self.valid_drag = true;
 			self.drag_drop_triggered = false;
 			var $this = $( this );
 			var $tooltip = $this.closest( '.draggable-tools-imhwpb' );
 
-			self.$current_drag = $tooltip.next().addClass( 'dragging-imhwpb' );
+			self.$current_drag = BG.Service.popover.selection.$target;
+			self.$current_drag.addClass( 'dragging-imhwpb' );
 			self.addClass( 'drag-progress' );
 
 			if ( self.$current_drag.parent( 'a' ).length ) {
@@ -2883,13 +2872,10 @@ return;
 
 			// These settings help reduce cpu resource usage, storing some properties of the
 			// drag start so that they wont be retrieved again.
-			var $popover_items = $tooltip.find( '.popover-imhwpb' );
 			self.$current_drag.IMHWPB = {
-				right_popover: $popover_items.hasClass( 'right-popover-imhwpb' ),
-				column_popover: $popover_items.hasClass( 'column-popover-imhwpb' ),
-				is_column: self.$current_drag.is( self.column_selectors_string ),
-				is_row: self.$current_drag.is( self.row_selectors_string ),
-				is_content: self.$current_drag.is( self.content_selectors.join() ),
+				is_column: 'column' === BG.Service.popover.selection.name,
+				is_row: 'row' === BG.Service.popover.selection.name,
+				is_content: 'content' === BG.Service.popover.selection.name,
 				height: self.$current_drag.outerHeight(),
 				width: self.$current_drag.outerWidth(),
 				dragStarted: true

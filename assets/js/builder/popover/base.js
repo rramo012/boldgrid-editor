@@ -27,15 +27,6 @@ export class Base {
 		// Init actions.
 		this.options.actions.clone.init();
 		this.options.actions.delete.init();
-console.log( BG.Controls.$container.find( '.drag-handle-imhwpb' ) );
-		BG.Controls.$container.find( '.drag-handle-imhwpb' )
-			.on( 'dragstart', () => {
-				console.log( 'ddddddddddddddddddd' );
-			} );
-		BG.Controls.$container.find( 'html' )
-			.on( 'dragstart', ( e ) => {
-				console.log( e );
-			} );
 
 		return this;
 	}
@@ -43,6 +34,11 @@ console.log( BG.Controls.$container.find( '.drag-handle-imhwpb' ) );
 	_bindEvents() {
 		BG.Controls.$container.on( 'mouseenter', this.selectorString, ( event ) => {
 			this.updatePosition( event );
+		} );
+
+		// Update the current target when it's clicked on.
+		this.$element.on( 'mousedown', ( event ) => {
+			BG.Service.popover.selection = this;
 		} );
 	}
 

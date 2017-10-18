@@ -8,7 +8,7 @@ import { Palette } from './controls/color/palette';
 import { Intro } from './notice/intro';
 import { Save as LibrarySave } from './library/save';
 import { Lead as GridblockLead } from './gridblock/lead';
-import PopoverContent from './popover/content';
+import ContentTools from './popover/content';
 
 export class Service {
 	init() {
@@ -43,7 +43,9 @@ export class Service {
 		BOLDGRID.EDITOR.$window.on( 'boldgrid_editor_loaded', () => {
 			this.styleUpdater = new StyleUpdater( BOLDGRID.EDITOR.Controls.$container ).init();
 
-			this.popoverContent = new PopoverContent().init();
+			this.popover = {};
+			this.popover.selection = false;
+			this.popover.content = new ContentTools().init();
 		} );
 	}
 

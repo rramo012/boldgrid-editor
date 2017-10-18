@@ -11,6 +11,8 @@ export class Content extends Base {
 
 		this.template = template;
 
+		this.name = 'content';
+
 		this.selectors = [
 			'p',
 			'blockquote',
