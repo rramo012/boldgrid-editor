@@ -76,12 +76,12 @@ iframe[src^="https://maps.google.com"] {
 
 .changing-padding,
 .added-element,
-.content-border-imhwpb,
+.popover-hover,
 .resize-border-right-imhwpb,
 .resize-border-left-imhwpb,
 .draggable-tools-imhwpb + *:not(.dragging-imhwpb),
 .draggable-tools-imhwpb + .row:not(.receptor-containers-imhwpb) > [class*="col-md"] {
-    outline: 1px solid gray !important;
+	outline: 1px solid gray !important;
 }
 
 .dragging-section .content-border-imhwpb,
@@ -757,29 +757,10 @@ iframe[src^="https://maps.google.com"] {
     margin-top: -3px;
     left:30px;
 }
-/*
-.container,
-.container-fluid {
-	transition: width .5s;
-}*/
 
 .container-fluid {
 	width: 100%;
 }
-/*
-li[data-action="toggle-container"] {
-	display: none;
-}
-
-.boldgrid-instance-menu li[data-action="toggle-container"] {
-	display: inline-block;
-}
-.boldgrid-section .container-fluid li[data-action="toggle-container"],
-.boldgrid-section .container li[data-action="toggle-container"] {
-	display: block;
-}*/
-
-/***********************/
 
 
 /*** Wordpress Styles **/
@@ -845,6 +826,9 @@ button {
 
 html.selecting .popover-imhwpb {
 	display: none;
+}
+html.selecting .popover-hover {
+	outline-color: transparent !important;
 }
 
 p.no-margin {

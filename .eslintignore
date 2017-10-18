@@ -1,3 +1,4 @@
 assets/js/builder/drag.js
 assets/js/builder/drag/content.js
+assets/js/builder/popover/actions/general.js
 assets/js/builder/tinymce/wp-mce-draggable.js

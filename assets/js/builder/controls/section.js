@@ -125,9 +125,15 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					e.stopPropagation();
 				};
 
+			// Popover related.
 			self.$container.on( 'mouseenter', 'html:not(.dragging-section) body > .boldgrid-section', self.positionHandles );
 			self.$container.on( 'mouseleave', 'html:not(.dragging-section) body > .boldgrid-section', self.hideHandles );
+			self.$container.on( 'mouseleave', self.hideHandles );
 			self.$popover.on( 'click', '[data-action]', self.hideHandles );
+			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
+			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
+			self.$popover.on( 'click', '.context-menu-imhwpb', self.menuDirection );
+
 			self.$popover.on( 'click', '[data-action="delete"]', self.deleteSection );
 			self.$popover.on( 'click', '[data-action="duplicate"]', self.clone );
 			self.$popover.on( 'click', '[data-action="section-width"]', self.sectionWidth );
@@ -138,10 +144,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self.$popover.on( 'click', '[data-action="add-new"]', self.addNewSection );
 			self.$popover.on( 'click', '[data-action]', stopPropagation );
 			self.$popover.on( 'click', '.move-sections', self.enableSectionDrag );
-			self.$popover.on( 'click', '.context-menu-imhwpb', self.menuDirection );
-			self.$container.on( 'boldgrid_modify_content', self.positionHandles );
-			self.$container.on( 'mouseleave', self.hideHandles );
-			self.$container.on( 'end_typing_boldgrid.draggable', self.positionHandles );
 			$( '.exit-row-dragging, .bg-close-zoom-view' ).on( 'click', self.exitSectionDrag );
 			$zoomIn.on( 'click', self.zoom.zoomIn );
 			$zoomOut.on( 'click', self.zoom.zoomOut );
@@ -372,9 +374,9 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$newSection.animate( {
 					'background-color': 'transparent'
 				}, 1500, 'swing', function() {
-						BG.Controls.addStyle( $newSection, 'background-color', '' );
-						IMHWPB['tinymce_undo_disabled'] = false;
-						tinymce.activeEditor.undoManager.add();
+					BG.Controls.addStyle( $newSection, 'background-color', '' );
+					IMHWPB['tinymce_undo_disabled'] = false;
+					tinymce.activeEditor.undoManager.add();
 				}
 			);
 		},

@@ -6,6 +6,11 @@ export class Delete {
 		this.popover = popover;
 	}
 
+	/**
+	 * Setup event listeners.
+	 *
+	 * @since 1.6
+	 */
 	init() {
 		this.popover.$element.find( '[data-action="delete"]' ).on( 'click', ( event ) => {
 			event.preventDefault();
@@ -13,6 +18,11 @@ export class Delete {
 		} );
 	}
 
+	/**
+	 * Delete process.
+	 *
+	 * @since 1.6
+	 */
 	delete() {
 		this.popover.$target.remove();
 		this.popover.$element.hide();

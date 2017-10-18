@@ -2,6 +2,7 @@ var BG = BOLDGRID.EDITOR;
 
 import ContentDragging from './drag/content.js';
 import ColumnDragging from './drag/column.js';
+import ieVersion from './browser/ie-version.js';
 
 jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	var self = this,
@@ -530,23 +531,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * A list of the menu items that are added by default.
-	 */
-	var native_menu_options = [
-		'duplicate',
-		'add-row',
-		'add-column',
-		'nest-row',
-		'clear',
-		'delete',
-		'clone-as-row',
-		'align-top',
-		'align-bottom',
-		'align-default',
-		'align-center'
-	];
-
-	/**
 	 * The options needed for the popover drop downs The key is the value is the
 	 * display name.
 	 */
@@ -687,7 +671,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			deactivate: disable_edit_as_row
 		} );
 
-		self.ie_version = self.get_ie_version();
+		self.ie_version = ieVersion();
 		self.isSafari = self.checkIsSafari();
 		self.create_selector_strings();
 		save_original_selector_strings();
@@ -909,7 +893,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		// Bind Event Handlers to container.
 		self.bind_drag_listeners();
 		self.bind_container_events();
-		self.bind_menu_items();
 		self.bind_additional_menu_items();
 		self.bind_edit_row();
 
@@ -1071,36 +1054,13 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Initializes event binds for drop down menu clicks.
-	 */
-	this.bind_menu_items = function() {
-		self.$body
-			.on( 'click.draggable', 'li[data-action="delete"]', self.menu_actions.delete_element )
-			.on( 'click.draggable', 'li[data-action="add-column"]', self.menu_actions.add_column )
-			.on( 'click.draggable', 'li[data-action="duplicate"]', self.menu_actions.duplicate )
-			.on( 'click.draggable', 'li[data-action="clear"]', self.menu_actions.clear )
-			.on( 'click.draggable', 'li[data-action="insert-layout"]', self.menu_actions.insert_layout )
-			.on( 'click.draggable', 'li[data-action="nest-row"]', self.menu_actions.nest_row )
-			.on( 'click.draggable', 'li[data-action="add-row"]', self.menu_actions.add_row )
-			.on( 'click.draggable', 'li[data-action="clone-as-row"]', self.menu_actions.unnest_row )
-			.on( 'click.draggable', 'li[data-action]', self.menu_actions.trigger_action_click )
-			.on( 'click.draggable', 'li[data-action="add-media"]', self.menu_actions.add_media )
-			.on( 'click.draggable', 'li[data-action="align-top"]', self.menu_actions.alignTop )
-			.on( 'click.draggable', 'li[data-action="Box"]', self.menu_actions.generalMacro )
-			.on( 'click.draggable', 'li[data-action="Font"]', self.menu_actions.generalMacro )
-			.on( 'click.draggable', 'li[data-action="align-default"]', self.menu_actions.alignDefault )
-			.on( 'click.draggable', 'li[data-action="align-bottom"]', self.menu_actions.alignBottom )
-			.on( 'click.draggable', 'li[data-action="align-center"]', self.menu_actions.alignCenter );
-	};
-
-	/**
 	 * Initializes event binds for drop down menu clicks: for menu items passed
 	 * in at initialization.
 	 */
 	this.bind_additional_menu_items = function() {
 		$.each( additional_menu_items, function( key, menu_item ) {
 			self.on(
-				'click.draggable',
+				'click',
 				'li[data-action="' + menu_item.title + '"]',
 				menu_item.callback
 			);
@@ -1111,15 +1071,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Sets up dragging for all elements defined.
 	 */
 	this.bind_drag_listeners = function() {
-		self.$window.on( 'dragover.draggable', self.drag_handlers.over );
+		self.$window.on( 'dragover', self.drag_handlers.over );
 
 		self
-			.on( 'dragstart.draggable', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
-			.on( 'dragstart.draggable', 'img, a', self.drag_handlers.hide_tooltips )
-			.on( 'drop.draggable', self.drag_handlers.drop )
-			.on( 'dragend.draggable', self.drag_handlers.end )
-			.on( 'dragleave.draggable', self.drag_handlers.leave_dragging )
-			.on( 'dragenter.draggable', self.drag_handlers.record_drag_enter );
+			.on( 'dragstart', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
+			.on( 'dragstart', 'img, a', self.drag_handlers.hide_tooltips )
+			.on( 'drop', self.drag_handlers.drop )
+			.on( 'dragend', self.drag_handlers.end )
+			.on( 'dragleave', self.drag_handlers.leave_dragging )
+			.on( 'dragenter', self.drag_handlers.record_drag_enter );
 	};
 
 	this.refresh_fourpan = function() {
@@ -1809,6 +1769,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// Apply hover_elements.
 			$.each( self.hover_elements, function( type, properties ) {
+				if ( 'content' === type ) {
+					return;
+				}
+
 				if ( this.add_element && false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
 					self.insert_popover( this.add_element );
 				} else if ( this.remove_element ) {
@@ -3142,40 +3106,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Get IE Version.
-	 *
-	 * Thanks To: http://stackoverflow.com/questions/19999388/check-if-user-is-using-ie-with-jquery.
-	 */
-	this.get_ie_version = function() {
-		var ua = window.navigator.userAgent;
-
-		var msie = ua.indexOf( 'MSIE ' );
-		if ( 0 < msie ) {
-
-			// IE 10 or older => return version number.
-			return parseInt( ua.substring( msie + 5, ua.indexOf( '.', msie ) ), 10 );
-		}
-
-		var trident = ua.indexOf( 'Trident/' );
-		if ( 0 < trident ) {
-
-			// IE 11 => return version number.
-			var rv = ua.indexOf( 'rv:' );
-			return parseInt( ua.substring( rv + 3, ua.indexOf( '.', rv ) ), 10 );
-		}
-
-		var edge = ua.indexOf( 'Edge/' );
-		if ( 0 < edge ) {
-
-			// Edge (IE 12+) => return version number.
-			return parseInt( ua.substring( edge + 5, ua.indexOf( '.', edge ) ), 10 );
-		}
-
-		// other browser
-		return;
-	};
-
-	/**
 	 * Determine if current browser is safari.
 	 *
 	 * Thanks To: http://stackoverflow.com/questions/7944460/detect-safari-browser.
@@ -3337,37 +3267,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.trigger( self.add_row_event, $empty_row.find( '.col-md-12' ) );
 	};
 
-	this.insertEmptyRow = function( $currentNode, $empty_row ) {
-		var $insertBefore, curNode, $parentRow;
-
-		// If clicked on add row.
-		if ( $currentNode && $currentNode.closest( '.draggable-tools-imhwpb' ).length ) {
-			$insertBefore = $currentNode.closest( '.draggable-tools-imhwpb' );
-		}
-
-		// If current cursor inside of a row.
-		if ( ! $insertBefore || ( ! $insertBefore.length && tinymce && tinymce.activeEditor ) ) {
-			curNode = tinymce.activeEditor.selection.getNode();
-			if ( curNode ) {
-				curNode = $( curNode );
-				$parentRow = curNode.parents( '.row' ).last();
-
-				if ( $parentRow.length ) {
-					$insertBefore = $parentRow;
-				}
-			}
-		}
-
-		// Otherwise put at top of page.
-		if ( ! $insertBefore || ! $insertBefore.length ) {
-			self.$body.prepend( $empty_row );
-		} else {
-			$insertBefore.before( $empty_row );
-		}
-	};
-
 	var alignColumn = function( $popover, alignment ) {
-		var $column = $popover.closest( '.draggable-tools-imhwpb' ).next();
+		var $column = BOLDGRID.EDITOR.Service.popover.selection.$target;
 
 		$column.removeClass( 'align-column-top align-column-bottom align-column-center' );
 
@@ -3376,291 +3277,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		$popover.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-	};
-
-	/**
-	 * An object with the actions that occur when a user clicks on the options
-	 * in the popover menu.
-	 */
-	this.menu_actions = {
-		generalMacro: function( e ) {
-			e.stopPropagation();
-
-			var $this = $( this ),
-				controlName = $this.data( 'action' ),
-				$element = $this.closest( '.draggable-tools-imhwpb' ).next();
-
-			$element.click();
-			BG.CONTROLS[controlName].openPanel();
-		},
-
-		alignTop: function() {
-			alignColumn( $( this ), 'top' );
-		},
-
-		alignBottom: function() {
-			alignColumn( $( this ), 'bottom' );
-		},
-
-		alignCenter: function() {
-			alignColumn( $( this ), 'center' );
-		},
-
-		alignDefault: function() {
-			alignColumn( $( this ) );
-		},
-
-		/**
-		 * The delete event for all element types.
-		 */
-		delete_element: function( event ) {
-			event.preventDefault();
-			var $tools = $( this ).closest( '.draggable-tools-imhwpb' );
-			$tools.next().remove();
-			$tools.remove();
-			self.trigger( self.delete_event );
-		},
-		unnest_row: function( event ) {
-			var $element = $( this )
-				.closest( '.draggable-tools-imhwpb' )
-				.next();
-			if ( ! $element.length ) {
-				return;
-			}
-			$( $element[0].outerHTML ).insertBefore( $element.parent().closest( '.row' ) );
-			self.wp_media_modal_action( event, $element );
-		},
-		nest_row: function( event ) {
-			return;
-		},
-		nest_row_old: function( event ) {
-			var $element = $( this )
-				.closest( '.draggable-tools-imhwpb' )
-				.next();
-			if ( ! $element.length ) {
-				return;
-			}
-
-			// Look Before.
-			var $row_to_nest_in = $element.prevAll( '.row' ).eq( 0 );
-			if ( ! $row_to_nest_in.length ) {
-
-				//Look After
-				$row_to_nest_in = $element.nextAll( '.row' ).eq( 0 );
-			}
-
-			// Not Found?
-			if ( ! $row_to_nest_in.length ) {
-
-				//Create row and nest it
-				$row_to_nest_in = $( '<div class="row"><div class="col-md-8"></div></div>' );
-				self.$body.prepend( $row_to_nest_in );
-			}
-
-			// Find Column.
-			var $column_to_nest_in = $row_to_nest_in.find( self.general_column_selectors_string ).eq( 0 );
-			if ( ! $column_to_nest_in.length ) {
-				$column_to_nest_in = $( '<div class=\'col-md-8\'></div>' );
-				$row_to_nest_in.prepend( $column_to_nest_in );
-			}
-
-			$column_to_nest_in.prepend( $element[0].outerHTML );
-
-			// Focus element scroll.
-			// Need to trigger event.
-		},
-
-		add_row: function( e ) {
-			var $empty_row, $target;
-
-			if ( e ) {
-				$target = $( this );
-			}
-
-			$empty_row = self.createEmptyRow();
-			self.insertEmptyRow( $target, $empty_row );
-			self.postAddRow( $empty_row );
-		},
-
-		/**
-		 * Adding a column to a row. Available from the row popovers.
-		 */
-		add_column: function( event ) {
-			event.preventDefault();
-
-			var min_row_size = 0,
-				$current_click = $( this ),
-				$row = $current_click.closest( '.draggable-tools-imhwpb' ).next(),
-				row_size = self.find_row_size( $row ),
-				$new_column;
-
-			//If this row is empty( only has a br tag ) make sure its blank before adding a column
-			var $children = $row.find( '> *' );
-			if ( 1 === $children.length && 'BR' == $children[0].tagName ) {
-				$row.empty();
-			}
-
-			if ( row_size < self.max_row_size && row_size >= min_row_size ) {
-				$new_column = self.fill_row( row_size, $row );
-			} else if ( row_size >= self.max_row_size ) {
-				var layout_format = self.get_layout_format( $row );
-				var layout_transform = self.find_layout_transform( layout_format );
-				if ( layout_transform && ! layout_transform.current ) {
-					self.transform_layout( $row, layout_transform );
-					$new_column = $(
-						'<div class="col-md-' + layout_transform.new + ' col-sm-12 col-xs-12"></div>'
-					);
-					$row.append( $new_column );
-				} else {
-					self.decrease_row_size( $row );
-					$new_column = $( '<div class="col-md-1 col-sm-12 col-xs-12"></div>' );
-					$row.append( $new_column );
-				}
-			}
-			$new_column.html( '<p><br> </p>' );
-			$new_column.addClass( 'added-element' );
-			setTimeout( function() {
-				$new_column.removeClass( 'added-element' );
-			}, 1000 );
-
-			self.trigger( self.add_column_event, $new_column );
-			$current_click.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-		},
-
-		/**
-		 * Duplicating an element, available from all element types.
-		 */
-		duplicate: function( event ) {
-			event.preventDefault();
-			var $current_click = $( this );
-			var $element = $current_click.closest( '.draggable-tools-imhwpb' ).next();
-			var element_type = self.get_element_type( $element );
-			if ( 'row' == element_type || 'content' == element_type ) {
-				var $cloned_element = $element.clone();
-				$cloned_element[0].popover = null;
-				$element.after( $cloned_element );
-			} else if ( 'column' == element_type ) {
-				var $row = $element.closest_context( self.row_selectors_string, self );
-
-				var column_size = self.find_column_size( $element );
-				var layout_format = self.get_layout_format( $row );
-				var layout_transform = self.find_layout_transform( layout_format, column_size );
-				var new_column_size = 1;
-
-				if ( self.find_row_size( $row ) + column_size <= self.max_row_size ) {
-					var $new_element = $element.before( $element[0].outerHTML );
-					$new_element[0].popover = null;
-				} else if ( layout_transform ) {
-					if ( ! layout_transform.current ) {
-						self.transform_layout( $row, layout_transform );
-						new_column_size = layout_transform.new;
-						var $new_element = $element.before( $element[0].outerHTML );
-						$new_element[0].popover = null;
-						self.change_column_size( $new_element, null, new_column_size );
-					} else {
-
-						// Transform current
-						self.change_column_size( $element, null, layout_transform['current_transform'] );
-
-						// Transform New
-						new_column_size = layout_transform.new;
-						var $new_element = $element.before( $element[0].outerHTML );
-						$new_element[0].popover = null;
-						self.change_column_size( $new_element, null, new_column_size );
-
-						// Transform Additional
-						$.each( layout_transform['additional_transform'], function( key, transform ) {
-							var num_transformed = 0;
-							$row
-								.find( self.immediate_column_selectors_string )
-								.reverse()
-								.each( function() {
-									if ( num_transformed < transform.count ) {
-										var $column = $( this );
-										if ( self.find_column_size( $column ) == transform.from ) {
-											self.change_column_size( $column, null, transform.to );
-											num_transformed++;
-										}
-									} else {
-										return false;
-									}
-								} );
-						} );
-					}
-				} else if ( 0 == column_size % 2 && column_size ) {
-					self.change_column_size( $element, null, parseInt( column_size / 2 ) );
-					var $new_element = $element.before( $element[0].outerHTML );
-					$new_element[0].popover = null;
-					self.change_column_size( $new_element, null, parseInt( column_size / 2 ) );
-				} else if ( self.decrease_row_size( $row ) ) {
-					var $new_element = $element.before( $element[0].outerHTML );
-					$new_element[0].popover = null;
-					self.change_column_size( $new_element, null, new_column_size );
-				}
-			}
-
-			self.trigger( self.add_column_event );
-			$current_click.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-
-			if ( self.ie_version ) {
-				self.refresh_handle_location();
-			}
-		},
-
-		/**
-		 * Remove the contents elements of an element.
-		 */
-		clear: function( event ) {
-			event.preventDefault();
-			var $current_click = $( this );
-			var $element = $current_click.closest( '.draggable-tools-imhwpb' ).next();
-			var type = self.get_element_type( $element );
-
-			if ( 'column' == type ) {
-				$element.html( '<p><br> </p>' );
-				alignColumn( $current_click );
-			} else {
-				$element
-					.find( ':not(' + self.column_selectors_string + '):not( ' + self.row_selectors_string + ')' )
-					.remove();
-			}
-
-			self.refresh_handle_location();
-			$current_click.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-			self.trigger( self.clear_event, $element );
-		},
-
-		/**
-		 * Activate the add media modal
-		 */
-		add_media: function( event ) {
-			var $clicked_element = $( this );
-			self.add_media_event_handler( $clicked_element.closest( '.draggable-tools-imhwpb' ).next()[0] );
-			return;
-		},
-
-		/**
-		 * Activate the add media modal.
-		 */
-		insert_layout: function( event ) {
-			var $clicked_element = $( this );
-			self.insert_layout_event_handler( $clicked_element.closest( '.draggable-tools-imhwpb' ).next()[0] );
-			return;
-		},
-		trigger_action_click: function( event ) {
-			var $clicked_element = $( this );
-
-			// Native Function do not need to run wp_media_modal_action,
-			// However, currently nest-row is the only action that requires that
-			// it isn't run.
-			if ( -1 === native_menu_options.indexOf( $clicked_element.data( 'action' ) ) ) {
-				self.$boldgrid_menu_action_clicked = $clicked_element.closest( '.draggable-tools-imhwpb' ).next()[0];
-
-				self.wp_media_modal_action( event, $clicked_element );
-			}
-
-			self.trigger( self.boldgrid_modify_event );
-		}
 	};
 
 	/**
@@ -3677,10 +3293,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.typing_events = {
 		start: function() {
-
-			//Remove Popovers
-			self.find( '.draggable-tools-imhwpb' ).attr( 'contenteditable', true );
-			self.delete_popovers();
 			self.find( 'html' ).addClass( 'boldgrid-is-typing' );
 		},
 		end: function() {
@@ -3688,7 +3300,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			//Add Popovers
 			self.validate_markup();
 			self.find( 'html' ).removeClass( 'boldgrid-is-typing' );
-			self.update_handles( self.last_hover );
 		}
 	};
 
