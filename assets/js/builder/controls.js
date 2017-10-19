@@ -245,8 +245,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				self.setupControl( this );
 			} );
 
-			BOLDGRID.EDITOR.CONTROLS.Section.init( self.$container );
-
 			// Trigger a click on the body to display global controls.
 			if ( ! BoldgridEditor.display_intro ) {
 				this.$container.find( 'body' ).click();

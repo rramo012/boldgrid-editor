@@ -67,7 +67,6 @@ export class Base {
 	 */
 	updatePosition( event ) {
 		let pos;
-
 		this._removeBorder();
 
 		if ( event ) {
@@ -86,6 +85,8 @@ export class Base {
 		if ( BG.Controls.$container.is_typing && true === BG.Controls.$container.is_typing ) {
 			return false;
 		}
+
+		this.$target = this.$target.closest( this.selectorString );
 
 		pos = this.$target[0].getBoundingClientRect();
 
@@ -124,7 +125,7 @@ export class Base {
 	_repositionEvents() {
 		var updatePosition = _.debounce( ( event )  => {
 				this.updatePosition( event );
-			}, 200
+			}, 300
 		);
 
 		BG.Controls.$container.on( 'mouseenter', this.selectorString, ( event ) => {
@@ -144,7 +145,7 @@ export class Base {
 	_hideEvents() {
 		var hideHandles = _.debounce( ( event )  => {
 				this.hideHandles( event );
-			}, 200
+			}, 300
 		);
 
 		BG.Controls.$container.on( 'mouseleave', this.selectorString, ( event ) => {
@@ -152,7 +153,7 @@ export class Base {
 		} );
 
 		this.$element.on( 'mouseleave', ( event ) => {
-			this.hideHandles( event );
+			hideHandles( event );
 		} );
 
 		BG.Controls.$container.find( '[data-action]' ).on( 'click', ( event ) => {

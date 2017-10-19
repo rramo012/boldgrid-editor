@@ -36,14 +36,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/** Popover Menu Items to be added. **/
 	var additional_menu_items = settings.menu_items || [];
 
-	/** Testing and debug flag that prevents popovers from being removed. Useful for testing placements. **/
-	this.popover_placement_testing = settings.popover_placement_testing || false;
-
 	/** How long should we wait before removing or displaying a new popover. **/
 	this.hover_timout = settings.hover_timout || 175;
-
-	/** Should popovers be removed while the user is typing. **/
-	this.type_popover_removal = settings.type_popover_removal || true;
 
 	/**
 	 * The interaction container refers to the wrapper that holds all the draggable items.
@@ -1016,32 +1010,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.bind_container_events = function() {
 		self
-			.on( 'click.draggable', '.drag-handle-imhwpb, .draggable-tools-imhwpb', self.prevent_default_draghandle )
 			.on( 'mousedown.draggable', '.drag-handle-imhwpb', self.drag_handle_mousedown )
 			.on( 'mouseup.draggable', '.drag-handle-imhwpb', self.drag_handle_mouseup )
 			.on( 'click.draggable', self.hide_menus )
 			.on( 'click.draggable', self.failSafeCleanup )
 			.on( 'click.draggable', '.context-menu-imhwpb', self.setup_context_menu )
 			.on( 'boldgrid_modify_content.draggable', self.refresh_fourpan );
-
-		if ( self.type_popover_removal ) {
-			self
-				.on( 'start_typing_boldgrid.draggable', self.typing_events.start )
-				.on( 'end_typing_boldgrid.draggable', self.typing_events.end );
-		}
-
-		//Manage drag handles show/hide
-		self.$body
-			.on(
-				'mouseenter.draggable',
-				self.draggable_selectors_string + ', .draggable-tools-imhwpb',
-				self.insert_drag_handles
-			)
-			.on(
-				'mouseleave.draggable',
-				self.draggable_selectors_string + ', .draggable-tools-imhwpb',
-				self.remove_drag_handles
-			);
 
 		self
 			.on( 'mouseleave.draggable', self.window_mouse_leave )
@@ -1354,18 +1328,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Remove all popovers and then re-add them used for positioning.
-	 */
-	this.refresh_handle_location = function() {
-
-		// Remove popovers so that they don't reappear in the old location.
-		self.remove_all_popovers();
-
-		// Refresh the location of handlers.
-		self.update_handles( self.last_hover );
-	};
-
-	/**
 	 * This function defines the restrictions of the dragged item.
 	 */
 	this.determine_current_drag_properties = function() {
@@ -1400,20 +1362,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.between = function( x, min, max ) {
 		return x >= min && x <= max;
-	};
-
-	/**
-	 * Remove all the popovers that have been added to the screen.
-	 */
-	this.remove_all_popovers = function() {
-		self.last_hover = null;
-		self.hover_elements.type = {
-			content: null,
-			column: null,
-			row: null
-		};
-
-		self.delete_popovers();
 	};
 
 	/**
@@ -1515,113 +1463,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Event that handles remove popovers Triggered when your mouse enters
-	 * another target within the the $master_container.
-	 */
-	this.remove_drag_handles = function( event ) {
-		var $current_element = $( this ); // Element you've left.
-		var type;
-		var $draggable;
-		var $tools;
-		if ( ! event.relatedTarget ) {
-			return;
-		}
-		self.remove_receptor_containers();
-
-		// Related Target is the target you entered.
-		var $related_target = $( event.relatedTarget || event.toElement ); // Element you've entered
-
-		if ( false == $related_target.length ) {
-			return;
-		}
-
-		var $closest_draggable_tools = $related_target.closest( '.draggable-tools-imhwpb' );
-		if ( $current_element.hasClass( 'draggable-tools-imhwpb' ) ) {
-
-			// If you've entered into your child dont remove.
-			if (
-				$current_element.next().find( $related_target ).length ||
-				$current_element.next()[0] == $related_target[0]
-			) {
-				return false;
-			}
-
-			$tools = $current_element;
-			$draggable = $current_element.next();
-
-			// If you did not enter your own popover.
-		} else if ( $closest_draggable_tools[0] != this.popover || false == $closest_draggable_tools.length ) {
-
-			// If you've entered into your parent, and your parent needs a popover
-			// Only applies to content.
-			type = self.get_element_type( $current_element );
-			var nested_content = $current_element
-				.parent()
-				.closest_context( self.content_selectors_string, self ).length;
-
-			if ( 'content' == type && nested_content ) {
-				return false;
-			}
-
-			if ( $current_element.find( $related_target ).length ) {
-				return false;
-			}
-
-			$tools = $current_element.prev( '.draggable-tools-imhwpb' );
-			$draggable = $current_element;
-		} //Endif
-
-		if ( $draggable && $draggable.length ) {
-			type = self.get_element_type( $draggable );
-
-			// Prevent a pending addition from occurring.
-			if (
-				type &&
-				self.hover_elements[type] &&
-				'undefined' != typeof self.hover_elements[type].add_element &&
-				null != self.hover_elements[type].add_element
-			) {
-
-				// In the case that the lowest child event leave does not trigger,
-				// Remove invalid elements.
-				self.hover_elements[type].add_element = null;
-				if ( 'row' == type ) {
-					self.hover_elements.column = { add_element: null };
-					self.hover_elements.content = { add_element: null };
-				} else if ( 'column' == type ) {
-					self.hover_elements.content = { add_element: null };
-				}
-			}
-		}
-
-		if ( $draggable && $draggable.length && $tools && $tools.length ) {
-			self.last_hover = new Date().getTime();
-			self.hover_elements[type] = {
-				remove_element: {
-					element: $draggable,
-					tools: $tools
-				}
-			};
-			setTimeout( self.update_handles, self.hover_timout, self.last_hover );
-		}
-	};
-
-	/**
-	 * Delete a popover.
-	 */
-	this.remove_drag_handle = function( $draggable, $tools ) {
-		if ( $tools ) {
-			$tools.remove_popover_imhwpb();
-		}
-		if ( $draggable && $draggable.length ) {
-			$draggable[0].popover = null;
-			if ( false == self.$current_drag ) {
-				$draggable.removeClass( self.dragging_selector_class_name );
-			}
-		}
-	};
-
-	/**
 	 * Return Row, Column, Content or nested-row.
 	 */
 	this.get_tooltip_type = function( $current ) {
@@ -1641,158 +1482,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Adds a popover before a row, content or column element.
-	 */
-	this.insert_popover = function( $current ) {
-		if ( ! self.find( $current ).length ) {
-			return;
-		}
-
-		var type = self.get_tooltip_type( $current );
-		if ( ! type ) {
-			return;
-		}
-
-		// Insert A tooltip before the current element.
-		$current.before( self.toolkit_markup( type ) );
-		var $added_tooltip = $current.prev( '.draggable-tools-imhwpb' );
-		var $offset = $current.offset();
-		var $parent_offset = $current.offsetParent().offset();
-
-		// Attach a popover object to the element so that it can be removed more easily.
-		$current[0].popover = $added_tooltip[0];
-
-		// Rewrite the position of the tooltip based on type.
-		if ( 'content' == type || 'nested-row' == type ) {
-			if ( self.$content_tooltip ) {
-				self.$content_tooltip.remove();
-			}
-			self.$content_tooltip = $added_tooltip;
-
-			// Min Left of 25.
-			var current_bounding_rect = $current[0].getBoundingClientRect();
-			var left = current_bounding_rect.left - 17;
-			if ( 25 > left ) {
-				left = 25;
-			}
-
-			if ( $current.is( 'img, .row .row, .wpview-wrap, .wpview' ) ) {
-				$added_tooltip.find( '[data-action="Font"]' ).hide();
-			}
-
-			$added_tooltip.css( {
-				top: current_bounding_rect.top - 25,
-				left: left
-			} );
-		} else if ( 'column' == type ) {
-			if ( self.$column_tooltip ) {
-				self.$column_tooltip.remove();
-			}
-			self.$column_tooltip = $added_tooltip;
-
-			var current_bounding_rect = $current[0].getBoundingClientRect();
-
-			$added_tooltip.css( {
-				top: current_bounding_rect.top,
-				left: current_bounding_rect.left
-			} );
-		} else if ( 'row' == type ) {
-			if ( self.$row_tooltip ) {
-				self.$row_tooltip.remove();
-			}
-			self.$row_tooltip = $added_tooltip;
-
-			$added_tooltip.css( {
-				position: 'relative'
-			} );
-		}
-	};
-
-	/**
 	 * Shortcut to get all elements that are direct decendents of the body.
 	 */
 	this.get_top_level_elements = function() {
 		return self.$body.find( '> *' ).not( '.draggable-tools-imhwpb' );
-	};
-
-	/**
-	 * Adds the event that creates the popovers.
-	 */
-	this.insert_drag_handles = function( event ) {
-		var $current = $( this );
-
-		if ( ! self.resize && ! self.popovers_disabled ) {
-
-			// If the user only has a paragraph on the page, don't show a popover.
-			var $top_level_elements = self.get_top_level_elements();
-			if ( 1 === $top_level_elements.length && 'P' == $top_level_elements[0].tagName ) {
-				return;
-			}
-
-			// If you have entered a popover rewrite to the popovers element.
-			var $closest_draggable = $current.closest( '.draggable-tools-imhwpb' );
-
-			if ( $closest_draggable.length ) {
-				$current = $closest_draggable.next();
-			}
-
-			// If this is nested content, rewrite handle to highest parent.
-			var type = self.get_element_type( $current );
-			if (
-				'content' == type &&
-				true ==
-					$current.parent().closest_context( self.content_selectors_string, self ).length
-			) {
-				$current = $current.parents( self.content_selectors_string ).last();
-			}
-
-			self.last_hover = new Date().getTime();
-			self.hover_elements[type] = {
-				add_element: $current
-			};
-			setTimeout( self.update_handles, self.hover_timout, self.last_hover );
-		}
-	};
-
-	/**
-	 * Set the location of the popovers based on the maintained self.hover_elements object.
-	 */
-	this.update_handles = function( last_hover ) {
-
-		// If the last time we hovered over an element, was this event.
-		if ( last_hover == self.last_hover ) {
-
-			// Do not show popovers while the user is typing.
-			if ( self.is_typing && true == self.is_typing ) {
-				return false;
-			}
-
-			// Apply hover_elements.
-			$.each( self.hover_elements, function( type, properties ) {
-				if ( 'content' === type ) {
-					return;
-				}
-
-				if ( this.add_element && false == this.add_element.prev().hasClass( 'draggable-tools-imhwpb' ) ) {
-					self.insert_popover( this.add_element );
-				} else if ( this.remove_element ) {
-					self.remove_drag_handle( this.remove_element.element, this.remove_element.tools );
-				}
-
-				// Failsafe due to poor design.
-				// @todo Remove failsafe.
-				if ( ! this.add_element ) {
-					var $extra_popovers = self
-						.find( '.' + type + '-popover-imhwpb' )
-						.closest( '.draggable-tools-imhwpb' );
-
-					$extra_popovers.each( function() {
-						var $this = $( this );
-						self.remove_drag_handle( $this.next(), $this );
-					} );
-				}
-			} );
-		}
 	};
 
 	/**
@@ -2116,13 +1809,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Prevent default behavior when the user clicks on the drag handle.
-	 */
-	this.prevent_default_draghandle = function( event ) {
-		event.preventDefault();
-	};
-
-	/**
 	 * Remove any classes that were added by the the draggable class.
 	 */
 	this.frame_cleanup = function( markup ) {
@@ -2179,7 +1865,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 
 		self.remove_resizing_classes( self );
-		self.remove_all_popovers();
 
 		self.hover_elements = {
 			content: null,
@@ -2241,16 +1926,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 		if ( self.$current_clicked_element ) {
 			self.$current_clicked_element.removeClass( 'dragging-imhwpb' );
-		}
-
-		if ( 'undefined' == typeof element ) {
-			var $target = $( event.target );
-		} else {
-			var $target = $( element );
-		}
-
-		if ( false == $target.closest( '.draggable-tools-imhwpb' ).length ) {
-			$target.trigger( 'mouseenter' );
 		}
 	};
 
@@ -3267,27 +2942,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.trigger( self.add_row_event, $empty_row.find( '.col-md-12' ) );
 	};
 
-	var alignColumn = function( $popover, alignment ) {
-		var $column = BOLDGRID.EDITOR.Service.popover.selection.$target;
-
-		$column.removeClass( 'align-column-top align-column-bottom align-column-center' );
-
-		if ( alignment ) {
-			$column.addClass( 'align-column-' + alignment );
-		}
-
-		$popover.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-	};
-
-	/**
-	 * Every time that we open the media modal this action should occur.
-	 */
-	this.wp_media_modal_action = function( event, $clicked_element ) {
-		event.preventDefault();
-		$clicked_element.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
-		self.window_mouse_leave();
-	};
-
 	/**
 	 * Handle the user typing.
 	 */
@@ -3379,7 +3033,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 				self.addClass( 'resizing-imhwpb' );
 				self.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
-				self.remove_all_popovers();
 
 				self.$html.addClass( 'no-select-imhwpb' );
 

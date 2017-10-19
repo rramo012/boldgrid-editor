@@ -8,7 +8,10 @@ import { Palette } from './controls/color/palette';
 import { Intro } from './notice/intro';
 import { Save as LibrarySave } from './library/save';
 import { Lead as GridblockLead } from './gridblock/lead';
-import ContentTools from './popover/content';
+import ContentPopover from './popover/content';
+import ColumnPopover from './popover/column';
+import RowPopover from './popover/row';
+import SectionPopover from './popover/section';
 
 export class Service {
 	init() {
@@ -45,7 +48,13 @@ export class Service {
 
 			this.popover = {};
 			this.popover.selection = false;
-			this.popover.content = new ContentTools().init();
+
+			this.popover.content = new ContentPopover().init();
+			this.popover.column = new ColumnPopover().init();
+			this.popover.row = new RowPopover().init();
+			this.popover.section = new SectionPopover().init();
+
+			BOLDGRID.EDITOR.CONTROLS.Section.init( BOLDGRID.EDITOR.Controls.$container );
 		} );
 	}
 
@@ -55,7 +64,7 @@ export class Service {
 	 * @since 1.6
 	 */
 	_onEditorPreload() {
-		BOLDGRID.EDITOR.$window.on( 'boldgrid_editor_preloaded', () => {
+		BOLDGRID.EDITOR.$window.on( 'boldgrid_editor_preload', () => {
 			new Palette().init();
 			new Intro().init();
 			new LibrarySave().init();

@@ -1,3 +1,5 @@
+var $ = jQuery;
+
 export default function( event, $left, $entered ) {
 	var self = BOLDGRID.EDITOR.Controls.$container;
 

@@ -10,6 +10,7 @@ var self,
 export class GeneralActions {
 	bind( $popover ) {
 		$popover.find( 'li[data-action="add-column"]' ).on( 'click', menuActions.add_column );
+		$popover.find( 'li[data-action="duplicate-column"]' ).on( 'click', menuActions.duplicateColumn );
 		$popover.find( 'li[data-action="clear"]' ).on( 'click', menuActions.clear );
 		$popover.find( 'li[data-action="insert-layout"]' ).on( 'click', menuActions.insert_layout );
 		$popover.find( 'li[data-action="add-row"]' ).on( 'click', menuActions.add_row );
@@ -46,6 +47,28 @@ let native_menu_options = [
 	'align-default',
 	'align-center'
 ];
+
+
+let alignColumn = function( $popover, alignment ) {
+	var $column = BOLDGRID.EDITOR.Service.popover.selection.$target;
+
+	$column.removeClass( 'align-column-top align-column-bottom align-column-center' );
+
+	if ( alignment ) {
+		$column.addClass( 'align-column-' + alignment );
+	}
+
+	$popover.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
+};
+
+/**
+ * Every time that we open the media modal this action should occur.
+ */
+let wp_media_modal_action = function( event, $clicked_element ) {
+	event.preventDefault();
+	$clicked_element.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
+	self.window_mouse_leave();
+};
 
 /**
  * An object with the actions that occur when a user clicks on the options
@@ -87,7 +110,7 @@ let menuActions = {
 		}
 
 		$( $element[0].outerHTML ).insertBefore( $element.parent().closest( '.row' ) );
-		self.wp_media_modal_action( event, $element );
+		wp_media_modal_action( event, $element );
 	},
 
 	add_row: function( e ) {
@@ -144,77 +167,68 @@ let menuActions = {
 	/**
 	 * Duplicating an element, available from all element types.
 	 */
-	duplicate: function( event ) {
+	duplicateColumn: function( event ) {
 		event.preventDefault();
-		var $current_click = $( this );
-		var $element = $current_click.closest( '.draggable-tools-imhwpb' ).next();
-		var element_type = self.get_element_type( $element );
-		if ( 'row' == element_type || 'content' == element_type ) {
-			var $cloned_element = $element.clone();
-			$cloned_element[0].popover = null;
-			$element.after( $cloned_element );
-		} else if ( 'column' == element_type ) {
-			var $row = $element.closest_context( self.row_selectors_string, self );
+		var $element = BOLDGRID.EDITOR.Service.popover.selection.$target;
+		var $row = $element.closest_context( self.row_selectors_string, self );
 
-			var column_size = self.find_column_size( $element );
-			var layout_format = self.get_layout_format( $row );
-			var layout_transform = self.find_layout_transform( layout_format, column_size );
-			var new_column_size = 1;
+		var column_size = self.find_column_size( $element );
+		var layout_format = self.get_layout_format( $row );
+		var layout_transform = self.find_layout_transform( layout_format, column_size );
+		var new_column_size = 1;
 
-			if ( self.find_row_size( $row ) + column_size <= self.max_row_size ) {
-				var $new_element = $element.before( $element[0].outerHTML );
-				$new_element[0].popover = null;
-			} else if ( layout_transform ) {
-				if ( ! layout_transform.current ) {
-					self.transform_layout( $row, layout_transform );
-					new_column_size = layout_transform.new;
-					var $new_element = $element.before( $element[0].outerHTML );
-					$new_element[0].popover = null;
-					self.change_column_size( $new_element, null, new_column_size );
-				} else {
-
-					// Transform current
-					self.change_column_size( $element, null, layout_transform['current_transform'] );
-
-					// Transform New
-					new_column_size = layout_transform.new;
-					var $new_element = $element.before( $element[0].outerHTML );
-					$new_element[0].popover = null;
-					self.change_column_size( $new_element, null, new_column_size );
-
-					// Transform Additional
-					$.each( layout_transform['additional_transform'], function( key, transform ) {
-						var num_transformed = 0;
-						$row
-							.find( self.immediate_column_selectors_string )
-							.reverse()
-							.each( function() {
-								if ( num_transformed < transform.count ) {
-									var $column = $( this );
-									if ( self.find_column_size( $column ) == transform.from ) {
-										self.change_column_size( $column, null, transform.to );
-										num_transformed++;
-									}
-								} else {
-									return false;
-								}
-							} );
-					} );
-				}
-			} else if ( 0 == column_size % 2 && column_size ) {
-				self.change_column_size( $element, null, parseInt( column_size / 2 ) );
-				var $new_element = $element.before( $element[0].outerHTML );
-				$new_element[0].popover = null;
-				self.change_column_size( $new_element, null, parseInt( column_size / 2 ) );
-			} else if ( self.decrease_row_size( $row ) ) {
+		if ( self.find_row_size( $row ) + column_size <= self.max_row_size ) {
+			var $new_element = $element.before( $element[0].outerHTML );
+			$new_element[0].popover = null;
+		} else if ( layout_transform ) {
+			if ( ! layout_transform.current ) {
+				self.transform_layout( $row, layout_transform );
+				new_column_size = layout_transform.new;
 				var $new_element = $element.before( $element[0].outerHTML );
 				$new_element[0].popover = null;
 				self.change_column_size( $new_element, null, new_column_size );
+			} else {
+
+				// Transform current
+				self.change_column_size( $element, null, layout_transform['current_transform'] );
+
+				// Transform New
+				new_column_size = layout_transform.new;
+				var $new_element = $element.before( $element[0].outerHTML );
+				$new_element[0].popover = null;
+				self.change_column_size( $new_element, null, new_column_size );
+
+				// Transform Additional
+				$.each( layout_transform['additional_transform'], function( key, transform ) {
+					var num_transformed = 0;
+					$row
+						.find( self.immediate_column_selectors_string )
+						.reverse()
+						.each( function() {
+							if ( num_transformed < transform.count ) {
+								var $column = $( this );
+								if ( self.find_column_size( $column ) == transform.from ) {
+									self.change_column_size( $column, null, transform.to );
+									num_transformed++;
+								}
+							} else {
+								return false;
+							}
+						} );
+				} );
 			}
+		} else if ( 0 == column_size % 2 && column_size ) {
+			self.change_column_size( $element, null, parseInt( column_size / 2 ) );
+			var $new_element = $element.before( $element[0].outerHTML );
+			$new_element[0].popover = null;
+			self.change_column_size( $new_element, null, parseInt( column_size / 2 ) );
+		} else if ( self.decrease_row_size( $row ) ) {
+			var $new_element = $element.before( $element[0].outerHTML );
+			$new_element[0].popover = null;
+			self.change_column_size( $new_element, null, new_column_size );
 		}
 
 		self.trigger( self.add_column_event );
-		$current_click.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
 
 		if ( self.ie_version ) {
 			self.refresh_handle_location();
@@ -230,7 +244,7 @@ let menuActions = {
 		var $element = BOLDGRID.EDITOR.Service.popover.selection.$target;
 		var type = self.get_element_type( $element );
 
-		if ( 'column' == type ) {
+		if ( 'column' == BOLDGRID.EDITOR.Service.popover.selection.name ) {
 			$element.html( '<p><br> </p>' );
 			alignColumn( $current_click );
 		} else {
@@ -268,7 +282,7 @@ let menuActions = {
 		if ( -1 === native_menu_options.indexOf( $clicked_element.data( 'action' ) ) ) {
 			self.$boldgrid_menu_action_clicked = BOLDGRID.EDITOR.Service.popover.selection.$target[0];
 
-			self.wp_media_modal_action( event, $clicked_element );
+			wp_media_modal_action( event, $clicked_element );
 		}
 
 		self.trigger( self.boldgrid_modify_event );
