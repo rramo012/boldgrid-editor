@@ -24,7 +24,6 @@ export class GeneralActions {
 		$popover.find( 'li[data-action="align-bottom"]' ).on( 'click', menuActions.alignBottom );
 		$popover.find( 'li[data-action="align-center"]' ).on( 'click', menuActions.alignCenter );
 
-
 		self = BG.Controls.$container;
 	}
 }
@@ -47,7 +46,6 @@ let native_menu_options = [
 	'align-default',
 	'align-center'
 ];
-
 
 let alignColumn = function( $popover, alignment ) {
 	var $column = BOLDGRID.EDITOR.Service.popover.selection.$target;
@@ -229,10 +227,6 @@ let menuActions = {
 		}
 
 		self.trigger( self.add_column_event );
-
-		if ( self.ie_version ) {
-			self.refresh_handle_location();
-		}
 	},
 
 	/**
@@ -253,7 +247,6 @@ let menuActions = {
 				.remove();
 		}
 
-		self.refresh_handle_location();
 		$current_click.closest( '.popover-menu-imhwpb' ).addClass( 'hidden' );
 		self.trigger( self.clear_event, $element );
 	},

@@ -6,7 +6,6 @@ import Delete from './actions/delete.js';
 import GeneralActions from './actions/general.js';
 
 export class Base {
-
 	constructor( options ) {
 		options = options || {};
 		options.actions = options.actions || {};
@@ -16,13 +15,11 @@ export class Base {
 
 		this.options = options;
 
-		this.selectors = [
-			'.must-be-defined'
-		];
+		this.selectors = [ '.must-be-defined' ];
 
 		this.debounceTime = 300;
-		this.debouncedHide = this._getDebouncedHide();
-		this.debouncedUpdate = this._getDebouncedUpdate();
+		this._hideCb = this._getDebouncedHide();
+		this._showCb = this._getDebouncedUpdate();
 	}
 
 	/**
@@ -85,7 +82,7 @@ export class Base {
 			return;
 		}
 
-		if ( BG.Controls.$container.$current_drag ) {
+		if ( BG.Controls.$container.$current_drag || BG.Controls.$container.resize ) {
 			return false;
 		}
 
@@ -110,13 +107,23 @@ export class Base {
 	 * @since 1.6
 	 */
 	bindSelectorEvents() {
-		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), ( event ) => {
+		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), event => {
 			this.debouncedUpdate( event );
 		} );
 
-		BG.Controls.$container.on( 'mouseleave.draggable', this.getSelectorString(), ( event ) => {
+		BG.Controls.$container.on( 'mouseleave.draggable', this.getSelectorString(), event => {
 			this.debouncedHide( event );
 		} );
+	}
+
+	debouncedHide( event ) {
+		this._hideCb( event );
+		this.mostRecentAction = 'leave';
+	}
+
+	debouncedUpdate( event ) {
+		this._showCb( event );
+		this.mostRecentAction = 'enter';
 	}
 
 	/**
@@ -127,10 +134,13 @@ export class Base {
 	 * @return {function} Debounced function.
 	 */
 	_getDebouncedHide() {
-		return _.debounce( ( event )  => {
+		return _.debounce( event => {
+
+			// Only proceed of if this was the most recently triggered action.
+			if ( 'leave' === this.mostRecentAction ) {
 				this.hideHandles( event );
-			}, this.debounceTime
-		);
+			}
+		}, this.debounceTime );
 	}
 
 	/**
@@ -141,10 +151,14 @@ export class Base {
 	 * @return {function} Debounced function.
 	 */
 	_getDebouncedUpdate() {
-		return _.debounce( ( event )  => {
+		return _.debounce( event => {
+
+			// Only proceed of if this was the most recently triggered action.
+			if ( 'enter' === this.mostRecentAction ) {
 				this.updatePosition( event );
-			}, this.debounceTime
-		);
+			}
+
+		}, this.debounceTime );
 	}
 
 	/**
@@ -163,7 +177,6 @@ export class Base {
 	 * @since 1.6
 	 */
 	_universalEvents() {
-
 		this.$element.on( 'mousedown', () => {
 			BG.Service.popover.selection = this;
 		} );
@@ -177,11 +190,11 @@ export class Base {
 			this.updatePosition();
 		} );
 
-		this.$element.on( 'mouseleave', ( event ) => {
+		this.$element.on( 'mouseleave', event => {
 			this.debouncedHide( event );
 		} );
 
-		BG.Controls.$container.find( '[data-action]' ).on( 'click', ( event ) => {
+		BG.Controls.$container.find( '[data-action]' ).on( 'click', event => {
 			this.hideHandles( event );
 		} );
 
@@ -189,7 +202,7 @@ export class Base {
 			this.debouncedHide( event );
 		} );
 
-		BG.Controls.$container.on( 'start_typing_boldgrid', () => {
+		BG.Controls.$container.on( 'start_typing_boldgrid resize_clicked drag_end_dwpb clear_dwpb add_column_dwpb', () => {
 			this.hideHandles();
 		} );
 	}

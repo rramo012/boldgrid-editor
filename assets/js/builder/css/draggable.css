@@ -78,6 +78,7 @@ iframe[src^="https://maps.google.com"] {
 .added-element,
 .popover-hover,
 .resize-border-right-imhwpb,
+.content-border-imhwpb
 .resize-border-left-imhwpb {
 	outline: 1px solid gray !important;
 }

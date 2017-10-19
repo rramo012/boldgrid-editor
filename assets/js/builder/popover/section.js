@@ -36,7 +36,6 @@ export class Section extends Base {
 			e.stopPropagation();
 		};
 
-		this.$element.find( '.context-menu-imhwpb' ).on( 'click', ( e ) => this.menuDirection( e ) );
 		this.$element.find( '[data-action]' ).on( 'click', stopPropagation );
 		this.$element.find( '[data-action="section-width"]' ).on( 'click', ( e ) => this.sectionWidth( e ) );
 		this.$element.find( '[data-action="move-up"]' ).on( 'click', () => this.moveUp() );
@@ -55,25 +54,6 @@ export class Section extends Base {
 	 */
 	getSelectorString() {
 		return this.selectorsString;
-	}
-
-	/**
-	 * When the section menu is too close to the top, point it down.
-	 *
-	 * @since 1.2.8
-	 * @param Event e.
-	 */
-	menuDirection( e ) {
-		let pos = e.screenY - window.screenY,
-			menuHeight = 340,
-			staticMenuPos = BG.Menu.$mceContainer[0].getBoundingClientRect();
-
-		if ( pos - staticMenuPos.bottom < menuHeight ) {
-			this.$element.find( '.popover-menu-imhwpb' ).addClass( 'menu-down' );
-		} else {
-			this.$element.find( '.popover-menu-imhwpb' ).removeClass( 'menu-down' );
-		}
-
 	}
 
 	/**

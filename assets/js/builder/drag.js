@@ -776,6 +776,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.wrap_content_elements();
 		self.add_redundant_classes();
 		self.removeClasses( self );
+		self.remove_resizing_classes( self );
 	};
 
 	this.removeClasses = function( $container ) {
@@ -1297,6 +1298,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.finish_dragging();
 		self.trigger( self.drag_end_event, self.$temp_insertion );
 		self.$current_drag = null;
+		self.$temp_insertion.trigger( 'mouseenter' );
 		self.removeClass( 'drag-progress' );
 		clearInterval( self.scrollInterval );
 	};
@@ -1809,10 +1811,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		// Remove Border Classes.
 		$container
 			.find(
-				'.resize-border-left-imhwpb, .resizing-imhwpb, .resize-border-right-imhwpb, .content-border-imhwpb'
+				'.resize-border-left-imhwpb, .resizing-imhwpb, .popover-hover, .resize-border-right-imhwpb, .content-border-imhwpb'
 			)
 			.removeClass(
-				'resize-border-right-imhwpb resizing-imhwpb resize-border-left-imhwpb content-border-imhwpb'
+				'resize-border-right-imhwpb resizing-imhwpb popover-hover resize-border-left-imhwpb content-border-imhwpb'
 			);
 	};
 
@@ -1853,13 +1855,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 */
 	this.drag_handle_mousedown = function( event ) {
 		self.valid_drag = true;
-		self.$current_clicked_element = $( this )
-			.closest( '.draggable-tools-imhwpb' )
-			.next();
-
-		if ( ! self.$current_clicked_element.length ) {
-			self.$current_clicked_element = BOLDGRID.EDITOR.Service.popoverContent.$target;
-		}
+		self.$current_clicked_element = BOLDGRID.EDITOR.Service.popover.selection.$target;
 
 		if ( self.$current_clicked_element.is( 'a' ) && self.$current_clicked_element.find( 'img, button' ).length ) {
 			self.$current_clicked_element
@@ -2471,7 +2467,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.valid_drag = true;
 			self.drag_drop_triggered = false;
 			var $this = $( this );
-			var $tooltip = $this.closest( '.draggable-tools-imhwpb' );
 
 			self.$current_drag = BG.Service.popover.selection.$target;
 			self.$current_drag.addClass( 'dragging-imhwpb' );
@@ -2516,11 +2511,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 			// Set the dragging content.
 			// For IE this must be set to "text" all lower case.
-			event.originalEvent.dataTransfer.setData( 'text', ' ' );
+			event.originalEvent.dataTransfer.setData( 'text', '' );
 			event.originalEvent.dataTransfer.dropEffect = 'copy';
 
 			self.$temp_insertion = $( self.original_html );
-			self.$temp_insertion.removeClass( 'dragging-imhwpb' );
+			self.$temp_insertion.removeClass( 'dragging-imhwpb popover-hover' );
 			self.$temp_insertion.addClass( 'cloned-div-imhwpb' );
 
 			// Set Dragging Image.
@@ -2924,8 +2919,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			self.find( 'html' ).addClass( 'boldgrid-is-typing' );
 		},
 		end: function() {
-
-			//Add Popovers
 			self.validate_markup();
 			self.find( 'html' ).removeClass( 'boldgrid-is-typing' );
 		}
@@ -3005,10 +2998,12 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					$sibling.addClass( 'content-border-imhwpb' );
 				}
 
+				$element.addClass( 'content-border-imhwpb' );
 				self.addClass( 'resizing-imhwpb' );
 				self.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
 
 				self.$html.addClass( 'no-select-imhwpb' );
+				self.trigger( 'resize_clicked' );
 
 				self.resize = {
 					element: $element,

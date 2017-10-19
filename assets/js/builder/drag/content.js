@@ -156,7 +156,7 @@ export default function( event, $left, $entered ) {
 			// Since we are in this block, we know that we have entered a column.
 			// First child is the first child of the column.
 			$first_child = $entered.find( '>:first-child' );
-			$direct_descendents = $entered.find( '> div' );
+			var $direct_descendents = $entered.find( '> div' );
 
 			// If the first child of the column is a div prepend it.
 			if (
