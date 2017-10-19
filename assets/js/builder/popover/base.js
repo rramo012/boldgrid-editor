@@ -21,22 +21,8 @@ export class Base {
 		];
 
 		this.debounceTime = 300;
-		this.debouncedHide = this.getDebouncedHide();
-		this.debouncedUpdate = this.getDebouncedUpdate();
-	}
-
-	getDebouncedHide() {
-		return _.debounce( ( event )  => {
-				this.hideHandles( event );
-			}, this.debounceTime
-		);
-	}
-
-	getDebouncedUpdate() {
-		return _.debounce( ( event )  => {
-				this.updatePosition( event );
-			}, this.debounceTime
-		);
+		this.debouncedHide = this._getDebouncedHide();
+		this.debouncedUpdate = this._getDebouncedUpdate();
 	}
 
 	/**
@@ -119,32 +105,10 @@ export class Base {
 	}
 
 	/**
-	 * Bind all event listeners.
+	 * Bind all selectors based on delegated selectors.
 	 *
 	 * @since 1.6
 	 */
-	_bindEvents() {
-		this._universalEvents();
-		this._bindSelectedPopover();
-		this.bindSelectorEvents();
-	}
-
-	/**
-	 * Update the current target when it's clicked on.
-	 *
-	 * @since 1.6
-	 */
-	_bindSelectedPopover() {
-		this.$element.on( 'mousedown', () => {
-			BG.Service.popover.selection = this;
-		} );
-
-		BG.Controls.$container.on( 'edit-as-row-enter edit-as-row-leave', () => {
-			this.bindSelectorEvents();
-			this.hideHandles();
-		} );
-	}
-
 	bindSelectorEvents() {
 		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), ( event ) => {
 			this.debouncedUpdate( event );
@@ -156,11 +120,58 @@ export class Base {
 	}
 
 	/**
+	 * Create a debounced version of the update function.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {function} Debounced function.
+	 */
+	_getDebouncedHide() {
+		return _.debounce( ( event )  => {
+				this.hideHandles( event );
+			}, this.debounceTime
+		);
+	}
+
+	/**
+	 * Create a debounced version of the update function.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {function} Debounced function.
+	 */
+	_getDebouncedUpdate() {
+		return _.debounce( ( event )  => {
+				this.updatePosition( event );
+			}, this.debounceTime
+		);
+	}
+
+	/**
+	 * Bind all event listeners.
+	 *
+	 * @since 1.6
+	 */
+	_bindEvents() {
+		this._universalEvents();
+		this.bindSelectorEvents();
+	}
+
+	/**
 	 * Bind all events that will hide the handles.
 	 *
 	 * @since 1.6
 	 */
 	_universalEvents() {
+
+		this.$element.on( 'mousedown', () => {
+			BG.Service.popover.selection = this;
+		} );
+
+		BG.Controls.$container.on( 'edit-as-row-enter edit-as-row-leave', () => {
+			this.bindSelectorEvents();
+			this.hideHandles();
+		} );
 
 		BG.Controls.$container.on( 'boldgrid_modify_content end_typing_boldgrid', () => {
 			this.updatePosition();

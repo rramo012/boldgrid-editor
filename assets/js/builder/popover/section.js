@@ -24,6 +24,11 @@ export class Section extends Base {
 		return this;
 	}
 
+	/**
+	 * Bind all events for this popover.
+	 *
+	 * @since 1.6
+	 */
 	_bindEvents() {
 		super._bindEvents();
 
@@ -41,6 +46,13 @@ export class Section extends Base {
 		this.$element.find( '[data-action="add-new"]' ).on( 'click', () => this.addNewSection() );
 	}
 
+	/**
+	 * Get the selector string.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {string} DOM query selector string.
+	 */
 	getSelectorString() {
 		return this.selectorsString;
 	}
@@ -64,6 +76,14 @@ export class Section extends Base {
 
 	}
 
+	/**
+	 * Get a position for the popover.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  {object} clientRect Current coords.
+	 * @return {object}            Css for positioning.
+	 */
 	getPositionCss( clientRect ) {
 		return {
 			'top': clientRect.bottom + 35,
@@ -78,7 +98,7 @@ export class Section extends Base {
 	 * @since 1.2.7
 	 */
 	addNewSection() {
-		var $newSection = $( this.emptySectionTemplate() ) ;
+		let $newSection = $( this.emptySectionTemplate() ) ;
 		this.$target.after( $newSection );
 		this.transistionSection( $newSection );
 	}
@@ -108,7 +128,7 @@ export class Section extends Base {
 	 * @since 1.2.7
 	 */
 	moveUp() {
-		var $prev = this.$target.prev();
+		let $prev = this.$target.prev();
 
 		if ( $prev.length ) {
 			$prev.before( this.$target );
@@ -134,7 +154,7 @@ export class Section extends Base {
 	 * @since 1.2.7
 	 */
 	moveDown() {
-		var $next = this.$target.next();
+		let $next = this.$target.next();
 		if ( $next.length ) {
 			$next.after( this.$target );
 		}
@@ -142,6 +162,11 @@ export class Section extends Base {
 		BG.Controls.$container.trigger( BG.Controls.$container.delete_event );
 	}
 
+	/**
+	 * Open the background controls.
+	 *
+	 * @since 1.6
+	 */
 	background() {
 		this.$target.click();
 		BOLDGRID.EDITOR.CONTROLS.Background.openPanel();
