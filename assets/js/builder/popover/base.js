@@ -15,6 +15,28 @@ export class Base {
 		options.actions.delete = options.actions.delete || new Delete( this );
 
 		this.options = options;
+
+		this.selectors = [
+			'.must-be-defined'
+		];
+
+		this.debounceTime = 300;
+		this.debouncedHide = this.getDebouncedHide();
+		this.debouncedUpdate = this.getDebouncedUpdate();
+	}
+
+	getDebouncedHide() {
+		return _.debounce( ( event )  => {
+				this.hideHandles( event );
+			}, this.debounceTime
+		);
+	}
+
+	getDebouncedUpdate() {
+		return _.debounce( ( event )  => {
+				this.updatePosition( event );
+			}, this.debounceTime
+		);
 	}
 
 	/**
@@ -27,7 +49,6 @@ export class Base {
 	init() {
 		this.$target;
 		this.$element = this._render();
-		this.selectorString = this._createSelectorString();
 
 		this.$element.hide();
 		this._bindEvents();
@@ -86,7 +107,9 @@ export class Base {
 			return false;
 		}
 
-		this.$target = this.$target.closest( this.selectorString );
+		this.$target = this.$target.closest( this.getSelectorString() );
+
+		this.$element.trigger( 'updatePosition' );
 
 		pos = this.$target[0].getBoundingClientRect();
 
@@ -101,9 +124,9 @@ export class Base {
 	 * @since 1.6
 	 */
 	_bindEvents() {
-		this._repositionEvents();
-		this._hideEvents();
+		this._universalEvents();
 		this._bindSelectedPopover();
+		this.bindSelectorEvents();
 	}
 
 	/**
@@ -112,28 +135,23 @@ export class Base {
 	 * @since 1.6
 	 */
 	_bindSelectedPopover() {
-		this.$element.on( 'mousedown', ( event ) => {
+		this.$element.on( 'mousedown', () => {
 			BG.Service.popover.selection = this;
+		} );
+
+		BG.Controls.$container.on( 'edit-as-row-enter edit-as-row-leave', () => {
+			this.bindSelectorEvents();
+			this.hideHandles();
 		} );
 	}
 
-	/**
-	 * Bind all event that will update the position of the handles.
-	 *
-	 * @since 1.6
-	 */
-	_repositionEvents() {
-		var updatePosition = _.debounce( ( event )  => {
-				this.updatePosition( event );
-			}, 300
-		);
-
-		BG.Controls.$container.on( 'mouseenter', this.selectorString, ( event ) => {
-			updatePosition( event );
+	bindSelectorEvents() {
+		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), ( event ) => {
+			this.debouncedUpdate( event );
 		} );
 
-		BG.Controls.$container.on( 'boldgrid_modify_content end_typing_boldgrid', () => {
-			this.updatePosition();
+		BG.Controls.$container.on( 'mouseleave.draggable', this.getSelectorString(), ( event ) => {
+			this.debouncedHide( event );
 		} );
 	}
 
@@ -142,18 +160,14 @@ export class Base {
 	 *
 	 * @since 1.6
 	 */
-	_hideEvents() {
-		var hideHandles = _.debounce( ( event )  => {
-				this.hideHandles( event );
-			}, 300
-		);
+	_universalEvents() {
 
-		BG.Controls.$container.on( 'mouseleave', this.selectorString, ( event ) => {
-			hideHandles( event );
+		BG.Controls.$container.on( 'boldgrid_modify_content end_typing_boldgrid', () => {
+			this.updatePosition();
 		} );
 
 		this.$element.on( 'mouseleave', ( event ) => {
-			hideHandles( event );
+			this.debouncedHide( event );
 		} );
 
 		BG.Controls.$container.find( '[data-action]' ).on( 'click', ( event ) => {
@@ -161,8 +175,7 @@ export class Base {
 		} );
 
 		BG.Controls.$container.on( 'mouseleave', () => {
-			this.hideHandles();
-			this.$target = false;
+			this.debouncedHide( event );
 		} );
 
 		BG.Controls.$container.on( 'start_typing_boldgrid', () => {
@@ -189,17 +202,6 @@ export class Base {
 		if ( this.$target && this.$target.length ) {
 			this.$target.removeClass( 'popover-hover' );
 		}
-	}
-
-	/**
-	 * Based on the list of selectors passed used in a child class create a string.
-	 *
-	 * @since 1.6
-	 *
-	 * @return {string}
-	 */
-	_createSelectorString() {
-		return this.selectors.join( ',' );
 	}
 
 	/**

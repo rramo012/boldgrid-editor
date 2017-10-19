@@ -13,10 +13,6 @@ export class Column extends Base {
 
 		this.name = 'column';
 
-		this.selectors = [
-			'div[class*="col-md-"]'
-		];
-
 		return this;
 	}
 
@@ -27,6 +23,13 @@ export class Column extends Base {
 		};
 	}
 
+	getSelectorString() {
+		if ( BG.Controls.$container.editting_as_row ) {
+			return BG.Controls.$container.nestedColumnSelector;
+		} else {
+			return BG.Controls.$container.original_selector_strings.unformatted_column_selectors_string;
+		}
+	}
 }
 
 export { Column as default };

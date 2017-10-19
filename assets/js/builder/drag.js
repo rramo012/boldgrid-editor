@@ -104,11 +104,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.drag_start_event = $.Event( 'drag_start_dwpb' );
 
 	/**
-	 * An event that indicates the dragging has started.
-	 */
-	this.boldgrid_edit_row = $.Event( 'boldgrid_edit_row' );
-
-	/**
 	 * A Boolean indicating whether or not we have disbabled popovers.
 	 */
 	this.popovers_disabled = false;
@@ -245,7 +240,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	/**
 	 * Default selectors for rows.
 	 */
-	this.row_selector = settings.row_selector || [ '.row:not(' + self.master_container_id + ' .row .row)' ];
+	this.row_selector = settings.row_selector || [ '.row:not(.row .row)' ];
 
 	/**
 	 * Add media event handler.
@@ -261,10 +256,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * An array of the column selectors.
 	 */
 	this.general_column_selectors = settings.general_column_selectors || [
-		'[class*="col-xs"]',
-		'[class*="col-sm"]',
-		'[class*="col-md"]',
-		'[class*="col-lg"]'
+		'[class*="col-md"]'
 	];
 
 	/**
@@ -276,6 +268,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Nested row selector.
 	 */
 	this.sectionSelectorString = '.boldgrid-section';
+
+	this.nestedColumnSelector = '.row .row > [class*="col-md"]:not(.row .row .row [class*="col-md"])';
 
 	/**
 	 * These are the selectors that are defined as content elements.
@@ -293,7 +287,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		'h7',
 		'a:not(p a)',
 		'img:not(p img):not(a img)',
-		'p',
+		'p:not(blockquote p)',
 		'button:not(p button):not(a button)',
 		'ul',
 		'ol',
@@ -317,15 +311,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	this.content_selectors = settings.content_selectors || [
 
 		// Headings.
-		'h1:not(' + self.master_container_id + ' .row .row h1)',
-		'h2:not(' + self.master_container_id + ' .row .row h2)',
-		'h3:not(' + self.master_container_id + ' .row .row h3)',
-		'h4:not(' + self.master_container_id + ' .row .row h4)',
-		'h5:not(' + self.master_container_id + ' .row .row h5)',
-		'h6:not(' + self.master_container_id + ' .row .row h6)',
-		'h7:not(' + self.master_container_id + ' .row .row h7)',
+		'h1:not(.row .row h1)',
+		'h2:not(.row .row h2)',
+		'h3:not(.row .row h3)',
+		'h4:not(.row .row h4)',
+		'h5:not(.row .row h5)',
+		'h6:not(.row .row h6)',
+		'h7:not(.row .row h7)',
 
-		'a:not(' + self.master_container_id + '.row .row a):not(p a)',
+		'a:not(.row .row a):not(p a)',
 
 		// Common Drag Content.
 		/*******************************************************************
@@ -333,30 +327,28 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		 * necessary, but improves performance I've defined common cases so
 		 * that the selector is not made any larger than it already is
 		 ******************************************************************/
-		'img:not(' + self.master_container_id + ' .row .row img):not(p img):not(a img)',
-		'p:not(' + self.master_container_id + ' .row .row p)',
-		'button:not(' + self.master_container_id + ' .row .row button):not(p button):not(a button)',
+		'img:not(.row .row img):not(p img):not(a img)',
+		'p:not(.row .row p):not(blockquote p)',
+		'button:not(.row .row button):not(p button):not(a button)',
 
 		// Lists.
-		'ul:not(' + self.master_container_id + ' .row .row ul):not(.draggable-tools-imhwpb ul)',
-		'ol:not(' + self.master_container_id + ' .row .row ol)',
-		'dl:not(' + self.master_container_id + ' .row .row dl)',
+		'ul:not(.row .row ul):not(.draggable-tools-imhwpb ul)',
+		'ol:not(.row .row ol)',
+		'dl:not(.row .row dl)',
 
 		// Additional Content.
-		'form:not(' + self.master_container_id + ' .row .row form)',
-		'table:not(' + self.master_container_id + ' .row .row table)',
+		'form:not(.row .row form)',
+		'table:not(.row .row table)',
 
 		// Nested Rows - Not rows nested out of master container.
-		'.row .row:not(:not(' + self.master_container_id + ' .row .row))',
+		'.row .row:not(.row .row .row)',
 
 		// Custom definitions.
-		'[data-imhwpb-draggable="true"]:not(' +
-			self.master_container_id +
-			' .row .row [data-imhwpb-draggable="true"])',
+		'[data-imhwpb-draggable="true"]:not(.row .row [data-imhwpb-draggable="true"])',
 
 		// WP specific wrapper.
-		'.wpview-wrap:not(' + self.master_container_id + ' .row .row .wpview-wrap)',
-		'.wpview:not(' + self.master_container_id + ' .row .row .wpview)',
+		'.wpview-wrap:not(.row .row .wpview-wrap)',
+		'.wpview:not(.row .row .wpview)',
 
 		'blockquote:not(.row .row blockquote)',
 		'code:not(.row .row code)',
@@ -888,7 +880,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.bind_drag_listeners();
 		self.bind_container_events();
 		self.bind_additional_menu_items();
-		self.bind_edit_row();
 
 		// This event should be bound to another mce event.
 		setTimeout( function() {
@@ -941,23 +932,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.$html.addClass( 'editing-as-row' );
 		self.trigger( 'edit-as-row-enter' );
 		self.window_mouse_leave();
-	};
-
-	/**
-	 * When the user clicks edit as row.
-	 */
-	this.bind_edit_row = function() {
-		self.on( 'click.draggable', '.edit-as-row', function() {
-			var $this = $( this );
-			var $element = $this.closest( '.draggable-tools-imhwpb' ).next();
-			self.trigger( self.boldgrid_edit_row, $element );
-
-			if ( self.editting_as_row ) {
-				$.fourpan.dismiss();
-			} else {
-				$.fourpan.highlight( $element );
-			}
-		} );
 	};
 
 	/**
@@ -1045,15 +1019,15 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Sets up dragging for all elements defined.
 	 */
 	this.bind_drag_listeners = function() {
-		self.$window.on( 'dragover', self.drag_handlers.over );
+		self.$window.on( 'dragover.draggable', self.drag_handlers.over );
 
 		self
-			.on( 'dragstart', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
-			.on( 'dragstart', 'img, a', self.drag_handlers.hide_tooltips )
-			.on( 'drop', self.drag_handlers.drop )
-			.on( 'dragend', self.drag_handlers.end )
-			.on( 'dragleave', self.drag_handlers.leave_dragging )
-			.on( 'dragenter', self.drag_handlers.record_drag_enter );
+			.on( 'dragstart.draggable', '.drag-handle-imhwpb, [data-action="nest-row"]', self.drag_handlers.start )
+			.on( 'dragstart.draggable', 'img, a', self.drag_handlers.hide_tooltips )
+			.on( 'drop.draggable', self.drag_handlers.drop )
+			.on( 'dragend.draggable', self.drag_handlers.end )
+			.on( 'dragleave.draggable', self.drag_handlers.leave_dragging )
+			.on( 'dragenter.draggable', self.drag_handlers.record_drag_enter );
 	};
 
 	this.refresh_fourpan = function() {

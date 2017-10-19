@@ -13,18 +13,24 @@ export class Row extends Base {
 
 		this.name = 'row';
 
-		this.selectors = [
-			'.row:not(.row .row)'
-		];
-
 		return this;
 	}
 
 	getPositionCss( clientRect ) {
 		return {
 			'top': clientRect.top,
-			'right': clientRect.left
+			'left': clientRect.left + clientRect.width
 		};
+	}
+
+	getSelectorString() {
+		let selectorString = BG.Controls.$container.original_selector_strings.row_selectors_string;
+
+		if ( BG.Controls.$container.editting_as_row ) {
+			selectorString = BG.Controls.$container.nested_row_selector_string;
+		}
+
+		return selectorString;
 	}
 
 }

@@ -19,6 +19,8 @@ export class Section extends Base {
 
 		this.emptySectionTemplate = wp.template( 'boldgrid-editor-empty-section' );
 
+		this.selectorsString = this.selectors.join( ',' );
+
 		return this;
 	}
 
@@ -39,6 +41,10 @@ export class Section extends Base {
 		this.$element.find( '[data-action="add-new"]' ).on( 'click', () => this.addNewSection() );
 	}
 
+	getSelectorString() {
+		return this.selectorsString;
+	}
+
 	/**
 	 * When the section menu is too close to the top, point it down.
 	 *
@@ -46,7 +52,7 @@ export class Section extends Base {
 	 * @param Event e.
 	 */
 	menuDirection( e ) {
-		var pos = e.screenY - window.screenY,
+		let pos = e.screenY - window.screenY,
 			menuHeight = 340,
 			staticMenuPos = BG.Menu.$mceContainer[0].getBoundingClientRect();
 
