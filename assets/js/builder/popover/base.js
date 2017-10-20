@@ -256,7 +256,10 @@ export class Base {
 	 * @return {jQuery} Popover element.
 	 */
 	_render() {
-		let $popover = $( this.template );
+		let $popover = $( _.template( this.template )( {
+			'actions': BG.Controls.$container.additional_menu_items
+		} ) );
+
 		$popover.$menu = $popover.find( '.popover-menu-imhwpb' );
 		BG.Controls.$container.$body.after( $popover );
 

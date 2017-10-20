@@ -34,7 +34,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	self.$post_status_info = $( '#post-status-info' );
 
 	/** Popover Menu Items to be added. **/
-	var additional_menu_items = settings.menu_items || [];
+	self.additional_menu_items = settings.menu_items || [];
 
 	/** How long should we wait before removing or displaying a new popover. **/
 	this.hover_timout = settings.hover_timout || 175;
@@ -516,133 +516,8 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		}
 	};
 
-	/**
-	 * The options needed for the popover drop downs The key is the value is the
-	 * display name.
-	 */
-	var menu_options = {
-		column: {
-			'': 'Edit Column',
-			duplicate: 'Clone',
-			delete: 'Delete',
-			clear: 'Clear Contents',
-			'add-media': 'Insert Media',
-			'vertical-alignment': {
-				title: 'Vertical Alignment',
-				options: {
-					'align-default': 'Default',
-					'align-top': 'Top',
-					'align-center': 'Center',
-					'align-bottom': 'Bottom'
-				}
-			},
-			Box: 'Background'
-		},
-		row: {
-			'': 'Edit Row',
-			duplicate: 'Clone',
-			delete: 'Delete',
-			clear: 'Clear Contents',
-			'insert-layout': 'Insert GridBlock',
-			'add-column': 'Add Column',
-			'add-row': 'Add Empty Row',
-			'nest-row': ''
-		},
-		content: {
-			'': 'Edit Content',
-			duplicate: 'Clone',
-			delete: 'Delete',
-			Font: 'Font'
-		},
-		'nested-row': {
-			'': 'Edit Content',
-			duplicate: 'Clone',
-			delete: 'Delete',
-			'clone-as-row': 'Clone as Row'
-		}
-	};
-
-	/**
-	 * The classes that are added to a popover depending on the type of the element.
-	 */
-	this.type_popover_classes = {
-		content: 'content-popover-imhwpb left-popover-imhwpb',
-		'nested-row': 'content-popover-imhwpb nested-row-popover-imhwpb left-popover-imhwpb',
-		row: 'row-popover-imhwpb right-popover-imhwpb',
-		column: 'top-popover-imhwpb column-popover-imhwpb'
-	};
-
 	this.capitalizeFirstLetter = function( string ) {
 		return string.charAt( 0 ).toUpperCase() + string.slice( 1 );
-	};
-
-	/**
-	 * Markup needed to display a popover.
-	 */
-	this.toolkit_markup = function( type ) {
-		var tooltipTitle = self.capitalizeFirstLetter( type );
-
-		var popover =
-			'<div spellcheck="false" data-mce-bogus="all" contenteditable="false"' +
-			'unselectable="on" class="draggable-tools-imhwpb">' +
-			'<span class="popover-imhwpb ' +
-			self.type_popover_classes[type] +
-			'">' +
-			'<div title="Drag ' +
-			tooltipTitle +
-			'" contenteditable="false" draggable="true" class="no-select-imhwpb drag-handle-imhwpb draggable-button"> ' +
-			'<span  class="genericon genericon-move" aria-hidden="true"> </span>' +
-			'</div>';
-
-		popover += '<div class=\'popover-menu-imhwpb hidden\'><ul>';
-		$.each( menu_options[type], function( key, value ) {
-			var draggable = '';
-			if ( 'nest-row' == key ) {
-				draggable = 'draggable="true"';
-			}
-			if ( 'object' === typeof value ) {
-				popover +=
-					'<li class=\'no-select-imhwpb action-list side-menu-parent\' data-action=\'' +
-					key +
-					'\'>' +
-					value.title +
-					'</li>';
-				popover += '<div class=\'side-menu\'>';
-				popover += '<ul>';
-				$.each( value.options, function( key, value ) {
-					popover +=
-						'<li class=\'no-select-imhwpb action-list\' data-action=\'' + key + '\'>' + value + '</li>';
-				} );
-				popover += '</ul>';
-				popover += '</div>';
-			} else {
-				popover +=
-					'<li class=\'no-select-imhwpb action-list\' ' +
-					draggable +
-					' data-action=\'' +
-					key +
-					'\'>' +
-					value +
-					'</li>';
-			}
-		} );
-
-		popover += '</ul></div>';
-
-		popover +=
-			'<div title="Edit ' +
-			tooltipTitle +
-			'" class="context-menu-imhwpb draggable-button"> ' +
-			'<span  class="genericon genericon-menu" aria-hidden="true"></span>' +
-			'</div>';
-
-		if ( 'nested-row' === type ) {
-			popover +=
-				'<div title="Edit As Row" class="edit-as-row draggable-button">' +
-				'<span class="genericon genericon-expand"  aria-hidden="true"></span></div>';
-		}
-
-		return popover + '</span></div>';
 	};
 
 	/**
@@ -665,7 +540,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.setup_additional_plugins();
 		self.validate_markup();
 		self.track_window_size();
-		self.merge_additional_menu_options();
 		addContainerData();
 
 		BG.RESIZE.Row.init( self );
@@ -862,18 +736,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	};
 
 	/**
-	 * Merge the menu items that have been added through configurations into the default settings.
-	 */
-	this.merge_additional_menu_options = function() {
-		$.each( additional_menu_items, function( key, menu_item ) {
-			var current_element_selection = menu_options[menu_item.element_type];
-			var addition_item = {};
-			addition_item[menu_item.title] = menu_item.title;
-			$.extend( current_element_selection, addition_item );
-		} );
-	};
-
-	/**
 	 * Bind all events.
 	 */
 	this.bind_events = function() {
@@ -1007,9 +869,9 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * in at initialization.
 	 */
 	this.bind_additional_menu_items = function() {
-		$.each( additional_menu_items, function( key, menu_item ) {
+		$.each( self.additional_menu_items, function( key, menu_item ) {
 			self.on(
-				'click',
+				'click.draggable',
 				'li[data-action="' + menu_item.title + '"]',
 				menu_item.callback
 			);

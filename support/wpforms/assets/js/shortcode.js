@@ -73,7 +73,6 @@
 	 */
 	$( document ).on( 'BoldGridPreInit', function( event, wp_mce_draggable ) {
 		wp_mce_draggable.add_menu_item( 'Insert Form', 'column', function() {
-
 			//On click of the new form, Open the media modal to the forms tab
 			wp_mce_draggable.insert_from_media_modal_tab( 'iframe:boldgrid_form' );
 		} );
