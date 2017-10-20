@@ -210,10 +210,14 @@ export class Base {
 		} );
 
 		BG.Controls.$container.on( 'end_typing_boldgrid', () => {
-			this.updatePosition();
+			if ( 'start_typing_boldgrid' === this.hideEventType ) {
+				this.updatePosition();
+			}
 		} );
 
 		BG.Controls.$container.on( 'history_change_boldgrid', () => {
+
+			// A manually triggered mouse enter on undo/redo caused popovers to appear, wait before adding.
 			this.disableAddPopover = true;
 			setTimeout( () => {
 				this.disableAddPopover = false;
@@ -228,11 +232,13 @@ export class Base {
 			this.hideHandles( event );
 		} );
 
-		BG.Controls.$container.on( 'mouseleave', () => {
-			this.debouncedHide( event );
+		BG.Controls.$container.on( 'mouseleave', ( event ) => {
+			this.hideEventType = event.type;
+			this.debouncedHide();
 		} );
 
-		BG.Controls.$container.on( this.hideHandleEvents.join( ' ' ), () => {
+		BG.Controls.$container.on( this.hideHandleEvents.join( ' ' ), ( event ) => {
+			this.hideEventType = event.type;
 			this.hideHandles();
 		} );
 	}

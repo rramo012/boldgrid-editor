@@ -179,6 +179,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.text_select_start = function() {
 		self.draggable_instance.$master_container.find( 'html' ).addClass( 'selecting' );
+		self.draggable_instance.$master_container.trigger( 'text_select_start' );
 	};
 
 	/**
@@ -186,6 +187,7 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 */
 	this.text_select_end = function() {
 		self.draggable_instance.$master_container.find( 'html' ).removeClass( 'selecting' );
+		self.draggable_instance.$master_container.trigger( 'text_select_end' );
 	};
 
 	/**

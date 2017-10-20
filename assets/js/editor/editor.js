@@ -256,7 +256,9 @@ IMHWPB.Editor = function( $ ) {
 			 //Before adding an undo level check to see if this is allowed
 			editor.on( 'BeforeAddUndo', function( e ) {
 				if ( IMHWPB.WP_MCE_Draggable.instance ) {
-					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
+
+				//	IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
+
 				}
 				if ( IMHWPB.tinymce_undo_disabled == true ) {
 					return false;
