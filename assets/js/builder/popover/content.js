@@ -77,11 +77,28 @@ export class Content extends Base {
 	}
 
 	/**
+	 * If the element that I entered is still within the current target, do not hide.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  {$} $target Jquery
+	 * @return {$}         Should we prevent mouse leave action?
+	 */
+	preventMouseLeave( $target ) {
+		return $target && ( 1 === $target.closest( this.$target ).length );
+	}
+
+	/**
 	 * Process to occur when updating the position of the popover.
 	 *
 	 * @since 1.6
 	 */
 	_onUpdatePosition() {
+		let $nestedContent = this.$target.parents( this.getSelectorString() ).last();
+		if ( $nestedContent.length ) {
+			this.$target = $nestedContent;
+		}
+
 		if ( this.$target.hasClass( 'row' ) && ! BG.Controls.$container.editting_as_row ) {
 			this.$element.addClass( 'nested-row-popover-imhwpb' );
 		} else {

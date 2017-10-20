@@ -20,6 +20,7 @@ h6,
 .wpview-wrap,
 .wpview {
   outline: 1px solid rgba(0,0,0,0);
+  transition: outline .25s;
 }
 
 hr {

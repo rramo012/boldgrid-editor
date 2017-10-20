@@ -36,26 +36,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 			self.$container = $container;
 			self.handleOffset = self.handleSize;
 			self.createHandles();
-			self.bindHandlers();
 			self.initDraggable();
-		},
-
-		/**
-		 * Bind all events.
-		 *
-		 * @since 1.2.7
-		 */
-		bindHandlers: function() {
-			self.$container
-				.on( 'mouseenter', '.row:not(.row .row):not(.editing-as-row .row)', self.positionHandles )
-				.on( 'mouseleave', '.row:not(.row .row):not(.editing-as-row .row)', self.hideHandles )
-				.on( 'mouseenter', '.editing-as-row .row .row:not(.row .row .row)', self.positionHandles )
-				.on( 'mouseleave', '.editing-as-row .row .row:not(.row .row .row)', self.hideHandles )
-				.on( 'edit-as-row-enter', self.hideHandles )
-				.on( 'edit-as-row-leave', self.hideHandles )
-				.on( 'boldgrid_modify_content', self.positionHandles )
-				.on( 'mouseleave', self.hideHandles )
-				.on( 'end_typing_boldgrid.draggable', self.positionHandles );
 		},
 
 		/**
@@ -101,12 +82,15 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 					self.$currentRow.addClass( 'changing-padding' );
 					self.$container.$html.addClass( 'no-select-imhwpb' );
 					self.$container.$html.addClass( 'changing-' + setting );
+					BG.Controls.$container.trigger( 'bge_row_resize_start' );
 				},
 				stop: function() {
+					BG.Controls.$container.trigger( 'bge_row_resize_end' );
 					self.currentlyDragging = false;
 					self.$currentRow.removeClass( 'changing-padding' );
 					self.$container.$html.removeClass( 'no-select-imhwpb' );
 					self.$container.$html.removeClass( 'changing-' + setting );
+					self.hideHandles();
 				},
 				drag: function( e, ui ) {
 					var padding, rowPos, relativePos,
@@ -146,16 +130,10 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		 *
 		 * @since 1.2.7
 		 */
-		positionHandles: function() {
-			var pos, $this, rightOffset;
+		positionHandles: function( $this ) {
+			var pos, rightOffset;
 
-			if ( this.getBoundingClientRect ) {
-				$this = $( this );
-			} else {
-				$this = self.$currentRow;
-			}
-
-			if ( ! $this || ! $this.length || false === $this.is( ':visible' ) ) {
+			if ( ! $this || ! $this.length ) {
 				self.$topHandle.hide();
 				self.$bottomHandle.hide();
 				return;
@@ -181,10 +159,8 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 				'left': rightOffset
 			} );
 
-			if ( this.getBoundingClientRect ) {
-				self.$topHandle.show();
-				self.$bottomHandle.show();
-			}
+			self.$topHandle.show();
+			self.$bottomHandle.show();
 		},
 
 		/**
@@ -192,11 +168,7 @@ BOLDGRID.EDITOR.RESIZE = BOLDGRID.EDITOR.RESIZE || {};
 		 *
 		 * @since 1.2.7
 		 */
-		hideHandles: function( e ) {
-			if ( e && e.relatedTarget && $( e.relatedTarget ).hasClass( 'draghandle' ) ) {
-				return;
-			}
-
+		hideHandles: function() {
 			if ( self.currentlyDragging ) {
 				return false;
 			}

@@ -17,6 +17,23 @@ export class Row extends Base {
 	}
 
 	/**
+	 * Bind all events.
+	 *
+	 * @since 1.6
+	 */
+	_bindEvents() {
+		super._bindEvents();
+
+		this.$element.on( 'updatePosition', () => {
+			BG.RESIZE.Row.positionHandles( this.$target );
+		} );
+
+		this.$element.on( 'hide', () => {
+			BG.RESIZE.Row.hideHandles();
+		} );
+	}
+
+	/**
 	 * Get a position for the popover.
 	 *
 	 * @since 1.6
@@ -29,6 +46,18 @@ export class Row extends Base {
 			'top': clientRect.top,
 			'left': clientRect.left + clientRect.width
 		};
+	}
+
+	/**
+	 * If the element that I entered is still within the current target, do not hide.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  {$} $target Jquery
+	 * @return {$}         Should we prevent mouse leave action?
+	 */
+	preventMouseLeave( $target ) {
+		return $target && $target.hasClass( 'draghandle' ) && this.$target.is( BG.RESIZE.Row.$currentRow );
 	}
 
 	/**

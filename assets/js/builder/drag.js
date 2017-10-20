@@ -1692,6 +1692,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 					if ( 12 >= row_size ) {
 						self.change_column_size( self.resize.element, false );
 						self.resize.sibling = $( '<div>' ).addClass( self.getNewColumnString() );
+						self.resize.sibling.addClass( 'content-border-imhwpb' );
 						self.resize.element.before( self.resize.sibling );
 						return false;
 					} else {

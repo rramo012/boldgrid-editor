@@ -78,9 +78,10 @@ iframe[src^="https://maps.google.com"] {
 .added-element,
 .popover-hover,
 .resize-border-right-imhwpb,
-.content-border-imhwpb
+.content-border-imhwpb,
+.resize-border-right-imhwpb.content-border-imhwpb + [class*="col-md"],
 .resize-border-left-imhwpb {
-	outline: 1px solid gray !important;
+	outline: 1px solid #a7a7a7 !important;
 }
 
 .dragging-section .content-border-imhwpb {
@@ -103,7 +104,7 @@ iframe[src^="https://maps.google.com"] {
 
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,
 .receptor-containers-imhwpb {
-    outline:1px solid gray;
+    outline:1px solid #a7a7a7;
 }
 
 .drag-progress .dragging-imhwpb {
@@ -612,6 +613,7 @@ iframe[src^="https://maps.google.com"] {
 .popover-imhwpb .popover-menu-imhwpb li[data-action="Insert Form"]::before {
 	background-image: url("../../../image/icons/insert-form.png");
 }
+.popover-imhwpb .popover-menu-imhwpb li[data-action="duplicate-column"]::before,
 .popover-imhwpb .popover-menu-imhwpb li[data-action="duplicate"]::before {
 	background-image: url("../../../image/icons/clone.png");
 }
@@ -640,6 +642,7 @@ iframe[src^="https://maps.google.com"] {
 .popover-imhwpb .popover-menu-imhwpb li[data-action="Insert Form"]:hover::before {
 	background-image: url("../../../image/icons/insert-form-hover.png");
 }
+.popover-imhwpb .popover-menu-imhwpb li[data-action="duplicate-column"]:hover::before,
 .popover-imhwpb .popover-menu-imhwpb li[data-action="duplicate"]:hover::before {
 	background-image: url("../../../image/icons/clone-hover.png");
 }
@@ -826,8 +829,9 @@ button {
 	cursor: text;
 }
 
+html.selecting:not(.changing-padding-top):not(.changing-padding-bottom) .draghandle,
 html.selecting .popover-imhwpb {
-	display: none;
+	display: none !important;
 }
 html.selecting .popover-hover {
 	outline-color: transparent !important;

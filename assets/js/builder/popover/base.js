@@ -20,6 +20,15 @@ export class Base {
 		this.debounceTime = 300;
 		this._hideCb = this._getDebouncedHide();
 		this._showCb = this._getDebouncedUpdate();
+
+		this.hideHandleEvents = [
+			'bge_row_resize_start',
+			'start_typing_boldgrid',
+			'resize_clicked',
+			'drag_end_dwpb',
+			'clear_dwpb',
+			'add_column_dwpb'
+		];
 	}
 
 	/**
@@ -51,15 +60,26 @@ export class Base {
 	 * @param {object} event Event from listeners.
 	 */
 	hideHandles( event ) {
+		let $target;
 
-		// This check if we're leaving the element but entering the popover.
-		if ( event && event.relatedTarget && $( event.relatedTarget ).closest( '.draggable-tools-imhwpb' ).length ) {
+		if ( event && event.relatedTarget ) {
+			$target = $( event.relatedTarget );
+
+			// This check if we're leaving the element but entering the popover.
+			if ( $target.closest( '.draggable-tools-imhwpb' ).length ) {
+				return;
+			}
+		}
+
+		// Allow child class to prevent this action.
+		if ( this.preventMouseLeave && this.preventMouseLeave( $target ) ) {
 			return;
 		}
 
 		this._removeBorder();
 		this.$element.$menu.addClass( 'hidden' );
 		this.$element.hide();
+		this.$element.trigger( 'hide' );
 	}
 
 	/**
@@ -202,7 +222,7 @@ export class Base {
 			this.debouncedHide( event );
 		} );
 
-		BG.Controls.$container.on( 'start_typing_boldgrid resize_clicked drag_end_dwpb clear_dwpb add_column_dwpb', () => {
+		BG.Controls.$container.on( this.hideHandleEvents.join( ' ' ), () => {
 			this.hideHandles();
 		} );
 	}
