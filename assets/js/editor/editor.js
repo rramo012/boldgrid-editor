@@ -255,6 +255,9 @@ IMHWPB.Editor = function( $ ) {
 			} );
 			 //Before adding an undo level check to see if this is allowed
 			editor.on( 'BeforeAddUndo', function( e ) {
+				if ( IMHWPB.WP_MCE_Draggable.instance ) {
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
+				}
 				if ( IMHWPB.tinymce_undo_disabled == true ) {
 					return false;
 				}
@@ -262,6 +265,11 @@ IMHWPB.Editor = function( $ ) {
 
 			// On Undo and redo make sure galleries are intialized.
 			editor.on( 'undo redo', function( e ) {
+
+				if ( BOLDGRID.EDITOR.Controls.$container ) {
+					BOLDGRID.EDITOR.Controls.$container.trigger( 'history_change_boldgrid' );
+				}
+
 				if ( typeof IMHWPBGallery != 'undefined' && IMHWPBGallery.init_gallery ) {
 					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
 				}

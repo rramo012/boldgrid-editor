@@ -1458,6 +1458,11 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			var smaller_position, larger_position, smaller_override, larger_override;
 
 			var $row = self.resize.element.closest_context( self.row_selectors_string, self );
+
+			if ( ! $row.length ) {
+				return;
+			}
+
 			var row_width = $row[0].getBoundingClientRect().width;
 			var column_size = self.find_column_size( self.resize.element );
 			var siblingColumnSize = self.find_column_size( self.resize.sibling );
@@ -1663,7 +1668,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Remove resizing class.
 	 */
 	this.remove_resizing_classes = function( $container ) {
-		$container.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
+		$container.find( '.resizing-imhwpb, .popover-hover' ).removeClass( 'resizing-imhwpb popover-hover' );
 	};
 
 	/**

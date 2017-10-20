@@ -24,8 +24,10 @@ export class Base {
 		this.hideHandleEvents = [
 			'bge_row_resize_start',
 			'start_typing_boldgrid',
+			'boldgrid_modify_content',
 			'resize_clicked',
 			'drag_end_dwpb',
+			'history_change_boldgrid',
 			'clear_dwpb',
 			'add_column_dwpb'
 		];
@@ -91,6 +93,7 @@ export class Base {
 	 */
 	updatePosition( event ) {
 		let pos;
+
 		this._removeBorder();
 
 		if ( event ) {
@@ -102,7 +105,7 @@ export class Base {
 			return;
 		}
 
-		if ( BG.Controls.$container.$current_drag || BG.Controls.$container.resize ) {
+		if ( BG.Controls.$container.$current_drag || BG.Controls.$container.resize || this.disableAddPopover ) {
 			return false;
 		}
 
@@ -206,8 +209,15 @@ export class Base {
 			this.hideHandles();
 		} );
 
-		BG.Controls.$container.on( 'boldgrid_modify_content end_typing_boldgrid', () => {
+		BG.Controls.$container.on( 'end_typing_boldgrid', () => {
 			this.updatePosition();
+		} );
+
+		BG.Controls.$container.on( 'history_change_boldgrid', () => {
+			this.disableAddPopover = true;
+			setTimeout( () => {
+				this.disableAddPopover = false;
+			}, 500 );
 		} );
 
 		this.$element.on( 'mouseleave', event => {
