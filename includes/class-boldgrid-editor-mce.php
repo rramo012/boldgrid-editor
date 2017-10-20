@@ -240,7 +240,9 @@ class Boldgrid_Editor_MCE {
 	 */
 	public function prepend_bootstrap_styles( $styles ) {
 
-		$editor_boostrap = plugins_url( '/assets/css/editor-bootstrap.min.css', BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+		$editor_boostrap = plugins_url( '/assets/css/mce-fe.min.css',
+			BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
+
 		$boostrap_included = false;
 		foreach ( $styles as $style ) {
 			if ( -1 !== stripos( $style, 'bootstrap.min.css' ) ) {

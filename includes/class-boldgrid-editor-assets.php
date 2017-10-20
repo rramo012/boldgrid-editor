@@ -110,27 +110,24 @@ class Boldgrid_Editor_Assets {
 	 * @since 1.2.7
 	 */
 	public function front_end() {
-		$plugin_file = BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php';
-
 		// Parallax.
 		// @TODO only enqueue if the user is using this.
 		wp_enqueue_script( 'boldgrid-parallax',
-			plugins_url( '/assets/js/jquery-stellar/jquery.stellar.js', $plugin_file ),
+			plugins_url( '/assets/js/jquery-stellar/jquery.stellar.js', BOLDGRID_EDITOR_ENTRY ),
 		array( 'jquery' ),BOLDGRID_EDITOR_VERSION, true );
 
 		wp_enqueue_script(
-			'boldgrid-editor-public', plugins_url( self::get_minified_js( '/assets/js/editor/public' ), $plugin_file ),
+			'boldgrid-editor-public', plugins_url( self::get_minified_js( '/assets/js/editor/public' ), BOLDGRID_EDITOR_ENTRY ),
 		array( 'jquery' ), BOLDGRID_EDITOR_VERSION, true );
 
 		// Enqueue Styles that which depend on version.
 		$this->enqueue_latest();
 
-		wp_enqueue_style( 'boldgrid-fe',
-			plugins_url( '/assets/css/editor-fe.min.css', $plugin_file ),
-		array(), BOLDGRID_EDITOR_VERSION );
-
-		wp_enqueue_style( 'bootstrap-styles',
-			plugins_url( '/assets/css/editor-bootstrap.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
+		if ( ! Boldgrid_Editor_Service::get( 'main' )->get_is_boldgrid_theme() ) {
+			wp_enqueue_style( 'boldgrid-fe',
+				plugins_url( '/assets/css/editor-fe.min.css', BOLDGRID_EDITOR_ENTRY ),
+				array(), BOLDGRID_EDITOR_VERSION );
+		}
 
 		// Control Styles.
 		$style_url = Boldgrid_Editor_Builder_Styles::get_url_info();
@@ -142,7 +139,7 @@ class Boldgrid_Editor_Assets {
 		$builder = new Boldgrid_Editor_Builder();
 		if ( $builder->requires_deprecated_buttons() ) {
 			wp_enqueue_style( 'boldgrid-buttons',
-			plugins_url( '/assets/css/buttons.min.css', $plugin_file ),
+			plugins_url( '/assets/css/buttons.min.css', BOLDGRID_EDITOR_ENTRY ),
 			array(), BOLDGRID_EDITOR_VERSION );
 		}
 	}
