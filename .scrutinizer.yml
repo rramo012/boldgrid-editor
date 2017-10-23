@@ -4,5 +4,6 @@ filter:
         - "assets/js/builder/drag/"
         - "assets/js/builder/drag.js"
         - "assets/js/builder/tinymce/wp-mce-draggable.js"
+        - "assets/js/jquery-stellar/jquery.stellar.js"
         - "assets/js/editor/"
         - "assets/js/*.min.js"
