@@ -229,7 +229,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		insertNew: function() {
 			var $insertedButton;
 
-			send_to_editor( '<a class="button-primary bg-inserted-button" href="#">Button</a>' );
+			send_to_editor( '<a class="btn btn-color-1 bg-inserted-button" href="#">Button</a>' );
 			$insertedButton = BG.Controls.$container.find( '.bg-inserted-button' ).last();
 			BG.Controls.$container.find( '.bg-inserted-button' ).removeClass( 'bg-inserted-button' );
 			BG.Controls.$menu.targetData[self.name] = $insertedButton;
