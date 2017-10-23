@@ -66,11 +66,6 @@ export class Base {
 
 		if ( event && event.relatedTarget ) {
 			$target = $( event.relatedTarget );
-
-			// This check if we're leaving the element but entering the popover.
-			if ( $target.closest( this.$element ).length ) {
-				return;
-			}
 		}
 
 		// Allow child class to prevent this action.
@@ -82,6 +77,7 @@ export class Base {
 		this.$element.$menu.addClass( 'hidden' );
 		this.$element.hide();
 		this.$element.trigger( 'hide' );
+		this.$element.removeClass( 'menu-open' );
 	}
 
 	/**
@@ -117,6 +113,7 @@ export class Base {
 
 			// If hovering over a new target, hide menu.
 			if ( this.$target && $newTarget[0] !== this.$target[0] ) {
+				this.$element.removeClass( 'menu-open' );
 				this.$element.$menu.addClass( 'hidden' );
 			}
 
@@ -137,6 +134,12 @@ export class Base {
 	 * @since 1.6
 	 */
 	bindSelectorEvents() {
+
+		// When the user enters the popover, show popover.
+		this.$element.on( 'mouseenter', () => {
+			this.debouncedUpdate();
+		} );
+
 		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), event => {
 			this.debouncedUpdate( event );
 		} );
