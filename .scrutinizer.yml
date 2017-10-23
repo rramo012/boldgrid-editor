@@ -1,0 +1,7 @@
+filter:
+    excluded_paths:
+        - "tests/"               # Everything in a root level "tests" directory
+        - "js/builder/drag/"
+        - "js/builder/drag.js"
+        - "js/builder/tinymce/wp-mce-draggable.js"
+        - "js/editor/"
