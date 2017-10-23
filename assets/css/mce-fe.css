@@ -950,3 +950,24 @@
 
 .h6 {
   font-size: 12px; }
+
+/**
+ * Flex Box.
+ */
+.row,
+.row > [class*="col-md"] {
+  min-height: 30px; }
+
+.row .row,
+.row .row > [class*="col-md"] {
+  min-height: 15px; }
+
+.row > * {
+  max-width: 100%; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap; }
+
+.row:before, .row:after {
+  width: 0; }
