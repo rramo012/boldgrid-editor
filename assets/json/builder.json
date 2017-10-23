@@ -1,49 +1,49 @@
 {
     "boxes": [
-        "bg-box bg-box-square",
-        "bg-box bg-box-edged",
-        "bg-box bg-box-rounded",
+        "bg-box bg-box-square bg-box-cover",
+        "bg-box bg-box-edged bg-box-cover",
+        "bg-box bg-box-rounded bg-box-cover",
         "bg-box bg-box-pill",
 
-        "bg-box bg-box-rounded-bottom-left bg-box-rounded-top-left",
-        "bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right",
-        "bg-box bg-box-rounded-top-left bg-box-rounded-top-right",
+        "bg-box bg-box-rounded-bottom-left bg-box-rounded-top-left bg-box-cover",
+        "bg-box bg-box-rounded-bottom-left bg-box-rounded-bottom-right bg-box-cover",
+        "bg-box bg-box-rounded-top-left bg-box-rounded-top-right bg-box-cover",
         "bg-box bg-box-rounded-bottom-right bg-box-rounded-top-right",
 
-        "bg-box bg-box-rounded-bottom-right bg-box-rounded-top-left",
-        "bg-box bg-box-rounded-bottom-left bg-box-rounded-top-right",
+        "bg-box bg-box-rounded-bottom-right bg-box-rounded-top-left bg-box-cover",
+        "bg-box bg-box-rounded-bottom-left bg-box-rounded-top-right bg-box-cover",
 
-        "bg-box bg-box-square bg-box-shadow-bottom-left",
-        "bg-box bg-box-edged bg-box-shadow-bottom-right",
+        "bg-box bg-box-square bg-box-shadow-bottom-left bg-box-cover ",
+        "bg-box bg-box-edged bg-box-shadow-bottom-right bg-box-cover",
         "bg-box bg-box-pill bg-box-shadow-bottom-right",
 
         "bg-box bg-box-square bg-box-border-thin",
-        "bg-box bg-box-rounded bg-box-border-thin",
+        "bg-box bg-box-rounded bg-box-border-thin bg-box-cover",
         "bg-box bg-box-pill bg-box-border-thin",
 
-        "bg-box bg-box-pill bg-box-border-normal",
-        "bg-box bg-box-rounded bg-box-border-normal",
+        "bg-box bg-box-pill bg-box-border-normal bg-box-cover",
+        "bg-box bg-box-rounded bg-box-border-normal bg-box-cover",
         "bg-box bg-box-square bg-box-border-normal",
 
-        "bg-box bg-box-rounded bg-box-border-thick",
-        "bg-box bg-box-square bg-box-border-thick",
+        "bg-box bg-box-rounded bg-box-border-thick bg-box-cover",
+        "bg-box bg-box-square bg-box-border-thick bg-box-cover",
         "bg-box bg-box-pill bg-box-border-thick",
 
-        "bg-box bg-box-rounded bg-box-border-dashed",
-        "bg-box bg-box-square bg-box-border-dashed",
+        "bg-box bg-box-rounded bg-box-border-dashed bg-box-cover",
+        "bg-box bg-box-square bg-box-border-dashed bg-box-cover",
         "bg-box bg-box-pill bg-box-border-dashed",
 
         "bg-box bg-box-rounded bg-box-border-dashed-thick",
-        "bg-box bg-box-square bg-box-border-dashed-thick",
+        "bg-box bg-box-square bg-box-border-dashed-thick bg-box-cover",
         "bg-box bg-box-pill bg-box-border-dashed-thick",
 
-        "bg-box bg-box-rounded bg-box-border-double",
-        "bg-box bg-box-square bg-box-border-double",
+        "bg-box bg-box-rounded bg-box-border-double bg-box-cover",
+        "bg-box bg-box-square bg-box-border-double bg-box-cover",
         "bg-box bg-box-pill bg-box-border-double",
 
-        "bg-box bg-box-rounded bg-box-border-double-thick",
+        "bg-box bg-box-rounded bg-box-border-double-thick bg-box-cover",
         "bg-box bg-box-pill bg-box-border-double-thick",
-        "bg-box bg-box-square bg-box-border-double-thick"
+        "bg-box bg-box-square bg-box-border-double-thick bg-box-cover"
     ],
     "image": [
 

@@ -68,7 +68,7 @@ export class Base {
 			$target = $( event.relatedTarget );
 
 			// This check if we're leaving the element but entering the popover.
-			if ( $target.closest( '.draggable-tools-imhwpb' ).length ) {
+			if ( $target.closest( this.$element ).length ) {
 				return;
 			}
 		}
@@ -92,34 +92,41 @@ export class Base {
 	 * @param  {object} event Event from listeners.
 	 */
 	updatePosition( event ) {
-		let pos;
+		let pos, $newTarget;
 
 		this._removeBorder();
 
 		if ( event ) {
-			this.$target = $( event.target );
+			$newTarget = $( event.target );
 		}
 
-		if ( this._isInvalidTarget() ) {
+		if ( this._isInvalidTarget( $newTarget || this.$target ) ) {
 			this.$element.hide();
 			return;
 		}
 
+		// Do not update if user is dragging.
 		if ( BG.Controls.$container.$current_drag || BG.Controls.$container.resize || this.disableAddPopover ) {
 			return false;
 		}
 
-		if ( BG.Controls.$container.is_typing && true === BG.Controls.$container.is_typing ) {
-			return false;
-		}
+		if ( $newTarget ) {
 
-		this.$target = this.$target.closest( this.getSelectorString() );
+			// Rewrite target to parent.
+			$newTarget = $newTarget.closest( this.getSelectorString() );
+
+			// If hovering over a new target, hide menu.
+			if ( this.$target && $newTarget[0] !== this.$target[0] ) {
+				this.$element.$menu.addClass( 'hidden' );
+			}
+
+			this.$target = $newTarget;
+		}
 
 		this.$element.trigger( 'updatePosition' );
 
 		pos = this.$target[0].getBoundingClientRect();
 
-		this.$element.$menu.addClass( 'hidden' );
 		this.$element.css( this.getPositionCss( pos ) ).show();
 		this.$target.addClass( 'popover-hover' );
 	}
@@ -249,8 +256,8 @@ export class Base {
 	 * @since 1.6
 	 * @return {Boolean} Is the target still on the page.
 	 */
-	_isInvalidTarget() {
-		return ! this.$target || ! this.$target.length || ! BG.Controls.$container.find( this.$target ).length;
+	_isInvalidTarget( $newTarget ) {
+		return ! $newTarget || ! $newTarget.length || ! BG.Controls.$container.find( $newTarget ).length;
 	}
 
 	/**

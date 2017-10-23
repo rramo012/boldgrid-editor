@@ -37,8 +37,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			setTimeout( function() {
 				$container.css( 'transition', '' );
 				$( window ).trigger( 'resize' );
-				BOLDGRID.EDITOR.CONTROLS.Section.positionHandles();
-				BOLDGRID.EDITOR.RESIZE.Row.positionHandles();
 				BG.Controls.$container.find( 'html' ).removeClass( 'bg-disabled-handles' );
 			}, 600 );
 		},

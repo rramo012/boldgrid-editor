@@ -52,11 +52,13 @@ export class Content extends Base {
 	 * @return {string} Selectors.
 	 */
 	getSelectorString() {
+		let selector = BG.Controls.$container.original_selector_strings.unformatted_content_selectors_string;
+
 		if ( BG.Controls.$container.editting_as_row ) {
-			return this.nestedSelector;
-		} else {
-			return BG.Controls.$container.original_selector_strings.unformatted_content_selectors_string;
+			selector = this.nestedSelector;
 		}
+
+		return selector;
 	}
 
 	/**
@@ -70,7 +72,9 @@ export class Content extends Base {
 		let contentSelectors = [];
 
 		_.each( BG.Controls.$container.content_selectors, ( value, index ) => {
-			contentSelectors[index] = value.replace( 'not(.row .row', 'not(.row .row .row' );
+			if ( '.row .row:not(.row .row .row)' !== value ) {
+				contentSelectors.push( value.replace( 'not(.row .row', 'not(.row .row .row' ) );
+			}
 		} );
 
 		return contentSelectors.join( ',' );

@@ -366,12 +366,13 @@ iframe[src^="https://maps.google.com"] {
 .bg-disabled-handles .draghandle,
 .bg-disabled-handles .section-drag-handle,
 .boldgrid-is-typing .draghandle,
+.boldgrid-is-typing .draggable-tools-imhwpb,
 .boldgrid-is-typing .section-drag-handle,
 .editing-as-row .section-drag-handle {
 	display: none !important;
 }
-.boldgrid-is-typing .boldgrid-section:hover {
-  outline: 1px solid rgba(0,0,0,0) !important;
+.boldgrid-is-typing .popover-hover {
+  outline-color: rgba(0,0,0,0) !important;
 }
 .section-popover-imhwpb {
     background-color: #32373c;

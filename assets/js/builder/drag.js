@@ -859,6 +859,10 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 			.on( 'mouseup.draggable', self.master_container_mouse_up )
 			.on( 'mousemove.draggable', self.mousemove_container );
 
+		self
+			.on( 'start_typing_boldgrid.draggable', self.typing_events.start )
+			.on( 'end_typing_boldgrid.draggable', self.typing_events.end );
+
 		if ( 11 < self.ie_version || ! self.ie_version ) {
 			self.on( self.resize_event_map, self.column_selectors_string );
 		}
