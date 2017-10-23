@@ -230,7 +230,7 @@ class Boldgrid_Editor_Templater {
 	 * @since 1.6
 	 */
 	public function add_template_filters() {
-		add_filter( 'body_class', array( $this, 'add_body_class' ) );
+		add_filter( 'body_class', array( $this, 'add_body_class' ), 30 );
 		add_filter( 'wp_calculate_image_sizes', array( $this, 'default_srcset' ), 40 );
 
 		do_action( 'boldgrid_editor_template' );
