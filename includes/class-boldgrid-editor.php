@@ -49,7 +49,6 @@ class Boldgrid_Editor {
 		$config = new Boldgrid_Editor_Config();
 		$config = apply_filters( 'boldgrid_editor_config', $config );
 		$this->set_config( $config );
-
 		$tab_configs = require BOLDGRID_EDITOR_PATH . '/includes/config/layouts.php';
 		$tab_configs = apply_filters( 'boldgrid-media-modal-config', $tab_configs );
 		$this->set_tab_configs( $tab_configs );
@@ -115,6 +114,7 @@ class Boldgrid_Editor {
 		if ( ! is_admin() ) {
 			$this->front_end_hooks();
 		}
+
 	}
 
 	/**

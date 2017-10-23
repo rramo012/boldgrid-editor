@@ -216,12 +216,35 @@ class Boldgrid_Editor_Templater {
 		// Just to be safe, we check if the file exist first
 		if ( file_exists( $file ) ) {
 			$template = $file;
-			add_filter( 'body_class', array( $this, 'add_body_class' ) );
+			$this->add_template_filters();
 		}
 
 		// Return template
 		return $template;
 
+	}
+
+	/**
+	 * Add filters and hooks that only occur when a BG template is used.
+	 *
+	 * @since 1.6
+	 */
+	public function add_template_filters() {
+		add_filter( 'body_class', array( $this, 'add_body_class' ) );
+		add_filter( 'wp_calculate_image_sizes', array( $this, 'default_srcset' ), 40 );
+
+		do_action( 'boldgrid_editor_template' );
+	}
+
+	/**
+	 * Return the default size attribute set for out templates.
+	 *
+	 * @since 1.6
+	 *
+	 * @param string $sizes
+	 */
+	public function default_srcset( $sizes ) {
+		return '(max-width: 1243px) 100vw, 1243px';
 	}
 
 	/**
