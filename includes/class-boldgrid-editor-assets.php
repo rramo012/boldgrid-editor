@@ -130,6 +130,9 @@ class Boldgrid_Editor_Assets {
 			wp_enqueue_style( 'boldgrid-fe',
 				plugins_url( '/assets/css/editor-fe.min.css', BOLDGRID_EDITOR_ENTRY ),
 				array(), BOLDGRID_EDITOR_VERSION );
+
+			// The editor bundle includes base bootstrap styles.
+			wp_dequeue_style( 'bootstrap-styles' );
 		}
 
 		// Control Styles.
@@ -213,6 +216,7 @@ class Boldgrid_Editor_Assets {
 			'version' => BOLDGRID_EDITOR_VERSION,
 			//'hasDraggableEnabled' => Boldgrid_Editor_MCE::has_draggable_enabled(),
 			'hasDraggableEnabled' => true,
+			'inspiration_active' => defined( 'BOLDGRID_INSPIRATIONS_VERSION' ),
 			'default_tab' => wp_default_editor(),
 			'draggableEnableNonce' => wp_create_nonce( 'boldgrid_draggable_enable' ),
 			'setupNonce' => wp_create_nonce( 'boldgrid_editor_setup' ),
