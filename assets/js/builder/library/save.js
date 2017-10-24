@@ -171,7 +171,6 @@ export class Save {
 					this._setState( 'save-failed' );
 				} )
 				.done( ( response ) => {
-					this.$html.find( '.gridblock-permalink' ).attr( 'href', response.data.guid );
 					this._setState( 'save-success' );
 					this._addToConfig( response.data );
 				} )
