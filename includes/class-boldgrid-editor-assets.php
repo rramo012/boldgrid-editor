@@ -101,6 +101,9 @@ class Boldgrid_Editor_Assets {
 			'bg_is_post' => $is_post,
 		), $permalink );
 
+		// Remove protocal.
+		$permalink = str_ireplace( array( 'http://', 'https://' ), '//', $permalink );
+
 		return $permalink;
 	}
 
