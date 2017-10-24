@@ -120,7 +120,7 @@ export class Save {
 			html: post.post_content,
 			post: post,
 			dynamicImages: false,
-			type: 'saved',
+			type: 'library',
 			'html-jquery': $( post.post_content )
 		};
 

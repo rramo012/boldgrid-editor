@@ -24,7 +24,6 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			self.fetchTypes();
 
 			self.findElements();
-			self.setGridblockCount();
 			self.positionGridblockContainer();
 			self.setupUndoRedo();
 			self.createGridblocks();
@@ -111,8 +110,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		 * @since 1.5
 		 */
 		setGridblockCount: function() {
-			let total = BoldgridEditor.gridblocks.length,
-				types = _.countBy( BoldgridEditor.gridblocks || [], 'type' );
+			let types = _.countBy( BOLDGRID.EDITOR.GRIDBLOCK.configs.gridblocks || [], 'type' );
 
 			self.$gridblockSection.find( '.gridblocks' )
 				.attr( 'my-gridblocks-count', ( types.saved || 0 ).toString() )
@@ -310,6 +308,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 				markup = self.generateInitialMarkup();
 				$gridblockContainer.append( markup );
 				self.$gridblockSection.trigger( 'scroll' );
+				self.setGridblockCount();
 			}
 		},
 
