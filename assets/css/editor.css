@@ -279,15 +279,20 @@
 .template-control {
   text-align: center;
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
 
 .template-control .radio {
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -ms-flex-item-align: end;
   align-self: flex-end;
   width: 50%;
   padding: 10px 0px;
@@ -367,7 +372,9 @@
   border-radius: 5px;
   box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
   border: 1px solid #b1b1b1;
+  -moz-user-select: none;
   -webkit-user-select: none;
+  -ms-user-select: none;
   user-select: none; }
 
 .color-panel.drag-disabled .panel-title,
@@ -1313,10 +1320,13 @@
 
 .editor-panel[data-type="information"] {
   -webkit-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
   user-select: initial; }
 
 .editor-panel[data-type="information"] .info-wrap {
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 0 25px; }
 
@@ -2179,10 +2189,13 @@ body.boldgrid-editor-fullscreen {
   font-size: 32px;
   z-index: 1;
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center; }
 
@@ -2278,6 +2291,8 @@ html:not(.dragging-section) .delete-icon-wrap {
   padding: 6.5px;
   text-align: center;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   border-bottom: 1px solid #cccccc; }
 
@@ -2478,6 +2493,8 @@ html:not(.dragging-section) .delete-icon-wrap {
   overflow-x: hidden;
   float: left;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none; }
 
 .boldgrid-zoomout .wrap {
@@ -2556,11 +2573,15 @@ html:not(.dragging-section) .delete-icon-wrap {
 
 .zoom-gridblocks-section .gridblocks {
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   margin-bottom: 80px;
   position: relative; }
@@ -2619,6 +2640,8 @@ html:not(.dragging-section) .delete-icon-wrap {
   cursor: move;
   width: 586px;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none; }
 
 .zoom-gridblocks-section .gridblock.gridblock-loading {

@@ -38,9 +38,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/components@^2.7.2":
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.2.tgz#481e75864dbe9f8ebcf23d2b603589e15e5ca355"
+"@boldgrid/components@^2.7.3":
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.3.tgz#97d06290289b9ad6bdc2670acd67c4058d46b8be"
   dependencies:
     babel-core "^6.22.1"
     babel-eslint "^7.2.3"
@@ -67,6 +67,7 @@
     jshint-loader "^0.8.4"
     node-sass "^4.5.3"
     normalize.css "^7.0.0"
+    postcss-loader "^2.0.8"
     rimraf "^2.6.1"
     sass-loader "^6.0.5"
     standard "^10.0.2"
@@ -6546,6 +6547,15 @@ postcss-loader@^2.0.6:
     postcss-load-config "^1.2.0"
     schema-utils "^0.3.0"
 
+postcss-loader@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.0.8.tgz#8c67ddb029407dfafe684a406cfc16bad2ce0814"
+  dependencies:
+    loader-utils "^1.1.0"
+    postcss "^6.0.0"
+    postcss-load-config "^1.2.0"
+    schema-utils "^0.3.0"
+
 postcss-merge-idents@^2.1.5:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/postcss-merge-idents/-/postcss-merge-idents-2.1.7.tgz#4c5530313c08e1d5b3bbf3d2bbc747e278eea270"
@@ -6722,6 +6732,14 @@ postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0
     js-base64 "^2.1.9"
     source-map "^0.5.6"
     supports-color "^3.2.3"
+
+postcss@^6.0.0:
+  version "6.0.13"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.13.tgz#b9ecab4ee00c89db3ec931145bd9590bbf3f125f"
+  dependencies:
+    chalk "^2.1.0"
+    source-map "^0.6.1"
+    supports-color "^4.4.0"
 
 postcss@^6.0.1, postcss@^6.0.2:
   version "6.0.11"
@@ -7765,6 +7783,10 @@ source-map@^0.4.2, source-map@^0.4.4:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
   dependencies:
     amdefine ">=0.0.4"
+
+source-map@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
 sourcemapped-stacktrace@^1.1.6:
   version "1.1.7"

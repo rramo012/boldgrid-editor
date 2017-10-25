@@ -58,7 +58,7 @@ gulp.task( 'sass', function() {
 		.pipe( sass.sync().on( 'error', sass.logError ) )
 		.pipe(
 			autoprefixer( {
-				browsers: [ '> 5%' ],
+				browsers: [ '> 1%', 'Last 2 versions' ],
 				cascade: false
 			} )
 		)
