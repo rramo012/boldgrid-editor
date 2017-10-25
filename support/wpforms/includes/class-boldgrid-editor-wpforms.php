@@ -157,8 +157,22 @@ class Boldgrid_Editor_Wpforms {
 
 			// load up any css / js we need
 			add_action( 'admin_enqueue_scripts', array ( $this, 'enqueue_header_content' ), 15 );
-			add_editor_style( self::get_stylesheet() );
+			add_filter( 'mce_css', array( $this, 'mce_css' ) );
 		}
+	}
+
+	/**
+	 * Add stylesheet to editor.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $stylehsheets All stylsheets.
+	 * @return string               All stylsheets.
+	 */
+	public function mce_css( $stylehsheets ) {
+		$stylehsheets = explode( ',', $stylehsheets );
+		$stylehsheets[] = self::get_stylesheet();
+		return implode( $stylehsheets, ',' );
 	}
 
 	/**
