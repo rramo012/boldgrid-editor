@@ -161,6 +161,27 @@ class Boldgrid_Editor_Crop {
 	}
 
 	/**
+	 * Convert a url of an attachment / image to a path.
+	 *
+	 * We do this by converting the following:
+	 * https://domain.com/wp-content/uploads/2016/01/image.jpg
+	 * /home/user/public_html/wp-content/uploads/2016/01/image.jpg
+	 *
+	 * @param  string $url Example: https://domain.com/wp-content/uploads/2016/01/image.jpg
+	 * @return mixed String on success, false on failure.
+	 */
+	public function url_to_path( $url ) {
+		$wp_upload_dir = wp_upload_dir();
+		preg_match( '/(.*)wp-content\/uploads(.*)/', $url, $matches );
+
+		if( empty( $wp_upload_dir['basedir'] ) || empty( $matches['2'] ) ) {
+			return false;
+		}
+
+		return $wp_upload_dir['basedir'] . $matches['2'];
+	}
+
+	/**
 	 * Crop an image.
 	 *
 	 * This method is called via an AJAX request.
@@ -214,16 +235,9 @@ class Boldgrid_Editor_Crop {
 			$orientation = $original_width / $original_height;
 		}
 
-		// Example $site_url: https://domain.com.
-		$site_url = get_site_url();
-
-		// Example $path_to_image: /home/user/public_html/wp-content/uploads/2016/01/image.jpg.
-		$path_to_image = ABSPATH . ( str_replace( $site_url . '/', '', $path ) );
-
-		// If we couldn't fine the file, abort.
-		if ( ! is_file( $path_to_image ) ) {
-			echo 'Error: unable to find path to image.';
-			wp_die();
+		$path_to_image = $this->url_to_path( $path );
+		if( ! $path_to_image ) {
+			wp_die( sprintf( 'Error. Unable to find path to image: "%1$s"', $path_to_image ) );
 		}
 
 		// @see https://codex.wordpress.org/Class_Reference/WP_Image_Editor.

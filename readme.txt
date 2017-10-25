@@ -24,6 +24,9 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+= 1.5.3 In progress =
+* Bug Fix:                      Image crop issue with http vs https.
+
 = 1.5.2 =
 * New Feature:                  Control for hiding and showing page titles.
 * New Feature:                  Escape now closes an open panel.
