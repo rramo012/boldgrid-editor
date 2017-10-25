@@ -1487,7 +1487,8 @@
 #boldgrid-instance-menu li .fa {
   width: 24px;
   height: 24px;
-  text-align: center; }
+  text-align: center;
+  font-family: FontAwesome; }
 
 #boldgrid-instance-menu li .dashicons-edit {
   padding: 3px 2px 0;
