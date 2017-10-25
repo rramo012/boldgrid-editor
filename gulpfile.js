@@ -56,17 +56,17 @@ gulp.task( 'sass', function() {
 			} ).on( 'error', sass.logError )
 		)
 		.pipe( sass.sync().on( 'error', sass.logError ) )
+		.pipe(
+			autoprefixer( {
+				browsers: [ '> 5%' ],
+				cascade: false
+			} )
+		)
 		.pipe( gulp.dest( config.dist + '/assets/css' ) )
 		.pipe(
 			cssnano( {
 				discardComments: { removeAll: true },
 				zindex: false
-			} )
-		)
-		.pipe(
-			autoprefixer( {
-				browsers: [ 'last 2 versions' ],
-				cascade: false
 			} )
 		)
 		.pipe( rename( { suffix: '.min' } ) )
@@ -76,6 +76,12 @@ gulp.task( 'sass', function() {
 gulp.task( 'merge-webpack', function() {
 	gulp
 		.src( [ config.dist + '/assets/css/editor.min.css', config.dist + '/assets/css/bundle.min.css' ] )
+		.pipe(
+			autoprefixer( {
+				browsers: [ '> 5%' ],
+				cascade: false
+			} )
+		)
 		.pipe( concat( 'editor.min.css' ) )
 		.pipe( gulp.dest( config.dist + '/assets/css/' ) );
 } );
