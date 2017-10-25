@@ -92,13 +92,15 @@ class Boldgrid_Editor_Templater {
 	 */
 	public function set_default_metabox() {
 		global $post;
+		global $pagenow;
 
 		$template_choice = Boldgrid_Editor_Setup::get_template_choice();
 
-		if ( 'page' == $post->post_type
+		if ( 'page' === $post->post_type
 			&& $template_choice
 			&& 'default' !== $template_choice
-			&& 0 != count( get_page_templates( $post ) )
+			&& 'post-new.php' === $pagenow
+			&& 0 !== count( get_page_templates( $post ) )
 
 			// Not the page for listing posts.
 			&& get_option( 'page_for_posts' ) != $post->ID

@@ -1664,7 +1664,6 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 		self.remove_resizing_classes( $markup );
 		self.remove_border_classes( $markup );
 		self.removeClasses( $markup );
-		// $markup.find( '.draggable-tools-imhwpb' ).remove();
 		return $markup.html();
 	};
 
@@ -1672,7 +1671,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 	 * Remove resizing class.
 	 */
 	this.remove_resizing_classes = function( $container ) {
-		$container.find( '.resizing-imhwpb, .popover-hover' ).removeClass( 'resizing-imhwpb popover-hover' );
+		$container.find( '.resizing-imhwpb' ).removeClass( 'resizing-imhwpb' );
 	};
 
 	/**
