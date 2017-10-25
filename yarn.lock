@@ -38,9 +38,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/components@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.0.tgz#1e6bc04b55ab8a48eb0bd4bf0b0bac8fd032cd7c"
+"@boldgrid/components@^2.7.2":
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.2.tgz#481e75864dbe9f8ebcf23d2b603589e15e5ca355"
   dependencies:
     babel-core "^6.22.1"
     babel-eslint "^7.2.3"
@@ -74,9 +74,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/controls@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.5.1.tgz#1538193fce16f9dfe2d01ec69339531ece2ca0a2"
+"@boldgrid/controls@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.5.2.tgz#0c8f837ccf713b5204141ea356690fef595af17d"
   dependencies:
     "@boldgrid/components" "^2.3.0"
     Buttons "https://github.com/alexwolfe/Buttons"
