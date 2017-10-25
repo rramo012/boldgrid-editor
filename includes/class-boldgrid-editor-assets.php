@@ -102,9 +102,21 @@ class Boldgrid_Editor_Assets {
 		), $permalink );
 
 		// Remove protocal.
-		$permalink = str_ireplace( array( 'http://', 'https://' ), '//', $permalink );
+		$permalink = self::remove_url_protocal( $permalink );
 
 		return $permalink;
+	}
+
+	/**
+	 * Remove protocal from the url.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  string $permalink URL.
+	 * @return string            Url with protocal removed.
+	 */
+	public static function remove_url_protocal( $permalink ) {
+		return str_ireplace( array( 'http://', 'https://' ), '//', $permalink );
 	}
 
 	/**

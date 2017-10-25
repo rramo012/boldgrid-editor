@@ -32,6 +32,18 @@ class Boldgrid_Editor_Builder_Styles {
 	}
 
 	/**
+	 * Get the path we user for uploads.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return  string Upload path.
+	 */
+	public static function get_upload_path( $key = 'basedir' ) {
+		$upload_dir = wp_upload_dir();
+		return $upload_dir[ $key ] . '/boldgrid';
+	}
+
+	/**
 	 * Get url info for the saved css file.
 	 *
 	 * @since 1.6
@@ -46,7 +58,11 @@ class Boldgrid_Editor_Builder_Styles {
 		// Currently disabled for BG themes. BG themes should use the BG color palette system (theme switching).
 		if ( ! $is_bg_theme ) {
 			if ( ! empty( $option['css_filename'] ) ) {
-				$url = $option['css_filename'];
+				$uploadPath = self::get_upload_path( 'baseurl' );
+
+				// Deprecated -- Remove this line after 1.6 is released.
+				$url = str_ireplace( $uploadPath, '', $option['css_filename'] );
+				$url = $uploadPath . $url;
 			} else {
 				$url = plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY );
 			}
@@ -134,14 +150,13 @@ class Boldgrid_Editor_Builder_Styles {
 	 * @param  string $css CSS to save to a file.
 	 * @return string      URL to new file.
 	 */
-	public function create_file( $css, $filename = '/boldgrid/custom-styles.css' ) {
-		$upload_dir = wp_upload_dir();
-		wp_mkdir_p( $upload_dir['basedir'] . '/boldgrid' );
-		$new_filename = $upload_dir['basedir'] . $filename;
+	public function create_file( $css, $filename = '/custom-styles.css' ) {
+		wp_mkdir_p( self::get_upload_path() );
+		$new_filename = self::get_upload_path() . $filename;
 		$editor_fs = new Boldgrid_Editor_Fs();
 		$editor_fs->save( $css, $new_filename );
 
-		return $upload_dir['baseurl'] . $filename;
+		return $filename;
 	}
 
 	/**
@@ -166,7 +181,7 @@ class Boldgrid_Editor_Builder_Styles {
 
 			if ( ! empty( $_POST['wp-preview'] ) ) {
 				// If previewing the page save to another option.
-				$css_file = $this->create_file( $css, '/boldgrid/preview-custom-styles.css' );
+				$css_file = $this->create_file( $css, '/preview-custom-styles.css' );
 
 				Boldgrid_Editor_Option::update( 'preview_styles', array(
 					'configuration' => $styles,
