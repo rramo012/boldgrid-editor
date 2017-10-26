@@ -75,11 +75,10 @@ class Test_Boldgrid_Editor extends WP_UnitTestCase {
 	 *  @since 1.0.3
 	 */
 	public function test_get_post_url_post_not_found() {
-
 		$testClass = new Boldgrid_Editor_Assets( array() );
 		$get_post_url = $testClass->get_post_url();
-		$this->assertEquals( get_site_url() . '?bg_preview_page=1', $get_post_url );
-
+		$expected = Boldgrid_Editor_Assets::remove_url_protocal( get_site_url() . '?bg_preview_page=1' );
+		$this->assertEquals( $expected, $get_post_url );
 	}
 
 	/**
