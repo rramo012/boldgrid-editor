@@ -567,15 +567,16 @@
 .color-panel .ui-slider-horizontal .ui-slider-handle,
 .editor-panel .ui-slider-horizontal .ui-slider-handle {
   left: 0%;
-  margin-top: -5px;
   border: 3px;
   height: 1em;
   width: 1em;
   border-radius: 0px;
   background: #f95b26;
-  top: -1px;
+  top: 50%;
   cursor: pointer;
-  border-radius: 50%; }
+  border-radius: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%); }
 
 .color-panel .inline-color-controls h4,
 .color-panel .inline-color-controls .theme-colors-wrap .boldgrid-tooltip-wrap,
@@ -2366,15 +2367,16 @@ html:not(.dragging-section) .delete-icon-wrap {
 
 .boldgrid-zoomout .bg-zoom-controls .ui-slider .ui-slider-handle {
   left: 0%;
-  margin-top: -5px;
   border: 3px;
   height: 1em;
   width: 1em;
   border-radius: 0px;
   background: #f95b26;
-  top: -1px;
+  top: 50%;
   cursor: pointer;
-  border-radius: 50%; }
+  border-radius: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%); }
 
 .boldgrid-zoomout .bg-zoom-controls .ui-slider .ui-slider-handle {
   left: -6px;

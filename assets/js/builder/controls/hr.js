@@ -28,7 +28,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			width: '275px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'fontColor', 'width', 'margin', 'blockAlignment', 'customClasses' ],
+			customizeSupport: [ 'fontColor', 'width', 'margin', 'blockAlignment', 'customClasses', 'padding' ],
 			customizeSupportOptions: {
 				margin: {
 					horizontal: false

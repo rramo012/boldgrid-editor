@@ -78,7 +78,7 @@ var webpackConfig = {
 				]
 			},
 			{
-				test: /\.(jpg|jpeg|png|gif|ico|svg)$/,
+				test: /\.(jpg|jpeg|png|gif|ico)$/,
 				loader: 'url-loader',
 				query: {
 					limit: 10000, // Use data url for assets <= 10KB

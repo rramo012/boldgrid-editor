@@ -2,6 +2,8 @@ window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
+import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/controls';
+
 ( function( $ ) {
 	'use strict';
 
@@ -10,6 +12,28 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 	BG.CONTROLS.Generic = {
 		defaultCustomize: wp.template( 'boldgrid-editor-default-customize' ),
+
+		bgControls: {
+			'margin': Margin,
+			'padding': Padding,
+			'box-shadow': BoxShadow,
+			'border-radius': BorderRadius,
+			'border': Border
+		},
+
+		loaders: {},
+
+		appendBasicBGControl( addOptions, name ) {
+			let $control = new name( {
+				target: BG.Menu.getCurrentTarget()
+			} ).render();
+
+			self.appendControl( $control );
+		},
+
+		appendControl( $control ) {
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+		},
 
 		createCustomizeSection: function() {
 			BG.Panel.$element.find( '.choices' ).append( self.defaultCustomize() );
@@ -30,20 +54,31 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			}
 
 			$.each( customizeOptions, function() {
-				var customizationOption = this,
+				var loadCallback,
+					customizationOption = this,
 					addOptions = {};
+
+				loadCallback = self.loaders[ customizationOption ];
 
 				if ( customizeSupportOptions && customizeSupportOptions[this] ) {
 					addOptions = customizeSupportOptions[this];
 				}
 
-				customizationOption = customizationOption.replace( '-', '' );
-				customizationOption = customizationOption.toLowerCase();
-				customizationOption = customizationOption.charAt( 0 ).toUpperCase() + customizationOption.slice( 1 );
+				if ( self.bgControls[ customizationOption ] ) {
+					self.appendBasicBGControl( addOptions, self.bgControls[ customizationOption ] );
+				} else if ( loadCallback ) {
+					loadCallback( addOptions );
+				} else {
+					customizationOption = customizationOption.replace( '-', '' );
+					customizationOption = customizationOption.toLowerCase();
+					customizationOption = customizationOption.charAt( 0 ).toUpperCase() + customizationOption.slice( 1 );
 
-				BG.CONTROLS.GENERIC[customizationOption].render( addOptions );
+					BG.CONTROLS.GENERIC[customizationOption].render( addOptions );
+					BG.CONTROLS.GENERIC[customizationOption].bind( addOptions );
+				}
+
 				BG.Tooltip.renderTooltips();
-				BG.CONTROLS.GENERIC[customizationOption].bind( addOptions );
+
 			} );
 		},
 
