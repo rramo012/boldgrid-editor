@@ -19,6 +19,7 @@ export class GeneralActions {
 		$popover.find( 'li[data-action="add-media"]' ).on( 'click', menuActions.add_media );
 		$popover.find( 'li[data-action="align-top"]' ).on( 'click', menuActions.alignTop );
 		$popover.find( 'li[data-action="Box"]' ).on( 'click', menuActions.generalMacro );
+		$popover.find( 'li[data-action="Advanced"]' ).on( 'click', menuActions.generalMacro );
 		$popover.find( 'li[data-action="Font"]' ).on( 'click', menuActions.generalMacro );
 		$popover.find( 'li[data-action="align-default"]' ).on( 'click', menuActions.alignDefault );
 		$popover.find( 'li[data-action="align-bottom"]' ).on( 'click', menuActions.alignBottom );
@@ -81,7 +82,7 @@ let menuActions = {
 		controlName = $( this ).data( 'action' );
 
 		BG.Service.popover.selection.$target.click();
-		BG.CONTROLS[ controlName ].openPanel();
+		BG.Controls.get( controlName ).openPanel( BG.Service.popover.selection.$target );
 	},
 
 	alignTop: function() {

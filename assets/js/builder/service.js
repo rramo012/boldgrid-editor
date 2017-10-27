@@ -7,6 +7,7 @@ import LoadingGraphic from './tinymce/loading';
 import { Palette } from './controls/color/palette';
 import { Intro } from './notice/intro';
 import { Save as LibrarySave } from './library/save';
+import { Advanced } from './controls/advanced';
 import { Lead as GridblockLead } from './gridblock/lead';
 import ContentPopover from './popover/content';
 import ColumnPopover from './popover/column';
@@ -69,6 +70,7 @@ export class Service {
 			new Intro().init();
 			new LibrarySave().init();
 			new GridblockLead().init();
+			new Advanced().init();
 		} );
 	}
 }

@@ -13,8 +13,12 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		template: wp.template( 'boldgrid-editor-margin' ),
 
 		render: function() {
+			var $control = $( this.template() );
+
 			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.margin-control' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+
+			return $control;
 		},
 
 		bind: function( options ) {

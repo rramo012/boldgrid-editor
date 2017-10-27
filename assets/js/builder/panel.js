@@ -1,6 +1,8 @@
 window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
+import { Navigation as CustomizeNavigation } from './customize/navigation.js';
+
 ( function( $ ) {
 	'use strict';
 
@@ -33,6 +35,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			this._lockPanelScroll();
 			this._setupAutoCenter();
 			this._setupEscapeClose();
+
+			new CustomizeNavigation().render();
 
 			return this.$element;
 		},
@@ -409,6 +413,14 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			} );
 		},
 
+		enterCustomization() {
+			self.$element.find( '.panel-body .customize' ).show();
+			self.$element.find( '.presets' ).hide();
+			self.$element.find( '.title' ).hide();
+			self.scrollTo( 0 );
+			self.hideFooter();
+		},
+
 		/**
 		 * Bind the default behavior that occurs when the user clicks the customize button.
 		 *
@@ -419,11 +431,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 				e.preventDefault();
 
 				if ( self.currentControl && self.currentControl.panel && true === self.currentControl.panel.customizeCallback ) {
-					self.$element.find( '.panel-body .customize' ).show();
-					self.$element.find( '.presets' ).hide();
-					self.$element.find( '.title' ).hide();
-					self.scrollTo( 0 );
-					self.hideFooter();
+					self.enterCustomization();
 				}
 			} );
 		},

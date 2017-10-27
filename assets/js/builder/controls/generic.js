@@ -21,14 +21,14 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 			'border': Border
 		},
 
-		loaders: {},
-
 		appendBasicBGControl( addOptions, name ) {
 			let $control = new name( {
 				target: BG.Menu.getCurrentTarget()
 			} ).render();
 
 			self.appendControl( $control );
+
+			return $control;
 		},
 
 		appendControl( $control ) {
@@ -36,7 +36,13 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 		},
 
 		createCustomizeSection: function() {
-			BG.Panel.$element.find( '.choices' ).append( self.defaultCustomize() );
+			let $append = BG.Panel.$element.find( '.choices' );
+
+			if ( ! $append.length ) {
+				BG.Panel.$element.find( '.panel-body' ).append( self.defaultCustomize() );
+			}
+
+			return $append;
 		},
 
 		/**
@@ -47,38 +53,36 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 		initControls: function() {
 			var customizeOptions = BG.Panel.currentControl.panel.customizeSupport || [],
 				customizeSupportOptions = BG.Panel.currentControl.panel.customizeSupportOptions || false;
+console.log( customizeOptions, customizeSupportOptions );
 
 			// Add customize section if it does not exist.
 			if ( customizeOptions.length && ! BG.Panel.$element.find( '.panel-body .customize' ).length ) {
+				console.log( 'creating' );
 				self.createCustomizeSection();
 			}
 
 			$.each( customizeOptions, function() {
-				var loadCallback,
+				var $control,
 					customizationOption = this,
 					addOptions = {};
-
-				loadCallback = self.loaders[ customizationOption ];
 
 				if ( customizeSupportOptions && customizeSupportOptions[this] ) {
 					addOptions = customizeSupportOptions[this];
 				}
 
 				if ( self.bgControls[ customizationOption ] ) {
-					self.appendBasicBGControl( addOptions, self.bgControls[ customizationOption ] );
-				} else if ( loadCallback ) {
-					loadCallback( addOptions );
+					$control = self.appendBasicBGControl( addOptions, self.bgControls[ customizationOption ] );
 				} else {
 					customizationOption = customizationOption.replace( '-', '' );
 					customizationOption = customizationOption.toLowerCase();
 					customizationOption = customizationOption.charAt( 0 ).toUpperCase() + customizationOption.slice( 1 );
 
-					BG.CONTROLS.GENERIC[customizationOption].render( addOptions );
+					$control = BG.CONTROLS.GENERIC[customizationOption].render( addOptions );
 					BG.CONTROLS.GENERIC[customizationOption].bind( addOptions );
 				}
 
 				BG.Tooltip.renderTooltips();
-
+				$control.attr( 'data-control-name', customizationOption );
 			} );
 		},
 
@@ -129,4 +133,5 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.Generic;
-} ( jQuery ) );
+
+}( jQuery ) );

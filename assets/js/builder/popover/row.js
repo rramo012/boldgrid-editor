@@ -31,6 +31,12 @@ export class Row extends Base {
 		this.$element.on( 'hide', () => {
 			BG.RESIZE.Row.hideHandles();
 		} );
+
+		this.$element.find( '[data-action="row-advanced"]' ).on( 'click', () => {
+
+			// Display Panel.
+			console.log( 'dff ' );
+		} );
 	}
 
 	/**

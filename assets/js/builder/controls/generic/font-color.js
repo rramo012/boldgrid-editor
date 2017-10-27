@@ -16,15 +16,18 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		template: wp.template( 'boldgrid-editor-font-color' ),
 
 		render: function() {
-			var $target = BG.Menu.getTarget( BG.Panel.currentControl );
+			var $control = $( this.template() ),
+				$target = BG.Menu.getTarget( BG.Panel.currentControl );
 
 			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.font-color' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
 
 			BG.Panel.$element.on( 'bg-customize-open', function() {
 				BG.Panel.$element.find( '.panel-body .customize' )
 					.find( '.section.font-color label' ).css( 'background-color', $target.css( 'color' ) );
 			} );
+
+			return $control;
 		},
 
 		bind: function() {

@@ -31,8 +31,12 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		},
 		template: wp.template( 'boldgrid-editor-rotate' ),
 		render: function() {
+			var $control = $( this.template() );
+
 			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.rotate-control' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+
+			return $control;
 		},
 		bind: function() {
 			var defaultSize = this.getDefault(),

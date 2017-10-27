@@ -12,8 +12,12 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 	BOLDGRID.EDITOR.CONTROLS.GENERIC.Link = {
 		template: wp.template( 'boldgrid-editor-insert-link' ),
 		render: function() {
+			var $control = $( this.template() );
+
 			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.insert-link' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+
+			return $control;
 		},
 		bind: function() {
 

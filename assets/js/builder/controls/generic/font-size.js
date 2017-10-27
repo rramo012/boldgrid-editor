@@ -12,8 +12,12 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 	BOLDGRID.EDITOR.CONTROLS.GENERIC.Fontsize = {
 		template: wp.template( 'boldgrid-editor-font-size' ),
 		render: function() {
+			var $control = $( this.template() );
+
 			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.size' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+
+			return $control;
 		},
 		bind: function() {
 			var $el = BG.Menu.getTarget( BG.Panel.currentControl ),

@@ -18,11 +18,15 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		 * @since 1.5.1
 		 */
 		render: function() {
+			let $control = $( this.template() );
+
 			BG.Panel.$element
 				.find( '.panel-body .customize' )
 				.find( '.section.custom-classes' )
 				.remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( this.template() );
+			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+
+			return $control;
 		},
 
 		/**
@@ -55,4 +59,4 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.GENERIC.Classes;
-} ( jQuery ) );
+}( jQuery ) );
