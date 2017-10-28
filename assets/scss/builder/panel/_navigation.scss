@@ -18,7 +18,15 @@
 		display: flex;
 		align-items: center;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-		transition: background .25s;
+
+		&, &:after {
+			transition-property: background, border;
+			transition-duration: .25s;
+		}
+
+		.boldgrid-help-icon {
+			display: none;
+		}
 
 		a {
 			line-height: 0;
@@ -51,6 +59,17 @@
 		}
 		&:hover {
 			background: lighten( $boldgrid-color, 10% );
+
+			&:after {
+				border-left: 10px solid lighten( $boldgrid-color, 10% );
+			}
+
+			.boldgrid-tooltip {
+				display: block;
+				right: 40px !important;
+				top: 50% !important;
+				transform: translateY(-50%);
+			}
 		}
 	}
 }

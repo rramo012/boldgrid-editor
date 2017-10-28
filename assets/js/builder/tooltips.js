@@ -20,14 +20,46 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 *
 		 * @since 1.2.7
 		 */
-		renderTooltips: function() {
-			$.each( BoldgridEditor.builder_config.helpTooltip, function( selector, message ) {
-				BG.Panel.$element.add( BOLDGRID.EDITOR.CONTROLS.Color.$colorPanel ).find( selector ).each( function() {
-					var $this = $( this );
+		renderTooltips() {
+			self._configTooltips();
+			self._inlineTooltips();
+		},
 
-					if ( false === $this.children().first().hasClass( 'boldgrid-tooltip-wrap' ) ) {
-						$this.prepend( self.template( { 'message': message } ) );
-					}
+		/**
+		 * Add tooltips.
+		 *
+		 * @since 1.4
+		 *
+		 * @param {jQuery} $el     Element to apply tooltip to.
+		 * @param {string} message Message for tooltip
+		 */
+		addTooltip( $el, message ) {
+			if ( false === $el.children().first().hasClass( 'boldgrid-tooltip-wrap' ) ) {
+				$el.prepend( self.template( { 'message': message } ) );
+			}
+		},
+
+		/**
+		 * Create tooltips defined inline.
+		 *
+		 * @since 1.4
+		 */
+		_inlineTooltips() {
+			BG.Panel.$element.find( '[data-tooltip-inline]' ).each( ( index, el ) => {
+				let $el = $( el );
+				self.addTooltip( $el, $el.data( 'tooltip-inline' ) );
+			} );
+		},
+
+		/**
+		 * Create tooltips defined in configurations.
+		 *
+		 * @since 1.4
+		 */
+		_configTooltips() {
+			_.each( BoldgridEditor.builder_config.helpTooltip, function( message, selector ) {
+				BG.Panel.$element.add( BOLDGRID.EDITOR.CONTROLS.Color.$colorPanel ).find( selector ).each( function() {
+					self.addTooltip( $( this ), message );
 				} );
 			} );
 		}

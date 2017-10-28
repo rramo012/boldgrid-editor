@@ -41,13 +41,11 @@ export class Advanced {
 		BG.Menu.$element.targetData[ this.name ] = $target;
 
 		BG.Panel.clear();
-
 		BG.Panel.showFooter();
-
-		// Open Panel.
 		BG.Panel.open( this );
-
 		BG.Panel.enterCustomization( this );
+
+		BG.Service.customize.navigation.activateFirstControl();
 	}
 }
 

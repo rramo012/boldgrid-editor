@@ -1,5 +1,4 @@
-window.BOLDGRID = window.BOLDGRID || {};
-BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
+var BG = window.BOLDGRID.EDITOR;
 
 import EditorWidth from './tinymce/width';
 import StyleUpdater from './style/updater';
@@ -13,6 +12,7 @@ import ContentPopover from './popover/content';
 import ColumnPopover from './popover/column';
 import RowPopover from './popover/row';
 import SectionPopover from './popover/section';
+import { Navigation as CustomizeNavigation } from './customize/navigation.js';
 
 export class Service {
 	init() {
@@ -71,6 +71,9 @@ export class Service {
 			new LibrarySave().init();
 			new GridblockLead().init();
 			new Advanced().init();
+
+			BG.Service.customize = BG.Service.customize || {};
+			BG.Service.customize.navigation = new CustomizeNavigation().init();
 		} );
 	}
 }

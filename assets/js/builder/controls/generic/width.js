@@ -3,7 +3,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 
-( function() {
+( function( $ ) {
 	'use strict';
 
 	var self,
@@ -14,10 +14,11 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		template: wp.template( 'boldgrid-editor-generic-width' ),
 
 		render: function() {
-			var $control = $( this.template() );
+			var $control = $( this.template() ),
+				$customize = BG.Panel.$element.find( '.panel-body .customize' );
 
-			BG.Panel.$element.find( '.panel-body .customize' ).find( '.section.width-control' ).remove();
-			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
+			$customize.find( '.section.width-control' ).remove();
+			$customize.append( $control );
 
 			return $control;
 		},

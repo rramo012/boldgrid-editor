@@ -17,16 +17,35 @@ export class Navigation {
 		this.template = _.template( template );
 	}
 
+	init() {
+		let navData = { controls: [] };
+		BG.Panel.$element.find( '.customize [data-control-name]' ).each( ( index, el ) => {
+			let $element = $( el ),
+				controlName = $element.data( 'control-name' );
+
+				navData.controls.push( { icon: marginSvg, name: controlName } );
+		} );
+
+		navData = this.getData();
+
+		this.$element = $( this.template( navData ) );
+		BG.Panel.$element.find( '.panel-title' ).after( this.$element );
+
+		this._setupClick();
+
+		return this;
+	}
+
 	getData() {
 		return {
 			controls: [
-				{ name: 'margin', icon: marginSvg },
-				{ name: 'padding', icon: paddingSvg },
-				{ name: 'border', icon: borderSvg },
-				{ name: 'box-shadow', icon: boxShadow },
-				{ name: 'border-radius', icon: borderRadius },
-				{ name: 'width', icon: widthSvg },
-				{ name: 'custom-classes', icon: customClasses }
+				{ name: 'margin', icon: marginSvg, label: 'Margin' },
+				{ name: 'padding', icon: paddingSvg, label: 'Padding' },
+				{ name: 'border', icon: borderSvg, label: 'Border' },
+				{ name: 'box-shadow', icon: boxShadow, label: 'Box Shadow' },
+				{ name: 'border-radius', icon: borderRadius, label: 'Border Radius' },
+				{ name: 'width', icon: widthSvg, label: 'Width' },
+				{ name: 'customClasses', icon: customClasses, label: 'Custom CSS Classes' }
 			]
 		};
 	}
@@ -35,7 +54,6 @@ export class Navigation {
 		this.$element.find( '.item' ).on( 'click', ( e ) => {
 			let $el = $( e.target ).closest( '.item' ),
 				name = $el.data( 'control-name' );
-
 			e.preventDefault();
 
 			if ( this.$activeControl ) {
@@ -54,23 +72,10 @@ export class Navigation {
 		BG.Panel.$element.find( '.customize [data-control-name="' + name + '"]' ).show();
 	}
 
-	render() {
-		let navData = { controls: [] };
-		BG.Panel.$element.find( '.customize [data-control-name]' ).each( ( index, el ) => {
-			let $element = $( el ),
-				controlName = $element.data( 'control-name' );
-
-				navData.controls.push( { icon: marginSvg, name: controlName } );
-		} );
-
-		navData = this.getData();
-
-		this.$element = $( this.template( navData ) );
-		BG.Panel.$element.find( '.panel-title' ).after( this.$element );
-		this._setupClick();
-
-		this.$element.find( '.item:first-of-type' ).click();
+	activateFirstControl() {
+		return this.$element.find( '.item:first-of-type' ).click();
 	}
+
 }
 
 export { Navigation as default };

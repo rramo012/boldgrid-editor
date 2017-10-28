@@ -53,11 +53,9 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 		initControls: function() {
 			var customizeOptions = BG.Panel.currentControl.panel.customizeSupport || [],
 				customizeSupportOptions = BG.Panel.currentControl.panel.customizeSupportOptions || false;
-console.log( customizeOptions, customizeSupportOptions );
 
 			// Add customize section if it does not exist.
 			if ( customizeOptions.length && ! BG.Panel.$element.find( '.panel-body .customize' ).length ) {
-				console.log( 'creating' );
 				self.createCustomizeSection();
 			}
 
@@ -82,7 +80,7 @@ console.log( customizeOptions, customizeSupportOptions );
 				}
 
 				BG.Tooltip.renderTooltips();
-				$control.attr( 'data-control-name', customizationOption );
+				$control.attr( 'data-control-name', this );
 			} );
 		},
 

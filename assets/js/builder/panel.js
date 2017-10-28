@@ -1,8 +1,6 @@
 window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
-import { Navigation as CustomizeNavigation } from './customize/navigation.js';
-
 ( function( $ ) {
 	'use strict';
 
@@ -35,8 +33,6 @@ import { Navigation as CustomizeNavigation } from './customize/navigation.js';
 			this._lockPanelScroll();
 			this._setupAutoCenter();
 			this._setupEscapeClose();
-
-			new CustomizeNavigation().render();
 
 			return this.$element;
 		},
