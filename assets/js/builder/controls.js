@@ -67,9 +67,6 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			// Init Panel.
 			this.$panel = BOLDGRID.EDITOR.Panel.init();
 
-			// Init Color Control.
-			this.colorControl = BOLDGRID.EDITOR.CONTROLS.Color.init();
-
 			this.onEditibleClick();
 
 			this.setupSliders();

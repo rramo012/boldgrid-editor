@@ -72,8 +72,6 @@ export class Intro extends Notice {
 	dismissPanel() {
 		super.dismissPanel();
 
-		// Compile the color palettes, and apply.( This should tie into what we have already. )
-		// BG.Controls.get( 'Palette' ).setPaletteSettings( _.clone( this.settings.palette.choice ) );
 		this.settings.template.choice = this.$templateInputs.filter( ':checked' ).val();
 
 		// If the user enters the first time setup on a page, update the meta box.

@@ -34,6 +34,8 @@ export class Palette {
 	 */
 	init() {
 		BG.Controls.registerControl( this );
+
+		return this;
 	}
 
 	/**
@@ -66,29 +68,6 @@ export class Palette {
 	}
 
 	/**
-	 * Manually set palette settings.
-	 *
-	 * Given an object like: {'colors':[red,white,blue], 'neutral-color': 'yellow'}
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {Object} settings Palette Settings.
-	 */
-	setPaletteSettings( settings ) {
-		let $tempDiv = $( '<div>' ).hide();
-		$( 'html' ).append( $tempDiv );
-
-		// Pass the color settings to the ColorPalette tool to format to the massive config.
-		this.paletteSettings = this.paletteConfig.createSimpleConfig( settings );
-
-		this.renderCustomization( $tempDiv ).on( 'sass_compiled', ( e, data ) => {
-			if ( 'activatePalette' === data.source ) {
-				$tempDiv.remove();
-			}
-		} );
-	}
-
-	/**
 	 * Get the currently saved palette settings.
 	 *
 	 * @since 1.6
@@ -96,13 +75,25 @@ export class Palette {
 	 * @return {Object} Palette settings.
 	 */
 	getPaletteSettings() {
-		let settings = this.updatedPaletteSettings || this.getLivePalettes() || this.paletteSettings;
 
-		if ( ! settings && BoldgridEditor.setup_settings && BoldgridEditor.setup_settings.palette ) {
-			settings = this.paletteConfig.createSimpleConfig( BoldgridEditor.setup_settings.palette.choice );
+		let settings = this.getSavedSettings();
+
+		if ( ! settings ) {
+			settings = this.paletteConfig.createSimpleConfig();
 		}
 
 		return settings;
+	}
+
+	/**
+	 * Updated palettes settings = on change, live palettes = saved after refresh.
+	 *
+	 * @since 1.6
+	 *
+	 * @return {object} Settings
+	 */
+	getSavedSettings() {
+		return this.updatedPaletteSettings || this.getLivePalettes() || false;
 	}
 
 	/**
@@ -134,7 +125,7 @@ export class Palette {
 	 * @since 1.6
 	 */
 	renderCustomization( $target ) {
-		let $control = this.colorPalette.render( $target, this.getPaletteSettings() );
+		let $control = this.colorPalette.render( $target, this.getSavedSettings() );
 
 		// Once the control is fully rendered run an initialization method.
 		if ( ! this.colorPalette.initialCompilesDone ) {

@@ -63,8 +63,7 @@ import { Palette } from './color/palette';
 		 * @since 1.2.7
 		 */
 		init: function() {
-			let palette = new Palette(),
-				settings = palette.getPaletteSettings();
+			let settings = BG.Service.colorPalette.getPaletteSettings();
 
 			self.importPaletteSettings( settings );
 

@@ -66,7 +66,11 @@ export class Service {
 	 */
 	_onEditorPreload() {
 		BOLDGRID.EDITOR.$window.on( 'boldgrid_editor_preload', () => {
-			new Palette().init();
+			this.colorPalette = new Palette().init();
+
+			// Init Color Control.
+			BG.Controls.colorControl = BG.CONTROLS.Color.init();
+
 			new Intro().init();
 			new LibrarySave().init();
 			new GridblockLead().init();
