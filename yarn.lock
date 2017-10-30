@@ -75,9 +75,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/controls@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.8.1.tgz#f2605c9eff47ffd772cb62a00d0c46b12ff57649"
+"@boldgrid/controls@^0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.8.2.tgz#a857298ae15dd1f6e52e5f3b55d25325ea25d564"
   dependencies:
     "@boldgrid/components" "^2.3.0"
     "@material/switch" "^0.1.15"
