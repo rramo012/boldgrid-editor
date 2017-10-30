@@ -25,10 +25,19 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		panel: {
 			title: 'Horizontal Line',
 			height: '550px',
-			width: '275px',
+			width: '325px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'fontColor', 'width', 'margin', 'blockAlignment', 'customClasses', 'padding' ],
+			customizeSupport: [
+				'fontColor',
+				'margin',
+				'padding',
+				'border',
+				'box-shadow',
+				'width',
+				'blockAlignment',
+				'customClasses'
+			],
 			customizeSupportOptions: {
 				margin: {
 					horizontal: false

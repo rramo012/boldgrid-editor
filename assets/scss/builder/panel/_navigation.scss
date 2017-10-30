@@ -1,4 +1,4 @@
-.customize {
+.editor-panel .panel-body .customize {
 	margin-left: 65px;
 }
 
@@ -15,9 +15,13 @@
 	.item {
 		height: 50px;
 		text-align: center;
-		display: flex;
 		align-items: center;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		display: none;
+
+		&.enabled {
+			display: flex;
+		}
 
 		&, &:after {
 			transition-property: background, border;

@@ -32,25 +32,30 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			'bg-font-family-menu'
 		],
 
+		disabledTextContrast: true,
+
 		init: function() {
 			BOLDGRID.EDITOR.Controls.registerControl( this );
 		},
 
 		panel: {
 			title: 'Text Setting',
-			height: '450px',
-			width: '268px',
+			height: '550px',
+			width: '325px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'width', 'margin', 'padding', 'box-shadow', 'border', 'border-radius', 'blockAlignment', 'customClasses' ],
-			customizeCallback: true,
-			customizeSupportOptions: {
-				margin: {
-					horMin: -50,
-					vertMin: -50,
-					vertMax: 200
-				}
-			}
+			customizeSupport: [
+				'width',
+				'margin',
+				'padding',
+				'box-shadow',
+				'border',
+				'border-radius',
+				'background-color',
+				'blockAlignment',
+				'customClasses'
+			],
+			customizeCallback: true
 		},
 
 		/**

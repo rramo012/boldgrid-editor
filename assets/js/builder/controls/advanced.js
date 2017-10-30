@@ -17,6 +17,7 @@ export class Advanced {
 				'width',
 				'box-shadow',
 				'border-radius',
+				'background-color',
 				'blockAlignment',
 				'customClasses'
 			]
@@ -44,8 +45,6 @@ export class Advanced {
 		BG.Panel.showFooter();
 		BG.Panel.open( this );
 		BG.Panel.enterCustomization( this );
-
-		BG.Service.customize.navigation.activateFirstControl();
 	}
 }
 

@@ -10,7 +10,6 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		BG = BOLDGRID.EDITOR;
 
 	BOLDGRID.EDITOR.CONTROLS.GENERIC.Width = {
-
 		template: wp.template( 'boldgrid-editor-generic-width' ),
 
 		render: function() {
@@ -24,7 +23,6 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		},
 
 		bind: function() {
-
 			var maxVal = 100,
 				$target = BG.Menu.getCurrentTarget(),
 				width = $target[0].style.width || $target.attr( 'width' );
@@ -33,18 +31,25 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 			width = Math.min( width, maxVal );
 			width = Math.max( width, 0 );
 
-			BG.Panel.$element.find( '.panel-body .customize .width .slider' ).slider( {
-				min: 1,
-				max: 100,
-				value: width,
-				range: 'max',
-				slide: function( event, ui ) {
-					BG.Controls.addStyle( $target, 'width', ui.value + '%' );
-				}
-			} ).siblings( '.value' ).html( width );
+			BG.Panel.$element
+				.find( '.panel-body .customize .width .slider' )
+				.slider( {
+					min: 10,
+					max: 100,
+					value: width,
+					range: 'max',
+					slide: function( event, ui ) {
+						if ( 100 === ui.value ) {
+							BG.Controls.addStyle( $target, 'width', 'auto' );
+						} else {
+							BG.Controls.addStyle( $target, 'width', ui.value + '%' );
+						}
+					}
+				} )
+				.siblings( '.value' )
+				.html( width );
 		}
 	};
 
 	self = BOLDGRID.EDITOR.CONTROLS.GENERIC.Width;
-
 } )( jQuery );

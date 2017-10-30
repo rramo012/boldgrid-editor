@@ -37,13 +37,22 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 		panel: {
 			title: 'Column Background',
-			height: '530px',
-			width: '290px',
-			customizeSupport: [ 'margin', 'customClasses' ],
+			height: '550px',
+			width: '325px',
+			customizeSupport: [
+				'width',
+				'margin',
+				'padding',
+				'box-shadow',
+				'border',
+				'border-radius',
+				'blockAlignment',
+				'background-color',
+				'customClasses'
+			],
 			includeFooter: true,
-			customizeCallback: function() {
-				self.openCustomizer();
-			}
+			customizeCallback: true,
+			customizeLeaveCallback: true
 		},
 
 		init: function() {
@@ -71,10 +80,11 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			self._setupPresetClick();
 			self._setupPresetHover();
 			self._setupPanelLeave();
-			self._setupBackgroundColor();
-			self._setupBorderColor();
-			self._setupCustomizeLeave();
+
 			self._setupSliderChange();
+			BG.Panel.$element.on( 'bg-customize-exit', () => BG.Panel.showFooter() );
+			BG.Panel.$element.on( 'box-background-color-change', () => self._saveModuleClasses() );
+			BG.Panel.$element.on( 'box-border-color-change', () => self._saveModuleClasses() );
 
 			self.presetsMarkup = self.getBoxMarkup();
 		},
@@ -87,25 +97,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		_setupSliderChange: function() {
 			BG.Panel.$element.on( 'slidechange', '.box-design .slider', function() {
 				self._saveModuleClasses();
-			} );
-		},
-
-		/**
-		 * Bind Event: Leaving the customization view of a panel.
-		 *
-		 * @since 1.2.7
-		 */
-		_setupCustomizeLeave: function() {
-			var panel = BG.Panel;
-
-			panel.$element.on( 'click', '.box-design .back .panel-button', function( e ) {
-				e.preventDefault();
-
-				panel.$element.find( '.presets' ).show();
-				panel.$element.find( '.box-design > .title' ).show();
-				panel.$element.find( '.box-design .customize' ).hide();
-				panel.scrollToSelected();
-				BG.Panel.showFooter();
 			} );
 		},
 
@@ -187,7 +178,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 				if ( $this.hasClass( 'selected' ) ) {
 					$module = self.findModule( BG.Menu.getTarget( self ) );
-					self.selfResetBorderClasses( $module );
+					BG.CONTROLS.Color.resetBorderClasses( $module );
 					panel.clearSelected();
 					self.removeModuleClasses( $module );
 					self._clearModuleClasses();
@@ -242,42 +233,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		},
 
 		/**
-		 * On customization open.
-		 *
-		 * @since 1.2.7
-		 */
-		openCustomizer: function() {
-			var panel = BG.Panel;
-			self._initSliders();
-			panel.$element.find( '.customize' ).show();
-			panel.$element.find( '.presets' ).hide();
-			panel.$element.find( '.box-design > .title' ).hide();
-			panel.$element.find( '.box-design [name="box-bg-color"]' ).val( self.getTarget().css( 'background-color' ) );
-			self.setupBorderColor();
-			BG.Panel.$element.trigger( 'bg-open-customization' );
-			panel.scrollTo( 0 );
-			BG.Panel.hideFooter();
-		},
-
-		/**
-		 * Hide/Show border control if available on module.
-		 *
-		 * @since 1.2.7
-		 */
-		setupBorderColor: function() {
-			var $target = BG.Menu.getTarget( self ),
-				$control = BG.Panel.$element.find( '.border-color-controls' ),
-				$module = self.findModule( $target );
-
-			if ( $module.is( '[class*="border"]' ) ) {
-				$control.find( '[name="box-border-color"]' ).val( $module.css( 'border-color' ) );
-				$control.show();
-			} else {
-				$control.hide();
-			}
-		},
-
-		/**
 		 * Find the module on the column.
 		 *
 		 * @since 1.2.7
@@ -323,7 +278,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				$module = self.findModule( $target );
 
 			self._clearInlineStyles( $module );
-			self.selfResetBorderClasses( $module );
+			BG.CONTROLS.Color.resetBorderClasses( $module );
 			self.removeModuleClasses( $module );
 
 			if ( $this.parent( '.my-designs' ).length ) {
@@ -351,138 +306,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
 			$module.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
 			BG.Controls.addStyle( $module, 'background-color', '' );
-		},
-
-		/**
-		 * Initialize Sliders.
-		 *
-		 * @since 1.2.7
-		 */
-		_initSliders: function() {
-			self._initPaddingSlider();
-		},
-
-		/**
-		 * Init Background color control.
-		 *
-		 * @since 1.2.7
-		 */
-		_setupBackgroundColor: function() {
-			var panel = BG.Panel;
-
-			panel.$element.on( 'change', '.box-design [name="box-bg-color"]', function() {
-				var $this = $( this ),
-					$target = BG.Menu.$element.targetData[ self.name ],
-					$module = self.findModule( $target ),
-					value = $this.val(),
-					type = $this.attr( 'data-type' );
-
-				$module.removeClass( BG.CONTROLS.Color.textContrastClasses.join( ' ' ) );
-				$module.removeClass( BG.CONTROLS.Color.backgroundColorClasses.join( ' ' ) );
-				BG.Controls.addStyle( $module, 'background-color', '' );
-
-				if ( 'class' === type ) {
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'text-contrast', value ) );
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'background-color', value ) );
-				} else {
-					BG.Controls.addStyle( $module, 'background-color', value );
-				}
-
-				self._saveModuleClasses();
-			} );
-		},
-
-		/**
-		 * Remove border styles.
-		 *
-		 * @since 1.2.7
-		 */
-		selfResetBorderClasses: function( $module ) {
-			$module.removeClass( BG.CONTROLS.Color.borderColorClasses.join( ' ' ) );
-			BG.Controls.addStyle( $module, 'border-color', '' );
-		},
-
-		/**
-		 * Init borderr color control.
-		 *
-		 * @since 1.2.7
-		 */
-		_setupBorderColor: function() {
-			var panel = BG.Panel;
-
-			panel.$element.on( 'change', '.box-design [name="box-border-color"]', function() {
-				var $this = $( this ),
-					$target = BG.Menu.$element.targetData[ self.name ],
-					$module = self.findModule( $target ),
-					value = $this.val(),
-					type = $this.attr( 'data-type' );
-
-				self.selfResetBorderClasses( $module );
-
-				if ( 'class' === type && BG.Controls.hasThemeFeature( 'border-color-classes' ) ) {
-					$module.addClass( BG.CONTROLS.Color.getColorClass( 'border-color', value ) );
-				} else {
-
-					// Using backgrond color for themes without background colors.
-					if ( '' !== value ) {
-						value = $this.prev( 'label' ).css( 'background-color' );
-					}
-
-					BG.Controls.addStyle( $module, 'border-color', value );
-				}
-
-				self._saveModuleClasses();
-			} );
-		},
-
-		/**
-		 * Init padding slider.
-		 *
-		 * @since 1.2.7
-		 */
-		_initPaddingSlider: function() {
-			var horPaddingEm, vertPaddingEm,
-				$target = BG.Menu.getTarget( self ),
-				$module = self.findModule( $target ),
-				fontSize = $module.css( 'font-size' ),
-				defaultPaddingVert = $module.css( 'padding-top' ),
-				defaultPaddingHor = $module.css( 'padding-left' );
-
-			defaultPaddingVert = defaultPaddingVert ? parseInt( defaultPaddingVert ) : 0;
-			defaultPaddingHor = defaultPaddingHor ? parseInt( defaultPaddingHor ) : 0;
-
-			horPaddingEm = BG.Util.convertPxToEm( defaultPaddingHor, fontSize );
-			vertPaddingEm = BG.Util.convertPxToEm( defaultPaddingVert, fontSize );
-
-			BG.Panel.$element.find( '.box-design .padding .slider' ).slider( {
-				min: 0,
-				max: 7,
-				value: horPaddingEm,
-				step: 0.1,
-				range: 'max',
-				slide: function( event, ui ) {
-					$target = BG.Menu.getTarget( self );
-					$module = self.findModule( $target );
-
-					BG.Controls.addStyle( $module, 'padding-left', ui.value + 'em' );
-					BG.Controls.addStyle( $module, 'padding-right', ui.value + 'em' );
-				}
-			} ).siblings( '.value' ).html( horPaddingEm );
-
-			BG.Panel.$element.find( '.box-design .padding-top .slider' ).slider( {
-				min: 0,
-				max: 7,
-				value: vertPaddingEm,
-				step: 0.1,
-				range: 'max',
-				slide: function( event, ui ) {
-					$target = BG.Menu.getTarget( self );
-					$module = self.findModule( $target );
-
-					BG.Controls.addStyle( $module, 'padding-top', ui.value + 'em' );
-					BG.Controls.addStyle( $module, 'padding-bottom', ui.value + 'em' );
-				}
-			} ).siblings( '.value' ).html( vertPaddingEm );
 		},
 
 		/**

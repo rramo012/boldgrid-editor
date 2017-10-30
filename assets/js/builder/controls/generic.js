@@ -2,7 +2,9 @@ window.BOLDGRID = window.BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
-import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/controls';
+import { Padding, Margin, BoxShadow, BorderRadius } from '@boldgrid/controls';
+import { BackgroundColor } from './generic/background-color';
+import { Border } from './generic/border';
 
 ( function( $ ) {
 	'use strict';
@@ -18,31 +20,57 @@ import { Padding, Margin, BoxShadow, BorderRadius, Border } from '@boldgrid/cont
 			'padding': Padding,
 			'box-shadow': BoxShadow,
 			'border-radius': BorderRadius,
-			'border': Border
+			'border': Border,
+			'background-color': BackgroundColor
 		},
 
 		appendBasicBGControl( addOptions, name ) {
-			let $control = new name( {
-				target: BG.Menu.getCurrentTarget()
-			} ).render();
+			let $control,
+				bgControl = new name( {
+					target: BG.Menu.getCurrentTarget(),
+					colorPicker: { width: 215 }
+				} );
+
+
+			bgControl.applyCssRules = ( property ) => {
+				BG.Controls.addStyle( bgControl.$target, property );
+			};
+
+
+			$control = bgControl.render();
 
 			self.appendControl( $control );
 
 			return $control;
 		},
 
+		/**
+		 * Append control to customization area
+		 *
+		 * @since 1.6
+		 * .
+		 * @param  {jQuery} $control Control Element.
+		 */
 		appendControl( $control ) {
 			BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
 		},
 
-		createCustomizeSection: function() {
-			let $append = BG.Panel.$element.find( '.choices' );
+		/**
+		 * Create customizatrion section.
+		 *
+		 * @since 1.6
+		 */
+		createCustomizeSection() {
+			let $container = BG.Panel.$element.find( '.choices' ),
+				$customize = self.defaultCustomize();
 
-			if ( ! $append.length ) {
-				BG.Panel.$element.find( '.panel-body' ).append( self.defaultCustomize() );
+			if ( ! $container.length ) {
+				$container = BG.Panel.$element.find( '.panel-body' );
 			}
 
-			return $append;
+			$container.append( $customize );
+
+			return $customize;
 		},
 
 		/**

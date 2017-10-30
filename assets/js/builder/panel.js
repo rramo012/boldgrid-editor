@@ -415,6 +415,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			self.$element.find( '.title' ).hide();
 			self.scrollTo( 0 );
 			self.hideFooter();
+			BG.Service.customize.navigation.enable();
 		},
 
 		/**
@@ -446,6 +447,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 					self.$element.find( '.presets' ).show();
 					self.$element.find( '.title' ).show();
 					self.$element.find( '.panel-body .customize' ).hide();
+					BG.Service.customize.navigation.disable();
 					self.toggleFooter();
 					self.scrollToSelected();
 					self.$element.trigger( 'bg-customize-exit' );
@@ -621,6 +623,8 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 			$target.addClass( 'bg-control-element' );
 
 			BG.CONTROLS.Color.initColorControls();
+
+			this.$element.trigger( 'open' );
 		}
 
 	};

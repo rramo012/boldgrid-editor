@@ -452,8 +452,7 @@
 
 .color-panel .back,
 .editor-panel .back {
-  padding: 10px;
-  margin-bottom: 0px; }
+  margin: 10px 0 0; }
 
 .color-panel .back .panel-button,
 .editor-panel .back .panel-button {
@@ -698,9 +697,10 @@
   margin-bottom: 0; }
 
 .editor-panel[data-type='box'] .presets {
-  margin: 0 10px;
   padding-bottom: 45px;
-  font-size: 7px; }
+  font-size: 7px;
+  margin: 0 auto;
+  width: 250px; }
 
 .editor-panel[data-type='box'] .presets.my-designs {
   padding-bottom: 15px; }
@@ -1074,13 +1074,10 @@
 .editor-panel[data-type="font"] .panel-title {
   margin-bottom: 0px; }
 
-.editor-panel[data-type="font"] .panel-body {
-  padding: 0; }
-
 .editor-panel[data-type="font"] select.google-fonts {
   width: 185px; }
 
-.editor-panel[data-type="font"] .color-preview {
+.editor-panel[data-type="font"] .family .color-preview {
   position: absolute;
   top: 23px;
   right: 20px; }
@@ -1273,12 +1270,12 @@
   left: -25px;
   font-size: 20px; }
 
-.bgctrl-color-palette .iris-picker {
+.boldgrid-control .iris-picker {
   left: -10px;
   position: relative;
   padding-right: 20px; }
 
-.bgctrl-color-palette .iris-alpha-slider.iris-strip {
+.boldgrid-control .iris-alpha-slider.iris-strip {
   position: absolute;
   right: -4px; }
 
@@ -1325,7 +1322,7 @@
   padding-top: 26px;
   padding-bottom: 26px; }
 
-.customize {
+.editor-panel .panel-body .customize {
   margin-left: 65px; }
 
 .customize-navigation {
@@ -1341,13 +1338,16 @@
 .customize-navigation .item {
   height: 50px;
   text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: none; }
+
+.customize-navigation .item.enabled {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
 
 .customize-navigation .item, .customize-navigation .item:after {
   transition-property: background, border;
@@ -1508,6 +1508,9 @@
 
 .border-type-control ul {
   text-align: left; }
+
+.editor-panel .width-control {
+  padding: 18px 12px; }
 
 /*--------------------------------------------------------------
 # Menu Styles
@@ -2139,7 +2142,7 @@ body.boldgrid-editor-fullscreen {
   padding: 6px 11px 8px;
   position: absolute;
   left: 38px;
-  width: 150px !important;
+  width: 187px !important;
   height: 20px;
   border-radius: 7px;
   background-image: url(../image/web-fonts.png);
