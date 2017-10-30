@@ -15,6 +15,8 @@ import { Border } from './generic/border';
 	BG.CONTROLS.Generic = {
 		defaultCustomize: wp.template( 'boldgrid-editor-default-customize' ),
 
+		basicControlInstances: [],
+
 		bgControls: {
 			'margin': Margin,
 			'padding': Padding,
@@ -37,6 +39,15 @@ import { Border } from './generic/border';
 			'customClasses'
 		],
 
+		/**
+		 * Setup controls that come from the BG controls lib.
+		 *
+		 * @since 1.6
+		 *
+		 * @param  {object} addOptions Options passed from controls.
+		 * @param  {string} name       Name of control.
+		 * @return {jQuery}            Control object.
+		 */
 		appendBasicBGControl( addOptions, name ) {
 			let $control,
 				bgControl = new name( {
@@ -44,14 +55,15 @@ import { Border } from './generic/border';
 					colorPicker: { width: 215 }
 				} );
 
-
 			bgControl.applyCssRules = ( property ) => {
 				BG.Controls.addStyle( bgControl.$target, property );
+				BG.Panel.$element.trigger( BG.Panel.currentControl.name + '-css-change' );
 			};
 
+			// On enter customization, refresh Values.
+			self.basicControlInstances.push( bgControl );
 
 			$control = bgControl.render();
-
 			self.appendControl( $control );
 
 			return $control;
@@ -95,6 +107,8 @@ import { Border } from './generic/border';
 			var customizeOptions = BG.Panel.currentControl.panel.customizeSupport || [],
 				customizeSupportOptions = BG.Panel.currentControl.panel.customizeSupportOptions || false;
 
+			self.basicControlInstances = [];
+
 			// Add customize section if it does not exist.
 			if ( customizeOptions.length && ! BG.Panel.$element.find( '.panel-body .customize' ).length ) {
 				self.createCustomizeSection();
@@ -123,10 +137,22 @@ import { Border } from './generic/border';
 				BG.Tooltip.renderTooltips();
 				$control.attr( 'data-control-name', this );
 			} );
+
+			self.bindControlRefresh();
+		},
+
+		bindControlRefresh() {
+			BG.Panel.$element.on( 'bg-customize-open', () => {
+				_.each( self.basicControlInstances, ( control ) => {
+					if ( control.refreshValues ) {
+						control.refreshValues();
+					}
+				} );
+			} );
 		},
 
 		/**
-		 * Setup Customization.
+		 * Class control that will allow the user to choose between classes.
 		 *
 		 * @since 1.2.7
 		 */

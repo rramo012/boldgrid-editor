@@ -83,8 +83,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 
 			self._setupSliderChange();
 			BG.Panel.$element.on( 'bg-customize-exit', () => BG.Panel.showFooter() );
-			BG.Panel.$element.on( 'box-background-color-change', () => self._saveModuleClasses() );
-			BG.Panel.$element.on( 'box-border-color-change', () => self._saveModuleClasses() );
+			BG.Panel.$element.on( 'box-background-color-change box-border-color-change box-css-change', () => self._saveModuleClasses() );
 
 			self.presetsMarkup = self.getBoxMarkup();
 		},

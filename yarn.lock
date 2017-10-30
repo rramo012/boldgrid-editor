@@ -38,9 +38,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/components@^2.7.4":
-  version "2.7.4"
-  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.4.tgz#9c60ccd26bd9d20a13b89e84ad0e7a2bd13da330"
+"@boldgrid/components@^2.7.5":
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/@boldgrid/components/-/components-2.7.5.tgz#a7e9b57375586b8cc3f9e1f58b3dbccb3c279b32"
   dependencies:
     babel-core "^6.22.1"
     babel-eslint "^7.2.3"

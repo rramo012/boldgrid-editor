@@ -46,6 +46,7 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 						value = $this.val();
 
 					self._applyMargin( $el, value );
+					BG.Panel.$element.trigger( BG.Panel.currentControl.name + '-css-change' );
 				}
 			);
 		},
