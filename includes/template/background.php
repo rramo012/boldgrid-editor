@@ -45,64 +45,66 @@
 			<div class='back section'>
 				<a class='panel-button' href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
 			</div>
-			<div class='image-opacity section hidden'>
-				<h4>Image Opacity (%)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
-			</div>
-			<div class='background-color section color-controls'>
-				<h4>Background Color</h4>
-				<label for="section-background-color" class='color-preview'></label>
-				<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
-			</div>
-			<div class='gradient-color-1 section color-controls'>
-				<h4>Gradient Color 1</h4>
-				<label for="gradient-color-1" class='color-preview'></label>
-				<input type="text" data-type="" name='gradient-color-1' class='color-control' value=''>
-			</div>
-			<div class='gradient-color-2 section color-controls'>
-				<h4>Gradient Color 2</h4>
-				<label for="gradient-color-2" class='color-preview'></label>
-				<input type="text" data-type="" name='gradient-color-2' class='color-control' value=''>
-			</div>
-			<div class='overlay-color section color-controls'>
-				<h4>Overlay Color</h4>
-				<label for="overlay-color" class='color-preview'></label>
-				<input type="text" data-type="" name='overlay-color' class='color-control' value='rgba(255,255,255,.5)'>
-				<div>
-					<a class="default-color" href="#">Reset to Default</a>
+			<div data-control-name="design">
+				<div class='image-opacity section hidden'>
+					<h4>Image Opacity (%)</h4>
+					<div class="slider"></div>
+					<span class='value'></span>
 				</div>
-			</div>
-			<div data-tooltip-id='vertical-position' class='vertical-position section'>
-				<h4>Vertical Position (%)</h4>
-				<div class="slider"></div>
-				<span class='value'></span>
-			</div>
-			<div class='direction section'>
-				<h4>Gradient Direction</h4>
-    			<label> <input type="radio" checked="checked" name="bg-direction" value="to left">Horizontal </label>
-    			<label> <input type="radio" name="bg-direction" value="to bottom">Vertical </label>
-			</div>
-			<div class='size section' data-tooltip-id='background-size'>
-				<h4>Size</h4>
-    			<label>
-					<input type="radio" checked="checked" name="background-size" value="cover">Cover Area
-				</label>
-    			<label>
-	    			<input type="radio" name="background-size" value="tiled">Tiled
-				</label>
-			</div>
-			<div class='scroll-effects section' data-tooltip-id='background-scroll-effects'>
-				<h4>Scroll Effects</h4>
-    			<label>
-					<input type="radio" checked="checked" name="scroll-effects" value="none">None
-				</label>
-    			<label>
-					<input type="radio" name="scroll-effects" value="background-parallax">Parallax
-				</label>
-    			<label>
-	    			<input type="radio" name="scroll-effects" value="background-fixed">Fixed
-				</label>
+				<div class='background-color section color-controls'>
+					<h4>Background Color</h4>
+					<label for="section-background-color" class='color-preview'></label>
+					<input type="text" data-type="" name='section-background-color' class='color-control' value=''>
+				</div>
+				<div class='gradient-color-1 section color-controls'>
+					<h4>Gradient Color 1</h4>
+					<label for="gradient-color-1" class='color-preview'></label>
+					<input type="text" data-type="" name='gradient-color-1' class='color-control' value=''>
+				</div>
+				<div class='gradient-color-2 section color-controls'>
+					<h4>Gradient Color 2</h4>
+					<label for="gradient-color-2" class='color-preview'></label>
+					<input type="text" data-type="" name='gradient-color-2' class='color-control' value=''>
+				</div>
+				<div class='overlay-color section color-controls'>
+					<h4>Overlay Color</h4>
+					<label for="overlay-color" class='color-preview'></label>
+					<input type="text" data-type="" name='overlay-color' class='color-control' value='rgba(255,255,255,.5)'>
+					<div>
+						<a class="default-color" href="#">Reset to Default</a>
+					</div>
+				</div>
+				<div data-tooltip-id='vertical-position' class='vertical-position section'>
+					<h4>Vertical Position (%)</h4>
+					<div class="slider"></div>
+					<span class='value'></span>
+				</div>
+				<div class='direction section'>
+					<h4>Gradient Direction</h4>
+	    			<label> <input type="radio" checked="checked" name="bg-direction" value="to left">Horizontal </label>
+	    			<label> <input type="radio" name="bg-direction" value="to bottom">Vertical </label>
+				</div>
+				<div class='size section' data-tooltip-id='background-size'>
+					<h4>Size</h4>
+	    			<label>
+						<input type="radio" checked="checked" name="background-size" value="cover">Cover Area
+					</label>
+	    			<label>
+		    			<input type="radio" name="background-size" value="tiled">Tiled
+					</label>
+				</div>
+				<div class='scroll-effects section' data-tooltip-id='background-scroll-effects'>
+					<h4>Scroll Effects</h4>
+	    			<label>
+						<input type="radio" checked="checked" name="scroll-effects" value="none">None
+					</label>
+	    			<label>
+						<input type="radio" name="scroll-effects" value="background-parallax">Parallax
+					</label>
+	    			<label>
+		    			<input type="radio" name="scroll-effects" value="background-fixed">Fixed
+					</label>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -24,6 +24,19 @@ import { Border } from './generic/border';
 			'background-color': BackgroundColor
 		},
 
+		allControls: [
+			'background-color',
+			'fontColor',
+			'margin',
+			'padding',
+			'border',
+			'box-shadow',
+			'border-radius',
+			'width',
+			'blockAlignment',
+			'customClasses'
+		],
+
 		appendBasicBGControl( addOptions, name ) {
 			let $control,
 				bgControl = new name( {

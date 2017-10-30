@@ -33,18 +33,25 @@ export class Advanced {
 		BG.Controls.registerControl( this );
 	}
 
+	_setTargetType( targetType ) {
+		BG.Panel.$element.find( '.customize-navigation' ).attr( 'data-element-type', targetType );
+	}
+
 	/**
 	 * Open the palette customization panel.
 	 *
 	 * @since 1.6.0
 	 */
-	openPanel( $target ) {
+	openPanel( $target, targetType ) {
+		this.$target = $target;
 		BG.Menu.$element.targetData[ this.name ] = $target;
 
 		BG.Panel.clear();
 		BG.Panel.showFooter();
 		BG.Panel.open( this );
-		BG.Panel.enterCustomization( this );
+		this._setTargetType( targetType );
+		BG.Panel.enterCustomization();
+		BG.Panel.customizeOpenEvent();
 	}
 }
 

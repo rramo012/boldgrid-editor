@@ -94,17 +94,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		panel: {
 			title: 'Button Design',
-			height: '500px',
-			width: '315px',
+			height: '550px',
+			width: '325px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
 			customizeCallback: true,
-			customizeSupport: [ 'margin', 'customClasses' ],
-			customizeSupportOptions: {
-				margin: {
-					horMin: -30
-				}
-			}
+			customizeSupport: [
+				'margin',
+				'padding',
+				'border',
+				'box-shadow',
+				'customClasses'
+			]
 		},
 
 		/**
@@ -211,6 +212,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					preset = $this.data( 'preset' ),
 					$target = BG.Menu.getTarget( self );
 
+				BG.Controls.addStyle( $target, 'border', '' );
+				BG.Controls.addStyle( $target, 'box-shadow', '' );
 				panel.clearSelected();
 				$this.addClass( 'selected' );
 

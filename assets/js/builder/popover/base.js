@@ -50,7 +50,7 @@ export class Base {
 		// Init actions.
 		this.options.actions.clone.init();
 		this.options.actions.delete.init();
-		new GeneralActions().bind( this.$element );
+		new GeneralActions().bind( this );
 
 		return this;
 	}

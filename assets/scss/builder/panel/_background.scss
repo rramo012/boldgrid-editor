@@ -15,6 +15,10 @@
 		border-radius: 0 0 5px 5px;
 	}
 
+	&.customize-open .customize {
+		padding: 0 10px;
+	}
+
 	.panel-footer {
     	bottom: -59px;
 	}
@@ -206,6 +210,8 @@
 
 		.back {
 			margin-bottom: 0px;
+			margin-bottom: 0px;
+			padding: 8px 0 14px;
 		}
 
 		.overlay-color {

@@ -156,7 +156,7 @@ import { Palette } from './color/palette';
 		 * @since 1.2.7
 		 */
 		_setupOpenCustomization: function() {
-			BG.Panel.$element.on( 'bg-open-customization', function() {
+			BG.Panel.$element.on( 'bg-customize-open', function() {
 				self.initColorControls();
 			} );
 		},

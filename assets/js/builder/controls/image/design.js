@@ -29,12 +29,20 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 
 		panel: {
 			title: 'Image Design',
-			height: '500px',
-			width: '280px',
+			height: '550px',
+			width: '325px',
 			includeFooter: true,
 			customizeCallback: true,
 			customizeLeaveCallback: true,
-			customizeSupport: [ 'margin', 'customClasses' ]
+			customizeSupport: [
+				'background-color',
+				'margin',
+				'border-radius',
+				'padding',
+				'border',
+				'box-shadow',
+				'customClasses'
+			]
 		},
 
 		/**
@@ -132,6 +140,9 @@ BOLDGRID.EDITOR.CONTROLS.IMAGE = BOLDGRID.EDITOR.CONTROLS.IMAGE || {};
 				var $this = $( this ),
 					preset = $this.data( 'preset' ),
 					$target = BOLDGRID.EDITOR.Menu.getTarget( self );
+
+				BG.Controls.addStyle( $target, 'border', '' );
+				BG.Controls.addStyle( $target, 'border-radius', '' );
 
 				// Remove Classes.
 				$target.removeClass( function( index, css ) {

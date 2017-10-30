@@ -1,4 +1,5 @@
 var self,
+	hackSelf,
 	BG = BOLDGRID.EDITOR,
 	$ = jQuery;
 
@@ -8,24 +9,37 @@ var self,
  */
 
 export class GeneralActions {
-	bind( $popover ) {
-		$popover.find( 'li[data-action="add-column"]' ).on( 'click', menuActions.add_column );
-		$popover.find( 'li[data-action="duplicate-column"]' ).on( 'click', menuActions.duplicateColumn );
-		$popover.find( 'li[data-action="clear"]' ).on( 'click', menuActions.clear );
-		$popover.find( 'li[data-action="insert-layout"]' ).on( 'click', menuActions.insert_layout );
-		$popover.find( 'li[data-action="add-row"]' ).on( 'click', menuActions.add_row );
-		$popover.find( 'li[data-action="clone-as-row"]' ).on( 'click', menuActions.unnest_row );
-		$popover.find( 'li[data-action]' ).on( 'click', menuActions.trigger_action_click );
-		$popover.find( 'li[data-action="add-media"]' ).on( 'click', menuActions.add_media );
-		$popover.find( 'li[data-action="align-top"]' ).on( 'click', menuActions.alignTop );
-		$popover.find( 'li[data-action="Box"]' ).on( 'click', menuActions.generalMacro );
-		$popover.find( 'li[data-action="Advanced"]' ).on( 'click', menuActions.generalMacro );
-		$popover.find( 'li[data-action="Font"]' ).on( 'click', menuActions.generalMacro );
-		$popover.find( 'li[data-action="align-default"]' ).on( 'click', menuActions.alignDefault );
-		$popover.find( 'li[data-action="align-bottom"]' ).on( 'click', menuActions.alignBottom );
-		$popover.find( 'li[data-action="align-center"]' ).on( 'click', menuActions.alignCenter );
+	bind( popover ) {
+		this.popover = popover;
+
+		popover.$element.find( 'li[data-action="add-column"]' ).on( 'click', menuActions.add_column );
+		popover.$element.find( 'li[data-action="duplicate-column"]' ).on( 'click', menuActions.duplicateColumn );
+		popover.$element.find( 'li[data-action="clear"]' ).on( 'click', menuActions.clear );
+		popover.$element.find( 'li[data-action="insert-layout"]' ).on( 'click', menuActions.insert_layout );
+		popover.$element.find( 'li[data-action="add-row"]' ).on( 'click', menuActions.add_row );
+		popover.$element.find( 'li[data-action="clone-as-row"]' ).on( 'click', menuActions.unnest_row );
+		popover.$element.find( 'li[data-action]' ).on( 'click', menuActions.trigger_action_click );
+		popover.$element.find( 'li[data-action="add-media"]' ).on( 'click', menuActions.add_media );
+		popover.$element.find( 'li[data-action="align-top"]' ).on( 'click', menuActions.alignTop );
+		popover.$element.find( 'li[data-action="Box"]' ).on( 'click', ( e ) => this.generalMacro( e ) );
+		popover.$element.find( 'li[data-action="Advanced"]' ).on( 'click', ( e ) => this.generalMacro( e ) );
+		popover.$element.find( 'li[data-action="Font"]' ).on( 'click', ( e ) => this.generalMacro( e ) );
+		popover.$element.find( 'li[data-action="align-default"]' ).on( 'click', menuActions.alignDefault );
+		popover.$element.find( 'li[data-action="align-bottom"]' ).on( 'click', menuActions.alignBottom );
+		popover.$element.find( 'li[data-action="align-center"]' ).on( 'click', menuActions.alignCenter );
 
 		self = BG.Controls.$container;
+	}
+
+	generalMacro( e ) {
+		let controlName;
+
+		e.stopPropagation();
+
+		controlName = $( e.target ).data( 'action' );
+
+		BG.Service.popover.selection.$target.click();
+		BG.Controls.get( controlName ).openPanel( BG.Service.popover.selection.$target, this.popover.name );
 	}
 }
 
@@ -74,16 +88,6 @@ let wp_media_modal_action = function( event, $clicked_element ) {
  * in the popover menu.
  */
 let menuActions = {
-	generalMacro: function( e ) {
-		let controlName;
-
-		e.stopPropagation();
-
-		controlName = $( this ).data( 'action' );
-
-		BG.Service.popover.selection.$target.click();
-		BG.Controls.get( controlName ).openPanel( BG.Service.popover.selection.$target );
-	},
 
 	alignTop: function() {
 		alignColumn( $( this ), 'top' );

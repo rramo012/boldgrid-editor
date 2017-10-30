@@ -9,7 +9,7 @@ export class BackgroundColor {
 	 * Render the control.
 	 *
 	 * @since 1.6
-	 * 
+	 *
 	 * @return {jQuery} Control element.
 	 */
 	render() {
@@ -36,8 +36,12 @@ export class BackgroundColor {
 		BG.Panel.$element.find( '.panel-body .customize' ).append( $control );
 
 		BG.Panel.$element.on( 'bg-customize-open', () => {
-			this.$control.find( 'label' )
-				.css( 'background-color', this.$target.css( 'background-color' ) );
+			let currentBackgroundColor = this.$target.css( 'background-color' );
+			if ( BG.Controls.$container.color_is( currentBackgroundColor, 'transparent' ) ) {
+				currentBackgroundColor = '#FFFFFF';
+			}
+
+			this.$control.find( 'label.color-preview' ).css( 'background-color', currentBackgroundColor  );
 		} );
 
 		return $control;

@@ -13,6 +13,11 @@
     	}
     }
 
+	.customize div[data-control-name] {
+		margin-left: 10px;
+	    margin-right: 10px;
+	}
+
     .presets .panel-selection {
 	    width: 48%;
 	    height: auto;
@@ -30,10 +35,6 @@
             top: 2px;
             right: 0px;
        }
-    }
-
-    .back {
-        padding: 10px 10px 0;
     }
 
     .boldgrid-button {

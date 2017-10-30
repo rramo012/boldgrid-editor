@@ -13,6 +13,9 @@ import widthSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/ico
 import blockAlignment from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/block-align.svg';
 import colorSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/color.svg';
 import backgroundColorSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/background-color.svg';
+import rotateSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/rotate.svg';
+import fontSizeSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/font-size.svg';
+import designSvg from 'svg-inline-loader?classPrefix!../../../../assets/image/icons/customize-nav/design.svg';
 
 export class Navigation {
 
@@ -21,10 +24,13 @@ export class Navigation {
 
 		this.data = {
 			controls: [
+				{ name: 'design', icon: designSvg, label: 'Element Design' },
+				{ name: 'fontSize', icon: fontSizeSvg, label: 'Font Size' },
 				{ name: 'fontColor', icon: colorSvg, label: 'Color' },
 				{ name: 'background-color', icon: backgroundColorSvg, label: 'Background Color' },
 				{ name: 'margin', icon: marginSvg, label: 'Margin' },
 				{ name: 'padding', icon: paddingSvg, label: 'Padding' },
+				{ name: 'rotate', icon: rotateSvg, label: 'Rotate' },
 				{ name: 'border', icon: borderSvg, label: 'Border' },
 				{ name: 'border-radius', icon: borderRadius, label: 'Border Radius' },
 				{ name: 'box-shadow', icon: boxShadow, label: 'Box Shadow' },

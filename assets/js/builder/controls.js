@@ -147,7 +147,7 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 		 * @return {object}      Control instance.
 		 */
 		get: function( name ) {
-			return this.indexedControls[ name ];
+			return this.indexedControls[ name ] || this.indexedControls[ name.toLowerCase() ];
 		},
 
 		/**

@@ -27,19 +27,23 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		panel: {
 			title: 'Change Icon',
-			height: '500px',
+			height: '575px',
 			width: '335px',
 			includeFooter: true,
 			customizeLeaveCallback: true,
-			customizeCallback: function() {
-				self.openCustomizer();
-			},
-			customizeSupport: [ 'fontColor', 'fontSize', 'margin', 'rotate', 'customClasses' ],
-			customizeSupportOptions: {
-				margin: {
-					horMin: -30
-				}
-			}
+			customizeCallback: true,
+			customizeSupport: [
+				'fontColor',
+				'fontSize',
+				'margin',
+				'padding',
+				'rotate',
+				'box-shadow',
+				'border',
+				'border-radius',
+				'background-color',
+				'customClasses'
+			]
 		},
 
 		template: wp.template( 'boldgrid-editor-icon' ),
@@ -100,21 +104,6 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		 */
 		collapseSelection: function() {
 			tinymce.activeEditor.execCommand( 'wp_link_cancel' );
-		},
-
-		/**
-		 * Open customization mode.
-		 *
-		 * @since 1.2.7
-		 */
-		openCustomizer: function() {
-			var panel = BG.Panel;
-			self.collapseSelection();
-			panel.$element.find( '.panel-body .customize' ).show();
-			panel.$element.find( '.presets' ).hide();
-			panel.$element.trigger( 'bg-open-customization' );
-			panel.scrollTo( 0 );
-			panel.hideFooter();
 		},
 
 		/**

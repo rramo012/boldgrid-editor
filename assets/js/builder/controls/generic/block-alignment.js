@@ -25,17 +25,15 @@ BOLDGRID.EDITOR.CONTROLS.GENERIC = BOLDGRID.EDITOR.CONTROLS.GENERIC || {};
 		},
 
 		bind: function() {
-			var currentAlignment = 'center',
-				$el = BG.Menu.getCurrentTarget(),
+			var $el = BG.Menu.getCurrentTarget(),
+				currentAlignment = $el.is( 'hr' ) ? 'center' : 'left',
 				$inputs = BG.Panel.$element.find( '.section.horizontal-block-alignment input' ),
 				marginLeft = parseInt( $el.css( 'margin-left' ) ),
 				marginRight = parseInt( $el.css( 'margin-right' ) );
 
-			if ( 0 === marginLeft && 0 === marginRight ) {
-				currentAlignment = $el.is( 'hr' ) ? 'center' : 'left';
-			} else if ( 0 === marginLeft ) {
+			if ( 0 === marginLeft && 0 !== marginRight ) {
 				currentAlignment = 'left';
-			} else if ( 0 === marginRight ) {
+			} else if ( 0 === marginRight && 0 !== marginLeft ) {
 				currentAlignment = 'right';
 			}
 

@@ -34,9 +34,18 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 		panel: {
 			title: 'Section Background',
 			height: '600px',
-			width: '300px',
+			width: '325px',
 			scrollTarget: '.presets',
-			customizeSupport: [ 'customClasses' ],
+			customizeSupport: [
+				'margin',
+				'padding',
+				'border',
+				'width',
+				'box-shadow',
+				'border-radius',
+				'blockAlignment',
+				'customClasses'
+			],
 			sizeOffset: -230
 		},
 
@@ -366,6 +375,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 				panel.initScroll();
 				self.preselectBackground();
 				panel.scrollToSelected();
+				BG.Service.customize.navigation.disable();
 			} );
 		},
 
@@ -609,7 +619,8 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			BG.Panel.$element.find( '.preset-wrapper' ).attr( 'data-type', BG.Panel.$element.find( '.current-selection' ).attr( 'data-type' ) );
 			self._initSliders();
 			self.selectDefaults();
-			BG.Panel.$element.trigger( 'bg-open-customization' );
+			BG.Panel.enterCustomization();
+			BG.Panel.customizeOpenEvent();
 
 			BG.Panel.createScrollbar( '.customize', {
 				'height': self.panel.height

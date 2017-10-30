@@ -401,12 +401,16 @@ BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 			self.$element.find( '.panel-footer .customize .panel-button' ).on( 'click', function( e ) {
 				e.preventDefault();
-				self.$element.trigger( 'bg-customize-open' );
-				self.$element.addClass( 'customize-open' );
+				self.customizeOpenEvent();
 				if ( self.$element.attr( 'data-type' ) === control.name && true !== self.currentControl.panel.customizeCallback ) {
 					control.panel.customizeCallback();
 				}
 			} );
+		},
+
+		customizeOpenEvent() {
+			self.$element.trigger( 'bg-customize-open' );
+			self.$element.addClass( 'customize-open' );
 		},
 
 		enterCustomization() {
