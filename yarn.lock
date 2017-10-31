@@ -75,9 +75,9 @@
     url-loader "^0.5.8"
     webpack "^3.6.0"
 
-"@boldgrid/controls@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.8.2.tgz#a857298ae15dd1f6e52e5f3b55d25325ea25d564"
+"@boldgrid/controls@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@boldgrid/controls/-/controls-0.8.3.tgz#17d48a9094a80ef2640e5151a11565bbb1a5f669"
   dependencies:
     "@boldgrid/components" "^2.3.0"
     "@material/switch" "^0.1.15"
@@ -356,9 +356,9 @@
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@shopify/draggable/-/draggable-1.0.0-beta.2.tgz#181ca6905a33f09289229adf3aa14d5548a89627"
 
-"Buttons@https://github.com/alexwolfe/Buttons":
+"Buttons@git+https://github.com/alexwolfe/Buttons.git":
   version "2.0.0"
-  resolved "https://github.com/alexwolfe/Buttons#0a91b65bc9e3a8bbbefbe1af20047dabed0d742e"
+  resolved "git+https://github.com/alexwolfe/Buttons.git#0a91b65bc9e3a8bbbefbe1af20047dabed0d742e"
   dependencies:
     grunt "^0.4.5"
     grunt-saucelabs "^8.3.2"

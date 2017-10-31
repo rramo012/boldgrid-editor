@@ -59,7 +59,7 @@
 	},
 	"dependencies": {
 		"@boldgrid/components": "^2.7.5",
-		"@boldgrid/controls": "^0.8.2",
+		"@boldgrid/controls": "^0.8.3",
 		"@shopify/draggable": "^1.0.0-beta.2",
 		"animate.css": "^3.5.2",
 		"babel-eslint": "^7.2.3",
