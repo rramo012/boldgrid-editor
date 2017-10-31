@@ -41,7 +41,7 @@
 .boldgrid-editor-template .entry-header .entry-title,
 .gridblock-template-default .entry-header .entry-title,
 .page-template-templatepagefullwidth-php.page-template-fullwidth .entry-header .entry-title {
-  padding: 10px 0; }
+  padding: 10px 5px; }
 
 .boldgrid-editor-template header:not(.entry-header),
 .gridblock-template-default header:not(.entry-header),

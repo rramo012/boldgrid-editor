@@ -140,11 +140,11 @@ export class Base {
 			this.debouncedUpdate();
 		} );
 
-		BG.Controls.$container.on( 'mouseenter.draggable', this.getSelectorString(), event => {
+		BG.Controls.$container.$body.on( 'mouseenter.draggable', this.getSelectorString(), event => {
 			this.debouncedUpdate( event );
 		} );
 
-		BG.Controls.$container.on( 'mouseleave.draggable', this.getSelectorString(), event => {
+		BG.Controls.$container.$body.on( 'mouseleave.draggable', this.getSelectorString(), event => {
 			this.debouncedHide( event );
 		} );
 	}
@@ -200,8 +200,8 @@ export class Base {
 	 * @since 1.6
 	 */
 	_bindEvents() {
-		this._universalEvents();
 		this.bindSelectorEvents();
+		this._universalEvents();
 	}
 
 	/**
