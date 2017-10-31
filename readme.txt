@@ -24,7 +24,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-= 1.5.3 In progress =
+= 1.5.3 =
 * New Feature:                  Advanced controls and Custom Design UI updates.
 * Bug Fix:                      Image crop issue with http vs https.
 
