@@ -88,20 +88,6 @@ iframe[src^="https://maps.google.com"] {
 	outline-color: transparent !important;
 }
 
-.boldgrid-section.boldgrid-section-hover {
-	border-color: grey;
-}
-
-.boldgrid-section,
-.editing-as-row .boldgrid-section-hover,
-.boldgrid-is-typing .boldgrid-section-hover,
-.drag-progress .boldgrid-section.boldgrid-section-hover,
-.no-select-imhwpb .boldgrid-section.boldgrid-section-hover,
-.no-select-imhwpb .boldgrid-section.content-border-imhwpb:hover,
-.boldgrid-section {
-	border: 1px solid transparent;
-}
-
 .editing-as-row .current-edit-as-row .receptor-containers-imhwpb,
 .receptor-containers-imhwpb {
     outline:1px solid #a7a7a7;

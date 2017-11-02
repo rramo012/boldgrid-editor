@@ -7,6 +7,7 @@ const MinifyPlugin = require( 'babel-minify-webpack-plugin' );
 
 const srcDir = path.resolve( __dirname, '../..' );
 const distDir = path.resolve( __dirname, '../..' );
+const nodeModules = path.resolve( __dirname, '../../node_modules' );
 const fontsDir = distDir + '/assets/fonts/';
 const jsonDir = distDir + '/assets/json/';
 const cssDir = distDir + '/assets/css/';
@@ -67,7 +68,7 @@ module.exports = {
 						{
 							loader: 'sass-loader',
 							options: {
-								includePaths: [ 'node_modules' ]
+								includePaths: [ nodeModules ]
 							}
 						},
 						{
