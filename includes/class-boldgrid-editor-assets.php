@@ -311,10 +311,6 @@ class Boldgrid_Editor_Assets {
 			plugins_url( '/assets/js/camanjs/caman.full.min.js', $plugin_file ), array(),
 		BOLDGRID_EDITOR_VERSION, true );
 
-		wp_enqueue_style( 'boldgrid-editor-jquery-ui',
-			'//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css',
-		false, BOLDGRID_EDITOR_VERSION, false );
-
 		wp_enqueue_style( 'boldgrid-editor-fonts',
 			'https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600',
 		false, BOLDGRID_EDITOR_VERSION, false );
@@ -343,7 +339,7 @@ class Boldgrid_Editor_Assets {
 
 		$script_url = plugins_url( '/assets/js/editor.min.js', $plugin_file );
 		if ( defined( 'BGEDITOR_SCRIPT_DEBUG' ) && BGEDITOR_SCRIPT_DEBUG ) {
-			$script_url = 'http://localhost:4000/bundle.js';
+			$script_url = $this->configs['development_server'] . '/bundle.js';
 		}
 
 		wp_register_script( 'boldgrid-editor-drag',
@@ -414,9 +410,6 @@ class Boldgrid_Editor_Assets {
 			wp_enqueue_style( 'boldgrid-buttons',
 			plugins_url( '/assets/css/buttons.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 		}
-
-		wp_enqueue_style( 'font-family-styles',
-		plugins_url( '/assets/css/font-family-controls.min.css', $plugin_file ), array(), BOLDGRID_EDITOR_VERSION );
 
 		wp_enqueue_style( 'editor-css-imhwpb' );
 

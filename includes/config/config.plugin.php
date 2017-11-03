@@ -13,6 +13,7 @@ return array (
 		'gridblock_types'    => '/v1/gridblocks/types'
 	),
 	'asset_server'          => 'https://wp-assets.boldgrid.com',
+	'development_server'    => 'http://localhost:4000',
 	'plugin_name'           => 'boldgrid-editor',
 	'plugin_key_code'       => 'editor',
 	'urls' => array(

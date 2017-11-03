@@ -130,10 +130,6 @@ module.exports = {
 			{
 				from: 'node_modules/@boldgrid/controls/dist/scss/color-palette-scss',
 				to: path.resolve( scssDir, 'color-palette-scss' )
-			},
-			{
-				from: require.resolve( 'boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css' ),
-				to: cssDir
 			}
 		] ),
 

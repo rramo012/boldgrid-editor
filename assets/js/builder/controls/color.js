@@ -101,7 +101,7 @@ import { Palette } from './color/palette';
 		 * @since 1.6
 		 */
 		importPaletteSettings( settings ) {
-			if ( settings ) {
+			if ( ! BoldgridEditor.is_boldgrid_theme && settings ) {
 				BoldgridEditor.colors = {
 					defaults: settings.palettes[0].colors,
 					neutral: settings.palettes[0]['neutral-color']

@@ -63,6 +63,10 @@
     display: none;
     width: 0 !important;
 
+	&.ui-front {
+		z-index: 100102;
+	}
+
     ul {
         z-index: 100102;
         position: relative;
