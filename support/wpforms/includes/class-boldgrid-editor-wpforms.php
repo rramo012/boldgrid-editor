@@ -232,8 +232,9 @@ class Boldgrid_Editor_Wpforms {
 	 */
 	public function remove_media_button( $display ) {
 		$screen = get_current_screen();
+		$config =  Boldgrid_Editor_Service::get( 'config' );
 
-		if ( 'page' === $screen->post_type || 'post' === $screen->post_type ) {
+		if ( in_array( $screen->post_type, $config[ 'allowed_post_types' ] ) ) {
 			return false;
 		}
 
