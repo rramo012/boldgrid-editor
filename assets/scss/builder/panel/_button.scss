@@ -1,57 +1,57 @@
 /*************** Button Panel ********************/
-.editor-panel[data-type="button"] {
+.editor-panel[data-type='button'] {
 	background-color: #eee;
 
-    .panel-body {
+	.panel-body {
 		background-color: #eee;
-    	padding: 0;
+		padding: 0;
 
-    	.theme-designs {
-    	    background-color: transparent !important;
-    	    padding-left: 2px;
-            padding-right: 12px;
-    	}
-    }
+		.theme-designs {
+			background-color: transparent !important;
+			padding-left: 2px;
+			padding-right: 12px;
+		}
+	}
 
 	.customize div[data-control-name] {
 		margin-left: 10px;
-	    margin-right: 10px;
+		margin-right: 10px;
 	}
 
-    .presets .panel-selection {
-	    width: 48%;
-	    height: auto;
-	    background-color: #eee;
-	    padding: 10px 0;
-	    margin: 0;
-    }
+	.presets .panel-selection {
+		width: 48%;
+		height: auto;
+		background-color: #eee;
+		padding: 10px 0;
+		margin: 0;
+	}
 
-    .presets .selected {
-       position:relative;
+	.presets .selected {
+		position: relative;
 
-       @include selected-preset();
+		@include selected-preset();
 
-       &:after {
-            top: 2px;
-            right: 0px;
-       }
-    }
+		&:after {
+			top: 2px;
+			right: 0px;
+		}
+	}
 
-    .boldgrid-button {
-        text-transform: uppercase;
-    }
+	.boldgrid-button {
+		text-transform: uppercase;
+	}
 
-    .presets {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+	.presets {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
 
-    .section.class-control {
+	.section.class-control {
 		padding-top: 0;
 		padding-bottom: 8px;
-    }
+	}
 
-    [data-preset*="btn-block"] {
-        width: 100% !important;
-    }
+	[data-preset*='btn-block'] {
+		width: 100% !important;
+	}
 }
