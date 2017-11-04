@@ -21,11 +21,11 @@
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
 	<div class="gridblocks">
 		<div class="my-gridblocks-404 saved">
-			We didn't find any Blocks on your pages. Once you add any Blocks to a post or page, it
+			We didn't find any Blocks on your pages. Once you add Blocks to a post or page, it
 			will show up here for your convenience.
 		</div>
 		<div class="my-gridblocks-404 library">
-			You haven't added any Blocks to your library. When you save any Blocks they will appear
+			You haven't added any Blocks to your library. When you save Blocks they will appear
 			here for your convenience.
 		</div>
 	</div>

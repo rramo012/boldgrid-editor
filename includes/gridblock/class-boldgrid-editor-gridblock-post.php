@@ -62,6 +62,7 @@ class Boldgrid_Editor_Gridblock_Post {
 			'description'         => __( 'My Blocks', 'boldgrid-editor' ),
 			'labels'              => $this->get_type_labels(),
 			'menu_icon'           => 'dashicons-edit',
+			'rewrite'             => array( 'slug' => 'bg-block' ),
 			'supports'            => array(
 				'title',
 				'editor',
@@ -95,7 +96,7 @@ class Boldgrid_Editor_Gridblock_Post {
 			'bg_block_type',
 			'bg_block',
 			array(
-				'rewrite' => array( 'slug' => 'bg-blocks' ),
+				'rewrite' => array( 'slug' => 'bg-block-types' ),
 				'label' => __( 'Block Types' ),
 				'show_admin_column' => true,
 				'show_in_menu' => false,

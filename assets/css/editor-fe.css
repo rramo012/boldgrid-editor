@@ -1,4 +1,4 @@
-.gridblock-template-default.single-gridblock article,
+.bg_block-template-default.single-bg_block article,
 .bg-custom-template article,
 .page-template-templatepagefullwidth-php.page-template-fullwidth article,
 .page-template-templatepageleft-sidebar-php.page-template-left-sidebar article,
@@ -27,24 +27,24 @@
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5); }
 
 .boldgrid-editor-template #content.site-content,
-.gridblock-template-default #content.site-content,
+.bg_block-template-default #content.site-content,
 .page-template-templatepagefullwidth-php.page-template-fullwidth #content.site-content {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0; }
 
 .boldgrid-editor-template .site-footer,
-.gridblock-template-default .site-footer,
+.bg_block-template-default .site-footer,
 .page-template-templatepagefullwidth-php.page-template-fullwidth .site-footer {
   margin-top: 0; }
 
 .boldgrid-editor-template .entry-header .entry-title,
-.gridblock-template-default .entry-header .entry-title,
+.bg_block-template-default .entry-header .entry-title,
 .page-template-templatepagefullwidth-php.page-template-fullwidth .entry-header .entry-title {
   padding: 10px 5px; }
 
 .boldgrid-editor-template header:not(.entry-header),
-.gridblock-template-default header:not(.entry-header),
+.bg_block-template-default header:not(.entry-header),
 .page-template-templatepagefullwidth-php.page-template-fullwidth header:not(.entry-header) {
   margin-bottom: 0; }
 

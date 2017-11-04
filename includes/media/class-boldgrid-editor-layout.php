@@ -52,7 +52,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	public static function parse_gridblocks( $content, $post = null ) {
 		global $shortcode_tags;
 
-		if ( 'gridblock' === $post->post_type ) {
+		if ( 'bg_block' === $post->post_type ) {
 			return array( self::format_gridblock_data( $post, $content ) );
 		}
 
@@ -93,7 +93,7 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 
 		return array (
 			'html' => $shortcode_translated_html,
-			'type' => 'gridblock' === $post->post_type ? 'library' : 'saved',
+			'type' => 'bg_block' === $post->post_type ? 'library' : 'saved',
 			'is_post' => ! empty( $post ) ? 'post' === $post->post_type : false,
 			'str_length' => strlen( $shortcode_translated_html )
 		);
@@ -256,10 +256,9 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 
 		// Find Pages.
 		$args = array (
-			'post__not_in' => self::get_excluded_posts(),
+			'post__not_in' =>  self::get_excluded_posts(),
 			'post_type' => array (
 				'page',
-				'gridblock',
 				'post'
 			),
 			'post_status' => $status,
@@ -267,8 +266,22 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 		);
 
 		$results = new WP_Query( $args );
+		$standard_post_types = ! empty( $results->posts ) ? $results->posts : array();
 
-		return ! empty( $results->posts ) ? $results->posts : array();
+		// Find GridBlocks.
+		$args = array (
+			'post_type' => array (
+				'bg_block'
+			),
+			'post_status' => $status,
+			'posts_per_page' => -1
+		);
+
+		$results = new WP_Query( $args );
+		$block_post_type = ! empty( $results->posts ) ? $results->posts : array();
+		$all_posts = array_merge( $block_post_type, $standard_post_types );
+
+		return $all_posts;
 	}
 
 	/**
