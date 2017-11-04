@@ -112,7 +112,7 @@ class Boldgrid_Editor_Preview {
 	public function create_post() {
 		if ( ! $this->preview_page_id ) {
 			$page_id = wp_insert_post( array(
-				'post_title' => 'GridBlock Preview Page',
+				'post_title' => 'Block Preview Page',
 				'post_type'=> 'page',
 				'post_status' => 'draft',
 			) );

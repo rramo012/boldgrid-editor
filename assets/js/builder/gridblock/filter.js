@@ -13,7 +13,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 		removedGridlocks: {},
 
 		/**
-		 * Setup the GridBlock configuration.
+		 * Setup the Block configuration.
 		 *
 		 * @since 1.4
 		 */

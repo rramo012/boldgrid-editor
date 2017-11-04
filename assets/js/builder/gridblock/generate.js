@@ -22,7 +22,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			licenseTypes: [],
 
 			/**
-			 * Get a set of GridBlocks.
+			 * Get a set of Blocks.
 			 *
 			 * @since 1.5
 			 *
@@ -118,7 +118,7 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			 *
 			 * @since 1.5
 			 *
-			 * @param {array} gridblocks Collection of GridBlock configs.
+			 * @param {array} gridblocks Collection of Block configs.
 			 */
 			addToConfig: function( gridblocks ) {
 				_.each( gridblocks, function( gridblockData, index ) {

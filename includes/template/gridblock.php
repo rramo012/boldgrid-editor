@@ -8,10 +8,10 @@
 	</div>
 	<div class="loading-remote">
 		<div class="enabled bg-editor-loading absolute"></div>
-		<span>Loading GridBlocks</span>
+		<span>Loading Blocks</span>
 	</div>
 	<span class="boldgrid-gridblock-categories">
-		<label>Gridblock Filters</label>
+		<label>Block Filters</label>
 		<select></select>
 	</span>
 	<a href="#" title="Close" class="bg-close-zoom-view">
@@ -21,11 +21,11 @@
 <div class="boldgrid-zoomout-section zoom-gridblocks-section">
 	<div class="gridblocks">
 		<div class="my-gridblocks-404 saved">
-			We didn't find any GridBlocks on your pages. Once you add any GridBlocks to a post or page, it
+			We didn't find any Blocks on your pages. Once you add any Blocks to a post or page, it
 			will show up here for your convenience.
 		</div>
 		<div class="my-gridblocks-404 library">
-			You haven't added any GridBlocks to your library. When you save any GridBlocks they will appear
+			You haven't added any Blocks to your library. When you save any Blocks they will appear
 			here for your convenience.
 		</div>
 	</div>
@@ -40,22 +40,22 @@
 	<div class="add-gridblock"></div>
 	<div class="premium-label">
 		<img class="boldgrid-seal" src="{{BoldgridEditor.plugin_url + '/assets/image/bg-seal.png'}}">
-		Premium GridBlock
+		Premium Block
 	</div>
 	<div class="action-items">
-		<i class="fa fa-heart-o save" aria-hidden="true" title="Add to GridBlock library"></i>
+		<i class="fa fa-heart-o save" aria-hidden="true" title="Add to Block library"></i>
 	</div>
 </div>
 </script>
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock-error">
 <div class="gridblock-error">
-	<h3>Error loading GridBlocks. Please try again later.</h3>
+	<h3>Error loading Blocks. Please try again later.</h3>
 </div>
 </script>
 
 <script type="text/html" id="tmpl-boldgrid-editor-gridblock-loading">
 	<div class="loading-gridblock">
-		<div>Installing Gridblock</div>
+		<div>Installing Block</div>
 		<div class="enabled bg-editor-loading absolute"></div></div>
 </script>
 

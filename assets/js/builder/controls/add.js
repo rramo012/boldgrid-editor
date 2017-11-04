@@ -37,7 +37,7 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 					class: 'action font-awesome add-icon'
 				},
 				{
-					name: 'GridBlock',
+					name: 'Block',
 					class: 'action add-gridblock'
 				},
 				{

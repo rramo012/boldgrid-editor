@@ -129,11 +129,11 @@
             },
             {
                 "slug": "library",
-                "title": "GridBlock Library"
+                "title": "Block Library"
             },
             {
                 "slug": "saved",
-                "title": "Used Gridblocks"
+                "title": "Used Blocks"
             }
         ]
     },

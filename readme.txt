@@ -44,26 +44,26 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Update:                       Bump version.
 
 = 1.4.9 =
-* Bug Fix:                      Fix notices thrown when installing GridBlocks.
+* Bug Fix:                      Fix notices thrown when installing Blocks.
 
 = 1.4.8 =
 * Bug Fix:                      Remove image content type checking.
 * Update:                       Added filter for allowed_post_types for loading editor.
-* Update:                       Improving timing of GridBlock loading message.
-* Update:                       Improving performance of GridBlocks on sites with a lot of content.
+* Update:                       Improving timing of Block loading message.
+* Update:                       Improving performance of Blocks on sites with a lot of content.
 * Update:                       Updating background image urls.
 * Update:                       Updating Font Awesome icon selections.
 * Update:                       Adding alternative image request methods.
 * Update:       JIRA WPB-3373   Use latest version of shared assets.
 * Bug fix:      JIRA WPB-3348   Fixing an error on attachment page.
-* Bug fix:      JIRA WPB-3383   Adding filter for posts to be excluded from My GridBlocks.
+* Bug fix:      JIRA WPB-3383   Adding filter for posts to be excluded from My Blocks.
 
 = 1.4.7 =
-* Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic GridBlocks.
-* New Feature:					Delete GridBlock button added to GridBlock UI.
+* Bug fix:		JIRA WPB-3303	Misc. bug fixes for  Dynamic Blocks.
+* New Feature:					Delete Block button added to Block UI.
 
 = 1.4.6 =
-* New Feature:	JIRA WPB-3246	Integrating new Dynamic GridBlocks.
+* New Feature:	JIRA WPB-3246	Integrating new Dynamic Blocks.
 * Update:		JIRA WPB-3292	Updated plugin URI.
 
 = 1.4.5 =
@@ -97,8 +97,8 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug fix:		JIRA WPB-2892	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
 * Bug fix:		JIRA WPB-2883	Error thrown while resizing.
 * Bug fix:		JIRA WPB-2881	Column Drag outline is the wrong color.
-* Bug fix:		JIRA WPB-2880	Gridblocks not vertically centered.
-* Update:		JIRA WPB-2902	Prioritize Post Gridblocks when viewing posts.
+* Bug fix:		JIRA WPB-2880	Blocks not vertically centered.
+* Update:		JIRA WPB-2902	Prioritize Post Blocks when viewing posts.
 
 = 1.3.3 =
 * Update:		JIRA WPB-2834	Add Underline to tinymce toolbar.
@@ -110,14 +110,14 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug fix:		JIRA WPB-2727	Replace more than one image bug.
 
 = 1.3.2 =
-* Bug fix:		JIRA WPB-2803	Fixing issue adding GridBlocks.
-* New feature:	JIRA WPB-2803	Added a new UI for Gridblocks.
+* Bug fix:		JIRA WPB-2803	Fixing issue adding Blocks.
+* New feature:	JIRA WPB-2803	Added a new UI for Blocks.
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 
 = 1.3.1 =
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
 * Update:		JIRA WPB-2436	Crop Image Screen - update source image options.
-* Bug fix:      JIRA WPB-2435   Prevent duplicate 'Add GridBlock' buttons.
+* Bug fix:      JIRA WPB-2435   Prevent duplicate 'Add Block' buttons.
 
 = 1.3 =
 * Update:		JIRA WPB-2541	Added neutral colors to section background colors.
@@ -221,7 +221,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.2.1 =
 * Bug fix:		JIRA WPB-2146	Issue with pressing enter on an empty .row > .column.
-* Bug fix:		JIRA WPB-2149	Fixed issue with gridblocks getting images updated.
+* Bug fix:		JIRA WPB-2149	Fixed issue with Blocks getting images updated.
 
 = 1.2 =
 * Bug fix:		JIRA WPB-2126	Fixing issue with column popover size when zooming out.
@@ -233,13 +233,13 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Bug fix:		JIRA WPB-2086	Adding a new row was not allowing you to type in it.
 
 = 1.1.4 =
-* Bug fix:		JIRA WPB-1901	Fixed issue with non BG themes and gridblocks modal.
+* Bug fix:		JIRA WPB-1901	Fixed issue with non BG themes and Blocks modal.
 * New Feature:	JIRA WPB-1912	Adding font family and font size controls to customizer widgets.
 
 = 1.1.3 =
 * Update:		JIRA WPB-1877	Changing borders to outline for draggable objects.
 * Update:		JIRA WPB-1884	Passed WordPress 4.5.1 testing.
-* Bug fix:		JIRA WPB-1894	Javascript error in console after loading GridBlocks.
+* Bug fix:		JIRA WPB-1894	Javascript error in console after loading Blocks.
 * Bug fix:		JIRA WPB-1895	JS Error when going to 'Google Map' tab.
 
 = 1.1.2 =
@@ -274,7 +274,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * Rework:		JIRA WPB-1616	Updated require and include statements for standards.
 
 = 1.0.6 =
-* New feature:	JIRA WPB-1520	Serve static Gridblocks via API
+* New feature:	JIRA WPB-1520	Serve static Blocks via API
 
 = 1.0.5.1 =
 * Bug fix:		JIRA WPB-1553	Fixed PHP version check condition (<5.3).
@@ -288,7 +288,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 * New feature:	JIRA WPB-1332	Updating the loading graphic
 * Misc:			JIRA WPB-1468	Updated readme.txt for Tested up to: 4.4.1
 * New feature:	JIRA WPB-1522   Standardize Drag Menu order
-* New feature:	JIRA WPB-1557	Add wp-image-## class to images when adding gridblocks.
+* New feature:	JIRA WPB-1557	Add wp-image-## class to images when adding Blocks.
 
 = 1.0.4 =
 * Bug fix:		JIRA WPB-711	Fixing compatibility issues with IE 11, 12 and 13

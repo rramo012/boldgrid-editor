@@ -9,7 +9,7 @@ export class Save {
 		this.name = 'Library';
 
 		this.panel = {
-			title: 'GridBlock Library',
+			title: 'Block Library',
 			icon: 'gridblock-grid-icon',
 			height: '430px',
 			width: '600px',

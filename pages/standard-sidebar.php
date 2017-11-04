@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 	<div class='boldgrid-loading-graphic'>
 		<img src="<?php echo plugins_url( '/assets/image/bg-logo.svg',$path_configs['plugin_filename'] ) ?>"
 			alt="BoldGrid logo">
-		<h4 class='loading-help-text'><?php echo __( 'Loading Gridblocks', 'boldgrid-editor' ); ?></h4>
+		<h4 class='loading-help-text'><?php echo __( 'Loading Blocks', 'boldgrid-editor' ); ?></h4>
 		<div class='loading-bar-wrap'>
 			<div class="loading-bar"></div>
 		</div>

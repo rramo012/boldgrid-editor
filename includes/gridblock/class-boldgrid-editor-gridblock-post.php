@@ -33,17 +33,17 @@ class Boldgrid_Editor_Gridblock_Post {
 	 */
 	protected function get_type_labels() {
 		return array(
-			'name'                => _x( 'GridBlock Library', 'Post Type General Name', 'boldgrid-editor' ),
-			'singular_name'       => _x( 'GridBlock', 'Post Type Singular Name', 'boldgrid-editor' ),
+			'name'                => _x( 'Block Library', 'Post Type General Name', 'boldgrid-editor' ),
+			'singular_name'       => _x( 'Block', 'Post Type Singular Name', 'boldgrid-editor' ),
 			'menu_name'           => __( 'BoldGrid Editor', 'boldgrid-editor' ),
-			'parent_item_colon'   => __( 'Parent GridBlock', 'boldgrid-editor' ),
-			'all_items'           => __( 'GridBlock Library', 'boldgrid-editor' ),
-			'view_item'           => __( 'View GridBlock', 'boldgrid-editor' ),
-			'add_new_item'        => __( 'Add New GridBlock', 'boldgrid-editor' ),
-			'add_new'             => __( 'Add New GridBlock', 'boldgrid-editor' ),
-			'edit_item'           => __( 'Edit GridBlock', 'boldgrid-editor' ),
-			'update_item'         => __( 'Update GridBlock', 'boldgrid-editor' ),
-			'search_items'        => __( 'Search GridBlock', 'boldgrid-editor' ),
+			'parent_item_colon'   => __( 'Parent Block', 'boldgrid-editor' ),
+			'all_items'           => __( 'Block Library', 'boldgrid-editor' ),
+			'view_item'           => __( 'View Block', 'boldgrid-editor' ),
+			'add_new_item'        => __( 'Add New Block', 'boldgrid-editor' ),
+			'add_new'             => __( 'Add New Block', 'boldgrid-editor' ),
+			'edit_item'           => __( 'Edit Block', 'boldgrid-editor' ),
+			'update_item'         => __( 'Update Block', 'boldgrid-editor' ),
+			'search_items'        => __( 'Search Block', 'boldgrid-editor' ),
 			'not_found'           => __( 'Not Found', 'boldgrid-editor' ),
 			'not_found_in_trash'  => __( 'Not found in Trash', 'boldgrid-editor' ),
 		);
@@ -58,8 +58,8 @@ class Boldgrid_Editor_Gridblock_Post {
 	 */
 	protected function get_type_args() {
 		return array(
-			'label'               => __( 'gridblock', 'boldgrid-editor' ),
-			'description'         => __( 'My GridBlocks', 'boldgrid-editor' ),
+			'label'               => __( 'bg-block', 'boldgrid-editor' ),
+			'description'         => __( 'My Blocks', 'boldgrid-editor' ),
 			'labels'              => $this->get_type_labels(),
 			'menu_icon'           => 'dashicons-edit',
 			'supports'            => array(
@@ -69,7 +69,7 @@ class Boldgrid_Editor_Gridblock_Post {
 				'revisions',
 				'custom-fields'
 			),
-			'taxonomies'          => array( 'gridblock_type' ),
+			'taxonomies'          => array( 'bg_block_type' ),
 			'hierarchical'        => false,
 			'show_ui'             => true,
 			// 'show_in_menu'        => false,
@@ -92,20 +92,20 @@ class Boldgrid_Editor_Gridblock_Post {
 
 		// create a new taxonomy
 		register_taxonomy(
-			'gridblock_type',
-			'gridblock',
+			'bg_block_type',
+			'bg_block',
 			array(
-				'rewrite' => array( 'slug' => 'gridblocks' ),
-				'label' => __( 'GridBlock Types' ),
+				'rewrite' => array( 'slug' => 'bg-blocks' ),
+				'label' => __( 'Block Types' ),
 				'show_admin_column' => true,
 				'show_in_menu' => false,
 				'show_in_nav_menus' => false,
-				'description' => 'GridBlock Types'
+				'description' => 'Block Types'
 			)
 		);
 
 		// Registering your Custom Post Type
-		register_post_type( 'gridblock', $args );
+		register_post_type( 'bg_block', $args );
 
 		// Flush rewrite rules if we haven't done so already.
 		if ( ! Boldgrid_Editor_Option::get( 'has_flushed_rewrite' ) ) {
@@ -124,7 +124,7 @@ class Boldgrid_Editor_Gridblock_Post {
 	public function set_template( $template ) {
 		global $post;
 
-		if ( $post && 'gridblock' === $post->post_type ) {
+		if ( $post && 'bg_block' === $post->post_type ) {
 			$templater = Boldgrid_Editor_Service::get( 'templater' );
 			$template = $templater->get_full_path( 'fullwidth' );
 			$templater->add_template_filters();
@@ -141,7 +141,7 @@ class Boldgrid_Editor_Gridblock_Post {
 	public function restrict_public_access() {
 		global $post;
 		$post_type = ! empty( $post->post_type ) ? $post->post_type : false;
-		if ( 'gridblock' ===  $post_type && ! current_user_can( 'edit_pages' ) ) {
+		if ( 'bg_block' ===  $post_type && ! current_user_can( 'edit_pages' ) ) {
 			wp_redirect( home_url(), 301 );
 			exit;
 		}
