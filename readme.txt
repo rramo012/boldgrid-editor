@@ -24,6 +24,12 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
+
+= 1.6 In Progress =
+* New Feature:                  Added new Post Type - Block.
+* New Feature:                  Users can now save Blocks and reuse them.
+* New Feature:                  New pages will now be prompted to install a new Block.
+
 = 1.5.3 =
 * New Feature:                  Advanced controls and Custom Design UI updates.
 * Bug Fix:                      Image crop issue with http vs https.
@@ -35,10 +41,10 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 = 1.5.1 =
 * New Feature:                  Allow customization of HR element.
-* New Feature:                  Adding information about the icons in the DropTab.
-* New Feature:                  Adding color palette control.
-* New Feature:                  Adding first time intro.
-* New Feature:                  Adding custom class inputs for buttons, backgrounds, hr, images and icons.
+* New Feature:                  Added information about the icons in the DropTab.
+* New Feature:                  Added color palette control.
+* New Feature:                  Added first time intro choices.
+* New Feature:                  Added custom class inputs for buttons, backgrounds, hr, images and icons.
 
 = 1.5 =
 * Update:                       Bump version.
