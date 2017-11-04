@@ -192,7 +192,8 @@ class Boldgrid_Layout extends Boldgrid_Editor_Media_Tab {
 	 * @return array $row_content
 	 */
 	public static function remove_duplicate_gridblocks( $row_content ) {
-		// Remove Duplicates
+
+		// Remove Duplicates.
 		$temp = array ();
 
 		foreach ( $row_content as $key => $row_content_element ) {

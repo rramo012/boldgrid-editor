@@ -109,12 +109,12 @@ class Boldgrid_Editor_Ajax {
 		$post_id = wp_insert_post( array(
 			'post_title' => $title,
 			'post_content' => $html,
-			'post_type' => 'gridblock',
+			'post_type' => 'bg_block',
 			'post_status' => 'publish',
 		) );
 
 		if ( ! empty( $type ) && ! empty( $post_id ) ) {
-			$output = wp_set_post_terms( $post_id, array( $type ), 'gridblock_type' );
+			$output = wp_set_post_terms( $post_id, array( $type ), 'bg_block_type' );
 		}
 
 		if ( ! empty( $post_id ) ) {

@@ -93,7 +93,7 @@ export class Save {
 
 		if ( 'string' !== typeof data.html ) {
 			data.html.always( ( html ) => {
-				data.html = html;
+				data.html = $( html ).html();
 
 				this.ajax( data )
 					.fail( ( response ) => {
@@ -106,6 +106,7 @@ export class Save {
 
 			return $deferred;
 		} else {
+			data.html = $( data.html ).html();
 			return this.ajax( data );
 		}
 	}
