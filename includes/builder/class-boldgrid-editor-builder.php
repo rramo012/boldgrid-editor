@@ -50,7 +50,7 @@ class Boldgrid_Editor_Builder {
 		$screen = get_current_screen();
 		$screen->add_help_tab( array(
 			'id'       => 'boldgrid-editor',
-			'title'    => __( 'Boldgrid Editor' ),
+			'title'    => __( 'Post and Page Builder' ),
 			'content'  => $fs->get_contents( BOLDGRID_EDITOR_PATH . '/pages/help-tab.html' ),
 		) );
 	}

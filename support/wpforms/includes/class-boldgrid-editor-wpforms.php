@@ -2,7 +2,7 @@
 /**
  * Class: Boldgrid_Editor_Wpforms
  *
- * Integration between WPForms and BoldGrid Editor.
+ * Integration between WPForms and Post and Page Builder.
  *
  * @since      1.4.4
  * @package    Boldgrid_Editor
@@ -14,7 +14,7 @@
 /**
  * Class: Boldgrid_Editor_Wpforms
  *
- * Integration between WPForms and BoldGrid Editor.
+ * Integration between WPForms and Post and Page Builder.
  *
  * @since      1.4.4
  */

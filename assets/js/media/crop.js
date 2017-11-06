@@ -12,7 +12,7 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.EDITOR = BOLDGRID.EDITOR || {};
 
 /**
- * BoldGrid Editor Crop.
+ * Post and Page Builder Crop.
  *
  * This class handles the front-end functionality for suggesting to users they
  * crop an image when replacing another image with different dimensions within

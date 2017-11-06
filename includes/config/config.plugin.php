@@ -46,9 +46,9 @@ return array (
 	'widget' => array(
 		'areas' => array(
 			'boldgrid-editor-sidebar' => array(
-				'name' => __( 'BoldGrid Editor Sidebar', 'boldgrid-editor' ),
+				'name' => __( 'Post and Page Builder Sidebar', 'boldgrid-editor' ),
 				'id' => 'boldgrid-editor-sidebar',
-				'description' => __( 'Widgets in this area will on BoldGrid Editor templates.', 'boldgrid-editor' ),
+				'description' => __( 'Widgets in this area will on Post and Page Builder templates.', 'boldgrid-editor' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h2 class="widget-title">',

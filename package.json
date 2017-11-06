@@ -1,7 +1,7 @@
 {
 	"name": "boldgrid-editor",
 	"version": "1.5.1",
-	"description": "BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor.",
+	"description": "Post and Page Builder is a standalone plugin which adds functionality to the existing TinyMCE Editor.",
 	"main": "gulpfile.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",

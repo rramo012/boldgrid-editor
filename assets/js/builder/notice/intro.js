@@ -12,7 +12,7 @@ export class Intro extends Notice {
 		this.name = 'intro';
 
 		this.panel = {
-			title: 'BoldGrid Editor - Setup',
+			title: 'Post and Page Builder - Setup',
 			height: '285px',
 			width: '650px',
 			disabledClose: true,

@@ -11,7 +11,7 @@ import { Base as Notice } from './base';
 		BG = BOLDGRID.EDITOR;
 
 	BG.NOTICE.Update = {
-		title: 'New Release: BoldGrid Editor',
+		title: 'New Release: Post and Page Builder',
 
 		template: wp.template( 'boldgrid-upgrade-notice' ),
 
