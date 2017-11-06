@@ -7,6 +7,7 @@ var IMHWPB = IMHWPB || {};
  */
 IMHWPB.Editor = function( $ ) {
 	var self = this;
+
 	//Have we bound the media open event yet?
 	this.media_default_bound = false;
 
@@ -44,20 +45,20 @@ IMHWPB.Editor = function( $ ) {
 
 			var value_selection = 'none';
 			$.each( current_classes, function( index, class_item ) {
-				if ( class_item == 'aligncenter' ) {
+				if ( 'aligncenter' == class_item ) {
 					value_selection = 'center';
 					return false;
-				} else if ( class_item == 'alignnone' ) {
+				} else if ( 'alignnone' == class_item ) {
 					value_selection = 'none';
 					return false;
-				} else if ( class_item == 'alignright' ) {
+				} else if ( 'alignright' == class_item ) {
 					value_selection = 'right';
 					return false;
-				} else if ( class_item == 'alignleft' ) {
+				} else if ( 'alignleft' == class_item ) {
 					value_selection = 'left';
 					return false;
 				}
-			});
+			} );
 
 			//Choose default link
 			var default_link_setting = null;
@@ -99,7 +100,7 @@ IMHWPB.Editor = function( $ ) {
 	/**
 	 * Carry over the height width and classes of the images when replacing images with images
 	 */
-	this.override_insert_media = function()  {
+	this.override_insert_media = function() {
 		var original_send_to_editor = send_to_editor;
 		send_to_editor = function( attachments ) {
 			var args = [];
@@ -108,12 +109,13 @@ IMHWPB.Editor = function( $ ) {
 			if ( ! attachments.match( /^\[.+?\]/ ) ) {
 				var $current_selection = $( tinymce.activeEditor.selection.getContent() );
 				var $inserting_content = $( attachments );
-				var inserting_media_image = $inserting_content.is( 'img' ) ||
+				var inserting_media_image =
+					$inserting_content.is( 'img' ) ||
 					( $inserting_content.is( 'a' ) && $inserting_content.find( '*' ).is( 'img' ) );
 			}
 
 			//Only do this rewrite if inserting 1 image
-			if ( inserting_media_image && $current_selection.is( 'img' ) && $inserting_content.find( 'img' ).length <= 1 ) {
+			if ( inserting_media_image && $current_selection.is( 'img' ) && 1 >= $inserting_content.find( 'img' ).length ) {
 				var classes_to_add = [];
 				var classes = $current_selection.attr( 'class' );
 				var current_classes = [];
@@ -123,12 +125,13 @@ IMHWPB.Editor = function( $ ) {
 
 				var width = $current_selection.attr( 'width' );
 				var height = $current_selection.attr( 'height' );
+
 				//Find all classes that need to transfered over
 				$.each( current_classes, function( index, class_item ) {
 					if ( ! class_item.match( /size-/ ) && ! class_item.match( /align/ ) && ! class_item.match( /wp-image-/ ) ) {
 						classes_to_add.push( class_item );
 					}
-				});
+				} );
 
 				var $image_to_insert = null;
 				if ( $inserting_content.is( 'img' ) ) {
@@ -140,7 +143,7 @@ IMHWPB.Editor = function( $ ) {
 				//Transfer over the classes
 				$.each( classes_to_add, function( key, value ) {
 					$image_to_insert.addClass( value );
-				});
+				} );
 
 				//Set height and width
 				$image_to_insert.attr( 'height', height ).attr( 'width', width );
@@ -154,7 +157,7 @@ IMHWPB.Editor = function( $ ) {
 				//If current node is preceded by an anchor, replace that too
 				var $current_node = $( tinymce.activeEditor.selection.getNode() );
 				var $parent = $current_node.parent();
-				if ( $parent.length && $parent[0].tagName == 'A' ) {
+				if ( $parent.length && 'A' == $parent[0].tagName ) {
 					$current_node = $parent;
 				}
 
@@ -171,8 +174,7 @@ IMHWPB.Editor = function( $ ) {
 				if ( window.tb_remove ) {
 					try {
 						window.tb_remove();
-					} catch ( e ) {
-					}
+					} catch ( e ) {}
 				}
 
 				return;
@@ -185,6 +187,7 @@ IMHWPB.Editor = function( $ ) {
 	};
 
 	$( function() {
+
 		/**
 		 * Select default alignment from the media modal window
 		 * If you are replacing an image with an image, then the default alignment should be
@@ -206,8 +209,8 @@ IMHWPB.Editor = function( $ ) {
 				onclick: function( e ) {
 					self.activate_display( 'monitor', $( e.target ) );
 				}
-			});
-		});
+			} );
+		} );
 
 		/**
 		 * Adding a button that is used to change the view to tablet
@@ -220,8 +223,8 @@ IMHWPB.Editor = function( $ ) {
 				onclick: function( e ) {
 					self.activate_display( 'tablet', $( e.target ) );
 				}
-			});
-		});
+			} );
+		} );
 
 		/**
 		 * Adding a button that changes the view to phone
@@ -234,13 +237,14 @@ IMHWPB.Editor = function( $ ) {
 				onclick: function( e ) {
 					self.activate_display( 'phone', $( e.target ) );
 				}
-			});
-		});
+			} );
+		} );
 
 		/**
 		 * Allowing the user to toggle the draggable fucntionality
 		 */
 		tinymce.PluginManager.add( 'toggle_draggable_imhwpb', function( editor, url ) {
+
 			/**
 			 * When replacing an image with an image we will carry over the classes, width and
 			 * height of the image being replaced.
@@ -253,26 +257,25 @@ IMHWPB.Editor = function( $ ) {
 				classes: 'widget btn',
 				onclick: self.toggle_draggable_plugin
 			} );
-			 //Before adding an undo level check to see if this is allowed
+
+			//Before adding an undo level check to see if this is allowed
 			editor.on( 'BeforeAddUndo', function( e ) {
 				if ( IMHWPB.WP_MCE_Draggable.instance ) {
 
-				//	IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
-
+					//	IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
 				}
-				if ( IMHWPB.tinymce_undo_disabled == true ) {
+				if ( true == IMHWPB.tinymce_undo_disabled ) {
 					return false;
 				}
-			});
+			} );
 
 			// On Undo and redo make sure galleries are intialized.
 			editor.on( 'undo redo', function( e ) {
-
 				if ( BOLDGRID.EDITOR.Controls.$container ) {
 					BOLDGRID.EDITOR.Controls.$container.trigger( 'history_change_boldgrid' );
 				}
 
-				if ( typeof IMHWPBGallery != 'undefined' && IMHWPBGallery.init_gallery ) {
+				if ( 'undefined' != typeof IMHWPBGallery && IMHWPBGallery.init_gallery ) {
 					IMHWPBGallery.init_gallery( $( editor.iframeElement ).contents() );
 				}
 			} );
@@ -285,7 +288,7 @@ IMHWPB.Editor = function( $ ) {
 					$.fourpan.refresh();
 				}
 
-				if ( e.format == 'html' && self.dragging_is_active() && ! e.set ) {
+				if ( 'html' == e.format && self.dragging_is_active() && ! e.set ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
 				}
 			} );
@@ -300,7 +303,9 @@ IMHWPB.Editor = function( $ ) {
 					return true;
 				}
 
-				var $structure, $newParagraph, $prev,
+				var $structure,
+					$newParagraph,
+					$prev,
 					node = tinymce.activeEditor.selection.getNode(),
 					$current_node = $( node ),
 					enterKey = 13;
@@ -323,8 +328,9 @@ IMHWPB.Editor = function( $ ) {
 				}
 
 				if ( is_column || is_row ) {
+
 					//Any Character
-					if ( ( e.which >= 48 && e.which <= 90 ) || ( e.which >= 96 && e.which <= 105 ) || 13 == e.which ) {
+					if ( ( 48 <= e.which && 90 >= e.which ) || ( 96 <= e.which && 105 >= e.which ) || 13 == e.which ) {
 
 						//Do not delete an element with content
 						if ( ! isEmpty ) {
@@ -333,8 +339,13 @@ IMHWPB.Editor = function( $ ) {
 
 						// When a user presses enter in an empty column. Create a new empty row with a new column inside.
 						if ( enterKey == e.which ) {
+
 							// If is row or col-12.
-							if ( is_row || ( is_column && self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) ) ) {
+							if (
+								is_row ||
+								( is_column &&
+									self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) )
+							) {
 								$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
 								$current_node.closest( '.row' ).after( $structure );
 								editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
@@ -351,7 +362,7 @@ IMHWPB.Editor = function( $ ) {
 
 						//The key pressed was alphanumeric
 						if ( is_column ) {
-							$newParagraph  = $( '<p><br data-mce-bogus="1"></p>' );
+							$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
 							$structure = $newParagraph;
 						} else {
 							$structure = $( '<div class="col-md-12"><p><br></p></div>' );
@@ -360,15 +371,16 @@ IMHWPB.Editor = function( $ ) {
 
 						$current_node.html( $structure );
 						editor.selection.setCursorLocation( $newParagraph[0], 0 );
-
 					}
-				} else if ( is_anchor && ( e.which == '8' || e.which == '46' ) ) {
+				} else if ( is_anchor && ( '8' == e.which || '46' == e.which ) ) {
+
 					//Backspace or Delete Key
-					if ( $current_node.html() == '&nbsp;&nbsp;' ||   $current_node.html() == '&nbsp; ' ) {
+					if ( '&nbsp;&nbsp;' == $current_node.html() || '&nbsp; ' == $current_node.html() ) {
 						$current_node.remove();
 						return false;
 					}
 				} else if ( 'P' == node.tagName ) {
+
 					// When clicking enter on an empty P, Just add another P.
 					if ( enterKey == e.which && isEmpty && ! $current_node.find( 'img' ).length ) {
 						$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
@@ -377,7 +389,7 @@ IMHWPB.Editor = function( $ ) {
 						return false;
 					}
 
-					if ( e.which == '8' && isEmpty ) {
+					if ( '8' == e.which && isEmpty ) {
 						$prev = $current_node.prev();
 						if ( $prev.length && $prev.hasClass( 'draggable-tools-imhwpb' ) ) {
 							$prev = $prev.prev();
@@ -390,15 +402,12 @@ IMHWPB.Editor = function( $ ) {
 							} else {
 								editor.selection.select( $prev[0] );
 								editor.selection.collapse( 0 );
-					        }
+							}
 							return false;
 						}
 					}
-
 				} else if ( 'IMG' == node.tagName || $current_node.is( '.button-primary, .button-secondary, .btn' ) ) {
-
 					if ( enterKey == e.which ) {
-
 						$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
 						var $parentP = $current_node.closest( 'p' );
 						if ( $parentP.length ) {
@@ -421,28 +430,33 @@ IMHWPB.Editor = function( $ ) {
 				var $element = $( e.element );
 
 				//If the element is an anchor
-					//And the user clicks on the last or first position in the content
-					//And that content character is a space
-					//Then re-map the node change to the the position after/before it
-				if ( e.element.tagName == 'A' ) {
+				//And the user clicks on the last or first position in the content
+				//And that content character is a space
+				//Then re-map the node change to the the position after/before it
+				if ( 'A' == e.element.tagName ) {
 					var range = tinymce.DOM.createRng();
 					var current_range = tinymce.activeEditor.selection.getRng();
 					var position = null;
 					if ( current_range.startOffset == current_range.endOffset ) {
+						if ( 0 === current_range.startOffset ) {
 
-						if ( current_range.startOffset === 0 ) {
 							//If the first character is a space, set the cursor to the second character
 							//to preserve the buffer
-							if ( e.element.firstChild.data.substr(0,6) == '&nbsp;' ||
-									/\s/.test(e.element.firstChild.data.substr(0,1) )) {
+							if (
+								'&nbsp;' == e.element.firstChild.data.substr( 0, 6 ) ||
+								/\s/.test( e.element.firstChild.data.substr( 0, 1 ) )
+							) {
 								position = 1;
 							}
 						} else if ( e.element.firstChild && current_range.startOffset == e.element.firstChild.length ) {
 							var final_pos_offset = 0;
+
 							//If the last character is a space, set the cursor to the second to last
 							//character to preserve the buffer
-							if ( e.element.firstChild.data.substr(-6) == '&nbsp;' ||
-									/\s/.test(e.element.firstChild.data.substr(-1) )) {
+							if (
+								'&nbsp;' == e.element.firstChild.data.substr( -6 ) ||
+								/\s/.test( e.element.firstChild.data.substr( -1 ) )
+							) {
 								final_pos_offset = -1;
 							}
 							position = e.element.firstChild.length + final_pos_offset;
@@ -451,43 +465,45 @@ IMHWPB.Editor = function( $ ) {
 
 					//Set the position of the cursor
 					if ( position ) {
-						range.setStart(e.element.firstChild, position);
-						range.setEnd(e.element.firstChild, position);
-						tinymce.activeEditor.selection.setRng(range);
+						range.setStart( e.element.firstChild, position );
+						range.setEnd( e.element.firstChild, position );
+						tinymce.activeEditor.selection.setRng( range );
 					}
 				}
 
 				if ( e.selectionChange && $element.length ) {
-					if ( $element.is('br') ) {
-						$element.parent().children().each( function () {
-							var $this = $(this);
-							if ( $this.is('a') && $this.html() && !$this.find('img').length ) {
-								$new_element = $this.find(':first');
-								if ( !$new_element.length ) {
-									$new_element = $this;
-								}
+					if ( $element.is( 'br' ) ) {
+						$element
+							.parent()
+							.children()
+							.each( function() {
+								var $this = $( this );
+								if ( $this.is( 'a' ) && $this.html() && ! $this.find( 'img' ).length ) {
+									$new_element = $this.find( ':first' );
+									if ( ! $new_element.length ) {
+										$new_element = $this;
+									}
 
-								editor.selection.setCursorLocation( $new_element[0], 1);
-								return false;
-							}
-						});
+									editor.selection.setCursorLocation( $new_element[0], 1 );
+									return false;
+								}
+							} );
 					}
 				}
-
 			} );
 
 			/**
 			 * While resizing a column if you finish resizing over wpview wrap, mouseup isn't triggered
 			 * trigger it manually
 			 */
-			editor.on('SetAttrib', function(e) {
-				if (e.attrElm.hasClass('wpview-wrap') && typeof IMHWPB.WP_MCE_Draggable.instance != 'undefined') {
+			editor.on( 'SetAttrib', function( e ) {
+				if ( e.attrElm.hasClass( 'wpview-wrap' ) && 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance ) {
 					var draggable = IMHWPB.WP_MCE_Draggable.instance.draggable_instance;
 					if ( draggable.resize ) {
-						draggable.$master_container.trigger('mouseup', e.attrElm);
+						draggable.$master_container.trigger( 'mouseup', e.attrElm );
 					}
 				}
-			});
+			} );
 
 			/**
 			 * On mouse down of the drag tools, prevent tinymce from blocking event.
@@ -498,10 +514,10 @@ IMHWPB.Editor = function( $ ) {
 				}
 
 				var $target = $( e.target ),
-					isResizing = ( true === tinymce.activeEditor.boldgridResize ),
+					isResizing = true === tinymce.activeEditor.boldgridResize,
 					isPopoverChild = $target.closest( '.draggable-tools-imhwpb' ).length,
-					isActionItem = ! self.draggable.ie_version && $target.hasClass( 'action-list' )
-						&& ! $target.attr( 'draggable' ),
+					isActionItem =
+						! self.draggable.ie_version && $target.hasClass( 'action-list' ) && ! $target.attr( 'draggable' ),
 					isPopover = isPopoverChild && ! isActionItem,
 					newDiv;
 
@@ -513,7 +529,7 @@ IMHWPB.Editor = function( $ ) {
 
 					// Stop tinymce from preventing out event.
 					// https://github.com/tinymce/tinymce/blob/master/js/tinymce/classes/dom/EventUtils.js#L125.
-					e.preventDefault = function () {};
+					e.preventDefault = function() {};
 
 					// Fake the target so that cE checking evals a different element.
 					newDiv = $( '<div><div></div></div>' );
@@ -529,66 +545,66 @@ IMHWPB.Editor = function( $ ) {
 				}
 			} );
 
-			 //Prevents boldgrid popovers from appearing when resizing images
-			editor.on('ObjectResizeStart', function(e) {
-				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
+			//Prevents boldgrid popovers from appearing when resizing images
+			editor.on( 'ObjectResizeStart', function( e ) {
+				if ( 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = true;
-					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
-						.$master_container.find('html').addClass( 'bg-disabled-handles' );
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
+						.find( 'html' )
+						.addClass( 'bg-disabled-handles' );
 				}
-			});
+			} );
 
 			//Once an object is resized, allow boldgrid popovers.
-			editor.on('ObjectResized', function(e) {
-				if ( typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container != 'undefined' ) {
+			editor.on( 'ObjectResized', function( e ) {
+				if ( 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = false;
-					IMHWPB.WP_MCE_Draggable.instance.draggable_instance
-						.$master_container.find('html').removeClass( 'bg-disabled-handles' );
+					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
+						.find( 'html' )
+						.removeClass( 'bg-disabled-handles' );
 				}
-			});
+			} );
 
 			/**
 			 * Before WP retrieves the contents of the editor, we will strip out any extra spaces
 			 * that we wrapped around anchors as well as any other cleanup
 			 */
-			editor.on('GetContent', function(e) {
-				if (e.content) {
-					e.content = self.reset_anchor_spaces('<div>' + e.content + '</div>', false);
+			editor.on( 'GetContent', function( e ) {
+				if ( e.content ) {
+					e.content = self.reset_anchor_spaces( '<div>' + e.content + '</div>', false );
 					if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
 						e.content = IMHWPB.WP_MCE_Draggable.instance.draggable_instance.frame_cleanup( e.content );
 					}
 				}
-			});
+			} );
 
-			editor.on('AddUndo', function(e) {
-				 BOLDGRID.EDITOR.GRIDBLOCK.View.updateHistoryStates();
+			editor.on( 'AddUndo', function( e ) {
+				BOLDGRID.EDITOR.GRIDBLOCK.View.updateHistoryStates();
 			} );
 
 			/**
 			 * When the editor is initialized load the draggable ability
 			 */
-			editor.on('init', function( event ) {
+			editor.on( 'init', function( event ) {
 				IMHWPB.WP_MCE_Draggable.instance = new IMHWPB.WP_MCE_Draggable();
 
-				var $tinymce_iframe = $(event.target.iframeElement).contents();
+				var $tinymce_iframe = $( event.target.iframeElement ).contents();
 				if ( BoldgridEditor.body_class ) {
-					$tinymce_iframe.find('body').addClass(BoldgridEditor.body_class);
+					$tinymce_iframe.find( 'body' ).addClass( BoldgridEditor.body_class );
 				}
 
 				if ( BoldgridEditor.hasDraggableEnabled ) {
-
-					IMHWPB.WP_MCE_Draggable.instance.load_draggable($tinymce_iframe);
+					IMHWPB.WP_MCE_Draggable.instance.load_draggable( $tinymce_iframe );
 					self.draggable = IMHWPB.WP_MCE_Draggable.instance.draggable_instance;
-					if ( self.draggable.ie_version && self.draggable.ie_version <= 11 ) {
+					if ( self.draggable.ie_version && 11 >= self.draggable.ie_version ) {
 						$tinymce_iframe.find( 'body' ).addClass( 'dragging-disabled' );
 					}
-
 				} else {
+
 					//If this is not a boldgrid theme we will disable by default,
 					//and deactivate style sheets
 					IMHWPB.WP_MCE_Draggable.instance.draggable_inactive = true;
 					IMHWPB.WP_MCE_Draggable.instance.addDeactivateClasses();
-
 				}
 
 				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text
@@ -602,16 +618,17 @@ IMHWPB.Editor = function( $ ) {
 				 */
 
 				var buttons = [];
-				buttons.push( tinymce.ui.Factory.create( {
-					type: 'button',
-					title: 'Change',
-					tooltip: 'Change',
-					icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
-					onclick: function () {
-						BOLDGRID.EDITOR.CONTROLS.IMAGE.Change.openModal();
-					}
-				} ) );
-
+				buttons.push(
+					tinymce.ui.Factory.create( {
+						type: 'button',
+						title: 'Change',
+						tooltip: 'Change',
+						icon: 'icon dashicons dashicons-admin-media imhwpb-icon',
+						onclick: function() {
+							BOLDGRID.EDITOR.CONTROLS.IMAGE.Change.openModal();
+						}
+					} )
+				);
 
 				// Add button to floating tinymce toolbar.
 				tinymce.activeEditor.on( 'wptoolbar', function( event ) {
@@ -619,21 +636,22 @@ IMHWPB.Editor = function( $ ) {
 						var toolbar = event.toolbar,
 							buttonPos = 3,
 							buttonGroup = toolbar.items()[0].items()[0],
-							buttonIndex = _.findIndex( buttonGroup.items(), function ( item ) {
-								return item.settings.title == 'Change';
+							buttonIndex = _.findIndex( buttonGroup.items(), function( item ) {
+								return 'Change' == item.settings.title;
 							} );
 
 						toolbar.show();
 
 						// If button doesnt exist, add it.
 						if ( -1 === buttonIndex ) {
+
 							// Toolbar/ButtonGroup.insert().
 							buttonGroup.insert( buttons, buttonPos, false );
 							toolbar.reposition();
 						}
 					}
 				} );
-			});
+			} );
 
 			/*
 			 *
@@ -675,18 +693,18 @@ IMHWPB.Editor = function( $ ) {
 			editor.on( all_events.join(' '), function( e ) {
 					console.log(e.type);
 			} );*/
-		});
-	});
+		} );
+	} );
 
 	/**
 	 * Check if an element is empty after being validated by mce
 	 * an element is "empty" if it only has a break tag in and no text
 	 * TODO: Function is not working correctly, fix
 	 */
-	this.mce_element_is_empty = function ( $element ) {
+	this.mce_element_is_empty = function( $element ) {
 		var $children = $element.children();
 		var is_empty = false;
-		if ( $element.is(':empty') || ($children.length == 1 && $children.filter('br').length && !$element.text() ) ) {
+		if ( $element.is( ':empty' ) || ( 1 == $children.length && $children.filter( 'br' ).length && ! $element.text() ) ) {
 			is_empty = true;
 		}
 
@@ -696,29 +714,32 @@ IMHWPB.Editor = function( $ ) {
 	/**
 	 * Wraps anchor contents in spaces to make it easier for the user to target
 	 */
-	this.reset_anchor_spaces = function ( markup,  add_spaces ) {
+	this.reset_anchor_spaces = function( markup, add_spaces ) {
 		var $markup = $( markup );
 
 		//Strip out added spaces
-		$markup.find('a').each( function () {
-			var $this = $(this);
+		$markup.find( 'a' ).each( function() {
+			var $this = $( this );
 			var html = $this.html();
+
 			//Starting With nbsp? remove
-			if ( html.substr(0, 6) == '&nbsp;' ) {
-				html = html.substr(6);
+			if ( '&nbsp;' == html.substr( 0, 6 ) ) {
+				html = html.substr( 6 );
 			}
+
 			//Ending with nbsp? remove
-			if ( html.substr(-6, 6) == '&nbsp;' ) {
-				html = html.substr(0, html.length - 6)
+			if ( '&nbsp;' == html.substr( -6, 6 ) ) {
+				html = html.substr( 0, html.length - 6 );
 			}
 
 			if ( add_spaces ) {
+
 				//Wrap all anchors in spaces
-				$this.html('&nbsp;' + html + '&nbsp;');
+				$this.html( '&nbsp;' + html + '&nbsp;' );
 			} else {
 				$this.html( html );
 			}
-		});
+		} );
 
 		return $markup.html();
 	};
@@ -726,15 +747,17 @@ IMHWPB.Editor = function( $ ) {
 	/**
 	 * Check is dragging is set to active by the user
 	 */
-	this.dragging_is_active = function () {
-		return typeof IMHWPB.WP_MCE_Draggable.instance != "undefined" &&
-			false == IMHWPB.WP_MCE_Draggable.instance.draggable_inactive;
+	this.dragging_is_active = function() {
+		return (
+			'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance &&
+			false == IMHWPB.WP_MCE_Draggable.instance.draggable_inactive
+		);
 	};
 
 	/**
 	 * Toggle the active state of the draggable plugin
 	 */
-	this.toggle_draggable_plugin = function ( event ) {
+	this.toggle_draggable_plugin = function( event ) {
 		console.log( 'disabled' );
 	};
 
@@ -743,26 +766,27 @@ IMHWPB.Editor = function( $ ) {
 	 */
 	this.activate_display = function( type, $element ) {
 		var $closest = $element.closest( 'div' );
-		if ( $closest.hasClass('mce-disabled') ) {
+		if ( $closest.hasClass( 'mce-disabled' ) ) {
 			return false;
 		}
-		$('.mce-displaysize-imhwpb').removeClass('boldgrid-highlighted-mce-icon');
+		$( '.mce-displaysize-imhwpb' ).removeClass( 'boldgrid-highlighted-mce-icon' );
 
 		if ( $closest.hasClass( 'mce-active' ) ) {
 			$element.closest( 'div' ).removeClass( 'mce-active' );
 			self.remove_editor_styles();
 			self.currently_selected_size = null;
-
 		} else {
 			$( '.mce-displaysize-imhwpb' ).each( function() {
-				$( this ).closest( 'div' ).removeClass( 'mce-active' );
+				$( this )
+					.closest( 'div' )
+					.removeClass( 'mce-active' );
 			} );
 			$element.closest( 'div' ).addClass( 'mce-active' );
 			self.set_width( type );
 			self.currently_selected_size = type;
 		}
 
-		if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_inactive == false) {
+		if ( IMHWPB.WP_MCE_Draggable.instance && false == IMHWPB.WP_MCE_Draggable.instance.draggable_inactive ) {
 			IMHWPB.WP_MCE_Draggable.instance.resize_done_event();
 			$window.trigger( 'resize' );
 		}
@@ -773,7 +797,8 @@ IMHWPB.Editor = function( $ ) {
 	 */
 	this.remove_editor_styles = function() {
 		$( '#wp-content-editor-container' ).removeClass(
-			'mce-viewsize-phone-imhwpb mce-viewsize-tablet-imhwpb mce-viewsize-monitor-imhwpb' );
+			'mce-viewsize-phone-imhwpb mce-viewsize-tablet-imhwpb mce-viewsize-monitor-imhwpb'
+		);
 	};
 
 	/**
@@ -783,8 +808,6 @@ IMHWPB.Editor = function( $ ) {
 		self.remove_editor_styles();
 		$( '#wp-content-editor-container' ).addClass( 'mce-viewsize-' + style + '-imhwpb' );
 	};
-
-
 };
 
 IMHWPB.Editor.instance = new IMHWPB.Editor( jQuery );
