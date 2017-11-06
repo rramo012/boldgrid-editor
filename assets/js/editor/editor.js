@@ -260,10 +260,6 @@ IMHWPB.Editor = function( $ ) {
 
 			//Before adding an undo level check to see if this is allowed
 			editor.on( 'BeforeAddUndo', function( e ) {
-				if ( IMHWPB.WP_MCE_Draggable.instance ) {
-
-					//	IMHWPB.WP_MCE_Draggable.instance.draggable_instance.validate_markup();
-				}
 				if ( true == IMHWPB.tinymce_undo_disabled ) {
 					return false;
 				}
@@ -572,13 +568,12 @@ IMHWPB.Editor = function( $ ) {
 			editor.on( 'GetContent', function( e ) {
 				if ( e.content ) {
 					e.content = self.reset_anchor_spaces( '<div>' + e.content + '</div>', false );
-					if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
-						e.content = IMHWPB.WP_MCE_Draggable.instance.draggable_instance.frame_cleanup( e.content );
-					}
+					e.content = self.cleanupContent( e.content );
 				}
 			} );
 
 			editor.on( 'AddUndo', function( e ) {
+				e.level.content = self.cleanupContent( e.level.content );
 				BOLDGRID.EDITOR.GRIDBLOCK.View.updateHistoryStates();
 			} );
 
@@ -606,16 +601,6 @@ IMHWPB.Editor = function( $ ) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_inactive = true;
 					IMHWPB.WP_MCE_Draggable.instance.addDeactivateClasses();
 				}
-
-				//Add a paragraph at the end of the editor to allow the user to click at the end to enter text
-
-				/*
-				 * Disabled this because it was breaking undo and redo
-				 * var $last_element = $tinymce_iframe.find('body > *:last');
-					if ( !$last_element.is('p') || $last_element.children().length != 1 ) {
-						$tinymce_iframe.find('body').append('<p> </p>');
-					}
-				 */
 
 				var buttons = [];
 				buttons.push(
@@ -695,6 +680,14 @@ IMHWPB.Editor = function( $ ) {
 			} );*/
 		} );
 	} );
+
+	this.cleanupContent = function( content ) {
+		if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
+			content = IMHWPB.WP_MCE_Draggable.instance.draggable_instance.frame_cleanup( content );
+		}
+
+		return content;
+	};
 
 	/**
 	 * Check if an element is empty after being validated by mce
