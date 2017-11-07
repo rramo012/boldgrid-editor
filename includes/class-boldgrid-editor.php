@@ -302,7 +302,7 @@ class Boldgrid_Editor {
 		$file = BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-update.php';
 
 		if ( file_exists( $file ) ) {
-			if ( $is_cron || $is_wpcli || is_admin() ) ) {
+			if ( $is_cron || $is_wpcli || is_admin() ) {
 				require_once $file;
 				$plugin_update = new Boldgrid_Editor_Update( $this->config->get_configs() );
 				$plugin_update->add_hooks();

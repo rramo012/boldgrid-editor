@@ -36,31 +36,34 @@ if ( ! defined( 'BOLDGRID_EDITOR_CONFIGDIR' ) ) {
 	define( 'BOLDGRID_EDITOR_CONFIGDIR', BOLDGRID_EDITOR_PATH . '/includes/config' );
 }
 
-// Load the editor class.
-require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor.php';
-
-register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
-register_deactivation_hook( __FILE__,  array( 'Boldgrid_Editor_Activate', 'on_deactivate' ) );
-
 /**
- * Initialize the editor plugin for Editors and Administrators in the admin section.
- */
-function boldgrid_editor_init () {
-	Boldgrid_Editor_Service::register(
-		'main',
-		new Boldgrid_Editor()
-	);
+* Initialize the editor plugin for Editors and Administrators in the admin section.
+*/
+if ( ! function_exists( 'boldgrid_editor_init' ) ) {
 
-	Boldgrid_Editor_Service::get( 'main' )->run();
-}
+	// Load the editor class.
+	require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor.php';
 
-// Plugin update checks.
-$upgrade = new Boldgrid_Editor_Upgrade();
-add_action( 'upgrader_process_complete', array( $upgrade, 'plugin_update_check' ), 10, 2 );
+	register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
+	register_deactivation_hook( __FILE__,  array( 'Boldgrid_Editor_Activate', 'on_deactivate' ) );
 
-// Load on an early hook so we can tie into framework configs.
-if ( is_admin() ) {
-	add_action( 'init', 'boldgrid_editor_init' );
-} else {
-	add_action( 'setup_theme', 'boldgrid_editor_init' );
+	function boldgrid_editor_init () {
+		Boldgrid_Editor_Service::register(
+			'main',
+			new Boldgrid_Editor()
+		);
+
+		Boldgrid_Editor_Service::get( 'main' )->run();
+	}
+
+	// Plugin update checks.
+	$upgrade = new Boldgrid_Editor_Upgrade();
+	add_action( 'upgrader_process_complete', array( $upgrade, 'plugin_update_check' ), 10, 2 );
+
+	// Load on an early hook so we can tie into framework configs.
+	if ( is_admin() ) {
+		add_action( 'init', 'boldgrid_editor_init' );
+	} else {
+		add_action( 'setup_theme', 'boldgrid_editor_init' );
+	}
 }
