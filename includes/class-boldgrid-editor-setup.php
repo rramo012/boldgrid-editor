@@ -80,6 +80,15 @@ class Boldgrid_Editor_Setup {
 		$response = array();
 		$settings = ! empty( $_POST['settings'] ) ? $_POST['settings'] : 'setup-failed';
 
+		if ( ! empty( $_POST['settings'] ) ) {
+			$settings = array(
+				'template' => array(
+					'choice' => ! empty( $settings['template']['choice'] ) ?
+						sanitize_text_field( $settings['template']['choice'] ) : 'fullwidth'
+				)
+			);
+		}
+
 		$ajax = new Boldgrid_Editor_Ajax();
 		$ajax->validate_nonce( 'setup' );
 
