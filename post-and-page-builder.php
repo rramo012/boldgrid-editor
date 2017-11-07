@@ -47,6 +47,8 @@ if ( ! function_exists( 'boldgrid_editor_init' ) ) {
 	register_activation_hook( __FILE__, array( 'Boldgrid_Editor_Activate', 'on_activate' ) );
 	register_deactivation_hook( __FILE__,  array( 'Boldgrid_Editor_Activate', 'on_deactivate' ) );
 
+	register_uninstall_hook( __FILE__, array( 'Boldgrid_Editor_Uninstall', 'on_delete' ) );
+
 	function boldgrid_editor_init () {
 		Boldgrid_Editor_Service::register(
 			'main',

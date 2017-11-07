@@ -16,6 +16,7 @@ require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-version.php
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-option.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-setup.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-activate.php';
+require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-uninstall.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-service.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-upgrade.php';
 require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-postmeta.php';
