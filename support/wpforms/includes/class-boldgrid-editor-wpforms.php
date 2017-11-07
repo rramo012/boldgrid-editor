@@ -278,14 +278,15 @@ class Boldgrid_Editor_Wpforms {
 
 		require $this->path_configs['addon_directory'] . '/templates/form-not-found.php';
 
+		// Take all form markup and create underscore templates.
 		foreach ( $form_markup as $form_id => $markup ) {
 			$markup = str_replace( '<script', '<# print("<sc" + "ript"); #>', $markup );
 			$markup = str_replace( '</script>', '<# print("</scr" + "ipt>"); #>', $markup );
 
 			?>
 <script type="text/html"
-	id="tmpl-editor-boldgrid-form-<?php echo $form_id; ?>">
-			<?php echo '<div>' . $markup . '</div>';  ?>
+	id="tmpl-editor-boldgrid-form-<?php echo esc_attr( $form_id ); ?>">
+			<?php echo '<div>' . esc_html( $markup ) . '</div>';  ?>
 			</script>
 <?php
 		}

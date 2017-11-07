@@ -37,7 +37,7 @@ class Boldgrid_Editor_Postmeta {
 	public function save() {
 		if ( ! empty( $_POST['wp-preview'] ) ) {
 			Boldgrid_Editor_Option::update( 'preview_meta', array(
-				'template' => isset( $_POST['page_template'] ) ? $_POST['page_template'] : null,
+				'template' => isset( $_POST['page_template'] ) ? sanitize_text_field( $_POST['page_template'] ) : null,
 				'boldgrid_hide_page_title' => isset( $_POST['boldgrid-display-post-title'] ) ?
 					intval( $_POST['boldgrid-display-post-title'] ) : null,
 			) );

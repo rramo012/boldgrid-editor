@@ -334,9 +334,9 @@ class Boldgrid_Editor_Builder {
 		$custom_colors = Boldgrid_Editor_Option::get( 'custom_colors', array() );
 
 		?>
-		<input style='display:none' type='checkbox' value='<?php echo (int) $in_page_containers; ?>'
+		<input style='display:none' type='checkbox' value='<?php echo intval( $in_page_containers ); ?>'
 			checked='checked' name='boldgrid-in-page-containers'>
-		<input style='display:none' type='checkbox' value='<?php echo json_encode( $custom_colors ); ?>'
+		<input style='display:none' type='checkbox' value='<?php echo esc_js( wp_json_encode( $custom_colors ) ); ?>'
 			checked='checked' name='boldgrid-custom-colors'>
 		<input style='display:none' value name='boldgrid-record-feedback'>
 <?php

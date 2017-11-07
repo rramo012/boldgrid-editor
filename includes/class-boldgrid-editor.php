@@ -238,8 +238,6 @@ class Boldgrid_Editor {
 			// Add screen display buttons.
 			$boldgrid_editor_mce->add_window_size_buttons();
 
-			add_action( 'media_buttons', array ( $boldgrid_editor_mce, 'help_pointers' ) );
-
 			// This has a high priority to override duplicate files in other boldgrid plugins.
 			add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
 

@@ -161,8 +161,8 @@ class Boldgrid_Editor_Media_Tab {
 		?>
 		<div class="boldgrid-loading-graphic-wrapper">
 			<div class='boldgrid-loading-graphic'>
-				<img src="<?php echo plugins_url( '/assets/image/bg-logo.svg',
-					 $path_configs['plugin_filename'] ) ?>" alt="BoldGrid logo">
+				<img src="<?php echo esc_attr( plugins_url( '/assets/image/bg-logo.svg',
+					 $path_configs['plugin_filename'] ) ) ?>" alt="BoldGrid logo">
 				<div class='loading-bar-wrap'>
 					<div class="loading-bar"></div>
 				</div>
