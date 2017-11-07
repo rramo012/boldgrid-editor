@@ -40,17 +40,7 @@ iframe[src^="https://maps.google.com"] {
     user-select: none;
 }
 
-.draggable-button:active, .draggable-button.active {
-    background-image: none;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
-    outline: 0 none;
-}
-
-.draggable-button:hover,
-.draggable-button:focus,
-.draggable-button.focus,
-.draggable-button:active,
-.draggable-button.active {
+.draggable-button:hover {
     background-color: #23282d;
     border-color: #23282d;
 }
