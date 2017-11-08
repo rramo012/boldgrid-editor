@@ -12,7 +12,7 @@ import 'wp-color-picker-alpha/src/wp-color-picker-alpha.js';
 
 import 'jquery-ui-dist/jquery-ui.structure.css';
 import 'jquery-ui-dist/jquery-ui.theme.css';
-import 'boldgrid-theme-framework/boldgrid-theme-framework/assets/css/customizer/font-family-controls.min.css';
+import '../css/font-family-controls.min.css';
 
 // Import Libs.
 import './builder/tinymce/wp-mce-draggable';
