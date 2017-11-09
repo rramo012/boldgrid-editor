@@ -160,8 +160,11 @@ iframe[src^="https://maps.google.com"] {
 	display: none;
 }
 
+.nested-row-popover-imhwpb {
+	transform: translateY(-10px);
+}
 .nested-row-popover-imhwpb .edit-as-row {
-	display: block
+	display: block;
 }
 
 .bg-drag-popover.section-drag-handle {

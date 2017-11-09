@@ -38,8 +38,15 @@ export class Content extends Base {
 	 * @return {object}            Css for positioning.
 	 */
 	getPositionCss( clientRect ) {
+		let offset = 40;
+
+		// 80 is double the default offset.
+		if ( 80 > clientRect.height ) {
+			offset = clientRect.height / 2;
+		}
+
 		return {
-			top: clientRect.top + clientRect.height / 2,
+			top: clientRect.top + offset,
 			left: clientRect.left
 		};
 	}
@@ -89,7 +96,7 @@ export class Content extends Base {
 	 * @return {$}         Should we prevent mouse leave action?
 	 */
 	preventMouseLeave( $target ) {
-		return $target && ( 1 === $target.closest( this.$target ).length );
+		return $target && 1 === $target.closest( this.$target ).length;
 	}
 
 	/**
