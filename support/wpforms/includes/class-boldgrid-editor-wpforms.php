@@ -286,7 +286,7 @@ class Boldgrid_Editor_Wpforms {
 			?>
 <script type="text/html"
 	id="tmpl-editor-boldgrid-form-<?php echo esc_attr( $form_id ); ?>">
-			<?php echo '<div>' . esc_html( $markup ) . '</div>';  ?>
+			<?php echo '<div>' . $markup . '</div>';  ?>
 			</script>
 <?php
 		}
