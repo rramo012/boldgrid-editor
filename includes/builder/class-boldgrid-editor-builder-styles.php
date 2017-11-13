@@ -57,12 +57,10 @@ class Boldgrid_Editor_Builder_Styles {
 
 		// Currently disabled for BG themes. BG themes should use the BG color palette system (theme switching).
 		if ( ! $is_bg_theme ) {
-			if ( ! empty( $option['css_filename'] ) ) {
-				$uploadPath = self::get_upload_path( 'baseurl' );
+			$filename = ! empty( $option['css_filename'] ) ? $option['css_filename'] : '';
 
-				// Deprecated -- Remove this line after 1.6 is released.
-				$url = str_ireplace( $uploadPath, '', $option['css_filename'] );
-				$url = $uploadPath . $url;
+			if ( $filename && file_exists( self::get_upload_path() . $filename ) ) {
+				$url = self::get_upload_path( 'baseurl' ) . $filename;
 			} else {
 				$url = plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY );
 			}
