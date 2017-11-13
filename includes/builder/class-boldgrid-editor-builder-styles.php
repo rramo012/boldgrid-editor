@@ -59,7 +59,8 @@ class Boldgrid_Editor_Builder_Styles {
 		if ( ! $is_bg_theme ) {
 			$filename = ! empty( $option['css_filename'] ) ? $option['css_filename'] : '';
 
-			$wp_filesystem = ( new Boldgrid_Editor_Fs() )->get_wp_filesystem();
+			$editor_fs = new Boldgrid_Editor_Fs();
+			$wp_filesystem = $editor_fs->get_wp_filesystem();
 			if ( $filename && $wp_filesystem->exists( self::get_upload_path() . $filename ) ) {
 				$url = self::get_upload_path( 'baseurl' ) . $filename;
 			} else {
