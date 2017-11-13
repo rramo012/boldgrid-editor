@@ -48,9 +48,12 @@ class Boldgrid_Editor_Builder_Styles {
 	 *
 	 * @since 1.6
 	 *
+	 * @global WP_Filesystem_Direct $wp_filesystem
+	 *
 	 * @return array Properties of file.
 	 */
 	public static function get_url_info() {
+		global $wp_filesystem;
 		$option = self::get_option();
 		$is_bg_theme = Boldgrid_Editor_Service::get( 'main' )->get_is_boldgrid_theme();
 		$url = false;
@@ -59,7 +62,7 @@ class Boldgrid_Editor_Builder_Styles {
 		if ( ! $is_bg_theme ) {
 			$filename = ! empty( $option['css_filename'] ) ? $option['css_filename'] : '';
 
-			if ( $filename && file_exists( self::get_upload_path() . $filename ) ) {
+			if ( $filename && $wp_filesystem->exists( self::get_upload_path() . $filename ) ) {
 				$url = self::get_upload_path( 'baseurl' ) . $filename;
 			} else {
 				$url = plugins_url( '/assets/css/custom-styles.css', BOLDGRID_EDITOR_ENTRY );
