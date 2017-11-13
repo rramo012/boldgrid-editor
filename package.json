@@ -58,7 +58,7 @@
 		"style-loader": "^0.18.2"
 	},
 	"dependencies": {
-		"@boldgrid/components": "^2.9.2",
+		"@boldgrid/components": "^2.10.0",
 		"@boldgrid/controls": "^0.8.4",
 		"@shopify/draggable": "^1.0.0-beta.2",
 		"animate.css": "^3.5.2",
