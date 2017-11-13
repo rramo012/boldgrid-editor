@@ -133,13 +133,14 @@ BOLDGRID.EDITOR.CONTROLS = BOLDGRID.EDITOR.CONTROLS || {};
 			panel.$element.on( 'click', '.icon-controls .panel-selection', function() {
 				var $menu = controls.$menu,
 					$target = $menu.targetData[ self.name ],
-					$this = $( this );
+					$this = $( this ),
+					staticClasses = $target.hasClass( 'fa-li' ) ? 'fa-li' : '';
 
 				$target.removeClass( function( index, css ) {
 					return ( css.match( /(^|\s)fa-\S+/g ) || [] ).join( ' ' );
 				} );
 
-				$target.addClass( $this.find( 'i' ).attr( 'class' ) );
+				$target.addClass( $this.find( 'i' ).attr( 'class' ) + ' ' + staticClasses );
 				panel.$element.find( '.selected' ).removeClass( 'selected' );
 				$this.addClass( 'selected' );
 			} );
