@@ -24,14 +24,12 @@ Post and Page Builder is a standalone plugin which adds functionality to the exi
 
 == Changelog ==
 
-= 1.6 In Progress =
-* New Feature:                  Added new Post Type - Block.
-* New Feature:                  Users can now save Blocks and reuse them.
-* New Feature:                  New pages will now be prompted to install a new Block.
-
 = 1.5.3 =
 * New Feature:                  Advanced controls and Custom Design UI updates.
 * Bug Fix:                      Image crop issue with http vs https.
+* New Feature:                  Added new Post Type - Block.
+* New Feature:                  Users can now save Blocks and reuse them.
+* New Feature:                  New pages will now be prompted to install a new Block.
 
 = 1.5.2 =
 * New Feature:                  Control for hiding and showing page titles.
