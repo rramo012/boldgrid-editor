@@ -246,7 +246,7 @@ class Boldgrid_Editor_Templater {
 	 * @param string $sizes
 	 */
 	public function default_srcset( $sizes ) {
-		return '(max-width: 1243px) 100vw, 1243px';
+		return '';
 	}
 
 	/**
