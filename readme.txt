@@ -2,7 +2,7 @@
 Contributors: rramo012, imh_brad, joemoto, timph
 Tags: drag and drop, tinymce, editor
 Requires at least: 4.4
-Tested up to: 4.8.1
+Tested up to: 4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,8 +24,7 @@ BoldGrid Editor is a standalone plugin which adds functionality to the existing 
 
 == Changelog ==
 
-
-= 1.6 In Progress =
+= 1.6 =
 * New Feature:                  Added new Post Type - Block.
 * New Feature:                  Users can now save Blocks and reuse them.
 * New Feature:                  New pages will now be prompted to install a new Block.
