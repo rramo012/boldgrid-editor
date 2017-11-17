@@ -332,8 +332,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 			 * Then find the post width on the front end iframe and set the
 			 * editor to the same width.
 			 */
-			BG.Service.editorWidth.$resizeiframe.attr( 'width', self.$tinymceHTML.width() );
-			self.tinymce_body_container.css( 'width', BG.Service.editorWidth.$postContainer.width() );
+			BG.Service.editorWidth.$resizeiframe.attr( 'width', BG.Controls.$container.$html.width() );
+			BG.Controls.$container.$body.css( 'width', BG.Service.editorWidth.$postContainer.width() );
 		}
 	};
 
@@ -419,8 +419,8 @@ IMHWPB.WP_MCE_Draggable = function() {
 	 * Highlight Current Device
 	 */
 	this.update_device_highlighting = function() {
-		if ( self.$mce_iframe && ! self.draggable_inactive ) {
-			var iframe_width = self.$mce_iframe.width();
+		if ( BG.Controls.$container.$iframe && ! self.draggable_inactive ) {
+			var iframe_width = BG.Controls.$container.$iframe.width();
 			if ( 1061 < iframe_width ) {
 				self.highlight_screen_size( 'desktop' );
 			} else if ( 837 < iframe_width ) {
@@ -534,10 +534,6 @@ IMHWPB.WP_MCE_Draggable = function() {
 		self.$editor_content_container = $( '#poststuff' );
 		self.$overlay_preview = $( '#boldgrid-overlay-preview' );
 		self.$resize_div = $( '#resizable' );
-
-		self.$mce_iframe = $( tinymce.activeEditor.iframeElement );
-		self.tinymce_body_container = self.$mce_iframe.contents().find( 'body' );
-		self.$tinymceHTML = self.$mce_iframe.contents().find( 'html' );
 
 		self.bind_column_switch();
 		self.bind_window_resize();

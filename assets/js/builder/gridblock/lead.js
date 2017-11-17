@@ -4,7 +4,6 @@ var $ = jQuery,
 import template from '../../../../includes/template/gridblock/lead.html';
 
 export class Lead {
-
 	constructor() {
 		this.$template = $();
 	}
@@ -46,10 +45,13 @@ export class Lead {
 	 * @since 1.6
 	 */
 	_bindDismiss() {
-		this.$template.find( '.add-blank' ).add( '#insert-media-button, #insert-gridblocks-button' ).one( 'click', () => {
-			this.dismissPrompt();
-			BG.VALIDATION.Section.updateContainers( BOLDGRID.EDITOR.Controls.$container );
-		} );
+		this.$template
+			.find( '.add-blank' )
+			.add( '#insert-media-button, #insert-gridblocks-button' )
+			.one( 'click', () => {
+				this.dismissPrompt();
+				BG.VALIDATION.Section.updateContainers( BOLDGRID.EDITOR.Controls.$container );
+			} );
 	}
 
 	/**
@@ -70,14 +72,13 @@ export class Lead {
 	 * @since 1.6
 	 */
 	_insert() {
-		let $iframe = $( tinymce.activeEditor.iframeElement ),
+		let $iframe = BG.Controls.$container.$iframe,
 			$template = $( template );
 
 		$iframe.after( $template );
 
 		return $template;
 	}
-
 }
 
 export { Save as default };

@@ -19,6 +19,7 @@ jQuery.fn.IMHWPB_Draggable = function( settings, $ ) {
 
 	// Some Jquery Selectors to be reused.
 	self.$window = $( window );
+	self.$iframe = $( '#content_ifr' );
 	self.$body = self.find( 'body' );
 	self.$html = self.find( 'html' );
 	self.$validatedInput = $( 'input[name="boldgrid-in-page-containers"]' );
