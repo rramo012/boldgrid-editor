@@ -8,22 +8,18 @@
  */
 
 var gulp = require( 'gulp' ),
-	uglify = require( 'gulp-uglify' ),
 	cssnano = require( 'gulp-cssnano' ),
 	rename = require( 'gulp-rename' ),
 	sass = require( 'gulp-sass' ),
 	debug = require( 'gulp-debug' ),
 	uglify = require( 'gulp-uglify' ),
-	notify = require( 'gulp-notify' ),
 	concat = require( 'gulp-concat' ),
-	inject = require( 'gulp-inject-string' ),
 	sequence = require( 'run-sequence' ),
-	jasmine = require( 'gulp-jasmine' ),
+	del = require( 'del' ),
 	fs = require( 'fs' ),
 	autoprefixer = require( 'gulp-autoprefixer' ),
 	server = require( 'karma' ).Server,
 	gutil = require( 'gutil' ),
-	readme = require( 'gulp-readme-to-markdown' ),
 	pump = require( 'pump' );
 
 // Configs.
@@ -31,10 +27,38 @@ var config = {
 	src: './',
 	dist: './',
 	fontDest: './assets/fonts',
+	buildDest: './build',
 	cssDest: './assets/css',
 	jsDest: './assets/js',
-	jsonDir: './assets/json'
+	jsonDir: './assets/json',
+	buildIgnoredFiles: [
+		'./**/*',
+		'!*.yml',
+		'!.htaccess',
+		'!./.*rc',
+		'!./node_modules',
+		'!./node_modules/**',
+		'!./yarn.lock',
+		'!./gulpfile.js',
+		'!./bin',
+		'!./bin/**',
+		'!README.md',
+		'!./tools',
+		'!./tools/**/*',
+		'!./tests',
+		'!./tests/**/*',
+		'!./package.json',
+		'!karma.conf.js',
+		'!webpack.config.js',
+		'!./build',
+		'!./build/**',
+		'!phpunit.xml'
+	]
 };
+
+gulp.task( 'clean', function() {
+	return del( config.buildDest, { force: true } );
+} );
 
 gulp.task( 'js-unit-tests', function( done ) {
 	return new server(
@@ -46,10 +70,17 @@ gulp.task( 'js-unit-tests', function( done ) {
 	).start();
 } );
 
+gulp.task( 'pre-deploy', function() {
+	return gulp.src( config.buildIgnoredFiles ).pipe( gulp.dest( config.buildDest ) );
+} );
+
 // Compile sass files.
 gulp.task( 'sass', function() {
 	gulp
-		.src( [ config.dist + '/assets/scss/**/*.scss', '!' + config.src + 'assets/scss/color-palette-scss/**/*' ] )
+		.src( [
+			config.dist + '/assets/scss/**/*.scss',
+			'!' + config.src + 'assets/scss/color-palette-scss/**/*'
+		] )
 		.pipe(
 			sass( {
 				includePaths: [ config.dist + 'assets/scss/' ]
@@ -75,7 +106,10 @@ gulp.task( 'sass', function() {
 
 gulp.task( 'merge-webpack', function() {
 	gulp
-		.src( [ config.dist + '/assets/css/editor.min.css', config.dist + '/assets/css/bundle.min.css' ] )
+		.src( [
+			config.dist + '/assets/css/editor.min.css',
+			config.dist + '/assets/css/bundle.min.css'
+		] )
 		.pipe(
 			autoprefixer( {
 				browsers: [ '> 5%' ],
@@ -89,7 +123,10 @@ gulp.task( 'merge-webpack', function() {
 gulp.task( 'jsmin-media', function( cb ) {
 	pump(
 		[
-			gulp.src( [ '!' + config.src + 'assets/js/media/**/*.min.js', config.src + 'assets/js/media/**/*.js' ] ),
+			gulp.src( [
+				'!' + config.src + 'assets/js/media/**/*.min.js',
+				config.src + 'assets/js/media/**/*.js'
+			] ),
 			uglify(),
 			rename( {
 				suffix: '.min'
@@ -103,7 +140,10 @@ gulp.task( 'jsmin-media', function( cb ) {
 gulp.task( 'jsmin-editor', function( cb ) {
 	pump(
 		[
-			gulp.src( [ '!' + config.src + 'assets/js/editor/**/*.min.js', config.src + 'assets/js/editor/**/*.js' ] ),
+			gulp.src( [
+				'!' + config.src + 'assets/js/editor/**/*.min.js',
+				config.src + 'assets/js/editor/**/*.js'
+			] ),
 			uglify(),
 			rename( {
 				suffix: '.min'
@@ -116,6 +156,10 @@ gulp.task( 'jsmin-editor', function( cb ) {
 
 gulp.task( 'build', function( cb ) {
 	sequence( [ 'sass', 'jsmin-editor', 'jsmin-media' ], cb );
+} );
+
+gulp.task( 'deploy', function( cb ) {
+	sequence( 'clean', 'pre-deploy', cb );
 } );
 
 gulp.task( 'watch', function() {
