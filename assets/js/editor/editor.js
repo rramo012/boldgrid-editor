@@ -115,7 +115,11 @@ IMHWPB.Editor = function( $ ) {
 			}
 
 			//Only do this rewrite if inserting 1 image
-			if ( inserting_media_image && $current_selection.is( 'img' ) && 1 >= $inserting_content.find( 'img' ).length ) {
+			if (
+				inserting_media_image &&
+				$current_selection.is( 'img' ) &&
+				1 >= $inserting_content.find( 'img' ).length
+			) {
 				var classes_to_add = [];
 				var classes = $current_selection.attr( 'class' );
 				var current_classes = [];
@@ -128,7 +132,11 @@ IMHWPB.Editor = function( $ ) {
 
 				//Find all classes that need to transfered over
 				$.each( current_classes, function( index, class_item ) {
-					if ( ! class_item.match( /size-/ ) && ! class_item.match( /align/ ) && ! class_item.match( /wp-image-/ ) ) {
+					if (
+						! class_item.match( /size-/ ) &&
+						! class_item.match( /align/ ) &&
+						! class_item.match( /wp-image-/ )
+					) {
 						classes_to_add.push( class_item );
 					}
 				} );
@@ -326,7 +334,11 @@ IMHWPB.Editor = function( $ ) {
 				if ( is_column || is_row ) {
 
 					//Any Character
-					if ( ( 48 <= e.which && 90 >= e.which ) || ( 96 <= e.which && 105 >= e.which ) || 13 == e.which ) {
+					if (
+						( 48 <= e.which && 90 >= e.which ) ||
+						( 96 <= e.which && 105 >= e.which ) ||
+						13 == e.which
+					) {
 
 						//Do not delete an element with content
 						if ( ! isEmpty ) {
@@ -340,16 +352,24 @@ IMHWPB.Editor = function( $ ) {
 							if (
 								is_row ||
 								( is_column &&
-									self.draggable.max_row_size === self.draggable.find_column_size( $current_node ) )
+									self.draggable.max_row_size ===
+										self.draggable.find_column_size( $current_node ) )
 							) {
-								$structure = $( '<div class="row"><div class="col-md-12"></div></div>' );
+								$structure = $(
+									'<div class="row"><div class="col-md-12"></div></div>'
+								);
 								$current_node.closest( '.row' ).after( $structure );
-								editor.selection.setCursorLocation( $structure.find( '.col-md-12' )[0], 0 );
+								editor.selection.setCursorLocation(
+									$structure.find( '.col-md-12' )[0],
+									0
+								);
 								return false;
 							}
 
 							if ( is_column ) {
-								$newParagraph = $( '<p><br data-mce-bogus="1"></p><p><br data-mce-bogus="1"></p>' );
+								$newParagraph = $(
+									'<p><br data-mce-bogus="1"></p><p><br data-mce-bogus="1"></p>'
+								);
 								$current_node.append( $newParagraph );
 								editor.selection.setCursorLocation( $newParagraph.last()[0], 0 );
 								return false;
@@ -371,7 +391,10 @@ IMHWPB.Editor = function( $ ) {
 				} else if ( is_anchor && ( '8' == e.which || '46' == e.which ) ) {
 
 					//Backspace or Delete Key
-					if ( '&nbsp;&nbsp;' == $current_node.html() || '&nbsp; ' == $current_node.html() ) {
+					if (
+						'&nbsp;&nbsp;' == $current_node.html() ||
+						'&nbsp; ' == $current_node.html()
+					) {
 						$current_node.remove();
 						return false;
 					}
@@ -402,7 +425,10 @@ IMHWPB.Editor = function( $ ) {
 							return false;
 						}
 					}
-				} else if ( 'IMG' == node.tagName || $current_node.is( '.button-primary, .button-secondary, .btn' ) ) {
+				} else if (
+					'IMG' == node.tagName ||
+					$current_node.is( '.button-primary, .button-secondary, .btn' )
+				) {
 					if ( enterKey == e.which ) {
 						$newParagraph = $( '<p><br data-mce-bogus="1"></p>' );
 						var $parentP = $current_node.closest( 'p' );
@@ -444,7 +470,10 @@ IMHWPB.Editor = function( $ ) {
 							) {
 								position = 1;
 							}
-						} else if ( e.element.firstChild && current_range.startOffset == e.element.firstChild.length ) {
+						} else if (
+							e.element.firstChild &&
+							current_range.startOffset == e.element.firstChild.length
+						) {
 							var final_pos_offset = 0;
 
 							//If the last character is a space, set the cursor to the second to last
@@ -493,7 +522,10 @@ IMHWPB.Editor = function( $ ) {
 			 * trigger it manually
 			 */
 			editor.on( 'SetAttrib', function( e ) {
-				if ( e.attrElm.hasClass( 'wpview-wrap' ) && 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance ) {
+				if (
+					e.attrElm.hasClass( 'wpview-wrap' ) &&
+					'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance
+				) {
 					var draggable = IMHWPB.WP_MCE_Draggable.instance.draggable_instance;
 					if ( draggable.resize ) {
 						draggable.$master_container.trigger( 'mouseup', e.attrElm );
@@ -513,7 +545,9 @@ IMHWPB.Editor = function( $ ) {
 					isResizing = true === tinymce.activeEditor.boldgridResize,
 					isPopoverChild = $target.closest( '.draggable-tools-imhwpb' ).length,
 					isActionItem =
-						! self.draggable.ie_version && $target.hasClass( 'action-list' ) && ! $target.attr( 'draggable' ),
+						! self.draggable.ie_version &&
+						$target.hasClass( 'action-list' ) &&
+						! $target.attr( 'draggable' ),
 					isPopover = isPopoverChild && ! isActionItem,
 					newDiv;
 
@@ -543,7 +577,10 @@ IMHWPB.Editor = function( $ ) {
 
 			//Prevents boldgrid popovers from appearing when resizing images
 			editor.on( 'ObjectResizeStart', function( e ) {
-				if ( 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container ) {
+				if (
+					'undefined' !=
+					typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
+				) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = true;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
 						.find( 'html' )
@@ -553,7 +590,10 @@ IMHWPB.Editor = function( $ ) {
 
 			//Once an object is resized, allow boldgrid popovers.
 			editor.on( 'ObjectResized', function( e ) {
-				if ( 'undefined' != typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container ) {
+				if (
+					'undefined' !=
+					typeof IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
+				) {
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.popovers_disabled = false;
 					IMHWPB.WP_MCE_Draggable.instance.draggable_instance.$master_container
 						.find( 'html' )
@@ -682,7 +722,10 @@ IMHWPB.Editor = function( $ ) {
 	} );
 
 	this.cleanupContent = function( content ) {
-		if ( IMHWPB.WP_MCE_Draggable.instance && IMHWPB.WP_MCE_Draggable.instance.draggable_instance ) {
+		if (
+			IMHWPB.WP_MCE_Draggable.instance &&
+			IMHWPB.WP_MCE_Draggable.instance.draggable_instance
+		) {
 			content = IMHWPB.WP_MCE_Draggable.instance.draggable_instance.frame_cleanup( content );
 		}
 
@@ -697,7 +740,10 @@ IMHWPB.Editor = function( $ ) {
 	this.mce_element_is_empty = function( $element ) {
 		var $children = $element.children();
 		var is_empty = false;
-		if ( $element.is( ':empty' ) || ( 1 == $children.length && $children.filter( 'br' ).length && ! $element.text() ) ) {
+		if (
+			$element.is( ':empty' ) ||
+			( 1 == $children.length && $children.filter( 'br' ).length && ! $element.text() )
+		) {
 			is_empty = true;
 		}
 
@@ -779,7 +825,10 @@ IMHWPB.Editor = function( $ ) {
 			self.currently_selected_size = type;
 		}
 
-		if ( IMHWPB.WP_MCE_Draggable.instance && false == IMHWPB.WP_MCE_Draggable.instance.draggable_inactive ) {
+		if (
+			IMHWPB.WP_MCE_Draggable.instance &&
+			false == IMHWPB.WP_MCE_Draggable.instance.draggable_inactive
+		) {
 			IMHWPB.WP_MCE_Draggable.instance.resize_done_event();
 			$window.trigger( 'resize' );
 		}
