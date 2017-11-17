@@ -160,6 +160,25 @@ class Boldgrid_Editor_Builder_Styles {
 	}
 
 	/**
+	 * Validate the CSS.
+	 *
+	 * @since 1.6
+	 *
+	 * @param  array $styles Unvalidated Styles.
+	 * @return array         Validated Styles.
+	 */
+	public function validate( $styles ) {
+		$validated_styles = array();
+		foreach( $styles as &$style ) {
+			if ( ! preg_match( '#</?\w+#', $style['css'] ) ) {
+				$validated_styles[] = $style;
+			}
+		}
+
+		return $validated_styles;
+	}
+
+	/**
 	 * Save user styles created during edit process.
 	 *
 	 * @since 1.6
@@ -171,6 +190,7 @@ class Boldgrid_Editor_Builder_Styles {
 
 			$styles = json_decode( $styles, true );
 			$styles = is_array( $styles ) ? $styles : array();
+			$styles = $this->validate( $styles );
 
 			// Create stylesheet.
 			$css = $this->create_css_string( $styles );

@@ -30,35 +30,6 @@ class Boldgrid_Editor_MCE {
 	}
 
 	/**
-	 * Add Help Pointer to Boldgrid Editing.
-	 *
-	 * @since 1.0
-	 */
-	public function help_pointers() {
-		// Dont add the help pointer if this is a boldgrid theme.
-		if ( Boldgrid_Editor_Theme::is_editing_boldgrid_theme() ) {
-			return;
-		}
-
-		$pointers = array (
-			array (
-				'id' => 'boldgrid-editor',
-				'screen' => 'page',
-				'target' => '[aria-label="BoldGrid Editing"]',
-				'title' => 'BoldGrid Editing',
-				'content' => 'BoldGrid Editing is currently disabled because your currently ' .
-				'active theme is not a BoldGrid theme. You can try enabling BoldGrid Editing with this button.',
-				'position' => array (
-					'edge' => 'right',
-					'align' => 'middle'
-				)
-			)
-		);
-
-		$myPointers = new Boldgrid_Editor_Pointer( $pointers );
-	}
-
-	/**
 	 * Check whether or not Drag and Drop is enabled.
 	 *
 	 * By default DnD (Drag and Drop) is disabled for non BG themes and enabled for BG themes.

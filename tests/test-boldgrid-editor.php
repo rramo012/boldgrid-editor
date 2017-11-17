@@ -10,7 +10,7 @@
  */
 
 /**
- * BoldGrid Editor Plugin Test class
+ * Post and Page Builder Plugin Test class
  */
 class Test_Boldgrid_Editor extends WP_UnitTestCase {
 

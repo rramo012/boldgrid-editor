@@ -10,12 +10,12 @@
 include __DIR__ . '/loader.php';
 
 /**
- * BoldGrid Editor class
+ * Post and Page Builder class
  */
 class Boldgrid_Editor {
 
 	/**
-	 * BoldGrid Editor Config object
+	 * Post and Page Builder Config object
 	 *
 	 * @var Boldgrid_Editor_Config
 	 */
@@ -238,8 +238,6 @@ class Boldgrid_Editor {
 			// Add screen display buttons.
 			$boldgrid_editor_mce->add_window_size_buttons();
 
-			add_action( 'media_buttons', array ( $boldgrid_editor_mce, 'help_pointers' ) );
-
 			// This has a high priority to override duplicate files in other boldgrid plugins.
 			add_action( 'admin_enqueue_scripts', array( $boldgrid_editor_assets, 'enqueue_scripts_action' ), 5 );
 
@@ -275,7 +273,7 @@ class Boldgrid_Editor {
 	}
 
 	/**
-	 * Get the BoldGrid Editor configuration array.
+	 * Get the Post and Page Builder configuration array.
 	 *
 	 * @since 1.3.3
 	 *
@@ -299,13 +297,14 @@ class Boldgrid_Editor {
 	public function prepare_plugin_update() {
 		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
 		$is_wpcli = ( defined( 'WP_CLI' ) && WP_CLI );
+		$file = BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-update.php';
 
-		if ( $is_cron || $is_wpcli || is_admin() ) {
-			require_once BOLDGRID_EDITOR_PATH . '/includes/class-boldgrid-editor-update.php';
-
-			$plugin_update = new Boldgrid_Editor_Update( $this->config->get_configs() );
-
-			$plugin_update->add_hooks();
+		if ( file_exists( $file ) ) {
+			if ( $is_cron || $is_wpcli || is_admin() ) {
+				require_once $file;
+				$plugin_update = new Boldgrid_Editor_Update( $this->config->get_configs() );
+				$plugin_update->add_hooks();
+			}
 		}
 	}
 

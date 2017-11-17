@@ -65,4 +65,13 @@ class Boldgrid_Editor_Option {
 			update_option( self::OPTION_NAMESPACE, $boldgrid_editor );
 		}
 	}
+
+	/**
+	 * Delete the BoldGrid Editor Option.
+	 *
+	 * @since 1.6
+	 */
+	public static function clear_all() {
+		delete_option( self::OPTION_NAMESPACE );
+	}
 }

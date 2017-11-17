@@ -35,7 +35,7 @@ class Boldgrid_Editor_Gridblock_Post {
 		return array(
 			'name'                => _x( 'Block Library', 'Post Type General Name', 'boldgrid-editor' ),
 			'singular_name'       => _x( 'Block', 'Post Type Singular Name', 'boldgrid-editor' ),
-			'menu_name'           => __( 'BoldGrid Editor', 'boldgrid-editor' ),
+			'menu_name'           => __( 'Post and Page Builder', 'boldgrid-editor' ),
 			'parent_item_colon'   => __( 'Parent Block', 'boldgrid-editor' ),
 			'all_items'           => __( 'Block Library', 'boldgrid-editor' ),
 			'view_item'           => __( 'View Block', 'boldgrid-editor' ),

@@ -72,7 +72,7 @@ class Boldgrid_Editor_Version {
 		if ( version_compare( phpversion(), $required_php_version, '<' ) ) {
 			deactivate_plugins( BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 			wp_die(
-				'<p><center><strong>BoldGrid Editor</strong> requires PHP ' . $required_php_version .
+				'<p><center><strong>Post and Page Builder</strong> requires PHP ' . $required_php_version .
 				' or greater.</center></p>', 'Plugin Activation Error',
 				array (
 					'response' => 200,
@@ -87,7 +87,7 @@ class Boldgrid_Editor_Version {
 		if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
 			deactivate_plugins( BOLDGRID_EDITOR_PATH . '/boldgrid-editor.php' );
 			wp_die(
-				'<p><center><strong>BoldGrid Editor</strong> requires WordPress ' .
+				'<p><center><strong>Post and Page Builder</strong> requires WordPress ' .
 				$required_wp_version . ' or higher.</center></p>', 'Plugin Activation Error',
 				array (
 					'response' => 200,

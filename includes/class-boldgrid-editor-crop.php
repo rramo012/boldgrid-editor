@@ -2,7 +2,7 @@
 /**
  * BoldGrid_Editor_Crop class
  *
- * The BoldGrid Editor Crop class suggests users crop images when replacing
+ * The Post and Page Builder Crop class suggests users crop images when replacing
  * those of different aspect ratios.
  *
  * @package Boldgrid_Editor_Crop
@@ -10,7 +10,7 @@
  */
 
 /**
- * BoldGrid Editor Crop.
+ * Post and Page Builder Crop.
  *
  * See file description above.
  *

@@ -3,8 +3,9 @@
 [![PHP Version](https://img.shields.io/badge/PHP-5.3%2B-blue.svg)](https://php.net)
 [![Code Climate](https://codeclimate.com/github/BoldGrid/boldgrid-editor/badges/gpa.svg)](https://codeclimate.com/github/BoldGrid/boldgrid-editor)
 
-# BoldGrid Editor #
-**Contributors:** rramo012, imh_brad, timph, joemoto
+# Post and Page Builder
+
+**Contributors:** boldgrid, rramo012, imh_brad, timph, joemoto
 
 **Tags:** drag and drop, tinymce, editor
 
@@ -16,23 +17,22 @@
 
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor.
+## Description
 
-## Description ##
+Post and Page Builder is a standalone plugin which adds functionality to the existing TinyMCE Editor
+used in the WordPress page and post editor.
 
-BoldGrid Editor is a standalone plugin which adds functionality to the existing TinyMCE Editor used in the WordPress page and post editor.
-
-## Requirements ##
+## Requirements
 
 * PHP 5.3 or higher.
 
-## Installation ##
+## Installation
 
-1. Upload the entire boldgrid-editor folder to the /wp-content/plugins/ directory.
+1. Upload the entire post-and-page-builder folder to the /wp-content/plugins/ directory.
 
 2. Activate the plugin through the Plugins menu in WordPress.
 
-## JS/CSS Development ##
+## JS/CSS Development
 
 ```
 # Install dependencies
