@@ -210,6 +210,10 @@ IMHWPB.Editor = function( $ ) {
 		 * Adding three new buttons
 		 */
 		tinymce.PluginManager.add( 'monitor_view_imhwpb', function( editor, url ) {
+			if ( 'content' !== editor.id ) {
+				return;
+			}
+
 			editor.addButton( 'monitor_view_imhwpb', {
 				title: 'Desktop View',
 				icon: 'icon dashicons dashicons-desktop imhwpb-icon',
@@ -224,6 +228,10 @@ IMHWPB.Editor = function( $ ) {
 		 * Adding a button that is used to change the view to tablet
 		 */
 		tinymce.PluginManager.add( 'tablet_view_imhwpb', function( editor, url ) {
+			if ( 'content' !== editor.id ) {
+				return;
+			}
+
 			editor.addButton( 'tablet_view_imhwpb', {
 				title: 'Tablet View',
 				icon: 'icon dashicons dashicons-tablet imhwpb-icon',
@@ -238,6 +246,10 @@ IMHWPB.Editor = function( $ ) {
 		 * Adding a button that changes the view to phone
 		 */
 		tinymce.PluginManager.add( 'phone_view_imhwpb', function( editor, url ) {
+			if ( 'content' !== editor.id ) {
+				return;
+			}
+
 			editor.addButton( 'phone_view_imhwpb', {
 				title: 'Phone View',
 				icon: 'icon dashicons dashicons-smartphone imhwpb-icon',
@@ -252,6 +264,9 @@ IMHWPB.Editor = function( $ ) {
 		 * Allowing the user to toggle the draggable fucntionality
 		 */
 		tinymce.PluginManager.add( 'toggle_draggable_imhwpb', function( editor, url ) {
+			if ( 'content' !== editor.id ) {
+				return;
+			}
 
 			/**
 			 * When replacing an image with an image we will carry over the classes, width and

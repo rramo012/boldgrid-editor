@@ -236,12 +236,14 @@ BOLDGRID.EDITOR.GRIDBLOCK = BOLDGRID.EDITOR.GRIDBLOCK || {};
 			updateHistoryStates: function() {
 				var $historyControls = $( '.history-controls' );
 
-				$historyControls
-					.find( '.redo-link' )
-					.attr( 'disabled', ! tinymce.activeEditor.undoManager.hasRedo() );
-				$historyControls
-					.find( '.undo-link' )
-					.attr( 'disabled', ! tinymce.activeEditor.undoManager.hasUndo() );
+				if ( tinymce.activeEditor.undoManager ) {
+					$historyControls
+						.find( '.redo-link' )
+						.attr( 'disabled', ! tinymce.activeEditor.undoManager.hasRedo() );
+					$historyControls
+						.find( '.undo-link' )
+						.attr( 'disabled', ! tinymce.activeEditor.undoManager.hasUndo() );
+				}
 			},
 
 			/**
