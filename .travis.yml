@@ -26,6 +26,7 @@ script: phpunit
 deploy:
   provider: script
   script: bin/test.sh
+  skip_cleanup: true
   on:
     tags: true
     all_branches: false

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-echo "hello world"
+echo "hello world"$WP_USERNAME
