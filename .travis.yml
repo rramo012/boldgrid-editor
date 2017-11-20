@@ -25,7 +25,7 @@ script: phpunit
 
 deploy:
   provider: script
-  script: chmod +x bin/test.sh && sh $TRAVIS_BUILD_DI/bin/test.sh
+  script: chmod +x ./bin/test.sh && sh ./bin/test.sh
   skip_cleanup: true
   on:
     tags: true
