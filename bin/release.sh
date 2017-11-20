@@ -21,8 +21,6 @@
 # THE GITHUB ACCESS TOKEN, GENERATE ONE AT: https://github.com/settings/tokens
 GITHUB_ACCESS_TOKEN=""
 
-SVN_REPO="replace-me-with-repo" || $SVN_REPO
-
 # ----- STOP EDITING HERE -----
 
 set -e
@@ -115,7 +113,7 @@ svn status
 # DEPLOY
 echo ""
 echo "Committing to WordPress.org...this may take a while..."
-svn commit -m "Release "${VERSION}", see readme.txt for the changelog." --username=$WP_USERNAME --password=$WP_PASSWORD --non-interactive --no-auth-cache || { echo "Unable to commit."; exit 1; }
+#svn commit -m "Release "${VERSION}", see readme.txt for the changelog." --username=$WP_USERNAME --password=$WP_PASSWORD --non-interactive --no-auth-cache || { echo "Unable to commit."; exit 1; }
 
 # DONE, BYE
 echo "RELEASER DONE :D"
