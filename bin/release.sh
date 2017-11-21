@@ -37,6 +37,8 @@ ROOT_PATH=$(pwd)"/../"
 CI_BUILD_PATH=$(pwd)"/"
 TEMP_SVN_REPO="tmp-repo-svn"
 
+echo "Releasing Version: ${VERSION}";
+
 # CHECKOUT SVN DIR IF NOT EXISTS
 if [[ ! -d $ROOT_PATH$TEMP_SVN_REPO ]];
 then
