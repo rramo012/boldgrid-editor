@@ -25,7 +25,7 @@ script: phpunit
 
 deploy:
   provider: script
-  script: ./node_modules/@boldgrid/wordpress-tag-sync/release.sh
+  script: chmod +x ./node_modules/@boldgrid/wordpress-tag-sync/release.sh && ./node_modules/@boldgrid/wordpress-tag-sync/release.sh
   skip_cleanup: true
   on:
     tags: true
