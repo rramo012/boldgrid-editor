@@ -30,3 +30,4 @@ deploy:
   on:
     tags: true
     all_branches: false
+    php: '5.6'
