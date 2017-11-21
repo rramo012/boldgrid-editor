@@ -35,31 +35,35 @@ echo "--------------------------------------------"
 VERSION=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
 ROOT_PATH=$(pwd)"/../"
 CI_BUILD_PATH=$(pwd)"/"
-TEMP_SVN_REPO="tmp-repo-svn"
+SVN_DIR="tmp-repo-svn"
+SVN_WORKSPACE="/tmp/"${SVN_DIR}
 
 echo "Releasing Version: ${VERSION}";
 
 # CHECKOUT SVN DIR IF NOT EXISTS
-if [[ ! -d $ROOT_PATH$TEMP_SVN_REPO ]];
+if [[ ! -d $SVN_WORKSPACE ]];
 then
 	echo "Checking out WordPress.org plugin repository"
-	svn checkout $SVN_REPO $TEMP_SVN_REPO --depth immediates || { echo "Unable to checkout repo."; exit 1; }
-	mv $TEMP_SVN_REPO $ROOT_PATH$TEMP_SVN_REPO
+	svn checkout $SVN_REPO $SVN_DIR --depth immediates || { echo "Unable to checkout repo."; exit 1; }
+	mv $SVN_DIR $SVN_WORKSPACE
 fi
 
 # MOVE INTO SVN DIR
-cd "../"$TEMP_SVN_REPO
+cd $SVN_WORKSPACE
 
 # UPDATE SVN
 echo "Updating SVN"
 svn update "tags/"${VERSION} --set-depth infinity || { echo "Unable to update SVN."; exit 1; }
 
 echo "Copy repo files to working dir"
-rm -Rf $ROOT_PATH$TEMP_SVN_REPO"/tags/"${VERSION}
-mkdir $ROOT_PATH$TEMP_SVN_REPO"/tags/"${VERSION}
-cp -prf $CI_BUILD_PATH"." $ROOT_PATH$TEMP_SVN_REPO"/tags/"${VERSION}
+rm -Rf $SVN_WORKSPACE"/tags/"${VERSION}
+mkdir $SVN_WORKSPACE"/tags/"${VERSION}
 
-cd $ROOT_PATH$TEMP_SVN_REPO"/tags/"${VERSION}
+shopt -s extglob
+cp -prf ${CI_BUILD_PATH}!(node_modules) $SVN_WORKSPACE"/tags/"${VERSION}
+shopt -u extglob
+
+cd $SVN_WORKSPACE"/tags/"${VERSION}
 
 # REMOVE UNWANTED FILES & FOLDERS
 echo "Removing unwanted files"
@@ -94,7 +98,7 @@ rm -f apigen.neon
 rm -f CHANGELOG.txt
 rm -f CONTRIBUTING.md
 
-cd $ROOT_PATH$TEMP_SVN_REPO
+cd $SVN_WORKSPACE
 
 # DO THE ADD ALL NOT KNOWN FILES UNIX COMMAND
 svn add --force * --auto-props --parents --depth infinity -q
