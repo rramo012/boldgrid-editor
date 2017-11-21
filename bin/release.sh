@@ -16,11 +16,7 @@ CI_BUILD_PATH=$(pwd)"/"
 SVN_DIR="tmp-repo-svn"
 SVN_WORKSPACE=${CI_BUILD_PATH}${SVN_DIR}
 VERSION_PATH=$SVN_WORKSPACE"/tags/"${VERSION}
-
-if [ -z "$PLUGIN_NAME" ]
-then
-	PLUGIN_NAME=$(basename $(pwd))
-fi
+PLUGIN_NAME=$(basename ${WP_SVN_REPO})
 
 echo "Releasing Version: ${VERSION}";
 echo "Using Plugin Name: ${PLUGIN_NAME}"
