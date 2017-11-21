@@ -1,7 +1,8 @@
 {
 	"name": "boldgrid-editor",
 	"version": "1.6.0",
-	"description": "Post and Page Builder is a standalone plugin which adds functionality to the existing TinyMCE Editor.",
+	"description":
+		"Post and Page Builder is a standalone plugin which adds functionality to the existing TinyMCE Editor.",
 	"main": "gulpfile.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -9,16 +10,15 @@
 		"start-js": "webpack-dev-server --colors",
 		"start-css": "gulp watch",
 		"build-webpack": "NODE_ENV=production webpack --colors",
+		"deploy":
+			"env WP_SVN_REPO=\"https://plugins.svn.wordpress.org/post-and-page-builder/\" env PLUGIN_NAME=\"post-and-page-builder\" ./node_modules/@boldgrid/wordpress-tag-sync/release.sh",
 		"build": "npm run build-webpack & gulp build & gulp merge-webpack"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BoldGrid/boldgrid-editor.git"
 	},
-	"keywords": [
-		"Editor",
-		"tinyMCE"
-	],
+	"keywords": ["Editor", "tinyMCE"],
 	"author": "The BoldGrid Team",
 	"license": "GPL-2.0",
 	"bugs": {

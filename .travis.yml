@@ -24,9 +24,16 @@ before_script:
 script: phpunit
 
 deploy:
-  provider: script
-  script: chmod +x ./node_modules/@boldgrid/wordpress-tag-sync/release.sh && ./node_modules/@boldgrid/wordpress-tag-sync/release.sh
-  skip_cleanup: true
-  on:
-    tags: true
-    php: '5.6'
+  - provider: script
+    script: chmod +x ./bin/release.sh && ./bin/release.sh
+    skip_cleanup: true
+    on:
+      tags: true
+      php: '5.6'
+  - provider: releases
+      api_key: "${GITHUB_TOKEN}"
+      file: "post-and-page-builder.zip"
+      skip_cleanup: true
+      on:
+        tags: true
+        php: '5.6'
