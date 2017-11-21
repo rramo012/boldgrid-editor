@@ -58,7 +58,7 @@ rm -Rf $SVN_WORKSPACE"/tags/"${VERSION}
 mkdir $SVN_WORKSPACE"/tags/"${VERSION}
 
 shopt -s extglob
-cp -prf ${CI_BUILD_PATH}!(.git|node_modules|${SVN_DIR}) $SVN_WORKSPACE"/tags/"${VERSION}
+cp -prf ${CI_BUILD_PATH}!(node_modules|${SVN_DIR}) $SVN_WORKSPACE"/tags/"${VERSION}
 shopt -u extglob
 
 cd $SVN_WORKSPACE"/tags/"${VERSION}
@@ -118,6 +118,9 @@ svn status
 echo ""
 echo "Committing to WordPress.org...this may take a while..."
 #svn commit -m "Release "${VERSION}", see readme.txt for the changelog." --username=$WP_USERNAME --password=$WP_PASSWORD --non-interactive --no-auth-cache || { echo "Unable to commit."; exit 1; }
+
+echo "Cleanup"
+rm -Rf $SVN_WORKSPACE
 
 # DONE, BYE
 echo "RELEASER DONE :D"
