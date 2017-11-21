@@ -33,7 +33,6 @@ echo "--------------------------------------------"
 
 # VARS
 VERSION=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
-ROOT_PATH=$(pwd)"/../"
 CI_BUILD_PATH=$(pwd)"/"
 SVN_DIR="tmp-repo-svn"
 SVN_WORKSPACE=${CI_BUILD_PATH}${SVN_DIR}
@@ -44,7 +43,7 @@ echo "Releasing Version: ${VERSION}";
 if [ ! -d $SVN_WORKSPACE ];
 then
 	echo "Checking out WordPress.org plugin repository"
-	svn checkout $SVN_REPO $SVN_DIR --depth immediates || { echo "Unable to checkout repo."; exit 1; }
+	svn checkout $WP_SVN_REPO $SVN_DIR --depth immediates || { echo "Unable to checkout repo."; exit 1; }
 fi
 
 # MOVE INTO SVN DIR
@@ -59,7 +58,7 @@ rm -Rf $SVN_WORKSPACE"/tags/"${VERSION}
 mkdir $SVN_WORKSPACE"/tags/"${VERSION}
 
 shopt -s extglob
-cp -prf ${CI_BUILD_PATH}!(node_modules|${SVN_DIR}) $SVN_WORKSPACE"/tags/"${VERSION}
+cp -prf ${CI_BUILD_PATH}!(.git|node_modules|${SVN_DIR}) $SVN_WORKSPACE"/tags/"${VERSION}
 shopt -u extglob
 
 cd $SVN_WORKSPACE"/tags/"${VERSION}
