@@ -46,7 +46,7 @@ then
 fi
 
 # MOVE INTO SVN DIR
-cd $ROOT_PATH$TEMP_SVN_REPO
+cd "../"$TEMP_SVN_REPO
 
 # UPDATE SVN
 echo "Updating SVN"
