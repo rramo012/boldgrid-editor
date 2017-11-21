@@ -117,7 +117,7 @@ svn status
 # DEPLOY
 echo ""
 echo "Committing to WordPress.org...this may take a while..."
-#svn commit -m "Release "${VERSION}", see readme.txt for the changelog." --username=$WP_USERNAME --password=$WP_PASSWORD --non-interactive --no-auth-cache || { echo "Unable to commit."; exit 1; }
+svn commit -m "Release "${VERSION}", see readme.txt for the changelog." --username=$WP_USERNAME --password=$WP_PASSWORD --non-interactive --no-auth-cache || { echo "Unable to commit."; exit 1; }
 
 echo "Cleanup"
 rm -Rf $SVN_WORKSPACE
