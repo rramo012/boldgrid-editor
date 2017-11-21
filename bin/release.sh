@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # By Mike Jolley, based on work by Barry Kooij ;)
 # License: GPL v3
@@ -41,7 +41,7 @@ SVN_WORKSPACE=${CI_BUILD_PATH}${SVN_DIR}
 echo "Releasing Version: ${VERSION}";
 
 # CHECKOUT SVN DIR IF NOT EXISTS
-if [[ ! -d $SVN_WORKSPACE ]];
+if [ ! -d $SVN_WORKSPACE ];
 then
 	echo "Checking out WordPress.org plugin repository"
 	svn checkout $SVN_REPO $SVN_DIR --depth immediates || { echo "Unable to checkout repo."; exit 1; }
